@@ -288,4 +288,4 @@ TEP_GNSS/
 - **Signal authenticity**: 27/27 null tests show 9-73x signal destruction
 - **Multi-center validation**: Independent confirmation across CODE, IGS, ESA
 
-**This analysis provides the first publication-quality evidence for TEP signatures in space-based precision timing data.**
+**This analysis provides the first publication-quality evidence for TEP signatures in space-based precision timing data.**# Trigger Pages deployment
