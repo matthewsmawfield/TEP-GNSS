@@ -1,0 +1,18 @@
+# Core numerical + scientific stack
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.11.4
+
+# Plotting
+matplotlib==3.8.4
+
+# System utilities
+psutil==5.9.8
+
+# Optional but common
+seaborn==0.13.2
+
+# Pin setuptools/wheel for reproducible builds (optional)
+setuptools==70.0.0
+wheel==0.43.0
+

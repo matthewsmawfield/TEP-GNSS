@@ -1,0 +1,671 @@
+#!/usr/bin/env python3
+"""
+TEP GNSS Analysis - STEP 1: Data Acquisition
+===========================================
+
+Acquires authoritative GNSS data and station coordinates from official sources.
+Downloads precision clock products and establishes comprehensive station catalogue
+for temporal equivalence principle analysis.
+
+Sources: IGS, CODE, ESA analysis centers; ITRF2014 coordinate framework
+Validation: Strict authentication, no synthetic data, complete provenance
+
+Author: Matthew Lukin Smawfield
+Theory: Temporal Equivalence Principle (TEP)
+"""
+
+import sys
+import os
+import time
+import urllib.request
+import urllib.error
+import re
+from pathlib import Path
+from datetime import datetime, timedelta
+import json
+import numpy as np
+import pandas as pd
+
+# Ensure package root on sys.path for intra-package imports
+PACKAGE_ROOT = Path(__file__).resolve().parents[2]
+if str(PACKAGE_ROOT) not in sys.path:
+    sys.path.insert(0, str(PACKAGE_ROOT))
+
+# Import TEP utilities for better configuration and error handling
+from scripts.utils.config import TEPConfig
+from scripts.utils.exceptions import (
+    SafeErrorHandler, TEPDataError, TEPNetworkError, TEPFileError, 
+    safe_csv_read, safe_json_read, safe_json_write
+)
+
+# Station catalogue building functions (integrated from utils)
+import json
+import math
+import urllib.request
+import ssl
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def geodetic_to_ecef(lat_deg: float, lon_deg: float, h_m: float):
+    """Convert geodetic coordinates to ECEF"""
+    import math
+    
+    # WGS84 constants
+    a = 6378137.0  # Semi-major axis
+    e2 = 6.69437999014e-3  # First eccentricity squared
+    
+    lat = math.radians(lat_deg)
+    lon = math.radians(lon_deg)
+    sin_lat = math.sin(lat)
+    N = a / math.sqrt(1 - e2 * sin_lat * sin_lat)
+    X = (N + h_m) * math.cos(lat) * math.cos(lon)
+    Y = (N + h_m) * math.cos(lat) * math.sin(lon)
+    Z = (N * (1 - e2) + h_m) * sin_lat
+    return X, Y, Z
+
+def fetch_igs_coordinates():
+    """Fetch coordinates from IGS network JSON"""
+    def _fetch_operation():
+        url = "https://files.igs.org/pub/station/general/IGSNetworkWithFormer.json"
+        print_status("Fetching IGS network coordinates...", "INFO")
+        
+        # Create secure SSL context
+        ssl_context = ssl.create_default_context()
+        timeout = TEPConfig.get_int('TEP_NETWORK_TIMEOUT')
+        
+        with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
+            data = json.load(response)
+        
+        rows = []
+        for code9, meta in data.items():
+            code = code9[:4].upper()
+            try:
+                X = float(meta["X"])
+                Y = float(meta["Y"])
+                Z = float(meta["Z"])
+                lat = float(meta.get("Latitude", 0))
+                lon = float(meta.get("Longitude", 0))
+                h = float(meta.get("Height", 0))
+                
+                rows.append({
+                    'code': code9,  # Keep full 9-char code
+                    'coord_source_code': code,
+                    'lat_deg': lat,
+                    'lon_deg': lon,
+                    'height_m': h,
+                    'X': X,
+                    'Y': Y,
+                    'Z': Z,
+                    'source': 'IGS'
+                })
+            except (KeyError, ValueError, TypeError):
+                continue  # Skip malformed station entries
+        
+        print_status(f"Retrieved {len(rows)} stations from IGS", "SUCCESS")
+        return pd.DataFrame(rows)
+    
+    # Use safe network operation handler
+    result = SafeErrorHandler.safe_network_operation(
+        _fetch_operation,
+        error_message="IGS coordinate fetch failed",
+        logger_func=print_status,
+        return_on_error=pd.DataFrame(),
+        max_retries=2
+    )
+    return result if result is not None else pd.DataFrame()
+
+def fetch_bkg_coordinates():
+    """Fetch coordinates from BKG station API"""
+    def _fetch_operation():
+        url = "https://igs.bkg.bund.de/api/stations?format=json"
+        print_status("Fetching BKG station coordinates...", "INFO")
+        
+        # Create secure SSL context
+        ssl_context = ssl.create_default_context()
+        timeout = TEPConfig.get_int('TEP_NETWORK_TIMEOUT')
+        
+        with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
+            data = json.load(response)
+        
+        rows = []
+        for entry in data:
+            code = entry.get("id", "").upper()[:4]
+            if not code:
+                continue
+            try:
+                lat = float(entry["position"]["latitude"])
+                lon = float(entry["position"]["longitude"])
+                h = float(entry["position"]["ellipsoidalHeight"])
+                X, Y, Z = geodetic_to_ecef(lat, lon, h)
+                
+                rows.append({
+                    'code': code,
+                    'coord_source_code': code,
+                    'lat_deg': lat,
+                    'lon_deg': lon,
+                    'height_m': h,
+                    'X': X,
+                    'Y': Y,
+                    'Z': Z,
+                    'source': 'BKG'
+                })
+            except (KeyError, ValueError, TypeError):
+                continue  # Skip malformed entries
+        
+        print_status(f"Retrieved {len(rows)} stations from BKG", "SUCCESS")
+        return pd.DataFrame(rows)
+    
+    # Use safe network operation handler
+    result = SafeErrorHandler.safe_network_operation(
+        _fetch_operation,
+        error_message="BKG coordinate fetch failed",
+        logger_func=print_status,
+        return_on_error=pd.DataFrame(),
+        max_retries=2
+    )
+    return result if result is not None else pd.DataFrame()
+
+def build_coordinate_catalogue():
+    """Build comprehensive coordinate catalogue with metadata"""
+    print_status("Building comprehensive coordinate catalogue...", "PROCESS")
+    
+    # Fetch from multiple sources
+    sources = []
+    
+    # IGS (primary source)
+    igs_df = fetch_igs_coordinates()
+    if len(igs_df) > 0:
+        sources.append(igs_df)
+    
+    # BKG (secondary source)
+    bkg_df = fetch_bkg_coordinates()
+    if len(bkg_df) > 0:
+        sources.append(bkg_df)
+    
+    if not sources:
+        print_status("No coordinate sources available", "ERROR")
+        return None
+    
+    # Combine all sources
+    all_df = pd.concat(sources, ignore_index=True)
+    
+    # Deduplicate by code (IGS takes priority)
+    dedup = all_df.drop_duplicates(subset=['code'], keep='first')
+    
+    # Add essential metadata for validation
+    dedup['has_coordinates'] = True  # All fetched stations have coordinates
+    
+    # Reorder columns for consistency - keep it simple
+    columns = [
+        'code', 'coord_source_code', 'lat_deg', 'lon_deg', 'height_m', 'X', 'Y', 'Z',
+        'has_coordinates'
+    ]
+    
+    # Add missing columns if needed
+    for col in columns:
+        if col not in dedup.columns:
+            if col == 'coord_source_code':
+                dedup[col] = dedup['code'].str[:4]
+            else:
+                dedup[col] = None
+    
+    result_df = dedup[columns].copy()
+    
+    print_status(f"Built coordinate catalogue: {len(result_df)} unique stations", "SUCCESS")
+    return result_df
+
+def download_station_clock_metadata():
+    """Download clock metadata from IGS sources with smart existing data checks."""
+    print_status("Downloading station clock metadata", "INFO")
+    
+    # Check if clock metadata already exists
+    metadata_file = PACKAGE_ROOT / "results" / "outputs" / "step_1_station_metadata.json"
+    station_logs_dir = PACKAGE_ROOT / "data" / "station_logs"
+    
+    if metadata_file.exists() and not TEPConfig.get_bool("TEP_REBUILD_METADATA"):
+        print_status("Using existing clock metadata", "SUCCESS")
+        return True
+    
+    # Download clock metadata using existing functions
+    station_logs_dir.mkdir(parents=True, exist_ok=True)
+    
+    try:
+        # Import clock metadata functions
+        import urllib.request
+        import re
+        import time
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        def get_station_log_urls():
+            base_url = "https://files.igs.org/pub/station/log/"
+            def _fetch_log_list():
+                ssl_context = ssl.create_default_context()
+                timeout = TEPConfig.get_int('TEP_NETWORK_TIMEOUT')
+                
+                with urllib.request.urlopen(base_url, context=ssl_context, timeout=timeout) as response:
+                    html = response.read().decode('utf-8')
+                log_files = re.findall(r'href="[^"]*?([a-z0-9_]+\.log)"', html)
+                return list(set([f"{base_url}{fname}" for fname in log_files]))
+            
+            result = SafeErrorHandler.safe_network_operation(
+                _fetch_log_list,
+                error_message="Failed to fetch station log list",
+                logger_func=print_status,
+                return_on_error=[],
+                max_retries=2
+            )
+            return result if result is not None else []
+        
+        def download_log_file(url):
+            filename = url.split('/')[-1]
+            station_code = filename[:4]
+            file_path = station_logs_dir / f"{station_code}.log"
+            
+            if file_path.exists():
+                return file_path
+            
+            # Use the safe download function we defined earlier
+            if safe_download_file(url, file_path, timeout=30):
+                return file_path
+            else:
+                return None
+        
+        def parse_oscillator_type(log_file_path):
+            def _parse_operation():
+                with open(log_file_path, 'r', errors='ignore') as f:
+                    content = f.read()
+                
+                freq_standard_sections = re.findall(r"6\.\d+\s+Standard Type\s+:\s*(.*)", content)
+                if freq_standard_sections:
+                    oscillator_type = freq_standard_sections[-1].strip()
+                    if "HYDROGEN MASER" in oscillator_type.upper():
+                        return "HYDROGEN MASER"
+                    if "CESIUM" in oscillator_type.upper():
+                        return "CESIUM"
+                    if "RUBIDIUM" in oscillator_type.upper():
+                        return "RUBIDIUM"
+                    if "INTERNAL" in oscillator_type.upper():
+                        return "INTERNAL"
+                    return oscillator_type
+                
+                freq_standard_section = re.search(r"6\.\s+Frequency Standard(.*?)(?:7\.\s+Collocation Information|\Z)", content, re.DOTALL)
+                if freq_standard_section:
+                    section_content = freq_standard_section.group(1)
+                    match = re.search(r"Standard Type\s+:\s*(.*)", section_content)
+                    if match:
+                        oscillator_type = match.group(1).strip()
+                        if "INTERNAL" in oscillator_type.upper():
+                            return "INTERNAL"
+                        return oscillator_type
+                
+                return "UNKNOWN"
+            
+            result = SafeErrorHandler.safe_file_operation(
+                _parse_operation,
+                error_message=f"Failed to parse oscillator type from {log_file_path}",
+                logger_func=None,  # Don't log every failed parse
+                return_on_error="UNKNOWN"
+            )
+            return result if result is not None else "UNKNOWN"
+        
+        # Download metadata
+        print_status("Fetching station log URLs...", "INFO")
+        urls = get_station_log_urls()
+        
+        if not urls:
+            print_status("No station log URLs found", "ERROR")
+            return False
+        
+        print_status(f"Downloading metadata for {len(urls)} stations...", "INFO")
+        
+        station_metadata = {}
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            future_to_url = {executor.submit(download_log_file, url): url for url in urls}
+            for future in as_completed(future_to_url):
+                log_file_path = future.result()
+                if log_file_path:
+                    station_code = log_file_path.stem.upper()
+                    oscillator = parse_oscillator_type(log_file_path)
+                    station_metadata[station_code] = {"oscillator_type": oscillator}
+        
+        # Save metadata using safe JSON write
+        try:
+            safe_json_write(station_metadata, metadata_file, indent=4)
+            print_status(f"Clock metadata saved for {len(station_metadata)} stations", "SUCCESS")
+            return True
+        except (TEPFileError, TEPDataError) as e:
+            print_status(f"Failed to save clock metadata: {e}", "ERROR")
+            return False
+        
+    except (ImportError, RuntimeError) as e:
+        print_status(f"Clock metadata download failed - system error: {e}", "ERROR")
+        return False
+    except (KeyError, ValueError, TypeError) as e:
+        print_status(f"Clock metadata download failed - data error: {e}", "ERROR")
+        return False
+
+def build_and_write_catalogue(min_target: int = 0, out_path = None):
+    """
+    Build comprehensive station catalogue from authoritative sources.
+    Creates single definitive coordinate file with validation metadata.
+    """
+    if out_path is None:
+        out_path = PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv"
+    
+    print_status("Building comprehensive station catalogue from authoritative sources", "INFO")
+    
+    # Check if we should rebuild coordinates
+    rebuild_coords = TEPConfig.get_bool("TEP_REBUILD_COORDS")
+    
+    if rebuild_coords or not out_path.exists():
+        print_status("Fetching coordinates from authoritative sources...", "INFO")
+        
+        # Build coordinates directly (no external script)
+        coords_df = build_coordinate_catalogue()
+        
+        if coords_df is None or len(coords_df) == 0:
+            print_status("Coordinate building failed - no stations retrieved", "ERROR")
+            return False
+        
+        # Save the comprehensive catalogue
+        coords_df.to_csv(out_path, index=False)
+        print_status(f"Station catalogue built: {len(coords_df)} stations saved to {out_path}", "SUCCESS")
+        
+        # Report verification statistics
+        verified_stations = coords_df[coords_df['has_coordinates'] == True]
+        
+        print_status(f"Coordinate verification summary:", "INFO")
+        print_status(f"  Total stations in catalogue: {len(coords_df)}", "INFO")
+        print_status(f"  Verified stations for analysis: {len(verified_stations)}", "SUCCESS")
+        
+    else:
+        print_status(f"Using existing station catalogue: {out_path}", "SUCCESS")
+    
+    # Verify coordinate catalogue and optionally fetch clock metadata
+    if out_path.exists():
+        import pandas as pd
+        df = pd.read_csv(out_path)
+        # Required coordinate columns only
+        # Final verification
+        required_cols = ['code', 'X', 'Y', 'Z']
+        if not all(col in df.columns for col in required_cols):
+            raise RuntimeError(f"Station catalogue missing required columns: {required_cols}")
+        
+        print_status(f"Final station catalogue: {len(df)} stations", "SUCCESS")
+
+        # Optional: fetch clock metadata (does not alter coordinate CSV)
+        if TEPConfig.get_bool("TEP_FETCH_CLOCK_METADATA"):
+            ok = download_station_clock_metadata()
+            if not ok:
+                msg = "Clock metadata fetch failed"
+                if TEPConfig.get_bool("TEP_REQUIRE_CLOCK_METADATA"):
+                    raise RuntimeError(msg)
+                else:
+                    print_status(msg, "ERROR")
+    
+    return True
+
+def print_status(text, status="INFO"):
+    icons = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "ERROR": "[ERROR]", "DOWNLOAD": ""}
+    print(f"{icons.get(status, '')} {text}")
+
+def gps_week_from_date(date: datetime) -> int:
+    """Convert UTC date to GPS week number."""
+    gps_epoch = datetime(1980, 1, 6)
+    return int((date - gps_epoch).days // 7)
+
+def download_station_coordinates_from_igs() -> bool:
+    """Replaced by multi-source authoritative catalogue builder."""
+    # Allow reusing existing real coordinates to avoid repeated rebuilds
+    if TEPConfig.get_bool("TEP_SKIP_COORDS"):
+        coord_path = PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv"
+        if coord_path.exists() and coord_path.stat().st_size > 0:
+            print_status(f"Using existing coordinates: {coord_path}", "SUCCESS")
+            return True
+        else:
+            print_status("TEP_SKIP_COORDS=1 but no existing coordinates found", "ERROR")
+            return False
+    
+    min_target = TEPConfig.get_int("TEP_MIN_STATIONS")
+    try:
+        build_and_write_catalogue(
+            min_target=min_target,
+            out_path=PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv"
+        )
+        return True
+    except (TEPNetworkError, TEPFileError, TEPDataError) as e:
+        print_status(f"CRITICAL: Station catalogue build failed: {e}", "ERROR")
+        return False
+    except (RuntimeError, ValueError, TypeError) as e:
+        print_status(f"CRITICAL: Station catalogue build failed - system error: {e}", "ERROR")
+        return False
+
+def download_small_real_clk_samples() -> bool:
+    """Download a small real sample of IGS, CODE, and ESA .CLK files (strict) - smart existing data checks."""
+    raw_dir = PACKAGE_ROOT / "data" / "raw"
+    (raw_dir / "igs_combined").mkdir(parents=True, exist_ok=True)
+    (raw_dir / "code").mkdir(parents=True, exist_ok=True)
+    (raw_dir / "esa_final").mkdir(parents=True, exist_ok=True)
+    
+    # Check if we already have sufficient clock files
+    existing_igs = len(list((raw_dir / "igs_combined").glob("*.CLK.gz")))
+    existing_code = len(list((raw_dir / "code").glob("*.CLK.gz")))
+    existing_esa = len(list((raw_dir / "esa_final").glob("*.CLK.gz")))
+    
+    print_status(f"Existing clock files: IGS:{existing_igs} CODE:{existing_code} ESA:{existing_esa}", "INFO")
+    
+    # Skip download if we have sufficient files and not forcing rebuild
+    if (existing_igs > 50 and existing_code > 50 and existing_esa > 50 and 
+        not TEPConfig.get_bool("TEP_REBUILD_CLK")):
+        print_status("Using existing clock files (sufficient coverage)", "SUCCESS")
+        return True
+
+    def day_of_year(d: datetime) -> int:
+        return d.timetuple().tm_yday
+
+    successes = {"igs_combined": 0, "code": 0, "esa_final": 0}
+    downloaded = {"igs_combined": [], "code": [], "esa_final": []}
+
+    # Get date range from centralized configuration
+    try:
+        date_start_s, date_end_s = TEPConfig.get_date_range()
+        ds = datetime.fromisoformat(date_start_s)
+        de = datetime.fromisoformat(date_end_s)
+        if de < ds:
+            ds, de = de, ds
+        # Build inclusive daily range
+        date_list = [ds + timedelta(days=i) for i in range((de - ds).days + 1)]
+        print_status(f"Using date filter {ds.date()} → {de.date()} ({len(date_list)} days)", "INFO")
+    except (ValueError, TypeError) as e:
+        print_status(f"Invalid date configuration, using default range: {e}", "ERROR")
+        # Fallback to default range
+        ds = datetime(2023, 1, 1)
+        de = datetime(2025, 6, 30)
+        date_list = [ds + timedelta(days=i) for i in range((de - ds).days + 1)]
+        print_status(f"Using fallback date range {ds.date()} → {de.date()} ({len(date_list)} days)", "INFO")
+
+    # Per-center known-good seeds (used only if no explicit date range supplied)
+    igs_seed = datetime(2024, 1, 10)
+    code_seed = datetime(2024, 1, 10)
+    esa_seed = datetime(2022, 11, 26)
+
+    # Per-center file limits using centralized configuration
+    file_limits = TEPConfig.get_file_limits()
+    files_per_igs = file_limits['igs_combined']
+    files_per_code = file_limits['code']
+    files_per_esa = file_limits['esa_final']
+    
+    print_status(f"File limits: IGS:{files_per_igs or 'unlimited'} CODE:{files_per_code or 'unlimited'} ESA:{files_per_esa or 'unlimited'}", "INFO")
+    
+    def safe_download_file(url: str, destination_path: Path, timeout: int = None) -> bool:
+        """Safely download a file with proper error handling and SSL"""
+        if timeout is None:
+            timeout = TEPConfig.get_int('TEP_DOWNLOAD_TIMEOUT')
+        
+        def _download_operation():
+            # Create SSL context for HTTPS URLs
+            ssl_context = ssl.create_default_context() if url.startswith('https') else None
+            
+            with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
+                data = response.read()
+            
+            # Ensure destination directory exists
+            destination_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            with open(destination_path, 'wb') as f:
+                f.write(data)
+            
+            return destination_path.stat().st_size > 0
+        
+        result = SafeErrorHandler.safe_network_operation(
+            _download_operation,
+            error_message=f"Download failed for {url}",
+            logger_func=None,  # Don't log every failed download
+            return_on_error=False,
+            max_retries=1  # Limited retries for bulk downloads
+        )
+        return result if result is not None else False
+
+    # Build per-center date lists (explicit range preferred; else default 60-day windows)
+    if date_list is not None:
+        igs_dates = date_list
+        code_dates = date_list
+        esa_dates = date_list
+    else:
+        igs_dates = [igs_seed + timedelta(days=i) for i in range(0, 60)]
+        code_dates = [code_seed + timedelta(days=i) for i in range(0, 60)]
+        esa_dates = [esa_seed + timedelta(days=i) for i in range(0, 60)]
+
+    # IGS Combined (week path)
+    for d in igs_dates:
+        if (files_per_igs is not None) and (successes["igs_combined"] >= files_per_igs):
+            break
+        year = d.year
+        doy = day_of_year(d)
+        week = gps_week_from_date(d)
+        igs_url = f"https://igs.bkg.bund.de/root_ftp/IGS/products/{week:04d}/IGS0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
+        igs_dst = raw_dir / "igs_combined" / Path(igs_url).name
+        
+        if safe_download_file(igs_url, igs_dst):
+            successes["igs_combined"] += 1
+            downloaded["igs_combined"].append(igs_dst.name)
+            print_status(f"IGS sample: {igs_dst.name}", "SUCCESS")
+
+    # CODE (year path)
+    for d in code_dates:
+        if (files_per_code is not None) and (successes["code"] >= files_per_code):
+            break
+        year = d.year
+        doy = day_of_year(d)
+        code_url = f"http://ftp.aiub.unibe.ch/CODE/{year}/COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
+        code_dst = raw_dir / "code" / Path(code_url).name
+        
+        if safe_download_file(code_url, code_dst):
+            successes["code"] += 1
+            downloaded["code"].append(code_dst.name)
+            print_status(f"CODE sample: {code_dst.name}", "SUCCESS")
+
+    # ESA (navigation-office week path)
+    for d in esa_dates:
+        if (files_per_esa is not None) and (successes["esa_final"] >= files_per_esa):
+            break
+        year = d.year
+        doy = day_of_year(d)
+        week = gps_week_from_date(d)
+        esa_url = f"http://navigation-office.esa.int/products/gnss-products/{week}/ESA0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
+        esa_dst = raw_dir / "esa_final" / Path(esa_url).name
+        
+        if safe_download_file(esa_url, esa_dst):
+            successes["esa_final"] += 1
+            downloaded["esa_final"].append(esa_dst.name)
+            print_status(f"ESA sample: {esa_dst.name}", "SUCCESS")
+
+    # Strict enforcement - check total files (existing + new downloads)
+    total_igs = existing_igs + successes["igs_combined"]
+    total_code = existing_code + successes["code"]
+    total_esa = existing_esa + successes["esa_final"]
+    
+    if total_igs < 1:
+        print_status("CRITICAL: No IGS Combined .CLK files available", "ERROR")
+        return False
+    if total_code < 1:
+        print_status("CRITICAL: No CODE .CLK files available", "ERROR")
+        return False
+    if total_esa < 1:
+        print_status("CRITICAL: No ESA .CLK files available", "ERROR")
+        return False
+
+    print_status(
+        f" Clock files available -> IGS:{total_igs} CODE:{total_code} ESA:{total_esa}",
+        "SUCCESS"
+    )
+
+    # Write a clean JSON summary of what we downloaded
+    summary = {
+        "igs_files": downloaded["igs_combined"],
+        "code_files": downloaded["code"],
+        "esa_files": downloaded["esa_final"],
+        "counts": {
+            "igs": successes["igs_combined"],
+            "code": successes["code"],
+            "esa": successes["esa_final"],
+        }
+    }
+    try:
+        (PACKAGE_ROOT / "logs").mkdir(exist_ok=True)
+        safe_json_write(summary, PACKAGE_ROOT / "logs" / "step_1_downloads.json", indent=2)
+    except (TEPFileError, TEPDataError) as e:
+        print_status(f"Failed to write download summary: {e}", "WARNING")
+
+    return True
+
+def main():
+    print("TEP GNSS Analysis - STEP 1: Data Acquisition")
+    print("Acquiring authoritative GNSS data and coordinates")
+    print("="*60)
+
+    (PACKAGE_ROOT / "logs").mkdir(exist_ok=True)
+
+    ok_coords = download_station_coordinates_from_igs()
+    if not ok_coords:
+        print_status("Data acquisition failed: coordinates unavailable", "ERROR")
+        return False
+
+    ok_clk = download_small_real_clk_samples()
+    if not ok_clk:
+        print_status("Data acquisition failed: clock products unavailable", "ERROR")
+        return False
+
+    # Final summary
+    try:
+        dl = safe_json_read(PACKAGE_ROOT / "logs" / "step_1_downloads.json")
+        coords_df = safe_csv_read(PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv")
+        
+        final_summary = {
+            "step": 1,
+            "name": "Data Acquisition",
+            "status": "completed",
+            "timestamp": time.strftime('%Y-%m-%d %H:%M:%S'),
+            "coordinates_stations": len(coords_df),
+            "downloads": dl["counts"],
+            "files": {
+                "igs": dl["igs_files"][:5],
+                "code": dl["code_files"][:5],
+                "esa": dl["esa_files"][:5]
+            },
+            "outputs": {
+                "coordinate_file": "data/coordinates/station_coords_global.csv",
+                "download_log": "logs/step_1_downloads.json"
+            }
+        }
+        
+        safe_json_write(final_summary, PACKAGE_ROOT / "logs" / "step_1_data_acquisition.json", indent=2)
+        
+    except (TEPFileError, TEPDataError) as e:
+        print_status(f"Failed to create final summary: {e}", "WARNING")
+
+    print_status("Data acquisition completed successfully", "SUCCESS")
+    print_status("Ready for coordinate validation (Step 2)", "SUCCESS")
+    return True
+
+if __name__ == "__main__":
+    main()

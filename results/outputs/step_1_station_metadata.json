@@ -1,0 +1,1589 @@
+{
+    "wuth": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sptu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "stpm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "scrz": {
+        "oscillator_type": "INTERNAL"
+    },
+    "matg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ous2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tnml": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "sutm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ac23": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hnus": {
+        "oscillator_type": "INTERNAL"
+    },
+    "spt0": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cpvg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "btng": {
+        "oscillator_type": "INTERNAL"
+    },
+    "qiki": {
+        "oscillator_type": "INTERNAL"
+    },
+    "artu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mtv1": {
+        "oscillator_type": "CESIUM"
+    },
+    "baie": {
+        "oscillator_type": "INTERNAL"
+    },
+    "metg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "rio1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tlsg": {
+        "oscillator_type": "CESIUM"
+    },
+    "uzhl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lpal": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ebre": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ptgg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yarr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kzn2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mgue": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "drdn": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "kmnm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "maui": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cusv": {
+        "oscillator_type": "INTERNAL"
+    },
+    "aspa": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nvsk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jpre": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ista": {
+        "oscillator_type": "INTERNAL"
+    },
+    "suth": {
+        "oscillator_type": "INTERNAL"
+    },
+    "twtf": {
+        "oscillator_type": "EXTERNAL STEERED H-MASER"
+    },
+    "tro1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mobk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cebr": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "morp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tidb": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "mate": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cote": {
+        "oscillator_type": "INTERNAL"
+    },
+    "braz": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hofn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "thti": {
+        "oscillator_type": "INTERNAL"
+    },
+    "samo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "shao": {
+        "oscillator_type": "INTERNAL"
+    },
+    "eur2": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "yibl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lpgs": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p779": {
+        "oscillator_type": "INTERNAL"
+    },
+    "eil4": {
+        "oscillator_type": "CESIUM"
+    },
+    "raeg": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "nnor": {
+        "oscillator_type": "EXTERNAL SLAVED CRYSTAL"
+    },
+    "rdsd": {
+        "oscillator_type": "INTERNAL"
+    },
+    "irkm": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cksv": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tow2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yssk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "chpg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wind": {
+        "oscillator_type": "INTERNAL"
+    },
+    "madr": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "will": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gmsd": {
+        "oscillator_type": "CESIUM"
+    },
+    "ptag": {
+        "oscillator_type": "INTERNAL"
+    },
+    "torp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yakt": {
+        "oscillator_type": "CESIUM"
+    },
+    "sin1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "stj3": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "uclp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "flrs": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sask": {
+        "oscillator_type": "INTERNAL"
+    },
+    "grac": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bik0": {
+        "oscillator_type": "INTERNAL"
+    },
+    "oafa": {
+        "oscillator_type": "INTERNAL"
+    },
+    "impz": {
+        "oscillator_type": "INTERNAL"
+    },
+    "enao": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mrc1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "dav1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pol2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cuib": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mssa": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cro1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "ftna": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gamg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "laut": {
+        "oscillator_type": "INTERNAL"
+    },
+    "chti": {
+        "oscillator_type": "INTERNAL"
+    },
+    "solo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sbok": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nabg": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "she2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "whc1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "toay": {
+        "oscillator_type": "INTERNAL"
+    },
+    "seus": {
+        "oscillator_type": "INTERNAL"
+    },
+    "qui4": {
+        "oscillator_type": "CESIUM"
+    },
+    "hers": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "abpo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "entb": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wtzz": {
+        "oscillator_type": "EXTERNAL H-MASER EFOS 18"
+    },
+    "hob2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "mac1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pbr4": {
+        "oscillator_type": "CESIUM"
+    },
+    "roag": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "onsa": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cuut": {
+        "oscillator_type": "INTERNAL"
+    },
+    "meli": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cmp9": {
+        "oscillator_type": "INTERNAL"
+    },
+    "fprt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "daej": {
+        "oscillator_type": "CESIUM"
+    },
+    "auck": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mar7": {
+        "oscillator_type": "INTERNAL"
+    },
+    "reyk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sgpo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "warn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "suwn": {
+        "oscillator_type": "CESIUM"
+    },
+    "coco": {
+        "oscillator_type": "INTERNAL"
+    },
+    "naus": {
+        "oscillator_type": "INTERNAL"
+    },
+    "rock": {
+        "oscillator_type": "INTERNAL"
+    },
+    "usn9": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "darw": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sthl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "salu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p802": {
+        "oscillator_type": "INTERNAL"
+    },
+    "teja": {
+        "oscillator_type": "INTERNAL"
+    },
+    "escu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kitg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lhaz": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bhr3": {
+        "oscillator_type": "CESIUM"
+    },
+    "mars": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tehn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "qaq1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bjnm": {
+        "oscillator_type": "HYDROGEN MASER"
+    },
+    "medi": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "wuh2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cit1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "m0se": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "orid": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sfdm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sydn": {
+        "oscillator_type": "CESIUM"
+    },
+    "guat": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nyal": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bor1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "palm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bogt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "blyt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wsrt": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "alrt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pppc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "op71": {
+        "oscillator_type": "EXTERNAL UTC(OP)"
+    },
+    "ptbb": {
+        "oscillator_type": "EXTERNAL ACTIVE H-MASER"
+    },
+    "svtl": {
+        "oscillator_type": "EXTERNAL H-MASER CH1-80"
+    },
+    "wtza": {
+        "oscillator_type": "CESIUM"
+    },
+    "lck4": {
+        "oscillator_type": "HYDROGEN MASER"
+    },
+    "wdc6": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "vndp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "drao": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "frdn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tsk2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "fair": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pie1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "albh": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "bill": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gvdg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ganp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "acso": {
+        "oscillator_type": "INTERNAL"
+    },
+    "func": {
+        "oscillator_type": "INTERNAL"
+    },
+    "humg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kiri": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pre4": {
+        "oscillator_type": "CESIUM"
+    },
+    "coyq": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kuj2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "osn3": {
+        "oscillator_type": "CESIUM"
+    },
+    "nium": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sant": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kour": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "zim3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bhpl": {
+        "oscillator_type": "CESIUM"
+    },
+    "hnlc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ncku": {
+        "oscillator_type": "INTERNAL"
+    },
+    "poal": {
+        "oscillator_type": "INTERNAL"
+    },
+    "met3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kokv": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "ykro": {
+        "oscillator_type": "INTERNAL"
+    },
+    "saby": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mikl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "str2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "alic": {
+        "oscillator_type": "INTERNAL"
+    },
+    "usn8": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "pin1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tuva": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sejn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mad2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "antc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nkay": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dae2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tixi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "riga": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mal2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "abmf": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jplm": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "eil3": {
+        "oscillator_type": "CESIUM"
+    },
+    "cedu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "badg": {
+        "oscillator_type": "EXTERNAL H-MASER CH1-80"
+    },
+    "mizu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kiru": {
+        "oscillator_type": "CESIUM"
+    },
+    "chum": {
+        "oscillator_type": "INTERNAL"
+    },
+    "reun": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pets": {
+        "oscillator_type": "INTERNAL"
+    },
+    "guug": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ufpr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bjfs": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "lae1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ieng": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "ajac": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gop7": {
+        "oscillator_type": "CESIUM"
+    },
+    "rgdg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tong": {
+        "oscillator_type": "INTERNAL"
+    },
+    "boav": {
+        "oscillator_type": "INTERNAL"
+    },
+    "izmi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ramo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "parc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bamf": {
+        "oscillator_type": "INTERNAL"
+    },
+    "barh": {
+        "oscillator_type": "INTERNAL"
+    },
+    "isba": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cmum": {
+        "oscillator_type": "INTERNAL"
+    },
+    "urum": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nain": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kir8": {
+        "oscillator_type": "INTERNAL"
+    },
+    "areg": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "pre3": {
+        "oscillator_type": "CESIUM"
+    },
+    "yebe": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cyne": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tit2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "licc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "qui3": {
+        "oscillator_type": "CESIUM"
+    },
+    "aruc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wroc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kos1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ntus": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tlse": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dear": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lbch": {
+        "oscillator_type": "INTERNAL"
+    },
+    "adis": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gop6": {
+        "oscillator_type": "CESIUM"
+    },
+    "ank2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mtv2": {
+        "oscillator_type": "CESIUM"
+    },
+    "zamb": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sod3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ssia": {
+        "oscillator_type": "INTERNAL"
+    },
+    "iqal": {
+        "oscillator_type": "INTERNAL"
+    },
+    "faa1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "smst": {
+        "oscillator_type": "EXTERNAL NONE"
+    },
+    "nico": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bucu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "unb3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dhlg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mall": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ascg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tcms": {
+        "oscillator_type": "INTERNAL"
+    },
+    "reso": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wgtn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wark": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "scor": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "tana": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hlfx": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "dgar": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bake": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hkws": {
+        "oscillator_type": "INTERNAL"
+    },
+    "koug": {
+        "oscillator_type": "CESIUM"
+    },
+    "dyng": {
+        "oscillator_type": "INTERNAL"
+    },
+    "not1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "stfu": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "tid1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "mkea": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "rabt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "uldi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hksl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "unbj": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jfng": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kit3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sulp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hert": {
+        "oscillator_type": "INTERNAL"
+    },
+    "chan": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "gods": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "bjco": {
+        "oscillator_type": "INTERNAL"
+    },
+    "rbay": {
+        "oscillator_type": "INTERNAL"
+    },
+    "vis0": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mat1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nist": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "geno": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lama": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mbar": {
+        "oscillator_type": "INTERNAL"
+    },
+    "spk1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tkbg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gol2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "karr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "krs1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pohn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pdel": {
+        "oscillator_type": "INTERNAL"
+    },
+    "voim": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cags": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ineg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hal1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "opmt": {
+        "oscillator_type": "EXTERNAL UTC(OP)"
+    },
+    "ucal": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mtka": {
+        "oscillator_type": "INTERNAL"
+    },
+    "osn4": {
+        "oscillator_type": "CESIUM"
+    },
+    "aira": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hrao": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "pngm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pimo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "unbd": {
+        "oscillator_type": "INTERNAL"
+    },
+    "iitk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "djig": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nrmd": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gold": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "nya1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "crfp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kir0": {
+        "oscillator_type": "INTERNAL"
+    },
+    "leij": {
+        "oscillator_type": "INTERNAL"
+    },
+    "guam": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ccj2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "srti": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nlib": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "mcm4": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gcgo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lroc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "oak1": {
+        "oscillator_type": "CESIUM"
+    },
+    "kouc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bshm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "brmg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nklg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "holm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "naur": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dltv": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mrl1": {
+        "oscillator_type": "CESIUM"
+    },
+    "gode": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "antf": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mdo1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "baut": {
+        "oscillator_type": "INTERNAL"
+    },
+    "whit": {
+        "oscillator_type": "INTERNAL"
+    },
+    "uscl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "godn": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "dubo": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "arht": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cibg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ons1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "chof": {
+        "oscillator_type": "INTERNAL"
+    },
+    "graz": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yons": {
+        "oscillator_type": "INTERNAL"
+    },
+    "usn7": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "redu": {
+        "oscillator_type": "CESIUM"
+    },
+    "mana": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sey2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cord": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dumg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "chpi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "kokb": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "tskb": {
+        "oscillator_type": "CESIUM"
+    },
+    "hamd": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mers": {
+        "oscillator_type": "INTERNAL"
+    },
+    "unsa": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gope": {
+        "oscillator_type": "CESIUM"
+    },
+    "ksu1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "monp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mdvj": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "mfkg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "park": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "yel2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cpnm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "eprt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "maju": {
+        "oscillator_type": "INTERNAL"
+    },
+    "novm": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "wab2": {
+        "oscillator_type": "EXTERNAL UTC(CH) MASTER CLOCK"
+    },
+    "iqqe": {
+        "oscillator_type": "INTERNAL"
+    },
+    "scip": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hrag": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "uclu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ishi": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "ptvl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hnpt": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mobj": {
+        "oscillator_type": "INTERNAL"
+    },
+    "arua": {
+        "oscillator_type": "INTERNAL"
+    },
+    "topl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "glsv": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dubi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "brft": {
+        "oscillator_type": "INTERNAL"
+    },
+    "casc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cztg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cas1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mas1": {
+        "oscillator_type": "CESIUM"
+    },
+    "chur": {
+        "oscillator_type": "INTERNAL"
+    },
+    "cace": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ohi2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "stk2": {
+        "oscillator_type": "CESIUM"
+    },
+    "invk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mro1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "chwk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tabl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bogi": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "aggo": {
+        "oscillator_type": "CESIUM"
+    },
+    "vacs": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mag0": {
+        "oscillator_type": "INTERNAL"
+    },
+    "brst": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yar3": {
+        "oscillator_type": "INTERNAL"
+    },
+    "xmis": {
+        "oscillator_type": "INTERNAL"
+    },
+    "klsq": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bhr4": {
+        "oscillator_type": "CESIUM"
+    },
+    "kerg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pots": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mar6": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tubi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bneu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "gras": {
+        "oscillator_type": "INTERNAL"
+    },
+    "maw1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nrmg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sch2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "joz2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sofi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "str1": {
+        "oscillator_type": "CESIUM"
+    },
+    "glps": {
+        "oscillator_type": "INTERNAL"
+    },
+    "obe4": {
+        "oscillator_type": "INTERNAL"
+    },
+    "savo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "zeck": {
+        "oscillator_type": "EXTERNAL H-MASER VCH-1003M"
+    },
+    "dund": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wtz3": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cggn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "brux": {
+        "oscillator_type": "EXTERNAL IMASER 3000"
+    },
+    "cut0": {
+        "oscillator_type": "INTERNAL"
+    },
+    "iisc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "khar": {
+        "oscillator_type": "INTERNAL"
+    },
+    "oak2": {
+        "oscillator_type": "CESIUM"
+    },
+    "stjo": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "sctb": {
+        "oscillator_type": "INTERNAL"
+    },
+    "widc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "dlf1": {
+        "oscillator_type": "CESIUM"
+    },
+    "owmg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "acrg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "polv": {
+        "oscillator_type": "INTERNAL"
+    },
+    "algo": {
+        "oscillator_type": "INTERNAL"
+    },
+    "areq": {
+        "oscillator_type": "EXTERNAL QUARTZ"
+    },
+    "thtg": {
+        "oscillator_type": "CESIUM"
+    },
+    "dakr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pove": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sfer": {
+        "oscillator_type": "CESIUM"
+    },
+    "alac": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jdpr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "usp1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mobs": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bele": {
+        "oscillator_type": "INTERNAL"
+    },
+    "msgr": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wtzr": {
+        "oscillator_type": "EXTERNAL H-MASER EFOS 18"
+    },
+    "rio2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "vald": {
+        "oscillator_type": "INTERNAL"
+    },
+    "penc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "picl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mchl": {
+        "oscillator_type": "INTERNAL"
+    },
+    "trak": {
+        "oscillator_type": "INTERNAL"
+    },
+    "flin": {
+        "oscillator_type": "INTERNAL"
+    },
+    "lmmf": {
+        "oscillator_type": "INTERNAL"
+    },
+    "irkj": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "kat1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "holp": {
+        "oscillator_type": "INTERNAL"
+    },
+    "hyde": {
+        "oscillator_type": "INTERNAL"
+    },
+    "unbn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sni1": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p043": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ohi3": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "cant": {
+        "oscillator_type": "INTERNAL"
+    },
+    "scub": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tash": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "pgen": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nya2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "moiu": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mrl2": {
+        "oscillator_type": "CESIUM"
+    },
+    "nrc1": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "shlg": {
+        "oscillator_type": "CS 5071A"
+    },
+    "yell": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p053": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jog2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "joze": {
+        "oscillator_type": "INTERNAL"
+    },
+    "jctw": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p051": {
+        "oscillator_type": "INTERNAL"
+    },
+    "pert": {
+        "oscillator_type": "INTERNAL"
+    },
+    "seyg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "zim2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "vill": {
+        "oscillator_type": "CESIUM"
+    },
+    "wuhn": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "ac24": {
+        "oscillator_type": "INTERNAL"
+    },
+    "quin": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nril": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wlsn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "thu2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "nano": {
+        "oscillator_type": "INTERNAL"
+    },
+    "syog": {
+        "oscillator_type": "CESIUM"
+    },
+    "wes2": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "bako": {
+        "oscillator_type": "EXTERNAL"
+    },
+    "mcil": {
+        "oscillator_type": "RUBIDIUM"
+    },
+    "prds": {
+        "oscillator_type": "INTERNAL"
+    },
+    "riop": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bzr2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "coso": {
+        "oscillator_type": "INTERNAL"
+    },
+    "drag": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mobn": {
+        "oscillator_type": "INTERNAL"
+    },
+    "wdc5": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "zimm": {
+        "oscillator_type": "INTERNAL"
+    },
+    "harb": {
+        "oscillator_type": "CESIUM"
+    },
+    "ural": {
+        "oscillator_type": "INTERNAL"
+    },
+    "mqzg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "sgoc": {
+        "oscillator_type": "INTERNAL"
+    },
+    "roth": {
+        "oscillator_type": "INTERNAL"
+    },
+    "yar2": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ispa": {
+        "oscillator_type": "INTERNAL"
+    },
+    "tdou": {
+        "oscillator_type": "INTERNAL"
+    },
+    "utqi": {
+        "oscillator_type": "INTERNAL"
+    },
+    "usud": {
+        "oscillator_type": "CESIUM"
+    },
+    "ckis": {
+        "oscillator_type": "INTERNAL"
+    },
+    "bnoa": {
+        "oscillator_type": "INTERNAL"
+    },
+    "brew": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "gamb": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ulab": {
+        "oscillator_type": "INTERNAL"
+    },
+    "amc4": {
+        "oscillator_type": "EXTERNAL H-MASER"
+    },
+    "falk": {
+        "oscillator_type": "INTERNAL"
+    },
+    "krgg": {
+        "oscillator_type": "INTERNAL"
+    },
+    "holb": {
+        "oscillator_type": "INTERNAL"
+    },
+    "p389": {
+        "oscillator_type": "INTERNAL"
+    },
+    "ffmj": {
+        "oscillator_type": "INTERNAL"
+    }
+}

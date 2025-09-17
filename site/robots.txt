@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://matthewsmawfield.github.io/TEP-GNSS/sitemap.xml
+
+# Allow all search engines to crawl the site
+# This is a scientific research paper that should be indexed

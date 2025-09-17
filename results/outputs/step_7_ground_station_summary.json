@@ -1,0 +1,29 @@
+{
+  "analysis_timestamp": "2025-09-16T12:12:36.634264",
+  "analysis_type": "Ground Station TEP Analysis",
+  "ground_station_tests": {
+    "elevation_dependence": {},
+    "frequency_universality": {},
+    "station_density_effects": {},
+    "circular_statistics": {},
+    "model_comparison": {},
+    "azimuth_permutation_test": {
+      "test_type": "azimuth_permutation",
+      "observed_anisotropy_ratio": 1.8399571655822553,
+      "p_value": 0.0,
+      "n_permutations": 1000,
+      "interpretation": "Anisotropy is statistically significant"
+    }
+  },
+  "key_insights": {
+    "data_type": "Ground station atomic clock correlations",
+    "advantage": "Fixed positions, altitude variations, global distribution",
+    "tep_applicability": "Direct test of gravitational field coupling to atomic clocks",
+    "screening_effects": "Elevation-dependent screening testable"
+  },
+  "implementation_status": {
+    "frameworks_ready": true,
+    "data_requirements": "Station coordinates with elevations, pair-level data",
+    "next_steps": "Implement coordinate mapping and pair-level filtering"
+  }
+}

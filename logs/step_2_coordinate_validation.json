@@ -1,0 +1,53 @@
+{
+  "step": 2,
+  "name": "Process Station Coordinates & Validation",
+  "completion_time": "2025-09-16T22:36:39.182431",
+  "status": "completed",
+  "outputs": {
+    "coordinate_file": "data/coordinates/station_coords_global.csv",
+    "n_stations_total": 766,
+    "n_stations_verified": 381,
+    "coordinate_quality": "comprehensive_verified",
+    "by_analysis_center": {
+      "igs_combined": {
+        "unique_9char_ids": 313,
+        "unique_4char_sites": 313,
+        "sites_with_coords": 313,
+        "missing_coords": [],
+        "missing_coords_count": 0
+      },
+      "code": {
+        "unique_9char_ids": 368,
+        "unique_4char_sites": 368,
+        "sites_with_coords": 368,
+        "missing_coords": [],
+        "missing_coords_count": 0
+      },
+      "esa_final": {
+        "unique_9char_ids": 272,
+        "unique_4char_sites": 272,
+        "sites_with_coords": 272,
+        "missing_coords": [],
+        "missing_coords_count": 0
+      }
+    }
+  },
+  "validation": {
+    "method": "comprehensive_audit_with_authoritative_sources",
+    "excluded_stations": 31,
+    "exclusion_reason": "missing_coordinates_in_authoritative_databases",
+    "sources_checked": [
+      "IGS",
+      "BKG",
+      "EPN",
+      "EarthScope"
+    ],
+    "spatial_verification": "all_variants_co_located_0m_separation"
+  },
+  "pipeline_consistency": {
+    "definitive_station_count": 381,
+    "use_4char_sites": true,
+    "reason": "multiple_9char_variants_perfectly_co_located"
+  },
+  "next_step": "python scripts/steps/step_4_tep_correlation_analysis.py"
+}

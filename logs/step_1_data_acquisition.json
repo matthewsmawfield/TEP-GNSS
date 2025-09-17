@@ -1,0 +1,33 @@
+{
+  "step": 1,
+  "status": "completed",
+  "coordinates_stations": 766,
+  "downloads": {
+    "igs": 965,
+    "code": 967,
+    "esa": 967
+  },
+  "files": {
+    "igs": [
+      "IGS0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
+      "IGS0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
+      "IGS0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
+      "IGS0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
+      "IGS0OPSFIN_20223640000_01D_30S_CLK.CLK.gz"
+    ],
+    "code": [
+      "COD0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
+      "COD0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
+      "COD0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
+      "COD0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
+      "COD0OPSFIN_20223640000_01D_30S_CLK.CLK.gz"
+    ],
+    "esa": [
+      "ESA0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
+      "ESA0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
+      "ESA0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
+      "ESA0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
+      "ESA0OPSFIN_20223640000_01D_30S_CLK.CLK.gz"
+    ]
+  }
+}
