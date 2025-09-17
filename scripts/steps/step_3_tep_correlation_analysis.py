@@ -908,8 +908,8 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
                 code1 = station1[:4] if len(station1) > 4 else station1
                 code2 = station2[:4] if len(station2) > 4 else station2
                 
-                s1_matches = coords_df[coords_df['code'] == code1]
-                s2_matches = coords_df[coords_df['code'] == code2]
+                s1_matches = coords_df[coords_df['coord_source_code'] == code1]
+                s2_matches = coords_df[coords_df['coord_source_code'] == code2]
                 
                 if len(s1_matches) > 0 and len(s2_matches) > 0:
                     s1_info = s1_matches.iloc[0]
@@ -1006,10 +1006,31 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         if len(frequencies) < 2:
             return np.nan, np.nan
         
-        # Extract plateau at first non-DC frequency bin
-        complex_plateau = cross_psd[1]  # Complex cross-PSD
-        plateau_value = abs(complex_plateau)  # Magnitude
-        plateau_phase = np.angle(complex_plateau)  # Phase (critical for TEP!)
+        # Optional band-limited phase averaging
+        use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '0') == '1'
+        if use_phase_band:
+            # Select frequency band and compute representative phase from band-averaged coherency
+            band_mask = (frequencies > 0) & (frequencies >= f1) & (frequencies <= f2)
+            if not np.any(band_mask):
+                return np.nan, np.nan
+            band_csd = cross_psd[band_mask]
+            
+            # Correct approach: magnitude-weighted phase average
+            magnitudes = np.abs(band_csd)
+            if np.sum(magnitudes) == 0:
+                return np.nan, np.nan
+            phases = np.angle(band_csd)
+            
+            # Weight phases by their magnitudes to get representative phase
+            weighted_phase = np.average(phases, weights=magnitudes)
+            avg_magnitude = np.mean(magnitudes)  # Representative magnitude
+            
+            return float(avg_magnitude), float(weighted_phase)
+        
+        # Default: Extract phase at first non-DC frequency bin
+        complex_plateau = cross_psd[1]
+        plateau_value = abs(complex_plateau)
+        plateau_phase = np.angle(complex_plateau)
         
         return float(plateau_value), float(plateau_phase)
 
@@ -1134,8 +1155,12 @@ def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.Data
     
     try:
         # Handle different coordinate dataframe formats
-        if 'code' in coords_df.columns:
-            # If 'code' is a column, filter by it
+        if 'coord_source_code' in coords_df.columns:
+            # Use 4-character source codes for matching
+            coord1 = coords_df[coords_df['coord_source_code'] == code1].iloc[0]
+            coord2 = coords_df[coords_df['coord_source_code'] == code2].iloc[0]
+        elif 'code' in coords_df.columns:
+            # Fallback to full code column
             coord1 = coords_df[coords_df['code'] == code1].iloc[0]
             coord2 = coords_df[coords_df['code'] == code2].iloc[0]
         else:
@@ -1656,8 +1681,8 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                 'correlation_length_assessment': 'TEP-consistent' if 1000 < lambda_km < 10000 else 'Outside TEP range',
                 'signal_strength': 'Strong' if r_squared > 0.5 else 'Moderate' if r_squared > 0.3 else 'Weak'
             },
-            'loso_analysis': loso_results,
-            'lodo_analysis': lodo_results
+            'loso_analysis': None,  # Moved to Step 5
+            'lodo_analysis': None   # Moved to Step 5
         }
         
         print_status("PHASE-COHERENT FIT RESULTS:", "SUCCESS")
