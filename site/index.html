@@ -99,13 +99,13 @@
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://polyfill.io" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://www.google-analytics.com">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     
     <!-- DNS prefetch for performance -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://polyfill.io">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TGNEGZ67NX"></script>
@@ -230,7 +230,7 @@
     </script>
     
     <!-- MathJax for mathematical formulas -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/core-js-bundle@3/minified.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         MathJax = {
@@ -722,22 +722,22 @@
     </div>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="public/figures/gnss_stations_three_globes.png" alt="Global distribution of GNSS stations shown on three globe perspectives" style="max-width:100%; height:auto;" loading="lazy">
+        <img src="figures/gnss_stations_three_globes.png" alt="Global distribution of GNSS stations shown on three globe perspectives" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">Figure 1a. Global GNSS Station Network: Three-globe perspective showing worldwide distribution of 529 ground stations across all continents, enabling detection of continental-scale correlation patterns.</figcaption>
     </figure>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="public/figures/gnss_stations_map.png" alt="Global map showing GNSS station distribution" style="max-width:100%; height:auto;" loading="lazy">
+        <img src="figures/gnss_stations_map.png" alt="Global map showing GNSS station distribution" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">Figure 1b. GNSS Station Coverage Map: Comprehensive global distribution showing station density and geographic coverage essential for intercontinental correlation analysis.</figcaption>
     </figure>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="public/figures/gnss_three_globes_connections_combined.png" alt="GNSS station correlations across all analysis centers combined, showing connection patterns" style="max-width:100%; height:auto;" loading="lazy">
+        <img src="figures/gnss_three_globes_connections_combined.png" alt="GNSS station correlations across all analysis centers combined, showing connection patterns" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">Figure 1c. GNSS Station Correlation Network: Combined analysis across all three centers (CODE, IGS, ESA) showing high-coherence connections (>0.8) colored by correlation strength. Phase-based coloring reveals the spatial structure of temporal correlations, with 6,279 total connections demonstrating global coherence patterns essential for TEP detection.</figcaption>
     </figure>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="public/figures/distance_distribution.png" alt="Distribution of station pair distances" style="max-width:100%; height:auto;" loading="lazy">
+        <img src="figures/distance_distribution.png" alt="Distribution of station pair distances" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">Figure 2. Station Pair Distance Distribution: Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.</figcaption>
     </figure>
 
@@ -811,7 +811,7 @@
     <p>Our analysis reveals robust TEP signatures validated through rigorous multi-center comparison, permutation testing, and signal-versus-null analysis. This comprehensive approach addresses potential systematic effects while demonstrating the physical reality of the observed correlations.</p>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="public/figures/figure_1_TEP_site_themed.png" alt="Complete redesigned three-panel figure showing TEP evidence with real manuscript data, proper confidence intervals, and Nature Physics standards." style="max-width:100%; height:auto;" loading="lazy">
+        <img src="figures/figure_1_TEP_site_themed.png" alt="Complete redesigned three-panel figure showing TEP evidence with real manuscript data, proper confidence intervals, and Nature Physics standards." style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">
             <b>Figure 3. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.</b> 
             <b>(a) Multi-center reproducibility:</b> Real manuscript data with 95% confidence intervals. λ values (3.40–3.53 Mm) within theoretical predictions for screened scalar fields (1–10 Mm). 
@@ -885,17 +885,17 @@
         
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0;">
             <figure style="text-align:center; margin: 10px 0;">
-                <img src="public/figures/residuals_code.png" alt="CODE model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
+                <img src="figures/residuals_code.png" alt="CODE model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
                 <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 4a. CODE residuals: Random scatter confirms excellent exponential model fit.</figcaption>
             </figure>
             
             <figure style="text-align:center; margin: 10px 0;">
-                <img src="public/figures/residuals_esa_final.png" alt="ESA_FINAL model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
+                <img src="figures/residuals_esa_final.png" alt="ESA_FINAL model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
                 <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 4b. ESA_FINAL residuals: Consistent model validation across centers.</figcaption>
             </figure>
             
             <figure style="text-align:center; margin: 10px 0;">
-                <img src="public/figures/residuals_igs_combined.png" alt="IGS_COMBINED model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
+                <img src="figures/residuals_igs_combined.png" alt="IGS_COMBINED model residuals showing fit quality" style="max-width:100%; height:auto;" loading="lazy">
                 <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 4c. IGS_COMBINED residuals: No systematic deviations validate TEP model.</figcaption>
             </figure>
         </div>
@@ -906,17 +906,17 @@
     
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 30px 0;">
         <figure style="text-align:center; margin: 10px 0;">
-            <img src="public/figures/anisotropy_heatmap_code.png" alt="CODE anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
+            <img src="figures/anisotropy_heatmap_code.png" alt="CODE anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
             <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 5a. CODE Analysis Center: Coherence anisotropy as a function of distance (0-8000 km) and longitude difference (0-180°). Clear systematic patterns show distance-dependent decay and longitude-dependent variations.</figcaption>
         </figure>
         
         <figure style="text-align:center; margin: 10px 0;">
-            <img src="public/figures/anisotropy_heatmap_esa_final.png" alt="ESA_FINAL anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
+            <img src="figures/anisotropy_heatmap_esa_final.png" alt="ESA_FINAL anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
             <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 5b. ESA_FINAL Analysis Center: Coherence anisotropy showing consistent patterns with CODE analysis. The reproducibility across independent processing validates the robustness of observed effects.</figcaption>
         </figure>
         
         <figure style="text-align:center; margin: 10px 0;">
-            <img src="public/figures/anisotropy_heatmap_igs_combined.png" alt="IGS_COMBINED anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
+            <img src="figures/anisotropy_heatmap_igs_combined.png" alt="IGS_COMBINED anisotropy heatmap showing coherence vs distance and longitude difference" style="max-width:100%; height:auto;" loading="lazy">
             <figcaption style="font-style:italic; font-size:12px; color:#495773;">Figure 5c. IGS_COMBINED Analysis Center: Coherence anisotropy confirming patterns observed in CODE and ESA_FINAL datasets. Three-center consistency provides strong evidence for genuine physical effects.</figcaption>
         </figure>
     </div>

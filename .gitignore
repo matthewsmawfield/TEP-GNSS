@@ -1,3 +1,8 @@
+# Development and internal files
+sync_figures.sh
+feedback*
+CODEBASE_IMPROVEMENTS*
+
 # Python
 __pycache__/
 *.py[cod]
@@ -22,20 +27,22 @@ wheels/
 MANIFEST
 
 # Virtual environments
-venv/
+.env
+.venv
 env/
+venv/
 ENV/
 env.bak/
 venv.bak/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS files
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -44,71 +51,15 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Jupyter Notebooks
-.ipynb_checkpoints
-
-# Scientific computing
-*.hdf5
-*.h5
-
-# Data files (keep structure but ignore large data)
-data/raw/
-data/processed/*.csv
-data/station_logs/*.log
-results/tmp/
-results/tmp/*.csv
-results/tmp/**/*.csv
-
-# Large processed data files
-data/processed/step_*.csv
-data/processed/*.csv
-
-# Large visualization files (>1MB) - keep essential figures only
-results/figures/gnss_three_globes_connections_*.png
-results/figures/gnss_stations_map.png
-site/public/figures/gnss_three_globes_connections_*.png
-site/public/figures/gnss_stations_map.png
-
-# Logs
-logs/*.log
-*.log
-
 # Temporary files
 *.tmp
 *.temp
 .cache/
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Logs
+*.log
+logs/*.log
 
-# GitHub Pages build
-_site/
-.jekyll-cache/
-.jekyll-metadata
-
-# Node modules (if any)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Data directories (keep structure but ignore large files)
+data/raw/*/
+results/tmp/

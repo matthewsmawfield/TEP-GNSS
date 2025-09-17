@@ -3,8 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,17 +27,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
-      - name: Copy site files to deployment directory
-        run: |
-          mkdir -p _site
-          cp -r site/* _site/
-          # Ensure figures are up to date
-          cp -r results/figures/* _site/public/figures/ 2>/dev/null || true
-          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site'
+          path: './site'
+          retention-days: 1
           
       - name: Deploy to GitHub Pages
         id: deployment
