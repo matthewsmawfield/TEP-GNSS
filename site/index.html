@@ -68,9 +68,9 @@
     <meta name="citation_publication_date" content="2025/09/17">
     <meta name="citation_online_date" content="2025/09/17">
     <meta name="citation_journal_title" content="Preprint">
-    <meta name="citation_doi" content="10.5281/zenodo.17127230">
+    <meta name="citation_doi" content="10.5281/zenodo.17148714">
     <meta name="citation_abstract_html_url" content="https://matthewsmawfield.github.io/TEP-GNSS/">
-    <meta name="citation_pdf_url" content="https://doi.org/10.5281/zenodo.17127230">
+    <meta name="citation_pdf_url" content="https://doi.org/10.5281/zenodo.17148714">
     <meta name="citation_language" content="en">
     <meta name="citation_keywords" content="TEP-GNSS; GNSS; atomic clocks; distance correlations; phase coherence; temporal equivalence principle">
     
@@ -84,7 +84,7 @@
     <meta name="dc.type" content="Text.Article">
     <meta name="dc.format" content="text/html">
     <meta name="dc.identifier" content="https://matthewsmawfield.github.io/TEP-GNSS/">
-    <meta name="dc.identifier.doi" content="10.5281/zenodo.17127230">
+    <meta name="dc.identifier.doi" content="10.5281/zenodo.17148714">
     <meta name="dc.language" content="en">
     <meta name="dc.rights" content="Creative Commons Attribution 4.0 International License">
     
@@ -206,7 +206,7 @@
         {
           "@type": "PropertyValue",
           "propertyID": "DOI",
-          "value": "10.5281/zenodo.17127230"
+          "value": "10.5281/zenodo.17148714"
         },
         {
           "@type": "PropertyValue",
@@ -708,17 +708,17 @@
             <li><strong>Data type</strong>: Ground station atomic clock correlations</li>
             <li><strong>Temporal coverage</strong>: 2023-01-01 to 2025-06-30 (911 days)
                 <ul>
-                    <li>Analysis window determined by three-way data availability</li>
-                    <li>IGS: 965 daily files (99.8% coverage of analysis period)</li>
-                    <li>CODE: 973 files processed (967 within analysis window, extended availability from 2022-11-28)</li>
-                    <li>ESA: 997 files processed (967 within analysis window, extended availability from 2022-08-29)</li>
+                    <li>Analysis window: 2023-01-01 to 2025-06-30 (911 days) with date filtering applied</li>
+                    <li>IGS: 910 files processed (93.9% of available files within date window)</li>
+                    <li>CODE: 912 files processed (93.7% of available files within date window)</li>
+                    <li>ESA: 912 files processed (91.5% of available files within date window)</li>
         </ul>
             </li>
             <li><strong>Spatial coverage</strong>: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
             <li><strong>Data volume</strong>: 62.7 million station pair cross-spectral measurements</li>
             <li><strong>Analysis centers</strong>: CODE (912 files processed, 39.1M pairs), IGS (910 files, 12.8M pairs), ESA (912 files processed, 10.8M pairs)</li>
         </ul>
-        <p><em>File counts reflect actual downloaded and processed files. CODE and ESA counts include files outside the analysis window for completeness, but only the 967-day overlap period was used for analysis.</em></p>
+        <p><em>File counts reflect actual processed files within the 911-day analysis window (2023-01-01 to 2025-06-30) after date filtering.</em></p>
     </div>
 
     <figure style="text-align:center; margin: 30px 0;">
@@ -1132,7 +1132,7 @@
         <h3>Physical interpretation</h3>
         <p>Under TEP with conformal coupling $A(\phi) = \exp(2\beta\phi/M_{\text{Pl}})$, the observed correlations imply:</p>
         <ul>
-            <li>Screened scalar field with correlation length $\sim 3,500$–$4,000$ km</li>
+            <li>Screened scalar field with correlation length $\sim 3,300$–$3,800$ km</li>
             <li>Fractional frequency shifts $y = (\beta/M_{\text{Pl}})\phi$ preserve field correlation structure</li>
             <li>Amplitude $A$ relates to field variance and coupling strength: $(\beta/M_{\text{Pl}}) \cdot \sigma_\phi = \sqrt{A}$</li>
         </ul>
@@ -1142,13 +1142,13 @@
     <p><strong>Systematic artifacts</strong>: Ruled out by null tests showing $8.5$–$44\times$ signal destruction under scrambling. Statistical artifacts cannot survive phase, distance, and station scrambling while maintaining consistent $\lambda$ across centers.</p>
     
     <div class="experimental-section">
-        <h3>Large-scale geophysical effects at $\sim 3,500$ km</h3>
+        <h3>Large-scale geophysical effects at $\sim 3,300$-$3,800$ km</h3>
         <p>Several known atmospheric and ionospheric phenomena operate at continental scales but are inconsistent with our observations:</p>
         <ul>
-            <li><strong>Planetary-scale atmospheric waves</strong>: Rossby waves have wavelengths of $6,000$–$10,000$ km (Holton & Hakim 2012), significantly longer than our observed $\lambda \approx 3,500$ km</li>
+            <li><strong>Planetary-scale atmospheric waves</strong>: Rossby waves have wavelengths of $6,000$–$10,000$ km (Holton & Hakim 2012), significantly longer than our observed $\lambda \approx 3,300$-$3,800$ km</li>
             <li><strong>Ionospheric traveling disturbances</strong>: Large-scale TIDs typically propagate at $400$–$1000$ km/h with wavelengths of $1,000$–$3,000$ km (Hunsucker & Hargreaves 2003), but show strong diurnal and solar cycle dependencies absent in our data</li>
             <li><strong>Magnetospheric current systems</strong>: Ring current and field-aligned currents create magnetic field variations at $2,000$–$5,000$ km scales (Kivelson & Russell 1995), but these primarily affect magnetic sensors rather than atomic clock frequencies</li>
-            <li><strong>Tropospheric delay correlations</strong>: Water vapor patterns show correlations up to $1,000$–$2,000$ km (Bevis et al. 1994), insufficient to explain our $3,500$ km scale and largely removed by analysis center processing</li>
+            <li><strong>Tropospheric delay correlations</strong>: Water vapor patterns show correlations up to $1,000$–$2,000$ km (Bevis et al. 1994), insufficient to explain our $3,300$-$3,800$ km scale and largely removed by analysis center processing</li>
         </ul>
         
         <h3>Cross-center validation strength</h3>

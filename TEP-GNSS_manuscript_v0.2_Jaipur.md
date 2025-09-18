@@ -430,7 +430,7 @@ The observed correlation lengths appear consistent with TEP theoretical predicti
 
 Under TEP with conformal coupling A(φ) = exp(2βφ/M_Pl), the observed correlations imply:
 
-- Screened scalar field with correlation length ~3,500–4,000 km
+- Screened scalar field with correlation length ~3,300–3,800 km
 - Fractional frequency shifts y = (β/M_Pl)φ preserve field correlation structure
 - Amplitude A relates to field variance and coupling strength: (β/M_Pl)·σ_φ = √A
 
@@ -446,14 +446,14 @@ Under TEP with conformal coupling A(φ) = exp(2βφ/M_Pl), the observed correlat
 
 **Systematic artifacts**: Ruled out by null tests showing 8.5–44× signal destruction under scrambling. Statistical artifacts cannot survive phase, distance, and station scrambling while maintaining consistent λ across centers.
 
-#### Large-scale geophysical effects at ~3,500 km
+#### Large-scale geophysical effects at ~3,300-3,800 km
 
 Several known atmospheric and ionospheric phenomena operate at continental scales but are inconsistent with our observations:
 
-- **Planetary-scale atmospheric waves**: Rossby waves have wavelengths of 6,000–10,000 km (Holton & Hakim 2012), significantly longer than our observed λ ≈ 3,500 km
+- **Planetary-scale atmospheric waves**: Rossby waves have wavelengths of 6,000–10,000 km (Holton & Hakim 2012), significantly longer than our observed λ ≈ 3,300-3,800 km
 - **Ionospheric traveling disturbances**: Large-scale TIDs typically propagate at 400–1000 km/h with wavelengths of 1,000–3,000 km (Hunsucker & Hargreaves 2003), but show strong diurnal and solar cycle dependencies absent in our data
 - **Magnetospheric current systems**: Ring current and field-aligned currents create magnetic field variations at 2,000–5,000 km scales (Kivelson & Russell 1995), but these primarily affect magnetic sensors rather than atomic clock frequencies
-- **Tropospheric delay correlations**: Water vapor patterns show correlations up to 1,000–2,000 km (Bevis et al. 1994), insufficient to explain our 3,500 km scale and largely removed by analysis center processing
+- **Tropospheric delay correlations**: Water vapor patterns show correlations up to 1,000–2,000 km (Bevis et al. 1994), insufficient to explain our 3,300-3,800 km scale and largely removed by analysis center processing
 
 #### Processing artifacts
 
@@ -463,7 +463,7 @@ Each analysis center uses different:
 - Reference clock selections and weighting strategies
 - Quality control procedures and outlier detection
 - Common mode removal techniques and reference frame realizations
-- Yet all observe λ ≈ 3,500 km with <4% variation
+- Yet all observe λ ≈ 3,300-3,800 km with 15.7% variation
 
 #### Cross-center validation strength
 
@@ -488,7 +488,7 @@ This work establishes several important results:
 
 #### Signal Robustness: Shape vs. Scale
 
-Our results demonstrate a clear separation between two aspects of the observed signal: **shape** (correlation length λ) and **scale** (amplitude A). The exponential decay form with λ ≈ 3,500 km is remarkably robust—consistent across all three analysis centers despite their different processing strategies, surviving comprehensive null tests, and matching theoretical predictions for screened scalar fields. In contrast, the amplitude varies by ~37% between centers (IGS: 0.351, ESA: 0.479, CODE: 0.206), suggesting sensitivity to processing-dependent effects such as common mode removal and reference frame choices. This separation is physically meaningful: the correlation length reflects the fundamental physics of field screening, while the amplitude depends on how much of the signal survives data processing pipelines designed to remove "systematic errors."
+Our results demonstrate a clear separation between two aspects of the observed signal: **shape** (correlation length λ) and **scale** (amplitude A). The exponential decay form with λ ≈ 3,300-3,800 km is remarkably robust—consistent across all three analysis centers despite their different processing strategies, surviving comprehensive null tests, and matching theoretical predictions for screened scalar fields. In contrast, the amplitude varies significantly between centers (IGS: 0.217, ESA: 0.313, CODE: 0.151), suggesting sensitivity to processing-dependent effects such as common mode removal and reference frame choices. This separation is physically meaningful: the correlation length reflects the fundamental physics of field screening, while the amplitude depends on how much of the signal survives data processing pipelines designed to remove "systematic errors."
 
 ### 4.4 Impact of Analysis Center Processing on Observed Signals
 
@@ -508,7 +508,7 @@ Analysis centers remove network-wide systematic signals as "errors." However, if
 
 - Reduced correlation amplitudes compared to theoretical predictions
 - Missing temporal propagation signatures (removed as time-dependent common mode)
-- Processing-dependent amplitudes (IGS: 0.351 vs ESA: 0.479)
+- Processing-dependent amplitudes (IGS: 0.217 vs ESA: 0.313)
 - Preserved correlation length λ despite different processing strategies
 
 #### Evidence for processing effects
@@ -520,7 +520,7 @@ Analysis centers remove network-wide systematic signals as "errors." However, if
 
 #### Implications
 
-Our observed correlations may represent only a fraction of the true signal strength. The consistency of λ ≈ 3,500 km across independent processing strategies suggests a physical phenomenon robust enough to partially survive aggressive error correction, but future tests would benefit from access to less-processed data to assess the full signal magnitude.
+Our observed correlations may represent only a fraction of the true signal strength. The consistency of λ ≈ 3,300-3,800 km across independent processing strategies suggests a physical phenomenon robust enough to partially survive aggressive error correction, but future tests would benefit from access to less-processed data to assess the full signal magnitude.
 
 ### 4.5 Limitations and Future Work
 
@@ -559,7 +559,7 @@ We report observations of distance-structured correlations in GNSS atomic clock 
 
 These observations suggest potential avenues for testing extensions to General Relativity using existing global infrastructure. The consistency across independent analysis centers, combined with comprehensive statistical validation, provides evidence consistent with screened correlation models that warrant further investigation. The phase-coherent methodology appears to capture systematic patterns in the data that differ from mathematical artifacts. 
 
-The observed correlations with λ ≈ 3,500 km suggest that precision tests conducted over shorter baselines may probe a different regime of potential field coupling than global-scale measurements. Solar system tests, gravitational wave observations, and laboratory experiments typically operate within scales much smaller than this correlation length. If confirmed, these findings could complement existing precision measurements by probing coupling effects at previously unexplored spatial scales.
+The observed correlations with λ ≈ 3,300-3,800 km suggest that precision tests conducted over shorter baselines may probe a different regime of potential field coupling than global-scale measurements. Solar system tests, gravitational wave observations, and laboratory experiments typically operate within scales much smaller than this correlation length. If confirmed, these findings could complement existing precision measurements by probing coupling effects at previously unexplored spatial scales.
 
 The relationship between local precision bounds and global correlation measurements requires careful theoretical development. While our observations appear consistent with TEP predictions, establishing their implications for existing constraints would require detailed theoretical analysis beyond the scope of this initial observational study.
 
