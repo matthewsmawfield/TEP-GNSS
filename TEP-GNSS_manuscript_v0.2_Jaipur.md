@@ -865,7 +865,7 @@ This version incorporates methodological corrections to the band-limited phase a
 
 1. **Fixed mathematical error in complex phase averaging**: Replaced incorrect complex sum with magnitude-weighted phase average to eliminate destructive interference artifacts
 2. **Implemented proper 10-500 μHz frequency band analysis**: Now correctly analyzes the documented frequency range using magnitude-weighted averaging across the band
-3. **Updated results**: λ = 3,314-3,532 km with R² = 0.915-0.947 using the corrected methodology
+3. **Updated results**: λ = 3,299-3,818 km with R² = 0.915-0.964 using the corrected methodology
 
 ---
 
