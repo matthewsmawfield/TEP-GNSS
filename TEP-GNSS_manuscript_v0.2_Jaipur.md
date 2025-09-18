@@ -69,8 +69,8 @@ Our analysis employs a rigorous three-way validation approach using independent 
   - CODE: 973 files processed (967 within analysis window, extended availability from 2022-11-28)
   - ESA: 997 files processed (967 within analysis window, extended availability from 2022-08-29)
 - Spatial coverage: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)
-- Data volume: 74.5 million station pair cross-spectral measurements
-- Analysis centers: CODE (973 files processed, 48.2M pairs), IGS (965 files, 14.2M pairs), ESA (997 files processed, 12.1M pairs)
+- Data volume: 62.7 million station pair cross-spectral measurements
+- Analysis centers: CODE (912 files processed, 39.1M pairs), IGS (910 files, 12.8M pairs), ESA (912 files processed, 10.8M pairs)
 
 *File counts reflect actual downloaded and processed files. CODE and ESA counts include files outside the analysis window for completeness, but only the 967-day overlap period was used for analysis.*
 
@@ -142,9 +142,9 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 
 | Analysis Center | λ (km) | 95% CI (km) | R² | A | C₀ | Files | Station Pairs |
 |-----------------|--------|-------------|-----|---|-----|-------|---------------|
-| IGS Combined | 3,448 ± 425 | [3,023, 3,873] | 0.945 | 0.217 ± 0.012 | 0.447 ± 0.005 | ~650 | ~14M |
+| IGS Combined | 3,448 ± 425 | [3,023, 3,873] | 0.945 | 0.217 ± 0.012 | 0.447 ± 0.005 | 910 | 12.8M |
 | ESA Final | 3,818 ± 429 | [3,389, 4,247] | 0.964 | 0.313 ± 0.015 | 0.404 ± 0.008 | 912 | 10.8M |
-| CODE | 3,299 ± 429 | [2,870, 3,728] | 0.915 | 0.151 ± 0.010 | 0.493 ± 0.005 | ~650 | ~28M |
+| CODE | 3,299 ± 429 | [2,870, 3,728] | 0.915 | 0.151 ± 0.010 | 0.493 ± 0.005 | 912 | 39.1M |
 
 #### Cross-Center Comparison
 
@@ -152,7 +152,7 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 - Average λ: 3,522 km (well within TEP predicted range of 1,000–10,000 km)
 - R² range: 0.915–0.964 (strong fits across all centers using exponential model)
 - All centers show consistent correlation patterns despite different processing strategies
-- Total data volume: 74.5 million station pair measurements from 2,935 files
+- Total data volume: 62.7 million station pair measurements from 2,734 files
 
 #### Distance-Dependent Correlation Structure (from IGS Combined analysis)
 
@@ -546,10 +546,10 @@ We investigated separating independent atomic clocks (H-Maser, Cesium, Rubidium)
 
 ## 5. Conclusion
 
-We report observations of distance-structured correlations in GNSS atomic clock data that are consistent with Temporal Equivalence Principle predictions. Through analysis of 74.5 million station pair measurements from three independent analysis centers, we find:
+We report observations of distance-structured correlations in GNSS atomic clock data that are consistent with Temporal Equivalence Principle predictions. Through analysis of 62.7 million station pair measurements from three independent analysis centers, we find:
 
-- **Consistent correlation length**: λ = 3,399–3,533 km (3.9% cross-center variation)
-- **Strong fit quality**: R² = 0.921–0.974 for exponential model using phase-coherent methodology
+- **Consistent correlation length**: λ = 3,299–3,818 km (15.7% cross-center variation)
+- **Strong fit quality**: R² = 0.915–0.964 for exponential model using phase-coherent methodology
 - **Theoretical compatibility**: All λ values within predicted range [1,000–10,000 km]
 - **Statistical validation**: Null tests show 8.5–44× signal reduction (all p < 0.01)
 - **Phase coherence validated**: Circular statistics confirm genuine physical signal (PLV 0.1–0.4, Rayleigh p < 1e-5)
