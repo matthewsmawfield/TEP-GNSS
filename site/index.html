@@ -1167,15 +1167,19 @@
             python scripts/steps/step_1_tep_data_acquisition.py<br><br>
             # Step 2: Process and validate station coordinates<br>
             python scripts/steps/step_2_tep_coordinate_validation.py<br><br>
-            # Step 4: TEP correlation analysis<br>
-            TEP_PROCESS_ALL_CENTERS=1 TEP_STEP4_WORKERS=8 \<br>
-            python scripts/steps/step_4_tep_correlation_analysis.py<br><br>
+            # Step 3: TEP correlation analysis<br>
+            TEP_USE_PHASE_BAND=1 TEP_COHERENCY_F1=1e-5 TEP_COHERENCY_F2=5e-4 \<br>
+            python scripts/steps/step_3_tep_correlation_analysis.py<br><br>
+            # Step 4: Aggregate geospatial data<br>
+            python scripts/steps/step_4_aggregate_geospatial_data.py<br><br>
             # Step 5: Statistical validation<br>
             python scripts/steps/step_5_tep_statistical_validation.py<br><br>
-            # Step 6: Advanced tests<br>
-            python scripts/steps/step_6_tep_advanced_tests.py<br><br>
-            # Step 7: Visualization and export<br>
-            python scripts/steps/step_7_tep_visualization_export.py
+            # Step 6: Null tests<br>
+            python scripts/steps/step_6_tep_null_tests.py<br><br>
+            # Step 7: Advanced analysis<br>
+            python scripts/steps/step_7_tep_advanced_analysis.py<br><br>
+            # Step 8: Visualization<br>
+            python scripts/steps/step_8_tep_visualization.py
         </div>
         
         <h3>Key Features</h3>

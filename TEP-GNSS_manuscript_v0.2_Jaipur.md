@@ -201,6 +201,8 @@ All 9 null tests show statistically significant signal degradation (permutation 
 
 #### 3.2.2 Robustness to Spatio-Temporal Dependencies (LOSO/LODO Analysis)
 
+*Note: The following LOSO/LODO results are from the previous analysis before v0.2 methodological corrections. These should be rerun with the corrected Step 3 data for complete validation.*
+
 To address the critical issue of non-independence among station pairs, which share common stations and observation days, we performed rigorous leave-one-station-out (LOSO) and leave-one-day-out (LODO) validation analyses. These block-resampling methods provide a robust estimate of the stability and uncertainty of our findings by systematically removing potentially influential data slices. The results, summarized below, demonstrate exceptional stability.
 
 | Analysis Center | λ (km) LOSO (mean ± sd) | λ (km) LODO (mean ± sd) | Internal Consistency (Δλ) |
