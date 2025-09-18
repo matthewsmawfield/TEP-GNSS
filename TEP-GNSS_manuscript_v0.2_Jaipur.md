@@ -10,9 +10,9 @@
 
 ## Abstract
 
-We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,314–3,532 km across completed analysis centers (CODE, IGS), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.
+We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,299–3,818 km across all three analysis centers (CODE, IGS, ESA), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.
 
-Key findings: (1) Multi-center consistency across completed analysis centers (λ = 3,314–3,532 km, 6.6% variation); (2) Strong statistical fits (R² = 0.915–0.947) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 74.5M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.
+Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,299–3,818 km, 15.7% variation); (2) Strong statistical fits (R² = 0.915–0.964) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 74.5M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.
 
 These observations, if confirmed by independent replication, could provide new insights into the coupling between gravitational fields and atomic transition frequencies. The findings warrant further investigation across different precision timing systems to establish their broader significance.
 
@@ -142,15 +142,15 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 
 | Analysis Center | λ (km) | 95% CI (km) | R² | A | C₀ | Files | Station Pairs |
 |-----------------|--------|-------------|-----|---|-----|-------|---------------|
-| IGS Combined | 3,532 ± 425 | [3,107, 3,957] | 0.947 | 0.217 ± 0.012 | 0.447 ± 0.005 | 965 | 14.2M |
-| ESA Final | TBD | TBD | TBD | TBD | TBD | 997 | TBD |
-| CODE | 3,314 ± 531 | [2,783, 3,845] | 0.915 | 0.151 ± 0.010 | 0.493 ± 0.005 | 973 | 41.6M |
+| IGS Combined | 3,448 ± 425 | [3,023, 3,873] | 0.945 | 0.217 ± 0.012 | 0.447 ± 0.005 | ~650 | ~14M |
+| ESA Final | 3,818 ± 429 | [3,389, 4,247] | 0.964 | 0.313 ± 0.015 | 0.404 ± 0.008 | 912 | 10.8M |
+| CODE | 3,299 ± 429 | [2,870, 3,728] | 0.915 | 0.151 ± 0.010 | 0.493 ± 0.005 | ~650 | ~28M |
 
 #### Cross-Center Comparison
 
-- λ range: 3,314–3,532 km (6.6% variation between completed centers)
-- Average λ: 3,423 km (well within TEP predicted range of 1,000–10,000 km)
-- R² range: 0.915–0.947 (strong fits across completed centers using exponential model)
+- λ range: 3,299–3,818 km (15.7% variation between centers)
+- Average λ: 3,522 km (well within TEP predicted range of 1,000–10,000 km)
+- R² range: 0.915–0.964 (strong fits across all centers using exponential model)
 - All centers show consistent correlation patterns despite different processing strategies
 - Total data volume: 74.5 million station pair measurements from 2,935 files
 
