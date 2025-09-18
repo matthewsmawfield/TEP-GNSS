@@ -1,9 +1,9 @@
 # TEP-GNSS: Global Time Echoes Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.1 (Jaipur)  
+**Version:** v0.2 (Jaipur)  
 **Date:** September 17, 2025  
-**DOI:** [10.5281/zenodo.17127230](https://doi.org/10.5281/zenodo.17127230)
+**DOI:** [10.5281/zenodo.17148714](https://doi.org/10.5281/zenodo.17148714)
 
 ## Overview
 
@@ -137,8 +137,8 @@ If you use this analysis package, please cite both the analysis and underlying t
            Clocks Across Independent Networks},
   year = {2025},
   publisher = {Zenodo},
-  doi = {10.5281/zenodo.17127230},
-  url = {https://doi.org/10.5281/zenodo.17127230}
+  doi = {10.5281/zenodo.17148714},
+  url = {https://doi.org/10.5281/zenodo.17148714}
 }
 ```
 

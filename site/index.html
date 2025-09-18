@@ -188,7 +188,7 @@
       "experimentalData": {
         "@type": "Dataset",
         "name": "GNSS Clock Correlation Analysis",
-        "description": "74.5 million station pair measurements from IGS, ESA, and CODE analysis centers"
+        "description": "62.7 million station pair measurements from IGS, ESA, and CODE analysis centers"
       },
       "image": "https://matthewsmawfield.github.io/TEP-GNSS/og-image.jpg",
       "mainEntityOfPage": {
@@ -654,7 +654,7 @@
         <h2>Abstract</h2>
         <p>We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,299–3,818 km across all three analysis centers (CODE, IGS, ESA), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.</p>
         
-        <p>Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,299–3,818 km, 15.7% variation); (2) Strong statistical fits (R² = 0.915–0.964) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 74.5M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.</p>
+        <p>Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,299–3,818 km, 15.7% variation); (2) Strong statistical fits (R² = 0.915–0.964) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 62.7M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.</p>
         
         <p>These observations, if confirmed by independent replication, could provide new insights into the coupling between gravitational fields and atomic transition frequencies. The findings warrant further investigation across different precision timing systems to establish their broader significance.</p>
     </div>
@@ -715,8 +715,8 @@
         </ul>
             </li>
             <li><strong>Spatial coverage</strong>: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
-            <li><strong>Data volume</strong>: 74.5 million station pair cross-spectral measurements</li>
-            <li><strong>Analysis centers</strong>: CODE (973 files processed, 48.2M pairs), IGS (965 files, 14.2M pairs), ESA (997 files processed, 12.1M pairs)</li>
+            <li><strong>Data volume</strong>: 62.7 million station pair cross-spectral measurements</li>
+            <li><strong>Analysis centers</strong>: CODE (912 files processed, 39.1M pairs), IGS (910 files, 12.8M pairs), ESA (912 files processed, 10.8M pairs)</li>
         </ul>
         <p><em>File counts reflect actual downloaded and processed files. CODE and ESA counts include files outside the analysis window for completeness, but only the 967-day overlap period was used for analysis.</em></p>
     </div>
@@ -839,33 +839,33 @@
                 <tbody>
                     <tr style="border: 1px solid #495773;">
                         <td style="padding: 8px; border: 1px solid #495773;"><strong>IGS Combined</strong></td>
-                        <td style="padding: 8px; border: 1px solid #495773;">3,399 ± 340</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">[3,059, 3,739]</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.961</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.351 ± 0.017</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">-0.034 ± 0.007</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">965</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">14.2M</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">3,448 ± 425</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">[3,023, 3,873]</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.945</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.217 ± 0.012</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.447 ± 0.005</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">910</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">12.8M</td>
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03); border: 1px solid #495773;">
                         <td style="padding: 8px; border: 1px solid #495773;"><strong>ESA Final</strong></td>
-                        <td style="padding: 8px; border: 1px solid #495773;">3,533 ± 321</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">[3,212, 3,854]</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.974</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.479 ± 0.021</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">-0.058 ± 0.009</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">997</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">12.1M</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">3,818 ± 429</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">[3,389, 4,247]</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.964</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.313 ± 0.015</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.404 ± 0.008</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">912</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">10.8M</td>
                     </tr>
                     <tr style="border: 1px solid #495773;">
                         <td style="padding: 8px; border: 1px solid #495773;"><strong>CODE</strong></td>
-                        <td style="padding: 8px; border: 1px solid #495773;">3,496 ± 570</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">[2,926, 4,066]</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.921</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">0.206 ± 0.013</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">-0.035 ± 0.008</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">973</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">48.2M</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">3,299 ± 429</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">[2,870, 3,728]</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.915</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.151 ± 0.010</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">0.493 ± 0.005</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">912</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">39.1M</td>
                     </tr>
                 </tbody>
             </table>
@@ -1190,7 +1190,7 @@
 
     <h1>6. Conclusions</h1>
     
-    <p>We report observations of distance-structured correlations in GNSS atomic clock data that are consistent with Temporal Equivalence Principle predictions. Through analysis of 74.5 million station pair measurements from three independent analysis centers, we find:</p>
+    <p>We report observations of distance-structured correlations in GNSS atomic clock data that are consistent with Temporal Equivalence Principle predictions. Through analysis of 62.7 million station pair measurements from three independent analysis centers, we find:</p>
     
     <div class="significance">
         <ul>

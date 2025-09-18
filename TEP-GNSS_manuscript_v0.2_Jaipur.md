@@ -12,7 +12,7 @@
 
 We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,299–3,818 km across all three analysis centers (CODE, IGS, ESA), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.
 
-Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,299–3,818 km, 15.7% variation); (2) Strong statistical fits (R² = 0.915–0.964) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 74.5M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.
+Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,299–3,818 km, 15.7% variation); (2) Strong statistical fits (R² = 0.915–0.964) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing signal degradation under data scrambling (8.5–44× weaker correlations, all p < 0.01 with 100 iterations); (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 62.7M measurements, strongly disfavoring mathematical artifacts; (5) Complete 3D geometry analysis with vectorized coordinate transformations showing no elevation-dependent screening effects (λ consistent across all elevation quintiles from -219m to 3,767m); (6) Advanced ground station analysis confirming distance-dependent correlations independent of altitude, geography, or station density; (7) Cross-validation across three independent analysis centers with different processing strategies. We discuss how standard GNSS processing, particularly common mode removal, may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.
 
 These observations, if confirmed by independent replication, could provide new insights into the coupling between gravitational fields and atomic transition frequencies. The findings warrant further investigation across different precision timing systems to establish their broader significance.
 
@@ -136,7 +136,7 @@ Previous studies using |CSD| (magnitude only) would miss this signal entirely, a
 
 ### 3.1 Primary Observations
 
-We observe distance-structured correlations in GNSS atomic clock data that exhibit exponential distance-dependent decay characteristics. Our analysis demonstrates strong exponential correlations with excellent statistical fits (R² = 0.921–0.974), consistent with theoretical predictions from screened scalar field models.
+We observe distance-structured correlations in GNSS atomic clock data that exhibit exponential distance-dependent decay characteristics. Our analysis demonstrates strong exponential correlations with excellent statistical fits (R² = 0.915–0.964), consistent with theoretical predictions from screened scalar field models.
 
 #### Phase-Coherent Correlation Results (Exponential Fits: C(r) = A·exp(-r/λ) + C₀)
 
@@ -156,7 +156,7 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 
 #### Distance-Dependent Correlation Structure (from IGS Combined analysis)
 
-**Figure 1. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.** Three-panel analysis demonstrating coherent, reproducible, and statistically strong TEP correlations across independent analysis centers. **(a) Multi-center reproducibility:** Exponential decay fits C(r) = A exp(−r/λ) + C₀ using consistent cos(Δφ) coherence metric. Data points show binned means with standard errors from real manuscript data. Shaded regions indicate 95% confidence intervals from error propagation. λ values vary by center (CODE: 3,496 ± 1,120 km; IGS Combined: 3,399 ± 667 km; ESA Final: 3,533 ± 630 km) but all remain within theoretically predicted range (1–10 Mm) for screened scalar fields. Excellent statistical fits (R² = 0.921–0.974). **(b) Statistical significance:** Station-day blocked permutation tests (N=300 total iterations) show real signal R² values as extreme outliers compared to null distributions (combined p < 0.01). Blocking methodology preserves within-station temporal correlation structure while testing spatial correlation significance. **(c) Signal vs. null comparison:** Direct comparison using real GNSS data demonstrates that distance-dependent coherence structure disappears under distance scrambling, confirming correlations are tied to spatial geometry rather than computational artifacts. Exponential fit overlay shows characteristic λ ≈ 3.5 Mm decay length.
+**Figure 1. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.** Three-panel analysis demonstrating coherent, reproducible, and statistically strong TEP correlations across independent analysis centers. **(a) Multi-center reproducibility:** Exponential decay fits C(r) = A exp(−r/λ) + C₀ using consistent cos(Δφ) coherence metric. Data points show binned means with standard errors from real manuscript data. Shaded regions indicate 95% confidence intervals from error propagation. λ values vary by center (CODE: 3,299 ± 429 km; IGS Combined: 3,448 ± 425 km; ESA Final: 3,818 ± 429 km) but all remain within theoretically predicted range (1–10 Mm) for screened scalar fields. Excellent statistical fits (R² = 0.915–0.964). **(b) Statistical significance:** Station-day blocked permutation tests (N=300 total iterations) show real signal R² values as extreme outliers compared to null distributions (combined p < 0.01). Blocking methodology preserves within-station temporal correlation structure while testing spatial correlation significance. **(c) Signal vs. null comparison:** Direct comparison using real GNSS data demonstrates that distance-dependent coherence structure disappears under distance scrambling, confirming correlations are tied to spatial geometry rather than computational artifacts. Exponential fit overlay shows characteristic λ ≈ 3.5 Mm decay length.
 
 *Figure 1 placeholder: (see results/figures/figure_1_TEP_site_themed.png)*
 
@@ -243,7 +243,7 @@ To rigorously test whether this observed anisotropy could be a statistical artif
 
 *Figure 3c: Exponential model residuals for IGS_COMBINED analysis center (see results/figures/residuals_igs_combined.png)*
 
-**Figure 3. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations, confirming that the exponential decay model appropriately captures the underlying correlation structure. Random scatter around zero with consistent variance across distance ranges validates the robustness of the fitted correlation lengths (λ = 3,399-3,533 km) and provides confidence in the statistical framework. The absence of distance-dependent bias in residuals rules out alternative correlation models and supports the screened scalar field interpretation of the observed TEP signatures.
+**Figure 3. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations, confirming that the exponential decay model appropriately captures the underlying correlation structure. Random scatter around zero with consistent variance across distance ranges validates the robustness of the fitted correlation lengths (λ = 3,299-3,818 km) and provides confidence in the statistical framework. The absence of distance-dependent bias in residuals rules out alternative correlation models and supports the screened scalar field interpretation of the observed TEP signatures.
 
 #### Distance Distribution Analysis
 
@@ -367,7 +367,7 @@ Analysis of station pairs grouped by elevation quintiles (-219m to 3,767m):
 - **Distance-elevation coupling**: Weak correlations (r = -0.019 to 0.011) confirm minimal coupling
 - **φ-field screening**: No evidence for elevation-dependent screening (Δφ range: -0.32 to +0.32)
 - **Consistent physics**: λ values remain within the predicted range across all elevations, although large uncertainties in some quintiles indicate weaker statistical constraints for certain altitude strata.
-- **Statistical validation**: R² values of 0.006–0.013 for elevation-difference stratified fits reflect the weaker correlation structure when subdividing by altitude (contrast with main distance-correlation fits R² = 0.921–0.974); phase coherence remains robust across all elevation strata as confirmed by circular statistics
+- **Statistical validation**: R² values of 0.006–0.013 for elevation-difference stratified fits reflect the weaker correlation structure when subdividing by altitude (contrast with main distance-correlation fits R² = 0.915–0.964); phase coherence remains robust across all elevation strata as confirmed by circular statistics
 
 ### 3.6 Summary of Advanced Validation (Step 6 Complete)
 
@@ -396,7 +396,7 @@ The comprehensive Step 6 ground station analysis definitively addresses all revi
 4. **Multi-center consistency maintained across comprehensive analysis**:
    - All three analysis centers show similar correlation patterns
    - λ values remain within theoretical predictions (1,000–10,000 km)
-   - Statistical significance maintained across 74.5M+ measurements
+   - Statistical significance maintained across 62.7M+ measurements
 
 5. **High-precision results with proper uncertainty quantification**:
    - Center-level λ uncertainties are ~9–16%; in Step 6 elevation-difference strata, λ errors are typically <2% due to large sample sizes
@@ -421,10 +421,10 @@ The observed correlation lengths appear consistent with TEP theoretical predicti
 
 #### Comparison with theory
 
-- Empirical observations: λ = 3,399–3,533 km across all centers
+- Empirical observations: λ = 3,299–3,818 km across all centers
 - Theoretical prediction: λ ∈ [1,000, 10,000] km for screened scalar fields
 - All measurements fall within the predicted range
-- 3.9% cross-center variation suggests a consistent pattern
+- 15.7% cross-center variation suggests a consistent pattern
 
 #### Physical interpretation
 

@@ -25,7 +25,7 @@ keywords:
   - TEP-GNSS
 repository-code: "https://github.com/matthewsmawfield/TEP-GNSS"
 url: "https://matthewsmawfield.github.io/TEP-GNSS/"
-doi: 10.5281/zenodo.17127230
+doi: 10.5281/zenodo.17148714
 
 preferred-citation:
   type: article
@@ -36,6 +36,6 @@ preferred-citation:
       orcid: "https://orcid.org/0009-0003-8219-3159"
   year: 2025
   journal: Zenodo
-  doi: 10.5281/zenodo.17127230
-  url: "https://doi.org/10.5281/zenodo.17127230"
+  doi: 10.5281/zenodo.17148714
+  url: "https://doi.org/10.5281/zenodo.17148714"
   notes: "Preprint"
