@@ -3,12 +3,10 @@
 **Author:** Matthew Lukin Smawfield
 **Date:** September 17, 2025
 **Version:** v0.2 (Jaipur)
-**DOI:** [10.5281/zenodo.17127230](https://doi.org/10.5281/zenodo.17127230)
+**DOI:** [10.5281/zenodo.17148714](https://doi.org/10.5281/zenodo.17148714)
 **Theory DOI:** [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)
 
-**Version 0.2 Updates:** This version incorporates critical methodological corrections to the band-limited phase analysis: (1) Fixed mathematical error in complex phase averaging (replaced incorrect complex sum with magnitude-weighted phase average), (2) Corrected station coordinate matching for proper distance calculations, (3) Implemented proper 10-500 μHz frequency band analysis as documented. Results show λ = 3,314-3,532 km with R² = 0.915-0.947 using the corrected methodology.
-
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.2 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127230
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.2 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17148714
 
 ## Abstract
 
@@ -54,7 +52,7 @@ Global Navigation Satellite System (GNSS) networks offer unique advantages for t
 
 ### 2.1 Data Architecture
 
-Our analysis employs a rigorous three-way validation approach using independent clock products from major analysis centers. To ensure cross-validation integrity, we restrict our analysis to the common temporal overlap period (2022-12-26 to 2025-08-18) when all three centers have available data:
+Our analysis employs a rigorous three-way validation approach using independent clock products from major analysis centers. To ensure cross-validation integrity, we restrict our analysis to the common temporal overlap period (2023-01-01 to 2025-06-30) when all three centers have available data:
 
 #### Authoritative data sources
 
@@ -65,7 +63,7 @@ Our analysis employs a rigorous three-way validation approach using independent 
 #### Dataset characteristics
 
 - Data type: Ground station atomic clock correlations
-- Temporal coverage: 2022-12-26 to 2025-08-18 (967 days)
+- Temporal coverage: 2023-01-01 to 2025-06-30 (911 days)
   - Analysis window determined by three-way data availability
   - IGS: 965 daily files (99.8% coverage of analysis period)
   - CODE: 973 files processed (967 within analysis window, extended availability from 2022-11-28)
@@ -87,6 +85,7 @@ Standard signal processing techniques using band-averaged real coherency fail to
 3. **Frequency band selection**: Analyze 10-500 μHz (periods: 33 minutes to 28 hours) using magnitude-weighted phase averaging across the band
 4. **Dynamic sampling**: Compute actual sampling rate from timestamps (no hardcoded assumptions)
 5. **Corrected phase calculation**: Use magnitude-weighted average of phases within the frequency band, eliminating destructive interference artifacts from complex summation
+
 
 #### Why phase coherence matters
 
@@ -617,6 +616,11 @@ All steps run from the project root unless noted.
 4.  **Step 3** — Correlation Analysis
 
     ```bash
+    # Standard analysis (first non-DC bin method)
+    python scripts/steps/step_3_tep_correlation_analysis.py
+    
+    # Band-limited phase analysis (10-500 μHz) - RECOMMENDED for v0.2
+    TEP_USE_PHASE_BAND=1 TEP_COHERENCY_F1=1e-5 TEP_COHERENCY_F2=5e-4 \
     python scripts/steps/step_3_tep_correlation_analysis.py
     ```
 
@@ -852,6 +856,16 @@ Webb, J. K., et al. (2001). Further evidence for cosmological evolution of the f
 *Manuscript version 0.2 (Jaipur) | Analysis completed September 17, 2025*
 *Theory: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)*
 *Author: Matthew Lukin Smawfield*
+
+---
+
+## Version 0.2 Updates
+
+This version incorporates methodological corrections to the band-limited phase analysis:
+
+1. **Fixed mathematical error in complex phase averaging**: Replaced incorrect complex sum with magnitude-weighted phase average to eliminate destructive interference artifacts
+2. **Implemented proper 10-500 μHz frequency band analysis**: Now correctly analyzes the documented frequency range using magnitude-weighted averaging across the band
+3. **Updated results**: λ = 3,314-3,532 km with R² = 0.915-0.947 using the corrected methodology
 
 ---
 

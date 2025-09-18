@@ -68,6 +68,9 @@ Key environment variables:
 | `TEP_WORKERS` | auto | Number of parallel workers |
 | `TEP_BINS` | 40 | Distance bins for correlation analysis |
 | `TEP_MAX_DISTANCE_KM` | 13000 | Maximum analysis distance |
+| `TEP_USE_PHASE_BAND` | 0 | Use band-limited phase analysis (10-500 μHz) |
+| `TEP_COHERENCY_F1` | 1e-5 | Lower frequency bound (Hz) for phase band |
+| `TEP_COHERENCY_F2` | 5e-4 | Upper frequency bound (Hz) for phase band |
 
 ## Data Sources
 
@@ -82,7 +85,7 @@ All data sourced directly from official repositories. No synthetic or fallback d
 Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format
 - `results/figures/`: Generated visualizations
-- `TEP-GNSS_manuscript_v0.1_Jaipur.md`: Comprehensive analysis report
+- `TEP-GNSS_manuscript_v0.2_Jaipur.md`: Comprehensive analysis report
 
 ## Scientific Background
 

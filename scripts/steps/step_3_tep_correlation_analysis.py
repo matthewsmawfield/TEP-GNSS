@@ -782,6 +782,27 @@ def compute_band_averaged_coherency(x, y, fs, f1=0.001, f2=0.01, nperseg=None):
 def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Dict]:
     """Process a single CLK file and extract plateau measurements for all station pairs"""
     
+    # Check if file is within date range (if configured)
+    import re
+    from datetime import datetime, timedelta
+    
+    # Extract date from filename to filter by date range
+    match = re.search(r'(\d{4})(\d{3})', file_path.name)
+    if match:
+        year = int(match.group(1))
+        day_of_year = int(match.group(2))
+        file_date = datetime(year, 1, 1) + timedelta(days=day_of_year - 1)
+        
+        # Get date range from config
+        start_date_str = TEPConfig.get_str('TEP_DATE_START')
+        end_date_str = TEPConfig.get_str('TEP_DATE_END')
+        start_date = datetime.fromisoformat(start_date_str)
+        end_date = datetime.fromisoformat(end_date_str)
+        
+        # Skip file if outside date range
+        if file_date < start_date or file_date > end_date:
+            return []
+    
     # Parse clock file
     records = []
     
