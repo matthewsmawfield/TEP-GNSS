@@ -10,10 +10,10 @@ abstract: >
   Phase-coherent GNSS clock analysis across independent centers (IGS, ESA, CODE) 
   with distance-correlation methods; publication-ready research site and analysis package.
   We report distance-structured correlations in GNSS clock products using phase-coherent 
-  analysis across 74.5M station-pair measurements, finding exponential correlation lengths 
-  of 3,399–3,533 km consistent with screened scalar-field models.
+  analysis across 62.7M station-pair measurements, finding exponential correlation lengths 
+  of 3,299–3,818 km consistent with screened scalar-field models.
 license: CC-BY-4.0
-version: "0.1"
+version: "0.2"
 date-released: 2025-09-17
 keywords:
   - physics

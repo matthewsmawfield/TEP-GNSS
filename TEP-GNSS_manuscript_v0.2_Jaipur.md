@@ -64,15 +64,15 @@ Our analysis employs a rigorous three-way validation approach using independent 
 
 - Data type: Ground station atomic clock correlations
 - Temporal coverage: 2023-01-01 to 2025-06-30 (911 days)
-  - Analysis window determined by three-way data availability
-  - IGS: 965 daily files (99.8% coverage of analysis period)
-  - CODE: 973 files processed (967 within analysis window, extended availability from 2022-11-28)
-  - ESA: 997 files processed (967 within analysis window, extended availability from 2022-08-29)
+  - Analysis window: 2023-01-01 to 2025-06-30 (911 days) with date filtering applied, determined by three-way data availability
+  - IGS: 910 files processed (93.9% of available files within date window)
+  - CODE: 912 files processed (93.7% of available files within date window)
+  - ESA: 912 files processed (91.5% of available files within date window)
 - Spatial coverage: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)
 - Data volume: 62.7 million station pair cross-spectral measurements
 - Analysis centers: CODE (912 files processed, 39.1M pairs), IGS (910 files, 12.8M pairs), ESA (912 files processed, 10.8M pairs)
 
-*File counts reflect actual downloaded and processed files. CODE and ESA counts include files outside the analysis window for completeness, but only the 967-day overlap period was used for analysis.*
+*File counts reflect actual processed files within the 911-day analysis window (2023-01-01 to 2025-06-30) after date filtering.*
 
 ### 2.2 Phase-Coherent Analysis Method
 
@@ -578,7 +578,7 @@ Controls and robustness. We perform null scrambles (distance, phase, station ide
 ### Data windowing and three‑way overlap (download policy)
 
 - Availability probe (no downloads): Availability probing is integrated into Step 1 for this release; a weekly scan writes `logs/probe_availability_summary.json` (per‑year counts and joint overlap). Configure the window with `TEP_PROBE_START` and `TEP_PROBE_END`.
-- Final download window: Use `TEP_DATE_START` and `TEP_DATE_END` (YYYY‑MM‑DD, inclusive) in Step 1 to restrict downloads to the maximum three‑way overlap. For the current run, the probed joint window is 2022‑12‑26 → 2025‑08‑18.
+- Final download window: Use `TEP_DATE_START` and `TEP_DATE_END` (YYYY‑MM‑DD, inclusive) in Step 1 to restrict downloads to the analysis window. For the current run, the analysis window is 2023‑01‑01 → 2025‑06‑30.
 - Strict policy: real sources only; if a day is missing for any agency within the window, the missing file is skipped (no synthetic substitution), and analyses later filter to matched subsets.
 
 ---

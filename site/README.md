@@ -26,8 +26,8 @@ This repository contains the complete analysis pipeline for testing the Temporal
 
 ## Key Results
 
-- **Multi-center consistency**: λ = 3,399–3,533 km (3.9% variation) across independent analysis centers
-- **Strong statistical fits**: R² = 0.921–0.974 for exponential correlation models
+- **Multi-center consistency**: λ = 3,299–3,818 km (15.7% variation) across independent analysis centers
+- **Strong statistical fits**: R² = 0.915–0.964 for exponential correlation models
 - **Theoretical compatibility**: Results within TEP-predicted range [1,000–10,000 km]
 - **Validated methodology**: Null tests confirm signal authenticity (8.5–44× destruction under scrambling)
 
