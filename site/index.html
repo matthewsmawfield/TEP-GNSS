@@ -138,7 +138,7 @@
       },
       "datePublished": "2025-09-17",
       "dateModified": "2025-09-17",
-      "version": "Jaipur v0.2",
+      "version": "Jaipur v0.3",
       "publisher": {
         "@type": "Organization",
         "name": "Independent Research",
@@ -643,7 +643,7 @@
         <img src="og-image.jpg" alt="Global Time Echoes - Distance-structured correlations in GNSS clocks analysis overview" class="header-image" loading="eager">
         <div class="title">Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks</div>
         <div class="author">Matthew Lukin Smawfield</div>
-        <div class="version">Version: v0.2 (Jaipur)</div>
+        <div class="version">Version: v0.3 (Jaipur)</div>
         <div class="date">Date: 17 September 2025</div>
         <div class="status">Status: Preprint (Analysis Package)</div>
         <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17148714">10.5281/zenodo.17148714</a></div>
@@ -1167,8 +1167,7 @@
             python scripts/steps/step_1_tep_data_acquisition.py<br><br>
             # Step 2: Process and validate station coordinates<br>
             python scripts/steps/step_2_tep_coordinate_validation.py<br><br>
-            # Step 3: TEP correlation analysis<br>
-            TEP_USE_PHASE_BAND=1 TEP_COHERENCY_F1=1e-5 TEP_COHERENCY_F2=5e-4 \<br>
+            # Step 3: TEP correlation analysis (v0.3 method default)<br>
             python scripts/steps/step_3_tep_correlation_analysis.py<br><br>
             # Step 4: Aggregate geospatial data<br>
             python scripts/steps/step_4_aggregate_geospatial_data.py<br><br>
@@ -1244,14 +1243,14 @@
 
     <div class="experimental-section">
         <h2>How to cite</h2>
-        <p><strong>Cite as:</strong> Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.2 (Jaipur). Zenodo. <a href="https://doi.org/10.5281/zenodo.17148714">https://doi.org/10.5281/zenodo.17148714</a></p>
+        <p><strong>Cite as:</strong> Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.3 (Jaipur). Zenodo. <a href="https://doi.org/10.5281/zenodo.17148714">https://doi.org/10.5281/zenodo.17148714</a></p>
         
         <div style="background-color: rgba(73, 87, 115, 0.03); padding: 15px; border-radius: 5px; margin: 15px 0; overflow-x: auto;">
             <strong>BibTeX:</strong>
 <pre style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; font-family: 'Courier New', monospace; font-size: 13px; margin: 10px 0; line-height: 1.4;">@misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS 
-                  Clocks Across Independent Networks (Jaipur v0.2)},
+                  Clocks Across Independent Networks (Jaipur v0.3)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17148714},
@@ -1271,9 +1270,9 @@
     <hr style="border: none; border-top: 2px solid #495773; margin: 30px 0;">
     
     <div class="experimental-section">
-        <h2>Version 0.2 Updates</h2>
+        <h2>Version 0.3 Updates</h2>
         <div class="update-notice" style="background-color: rgba(74, 144, 194, 0.1); padding: 15px; border-radius: 5px; margin: 15px 0; font-size: 14px;">
-            <p><strong>Version 0.2 (Jaipur)</strong> incorporates methodological corrections to the band-limited phase analysis:</p>
+            <p><strong>Version 0.3 (Jaipur)</strong> incorporates methodological corrections and improved pipeline design:</p>
             <ol>
                 <li><strong>Fixed mathematical error in complex phase averaging:</strong> Replaced incorrect complex sum with magnitude-weighted phase average to eliminate destructive interference artifacts</li>
                 <li><strong>Implemented proper 10-500 μHz frequency band analysis:</strong> Now correctly analyzes the documented frequency range using magnitude-weighted averaging across the band</li>

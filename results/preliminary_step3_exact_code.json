@@ -1,0 +1,113 @@
+{
+  "analysis_center": "CODE",
+  "method": {
+    "type": "phase_alignment_index",
+    "formula": "cos(phase(CSD))"
+  },
+  "data_summary": {
+    "total_pairs": 27250597,
+    "files_processed": 616,
+    "files_total": 616,
+    "bins_used": 38,
+    "distance_range_km": [
+      68.80242531120645,
+      12145.771304178263
+    ],
+    "coherence_range": [
+      -0.08946289026675147,
+      0.1722668923010994
+    ],
+    "mean_coherence": 0.052730656680199994
+  },
+  "model_comparison": {
+    "models_tested": [
+      "Exponential",
+      "Gaussian",
+      "Squared Exponential",
+      "Power Law",
+      "Power Law w/ Cutoff",
+      "Mat\u00e9rn (\u03bd=1.5)",
+      "Mat\u00e9rn (\u03bd=2.5)"
+    ],
+    "best_model_aic": "Exponential",
+    "model_results": [
+      {
+        "name": "Exponential",
+        "aic": 141.0456750727845,
+        "bic": 145.95843355196365,
+        "r_squared": 0.9001325528859949,
+        "delta_aic": 0.0
+      },
+      {
+        "name": "Gaussian",
+        "aic": 148.1912463423436,
+        "bic": 153.10400482152275,
+        "r_squared": 0.8794716340820717,
+        "delta_aic": 7.145571269559099
+      },
+      {
+        "name": "Squared Exponential",
+        "aic": 148.1912463641405,
+        "bic": 153.10400484331967,
+        "r_squared": 0.8794716340129363,
+        "delta_aic": 7.1455712913560205
+      },
+      {
+        "name": "Power Law",
+        "aic": 152.69468300356553,
+        "bic": 157.6074414827447,
+        "r_squared": 0.8643067778719551,
+        "delta_aic": 11.649007930781039
+      },
+      {
+        "name": "Power Law w/ Cutoff",
+        "aic": 144.26519361013183,
+        "bic": 150.8155382490374,
+        "r_squared": 0.8968755644767682,
+        "delta_aic": 3.2195185373473407
+      },
+      {
+        "name": "Mat\u00e9rn (\u03bd=1.5)",
+        "aic": 143.0289224162384,
+        "bic": 147.94168089541756,
+        "r_squared": 0.894781988523512,
+        "delta_aic": 1.983247343453911
+      },
+      {
+        "name": "Mat\u00e9rn (\u03bd=2.5)",
+        "aic": 144.44487742028826,
+        "bic": 149.35763589946743,
+        "r_squared": 0.8907873967320175,
+        "delta_aic": 3.399202347503774
+      }
+    ]
+  },
+  "best_fit": {
+    "model_name": "Exponential",
+    "amplitude": 0.11063102749615712,
+    "amplitude_error": 0.006247481624735963,
+    "lambda_km": 4446.893285429443,
+    "lambda_error": 788.7053674910894,
+    "offset": -0.018756218483477877,
+    "offset_error": 0.005695602733342434,
+    "r_squared": 0.9001325528859949,
+    "n_bins": 38
+  },
+  "exponential_fit": {
+    "model": "C(r) = A * exp(-r/lambda) + C0",
+    "amplitude": 0.11063102749615712,
+    "amplitude_error": 0.006247481624735963,
+    "lambda_km": 4446.893285429443,
+    "lambda_error": 788.7053674910894,
+    "offset": -0.018756218483477877,
+    "offset_error": 0.005695602733342434,
+    "r_squared": 0.9001325528859949,
+    "n_bins": 38
+  },
+  "tep_interpretation": {
+    "tep_consistent": true,
+    "correlation_length_assessment": "TEP-consistent",
+    "signal_strength": "Strong",
+    "best_model_vs_exponential": "Best model: Exponential (\u0394AIC = 0.00)"
+  }
+}

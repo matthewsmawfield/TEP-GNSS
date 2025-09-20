@@ -465,7 +465,7 @@ def download_small_real_clk_samples() -> bool:
     successes = {"igs_combined": 0, "code": 0, "esa_final": 0}
     downloaded = {"igs_combined": [], "code": [], "esa_final": []}
 
-    # Get date range from centralized configuration
+    # Get date range from centralized configuration (fail-fast: no defaults)
     try:
         date_start_s, date_end_s = TEPConfig.get_date_range()
         ds = datetime.fromisoformat(date_start_s)
@@ -476,12 +476,7 @@ def download_small_real_clk_samples() -> bool:
         date_list = [ds + timedelta(days=i) for i in range((de - ds).days + 1)]
         print_status(f"Using date filter {ds.date()} → {de.date()} ({len(date_list)} days)", "INFO")
     except (ValueError, TypeError) as e:
-        print_status(f"Invalid date configuration, using default range: {e}", "ERROR")
-        # Fallback to default range
-        ds = datetime(2023, 1, 1)
-        de = datetime(2025, 6, 30)
-        date_list = [ds + timedelta(days=i) for i in range((de - ds).days + 1)]
-        print_status(f"Using fallback date range {ds.date()} → {de.date()} ({len(date_list)} days)", "INFO")
+        raise RuntimeError(f"Invalid date configuration in TEPConfig: {e}. Set TEP_DATE_START and TEP_DATE_END.")
 
     # Per-center known-good seeds (used only if no explicit date range supplied)
     igs_seed = datetime(2024, 1, 10)
@@ -619,9 +614,11 @@ def download_small_real_clk_samples() -> bool:
     return True
 
 def main():
-    print("TEP GNSS Analysis - STEP 1: Data Acquisition")
+    print("="*80)
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 1: Data Acquisition")
     print("Acquiring authoritative GNSS data and coordinates")
-    print("="*60)
+    print("="*80)
 
     (PACKAGE_ROOT / "logs").mkdir(exist_ok=True)
 

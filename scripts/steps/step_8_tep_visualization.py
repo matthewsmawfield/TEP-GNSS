@@ -87,7 +87,7 @@ def print_status(text: str, status: str = "INFO"):
     prefixes = {
         "INFO": "ℹ️ ",
         "SUCCESS": "✅",
-        "WARNING": "⚠️ ",
+        "WARNING": "⚠️",
         "ERROR": "❌",
         "PROCESSING": "🔄"
     }
@@ -1371,12 +1371,10 @@ def generate_summary_report(all_results, output_file):
     return report
 
 def main():
-    """Main analysis function for Step 8"""
-    
-    print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v1.0")
-    print("STEP 8: Visualization and Export")
-    print("Creating publication-quality figures and comprehensive data exports")
+    """Main function to generate all TEP visualizations"""
+    print("="*80)
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 8: TEP Visualization")
     print("="*80)
     
     # Setup paths

@@ -54,6 +54,11 @@ def csv_count(p: Path) -> int:
         return -1
 
 def main():
+    print("="*80)
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 0: Provenance Documentation")
+    print("="*80)
+    
     out_dir = ROOT / 'results' / 'outputs'
     out_dir.mkdir(parents=True, exist_ok=True)
 

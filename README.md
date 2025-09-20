@@ -1,7 +1,7 @@
 # TEP-GNSS: Global Time Echoes Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.2 (Jaipur)  
+**Version:** v0.3 (Jaipur)  
 **Date:** September 17, 2025  
 **DOI:** [10.5281/zenodo.17148714](https://doi.org/10.5281/zenodo.17148714)
 
@@ -60,17 +60,27 @@ python scripts/steps/step_8_tep_visualization.py
 
 ### Configuration
 
-Key environment variables:
+### v0.3 Configuration (Published Method Defaults)
 
+**Core Analysis Settings:**
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis (v0.3 method) |
+| `TEP_COHERENCY_F1` | 1e-5 | Lower frequency bound (10 μHz) |
+| `TEP_COHERENCY_F2` | 5e-4 | Upper frequency bound (500 μHz) |
+| `TEP_BINS` | 40 | Distance bins for correlation analysis |
+
+**Processing Settings:**
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `TEP_PROCESS_ALL_CENTERS` | 1 | Process CODE, IGS, and ESA data |
 | `TEP_WORKERS` | auto | Number of parallel workers |
-| `TEP_BINS` | 40 | Distance bins for correlation analysis |
-| `TEP_MAX_DISTANCE_KM` | 13000 | Maximum analysis distance |
-| `TEP_USE_PHASE_BAND` | 0 | Use band-limited phase analysis (10-500 μHz) |
-| `TEP_COHERENCY_F1` | 1e-5 | Lower frequency bound (Hz) for phase band |
-| `TEP_COHERENCY_F2` | 5e-4 | Upper frequency bound (Hz) for phase band |
+| `TEP_BOOTSTRAP_ITER` | 1000 | Bootstrap iterations for confidence intervals |
+
+**Simple Command for v0.3 Results:**
+```bash
+python scripts/steps/step_3_tep_correlation_analysis.py
+```
 
 ## Data Sources
 
@@ -85,7 +95,7 @@ All data sourced directly from official repositories. No synthetic or fallback d
 Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format
 - `results/figures/`: Generated visualizations
-- `TEP-GNSS_manuscript_v0.2_Jaipur.md`: Comprehensive analysis report
+- `TEP-GNSS_manuscript_v0.3_Jaipur.md`: Comprehensive analysis report
 
 ## Scientific Background
 

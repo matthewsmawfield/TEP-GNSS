@@ -1,284 +1,129 @@
 {
   "analysis_center": "IGS_COMBINED",
-  "timestamp": "2025-09-14T23:52:50.334441",
+  "timestamp": "2025-09-20T18:06:23.654434",
   "method": {
     "type": "phase_alignment_index",
     "formula": "cos(phase(CSD))"
   },
   "data_summary": {
-    "total_pairs": 14244831,
-    "files_processed": 965,
-    "files_total": 965,
-    "bins_used": 28,
+    "total_pairs": 114808,
+    "files_processed": 20,
+    "files_total": 20,
+    "bins_used": 15,
     "distance_range_km": [
-      70.44840781162318,
-      12135.341492745252
+      949.7054593523862,
+      12118.902389593512
     ],
     "coherence_range": [
-      -0.10636625963577825,
-      0.37061178727185046
+      -0.03703947113415037,
+      0.21193528186489313
     ],
-    "mean_coherence": 0.12445367967861312
+    "mean_coherence": 0.08322879426094329
   },
   "model_comparison": {
     "models_tested": [
       "Exponential",
       "Gaussian",
+      "Squared Exponential",
       "Power Law",
-      "Mat\u00e9rn (\u03bd=1.5)"
+      "Power Law w/ Cutoff",
+      "Mat\u00e9rn (\u03bd=1.5)",
+      "Mat\u00e9rn (\u03bd=2.5)"
     ],
-    "best_model_aic": "Gaussian",
+    "best_model_aic": "Squared Exponential",
     "model_results": [
       {
         "name": "Exponential",
-        "aic": -103.08202150797771,
-        "bic": -99.0854079774521,
-        "r_squared": -0.3818389776278204,
-        "delta_aic": 13.027024777748238
+        "aic": 13.11095729370334,
+        "bic": 15.235107897009968,
+        "r_squared": 0.9105055186690358,
+        "delta_aic": 1.7627005881500715
       },
       {
         "name": "Gaussian",
-        "aic": -116.10904628572595,
-        "bic": -112.11243275520035,
-        "r_squared": 0.1322361646048794,
+        "aic": 11.348256705569941,
+        "bic": 13.472407308876571,
+        "r_squared": 0.9204278951593504,
+        "delta_aic": 1.667288529461075e-11
+      },
+      {
+        "name": "Squared Exponential",
+        "aic": 11.348256705553268,
+        "bic": 13.4724073088599,
+        "r_squared": 0.9204278951594388,
         "delta_aic": 0.0
       },
       {
         "name": "Power Law",
-        "aic": -82.55675121652712,
-        "bic": -78.56013768600151,
-        "r_squared": -1.8761729455010032,
-        "delta_aic": 33.552295069198834
+        "aic": 49.314632044338296,
+        "bic": 51.43878264764493,
+        "r_squared": 2.220446049250313e-16,
+        "delta_aic": 37.96637533878503
+      },
+      {
+        "name": "Power Law w/ Cutoff",
+        "aic": 15.822116917474915,
+        "bic": 18.654317721883757,
+        "r_squared": 0.9061603378691208,
+        "delta_aic": 4.473860211921647
       },
       {
         "name": "Mat\u00e9rn (\u03bd=1.5)",
-        "aic": -111.76903278964978,
-        "bic": -107.77241925912418,
-        "r_squared": -0.013251839148254785,
-        "delta_aic": 4.340013496076168
+        "aic": 11.66477875275789,
+        "bic": 13.788929356064521,
+        "r_squared": 0.9187309659062252,
+        "delta_aic": 0.3165220472046215
+      },
+      {
+        "name": "Mat\u00e9rn (\u03bd=2.5)",
+        "aic": 11.41443133740615,
+        "bic": 13.538581940712778,
+        "r_squared": 0.920076076030431,
+        "delta_aic": 0.0661746318528813
       }
     ]
   },
   "exponential_fit": {
     "model": "C(r) = A * exp(-r/lambda) + C0",
-    "amplitude": 0.350589571247461,
-    "amplitude_error": 0.017442681979405128,
-    "lambda_km": 3398.9336332651596,
-    "lambda_error": 339.6496540457016,
-    "offset": -0.034470001752266874,
-    "offset_error": 0.007048339167247578,
-    "r_squared": 0.9608789770252778,
-    "n_bins": 28
+    "amplitude": 0.3489962537664393,
+    "amplitude_error": 0.046303884013008466,
+    "lambda_km": 3466.316144673641,
+    "lambda_error": 811.3407105216123,
+    "offset": -0.04723073553255517,
+    "offset_error": 0.014781450879211403,
+    "r_squared": 0.9105055186690358,
+    "n_bins": 15
   },
   "jackknife_analysis": {
     "enabled": true,
-    "lambda_mean": 3416.0305264761832,
-    "lambda_std": 92.99351544814442,
-    "n_samples": 20,
+    "lambda_mean": 3373.79489219098,
+    "lambda_std": 185.54650639707185,
+    "n_samples": 15,
     "lambda_values": [
-      3398.734043744745,
-      3350.823342415569,
-      3413.788295170238,
-      3370.7763378667096,
-      3384.9332612388084,
-      3555.377476516429,
-      3347.15754585681,
-      3348.690976443128,
-      3358.8995295412774,
-      3342.1978963400115,
-      3450.933131624636,
-      3428.90645226687,
-      3444.2554665828493,
-      3303.4065097725697,
-      3396.5558155925705,
-      3299.2759068169876,
-      3600.8923606602307,
-      3602.999588992639,
-      3347.15754585681,
-      3574.8490462237764
+      3176.7241559362456,
+      3218.125577232192,
+      3215.5338712641537,
+      3420.594720935068,
+      3218.125577232192,
+      3792.058179063898,
+      3197.9709001604756,
+      3215.5338712641537,
+      3420.594720935068,
+      3552.3055119656506,
+      3604.6185558071534,
+      3428.6826037793603,
+      3325.902710217793,
+      3215.5338712641537,
+      3604.6185558071534
     ]
   },
-  "anisotropy_analysis": {
-    "sector_results": {
-      "N": {
-        "lambda_km": 1989.0503849373547,
-        "amplitude": 0.6096478206591324,
-        "n_pairs": 12633,
-        "n_bins": 8
-      },
-      "NE": {
-        "lambda_km": 1611.4526955459453,
-        "amplitude": 0.6578007671988452,
-        "n_pairs": 14542,
-        "n_bins": 7
-      },
-      "E": {
-        "lambda_km": 310.17629270649036,
-        "amplitude": 1.0460813578725285,
-        "n_pairs": 8852,
-        "n_bins": 7
-      },
-      "SE": {
-        "lambda_km": 19999.99999999909,
-        "amplitude": 0.6506246170407333,
-        "n_pairs": 7695,
-        "n_bins": 7
-      },
-      "S": {
-        "lambda_km": 1889.9185242635822,
-        "amplitude": 0.6455676560554829,
-        "n_pairs": 7069,
-        "n_bins": 7
-      },
-      "SW": {
-        "lambda_km": 19999.99999810658,
-        "amplitude": 0.6456322523248553,
-        "n_pairs": 8223,
-        "n_bins": 7
-      },
-      "W": {
-        "lambda_km": 3662.4271956400767,
-        "amplitude": 0.3218978450949245,
-        "n_pairs": 8030,
-        "n_bins": 7
-      },
-      "NW": {
-        "lambda_km": 19999.999999988973,
-        "amplitude": 0.49396968045230166,
-        "n_pairs": 14534,
-        "n_bins": 7
-      }
-    },
-    "lambda_mean": 8682.87813639851,
-    "lambda_std": 8806.925496587082,
-    "coefficient_of_variation": 1.0142864333968442,
-    "anisotropy_category": "extreme",
-    "n_sectors": 8,
-    "interpretation": "Extreme anisotropy (systematic artifact likely)",
-    "tep_assessment": "Investigate alignment with Earth motion vectors",
-    "earth_motion_analysis": {
-      "rotation_analysis": {
-        "ew_lambda_mean": 1986.3017441732836,
-        "ns_lambda_mean": 1939.4844546004683,
-        "ew_ns_ratio": 1.024139038321119,
-        "rotation_aligned": false,
-        "interpretation": "E-W/N-S ratio = 1.02 (minimal rotation effect)"
-      },
-      "dipole_analysis": {
-        "strongest_direction": "SE",
-        "strongest_lambda": 19999.99999999909,
-        "weakest_direction": "E",
-        "weakest_lambda": 310.17629270649036,
-        "dipole_ratio": 64.47946045613625,
-        "dipole_strength": 2.267660952737908
-      },
-      "sector_lambda_values": {
-        "N": 1989.0503849373547,
-        "NE": 1611.4526955459453,
-        "E": 310.17629270649036,
-        "SE": 19999.99999999909,
-        "S": 1889.9185242635822,
-        "SW": 19999.99999810658,
-        "W": 3662.4271956400767,
-        "NW": 19999.999999988973
-      },
-      "assessment": {
-        "rotation_signature": false,
-        "dipole_strength": 2.267660952737908,
-        "earth_motion_consistency": "Moderate"
-      }
-    }
-  },
-  "temporal_propagation_analysis": {
-    "analysis_type": "Complete Earth Motion Temporal Propagation Analysis",
-    "regional_signatures": {
-      "Asia": {
-        "mean_correlation": 0.013308448861249529,
-        "std_correlation": 0.71461250631683,
-        "weighted_correlation": 0.11314480642459473,
-        "correlation_strength": 0.47632661249874614,
-        "n_pairs": 19938,
-        "utc_offset": 8,
-        "longitude_center": 98.04759988594435,
-        "latitude_center": 3.341413417642874
-      },
-      "Europe": {
-        "mean_correlation": 0.022026099494949172,
-        "std_correlation": 0.71833456664538,
-        "weighted_correlation": 0.12386109274004192,
-        "correlation_strength": 0.4858597869920381,
-        "n_pairs": 38684,
-        "utc_offset": 1,
-        "longitude_center": 13.915543997219503,
-        "latitude_center": 13.729418830880862
-      },
-      "Americas": {
-        "mean_correlation": 0.018056412149473074,
-        "std_correlation": 0.7310505383059909,
-        "weighted_correlation": 0.07678223226147232,
-        "correlation_strength": 0.4840128942324447,
-        "n_pairs": 22956,
-        "utc_offset": -6,
-        "longitude_center": -70.5198395682644,
-        "latitude_center": 21.221035613801064
-      }
-    },
-    "rotation_propagation": {
-      "region_sequence": [
-        "Asia",
-        "Europe",
-        "Americas"
-      ],
-      "correlation_by_region": [
-        0.11314480642459473,
-        0.12386109274004192,
-        0.07678223226147232
-      ],
-      "utc_offsets": [
-        8,
-        1,
-        -6
-      ],
-      "longitude_centers": [
-        98.04759988594435,
-        13.915543997219503,
-        -70.5198395682644
-      ],
-      "correlation_gradient": [
-        0.010716286315447188,
-        -0.018181287081561207,
-        -0.0470788604785696
-      ],
-      "gradient_strength": 0.023594769875765368,
-      "longitude_correlation": 0.7374959053051894,
-      "rotation_signature_detected": false,
-      "interpretation": "No clear rotation propagation pattern",
-      "tep_assessment": "Spatial correlations without clear temporal propagation"
-    },
-    "orbital_analysis": {
-      "implemented": false,
-      "note": "Requires multi-month time-series data for seasonal variation detection",
-      "framework_ready": true,
-      "expected_signature": "365-day modulation in correlation patterns as Earth orbits through field"
-    },
-    "galactic_motion_analysis": {
-      "implemented": false,
-      "note": "Requires multi-year data for galactic motion signature detection",
-      "framework_ready": true,
-      "expected_signature": "Secular drift in correlation patterns aligned with solar system motion (~220 km/s toward Cygnus)",
-      "galactic_motion_vector": {
-        "velocity_km_s": 220,
-        "direction_ra_hours": 18.0,
-        "direction_dec_degrees": 30.0
-      }
-    },
-    "implementation_status": "COMPLETE - Full multi-scale Earth motion analysis implemented",
-    "scientific_significance": "Ultimate TEP test - temporal propagation proves Earth motion through structured field"
-  },
+  "advanced_analyses_note": "LOSO/LODO, anisotropy, and temporal analyses moved to Step 5",
   "bootstrap_ci": null,
   "tep_interpretation": {
     "tep_consistent": true,
     "correlation_length_assessment": "TEP-consistent",
     "signal_strength": "Strong"
-  }
+  },
+  "loso_analysis": null,
+  "lodo_analysis": null
 }

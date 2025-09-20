@@ -1245,7 +1245,7 @@ def analyze_circular_statistics(root_dir):
     return results
 
 def main():
-    """Main analysis function for Step 7"""
+    """Main function to run all advanced analyses."""
     import sys
 
     # ------------------------------------------------------------
@@ -1273,8 +1273,8 @@ def main():
     ac_arg = args.analysis_center
 
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v1.0")
-    print("STEP 7: Advanced Analysis")
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 7: Advanced TEP Analysis")
     print("Comprehensive TEP validation through advanced statistical methods")
     print("="*80)
     

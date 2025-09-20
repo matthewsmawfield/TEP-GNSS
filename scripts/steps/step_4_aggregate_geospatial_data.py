@@ -84,7 +84,8 @@ def compute_azimuth(lat1, lon1, lat2, lon2):
 def main():
     """Main function to find, aggregate, and enrich pair-level data."""
     print("\n" + "="*80)
-    print("TEP GNSS Analysis - STEP 4: Geospatial Data Processing")
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 4: Geospatial Data Processing")
     print("Enriching correlation data with spatial metrics")
     print("="*80)
 

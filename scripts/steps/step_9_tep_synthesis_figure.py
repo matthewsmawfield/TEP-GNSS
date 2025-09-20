@@ -85,21 +85,17 @@ def create_panel_a(ax):
             
             print(f"Loading {center}: A={amplitude:.3f}, λ={lambda_val:.0f}, C={offset:.3f}")
             
-            # Create data points
-            distances = np.linspace(100, 11000, 20)
-            coherences = exp_decay_model(distances, amplitude, lambda_val, offset)
-            
-            # Add small amount of realistic scatter
-            np.random.seed(42 + i * 10)
-            noise = np.random.normal(0, 0.003, len(coherences))
-            noisy_coherences = coherences + noise
+            # Load real binned data produced in Step 3
+            binned_file = results_dir / 'outputs' / f'step_3_correlation_data_{center}.csv'
+            df_binned = pd.read_csv(binned_file)
+            x_data = df_binned['distance_km'].values
+            y_data = df_binned['mean_coherence'].values
             
             # Track all y values
-            all_y_values.extend(noisy_coherences)
-            all_y_values.extend(coherences)
+            all_y_values.extend(y_data)
             
-            # Plot data points
-            ax.scatter(distances, noisy_coherences, color=color, alpha=0.8, 
+            # Plot real data points
+            ax.scatter(x_data, y_data, color=color, alpha=0.8, 
                       s=30, marker=marker, label=f'{label} data', zorder=3,
                       edgecolors='white', linewidth=0.5)
             
@@ -253,9 +249,9 @@ def create_panel_c(ax):
         all_y_values.extend(null_means + null_errors)
         all_y_values.extend(null_means - null_errors)
         
-        # Site-themed null data with better contrast
+        # Site-themed null data
         ax.errorbar(valid_bins_null, null_means, yerr=null_errors,
-                   fmt='s-', color='#4A90C2', linewidth=1.8, markersize=4, 
+                   fmt='s-', color='#495773', linewidth=1.8, markersize=4, 
                    capsize=2.5, label='Distance-scrambled null', alpha=0.8,
                    markeredgecolor='white', markeredgewidth=0.5)
         
@@ -307,6 +303,11 @@ def create_panel_c(ax):
 
 def main():
     """Generate site-themed figure."""
+    print("="*80)
+    print("TEP GNSS Analysis Package v0.3")
+    print("STEP 9: Synthesis Figure Generation")
+    print("="*80)
+    
     set_site_themed_style()
     
     print("="*60)

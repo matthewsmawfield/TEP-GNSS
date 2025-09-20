@@ -20,7 +20,7 @@ Parallel Processing:
 - Uses ProcessPoolExecutor with configurable worker count
 - Each worker processes one .CLK file independently
 - Results aggregated in distance bins to minimize memory overhead
-- Batch processing with checkpointing for fault tolerance
+- Batch processing with optional checkpointing (TEP_RESUME=1 to enable)
 
 Inputs:
   - data/raw/{igs,esa,code}/*.CLK.gz files
@@ -30,18 +30,25 @@ Outputs:
   - results/outputs/step_3_correlation_{ac}.json
   - results/outputs/step_3_correlation_data_{ac}.csv
 
-Environment Variables:
-  - TEP_BINS: Number of distance bins (default: 25, optimized for signal/noise)
+Environment Variables (v0.3 defaults for published methodology):
+  
+  CORE ANALYSIS:
+  - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.3 method)
+  - TEP_COHERENCY_F1: Lower frequency bound Hz (default: 1e-5, 10 μHz)
+  - TEP_COHERENCY_F2: Upper frequency bound Hz (default: 5e-4, 500 μHz)
+  - TEP_BINS: Number of distance bins (default: 40)
   - TEP_MAX_DISTANCE_KM: Maximum distance for analysis (default: 13000)
-  - TEP_MIN_BIN_COUNT: Minimum pairs per bin (default: 200)
-  - TEP_WORKERS: Number of parallel workers (default: CPU count). Backward compatible with TEP_STEP4_WORKERS
-  - TEP_PROCESS_ALL_CENTERS: Process all centers if '1' (default: CODE only)
+  
+  PROCESSING:
+  - TEP_PROCESS_ALL_CENTERS: Process all centers (default: 1)
+  - TEP_WORKERS: Number of parallel workers (default: CPU count)
+  - TEP_BOOTSTRAP_ITER: Bootstrap iterations for CI (default: 1000)
+  - TEP_RESUME: Resume from checkpoint (default: 0, set to 1 to enable)
+  
+  LEGACY/TESTING:
+  - TEP_USE_REAL_COHERENCY: Use real coherency method (default: 0)
   - TEP_MAX_FILES_PER_CENTER: Limit files for testing (default: unlimited)
-  - TEP_BOOTSTRAP_ITER: Number of bootstrap iterations for CI (default: 1000 if not set; 0 to disable)
-  - TEP_BOOTSTRAP_WORKERS: Parallel workers for bootstrap (default: CPU count)
-  - TEP_USE_REAL_COHERENCY: Use band-averaged real coherency instead of cos(phase) if '1' (default: 0)
-  - TEP_COHERENCY_F1: Lower frequency for coherency band in Hz (default: 0.001)
-  - TEP_COHERENCY_F2: Upper frequency for coherency band in Hz (default: 0.01)
+  - TEP_MIN_BIN_COUNT: Minimum pairs per bin (default: 200)
 
 Author: Matthew Lukin Smawfield
 Date: September 2025
@@ -55,7 +62,7 @@ import json
 import gzip
 import itertools
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Optional
 import pandas as pd
 import numpy as np
@@ -66,7 +73,21 @@ import multiprocessing as mp
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 import gc
-from glob import glob # New import for finding pair-level files
+import re
+
+# Worker-global context to reduce pickling overhead per task
+WORKER_COORDS_DF = None
+WORKER_EDGES = None
+WORKER_NUM_BINS = None
+WORKER_AC = None
+
+def _init_worker_context(coords_df, edges, num_bins, ac):
+    """Initializer to load heavy context once per worker process."""
+    global WORKER_COORDS_DF, WORKER_EDGES, WORKER_NUM_BINS, WORKER_AC
+    WORKER_COORDS_DF = coords_df
+    WORKER_EDGES = edges
+    WORKER_NUM_BINS = num_bins
+    WORKER_AC = ac
 
 # Anchor to package root
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,6 +100,23 @@ from scripts.utils.exceptions import (
     TEPAnalysisError, safe_csv_read, safe_json_read, safe_json_write,
     validate_file_exists, validate_directory_exists
 )
+
+# ----------------------------
+# Scientific Constants
+# ----------------------------
+# These thresholds are based on the TEP theory and empirical observations from GNSS data.
+# They are centralized here for clarity, maintainability, and to avoid "magic numbers".
+
+# Earth Motion Analysis Thresholds
+ROTATION_SIGNATURE_GRADIENT_STRENGTH = 0.05  # Minimum standard deviation of correlation gradient to be considered significant
+ROTATION_SIGNATURE_LONGITUDE_CORR = 0.3     # Minimum correlation between longitude and regional correlation strength
+
+# Anisotropy Analysis Thresholds (Coefficient of Variation of lambda_km)
+ANISOTROPY_CV_MODERATE_LOWER = 0.2          # Lower bound for moderate anisotropy, consistent with Earth's motion through a structured field
+ANISOTROPY_CV_MODERATE_UPPER = 0.5          # Upper bound for moderate anisotropy
+ANISOTROPY_CV_ISOTROPIC_THRESHOLD = 0.1     # Below this value, the field is suspiciously uniform (potential artifact)
+ANISOTROPY_CV_CHAOTIC_THRESHOLD = 0.8       # Above this value, variation is too high (potential artifact)
+DIPOLE_STRENGTH_THRESHOLD = 0.3             # Minimum dipole strength to be considered a strong indicator of Earth motion
 
 def print_status(text: str, status: str = "INFO"):
     """Print verbose status message with timestamp"""
@@ -97,7 +135,7 @@ def fit_bootstrap_task(args):
         rng = np.random.default_rng(seed_idx)
         
         # Block bootstrap to handle mild intra-bin correlation
-        block_size = 5
+        block_size = 10  # Larger blocks for more realistic bootstrap CI
         n_bins = len(distances)
         n_blocks = (n_bins + block_size - 1) // block_size  # Ceiling division
         
@@ -118,7 +156,7 @@ def fit_bootstrap_task(args):
         popt_bs, _ = curve_fit(
             correlation_model, d_bs, c_bs, p0=p0,
             sigma=1.0/np.sqrt(w_bs),
-            bounds=([1e-10, 100, -1], [2, 20000, 1]),
+            bounds=([1e-10, 100, -1], [5, 20000, 1]),
             maxfev=3000
         )
         return popt_bs
@@ -150,7 +188,7 @@ def gaussian_model(r, amplitude, length_scale, offset):
 
 def power_law_model(r, amplitude, alpha, offset):
     """Power law correlation model: C(r) = A * r^(-α) + C₀"""
-    return amplitude * np.power(r + 1e-10, -alpha) + offset  # Small offset to avoid r=0
+    return amplitude * np.power(r + 1e-10, -alpha) + offset  # Small offset (0.1mm) to avoid r=0
 
 def matern_model(r, amplitude, length_scale, offset, nu=1.5):
     """Matérn correlation model with fixed ν=1.5: C(r) = A * (1 + √3*r/l) * exp(-√3*r/l) + C₀"""
@@ -163,12 +201,14 @@ def squared_exponential_model(r, amplitude, length_scale, offset):
 
 def power_law_with_cutoff_model(r, amplitude, alpha, cutoff_km, offset):
     """Power law with an exponential cutoff."""
-    return amplitude * np.power(r + 1e-9, -alpha) * np.exp(-r / cutoff_km) + offset
+    return amplitude * np.power(r + 1e-9, -alpha) * np.exp(-r / cutoff_km) + offset  # Small offset (1nm) to avoid r=0
 
 def matern_general_model(r, amplitude, length_scale, offset, nu):
     """
     General Matérn correlation model for fixed ν.
     Uses special functions from scipy for non-trivial ν.
+    This implementation handles common cases ν=0.5, 1.5, 2.5 directly.
+    A fully general implementation for arbitrary ν would require scipy.special functions.
     """
     # This is a placeholder for the more complex implementation
     # required for arbitrary nu, which needs gamma functions and Bessel functions.
@@ -182,8 +222,7 @@ def matern_general_model(r, amplitude, length_scale, offset, nu):
         sqrt5_r_over_l = np.sqrt(5) * r / length_scale
         return amplitude * (1 + sqrt5_r_over_l + (5/3) * (r/length_scale)**2) * np.exp(-sqrt5_r_over_l) + offset
     else:
-        # Fallback for unsupported nu, or raise error
-        return np.full_like(r, offset)
+        raise ValueError(f"Unsupported Matérn ν={nu}; only ν in {0.5, 1.5, 2.5} are implemented")
 
 def compute_azimuth(lat1, lon1, lat2, lon2):
     """
@@ -262,7 +301,7 @@ def temporal_propagation_analysis(pair_data_with_coords, enable_temporal=True):
                 correlation_strength = float(np.sum(correlations > 0.1) / len(correlations))  # Fraction with strong correlation
                 
                 # Distance-weighted correlation (closer pairs have more weight)
-                weights = 1.0 / (distances + 100)  # Avoid division by zero
+                weights = 1.0 / (distances + 100.0)  # Add 100km offset to avoid division by zero
                 weighted_correlation = float(np.average(correlations, weights=weights))
                 
                 regional_time_signatures[region] = {
@@ -304,8 +343,9 @@ def temporal_propagation_analysis(pair_data_with_coords, enable_temporal=True):
                 gradient_strength = float(np.std(correlation_gradient))
                 longitude_correlation = float(np.corrcoef(rotation_longitudes, rotation_correlations)[0,1]) if len(rotation_correlations) > 1 else 0.0
                 
-                # Earth rotation signature assessment
-                has_rotation_signature = gradient_strength > 0.05 and abs(longitude_correlation) > 0.3
+                # Earth rotation signature assessment (using centralized constants)
+                has_rotation_signature = (gradient_strength > ROTATION_SIGNATURE_GRADIENT_STRENGTH and 
+                                          abs(longitude_correlation) > ROTATION_SIGNATURE_LONGITUDE_CORR)
                 
                 rotation_propagation = {
                     'region_sequence': available_regions,
@@ -421,7 +461,8 @@ def analyze_earth_motion_patterns(sector_stats):
     assessment = {
         'rotation_signature': bool(rotation_analysis.get('rotation_aligned', False)),
         'dipole_strength': float(dipole_analysis['dipole_strength']),
-        'earth_motion_consistency': 'Strong' if rotation_analysis.get('rotation_aligned', False) and dipole_analysis['dipole_strength'] > 0.3 else 'Moderate'
+        'earth_motion_consistency': 'Strong' if (rotation_analysis.get('rotation_aligned', False) and 
+                                               dipole_analysis['dipole_strength'] > DIPOLE_STRENGTH_THRESHOLD) else 'Moderate'
     }
     
     return {
@@ -500,7 +541,7 @@ def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
                         p0 = [c_range, 3000, bin_corrs.min()]
                         
                         popt, _ = curve_fit(correlation_model, bin_dists, bin_corrs, 
-                                           p0=p0, bounds=([1e-10, 100, -1], [2, 20000, 1]),
+                                           p0=p0, bounds=([1e-10, 100, -1], [5, 20000, 1]),
                                            maxfev=5000)
                         
                         sector_stats[sector] = {
@@ -521,10 +562,10 @@ def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
             # Detailed Earth motion analysis
             earth_motion_analysis = analyze_earth_motion_patterns(sector_stats)
             
-            # Anisotropy assessment for TEP (Earth moving through field)
-            is_moderate_anisotropy = 0.2 < lambda_cv < 0.5  # Expected for Earth motion through field
-            is_too_isotropic = lambda_cv < 0.1  # Suspiciously uniform (artifact?)
-            is_too_anisotropic = lambda_cv > 0.8  # Chaotic variation (artifact?)
+            # Anisotropy assessment for TEP (Earth moving through field) using centralized constants
+            is_moderate_anisotropy = ANISOTROPY_CV_MODERATE_LOWER < lambda_cv < ANISOTROPY_CV_MODERATE_UPPER
+            is_too_isotropic = lambda_cv < ANISOTROPY_CV_ISOTROPIC_THRESHOLD
+            is_too_anisotropic = lambda_cv > ANISOTROPY_CV_CHAOTIC_THRESHOLD
             
             if is_too_isotropic:
                 interpretation = 'Too isotropic (processing artifact likely - TEP should show Earth-motion anisotropy)'
@@ -583,7 +624,7 @@ def jackknife_analysis(distances, coherences, weights, station_pairs_info=None, 
             sigma = 1.0 / np.sqrt(weights[keep_indices])
             popt, _ = curve_fit(correlation_model, distances[keep_indices], coherences[keep_indices], 
                                p0=p0, sigma=sigma,
-                               bounds=([1e-10, 100, -1], [2, 20000, 1]),
+                               bounds=([1e-10, 100, -1], [5, 20000, 1]),
                                maxfev=5000)
             
             jackknife_lambdas.append(popt[1])  # lambda parameter
@@ -669,7 +710,7 @@ def run_leave_one_out_analysis(pair_level_df, analysis_type='loso'):
             popt, _ = curve_fit(
                 correlation_model, distances, coherences,
                 p0=p0, sigma=1.0/np.sqrt(weights),
-                bounds=([1e-10, 100, -1], [2, 20000, 1]),
+                bounds=([1e-10, 100, -1], [5, 20000, 1]),
                 maxfev=5000
             )
             lambda_estimates.append(popt[1]) # Append lambda
@@ -693,20 +734,23 @@ def fit_model_with_aic_bic(distances, coherences, weights, model_func, p0, bound
         popt, pcov = curve_fit(model_func, distances, coherences, 
                              p0=p0, sigma=sigma, bounds=bounds, maxfev=5000)
         
-        # Calculate residuals and statistics
+        # Calculate residuals and statistics (weighted consistently with sigma)
         y_pred = model_func(distances, *popt)
         residuals = coherences - y_pred
-        rss = np.sum(residuals**2)  # Residual sum of squares
+        # Weighted RSS consistent with sigma=1/sqrt(weights)
+        wrss = np.sum(weights * residuals**2)
         n = len(distances)
         k = len(popt)  # Number of parameters
         
-        # R-squared
-        ss_tot = np.sum((coherences - np.mean(coherences))**2)
-        r_squared = 1 - (rss / ss_tot) if ss_tot > 0 else 0
+        # Weighted R-squared
+        weighted_mean = np.average(coherences, weights=weights)
+        ss_tot = np.sum(weights * (coherences - weighted_mean)**2)
+        r_squared = 1 - (wrss / ss_tot) if ss_tot > 0 else 0
         
-        # AIC and BIC
-        aic = n * np.log(rss / n) + 2 * k
-        bic = n * np.log(rss / n) + k * np.log(n)
+        # AIC and BIC based on weighted RSS
+        wrss = max(wrss, 1e-12)  # Guard against perfect fits
+        aic = n * np.log(wrss / n) + 2 * k
+        bic = n * np.log(wrss / n) + k * np.log(n)
         
         return {
             'name': name,
@@ -715,7 +759,7 @@ def fit_model_with_aic_bic(distances, coherences, weights, model_func, p0, bound
             'r_squared': r_squared,
             'aic': aic,
             'bic': bic,
-            'rss': rss,
+            'rss': wrss,
             'n_params': k,
             'success': True
         }
@@ -729,7 +773,7 @@ def fit_model_with_aic_bic(distances, coherences, weights, model_func, p0, bound
             'r_squared': -np.inf
         }
 
-def compute_band_averaged_coherency(x, y, fs, f1=0.001, f2=0.01, nperseg=None):
+def compute_band_averaged_coherency(x, y, fs, f1=1e-5, f2=5e-4, nperseg=None):
     """
     Compute band-averaged real coherency between two time series.
     
@@ -783,10 +827,11 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
     """Process a single CLK file and extract plateau measurements for all station pairs"""
     
     # Check if file is within date range (if configured)
-    import re
     from datetime import datetime, timedelta
     
-    # Extract date from filename to filter by date range
+    # NOTE: Date filtering is now handled in the main process_analysis_center function
+    # before files are dispatched to workers. This block is retained as a safeguard
+    # but should not filter any files in a standard run.
     match = re.search(r'(\d{4})(\d{3})', file_path.name)
     if match:
         year = int(match.group(1))
@@ -796,12 +841,13 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
         # Get date range from config
         start_date_str = TEPConfig.get_str('TEP_DATE_START')
         end_date_str = TEPConfig.get_str('TEP_DATE_END')
-        start_date = datetime.fromisoformat(start_date_str)
-        end_date = datetime.fromisoformat(end_date_str)
-        
-        # Skip file if outside date range
-        if file_date < start_date or file_date > end_date:
-            return []
+        if start_date_str and end_date_str:
+            start_date = datetime.fromisoformat(start_date_str)
+            end_date = datetime.fromisoformat(end_date_str)
+            
+            # Skip file if outside date range
+            if file_date < start_date or file_date > end_date:
+                return []
     
     # Parse clock file
     records = []
@@ -814,32 +860,45 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
             f = open(file_path, 'r', errors='ignore')
         
         with f:
+            # Use a regular expression for robust parsing of .CLK files
+            # Handles variable whitespace and ensures all required fields are captured
+            clk_pattern = re.compile(
+                r'^AR\s+'          # Record type
+                r'(\S+)\s+'        # Station ID (non-whitespace)
+                r'(\d{4})\s+'      # Year
+                r'(\d{1,2})\s+'    # Month
+                r'(\d{1,2})\s+'    # Day
+                r'(\d{1,2})\s+'    # Hour
+                r'(\d{1,2})\s+'    # Minute
+                r'([\d.]+)\s+'     # Second (float)
+                r'(\d+)\s+'        # Number of data points
+                r'([-.\d]+)'       # Clock offset (float)
+            )
+
             for line in f:
-                if not line.startswith('AR '):  # AR = clock record
-                    continue
-                
-                parts = line.split()
-                if len(parts) < 10:
+                match = clk_pattern.match(line)
+                if not match:
                     continue
                 
                 try:
-                    # Extract station and time information
-                    station = parts[1]
-                    
+                    # Extract captured groups
+                    (station, year_str, month_str, day_str, hour_str, 
+                     minute_str, second_str, _, clock_offset_str) = match.groups()
+
                     # Parse time: YYYY MM DD HH MM SS.ffffff
-                    year = int(parts[2])
-                    month = int(parts[3]) 
-                    day = int(parts[4])
-                    hour = int(parts[5])
-                    minute = int(parts[6])
-                    second_float = float(parts[7])
+                    year = int(year_str)
+                    month = int(month_str) 
+                    day = int(day_str)
+                    hour = int(hour_str)
+                    minute = int(minute_str)
+                    second_float = float(second_str)
                     second = int(second_float)
                     microsecond = int((second_float - second) * 1_000_000)
                     
                     timestamp = pd.Timestamp(year, month, day, hour, minute, second, microsecond)
                     
                     # Clock offset (in seconds)
-                    clock_offset = float(parts[9])
+                    clock_offset = float(clock_offset_str)
                     
                     records.append({
                         'timestamp': timestamp,
@@ -907,8 +966,8 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
             
             # Compute cross-power plateau and phase
             use_real_coherency = os.getenv('TEP_USE_REAL_COHERENCY', '0') == '1'
-            f1 = float(os.getenv('TEP_COHERENCY_F1', '0.001'))
-            f2 = float(os.getenv('TEP_COHERENCY_F2', '0.01'))
+            f1 = float(os.getenv('TEP_COHERENCY_F1', '1e-5'))  # Default to v0.3 published method
+            f2 = float(os.getenv('TEP_COHERENCY_F2', '5e-4'))  # Default to v0.3 published method
             
             plateau_value, plateau_phase = compute_cross_power_plateau(
                 series1_common, series2_common, fs=fs_hz,
@@ -981,7 +1040,7 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
         return plateau_records
                 
     except Exception as e:
-        return []
+        raise RuntimeError(f"Failed processing CLK file '{file_path}': {e}")
 
 def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: float, 
                                use_real_coherency: bool = False, f1: float = 0.001, f2: float = 0.01) -> Tuple[float, float]:
@@ -1027,8 +1086,8 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         if len(frequencies) < 2:
             return np.nan, np.nan
         
-        # Optional band-limited phase averaging
-        use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '0') == '1'
+        # Band-limited phase averaging (v0.3 published method default)
+        use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '1') == '1'  # Default to v0.3 method
         if use_phase_band:
             # Select frequency band and compute representative phase from band-averaged coherency
             band_mask = (frequencies > 0) & (frequencies >= f1) & (frequencies <= f2)
@@ -1036,14 +1095,17 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
                 return np.nan, np.nan
             band_csd = cross_psd[band_mask]
             
-            # Correct approach: magnitude-weighted phase average
+            # Correct approach: magnitude-weighted phase average using circular statistics
             magnitudes = np.abs(band_csd)
             if np.sum(magnitudes) == 0:
                 return np.nan, np.nan
             phases = np.angle(band_csd)
             
-            # Weight phases by their magnitudes to get representative phase
-            weighted_phase = np.average(phases, weights=magnitudes)
+            # Weight phases by their magnitudes using circular statistics to handle phase wrapping
+            # Convert phases to complex unit vectors, average, then extract phase
+            complex_phases = np.exp(1j * phases)
+            weighted_complex = np.average(complex_phases, weights=magnitudes)
+            weighted_phase = np.angle(weighted_complex)
             avg_magnitude = np.mean(magnitudes)  # Representative magnitude
             
             return float(avg_magnitude), float(weighted_phase)
@@ -1084,7 +1146,12 @@ def ecef_to_geodetic(x: float, y: float, z: float) -> Tuple[float, float, float]
     
     for _ in range(5):  # Usually converges in 3-4 iterations
         N = a / np.sqrt(1 - e2 * np.sin(lat)**2)
-        height = p / np.cos(lat) - N
+        # Handle near-pole cases where cos(lat) approaches zero
+        cos_lat = np.cos(lat)
+        if abs(cos_lat) < 1e-10:  # Near poles
+            height = abs(z) - b  # Approximate height at poles
+        else:
+            height = p / cos_lat - N
         lat = np.arctan2(z, p * (1 - e2 * N / (N + height)))
     
     # Convert to degrees
@@ -1151,7 +1218,7 @@ def great_circle_distance(lat1: float, lon1: float, lat2: float, lon2: float) ->
     --------
     float : Distance in kilometers
     """
-    R = 6371.0088  # Mean Earth radius in km (WGS-84)
+    R = 6371.0088  # Mean Earth radius in km (WGS-84 standard value)
     
     # Convert to radians
     lat1_rad = np.radians(lat1)
@@ -1159,10 +1226,12 @@ def great_circle_distance(lat1: float, lon1: float, lat2: float, lon2: float) ->
     lat2_rad = np.radians(lat2)
     lon2_rad = np.radians(lon2)
     
-    # Haversine formula
+    # Haversine formula with numerical stability for antipodal points
     dlat = lat2_rad - lat1_rad
     dlon = lon2_rad - lon1_rad
     a = np.sin(dlat/2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon/2)**2
+    # Clip 'a' to [0,1] to handle floating-point errors at antipodal points
+    a = np.clip(a, 0.0, 1.0)
     c = 2 * np.arcsin(np.sqrt(a))
     
     return R * c
@@ -1189,16 +1258,22 @@ def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.Data
             coord1 = coords_df.loc[code1]
             coord2 = coords_df.loc[code2]
         
-        # Check if lat/lon coordinates are available
-        if 'lat' in coord1 and 'lon' in coord1 and 'lat' in coord2 and 'lon' in coord2:
-            lat1 = float(coord1['lat']) if not pd.isna(coord1['lat']) else None
-            lon1 = float(coord1['lon']) if not pd.isna(coord1['lon']) else None
-            lat2 = float(coord2['lat']) if not pd.isna(coord2['lat']) else None
-            lon2 = float(coord2['lon']) if not pd.isna(coord2['lon']) else None
+        # Check if lat/lon coordinates are available (support multiple schemas)
+        lat_fields = ['lat', 'lat_deg', 'latitude']
+        lon_fields = ['lon', 'lon_deg', 'longitude']
+        def _get_first_valid(obj, fields):
+            for f in fields:
+                if f in obj and not pd.isna(obj[f]):
+                    return float(obj[f])
+            return None
+        lat1 = _get_first_valid(coord1, lat_fields)
+        lon1 = _get_first_valid(coord1, lon_fields)
+        lat2 = _get_first_valid(coord2, lat_fields)
+        lon2 = _get_first_valid(coord2, lon_fields)
             
-            if lat1 is not None and lon1 is not None and lat2 is not None and lon2 is not None:
-                # Use great-circle distance
-                return great_circle_distance(lat1, lon1, lat2, lon2)
+        if lat1 is not None and lon1 is not None and lat2 is not None and lon2 is not None:
+            # Use great-circle distance
+            return great_circle_distance(lat1, lon1, lat2, lon2)
         
         # Otherwise convert ECEF to geodetic and use great-circle
         if 'X' in coord1 and 'Y' in coord1 and 'Z' in coord1:
@@ -1222,17 +1297,17 @@ def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.Data
     except (KeyError, IndexError):
         return None
 
-def process_file_worker(args):
-    """Worker function to process a single CLK file and return aggregated bin data"""
+def process_file_worker(clk_file: Path):
+    """Worker function to process a single CLK file and return aggregated bin data.
+    Uses worker-global context set by the initializer to avoid re-pickling large objects."""
     try:
-        # Backward-compatible args unpacking: accept 4 or 5 items
-        if isinstance(args, (list, tuple)) and len(args) == 5:
-            clk_file, coords_df, edges, num_bins, ac = args
-        elif isinstance(args, (list, tuple)) and len(args) == 4:
-            clk_file, coords_df, edges, num_bins = args
-            ac = None
-        else:
-            raise ValueError("Invalid worker args")
+        global WORKER_COORDS_DF, WORKER_EDGES, WORKER_NUM_BINS, WORKER_AC
+        coords_df = WORKER_COORDS_DF
+        edges = WORKER_EDGES
+        num_bins = WORKER_NUM_BINS
+        ac = WORKER_AC
+        if coords_df is None or edges is None or num_bins is None:
+            raise RuntimeError("Worker context not initialized")
 
         # Processing functions are now integrated directly in this script
         
@@ -1266,11 +1341,12 @@ def process_file_worker(args):
             
         df_file = df_file[df_file['dist_km'] > 0].copy()
         
-        # Optionally write pair-level outputs for Step 4 (real-only)
-        write_pair_level = os.getenv('TEP_WRITE_PAIR_LEVEL', '1') in ['1', 'true', 'TRUE', 'True']  # Default enabled for anisotropy
+        # Always write pair-level outputs for downstream steps (Steps 4-7)
+        # This is required for complete pipeline functionality
+        write_pair_level = True  # Always enabled - no reason to disable
         enable_anisotropy = os.getenv('TEP_ENABLE_ANISOTROPY', '1') == '1'
         
-        if write_pair_level or enable_anisotropy:
+        if write_pair_level:
             pair_dir = ROOT / 'results' / 'tmp'
             pair_dir.mkdir(parents=True, exist_ok=True)
             ac_tag = ac if ac else 'unknown'
@@ -1361,9 +1437,29 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         print_status(f"No {ac.upper()} data directory found: {clk_dir}", "ERROR")
         return None
     
-    clk_files = list(clk_dir.glob("*.CLK.gz"))
+    all_clk_files = sorted(list(clk_dir.glob("*.CLK.gz")))
+    
+    # Pre-filter files by date range for accurate logging and efficiency
+    start_date_str = TEPConfig.get_str('TEP_DATE_START')
+    end_date_str = TEPConfig.get_str('TEP_DATE_END')
+    clk_files = []
+    if start_date_str and end_date_str:
+        start_date = datetime.fromisoformat(start_date_str)
+        end_date = datetime.fromisoformat(end_date_str)
+        
+        for f in all_clk_files:
+            match = re.search(r'(\d{4})(\d{3})', f.name)
+            if match:
+                year = int(match.group(1))
+                day_of_year = int(match.group(2))
+                file_date = datetime(year, 1, 1) + timedelta(days=day_of_year - 1)
+                if start_date <= file_date <= end_date:
+                    clk_files.append(f)
+    else:
+        clk_files = all_clk_files # No date range specified
+
     if not clk_files:
-        print_status(f"No {ac.upper()} .CLK.gz files found", "WARNING")
+        print_status(f"No {ac.upper()} .CLK.gz files found in the specified date range", "WARNING")
         return None
     
     if max_files:
@@ -1384,8 +1480,8 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     print_status(f"Distance bin edges: {edges[0]:.1f}, {edges[1]:.1f}, ..., {edges[-2]:.1f}, {edges[-1]:.1f} km", "INFO")
     
     # Get number of workers using centralized configuration
-    num_workers = TEPConfig.get_worker_count('TEP_STEP4_WORKERS')
-    print_status(f"Using {num_workers} parallel workers for processing (max available: {mp.cpu_count()})", "INFO")
+    num_workers = TEPConfig.get_worker_count()
+    print_status(f"Using {num_workers} parallel workers ({mp.cpu_count()} CPU cores available)", "INFO")
     
     # Initialize aggregation arrays
     agg_sum_coh = np.zeros(num_bins)
@@ -1405,8 +1501,9 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     total_pairs_kept = 0
     successful_files = 0
     
-    # Try to resume from checkpoint
-    if os.getenv('TEP_RESUME', '1') != '0' and checkpoint_file.exists():
+    # Try to resume from checkpoint (disabled by default for clean runs)
+    resume_enabled = os.getenv('TEP_RESUME', '0') == '1'
+    if resume_enabled and checkpoint_file.exists():
         try:
             state = np.load(checkpoint_file, allow_pickle=True)
             agg_sum_coh = state['agg_sum_coh']
@@ -1420,6 +1517,13 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         except Exception as e:
             print_status(f"Failed to resume checkpoint: {e}", "WARNING")
             processed_files = set()
+    else:
+        # Clean start - remove any existing checkpoint
+        if checkpoint_file.exists():
+            checkpoint_file.unlink()
+            print_status(f"Starting fresh analysis - removed existing checkpoint", "INFO")
+        else:
+            print_status(f"Starting fresh analysis", "INFO")
     
     # Filter out already processed files
     remaining_files = [f for f in clk_files if f.name not in processed_files]
@@ -1427,21 +1531,21 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     if not remaining_files:
         print_status("All files already processed!", "SUCCESS")
     else:
-        # Process files with parallel workers
-        worker_args = [(f, coords_df, edges, num_bins, ac) for f in remaining_files]
+        # Process files with parallel workers (use initializer to set shared context)
+        worker_files = remaining_files
         
         # Process in batches to allow periodic checkpointing
         batch_size = max(10, num_workers * 2)
         
         for batch_start in range(0, len(remaining_files), batch_size):
-            batch_args = worker_args[batch_start:batch_start + batch_size]
             batch_files = remaining_files[batch_start:batch_start + batch_size]
             
             print_status(f"Processing batch {batch_start//batch_size + 1}: {len(batch_files)} files", "PROCESS")
             
-            with ProcessPoolExecutor(max_workers=num_workers) as executor:
-                future_to_file = {executor.submit(process_file_worker, arg): arg[0] 
-                                for arg in batch_args}
+            with ProcessPoolExecutor(max_workers=num_workers,
+                                     initializer=_init_worker_context,
+                                     initargs=(coords_df, edges, num_bins, ac)) as executor:
+                future_to_file = {executor.submit(process_file_worker, f): f for f in batch_files}
                 
                 for future in as_completed(future_to_file):
                     clk_file = future_to_file[future]
@@ -1539,44 +1643,44 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                 'func': correlation_model,
                 'name': 'Exponential',
                 'p0': [c_range, 3000, coherences.min()],
-                'bounds': ([1e-10, 100, -1], [2, 20000, 1])
+                'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 'func': gaussian_model,
                 'name': 'Gaussian',
                 'p0': [c_range, 3000, coherences.min()],
-                'bounds': ([1e-10, 100, -1], [2, 20000, 1])
+                'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 'func': squared_exponential_model,
                 'name': 'Squared Exponential',
                 'p0': [c_range, 3000, coherences.min()],
-                'bounds': ([1e-10, 100, -1], [2, 20000, 1])
+                'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 'func': power_law_model,
                 'name': 'Power Law',
-                'p0': [c_range, 2.0, coherences.min()],
-                'bounds': ([1e-10, 0.1, -1], [2, 10, 1])
+                'p0': [c_range, 5, coherences.min()],
+                'bounds': ([1e-10, 0.1, -1], [5, 10, 1])
             },
             {
                 'func': power_law_with_cutoff_model,
                 'name': 'Power Law w/ Cutoff',
                 'p0': [c_range, 1.0, 5000, coherences.min()],
-                'bounds': ([1e-10, 0.1, 1000, -1], [2, 5, 20000, 1])
+                'bounds': ([1e-10, 0.1, 1000, -1], [5, 10, 20000, 1])
             },
             {
                 'func': matern_model, # This is Matérn with ν=1.5
                 'name': 'Matérn (ν=1.5)',
                 'p0': [c_range, 3000, coherences.min()],
-                'bounds': ([1e-10, 100, -1], [2, 20000, 1])
+                'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 # Matérn with ν=2.5 by wrapping the general function
                 'func': lambda r, amp, l, off: matern_general_model(r, amp, l, off, nu=2.5),
                 'name': 'Matérn (ν=2.5)',
                 'p0': [c_range, 3000, coherences.min()],
-                'bounds': ([1e-10, 100, -1], [2, 20000, 1])
+                'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             }
         ]
         
@@ -1604,21 +1708,27 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             delta_aic = result['aic'] - best_model['aic']
             print(f"{result['name']:15s} | {result['aic']:8.2f} | {result['bic']:8.2f} | {result['r_squared']:6.3f} | {delta_aic:6.2f}")
         
-        # Use exponential model parameters for TEP analysis (regardless of best fit)
-        exp_result = next((r for r in model_results if r['name'] == 'Exponential' and r['success']), None)
-        if not exp_result:
-            print_status("Exponential model fit failed", "ERROR")
-            return None
-            
-        amplitude, lambda_km, offset = exp_result['params']
-        param_errors = np.sqrt(np.diag(exp_result['covariance']))
+        # Use best AIC model parameters for primary analysis
+        best_result = best_model
+        amplitude, lambda_km, offset = best_result['params']
+        param_errors = np.sqrt(np.diag(best_result['covariance']))
         amplitude_err, lambda_err, offset_err = param_errors
         
-        # R-squared for exponential model
-        coherences_pred = correlation_model(distances, amplitude, lambda_km, offset)
-        ss_res = np.sum(weights * (coherences - coherences_pred)**2)
-        ss_tot = np.sum(weights * (coherences - np.average(coherences, weights=weights))**2)
-        r_squared = 1 - ss_res/ss_tot if ss_tot > 0 else 0
+        # R-squared for best model (already computed)
+        r_squared = best_result['r_squared']
+        
+        # Also get exponential model results for TEP comparison
+        exp_result = next((r for r in model_results if r['name'] == 'Exponential' and r['success']), None)
+        if exp_result:
+            exp_amplitude, exp_lambda_km, exp_offset = exp_result['params']
+            exp_param_errors = np.sqrt(np.diag(exp_result['covariance']))
+            exp_amplitude_err, exp_lambda_err, exp_offset_err = exp_param_errors
+            exp_r_squared = exp_result['r_squared']
+        else:
+            # Fallback if exponential failed
+            exp_amplitude, exp_lambda_km, exp_offset = amplitude, lambda_km, offset
+            exp_amplitude_err, exp_lambda_err, exp_offset_err = amplitude_err, lambda_err, offset_err
+            exp_r_squared = r_squared
         
         # Jackknife analysis for λ stability
         enable_jackknife = os.getenv('TEP_ENABLE_JACKKNIFE', '1') == '1'
@@ -1637,8 +1747,8 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         # Get method information
         use_real_coherency = os.getenv('TEP_USE_REAL_COHERENCY', '0') == '1'
         if use_real_coherency:
-            f1 = float(os.getenv('TEP_COHERENCY_F1', '0.001'))
-            f2 = float(os.getenv('TEP_COHERENCY_F2', '0.01'))
+            f1 = float(os.getenv('TEP_COHERENCY_F1', '1e-5'))
+            f2 = float(os.getenv('TEP_COHERENCY_F2', '5e-4'))
             method_info = {
                 'type': 'band_averaged_real_coherency',
                 'frequency_band_hz': [f1, f2],
@@ -1677,8 +1787,8 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                     } for r in successful_models
                 ]
             },
-            'exponential_fit': {
-                'model': 'C(r) = A * exp(-r/lambda) + C0',
+            'best_fit': {
+                'model_name': best_result['name'],
                 'amplitude': float(amplitude),
                 'amplitude_error': float(amplitude_err),
                 'lambda_km': float(lambda_km),
@@ -1686,6 +1796,17 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                 'offset': float(offset),
                 'offset_error': float(offset_err),
                 'r_squared': float(r_squared),
+                'n_bins': len(distances)
+            },
+            'exponential_fit': {
+                'model': 'C(r) = A * exp(-r/lambda) + C0',
+                'amplitude': float(exp_amplitude),
+                'amplitude_error': float(exp_amplitude_err),
+                'lambda_km': float(exp_lambda_km),
+                'lambda_error': float(exp_lambda_err),
+                'offset': float(exp_offset),
+                'offset_error': float(exp_offset_err),
+                'r_squared': float(exp_r_squared),
                 'n_bins': len(distances)
             },
             'jackknife_analysis': {
@@ -1698,27 +1819,36 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             'advanced_analyses_note': 'LOSO/LODO, anisotropy, and temporal analyses moved to Step 5',
             'bootstrap_ci': None,  # placeholder updated if bootstrap enabled
             'tep_interpretation': {
-                'tep_consistent': bool(1000 < lambda_km < 10000 and r_squared > 0.3),
-                'correlation_length_assessment': 'TEP-consistent' if 1000 < lambda_km < 10000 else 'Outside TEP range',
-                'signal_strength': 'Strong' if r_squared > 0.5 else 'Moderate' if r_squared > 0.3 else 'Weak'
+                'tep_consistent': bool(1000 < exp_lambda_km < 10000 and exp_r_squared > 0.3),
+                'correlation_length_assessment': 'TEP-consistent' if 1000 < exp_lambda_km < 10000 else 'Outside TEP range',
+                'signal_strength': 'Strong' if exp_r_squared > 0.5 else 'Moderate' if exp_r_squared > 0.3 else 'Weak',
+                'best_model_vs_exponential': f'Best model: {best_result["name"]} (ΔAIC = {best_result["aic"] - exp_result["aic"]:.2f})' if exp_result else 'Exponential model failed'
             },
             'loso_analysis': None,  # Moved to Step 5
             'lodo_analysis': None   # Moved to Step 5
         }
         
-        print_status("PHASE-COHERENT FIT RESULTS:", "SUCCESS")
-        print(f"  Model: C(r) = A * exp(-r/λ) + C₀")
+        print_status("BEST MODEL FIT RESULTS:", "SUCCESS")
+        print(f"  Best Model: {best_result['name']} (AIC winner)")
         print(f"  Amplitude (A): {amplitude:.6f} ± {amplitude_err:.6f}")
         print(f"  Correlation Length (λ): {lambda_km:.1f} ± {lambda_err:.1f} km")
         print(f"  Offset (C₀): {offset:.6f} ± {offset_err:.6f}")
         print(f"  R-squared: {r_squared:.4f}")
+        if best_result['name'] != 'Exponential' and exp_result:
+            print_status("EXPONENTIAL MODEL (TEP) RESULTS:", "INFO")
+            print(f"  Amplitude (A): {exp_amplitude:.6f} ± {exp_amplitude_err:.6f}")
+            print(f"  Correlation Length (λ): {exp_lambda_km:.1f} ± {exp_lambda_err:.1f} km")
+            print(f"  Offset (C₀): {exp_offset:.6f} ± {exp_offset_err:.6f}")
+            print(f"  R-squared: {exp_r_squared:.4f}")
         
-        # TEP assessment
+        # TEP assessment (always based on exponential model)
         if results['tep_interpretation']['tep_consistent']:
             print_status("TEP-consistent signal detected", "SUCCESS")
-            print(f"  Correlation length λ = {lambda_km:.0f} km is in TEP range")
-            print(f"  R² = {r_squared:.3f} indicates {results['tep_interpretation']['signal_strength'].lower()} correlation structure")
+            print(f"  Exponential model: λ = {exp_lambda_km:.0f} km is in TEP range")
+            print(f"  R² = {exp_r_squared:.3f} indicates {results['tep_interpretation']['signal_strength'].lower()} correlation structure")
             print(f"  Phase-coherent analysis supports TEP predictions")
+            if best_result['name'] != 'Exponential':
+                print(f"  Note: {best_result['name']} model fits better (ΔAIC = {best_result['aic'] - exp_result['aic']:.2f})")
         else:
             print_status("Signal detected but not clearly TEP-consistent", "WARNING")
         
@@ -1730,6 +1860,24 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         with open(output_json, 'w') as f:
             json.dump(results, f, indent=2)
         print_status(f"Results saved: {output_json}", "SUCCESS")
+        
+        # Generate predictions for the best model
+        if best_result['name'] == 'Exponential':
+            coherences_pred = correlation_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Gaussian':
+            coherences_pred = gaussian_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Squared Exponential':
+            coherences_pred = squared_exponential_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Power Law':
+            coherences_pred = power_law_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Power Law w/ Cutoff':
+            coherences_pred = power_law_with_cutoff_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Matérn (ν=1.5)':
+            coherences_pred = matern_model(distances, *best_result['params'])
+        elif best_result['name'] == 'Matérn (ν=2.5)':
+            coherences_pred = matern_general_model(distances, best_result['params'][0], best_result['params'][1], best_result['params'][2], nu=2.5)
+        else:
+            coherences_pred = correlation_model(distances, *best_result['params'])  # Fallback to exponential
         
         # Save binned data
         binned_data = pd.DataFrame({
@@ -1750,20 +1898,28 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             print_status(f"Running bootstrap ({bootstrap_iter} iterations) for CI", "INFO")
 
             bs_amp, bs_lambda, bs_offset = [], [], []
+            p0_bootstrap = [amplitude, lambda_km, offset]
 
-            # Use sequential bootstrap to avoid pickling issues
-            for i in range(bootstrap_iter):
-                if i % 100 == 0:
-                    print_status(f"Bootstrap progress: {i}/{bootstrap_iter}", "INFO")
+            # Use ProcessPoolExecutor for parallel bootstrap
+            with ProcessPoolExecutor(max_workers=num_workers) as executor:
+                # Prepare arguments for each task
+                tasks = [(distances, coherences, weights, p0_bootstrap, i) for i in range(bootstrap_iter)]
                 
-                # Use the original exponential model parameters as initial guess
-                p0_bootstrap = [amplitude, lambda_km, offset]
-                result = fit_bootstrap_task((distances, coherences, weights, p0_bootstrap, i))
-                if result is not None:
-                    a_bs, l_bs, o_bs = result
-                    bs_amp.append(a_bs)
-                    bs_lambda.append(l_bs)
-                    bs_offset.append(o_bs)
+                # Submit tasks and get futures
+                future_to_iter = {executor.submit(fit_bootstrap_task, task): i for i, task in enumerate(tasks)}
+
+                completed_count = 0
+                for future in as_completed(future_to_iter):
+                    result = future.result()
+                    if result is not None:
+                        a_bs, l_bs, o_bs = result
+                        bs_amp.append(a_bs)
+                        bs_lambda.append(l_bs)
+                        bs_offset.append(o_bs)
+                    
+                    completed_count += 1
+                    if completed_count % 100 == 0:
+                         print_status(f"Bootstrap progress: {completed_count}/{bootstrap_iter}", "INFO")
 
             if bs_amp:
                 ci_low = 2.5
@@ -1805,7 +1961,7 @@ def main():
         bool: True if analysis completed successfully, False otherwise
     """
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v1.0")
+    print("TEP GNSS Analysis Package v0.3")
     print("STEP 3: Correlation Analysis")
     print("Detecting TEP signatures through phase-coherent clock correlation analysis")
     print("="*80)
@@ -1813,8 +1969,8 @@ def main():
     # Check if using alternative coherency method
     use_real_coherency = os.getenv('TEP_USE_REAL_COHERENCY', '0') == '1'
     if use_real_coherency:
-        f1 = float(os.getenv('TEP_COHERENCY_F1', '0.001'))
-        f2 = float(os.getenv('TEP_COHERENCY_F2', '0.01'))
+        f1 = float(os.getenv('TEP_COHERENCY_F1', '1e-5'))
+        f2 = float(os.getenv('TEP_COHERENCY_F2', '5e-4'))
         print(f"\nUsing band-averaged real coherency method")
         print(f"Frequency band: [{f1*1000:.1f}, {f2*1000:.1f}] mHz")
         print("Note: Full implementation requires time series data access")
@@ -1875,9 +2031,11 @@ def main():
         for ac, result in results.items():
             fit = result['exponential_fit']
             tep = result['tep_interpretation']
-            print(f"  {ac.upper()}: λ = {fit['lambda_km']:.1f} km, R² = {fit['r_squared']:.3f} ({tep['signal_strength']})")
+            best_fit = result['best_fit']
+            exp_fit = result['exponential_fit']
+            print(f"  {ac.upper()}: Best={best_fit['lambda_km']:.1f}km ({result['model_comparison']['best_model_aic']}), TEP={exp_fit['lambda_km']:.1f}km, R²={exp_fit['r_squared']:.3f} ({tep['signal_strength']})")
             if tep['tep_consistent']:
-                print(f"    TEP-consistent detection")
+                print(f"    ✅ TEP-consistent detection")
             else:
                 print(f"    ❓ Signal detected but not clearly TEP")
         

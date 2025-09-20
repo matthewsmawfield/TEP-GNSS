@@ -14,6 +14,7 @@ Theory: Temporal Equivalence Principle (TEP)
 import os
 from typing import Optional, Union, List
 from pathlib import Path
+import multiprocessing as mp
 
 
 class TEPConfig:
@@ -251,31 +252,18 @@ class TEPConfig:
         return limits
     
     @staticmethod
-    def get_worker_count(fallback_key: Optional[str] = None) -> int:
+    def get_worker_count(env_var: str = 'TEP_WORKERS') -> int:
         """
-        Get number of parallel workers with intelligent defaults.
-        Handles the TEP_WORKERS vs TEP_STEP4_WORKERS complexity.
-        
-        Args:
-            fallback_key: Optional fallback environment variable name
-            
-        Returns:
-            int: Number of workers to use
+        Get a valid worker count from an environment variable.
+        Caps the value at the number of available CPU cores to prevent over-subscription.
         """
-        # Primary worker count
-        workers = TEPConfig.get_optional_int('TEP_WORKERS')
-        if workers is not None:
-            return max(1, workers)
-        
-        # Fallback for backward compatibility
-        if fallback_key:
-            fallback_workers = TEPConfig.get_optional_int(fallback_key)
-            if fallback_workers is not None:
-                return max(1, fallback_workers)
-        
-        # Default to CPU count
-        import multiprocessing
-        return multiprocessing.cpu_count()
+        default_workers = mp.cpu_count()
+        try:
+            user_workers = int(os.getenv(env_var, default_workers))
+            # Cap at the number of physical cores
+            return max(1, min(user_workers, default_workers))
+        except (ValueError, TypeError):
+            return default_workers
     
     @staticmethod
     def get_date_range() -> tuple:
@@ -362,7 +350,7 @@ class TEPConfig:
         
         # Processing parameters
         logger_func("Processing Parameters:")
-        logger_func(f"  TEP_WORKERS: {cls.get_worker_count()}")
+        logger_func(f"  TEP_WORKERS: {cls.get_worker_count('TEP_WORKERS')}")
         logger_func(f"  TEP_MEMORY_LIMIT_GB: {cls.get_float('TEP_MEMORY_LIMIT_GB')}")
         
         # File limits

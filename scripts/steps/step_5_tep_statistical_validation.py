@@ -834,13 +834,10 @@ def process_analysis_center(ac: str) -> Dict:
         }
 
 def main():
-    """
-    Main function for advanced statistical validation.
-    """
-    print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v1.0")
+    """Main function to run all statistical validation tests."""
+    print("="*80)
+    print("TEP GNSS Analysis Package v0.3")
     print("STEP 5: Statistical Validation")
-    print("Rigorous validation through resampling and robustness testing")
     print("="*80)
     
     start_time = time.time()
