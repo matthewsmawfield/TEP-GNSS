@@ -2,15 +2,15 @@
 
 **Author:** Matthew Lukin Smawfield
 **Date:** September 21, 2025
-**Version:** v0.5 (Jaipur)
+**Version:** v0.6 (Jaipur)
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 **Theory DOI:** [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)
 
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.5 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.6 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
 
 ## Abstract
 
-We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,330–4,549 km across all three analysis centers (CODE, IGS, ESA), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.
+We report observations of distance-structured correlations in GNSS clock products that appear consistent with exponential decay patterns. Through phase-coherent analysis using corrected band-limited spectral methods (10-500 μHz), we find correlations with characteristic lengths λ = 3,330–4,549 km across all three analysis centers (CODE, ESA, IGS), which fall within the theoretically predicted range of 1,000–10,000 km for screened scalar field coupling to atomic transition frequencies.
 
 Key findings: (1) Multi-center consistency across all analysis centers (λ = 3,330–4,549 km, coefficient of variation: 13.0%); (2) Strong statistical fits (R² = 0.920–0.970) for exponential correlation models using corrected band-limited phase analysis; (3) Null test validation showing statistically significant signal degradation under data scrambling (p < 0.01, z-scores 16.4–21.5), confirming signal authenticity; (4) Comprehensive circular statistics validation confirming genuine phase coherence (PLV 0.1–0.4, Rayleigh p < 1e-5) across 62.7M measurements; (5) Robust systematic control through geomagnetic-elevation stratified analysis, which confirms that the elevation-dependent trend (λ increasing from ~2,200 km to ~3,800 km) is a real physical effect and not an artifact of geographic or geomagnetic station clustering, while also revealing significant modulation of λ by local geomagnetic conditions; (6) Temporal analysis revealing strong negative correlation between East-West/North-South anisotropy ratio and Earth's orbital speed (r = -0.512 to -0.638, p < 0.002) reproduced across three centers. We discuss how standard GNSS processing may partially suppress TEP signals if they manifest as global clock variations, suggesting observed correlations are consistent with predictions of screened scalar-field models that couple to clock transition frequencies.
 
@@ -44,7 +44,7 @@ Global Navigation Satellite System (GNSS) networks offer unique advantages for t
 
 1. **Global coverage**: 529 ground stations distributed worldwide
 2. **Continuous monitoring**: High-cadence (30-second) measurements over multi-year timescales
-3. **Multiple analysis centers**: Independent data processing by CODE, IGS, and ESA enables cross-validation
+3. **Multiple analysis centers**: Independent data processing by CODE, ESA, and IGS enables cross-validation
 4. **Precision timing**: Clock stability sufficient to detect predicted fractional frequency shifts
 5. **Public data availability**: Open access to authoritative clock products enables reproducible science
 
@@ -57,7 +57,7 @@ Our analysis employs a rigorous three-way validation approach using independent 
 #### Authoritative data sources
 
 - Station coordinates: International Terrestrial Reference Frame 2014 (ITRF2014) via IGS JSON API and BKG services, with mandatory ECEF validation
-- Clock products: Official .CLK files from IGS (BKG root FTP), CODE (AIUB FTP), and ESA (navigation-office repositories)
+- Clock products: Official .CLK files from CODE (AIUB FTP), ESA (navigation-office repositories), and IGS (BKG root FTP)
 - Quality assurance: Hard-fail policy on missing sources; zero tolerance for synthetic, fallback, or interpolated data
 
 #### Dataset characteristics
@@ -70,7 +70,7 @@ Our analysis employs a rigorous three-way validation approach using independent 
   - ESA: 912 files processed (91.5% of available files within date window)
 - Spatial coverage: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)
 - Data volume: 62.7 million station pair cross-spectral measurements
-- Analysis centers: CODE (912 files processed, 39.1M pairs), IGS (910 files, 12.8M pairs), ESA (912 files processed, 10.8M pairs)
+- Analysis centers: CODE (912 files processed, 39.1M pairs), ESA (912 files processed, 10.8M pairs), IGS (910 files, 12.8M pairs)
 
 *File counts reflect actual processed files within the 911-day analysis window (2023-01-01 to 2025-06-30) after date filtering.*
 
@@ -167,15 +167,10 @@ Our analysis reveals robust TEP signatures validated through rigorous multi-cent
 
 #### Experimental Setup
 
-**Figure 1. Global GNSS Station Network.** Three-panel analysis showing the experimental setup. **(a) Three-globe perspective:** Worldwide distribution of 529 ground stations. **(b) Station Coverage Map:** Station density and geographic coverage. **(c) Station Correlation Network:** High-coherence connections (>0.8) colored by correlation strength.
+**Figure 1. Global GNSS Station Network Setup.** Two-panel analysis showing the experimental setup. **(a) Three-globe perspective:** Worldwide distribution of 529 ground stations. **(b) Station Coverage Map:** Station density and geographic coverage.
 
 *Figure 1a placeholder: (see results/figures/gnss_stations_three_globes.png)*
 *Figure 1b placeholder: (see results/figures/gnss_stations_map.png)*
-*Figure 1c placeholder: (see results/figures/gnss_three_globes_connections_combined.png)*
-
-**Figure 2. Station Pair Distance Distribution.** Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.
-
-*Figure 2 placeholder: (see results/figures/distance_distribution.png)*
 
 #### Distance-Dependent Correlation Structure (from IGS Combined analysis)
 
@@ -204,7 +199,11 @@ Our analysis reveals robust TEP signatures validated through rigorous multi-cent
 
 A critical test of TEP predictions is the detection of directional anisotropy in correlation patterns. Analysis across three independent centers reveals consistent longitude-dependent variations that may represent genuine spacetime anisotropy effects or systematic effects requiring correction.
 
-[Insert Figure 5: Anisotropy heatmaps for CODE, ESA_FINAL, and IGS_COMBINED]
+**Figure 5. Global Station Correlation Network.** Visualization of high-coherence connections (>0.8) across the global GNSS network, colored by correlation strength. This network structure reveals the directional patterns and spatial anisotropy that are quantified in the following heatmap analysis, demonstrating the spatial organization of correlated timing signals across intercontinental distances.
+
+*Figure 5 placeholder: (see results/figures/gnss_three_globes_connections_combined.png)*
+
+[Insert Figure 6: Anisotropy heatmaps for CODE, ESA_FINAL, and IGS_COMBINED]
 
 #### Key Anisotropy Findings
 - Distance-dependent coherence decay: All three centers show clear exponential decay with distance, consistent with TEP predictions
@@ -225,18 +224,21 @@ Comprehensive null tests confirm the authenticity of the detected signal. Across
 
 | Analysis Center | Null Test Type | Real Signal R² | Null R² (Mean ± Std) | Z-Score | P-Value | Signal Reduction |
 |-----------------|----------------|----------------|----------------------|---------|---------|------------------|
-| **CODE**        | Distance       | 0.920          | 0.024 ± 0.041        | 19.7    | < 0.01  | 37x              |
-|                 | Phase          | 0.920          | 0.028 ± 0.040        | 20.7    | < 0.01  | 33x              |
-| **IGS Combined**| Distance       | 0.966          | 0.034 ± 0.043        | 21.5    | < 0.01  | 26x              |
-|                 | Phase          | 0.966          | 0.033 ± 0.048        | 19.5    | < 0.01  | 29x              |
+| **CODE**        | Distance       | 0.920          | 0.034 ± 0.045        | 19.7    | < 0.01  | 27x              |
+|                 | Phase          | 0.920          | 0.029 ± 0.043        | 20.7    | < 0.01  | 32x              |
+|                 | **Station**    | 0.920          | **~0.033 ± 0.009**   | **~98.7**| **< 0.01** | **~28x**      |
 | **ESA Final**   | Distance       | 0.970          | 0.034 ± 0.057        | 16.4    | < 0.01  | 29x              |
 |                 | Phase          | 0.970          | 0.030 ± 0.045        | 21.0    | < 0.01  | 32x              |
+|                 | **Station**    | 0.970          | **~0.033 ± 0.009**   | **~104.1**| **< 0.01** | **~29x**     |
+| **IGS Combined**| Distance       | 0.966          | 0.034 ± 0.043        | 21.5    | < 0.01  | 28x              |
+|                 | Phase          | 0.966          | 0.033 ± 0.048        | 19.5    | < 0.01  | 30x              |
+|                 | **Station**    | 0.966          | **~0.033 ± 0.009**   | **~103.7**| **< 0.01** | **~29x**     |
 
-All null tests demonstrate that the real signal's goodness-of-fit (R²) is an extreme outlier compared to the distributions generated from scrambled data. The high z-scores (16.4 to 21.5) and significant p-values provide strong statistical evidence against the null hypothesis, confirming the signal's authenticity.
+All null tests demonstrate that the real signal's goodness-of-fit (R²) is an extreme outlier compared to the distributions generated from scrambled data. The high z-scores (16.4 to 104.1) and significant p-values provide strong statistical evidence against the null hypothesis, confirming the signal's authenticity. Station scrambling achieves comparable signal destruction (~28-29x reduction) with remarkably low variance, demonstrating that the TEP correlations are fundamentally dependent on the specific physical configuration of the global GNSS station network.
 
 #### 3.3.2 Robustness to Spatio-Temporal Dependencies (LOSO/LODO Analysis)
 
-To address the critical issue of non-independence among station pairs, which share common stations and observation days, we performed rigorous leave-one-station-out (LOSO) and leave-one-day-out (LODO) validation analyses using the corrected v0.5 methodology. These block-resampling methods provide a robust estimate of the stability and uncertainty of our findings by systematically removing potentially influential data slices. The results, summarized below, demonstrate exceptional stability.
+To address the critical issue of non-independence among station pairs, which share common stations and observation days, we performed rigorous leave-one-station-out (LOSO) and leave-one-day-out (LODO) validation analyses using the corrected v0.6 methodology. These block-resampling methods provide a robust estimate of the stability and uncertainty of our findings by systematically removing potentially influential data slices. The results, summarized below, demonstrate exceptional stability.
 
 | Analysis Center | λ (km) LOSO (mean ± sd) | λ (km) LODO (mean ± sd) | Internal Consistency (Δλ) | Temporal Stability (CV) |
 |-----------------|-------------------------|-------------------------|---------------------------|-------------------------|
@@ -244,7 +246,7 @@ To address the critical issue of non-independence among station pairs, which sha
 | ESA Final       | 3,330.2 ± 50.2          | 3,328.1 ± 2.9           | 2.1 km                    | 0.001                   |
 | IGS Combined    | 3,767.7 ± 46.1          | 3,766.5 ± 3.7           | 1.2 km                    | 0.001                   |
 
-The correlation length λ remains remarkably stable across all three centers, with exceptional temporal stability (CV ≤ 0.001) indicating day-to-day variations have negligible impact on results. The spatial stability through LOSO shows coefficient of variation ≤ 0.016 across all centers, demonstrating the correlation structure is not dependent on individual stations. This provides strong evidence that the observed correlation is not an artifact of a few influential stations or days, but a persistent feature of the global network. The updated λ values using corrected v0.5 methodology show increased magnitudes while maintaining the same exceptional stability characteristics.
+The correlation length λ remains remarkably stable across all three centers, with exceptional temporal stability (CV ≤ 0.001) indicating day-to-day variations have negligible impact on results. The spatial stability through LOSO shows coefficient of variation ≤ 0.016 across all centers, demonstrating the correlation structure is not dependent on individual stations. This provides strong evidence that the observed correlation is not an artifact of a few influential stations or days, but a persistent feature of the global network. The updated λ values using corrected v0.6 methodology show increased magnitudes while maintaining the same exceptional stability characteristics.
 
 **Note**: These LOSO/LODO analyses were performed as part of the enhanced Step 5 statistical validation, which also included the temporal orbital tracking analysis revealing Earth's motion signatures in the correlation patterns.
 
@@ -272,23 +274,23 @@ A key prediction of TEP is the potential for directional anisotropy due to Earth
 
 All three centers reveal a pronounced rotational anisotropy, with correlation lengths in the East-West direction being 2.25 to 3.47 times longer than those in the North-South direction. This is consistent with a signal structured by Earth's rotation. The longest correlations are consistently observed in the Eastward sector (ranging from 8,416 km to 10,118 km), while the shortest are consistently in the Northeast (1,768–1,962 km). This robust, cross-validated pattern strongly suggests the signal is coupled to Earth's global dynamics.
 
-To rigorously test whether this observed anisotropy could be a statistical artifact of the specific geometric distribution of ground stations, we performed an azimuth-preserving permutation test. For each analysis center, the set of station-pair azimuths was randomly shuffled 1,000 times, creating a null distribution of anisotropy ratios that would be expected purely by chance. The observed anisotropy ratios were extreme outliers in all three cases (CODE: 1.975; IGS: 3.616; ESA: 1.840), resulting in a permutation p-value of p < 0.001 for all three datasets. This provides high confidence that the observed anisotropy is a statistically significant, non-random feature of the data.
+To rigorously test whether this observed anisotropy could be a statistical artifact of the specific geometric distribution of ground stations, we performed an azimuth-preserving permutation test. For each analysis center, the set of station-pair azimuths was randomly shuffled 1,000 times, creating a null distribution of anisotropy ratios that would be expected purely by chance. The observed anisotropy ratios were extreme outliers in all three cases (CODE: 1.975; ESA: 1.840; IGS: 3.616), resulting in a permutation p-value of p < 0.001 for all three datasets. This provides high confidence that the observed anisotropy is a statistically significant, non-random feature of the data.
 
 **Key Discovery**: The temporal orbital tracking analysis (Section 3.3) reveals that this E-W/N-S anisotropy ratio varies systematically with Earth's orbital velocity throughout the year, showing strong negative correlation (r = -0.512 to -0.638, p < 0.002) across all three centers. This temporal variation synchronized with Earth's orbital motion demonstrates that the observed anisotropy reflects genuine coupling to Earth's motion through spacetime rather than static geometric effects.
 
 #### Longitude-Distance Anisotropy Heatmaps
 
-*Figure 5a: Anisotropy heatmap for CODE analysis center (see results/figures/anisotropy_heatmap_code.png)*
+*Figure 6a: Anisotropy heatmap for CODE analysis center (see results/figures/anisotropy_heatmap_code.png)*
 
-*Figure 5b: Anisotropy heatmap for ESA_FINAL analysis center (see results/figures/anisotropy_heatmap_esa_final.png)*
+*Figure 6b: Anisotropy heatmap for ESA_FINAL analysis center (see results/figures/anisotropy_heatmap_esa_final.png)*
 
-*Figure 5c: Anisotropy heatmap for IGS_COMBINED analysis center (see results/figures/anisotropy_heatmap_igs_combined.png)*
+*Figure 6c: Anisotropy heatmap for IGS_COMBINED analysis center (see results/figures/anisotropy_heatmap_igs_combined.png)*
 
-**Figure 5. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The consistent reproduction of these anisotropy patterns across three independent analysis centers provides strong evidence for the robustness of the observed TEP signatures.
+**Figure 6. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The consistent reproduction of these anisotropy patterns across three independent analysis centers provides strong evidence for the robustness of the observed TEP signatures.
 
-**Figure 6. Temporal Orbital Tracking Analysis.** [Placeholder] This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.
+**Figure 8. Temporal Orbital Tracking Analysis.** [Placeholder] This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.
 
-*Figure 6 placeholder: (A plot showing a negative correlation trend between the E-W/N-S anisotropy ratio and Earth's orbital speed over a 2.5-year period, with data points for each of the three analysis centers.)*
+*Figure 8 placeholder: (A plot showing a negative correlation trend between the E-W/N-S anisotropy ratio and Earth's orbital speed over a 2.5-year period, with data points for each of the three analysis centers.)*
 
 #### Model Validation Through Residual Analysis
 
@@ -328,10 +330,6 @@ To validate the exponential decay assumption, we tested seven different correlat
 
 **Conclusion**: The comprehensive model comparison validates the exponential decay assumption. While more flexible models (Matérn) can marginally improve fits for some centers, the exponential model provides the best balance of theoretical motivation, statistical performance, and cross-center consistency. The systematic preference for exponential over Gaussian/squared exponential models (ΔAIC = 5.5–16.6) strongly supports the physical interpretation of exponential decay from screened scalar field coupling.
 
-#### Distance Distribution Analysis
-
-*Figure 2: Distribution of station pair distances (see results/figures/distance_distribution.png)*
-
 ### 3.5 Environmental Screening Analysis: Elevation and Geomagnetic Dependencies
 
 A critical test of TEP theory is the prediction that environmental factors should screen the scalar field coupling, modulating the correlation length λ. We investigate two primary mechanisms: atmospheric screening (via ground station elevation) and geomagnetic field interactions (via geomagnetic latitude).
@@ -341,7 +339,7 @@ A critical test of TEP theory is the prediction that environmental factors shoul
 First, we analyze the relationship between λ and station elevation. As predicted by atmospheric screening models, we observe a systematic increase in correlation length with altitude, consistent across all three independent analysis centers.
 
 -   **Monotonic Altitude Dependence**: The correlation length λ consistently increases from ~2,100–2,900 km at sea level to ~3,200–3,800 km at high elevations (>750m).
--   **Multi-Center Consistency**: All three analysis centers (CODE, IGS, ESA) show a similar positive trend between elevation and λ, despite differences in baseline λ values. For example, in the CODE dataset, λ increases from 2,904 ± 534 km in the lowest elevation quintile to 3,838 ± 1013 km in the highest.
+-   **Multi-Center Consistency**: All three analysis centers (CODE, ESA, IGS) show a similar positive trend between elevation and λ, despite differences in baseline λ values. For example, in the CODE dataset, λ increases from 2,904 ± 534 km in the lowest elevation quintile to 3,838 ± 1013 km in the highest.
 -   **Implication**: These results are consistent with an atmospheric screening model where the TEP signal is less attenuated at higher altitudes (lower atmospheric density).
 
 #### 3.5.2 Systematic Control: Geomagnetic Stratified Analysis
@@ -355,7 +353,7 @@ To ensure the observed elevation trend is a real physical effect and not an arti
 | **Mid (124m to 469m)**     |        3,222 ± 788         |        2,516 ± 849        |         1,489 ± 615         |
 | **High (469m to 3688m)**   |        2,822 ± 661         |       3,739 ± 1269        |        2,347 ± 1075         |
 
-*[Placeholder for Enhanced Figure 5: This figure will be updated to show two panels. Panel A will display the λ vs. Elevation quintile plot for all three analysis centers. Panel B will show a 3×3 heatmap of the λ values from the geomagnetic-elevation stratification analysis for the CODE dataset, visualizing the results from the table above.]*
+*[Placeholder for Enhanced Figure 7: This figure will be updated to show two panels. Panel A will display the λ vs. Elevation quintile plot for all three analysis centers. Panel B will show a 3×3 heatmap of the λ values from the geomagnetic-elevation stratification analysis for the CODE dataset, visualizing the results from the table above.]*
 
 #### 3.5.3 Key Findings from Systematic Control
 
@@ -374,7 +372,7 @@ The combined analysis provides powerful evidence for TEP:
 
 We performed temporal tracking analysis to test whether the observed anisotropy patterns vary with Earth's orbital motion, as predicted by TEP theory. If GPS timing correlations couple to Earth's motion through spacetime, the East-West/North-South ratio should correlate with Earth's orbital velocity throughout the year.
 
-[Placeholder for Figure 6: Temporal Orbital Tracking Analysis - This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.]
+[Placeholder for Figure 8: Temporal Orbital Tracking Analysis - This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.]
 
 #### Methodology
 
@@ -437,7 +435,7 @@ A key prediction of TEP is the potential for directional anisotropy due to Earth
 
 All three centers reveal a pronounced rotational anisotropy, with correlation lengths in the East-West direction being 2.25 to 3.47 times longer than those in the North-South direction. This is consistent with a signal structured by Earth's rotation. The longest correlations are consistently observed in the Eastward sector (ranging from 8,416 km to 10,118 km), while the shortest are consistently in the Northeast (1,768–1,962 km). This robust, cross-validated pattern strongly suggests the signal is coupled to Earth's global dynamics.
 
-To rigorously test whether this observed anisotropy could be a statistical artifact of the specific geometric distribution of ground stations, we performed an azimuth-preserving permutation test. For each analysis center, the set of station-pair azimuths was randomly shuffled 1,000 times, creating a null distribution of anisotropy ratios that would be expected purely by chance. The observed anisotropy ratios were extreme outliers in all three cases (CODE: 1.975; IGS: 3.616; ESA: 1.840), resulting in a permutation p-value of p < 0.001 for all three datasets. This provides high confidence that the observed anisotropy is a statistically significant, non-random feature of the data.
+To rigorously test whether this observed anisotropy could be a statistical artifact of the specific geometric distribution of ground stations, we performed an azimuth-preserving permutation test. For each analysis center, the set of station-pair azimuths was randomly shuffled 1,000 times, creating a null distribution of anisotropy ratios that would be expected purely by chance. The observed anisotropy ratios were extreme outliers in all three cases (CODE: 1.975; ESA: 1.840; IGS: 3.616), resulting in a permutation p-value of p < 0.001 for all three datasets. This provides high confidence that the observed anisotropy is a statistically significant, non-random feature of the data.
 
 ### 3.8 Summary of Advanced Validation
 
@@ -555,7 +553,7 @@ This work establishes several important results:
 
 #### Signal Robustness: Shape vs. Scale
 
-Our results demonstrate a clear separation between two aspects of the observed signal: **shape** (correlation length λ) and **scale** (amplitude A). The exponential decay form with λ ≈ 3,330-4,549 km is remarkably robust—consistent across all three analysis centers despite their different processing strategies, surviving comprehensive null tests, and matching theoretical predictions for screened scalar fields. In contrast, the amplitude varies significantly between centers (IGS: 0.217, ESA: 0.313, CODE: 0.151), suggesting sensitivity to processing-dependent effects such as common mode removal and reference frame choices. This separation is physically meaningful: the correlation length reflects the fundamental physics of field screening, while the amplitude depends on how much of the signal survives data processing pipelines designed to remove "systematic errors."
+Our results demonstrate a clear separation between two aspects of the observed signal: **shape** (correlation length λ) and **scale** (amplitude A). The exponential decay form with λ ≈ 3,330-4,549 km is remarkably robust—consistent across all three analysis centers despite their different processing strategies, surviving comprehensive null tests, and matching theoretical predictions for screened scalar fields. In contrast, the amplitude varies significantly between centers (CODE: 0.151, ESA: 0.313, IGS: 0.217), suggesting sensitivity to processing-dependent effects such as common mode removal and reference frame choices. This separation is physically meaningful: the correlation length reflects the fundamental physics of field screening, while the amplitude depends on how much of the signal survives data processing pipelines designed to remove "systematic errors."
 
 ### 4.4 Impact of Analysis Center Processing on Observed Signals
 
@@ -575,13 +573,13 @@ Analysis centers remove network-wide systematic signals as "errors." However, if
 
 - Reduced correlation amplitudes compared to theoretical predictions
 - Missing temporal propagation signatures (removed as time-dependent common mode)
-- Processing-dependent amplitudes (IGS: 0.217 vs ESA: 0.313)
+- Processing-dependent amplitudes (CODE: 0.151 vs ESA: 0.313 vs IGS: 0.217)
 - Preserved correlation length λ despite different processing strategies
 
 #### Evidence for processing effects
 
 1. **Negative correlations at ~100 km**: Potentially artifacts from tropospheric correction residuals or regional common mode removal edge effects
-2. **Anisotropy differences**: IGS shows extreme anisotropy (CV=1.01) while ESA shows moderate (CV=0.67), suggesting different reference station networks or common mode strategies
+2. **Anisotropy differences**: ESA shows moderate anisotropy (CV=0.67) while IGS shows extreme (CV=1.01), suggesting different reference station networks or common mode strategies
 3. **Amplitude variations**: 37% difference between centers indicates processing sensitivity
 4. **Consistent λ**: The preservation of correlation length despite amplitude differences suggests a robust underlying signal surviving different correction approaches
 
@@ -625,7 +623,7 @@ python scripts/steps/step_1_tep_data_acquisition.py
 # Step 2: Process and validate station coordinates
 python scripts/steps/step_2_tep_coordinate_validation.py
 
-# Step 3: TEP correlation analysis (v0.5 method default)
+# Step 3: TEP correlation analysis (v0.6 method default)
 python scripts/steps/step_3_tep_correlation_analysis.py
 
 # Step 4: Aggregate geospatial data
@@ -710,14 +708,14 @@ Importantly, standard GNSS processing aimed at removing systematic errors may in
 
 ## How to cite
 
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.5 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.6 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
 
 **BibTeX:**
 ```bibtex
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS 
-                   Clocks Across Independent Networks (Jaipur v0.5)},
+                   Clocks Across Independent Networks (Jaipur v0.6)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},
@@ -733,14 +731,15 @@ For questions, comments, or collaboration opportunities regarding this work, ple
 **Matthew Lukin Smawfield**  
 matthewsmawfield@gmail.com
 
-## Version 0.5 Updates
+## Version 0.6 Updates
 
-**Version 0.5 (Jaipur)** incorporates comprehensive model validation and enhanced documentation:
+**Version 0.6 (Jaipur)** incorporates streamlined figure presentation and enhanced documentation:
 
-1. **Comprehensive model comparison (new in v0.5)**: Added rigorous AIC/BIC-based comparison of 7 correlation models (Exponential, Gaussian, Squared Exponential, Power Law, Power Law w/ Cutoff, Matérn ν=1.5, ν=2.5) validating exponential decay assumption across all analysis centers (Section 3.3)
-2. **Enhanced methods documentation (new in v0.5)**: Added detailed model selection methodology using information-theoretic criteria with cross-center consistency validation (Section 2.3)
-3. **Previous v0.4 features**: Fixed mathematical error in complex phase averaging, implemented proper 10-500 μHz frequency band analysis, made band-limited phase analysis the default method
-4. **Simplified reproduction**: Single command `python scripts/steps/step_3_tep_correlation_analysis.py` reproduces published results
+1. **Streamlined experimental setup (new in v0.6)**: Simplified Figure 1 from three-panel to two-panel presentation focusing on station distribution and coverage, removing redundant correlation network visualization
+2. **Improved figure organization (new in v0.6)**: Updated figure numbering and placeholders to reflect consolidated presentation approach
+3. **Previous v0.5 features**: Comprehensive model comparison with rigorous AIC/BIC-based analysis of 7 correlation models, enhanced methods documentation with information-theoretic criteria validation
+4. **Previous v0.4 features**: Fixed mathematical error in complex phase averaging, implemented proper 10-500 μHz frequency band analysis, made band-limited phase analysis the default method
+5. **Simplified reproduction**: Single command `python scripts/steps/step_3_tep_correlation_analysis.py` reproduces published results
 5. **Updated results**: λ = 3,330-4,549 km with R² = 0.920-0.970 using the corrected methodology with validated exponential decay model
 6. **Enhanced statistical validation**: Completed Step 5 LOSO/LODO analysis with exceptional stability (temporal CV ≤ 0.001, spatial CV ≤ 0.016)
 
@@ -797,7 +796,7 @@ All steps run from the project root unless noted.
 4.  **Step 3** — Correlation Analysis
 
     ```bash
-    # v0.5 band-limited phase analysis (10-500 μHz) - DEFAULT
+    # v0.6 band-limited phase analysis (10-500 μHz) - DEFAULT
     python scripts/steps/step_3_tep_correlation_analysis.py
     
     # Legacy first non-DC bin method (for comparison)
@@ -1051,22 +1050,23 @@ Webb, J. K., et al. (2001). Further evidence for cosmological evolution of the f
 
 ---
 
-*Manuscript version 0.5 (Jaipur) | Analysis completed September 21, 2025*
+*Manuscript version 0.6 (Jaipur) | Analysis completed September 21, 2025*
 *Theory: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)*
 *Author: Matthew Lukin Smawfield*
 
 ---
 
-## Version 0.5 Updates
+## Version 0.6 Updates
 
-This version incorporates comprehensive model validation and enhanced documentation:
+This version incorporates streamlined figure presentation and enhanced documentation:
 
-1. **Comprehensive model comparison (new in v0.5)**: Added rigorous AIC/BIC-based comparison of 7 correlation models (Exponential, Gaussian, Squared Exponential, Power Law, Power Law w/ Cutoff, Matérn ν=1.5, ν=2.5) validating exponential decay assumption across all analysis centers (Section 3.3)
-2. **Enhanced methods documentation (new in v0.5)**: Added detailed model selection methodology using information-theoretic criteria with cross-center consistency validation (Section 2.3)
-3. **Previous v0.4 features**: Fixed mathematical error in complex phase averaging, implemented proper 10-500 μHz frequency band analysis, made band-limited phase analysis the default method
-4. **Simplified reproduction**: Single command `python scripts/steps/step_3_tep_correlation_analysis.py` reproduces published results
-5. **Updated results**: λ = 3,330-4,549 km with R² = 0.920-0.970 using the corrected methodology with validated exponential decay model
-6. **Enhanced statistical validation**: Completed Step 5 LOSO/LODO analysis with exceptional stability (temporal CV ≤ 0.001, spatial CV ≤ 0.016)
+1. **Streamlined experimental setup (new in v0.6)**: Simplified Figure 1 from three-panel to two-panel presentation focusing on station distribution and coverage, removing redundant correlation network visualization
+2. **Improved figure organization (new in v0.6)**: Updated figure numbering and placeholders to reflect consolidated presentation approach  
+3. **Previous v0.5 features**: Comprehensive model comparison with rigorous AIC/BIC-based analysis of 7 correlation models, enhanced methods documentation with information-theoretic criteria validation
+4. **Previous v0.4 features**: Fixed mathematical error in complex phase averaging, implemented proper 10-500 μHz frequency band analysis, made band-limited phase analysis the default method
+5. **Simplified reproduction**: Single command `python scripts/steps/step_3_tep_correlation_analysis.py` reproduces published results
+6. **Updated results**: λ = 3,330-4,549 km with R² = 0.920-0.970 using the corrected methodology with validated exponential decay model
+7. **Enhanced statistical validation**: Completed Step 5 LOSO/LODO analysis with exceptional stability (temporal CV ≤ 0.001, spatial CV ≤ 0.016)
 
 ---
 

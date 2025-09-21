@@ -30,10 +30,10 @@ Outputs:
   - results/outputs/step_3_correlation_{ac}.json
   - results/outputs/step_3_correlation_data_{ac}.csv
 
-Environment Variables (v0.5 defaults for published methodology):
+Environment Variables (v0.6 defaults for published methodology):
   
   CORE ANALYSIS:
-  - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.5 method)
+  - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.6 method)
   - TEP_COHERENCY_F1: Lower frequency bound Hz (default: 1e-5, 10 μHz)
   - TEP_COHERENCY_F2: Upper frequency bound Hz (default: 5e-4, 500 μHz)
   - TEP_BINS: Number of distance bins (default: 40)
@@ -1067,8 +1067,8 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         if len(frequencies) < 2:
             return np.nan, np.nan
         
-        # Band-limited phase averaging (v0.5 published method default)
-        use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '1') == '1'  # Default to v0.5 method
+        # Band-limited phase averaging (v0.6 published method default)
+        use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '1') == '1'  # Default to v0.6 method
         if use_phase_band:
             # Select frequency band and compute representative phase from band-averaged coherency
             band_mask = (frequencies > 0) & (frequencies >= f1) & (frequencies <= f2)
@@ -1977,7 +1977,7 @@ def main():
         bool: True if analysis completed successfully, False otherwise
     """
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.5")
+    print("TEP GNSS Analysis Package v0.6")
     print("STEP 3: Correlation Analysis")
     print("Detecting TEP signatures through phase-coherent clock correlation analysis")
     print("="*80)

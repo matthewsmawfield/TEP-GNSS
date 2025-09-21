@@ -12,6 +12,9 @@ psutil==5.9.8
 # Optional but common
 seaborn==0.13.2
 
+# Geomagnetic field calculations
+pyIGRF==0.4.1
+
 # Pin setuptools/wheel for reproducible builds (optional)
 setuptools==70.0.0
 wheel==0.43.0

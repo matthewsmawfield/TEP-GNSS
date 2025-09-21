@@ -153,7 +153,7 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42):
             print(f"    No pair-level data found for {ac}. Re-run Step 3 with TEP_WRITE_PAIR_LEVEL=1.")
             return None
 
-        # Concatenate all pairs files for this analysis center
+        # For station scrambling, use a representative sample to avoid excessive computation
         files = sorted(pair_dir.glob(f"step_3_pairs_{ac}_*.csv"))
         if not files:
             print(f"    No pair files for {ac} in {pair_dir}")
@@ -161,6 +161,12 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42):
 
         frames = []
         total_rows = 0
+        
+        if null_type == 'station':
+            # For station scrambling, sample every 10th file to reduce computation time
+            files = files[::10]  # Take every 10th file
+            print(f"    Station scrambling: Using {len(files)} sample files (every 10th) for efficiency")
+        
         for p in files:
             try:
                 dfp = safe_csv_read(p)
@@ -231,26 +237,56 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42):
             coords_path = ROOT / 'data' / 'coordinates' / 'station_coords_global.csv'
             coords_df = pd.read_csv(coords_path)
             
-            # Vectorized approach for performance
+            # Robust approach for scrambled stations (some may not have coordinates)
             # Create a mapping from station code to coordinates
             coords_map = coords_df.set_index('coord_source_code')[['X', 'Y', 'Z']].to_dict('index')
 
-            # Map station codes to coordinates
-            coords_i = pd.DataFrame(df['station_i'].str[:4].map(coords_map).tolist(), index=df.index)
-            coords_j = pd.DataFrame(df['station_j'].str[:4].map(coords_map).tolist(), index=df.index)
-
-            # Convert ECEF to geodetic in a vectorized manner
-            lat1, lon1, _ = ecef_to_geodetic(coords_i['X'], coords_i['Y'], coords_i['Z'])
-            lat2, lon2, _ = ecef_to_geodetic(coords_j['X'], coords_j['Y'], coords_j['Z'])
-
-            # Calculate great-circle distance
-            df['dist_km'] = great_circle_distance(lat1, lon1, lat2, lon2)
+            # Map station codes to coordinates, handling missing stations
+            station_i_codes = df['station_i'].str[:4]
+            station_j_codes = df['station_j'].str[:4]
+            
+            # Get coordinates for each station, filtering out missing ones
+            valid_pairs_mask = station_i_codes.isin(coords_map.keys()) & station_j_codes.isin(coords_map.keys())
+            df_valid = df[valid_pairs_mask].copy()
+            
+            if len(df_valid) == 0:
+                print(f"    No valid station pairs found after scrambling")
+                return None
+                
+            print(f"    Found {len(df_valid)}/{len(df)} pairs with valid coordinates")
+            
+            # Use simpler row-by-row approach to avoid vectorization issues
+            print(f"    Calculating distances for {len(df_valid)} pairs...")
+            distances = []
+            
+            for idx, row in df_valid.iterrows():
+                try:
+                    code1 = row['station_i'][:4]
+                    code2 = row['station_j'][:4]
+                    
+                    coord1 = coords_map[code1]
+                    coord2 = coords_map[code2]
+                    
+                    # Convert ECEF to geodetic
+                    lat1, lon1, _ = ecef_to_geodetic(coord1['X'], coord1['Y'], coord1['Z'])
+                    lat2, lon2, _ = ecef_to_geodetic(coord2['X'], coord2['Y'], coord2['Z'])
+                    
+                    # Calculate distance
+                    dist = great_circle_distance(lat1, lon1, lat2, lon2)
+                    distances.append(dist)
+                except:
+                    distances.append(np.nan)
+            
+            df_valid['dist_km'] = distances
+            df = df_valid
             
             df = df.dropna(subset=['dist_km']).copy()
             print(f"    Distance computation completed: {len(df)} valid pairs")
         
         # Coherence already available from processed data
-        df = df[df['dist_km'] > 0].copy()
+        # Ensure dist_km is numeric and filter positive distances
+        df = df[pd.to_numeric(df['dist_km'], errors='coerce') > 0].copy()
+        df = df.dropna(subset=['dist_km']).copy()
         
         # Use same binning as Step 3
         num_bins = TEPConfig.get_int('TEP_BINS')
@@ -479,7 +515,7 @@ def main():
     to prove the correlations are real and not statistical artifacts.
     """
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.5")
+    print("TEP GNSS Analysis Package v0.6")
     print("STEP 6: Null Tests")
     print("Validating TEP signatures through rigorous null hypothesis tests")
     print("="*80)

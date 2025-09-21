@@ -797,7 +797,7 @@ def main():
     VERBOSE = args.verbose
     
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.5")
+    print("TEP GNSS Analysis Package v0.6")
     print("STEP 7: Advanced TEP Analysis")
     print("Focused validation: Elevation, Circular Statistics, Model Comparison")
     print("="*80)
