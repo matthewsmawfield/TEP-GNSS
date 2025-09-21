@@ -797,7 +797,7 @@ All steps run from the project root unless noted.
 4.  **Step 3** — Correlation Analysis
 
     ```bash
-    # v0.4 band-limited phase analysis (10-500 μHz) - DEFAULT
+    # v0.5 band-limited phase analysis (10-500 μHz) - DEFAULT
     python scripts/steps/step_3_tep_correlation_analysis.py
     
     # Legacy first non-DC bin method (for comparison)
@@ -1051,7 +1051,7 @@ Webb, J. K., et al. (2001). Further evidence for cosmological evolution of the f
 
 ---
 
-*Manuscript version 0.4 (Jaipur) | Analysis completed September 21, 2025*
+*Manuscript version 0.5 (Jaipur) | Analysis completed September 21, 2025*
 *Theory: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)*
 *Author: Matthew Lukin Smawfield*
 

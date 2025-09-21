@@ -479,7 +479,7 @@ def main():
     to prove the correlations are real and not statistical artifacts.
     """
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.4")
+    print("TEP GNSS Analysis Package v0.5")
     print("STEP 6: Null Tests")
     print("Validating TEP signatures through rigorous null hypothesis tests")
     print("="*80)

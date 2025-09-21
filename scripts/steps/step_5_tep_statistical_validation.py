@@ -1076,7 +1076,7 @@ def process_analysis_center(ac: str) -> Dict:
 def main():
     """Main function to run all statistical validation tests."""
     print("="*80)
-    print("TEP GNSS Analysis Package v0.4")
+    print("TEP GNSS Analysis Package v0.5")
     print("STEP 5: Statistical Validation")
     print("="*80)
     
