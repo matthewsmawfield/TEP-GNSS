@@ -678,7 +678,7 @@ def create_three_globe_views(root_dir):
     print_status(f"Saved three-globe view: {output_file}", "SUCCESS")
     return str(output_file)
 
-def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, max_connections=3000):
+def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, max_connections=1000):
     """Creates a single figure showing all three analysis centers' connections on three globes."""
     print_status("Creating combined three-globe connections visualization", "INFO")
     set_publication_style()
@@ -732,8 +732,8 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
         ax.axis('off')
         ax.set_title(f'{view_name}', fontdict=font_props, fontsize=12)
         
-        # Globe background
-        ax.add_patch(plt.Circle((0, 0), 1, color='#E6F3FF', zorder=0))
+        # Globe background - white for better contrast
+        ax.add_patch(plt.Circle((0, 0), 1, color='white', zorder=0))
         
         # Draw land polygons
         for feature in land_data.get('features', []):
@@ -757,7 +757,7 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
                                     y_proj.append(y)
                         
                         if len(x_proj) > 2 and ring_idx == 0:
-                            ax.fill(x_proj, y_proj, color='white', edgecolor='#4a5568', linewidth=0.5, zorder=1)
+                            ax.fill(x_proj, y_proj, color='#F5F5F5', edgecolor='#CCCCCC', linewidth=0.3, zorder=1)
         
         # Load and merge ALL analysis centers together
         all_merged_pairs = []
@@ -823,19 +823,22 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
                                 # Use actual coherence values for real correlation strength
                                 # Higher coherence = stronger correlation = darker colors
                                 
-                                # Create custom colormap with dark colors for high correlations
+                                # Create site-consistent colormap with better dynamic range
                                 from matplotlib.colors import LinearSegmentedColormap
-                                site_colors = ['#220126', '#2D0140', '#495773', '#4A90C2', '#FFFF00']  # Dark purple to yellow (reversed)
+                                site_colors = ['#F8F8FF', '#4A90C2', '#495773', '#2D0140', '#220126']  # Light to dark site theme
                                 site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
                                 
-                                # Use fixed normalization range 0-1 to show true spectrum
-                                # Don't normalize to actual data range - use theoretical 0-1 range
-                                coherence_norm = coherence  # coherence is already 0-1
+                                # Use actual data range for better color utilization
+                                if coherence_values:
+                                    coherence_norm = (coherence - min_coherence) / (max_coherence - min_coherence) if coherence_range > 0 else 0
+                                else:
+                                    coherence_norm = coherence
                                 color = site_cmap(coherence_norm)
                                 
-                                # Make all lines equally visible to see color variation
-                                alpha = 0.6  # Fixed alpha for visibility
-                                linewidth = 0.5  # Fixed linewidth
+                                # Enhanced line visibility with hierarchy based on correlation strength
+                                # Higher coherence = thicker lines, but keep all lines fully opaque
+                                alpha = 0.8  # Fixed alpha for visibility
+                                linewidth = 0.5 + (coherence_norm * 1.0)  # Range: 0.5 to 1.5
                                 
                                 x_arc, y_arc = zip(*arc_points)
                                 ax.plot(x_arc, y_arc, color=color, alpha=alpha, linewidth=linewidth, zorder=2)
@@ -863,8 +866,8 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
                 x_stations.append(x)
                 y_stations.append(y)
         
-        ax.scatter(x_stations, y_stations, s=8, c='#2D0140', alpha=0.7, 
-                  edgecolors='#4A90C2', linewidth=0.5, zorder=4)
+        ax.scatter(x_stations, y_stations, s=12, c='#2D0140', alpha=0.9, 
+                  edgecolors='white', linewidth=0.8, zorder=4)
         
         ax.set_xlim(-1.1, 1.1)
         ax.set_ylim(-1.1, 1.1)
@@ -880,13 +883,30 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
     import matplotlib.colors as mcolors
     from matplotlib.colors import LinearSegmentedColormap
     
-    # Create custom colormap with dark colors for high correlations (reversed)
-    site_colors = ['#220126', '#2D0140', '#495773', '#4A90C2', '#FFFF00']  # Dark purple to yellow (reversed)
+    # Create site-consistent colormap matching the connections
+    site_colors = ['#F8F8FF', '#4A90C2', '#495773', '#2D0140', '#220126']  # Light to dark site theme
     site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
     
-    # Create colorbar showing fixed 0-1 coherence range to show true spectrum
-    # Use fixed range regardless of actual data to show weak correlations properly
-    norm = mcolors.Normalize(vmin=0.0, vmax=1.0)
+    # Use actual data range for colorbar to match the connections
+    # Calculate the actual range from all loaded data
+    all_coherence_values = []
+    for analysis_center in ['code', 'esa_final', 'igs_combined']:
+        pair_files = list((root_dir / 'results/tmp').glob(f'step_3_pairs_{analysis_center}_*.csv'))
+        if pair_files:
+            for file_path in pair_files[:3]:  # Sample a few files to get range
+                try:
+                    df = pd.read_csv(file_path)
+                    df['coherence'] = np.abs(np.cos(df['plateau_phase']))
+                    all_coherence_values.extend(df['coherence'].tolist())
+                except:
+                    continue
+    
+    if all_coherence_values:
+        actual_min = min(all_coherence_values)
+        actual_max = max(all_coherence_values)
+        norm = mcolors.Normalize(vmin=actual_min, vmax=actual_max)
+    else:
+        norm = mcolors.Normalize(vmin=0.0, vmax=1.0)
     sm = plt.cm.ScalarMappable(cmap=site_cmap, norm=norm)
     sm.set_array([])
     
