@@ -1,5 +1,5 @@
 {
-  "analysis_timestamp": "2025-09-21T05:15:06.893465",
+  "analysis_timestamp": "2025-09-21T06:02:25.080951",
   "step_8_analyses": {
     "residual_analysis": {
       "code": {
@@ -65,17 +65,17 @@
         "amplitude": 0.11380180404602341,
         "offset": -0.021333501759585174
       },
-      "igs_combined_plot": {
-        "lambda_km": 3768.172094585321,
-        "r_squared": 0.9658709167990942,
-        "amplitude": 0.19362539538097395,
-        "offset": -0.020986986886067833
-      },
       "esa_final_plot": {
         "lambda_km": 3329.7779129995965,
         "r_squared": 0.9701459935123946,
         "amplitude": 0.24970183578486854,
         "offset": -0.024730381429403616
+      },
+      "igs_combined_plot": {
+        "lambda_km": 3768.172094585321,
+        "r_squared": 0.9658709167990942,
+        "amplitude": 0.19362539538097395,
+        "offset": -0.020986986886067833
       },
       "output_file": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/correlation_vs_distance_all_centers.png"
     },

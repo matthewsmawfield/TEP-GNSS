@@ -63,11 +63,11 @@ def create_panel_a(ax):
     """Panel A: Multi-center reproducibility with site theme colors."""
     results_dir = ROOT / 'results'
     
-    centers = ['code', 'igs_combined', 'esa_final']
+    centers = ['code', 'esa_final', 'igs_combined']
     # Updated color palette for better thematic consistency
-    colors = ['#4A90C2', '#2D0140', '#495773']  # Cosmic Blue, Dark Purple, Blue-Gray
-    labels = ['CODE', 'IGS', 'ESA']
-    markers = ['o', 's', '^']
+    colors = ['#4A90C2', '#495773', '#2D0140']  # Cosmic Blue, Blue-Gray, Dark Purple
+    labels = ['CODE', 'ESA', 'IGS']
+    markers = ['o', '^', 's']
     
     all_y_values = []
     
@@ -351,10 +351,10 @@ def main():
     
     all_null_r2 = []
     real_r2_values = []
-    colors = ['#4A90C2', '#2D0140', '#495773']  # Updated palette to match Panel A
-    labels = ['CODE', 'IGS', 'ESA']
+    colors = ['#4A90C2', '#495773', '#2D0140']  # Updated palette to match Panel A
+    labels = ['CODE', 'ESA', 'IGS']
     
-    for center in ['code', 'igs_combined', 'esa_final']:
+    for center in ['code', 'esa_final', 'igs_combined']:
         try:
             with open(results_dir / 'outputs' / f'step_6_null_tests_{center}.json', 'r') as f:
                 data = json.load(f)

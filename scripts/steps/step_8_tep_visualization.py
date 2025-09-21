@@ -319,7 +319,7 @@ def create_publication_figure(root_dir):
     
     colors = ['#1e4a5f', '#2D0140', '#495773']  # Blue, Orange, Green
     
-    for idx, ac in enumerate(['code', 'igs_combined', 'esa_final']):
+    for idx, ac in enumerate(['code', 'esa_final', 'igs_combined']):
         ax = axes[idx]
         
         # Load data
@@ -1165,8 +1165,8 @@ def create_correlation_vs_distance_all_centers(root_dir):
     colors = ['#1e4a5f', '#2D0140', '#495773']  # Blue, Orange, Green
     analysis_centers = [
         ('code', 'CODE Analysis Center'),
-        ('igs_combined', 'IGS Combined Analysis Center'), 
-        ('esa_final', 'ESA Final Analysis Center')
+        ('esa_final', 'ESA Final Analysis Center'),
+        ('igs_combined', 'IGS Combined Analysis Center')
     ]
     
     results = {}

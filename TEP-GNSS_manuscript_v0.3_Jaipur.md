@@ -143,8 +143,8 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 | Analysis Center | λ (km) | 95% CI (km) | R² | A | C₀ | Files | Station Pairs |
 |-----------------|--------|-------------|-----|---|-----|-------|---------------|
 | CODE | 4,549 ± 72 | [4,477, 4,621] | 0.920 | 0.114 ± 0.006 | -0.022 ± 0.006 | 912 | 39.1M |
-| IGS Combined | 3,768 ± 46 | [3,722, 3,814] | 0.966 | 0.194 ± 0.008 | -0.021 ± 0.004 | 910 | 12.8M |
 | ESA Final | 3,330 ± 50 | [3,280, 3,380] | 0.970 | 0.250 ± 0.012 | -0.025 ± 0.004 | 912 | 10.8M |
+| IGS Combined | 3,768 ± 46 | [3,722, 3,814] | 0.966 | 0.194 ± 0.008 | -0.021 ± 0.004 | 910 | 12.8M |
 
 #### Cross-Center Comparison
 
@@ -159,6 +159,16 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 **Figure 1. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.** Three-panel analysis demonstrating coherent, reproducible, and statistically strong TEP correlations across independent analysis centers. **(a) Multi-center reproducibility:** Exponential decay fits C(r) = A exp(−r/λ) + C₀ using consistent cos(Δφ) coherence metric. Data points show binned means with standard errors from real manuscript data. Shaded regions indicate 95% confidence intervals from error propagation. λ values vary by center (CODE: 4,549 ± 72 km; IGS Combined: 3,768 ± 46 km; ESA Final: 3,330 ± 50 km) but all remain within theoretically predicted range (1–10 Mm) for screened scalar fields. Excellent statistical fits (R² = 0.920–0.970). **(b) Statistical significance:** Station-day blocked permutation tests (N=300 total iterations) show real signal R² values as extreme outliers compared to null distributions (combined p < 0.01). Blocking methodology preserves within-station temporal correlation structure while testing spatial correlation significance. **(c) Signal vs. null comparison:** Direct comparison using real GNSS data demonstrates that distance-dependent coherence structure disappears under distance scrambling, confirming correlations are tied to spatial geometry rather than computational artifacts. Exponential fit overlay shows characteristic λ ≈ 3.9 Mm decay length.
 
 *Figure 1 placeholder: (see results/figures/figure_1_TEP_site_themed.png)*
+
+**Figure 2. Global GNSS Station Network.** Three-panel analysis showing the experimental setup. **(a) Three-globe perspective:** Worldwide distribution of 529 ground stations. **(b) Station Coverage Map:** Station density and geographic coverage. **(c) Station Correlation Network:** High-coherence connections (>0.8) colored by correlation strength.
+
+*Figure 2a placeholder: (see results/figures/gnss_stations_three_globes.png)*
+*Figure 2b placeholder: (see results/figures/gnss_stations_map.png)*
+*Figure 2c placeholder: (see results/figures/gnss_three_globes_connections_combined.png)*
+
+**Figure 3. Station Pair Distance Distribution.** Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.
+
+*Figure 3 placeholder: (see results/figures/distance_distribution.png)*
 
 | Distance (km) | Mean Coherence | Station Pairs |
 |---------------|---------------:|--------------:|
@@ -190,12 +200,12 @@ Comprehensive null tests confirm the authenticity of the detected signal:
 | CODE | Distance scramble | 0.0246 ± 0.0405 | 37x | p < 0.01 |
 | CODE | Phase scramble | 0.0280 ± 0.0403 | 33x | p < 0.01 |
 | CODE | Station scramble | 0.0299 ± 0.0419 | 31x | p < 0.01 |
-| IGS | Distance scramble | 0.0369 ± 0.0490 | 26x | p < 0.01 |
-| IGS | Phase scramble | 0.0250 ± 0.0360 | 39x | p < 0.01 |
-| IGS | Station scramble | 0.0220 ± 0.0360 | 44x | p < 0.01 |
 | ESA | Distance scramble | 0.0330 ± 0.0502 | 30x | p < 0.01 |
 | ESA | Phase scramble | 0.0270 ± 0.0390 | 37x | p < 0.01 |
 | ESA | Station scramble | 0.1150 ± 0.0840 | 8.5x | p < 0.01 |
+| IGS | Distance scramble | 0.0369 ± 0.0490 | 26x | p < 0.01 |
+| IGS | Phase scramble | 0.0250 ± 0.0360 | 39x | p < 0.01 |
+| IGS | Station scramble | 0.0220 ± 0.0360 | 44x | p < 0.01 |
 
 All 9 null tests show statistically significant signal degradation (permutation p-values < 0.01 with 100 iterations each), demonstrating that the observed pattern is tied to the physical configuration of the network and not a statistical artifact.
 
@@ -206,8 +216,8 @@ To address the critical issue of non-independence among station pairs, which sha
 | Analysis Center | λ (km) LOSO (mean ± sd) | λ (km) LODO (mean ± sd) | Internal Consistency (Δλ) | Temporal Stability (CV) |
 |-----------------|-------------------------|-------------------------|---------------------------|-------------------------|
 | CODE            | 4,548.8 ± 72.2          | 4,550.1 ± 5.2           | 1.3 km                    | 0.001                   |
-| IGS Combined    | 3,767.7 ± 46.1          | 3,766.5 ± 3.7           | 1.2 km                    | 0.001                   |
 | ESA Final       | 3,330.2 ± 50.2          | 3,328.1 ± 2.9           | 2.1 km                    | 0.001                   |
+| IGS Combined    | 3,767.7 ± 46.1          | 3,766.5 ± 3.7           | 1.2 km                    | 0.001                   |
 
 The correlation length λ remains remarkably stable across all three centers, with exceptional temporal stability (CV ≤ 0.001) indicating day-to-day variations have negligible impact on results. The spatial stability through LOSO shows coefficient of variation ≤ 0.016 across all centers, demonstrating the correlation structure is not dependent on individual stations. This provides strong evidence that the observed correlation is not an artifact of a few influential stations or days, but a persistent feature of the global network. The updated λ values using corrected v0.3 methodology show increased magnitudes while maintaining the same exceptional stability characteristics.
 
@@ -220,8 +230,8 @@ To provide the highest standard of validation, we implemented block-wise cross-v
 | Analysis Center | Monthly CV λ (km) | CV Stability | CV-RMSE | NRMSE | Predictive Consistency |
 |-----------------|-------------------|--------------|---------|-------|------------------------|
 | CODE            | 4,568 ± 56        | CV = 0.012   | 0.044   | 0.176 | Excellent              |
-| IGS Combined    | 3,818 ± 54        | CV = 0.014   | 0.045   | 0.178 | Excellent              |
 | ESA Final       | 3,389 ± 33        | CV = 0.010   | 0.045   | 0.181 | Excellent              |
+| IGS Combined    | 3,818 ± 54        | CV = 0.014   | 0.045   | 0.178 | Excellent              |
 
 The block-wise cross-validation results demonstrate exceptional predictive stability, with λ estimates from cross-validation matching LOSO results within 0.1-0.3% across all centers. The low CV-RMSE values (0.044-0.045) and excellent parameter stability (CV ≤ 0.014) provide strong evidence that the correlation length λ represents genuine predictive physics capable of forecasting correlations in unseen data, rather than statistical overfitting. This gold standard validation methodology confirms the robustness of TEP signatures across both spatial and temporal validation frameworks.
 
@@ -231,9 +241,9 @@ A key prediction of TEP is the potential for directional anisotropy due to Earth
 
 | Analysis Center | E-W λ Mean (km) | N-S λ Mean (km) | E-W / N-S Ratio | Anisotropy (CV) | Interpretation |
 |-----------------|-----------------|-----------------|-----------------|-----------------|-----------------------------|
+| **CODE**        | 8,416           | 3,743           | **2.25**        | 0.665           | Clear rotation signature    |
 | **ESA Final**   | 9,400           | 3,436           | **2.74**        | 0.748           | Strong rotation signature   |
 | **IGS Combined**| 10,118          | 2,916           | **3.47**        | 0.688           | Strongest rotation signature|
-| **CODE**        | 8,416           | 3,743           | **2.25**        | 0.665           | Clear rotation signature    |
 
 All three centers reveal a pronounced rotational anisotropy, with correlation lengths in the East-West direction being 2.25 to 3.47 times longer than those in the North-South direction. This is consistent with a signal structured by Earth's rotation. The longest correlations are consistently observed in the Eastward sector (ranging from 8,416 km to 10,118 km), while the shortest are consistently in the Northeast (1,768–1,962 km). This robust, cross-validated pattern strongly suggests the signal is coupled to Earth's global dynamics.
 
@@ -249,7 +259,11 @@ To rigorously test whether this observed anisotropy could be a statistical artif
 
 *Figure 2c: Anisotropy heatmap for IGS_COMBINED analysis center (see results/figures/anisotropy_heatmap_igs_combined.png)*
 
-**Figure 2. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. Color scale represents mean coherence values derived from cos(plateau_phase) of complex cross-spectral density analysis. All three datasets show remarkably consistent patterns: (1) strong distance-dependent coherence decay (darker colors at larger distances), (2) systematic longitude-dependent anisotropy with enhanced coherence at specific longitude differences (40-80° and 120-160° ranges), and (3) preservation of correlation structure even at intercontinental distances (>6000 km). The consistent reproduction of these anisotropy patterns across three independent analysis centers with different processing strategies provides strong evidence for the robustness of the observed TEP signatures. The longitude-dependent variations may represent either genuine spacetime anisotropy effects predicted by TEP theory in rotating reference frames, or systematic effects requiring correction for clean signal extraction. Statistical significance confirmed by azimuth-preserving permutation tests (p < 0.001 for all centers). Data sampled at 10% for computational efficiency while preserving statistical structure.
+**Figure 4. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The consistent reproduction of these anisotropy patterns across three independent analysis centers provides strong evidence for the robustness of the observed TEP signatures.
+
+**Figure 5. Temporal Orbital Tracking Analysis.** [Placeholder] This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.
+
+*Figure 5 placeholder: (A plot showing a negative correlation trend between the E-W/N-S anisotropy ratio and Earth's orbital speed over a 2.5-year period, with data points for each of the three analysis centers.)*
 
 #### Model Validation Through Residual Analysis
 
@@ -259,13 +273,13 @@ To rigorously test whether this observed anisotropy could be a statistical artif
 
 *Figure 3c: Exponential model residuals for IGS_COMBINED analysis center (see results/figures/residuals_igs_combined.png)*
 
-**Figure 3. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations, confirming that the exponential decay model appropriately captures the underlying correlation structure. Random scatter around zero with consistent variance across distance ranges validates the robustness of the fitted correlation lengths (λ = 3,330-4,549 km) and provides confidence in the statistical framework. The absence of distance-dependent bias in residuals rules out alternative correlation models and supports the screened scalar field interpretation of the observed TEP signatures.
+**Figure 6. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations.
 
 #### Distance Distribution Analysis
 
 *Figure 4: Distribution of station pair distances (see results/figures/distance_distribution.png)*
 
-**Figure 4. Distribution of Pairwise Distances Between GNSS Stations.** Histogram showing the distribution of great circle distances between all station pairs used in the TEP analysis. The distribution reveals optimal sampling across the critical distance range (0-15,000 km) with sufficient station pairs at all scales to enable robust exponential model fitting. Peak density occurs around 8,000-12,000 km (intercontinental pairs), providing strong statistical power for detecting long-range correlations predicted by TEP theory. The broad distance coverage ensures that observed correlation patterns are not artifacts of geometric sampling bias and validates the global scope of the analysis.
+**Figure 4. Distribution of Pairwise Distances Between GNSS Stations.** Histogram showing the distribution of great circle distances between all station pairs used in the TEP analysis. The distribution reveals optimal sampling across the critical distance range (0-15,000 km) with sufficient station pairs at all scales to enable robust exponential model fitting. Peak density occurs around 8,000-12,000 km (intercontinental pairs), providing strong statistical power for detecting long-range correlations predicted by TEP theory.
 
 ### 3.4 Comprehensive Circular Statistics Validation (Step 6 Complete Results)
 
@@ -402,8 +416,8 @@ We performed temporal tracking analysis to test whether the observed anisotropy 
 | Analysis Center | Orbital Correlation (r) | P-value | Significance | Interpretation |
 |-----------------|------------------------|---------|--------------|----------------|
 | **CODE** | -0.546 | 0.0005 | 99.95% confidence | Strong negative correlation |
-| **IGS Combined** | -0.638 | <0.0001 | >99.99% confidence | Very strong negative correlation |
 | **ESA Final** | -0.512 | 0.0012 | 99.88% confidence | Strong negative correlation |
+| **IGS Combined** | -0.638 | <0.0001 | >99.99% confidence | Very strong negative correlation |
 
 **Combined probability of random occurrence**: 0.0005 × 0.0001 × 0.0012 ≈ **1 in 1.7 billion**
 
@@ -423,8 +437,8 @@ Fitting a seasonal model of the form: E-W/N-S ratio = A·sin(2π·day/365.25 + �
 | Analysis Center | Seasonal Amplitude | Phase (days) | Variation (%) | Fit Success |
 |-----------------|-------------------|--------------|---------------|-------------|
 | **CODE** | 0.48 | 15 | 42% | Yes |
-| **IGS Combined** | 0.61 | 22 | 55% | Yes |
 | **ESA Final** | 0.39 | 18 | 36% | Yes |
+| **IGS Combined** | 0.61 | 22 | 55% | Yes |
 
 The detection of clear 365.25-day periodicity synchronized with Earth's orbital motion provides additional confirmation of the spacetime coupling mechanism.
 
