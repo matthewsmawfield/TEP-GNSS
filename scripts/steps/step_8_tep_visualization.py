@@ -1270,6 +1270,32 @@ def create_distance_distribution_plot(root_dir):
     except Exception as e:
         print_status(f"Failed to load distance data: {e}", "WARNING")
         return None
+
+    # Load correlation results from all centers to get the full range for highlighting
+    lambda_values = []
+    centers = ['code', 'igs_combined', 'esa_final']
+    
+    for center in centers:
+        try:
+            results_file = root_dir / f'results/outputs/step_3_correlation_{center}.json'
+            if results_file.exists():
+                fit_results = safe_json_read(results_file)
+                lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
+                if lambda_km:
+                    lambda_values.append(lambda_km)
+        except Exception as e:
+            print_status(f"Could not load lambda_km from {center} results: {e}", "WARNING")
+    
+    # Calculate correlation range from all centers
+    correlation_range = None
+    if lambda_values:
+        lambda_min = min(lambda_values)
+        lambda_max = max(lambda_values)
+        lambda_mean = sum(lambda_values) / len(lambda_values)
+        correlation_range = (lambda_min, lambda_max, lambda_mean)
+        print_status(f"Loaded correlation range: {lambda_min:.0f}-{lambda_max:.0f} km from {len(lambda_values)} centers", "INFO")
+    else:
+        print_status("Could not load correlation lengths from any center", "WARNING")
     
     # Create figure with single chart - reduced height by 40%
     fig, ax = plt.subplots(1, 1, figsize=(12, 3.6))
@@ -1293,17 +1319,42 @@ def create_distance_distribution_plot(root_dir):
     ax.hist(distances, bins=100, alpha=0.8, color=THEME_COLORS['primary'], 
              edgecolor='white', linewidth=1.0, rwidth=0.85)
     
-    # Add highlighted range from the zoomed view
-    ax.axvspan(2500, 3500, alpha=0.2, color=THEME_COLORS['range_highlight'], 
-                label='2500-3500 km range', zorder=1)
-    
-    ax.axvline(3000, color=THEME_COLORS['highlight'], linestyle='--', linewidth=2, label='3000 km')
+    # Add highlighted range based on correlation results from all centers
+    if correlation_range:
+        lambda_min, lambda_max, lambda_mean = correlation_range
+        ax.axvspan(lambda_min, lambda_max, alpha=0.2, color=THEME_COLORS['range_highlight'], 
+                    label=f'TEP correlation range ({lambda_min:.0f}–{lambda_max:.0f} km)', zorder=1)
+        ax.axvline(lambda_mean, color=THEME_COLORS['highlight'], linestyle='-', linewidth=2.5, 
+                   label=f'Mean λ = {lambda_mean:.0f} km')
+        
+        # Add individual center markers with distinct colors and subtle styling
+        center_styles = {
+            'code': {'color': '#8B0000', 'linestyle': ':', 'alpha': 0.6},      # Dark red, dotted
+            'igs_combined': {'color': '#006400', 'linestyle': '-.', 'alpha': 0.6},  # Dark green, dash-dot
+            'esa_final': {'color': '#FF8C00', 'linestyle': '--', 'alpha': 0.6}      # Dark orange, dashed
+        }
+        center_labels = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
+        
+        for i, lambda_val in enumerate(lambda_values):
+            center_key = centers[i]
+            center_name = center_labels.get(center_key, center_key)
+            style = center_styles.get(center_key, {'color': THEME_COLORS['highlight'], 'linestyle': ':', 'alpha': 0.5})
+            
+            ax.axvline(lambda_val, color=style['color'], linestyle=style['linestyle'], 
+                      alpha=style['alpha'], linewidth=1.2,
+                      label=f'{center_name}: {lambda_val:.0f} km')
+    else:
+        # Fallback using current manuscript values if results can't be loaded
+        ax.axvspan(3330, 4549, alpha=0.2, color=THEME_COLORS['range_highlight'], 
+                    label='TEP correlation range (3,330–4,549 km)', zorder=1)
+        ax.axvline(3882, color=THEME_COLORS['highlight'], linestyle='-', linewidth=2.5, label='Mean λ = 3,882 km')
+
     ax.axvline(distances.mean(), color=THEME_COLORS['secondary'], linestyle='--', linewidth=2, 
-               label=f'Mean: {distances.mean():.0f} km')
+               label=f'Mean station distance: {distances.mean():.0f} km')
     
     ax.set_xlabel('Distance (km)', color=THEME_COLORS['text'])
     ax.set_ylabel('Number of station pairs', color=THEME_COLORS['text'])
-    ax.set_title('Distribution of Pairwise Distances Between GNSS Stations', 
+    ax.set_title('Distribution of Pairwise Distances Between GNSS Stations\nwith TEP Correlation Length Range', 
                  fontsize=16, fontweight='bold', color=THEME_COLORS['text'])
     
     # Clean professional legend

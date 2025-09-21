@@ -64,8 +64,8 @@ def create_panel_a(ax):
     results_dir = ROOT / 'results'
     
     centers = ['code', 'igs_combined', 'esa_final']
-    # Color palette with cosmic blue accent
-    colors = ['#220126', '#2D0140', '#4A90C2']  # Deep purple, dark purple, cosmic blue
+    # Updated color palette for better thematic consistency
+    colors = ['#4A90C2', '#2D0140', '#495773']  # Cosmic Blue, Dark Purple, Blue-Gray
     labels = ['CODE', 'IGS', 'ESA']
     markers = ['o', 's', '^']
     
@@ -82,6 +82,7 @@ def create_panel_a(ax):
             lambda_err = fit_params['lambda_error']
             amplitude = fit_params['amplitude']
             offset = fit_params['offset']
+            r_squared = fit_params['r_squared']
             
             print(f"Loading {center}: A={amplitude:.3f}, λ={lambda_val:.0f}, C={offset:.3f}")
             
@@ -94,9 +95,9 @@ def create_panel_a(ax):
             # Track all y values
             all_y_values.extend(y_data)
             
-            # Plot real data points
+            # Plot real data points, now with R² in the label
             ax.scatter(x_data, y_data, color=color, alpha=0.8, 
-                      s=30, marker=marker, label=f'{label} data', zorder=3,
+                      s=20, marker=marker, label=f'{label} (R² = {r_squared:.3f})', zorder=3,
                       edgecolors='white', linewidth=0.5)
             
             # Plot fit line
@@ -105,10 +106,25 @@ def create_panel_a(ax):
             all_y_values.extend(y_fit)
             ax.plot(x_fit, y_fit, color=color, linewidth=2, alpha=0.9, zorder=2)
             
-            # 95% CI band
-            lambda_ci = 1.96 * lambda_err
-            y_upper = exp_decay_model(x_fit, amplitude, lambda_val + lambda_ci, offset)
-            y_lower = exp_decay_model(x_fit, amplitude, lambda_val - lambda_ci, offset)
+            # 95% CI band using proper error propagation for all parameters
+            # We assume parameter errors are uncorrelated as cov matrix is not available
+            amp_err = fit_params['amplitude_error']
+            lambda_err = fit_params['lambda_error']
+            offset_err = fit_params['offset_error']
+
+            # Partial derivatives of the model w.r.t. parameters
+            d_dA = np.exp(-x_fit / lambda_val)
+            d_dlambda = (amplitude * x_fit / (lambda_val**2)) * np.exp(-x_fit / lambda_val)
+            d_dC = 1.0
+
+            # Propagated variance and standard error of the fit
+            var_y_fit = (d_dA**2 * amp_err**2) + (d_dlambda**2 * lambda_err**2) + (d_dC**2 * offset_err**2)
+            se_y_fit = np.sqrt(var_y_fit)
+
+            # 95% confidence interval
+            y_upper = y_fit + 1.96 * se_y_fit
+            y_lower = y_fit - 1.96 * se_y_fit
+            
             all_y_values.extend(y_upper)
             all_y_values.extend(y_lower)
             ax.fill_between(x_fit, y_lower, y_upper, color=color, alpha=0.2, zorder=1)
@@ -117,9 +133,9 @@ def create_panel_a(ax):
             print(f"Error processing {center}: {e}")
             continue
     
-    # Set limits to 0.5 as requested
+    # Set limits to 0.4 as requested
     ax.set_xlim(0, 12000)
-    ax.set_ylim(-0.06, 0.5)  # Fixed upper limit to 0.5
+    ax.set_ylim(-0.06, 0.4)  # Fixed upper limit to 0.4
     
     # Add consistent zero line styling (darker, matching site theme)
     ax.axhline(y=0, color='#220126', linestyle='-', alpha=0.8, linewidth=1.5, zorder=5)
@@ -229,8 +245,8 @@ def create_panel_c(ax):
         
         # Site-themed real data
         ax.errorbar(valid_bins, real_means, yerr=real_errors,
-                   fmt='o-', color='#2D0140', linewidth=2, markersize=5, 
-                   capsize=3, label='Real GNSS data', alpha=0.9,
+                   fmt='o-', color='#2D0140', linewidth=1.5, markersize=4, 
+                   capsize=2, elinewidth=0.5, label='Real GNSS data', alpha=0.9,
                    markeredgecolor='white', markeredgewidth=0.5)
         
         # Null data
@@ -251,8 +267,8 @@ def create_panel_c(ax):
         
         # Site-themed null data
         ax.errorbar(valid_bins_null, null_means, yerr=null_errors,
-                   fmt='s-', color='#495773', linewidth=1.8, markersize=4, 
-                   capsize=2.5, label='Distance-scrambled null', alpha=0.8,
+                   fmt='s-', color='#495773', linewidth=1.5, markersize=3, 
+                   capsize=2, elinewidth=0.5, label='Distance-scrambled null', alpha=0.7,
                    markeredgecolor='white', markeredgewidth=0.5)
         
         # Consistent zero reference line (same as Panel A)
@@ -265,7 +281,7 @@ def create_panel_c(ax):
             x_fit = np.linspace(100, 10000, 100)
             y_fit = exp_decay_model(x_fit, *popt)
             all_y_values.extend(y_fit)
-            ax.plot(x_fit, y_fit, color='#495773', linestyle='--', alpha=0.8, linewidth=1.5,
+            ax.plot(x_fit, y_fit, color='#FF6347', linestyle='--', alpha=0.9, linewidth=1.5,
                    label=f'Exp. fit (λ={popt[1]:.0f} km)')
         except:
             pass
@@ -335,7 +351,7 @@ def main():
     
     all_null_r2 = []
     real_r2_values = []
-    colors = ['#2D0140', '#495773', '#495773']  # Site palette
+    colors = ['#4A90C2', '#2D0140', '#495773']  # Updated palette to match Panel A
     labels = ['CODE', 'IGS', 'ESA']
     
     for center in ['code', 'igs_combined', 'esa_final']:

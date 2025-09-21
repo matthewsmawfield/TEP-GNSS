@@ -1,20 +1,20 @@
 cff-version: 1.2.0
 title: "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks"
-message: "If you use this work, please cite it as below."
+message: "If you use this software, please cite it as below."
 type: article
 authors:
-  - family-names: Smawfield
-    given-names: Matthew Lukin
+  - family-names: "Smawfield"
+    given-names: "Matthew Lukin"
     orcid: "https://orcid.org/0009-0003-8219-3159"
 abstract: >
   Phase-coherent GNSS clock analysis across independent centers (IGS, ESA, CODE) 
   with distance-correlation methods; publication-ready research site and analysis package.
   We report distance-structured correlations in GNSS clock products using phase-coherent 
   analysis across 62.7M station-pair measurements, finding exponential correlation lengths 
-  of 3,400–4,564 km consistent with screened scalar-field models.
+  of 3,330–4,549 km consistent with screened scalar-field models.
 license: CC-BY-4.0
-version: "0.3"
-date-released: 2025-09-17
+version: 0.3.0
+date-released: 2025-09-21
 keywords:
   - physics
   - GNSS
@@ -24,7 +24,7 @@ keywords:
   - temporal equivalence principle
   - TEP-GNSS
 repository-code: "https://github.com/matthewsmawfield/TEP-GNSS"
-url: "https://matthewsmawfield.github.io/TEP-GNSS/"
+url: "https://github.com/matthewsmawfield/TEP-GNSS"
 doi: 10.5281/zenodo.17148714
 
 preferred-citation:
