@@ -1,0 +1,731 @@
+{
+  "step": 7,
+  "version": "1.0-streamlined",
+  "timestamp": "2025-09-21T17:34:15.671435",
+  "analyses_performed": [
+    "elevation_dependence",
+    "circular_statistics",
+    "model_comparison"
+  ],
+  "results": {
+    "elevation_dependence": {
+      "code": {
+        "total_pairs": 39068753,
+        "pairs_with_elevation": 39068753,
+        "pairs_with_geomagnetic": 39068753,
+        "elevation_coverage_percent": 100.0,
+        "geomagnetic_coverage_percent": 100.0,
+        "quintile_analysis": {
+          "quintile_1": {
+            "elevation_range_m": [
+              -80.775,
+              79.1
+            ],
+            "lambda_km": 2904.401382046686,
+            "lambda_error_km": 533.6873667636447,
+            "amplitude": 0.14017055445966486,
+            "offset": -0.010338199307847275,
+            "r_squared": 0.7597966906458977,
+            "n_pairs": 7810123,
+            "n_bins": 36
+          },
+          "quintile_2": {
+            "elevation_range_m": [
+              79.1,
+              163.507
+            ],
+            "lambda_km": 2648.8151662249134,
+            "lambda_error_km": 616.5317288409082,
+            "amplitude": 0.10644235296728759,
+            "offset": -0.008166571135909595,
+            "r_squared": 0.7097712484516789,
+            "n_pairs": 7816719,
+            "n_bins": 38
+          },
+          "quintile_3": {
+            "elevation_range_m": [
+              163.507,
+              378.7
+            ],
+            "lambda_km": 2994.433990548464,
+            "lambda_error_km": 794.8423391703922,
+            "amplitude": 0.09973005735710766,
+            "offset": -0.008722538342808882,
+            "r_squared": 0.7064292199789617,
+            "n_pairs": 7813895,
+            "n_bins": 33
+          },
+          "quintile_4": {
+            "elevation_range_m": [
+              378.7,
+              713.0
+            ],
+            "lambda_km": 3579.954006162702,
+            "lambda_error_km": 1109.3794833365282,
+            "amplitude": 0.09638411074172964,
+            "offset": -0.008935441289678894,
+            "r_squared": 0.6532663593647323,
+            "n_pairs": 7813818,
+            "n_bins": 35
+          },
+          "quintile_5": {
+            "elevation_range_m": [
+              713.0,
+              3688.35
+            ],
+            "lambda_km": 3838.1059283207455,
+            "lambda_error_km": 1013.4128601639893,
+            "amplitude": 0.15407186858864397,
+            "offset": -0.015303740299599926,
+            "r_squared": 0.6770264003524291,
+            "n_pairs": 7814198,
+            "n_bins": 38
+          }
+        },
+        "geomagnetic_stratified_analysis": {
+          "elev_bin_1_geomag_bin_1": {
+            "elevation_range_m": [
+              -80.775,
+              124.2715
+            ],
+            "geomag_lat_range": [
+              -72.6209700072612,
+              7.066482515307397
+            ],
+            "lambda_km": 1962.9060560404225,
+            "lambda_error_km": 301.7775323693423,
+            "amplitude": 0.41658362526332005,
+            "offset": -0.012463694471007042,
+            "r_squared": 0.8361888210685258,
+            "n_pairs": 4574583,
+            "n_bins": 24
+          },
+          "elev_bin_1_geomag_bin_2": {
+            "elevation_range_m": [
+              -80.775,
+              124.2715
+            ],
+            "geomag_lat_range": [
+              7.066482515307397,
+              36.63900533370774
+            ],
+            "lambda_km": 3146.3744215652796,
+            "lambda_error_km": 933.3899385468866,
+            "amplitude": 0.1367632081891634,
+            "offset": -0.0069486444480061456,
+            "r_squared": 0.6381506488403048,
+            "n_pairs": 4587016,
+            "n_bins": 26
+          },
+          "elev_bin_1_geomag_bin_3": {
+            "elevation_range_m": [
+              -80.775,
+              124.2715
+            ],
+            "geomag_lat_range": [
+              36.63900533370774,
+              82.19869104293558
+            ],
+            "lambda_km": 1665.7620893502121,
+            "lambda_error_km": 737.3462562254932,
+            "amplitude": 0.1016078159284802,
+            "offset": -0.004788443332095362,
+            "r_squared": 0.5127190173952678,
+            "n_pairs": 3730636,
+            "n_bins": 26
+          },
+          "elev_bin_2_geomag_bin_1": {
+            "elevation_range_m": [
+              124.2715,
+              468.62
+            ],
+            "geomag_lat_range": [
+              -72.6209700072612,
+              7.066482515307397
+            ],
+            "lambda_km": 3222.1059615351323,
+            "lambda_error_km": 788.2169317824423,
+            "amplitude": 0.2199574460371638,
+            "offset": -0.008144644816808603,
+            "r_squared": 0.7256075017912194,
+            "n_pairs": 3993045,
+            "n_bins": 23
+          },
+          "elev_bin_2_geomag_bin_2": {
+            "elevation_range_m": [
+              124.2715,
+              468.62
+            ],
+            "geomag_lat_range": [
+              7.066482515307397,
+              36.63900533370774
+            ],
+            "lambda_km": 2516.4398590959127,
+            "lambda_error_km": 848.8344023888243,
+            "amplitude": 0.13347591762816124,
+            "offset": -0.008259010789894373,
+            "r_squared": 0.541071715108479,
+            "n_pairs": 4281647,
+            "n_bins": 24
+          },
+          "elev_bin_2_geomag_bin_3": {
+            "elevation_range_m": [
+              124.2715,
+              468.62
+            ],
+            "geomag_lat_range": [
+              36.63900533370774,
+              82.19869104293558
+            ],
+            "lambda_km": 1488.7481598690479,
+            "lambda_error_km": 615.4897190678015,
+            "amplitude": 0.08664038298236205,
+            "offset": 0.0023185277631007574,
+            "r_squared": 0.5664497984047003,
+            "n_pairs": 5008695,
+            "n_bins": 26
+          },
+          "elev_bin_3_geomag_bin_1": {
+            "elevation_range_m": [
+              468.62,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              -72.6209700072612,
+              7.066482515307397
+            ],
+            "lambda_km": 2822.098911332814,
+            "lambda_error_km": 660.7416576991338,
+            "amplitude": 0.38592678841694766,
+            "offset": -0.018874206365828733,
+            "r_squared": 0.726195797043238,
+            "n_pairs": 4324901,
+            "n_bins": 23
+          },
+          "elev_bin_3_geomag_bin_2": {
+            "elevation_range_m": [
+              468.62,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              7.066482515307397,
+              36.63900533370774
+            ],
+            "lambda_km": 3739.130700961329,
+            "lambda_error_km": 1269.393130870576,
+            "amplitude": 0.15191637424030693,
+            "offset": -0.013957846387467035,
+            "r_squared": 0.5727363569737356,
+            "n_pairs": 4414243,
+            "n_bins": 28
+          },
+          "elev_bin_3_geomag_bin_3": {
+            "elevation_range_m": [
+              468.62,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              36.63900533370774,
+              82.19869104293558
+            ],
+            "lambda_km": 2347.081751666304,
+            "lambda_error_km": 1074.8015310341596,
+            "amplitude": 0.10713215601783974,
+            "offset": -0.0026643413890371113,
+            "r_squared": 0.5994105466890731,
+            "n_pairs": 4153987,
+            "n_bins": 24
+          }
+        },
+        "elevation_range_m": [
+          -80.775,
+          3688.35
+        ],
+        "geomagnetic_range": [
+          -72.6209700072612,
+          82.19869104293558
+        ],
+        "coordinate_mapping_fixed": true,
+        "geomagnetic_enhancement": true
+      },
+      "igs_combined": {
+        "total_pairs": 12841178,
+        "pairs_with_elevation": 12841178,
+        "pairs_with_geomagnetic": 12841178,
+        "elevation_coverage_percent": 100.0,
+        "geomagnetic_coverage_percent": 100.0,
+        "quintile_analysis": {
+          "quintile_1": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              72.7
+            ],
+            "lambda_km": 2209.0706906922665,
+            "lambda_error_km": 328.80312888231714,
+            "amplitude": 0.25779720351677243,
+            "offset": -0.006218644277702285,
+            "r_squared": 0.8195613854500594,
+            "n_pairs": 2567929,
+            "n_bins": 33
+          },
+          "quintile_2": {
+            "elevation_range_m": [
+              72.7,
+              149.8025
+            ],
+            "lambda_km": 2324.4061615434657,
+            "lambda_error_km": 383.42052854223755,
+            "amplitude": 0.1938943835774472,
+            "offset": 3.920660167968581e-05,
+            "r_squared": 0.8071807961070785,
+            "n_pairs": 2568185,
+            "n_bins": 35
+          },
+          "quintile_3": {
+            "elevation_range_m": [
+              149.8025,
+              371.7
+            ],
+            "lambda_km": 2510.54332277711,
+            "lambda_error_km": 540.141507180898,
+            "amplitude": 0.17680066347633036,
+            "offset": -0.001430475806806681,
+            "r_squared": 0.7305429628343438,
+            "n_pairs": 2567957,
+            "n_bins": 32
+          },
+          "quintile_4": {
+            "elevation_range_m": [
+              371.7,
+              751.9
+            ],
+            "lambda_km": 3350.4741988203277,
+            "lambda_error_km": 927.7611082578092,
+            "amplitude": 0.17108435106576123,
+            "offset": -0.007155969261231264,
+            "r_squared": 0.6513051441413079,
+            "n_pairs": 2568652,
+            "n_bins": 34
+          },
+          "quintile_5": {
+            "elevation_range_m": [
+              751.9,
+              3688.35
+            ],
+            "lambda_km": 3196.1244151776414,
+            "lambda_error_km": 649.8370651917932,
+            "amplitude": 0.24865580833510137,
+            "offset": -0.012887222436774369,
+            "r_squared": 0.7373594104848507,
+            "n_pairs": 2568455,
+            "n_bins": 36
+          }
+        },
+        "geomagnetic_stratified_analysis": {
+          "elev_bin_1_geomag_bin_1": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              115.35
+            ],
+            "geomag_lat_range": [
+              -80.2760155363996,
+              -0.18094896066119404
+            ],
+            "lambda_km": 1874.850913508433,
+            "lambda_error_km": 293.0312975822677,
+            "amplitude": 0.46482463446092603,
+            "offset": -0.006499069803549578,
+            "r_squared": 0.8613323688564214,
+            "n_pairs": 1636270,
+            "n_bins": 22
+          },
+          "elev_bin_1_geomag_bin_2": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              115.35
+            ],
+            "geomag_lat_range": [
+              -0.18094896066119404,
+              25.45773566693064
+            ],
+            "lambda_km": 1919.8794712102797,
+            "lambda_error_km": 593.2491908455178,
+            "amplitude": 0.2641104003767524,
+            "offset": -0.0034067093117241196,
+            "r_squared": 0.5631624842734548,
+            "n_pairs": 1375950,
+            "n_bins": 22
+          },
+          "elev_bin_1_geomag_bin_3": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              115.35
+            ],
+            "geomag_lat_range": [
+              25.45773566693064,
+              82.19869104293558
+            ],
+            "lambda_km": 2357.9138148888933,
+            "lambda_error_km": 838.0128262934683,
+            "amplitude": 0.1326211451718782,
+            "offset": 0.0013187007399769954,
+            "r_squared": 0.6258495017544743,
+            "n_pairs": 1223954,
+            "n_bins": 25
+          },
+          "elev_bin_2_geomag_bin_1": {
+            "elevation_range_m": [
+              115.35,
+              480.0
+            ],
+            "geomag_lat_range": [
+              -80.2760155363996,
+              -0.18094896066119404
+            ],
+            "lambda_km": 2425.129486481187,
+            "lambda_error_km": 454.0459812970686,
+            "amplitude": 0.3489174717902629,
+            "offset": -0.008429852864670698,
+            "r_squared": 0.7991440192439724,
+            "n_pairs": 1177939,
+            "n_bins": 24
+          },
+          "elev_bin_2_geomag_bin_2": {
+            "elevation_range_m": [
+              115.35,
+              480.0
+            ],
+            "geomag_lat_range": [
+              -0.18094896066119404,
+              25.45773566693064
+            ],
+            "lambda_km": 1319.8888480410817,
+            "lambda_error_km": 1343.0445133249018,
+            "amplitude": 0.16183626474921597,
+            "offset": -0.0022028082029339597,
+            "r_squared": 0.09708673989781302,
+            "n_pairs": 1504306,
+            "n_bins": 21
+          },
+          "elev_bin_2_geomag_bin_3": {
+            "elevation_range_m": [
+              115.35,
+              480.0
+            ],
+            "geomag_lat_range": [
+              25.45773566693064,
+              82.19869104293558
+            ],
+            "lambda_km": 1392.1411898392946,
+            "lambda_error_km": 393.28691948361967,
+            "amplitude": 0.16815497468786308,
+            "offset": 0.02167324799379739,
+            "r_squared": 0.6514148133277383,
+            "n_pairs": 1684731,
+            "n_bins": 27
+          },
+          "elev_bin_3_geomag_bin_1": {
+            "elevation_range_m": [
+              480.0,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              -80.2760155363996,
+              -0.18094896066119404
+            ],
+            "lambda_km": 2786.121309710313,
+            "lambda_error_km": 832.1969568391158,
+            "amplitude": 0.4343009199147121,
+            "offset": -0.030810141495834106,
+            "r_squared": 0.6766503359319844,
+            "n_pairs": 1422824,
+            "n_bins": 23
+          },
+          "elev_bin_3_geomag_bin_2": {
+            "elevation_range_m": [
+              480.0,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              -0.18094896066119404,
+              25.45773566693064
+            ],
+            "lambda_km": 2396.563320741298,
+            "lambda_error_km": 407.9434948619647,
+            "amplitude": 0.5208308588665135,
+            "offset": -0.006690752230275105,
+            "r_squared": 0.7737859998494012,
+            "n_pairs": 1485448,
+            "n_bins": 20
+          },
+          "elev_bin_3_geomag_bin_3": {
+            "elevation_range_m": [
+              480.0,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              25.45773566693064,
+              82.19869104293558
+            ],
+            "lambda_km": 2834.64571623339,
+            "lambda_error_km": 1045.6957834453524,
+            "amplitude": 0.09750924212710817,
+            "offset": 0.011406303569614269,
+            "r_squared": 0.643533680225835,
+            "n_pairs": 1329756,
+            "n_bins": 25
+          }
+        },
+        "elevation_range_m": [
+          -71.62299999999999,
+          3688.35
+        ],
+        "geomagnetic_range": [
+          -80.2760155363996,
+          82.19869104293558
+        ],
+        "coordinate_mapping_fixed": true,
+        "geomagnetic_enhancement": true
+      },
+      "esa_final": {
+        "total_pairs": 10809084,
+        "pairs_with_elevation": 10809084,
+        "pairs_with_geomagnetic": 10809084,
+        "elevation_coverage_percent": 100.0,
+        "geomagnetic_coverage_percent": 100.0,
+        "quintile_analysis": {
+          "quintile_1": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              78.52499999999999
+            ],
+            "lambda_km": 2114.3481954420954,
+            "lambda_error_km": 341.404843053671,
+            "amplitude": 0.35394814901800864,
+            "offset": -0.009716966854883824,
+            "r_squared": 0.8180520997555918,
+            "n_pairs": 2161760,
+            "n_bins": 29
+          },
+          "quintile_2": {
+            "elevation_range_m": [
+              78.52499999999999,
+              166.057
+            ],
+            "lambda_km": 1721.5517823322411,
+            "lambda_error_km": 263.03788851123676,
+            "amplitude": 0.3881463470638937,
+            "offset": -0.00663707479944429,
+            "r_squared": 0.8224132204358771,
+            "n_pairs": 2161494,
+            "n_bins": 32
+          },
+          "quintile_3": {
+            "elevation_range_m": [
+              166.057,
+              378.8575
+            ],
+            "lambda_km": 2738.6837408226197,
+            "lambda_error_km": 609.4510034425786,
+            "amplitude": 0.22761188865473203,
+            "offset": -0.011449929746077916,
+            "r_squared": 0.7417261591497049,
+            "n_pairs": 2161812,
+            "n_bins": 30
+          },
+          "quintile_4": {
+            "elevation_range_m": [
+              378.8575,
+              753.7
+            ],
+            "lambda_km": 3610.9065344395726,
+            "lambda_error_km": 862.6289799545905,
+            "amplitude": 0.20237130585582558,
+            "offset": -0.017420946288864335,
+            "r_squared": 0.7684386571510877,
+            "n_pairs": 2161742,
+            "n_bins": 29
+          },
+          "quintile_5": {
+            "elevation_range_m": [
+              753.7,
+              3688.35
+            ],
+            "lambda_km": 3169.5904791862595,
+            "lambda_error_km": 587.4167603087928,
+            "amplitude": 0.24487974233083773,
+            "offset": -0.012328767210425738,
+            "r_squared": 0.7994776506422412,
+            "n_pairs": 2162276,
+            "n_bins": 32
+          }
+        },
+        "geomagnetic_stratified_analysis": {
+          "elev_bin_1_geomag_bin_1": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              126.5
+            ],
+            "geomag_lat_range": [
+              -72.62607472044601,
+              -3.012104640618606
+            ],
+            "lambda_km": 1800.6938397494773,
+            "lambda_error_km": 328.99875566446093,
+            "amplitude": 0.5679856050128319,
+            "offset": -0.014095289237722748,
+            "r_squared": 0.8219126689044861,
+            "n_pairs": 1477793,
+            "n_bins": 22
+          },
+          "elev_bin_1_geomag_bin_2": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              126.5
+            ],
+            "geomag_lat_range": [
+              -3.012104640618606,
+              21.270050415267548
+            ],
+            "lambda_km": 1909.933360105188,
+            "lambda_error_km": 550.8499526357866,
+            "amplitude": 0.3953717731272364,
+            "offset": -0.00840790659474646,
+            "r_squared": 0.6601020996968099,
+            "n_pairs": 1126462,
+            "n_bins": 19
+          },
+          "elev_bin_1_geomag_bin_3": {
+            "elevation_range_m": [
+              -71.62299999999999,
+              126.5
+            ],
+            "geomag_lat_range": [
+              21.270050415267548,
+              82.19869104293558
+            ],
+            "lambda_km": 3501.5861794357106,
+            "lambda_error_km": 1719.2973085286635,
+            "amplitude": 0.13181326036340404,
+            "offset": -0.006692487228934417,
+            "r_squared": 0.5722714549492942,
+            "n_pairs": 962473,
+            "n_bins": 23
+          },
+          "elev_bin_2_geomag_bin_1": {
+            "elevation_range_m": [
+              126.5,
+              491.4325
+            ],
+            "geomag_lat_range": [
+              -72.62607472044601,
+              -3.012104640618606
+            ],
+            "lambda_km": 2391.855412057943,
+            "lambda_error_km": 451.86973728724826,
+            "amplitude": 0.41798723716301683,
+            "offset": -0.013157969373812212,
+            "r_squared": 0.8283546578663968,
+            "n_pairs": 1069639,
+            "n_bins": 23
+          },
+          "elev_bin_2_geomag_bin_2": {
+            "elevation_range_m": [
+              126.5,
+              491.4325
+            ],
+            "geomag_lat_range": [
+              -3.012104640618606,
+              21.270050415267548
+            ],
+            "lambda_km": 2617.49739397519,
+            "lambda_error_km": 2599.848238151483,
+            "amplitude": 0.09238774448018815,
+            "offset": -0.010434742588883316,
+            "r_squared": 0.13414338417632654,
+            "n_pairs": 1261629,
+            "n_bins": 17
+          },
+          "elev_bin_2_geomag_bin_3": {
+            "elevation_range_m": [
+              126.5,
+              491.4325
+            ],
+            "geomag_lat_range": [
+              21.270050415267548,
+              82.19869104293558
+            ],
+            "lambda_km": 2489.8875209110083,
+            "lambda_error_km": 995.9343945537651,
+            "amplitude": 0.16400622617772787,
+            "offset": -0.0016752760102154518,
+            "r_squared": 0.6337798681938487,
+            "n_pairs": 1343787,
+            "n_bins": 21
+          },
+          "elev_bin_3_geomag_bin_1": {
+            "elevation_range_m": [
+              491.4325,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              -72.62607472044601,
+              -3.012104640618606
+            ],
+            "lambda_km": 2883.266258089028,
+            "lambda_error_km": 869.2502560118669,
+            "amplitude": 0.4518621552482567,
+            "offset": -0.040564093679596305,
+            "r_squared": 0.7146022285590887,
+            "n_pairs": 1019532,
+            "n_bins": 22
+          },
+          "elev_bin_3_geomag_bin_2": {
+            "elevation_range_m": [
+              491.4325,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              -3.012104640618606,
+              21.270050415267548
+            ],
+            "lambda_km": 2240.1265678405966,
+            "lambda_error_km": 465.3280170765039,
+            "amplitude": 0.6753062260619587,
+            "offset": -0.010934928764503343,
+            "r_squared": 0.7826731822464579,
+            "n_pairs": 1286841,
+            "n_bins": 15
+          },
+          "elev_bin_3_geomag_bin_3": {
+            "elevation_range_m": [
+              491.4325,
+              3688.35
+            ],
+            "geomag_lat_range": [
+              21.270050415267548,
+              82.19869104293558
+            ],
+            "lambda_km": 1288.4384122813756,
+            "lambda_error_km": 433.23688562486797,
+            "amplitude": 0.1922297984010094,
+            "offset": 0.021650650400962715,
+            "r_squared": 0.5673336663936084,
+            "n_pairs": 1260928,
+            "n_bins": 24
+          }
+        },
+        "elevation_range_m": [
+          -71.62299999999999,
+          3688.35
+        ],
+        "geomagnetic_range": [
+          -72.62607472044601,
+          82.19869104293558
+        ],
+        "coordinate_mapping_fixed": true,
+        "geomagnetic_enhancement": true
+      }
+    }
+  }
+}

@@ -37,7 +37,7 @@ from scripts.utils.exceptions import (
 def print_step_header():
     """Print formatted step header"""
     print(f"\n{'='*80}")
-    print("TEP GNSS Analysis Package v0.3")
+    print("TEP GNSS Analysis Package v0.4")
     print("STEP 2: Coordinate Validation")
     print("Validating station coordinates for precision distance calculations")
     print(f"{'='*80}")

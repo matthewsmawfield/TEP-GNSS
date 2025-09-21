@@ -62,6 +62,103 @@ def geodetic_to_ecef(lat_deg: float, lon_deg: float, h_m: float):
     Z = (N * (1 - e2) + h_m) * sin_lat
     return X, Y, Z
 
+def calculate_geomagnetic_coordinates(lat_deg: float, lon_deg: float, height_m: float, date_decimal: float = 2024.0):
+    """
+    Calculate geomagnetic coordinates using IGRF model.
+    
+    Args:
+        lat_deg: Geographic latitude in degrees
+        lon_deg: Geographic longitude in degrees  
+        height_m: Height above sea level in meters
+        date_decimal: Decimal year for IGRF model (default: 2024.0)
+        
+    Returns:
+        tuple: (geomag_lat, geomag_lon) in degrees, or (None, None) if calculation fails
+    """
+    try:
+        import pyIGRF
+        
+        # Convert height to km for pyIGRF
+        height_km = height_m / 1000.0
+        
+        # Calculate magnetic field components
+        # pyIGRF.igrf_value returns (declination, inclination, horizontal_intensity, 
+        #                          north_component, east_component, vertical_component, total_intensity)
+        mag_components = pyIGRF.igrf_value(lat_deg, lon_deg, height_km, date_decimal)
+        
+        # Extract inclination (magnetic dip) to calculate geomagnetic latitude
+        inclination = mag_components[1]  # In degrees
+        
+        # Calculate geomagnetic latitude from inclination using dipole approximation
+        # tan(inclination) = 2 * tan(geomagnetic_latitude)
+        geomag_lat = math.degrees(math.atan(math.tan(math.radians(inclination)) / 2.0))
+        
+        # For geomagnetic longitude, we use a simplified approach
+        # In practice, this would require more complex calculations with dipole coordinates
+        # For now, we'll use the geographic longitude as an approximation
+        geomag_lon = lon_deg
+        
+        return geomag_lat, geomag_lon
+        
+    except Exception as e:
+        # Only log the first few failures to avoid log spam
+        if not hasattr(calculate_geomagnetic_coordinates, '_error_logged'):
+            print_status(f"Geomagnetic calculation failed: {e}", "WARNING")
+            if "No module named 'pyIGRF'" in str(e):
+                print_status("Install pyIGRF with: pip install pyigrf==0.3.3", "INFO")
+            calculate_geomagnetic_coordinates._error_logged = True
+        return None, None
+
+def add_geomagnetic_coordinates(coords_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Add geomagnetic coordinates to station coordinate dataframe.
+    
+    Args:
+        coords_df: DataFrame with station coordinates
+        
+    Returns:
+        DataFrame with added geomagnetic coordinate columns
+    """
+    print_status("Calculating geomagnetic coordinates for all stations...", "PROCESS")
+    
+    # Check if we have required columns
+    required_cols = ['lat_deg', 'lon_deg', 'height_m']
+    missing_cols = [col for col in required_cols if col not in coords_df.columns]
+    
+    if missing_cols:
+        print_status(f"Missing required columns for geomagnetic calculation: {missing_cols}", "ERROR")
+        return coords_df
+    
+    # Initialize new columns
+    coords_df['geomag_lat'] = None
+    coords_df['geomag_lon'] = None
+    
+    successful_calculations = 0
+    failed_calculations = 0
+    
+    # Calculate geomagnetic coordinates for each station
+    for idx, row in coords_df.iterrows():
+        if pd.notna(row['lat_deg']) and pd.notna(row['lon_deg']) and pd.notna(row['height_m']):
+            geomag_lat, geomag_lon = calculate_geomagnetic_coordinates(
+                row['lat_deg'], row['lon_deg'], row['height_m']
+            )
+            
+            if geomag_lat is not None and geomag_lon is not None:
+                coords_df.at[idx, 'geomag_lat'] = geomag_lat
+                coords_df.at[idx, 'geomag_lon'] = geomag_lon
+                successful_calculations += 1
+            else:
+                failed_calculations += 1
+        else:
+            failed_calculations += 1
+    
+    if successful_calculations > 0:
+        print_status(f"Geomagnetic coordinate calculation complete: {successful_calculations} successful, {failed_calculations} failed", "SUCCESS")
+    else:
+        print_status(f"Geomagnetic coordinate calculation: {failed_calculations} failed (pyIGRF not installed)", "WARNING")
+    
+    return coords_df
+
 def fetch_igs_coordinates():
     """Fetch coordinates from IGS network JSON"""
     def _fetch_operation():
@@ -85,6 +182,10 @@ def fetch_igs_coordinates():
                 lat = float(meta.get("Latitude", 0))
                 lon = float(meta.get("Longitude", 0))
                 h = float(meta.get("Height", 0))
+                
+                # Normalize longitude to -180 to +180 range
+                if lon > 180:
+                    lon = lon - 360
                 
                 rows.append({
                     'code': code9,  # Keep full 9-char code
@@ -113,80 +214,18 @@ def fetch_igs_coordinates():
     )
     return result if result is not None else pd.DataFrame()
 
-def fetch_bkg_coordinates():
-    """Fetch coordinates from BKG station API"""
-    def _fetch_operation():
-        url = "https://igs.bkg.bund.de/api/stations?format=json"
-        print_status("Fetching BKG station coordinates...", "INFO")
-        
-        # Create secure SSL context
-        ssl_context = ssl.create_default_context()
-        timeout = TEPConfig.get_int('TEP_NETWORK_TIMEOUT')
-        
-        with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
-            data = json.load(response)
-        
-        rows = []
-        for entry in data:
-            code = entry.get("id", "").upper()[:4]
-            if not code:
-                continue
-            try:
-                lat = float(entry["position"]["latitude"])
-                lon = float(entry["position"]["longitude"])
-                h = float(entry["position"]["ellipsoidalHeight"])
-                X, Y, Z = geodetic_to_ecef(lat, lon, h)
-                
-                rows.append({
-                    'code': code,
-                    'coord_source_code': code,
-                    'lat_deg': lat,
-                    'lon_deg': lon,
-                    'height_m': h,
-                    'X': X,
-                    'Y': Y,
-                    'Z': Z,
-                    'source': 'BKG'
-                })
-            except (KeyError, ValueError, TypeError):
-                continue  # Skip malformed entries
-        
-        print_status(f"Retrieved {len(rows)} stations from BKG", "SUCCESS")
-        return pd.DataFrame(rows)
-    
-    # Use safe network operation handler
-    result = SafeErrorHandler.safe_network_operation(
-        _fetch_operation,
-        error_message="BKG coordinate fetch failed",
-        logger_func=print_status,
-        return_on_error=pd.DataFrame(),
-        max_retries=2
-    )
-    return result if result is not None else pd.DataFrame()
-
 def build_coordinate_catalogue():
     """Build comprehensive coordinate catalogue with metadata"""
     print_status("Building comprehensive coordinate catalogue...", "PROCESS")
     
-    # Fetch from multiple sources
-    sources = []
-    
-    # IGS (primary source)
+    # Fetch from IGS (primary and sufficient source)
     igs_df = fetch_igs_coordinates()
-    if len(igs_df) > 0:
-        sources.append(igs_df)
-    
-    # BKG (secondary source)
-    bkg_df = fetch_bkg_coordinates()
-    if len(bkg_df) > 0:
-        sources.append(bkg_df)
-    
-    if not sources:
+    if len(igs_df) == 0:
         print_status("No coordinate sources available", "ERROR")
         return None
     
-    # Combine all sources
-    all_df = pd.concat(sources, ignore_index=True)
+    # Use IGS data directly (766 stations is comprehensive)
+    all_df = igs_df
     
     # Deduplicate by code (IGS takes priority)
     dedup = all_df.drop_duplicates(subset=['code'], keep='first')
@@ -194,23 +233,30 @@ def build_coordinate_catalogue():
     # Add essential metadata for validation
     dedup['has_coordinates'] = True  # All fetched stations have coordinates
     
-    # Reorder columns for consistency - keep it simple
+    # Add geomagnetic coordinates to the dataset
+    dedup_with_geomag = add_geomagnetic_coordinates(dedup)
+    
+    # Reorder columns for consistency - include geomagnetic coordinates
     columns = [
         'code', 'coord_source_code', 'lat_deg', 'lon_deg', 'height_m', 'X', 'Y', 'Z',
-        'has_coordinates'
+        'geomag_lat', 'geomag_lon', 'has_coordinates'
     ]
     
     # Add missing columns if needed
     for col in columns:
-        if col not in dedup.columns:
+        if col not in dedup_with_geomag.columns:
             if col == 'coord_source_code':
-                dedup[col] = dedup['code'].str[:4]
+                dedup_with_geomag[col] = dedup_with_geomag['code'].str[:4]
             else:
-                dedup[col] = None
+                dedup_with_geomag[col] = None
     
-    result_df = dedup[columns].copy()
+    result_df = dedup_with_geomag[columns].copy()
     
+    # Report geomagnetic coordinate statistics
+    valid_geomag = result_df['geomag_lat'].notna().sum()
     print_status(f"Built coordinate catalogue: {len(result_df)} unique stations", "SUCCESS")
+    print_status(f"Geomagnetic coordinates: {valid_geomag}/{len(result_df)} stations ({100*valid_geomag/len(result_df):.1f}%)", "SUCCESS")
+    
     return result_df
 
 def download_station_clock_metadata():
@@ -615,7 +661,7 @@ def download_small_real_clk_samples() -> bool:
 
 def main():
     print("="*80)
-    print("TEP GNSS Analysis Package v0.3")
+    print("TEP GNSS Analysis Package v0.4")
     print("STEP 1: Data Acquisition")
     print("Acquiring authoritative GNSS data and coordinates")
     print("="*80)

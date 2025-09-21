@@ -27,7 +27,7 @@ Inputs:
   - results/outputs/step_3_correlation_{ac}.json (from Step 3)
 
 Outputs:
-  - results/outputs/block_wise_cv_{ac}.json
+  - results/outputs/step_5_5_block_wise_cv_{ac}.json
 
 Environment Variables:
   - TEP_ENABLE_MONTHLY_CV: Enable monthly temporal cross-validation (default: 1)
@@ -659,7 +659,7 @@ def main():
         results = run_block_wise_cross_validation_analysis(ac)
         
         # Save results with better error handling
-        output_file = ROOT / "results" / "outputs" / f"block_wise_cv_{ac}.json"
+        output_file = ROOT / "results" / "outputs" / f"step_5_5_block_wise_cv_{ac}.json"
         try:
             # Ensure output directory exists
             output_file.parent.mkdir(parents=True, exist_ok=True)

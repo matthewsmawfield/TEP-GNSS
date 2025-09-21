@@ -23,7 +23,7 @@ Inputs:
   - results/outputs/step_3_correlation_{ac}.json (from Step 3)
 
 Outputs:
-  - results/outputs/statistical_validation_{ac}.json
+  - results/outputs/step_5_statistical_validation_{ac}.json
   - results/outputs/enhanced_anisotropy_{ac}.json
 
 Environment Variables:
@@ -1076,7 +1076,7 @@ def process_analysis_center(ac: str) -> Dict:
 def main():
     """Main function to run all statistical validation tests."""
     print("="*80)
-    print("TEP GNSS Analysis Package v0.3")
+    print("TEP GNSS Analysis Package v0.4")
     print("STEP 5: Statistical Validation")
     print("="*80)
     
@@ -1118,7 +1118,7 @@ def main():
         output_dir = ROOT / "results/outputs"
         output_dir.mkdir(parents=True, exist_ok=True)
         
-        output_file = output_dir / f"statistical_validation_{ac}.json"
+        output_file = output_dir / f"step_5_statistical_validation_{ac}.json"
         try:
             safe_json_write(result, output_file, indent=2)
             print_status(f"Results saved: {output_file}", "SUCCESS")

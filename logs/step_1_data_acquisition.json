@@ -1,6 +1,8 @@
 {
   "step": 1,
+  "name": "Data Acquisition",
   "status": "completed",
+  "timestamp": "2025-09-21 17:24:09",
   "coordinates_stations": 766,
   "downloads": {
     "igs": 965,
@@ -29,5 +31,9 @@
       "ESA0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
       "ESA0OPSFIN_20223640000_01D_30S_CLK.CLK.gz"
     ]
+  },
+  "outputs": {
+    "coordinate_file": "data/coordinates/station_coords_global.csv",
+    "download_log": "logs/step_1_downloads.json"
   }
 }

@@ -56,7 +56,7 @@ class TEPConfig:
         'TEP_ENABLE_ENHANCED_ANISOTROPY': True,
         
         # Rebuild flags
-        'TEP_REBUILD_COORDS': False,
+        'TEP_REBUILD_COORDS': True,  # Default to True for geomagnetic enhancement
         'TEP_REBUILD_CLK': False,
         'TEP_REBUILD_METADATA': False,
         'TEP_SKIP_COORDS': False,

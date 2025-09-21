@@ -1,7 +1,7 @@
 # TEP-GNSS: Global Time Echoes Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.3 (Jaipur)  
+**Version:** v0.4 (Jaipur)  
 **Date:** September 17, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
@@ -60,12 +60,12 @@ python scripts/steps/step_8_tep_visualization.py
 
 ### Configuration
 
-### v0.3 Configuration (Published Method Defaults)
+### v0.4 Configuration (Published Method Defaults)
 
 **Core Analysis Settings:**
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis (v0.3 method) |
+| `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis (v0.4 method) |
 | `TEP_COHERENCY_F1` | 1e-5 | Lower frequency bound (10 μHz) |
 | `TEP_COHERENCY_F2` | 5e-4 | Upper frequency bound (500 μHz) |
 | `TEP_BINS` | 40 | Distance bins for correlation analysis |
@@ -77,7 +77,7 @@ python scripts/steps/step_8_tep_visualization.py
 | `TEP_WORKERS` | auto | Number of parallel workers |
 | `TEP_BOOTSTRAP_ITER` | 1000 | Bootstrap iterations for confidence intervals |
 
-**Simple Command for v0.3 Results:**
+**Simple Command for v0.4 Results:**
 ```bash
 python scripts/steps/step_3_tep_correlation_analysis.py
 ```
@@ -95,7 +95,7 @@ All data sourced directly from official repositories. No synthetic or fallback d
 Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format
 - `results/figures/`: Generated visualizations
-- `TEP-GNSS_manuscript_v0.3_Jaipur.md`: Comprehensive analysis report
+- `TEP-GNSS_manuscript_v0.4_Jaipur.md`: Comprehensive analysis report
 
 ## Scientific Background
 
@@ -169,7 +169,7 @@ If you use this analysis package, please cite both the analysis and underlying t
 ## Documentation
 
 - **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.3_Jaipur.pdf`
+- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.4_Jaipur.pdf`
 - **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
 - **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 - **Execution logs**: `logs/` directory
