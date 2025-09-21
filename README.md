@@ -95,7 +95,7 @@ All data sourced directly from official repositories. No synthetic or fallback d
 Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format
 - `results/figures/`: Generated visualizations
-- `TEP-GNSS_manuscript_v0.4_Jaipur.md`: Comprehensive analysis report
+- Full analysis report (PDF): `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.4_Jaipur.pdf`
 
 ## Scientific Background
 
