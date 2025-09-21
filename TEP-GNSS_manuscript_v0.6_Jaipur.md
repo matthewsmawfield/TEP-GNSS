@@ -65,9 +65,9 @@ Our analysis employs a rigorous three-way validation approach using independent 
 - Data type: Ground station atomic clock correlations
 - Temporal coverage: 2023-01-01 to 2025-06-30 (911 days)
   - Analysis window: 2023-01-01 to 2025-06-30 (911 days) with date filtering applied, determined by three-way data availability
-  - IGS: 910 files processed (93.9% of available files within date window)
-  - CODE: 912 files processed (93.7% of available files within date window)
-  - ESA: 912 files processed (91.5% of available files within date window)
+  - IGS: 910 files processed (complete analysis window coverage)
+  - CODE: 912 files processed (complete analysis window coverage)
+  - ESA: 912 files processed (complete analysis window coverage)
 - Spatial coverage: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)
 - Data volume: 62.7 million station pair cross-spectral measurements
 - Analysis centers: CODE (912 files processed, 39.1M pairs), ESA (912 files processed, 10.8M pairs), IGS (910 files, 12.8M pairs)

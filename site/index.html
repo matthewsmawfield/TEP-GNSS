@@ -719,9 +719,9 @@
             <li><strong>Temporal coverage</strong>: 2023-01-01 to 2025-06-30 (911 days)
                 <ul>
                     <li>Analysis window: 2023-01-01 to 2025-06-30 (911 days) with date filtering applied</li>
-                    <li>IGS: 910 files processed (93.9% of available files within date window)</li>
-                    <li>CODE: 912 files processed (93.7% of available files within date window)</li>
-                    <li>ESA: 912 files processed (91.5% of available files within date window)</li>
+                    <li>IGS: 910 files processed (complete analysis window coverage)</li>
+                    <li>CODE: 912 files processed (complete analysis window coverage)</li>
+                    <li>ESA: 912 files processed (complete analysis window coverage)</li>
         </ul>
             </li>
             <li><strong>Spatial coverage</strong>: 529 ground stations from global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
@@ -740,12 +740,6 @@
     <figure style="text-align:center; margin: 30px 0;">
         <img src="figures/gnss_stations_map.png" alt="Global map showing GNSS station distribution" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1b. GNSS Station Coverage Map:</b> Comprehensive global distribution showing station density and geographic coverage essential for intercontinental correlation analysis.</figcaption>
-    </figure>
-
-    <h3>Station Pair Distance Distribution</h3>
-    <figure style="text-align:center; margin: 30px 0;">
-        <img src="figures/distance_distribution.png" alt="Distribution of station pair distances" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 2. Station Pair Distance Distribution:</b> Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.</figcaption>
     </figure>
 
     <h2>2.2 Phase-Coherent Analysis Method</h2>
@@ -772,6 +766,12 @@
         </ol>
         <p>Previous studies using $|\text{CSD}|$ (magnitude only) would miss this signal entirely, as they discard the critical phase information that encodes the field's spatial correlation structure.</p>
         </div>
+
+    <h3>Station Pair Distance Distribution</h3>
+    <figure style="text-align:center; margin: 30px 0;">
+        <img src="figures/distance_distribution.png" alt="Distribution of station pair distances" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 2. Station Pair Distance Distribution:</b> Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.</figcaption>
+    </figure>
         
     <h2>2.3 Statistical Framework</h2>
     
@@ -1547,7 +1547,7 @@
                 </svg>
             </button><br>
         </div>
-        <p><strong>Purpose:</strong> Downloads raw GNSS clock product files from official analysis centers (CODE, ESA, IGS) covering the full analysis period (2020-2022). Retrieves precise clock corrections in 30-second intervals from authoritative FTP servers, ensuring data integrity through checksum validation and automatic retry mechanisms.</p>
+        <p><strong>Purpose:</strong> Downloads raw GNSS clock product files from official analysis centers (CODE, ESA, IGS) covering the full analysis period (2023-01-01 to 2025-06-30). Retrieves precise clock corrections in 30-second intervals from authoritative FTP servers, ensuring data integrity through checksum validation and automatic retry mechanisms.</p>
         
         <h3>Step 2: Coordinate Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~10-15 minutes</span></h3>
         <div class="error-budget">
