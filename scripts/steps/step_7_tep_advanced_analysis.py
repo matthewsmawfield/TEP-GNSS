@@ -45,11 +45,11 @@ from scripts.utils.exceptions import (
 def print_status(text: str, status: str = "INFO"):
     """Print status with icons, respecting global VERBOSE flag."""
     prefixes = {
-        "INFO": "ℹ️ ",
-        "SUCCESS": "✅",
-        "WARNING": "⚠️ ",
-        "ERROR": "❌",
-        "PROCESSING": "🔄"
+        "INFO": "[INFO]",
+        "SUCCESS": "[OK]",
+        "WARNING": "[WARN]",
+        "ERROR": "[ERROR]",
+        "PROCESSING": "[PROC]"
     }
     if status == "INFO" and not VERBOSE:
         return  # Skip chatty INFO messages when not verbose
@@ -1369,21 +1369,21 @@ def main():
     print("KEY FINDINGS")
     print("="*60)
     
-    print("\n✅ Data Type Confirmed:")
+    print("\nData Type Confirmed:")
     print("   Ground station atomic clocks (not satellites)")
     
-    print("\n🔬 TEP Test Advantages:")
+    print("\nTEP Test Advantages:")
     print("   - Fixed positions (no orbital dynamics)")
     print("   - Altitude variations (screening effects testable)")
     print("   - Global distribution (distance correlations)")
     print("   - Stable references (controlled environments)")
     
-    print("\n💡 Implementation Status:")
+    print("\nImplementation Status:")
     print("   - Analysis frameworks ready")
     print("   - Requires station coordinate mapping")
     print("   - Pair-level data filtering needed")
     
-    print("\n🎯 Next Steps:")
+    print("\nNext Steps:")
     print("   - Map station pairs to coordinates/elevations")
     print("   - Implement elevation-dependent filtering")
     print("   - Run frequency universality tests")

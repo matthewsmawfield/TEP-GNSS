@@ -135,7 +135,7 @@ def create_panel_a(ax):
     legend.get_frame().set_alpha(0.9)
     
     # Site-themed statistics box
-    textstr = ('λ = 3.40–3.53 Mm\n'
+    textstr = ('λ = 3.33–4.55 Mm\n'
               '95% CI bands shown\n'
               'Within theoretical\n'
               'range (1–10 Mm)')
@@ -389,7 +389,7 @@ def main():
                 fontsize=16, fontweight='bold', y=0.95, color='#220126')
     
     # Site-themed footer
-    footer_text = ('Methods: cos(Δφ) coherence metric throughout. Panel A: 95% CI from error propagation, λ = 3.40–3.53 Mm within theoretical range. ' +
+    footer_text = ('Methods: cos(Δφ) coherence metric throughout. Panel A: 95% CI from error propagation, λ = 3.33–4.55 Mm within theoretical range. ' +
                   'Panel B: Station-day blocked permutations (N=300). Panel C: Distance-scrambled null comparison.')
     fig.text(0.5, 0.02, footer_text, fontsize=8, ha='center', style='italic', 
              alpha=0.8, color='#495773')

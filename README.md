@@ -13,8 +13,8 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 Through analysis of 62.7 million station pair measurements from 529 global ground stations, we observe:
 
-- **Correlation lengths**: λ = 3,299–3,818 km across all analysis centers (15.7% variation)
-- **Statistical significance**: Strong exponential fits (R² = 0.915–0.964)
+- **Correlation lengths**: λ = 3,400–4,564 km across all analysis centers (25.5% variation)
+- **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
 - **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
 - **Validation**: Comprehensive null tests confirm signal authenticity
 

@@ -1,0 +1,5 @@
+GitHub About:
+Global Time Echoes: Distance-structured correlations in GNSS clocks (λ = 3,400-4,564 km) consistent with screened scalar field theory. Complete analysis of 62.7M measurements across CODE/IGS/ESA centres using band-limited phase methods.
+
+Zenodo Description: 
+Observations of exponentially decaying correlations in GNSS atomic clocks reveal characteristic lengths λ = 3,400-4,564 km across IGS, ESA, and CODE products. Phase-coherent analysis of 62.7 million station-pair measurements using band-limited spectral methods (10-500 μHz) yields strong exponential fits (R² = 0.920-0.970) and passes rigorous null tests. These distance-structured patterns align with predictions of the Temporal Equivalence Principle (TEP), suggesting screened scalar field coupling to atomic frequencies. Complete code and data analysis pipeline with methodological corrections is provided for reproducibility.

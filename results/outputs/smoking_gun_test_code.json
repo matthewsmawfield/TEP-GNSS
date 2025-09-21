@@ -1,0 +1,47 @@
+{
+  "analysis_center": "CODE",
+  "timestamp": "2025-09-20T23:16:10.494215",
+  "smoking_gun_test": {
+    "pair_level_analysis": true,
+    "n_measurements": 2138673,
+    "correlation_with_orbital_velocity": -0.0008764301677104757,
+    "correlation_with_velocity_squared": -0.0008778057015339945,
+    "p_value_velocity": 0.19994484286952333,
+    "p_value_velocity_squared": 0.1992398269329212,
+    "seasonal_pattern": {
+      "annual_periodicity_detected": false,
+      "annual_r_squared": 0.02186693519615579,
+      "annual_amplitude": -0.001409639444437541,
+      "annual_phase": 2.317927639483032,
+      "annual_offset": 0.006909882009475499,
+      "n_days_analyzed": 50
+    },
+    "perihelion_aphelion_test": {
+      "asymmetry_detected": false,
+      "perihelion_coherence": 0.006587817264826729,
+      "aphelion_coherence": -9.356679355482536e-06,
+      "observed_ratio": -704.0764158458209,
+      "expected_ratio": 1.069,
+      "ratio_error": 659.6308847949681
+    },
+    "smoking_gun_evidence": false,
+    "correlation_length_analysis": {
+      "observed_lambda_km": 4548.589996454075,
+      "theoretical_lambda_km": 6378.134344407706,
+      "lambda_ratio": 0.7131536826975494,
+      "lambda_match": true
+    },
+    "amplitude_analysis": {
+      "observed_amplitude": 0.11380180404602341,
+      "theoretical_amplitude": 9.85387111111111e-09,
+      "amplitude_ratio": 11548943.837686472,
+      "amplitude_reasonable": true
+    },
+    "final_verdict": {
+      "evidence_count": 1,
+      "evidence_threshold": 2,
+      "tep_proven": false,
+      "confidence_level": "LOW"
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "analysis_center": "CODE",
+  "timestamp": "2025-09-21T00:20:01.278754",
+  "step": "11_tep_validation_cross_analysis",
+  "data_availability": {
+    "step3_available": true,
+    "step5_available": true,
+    "step10_available": true
+  },
+  "directional_alignment": {
+    "sector_analysis": {},
+    "orbital_alignment": {},
+    "statistical_tests": {},
+    "ew_ns_analysis": {
+      "ew_mean_lambda": 8718.571027223572,
+      "ns_mean_lambda": 3541.406592444344,
+      "ew_ns_ratio": 2.461894956039446,
+      "predicted_enhancement": 2.0,
+      "alignment_quality": 0.23094747801972293
+    },
+    "summary": {
+      "n_sectors_analyzed": 8,
+      "sector_data": [
+        {
+          "sector": "N",
+          "angle": 0,
+          "lambda_km": 2570.1419669708075,
+          "amplitude": 0.1055413901527189,
+          "r_squared": 0.49334508819826683,
+          "expected_enhancement": 1.3
+        },
+        {
+          "sector": "NE",
+          "angle": 45,
+          "lambda_km": 2275.0572122675426,
+          "amplitude": 0.1669615414741452,
+          "r_squared": 0.7707672069755334,
+          "expected_enhancement": 1.2121320343559643
+        },
+        {
+          "sector": "E",
+          "angle": 90,
+          "lambda_km": 10638.420192640388,
+          "amplitude": 0.1840152478237684,
+          "r_squared": 0.7096529501997113,
+          "expected_enhancement": 1.0
+        },
+        {
+          "sector": "SE",
+          "angle": 135,
+          "lambda_km": 8754.849140187067,
+          "amplitude": 0.131712212901754,
+          "r_squared": 0.6365024939320149,
+          "expected_enhancement": 0.7878679656440357
+        },
+        {
+          "sector": "S",
+          "angle": 180,
+          "lambda_km": 4512.67121791788,
+          "amplitude": 0.12764811722848926,
+          "r_squared": 0.6625850759588603,
+          "expected_enhancement": 0.7
+        },
+        {
+          "sector": "SW",
+          "angle": 225,
+          "lambda_km": 4492.561166148602,
+          "amplitude": 0.10373582436608941,
+          "r_squared": 0.5277841783073185,
+          "expected_enhancement": 0.7878679656440357
+        },
+        {
+          "sector": "W",
+          "angle": 270,
+          "lambda_km": 19999.999999989348,
+          "amplitude": 0.31698150623530397,
+          "r_squared": 0.7039623905262286,
+          "expected_enhancement": 1.0
+        },
+        {
+          "sector": "NW",
+          "angle": 315,
+          "lambda_km": 6150.538452108483,
+          "amplitude": 0.07139419975469977,
+          "r_squared": 0.42403889446002874,
+          "expected_enhancement": 1.2121320343559643
+        }
+      ],
+      "orbital_predictions_available": true,
+      "validation_quality": "preliminary"
+    }
+  },
+  "latitude_scaling": {
+    "theoretical_predictions": [
+      {
+        "latitude": 0.0,
+        "n_stations": 68,
+        "expected_tep_factor": 1.0,
+        "cos_squared_lat": 1.0
+      },
+      {
+        "latitude": 20.0,
+        "n_stations": 96,
+        "expected_tep_factor": 0.8830222215594891,
+        "cos_squared_lat": 0.8830222215594891
+      },
+      {
+        "latitude": 45.0,
+        "n_stations": 372,
+        "expected_tep_factor": 0.5000000000000001,
+        "cos_squared_lat": 0.5000000000000001
+      },
+      {
+        "latitude": 75.0,
+        "n_stations": 60,
+        "expected_tep_factor": 0.06698729810778066,
+        "cos_squared_lat": 0.06698729810778066
+      },
+      {
+        "latitude": -20.0,
+        "n_stations": 81,
+        "expected_tep_factor": 0.8830222215594891,
+        "cos_squared_lat": 0.8830222215594891
+      },
+      {
+        "latitude": -45.0,
+        "n_stations": 70,
+        "expected_tep_factor": 0.5000000000000001,
+        "cos_squared_lat": 0.5000000000000001
+      },
+      {
+        "latitude": -75.0,
+        "n_stations": 19,
+        "expected_tep_factor": 0.06698729810778066,
+        "cos_squared_lat": 0.06698729810778066
+      }
+    ],
+    "station_distribution": {
+      "total_stations": 766,
+      "bands_analyzed": 7,
+      "equatorial_stations": 68,
+      "theoretical_scaling": "cos\u00b2(latitude)"
+    },
+    "scaling_validation": "theoretical_only"
+  },
+  "seasonal_patterns": {
+    "orbital_predictions_available": true,
+    "temporal_data_search": {},
+    "pattern_analysis": "limited_by_available_data",
+    "jackknife_variation": {
+      "n_samples": 20,
+      "lambda_mean": 4538.581427258418,
+      "lambda_std": 295.6908622810507,
+      "coefficient_of_variation": 0.06515050286531185
+    },
+    "orbital_timing_predictions": {
+      "perihelion_day": 4,
+      "aphelion_day": 186,
+      "expected_lambda_enhancement": 1.069124336914185,
+      "annual_period": 365.25,
+      "daily_rotation_rate": 0.9856
+    }
+  },
+  "validation_score": {
+    "component_scores": {
+      "directional_alignment": 0.7690525219802771,
+      "latitude_scaling": 0.8,
+      "seasonal_patterns": 0.7,
+      "cross_center_consistency": 0.0
+    },
+    "overall_score": 0.5672631304950693,
+    "evidence_strength": "WEAK - Limited supporting evidence",
+    "validation_completeness": 0.6000000000000001
+  },
+  "execution_time_seconds": 0.7540268898010254,
+  "success": true
+}

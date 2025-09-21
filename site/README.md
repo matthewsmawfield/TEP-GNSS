@@ -13,7 +13,7 @@
 
 ## Abstract
 
-We report distance-structured correlations in GNSS clock products using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers. Across 62.7M station-pair measurements, exponential correlation lengths of 3,299–3,818 km are observed with strong fits (R² = 0.915–0.964), validated by comprehensive null tests (8.5–44× signal destruction) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
+We report distance-structured correlations in GNSS clock products using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers. Across 62.7M station-pair measurements, exponential correlation lengths of 3,400–4,564 km are observed with strong fits (R² = 0.920–0.970), validated by comprehensive null tests (8.5–44× signal destruction) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
 
 ## Analysis Package
 
@@ -26,8 +26,8 @@ This repository contains the complete analysis pipeline for testing the Temporal
 
 ## Key Results
 
-- **Multi-center consistency**: λ = 3,299–3,818 km (15.7% variation) across independent analysis centers
-- **Strong statistical fits**: R² = 0.915–0.964 for exponential correlation models
+- **Multi-center consistency**: λ = 3,400–4,564 km (25.5% variation) across independent analysis centers
+- **Strong statistical fits**: R² = 0.920–0.970 for exponential correlation models
 - **Theoretical compatibility**: Results within TEP-predicted range [1,000–10,000 km]
 - **Validated methodology**: Null tests confirm signal authenticity (8.5–44× destruction under scrambling)
 

@@ -1,0 +1,2287 @@
+{
+  "analysis_center": "IGS_COMBINED",
+  "timestamp": "2025-09-21T00:27:12.216918",
+  "orbital_motion_evidence": {
+    "east_west_mean_lambda": 13138.105972801333,
+    "north_south_mean_lambda": 2848.354430043754,
+    "ew_ns_enhancement_ratio": 4.612524984329116,
+    "orbital_velocity_kms": 29.78,
+    "rotational_velocity_kms": 0.465,
+    "velocity_ratio": 64.04301075268818,
+    "evidence_interpretation": "4.6\u00d7 stronger correlations along orbital motion direction"
+  },
+  "sector_directional_evidence": [
+    {
+      "sector": "N",
+      "lambda_km": 2471.178248516202,
+      "amplitude": 0.19478413537072042,
+      "r_squared": 0.6764273977757458,
+      "angle_deg": 0
+    },
+    {
+      "sector": "NE",
+      "lambda_km": 2081.855226883634,
+      "amplitude": 0.2185748512083838,
+      "r_squared": 0.6954062519881041,
+      "angle_deg": 45
+    },
+    {
+      "sector": "E",
+      "lambda_km": 6276.211945602671,
+      "amplitude": 0.2826819212350571,
+      "r_squared": 0.8261280312808371,
+      "angle_deg": 90
+    },
+    {
+      "sector": "SE",
+      "lambda_km": 2517.7481993420693,
+      "amplitude": 0.2791057119610729,
+      "r_squared": 0.6922186445870802,
+      "angle_deg": 135
+    },
+    {
+      "sector": "S",
+      "lambda_km": 3225.5306115713056,
+      "amplitude": 0.1827411941353158,
+      "r_squared": 0.6508101465683165,
+      "angle_deg": 180
+    },
+    {
+      "sector": "SW",
+      "lambda_km": 3342.088303374568,
+      "amplitude": 0.2019846426670227,
+      "r_squared": 0.8209516024430308,
+      "angle_deg": 225
+    },
+    {
+      "sector": "W",
+      "lambda_km": 19999.999999999996,
+      "amplitude": 0.42422898067833215,
+      "r_squared": 0.9076320637657458,
+      "angle_deg": 270
+    },
+    {
+      "sector": "NW",
+      "lambda_km": 5903.056937710879,
+      "amplitude": 0.13904931383036762,
+      "r_squared": 0.6248380790580255,
+      "angle_deg": 315
+    }
+  ],
+  "seasonal_variation_evidence": {
+    "perihelion_speed": 30.285772399064378,
+    "aphelion_speed": 29.29085293391836,
+    "speed_variation_percent": 3.340470690393218,
+    "predicted_lambda_variation_percent": 6.681020053441412,
+    "perihelion_date": "January 4",
+    "aphelion_date": "July 4"
+  },
+  "orbital_predictions": [
+    {
+      "day_of_year": 1,
+      "orbital_speed_kms": 30.2850876133731,
+      "predicted_lambda_km": 3513.9639082024246,
+      "velocity_enhancement": 1.0342089265196677
+    },
+    {
+      "day_of_year": 2,
+      "orbital_speed_kms": 30.28546800851481,
+      "predicted_lambda_km": 3514.0521828814108,
+      "velocity_enhancement": 1.0342349069973784
+    },
+    {
+      "day_of_year": 3,
+      "orbital_speed_kms": 30.285696295223286,
+      "predicted_lambda_km": 3514.1051597368114,
+      "velocity_enhancement": 1.034250498829903
+    },
+    {
+      "day_of_year": 4,
+      "orbital_speed_kms": 30.285772399064378,
+      "predicted_lambda_km": 3514.1228206968935,
+      "velocity_enhancement": 1.0342556966984768
+    },
+    {
+      "day_of_year": 5,
+      "orbital_speed_kms": 30.285696295223286,
+      "predicted_lambda_km": 3514.1051597368114,
+      "velocity_enhancement": 1.034250498829903
+    },
+    {
+      "day_of_year": 6,
+      "orbital_speed_kms": 30.28546800851481,
+      "predicted_lambda_km": 3514.0521828814108,
+      "velocity_enhancement": 1.0342349069973784
+    },
+    {
+      "day_of_year": 7,
+      "orbital_speed_kms": 30.2850876133731,
+      "predicted_lambda_km": 3513.9639082024246,
+      "velocity_enhancement": 1.0342089265196677
+    },
+    {
+      "day_of_year": 8,
+      "orbital_speed_kms": 30.284555233820985,
+      "predicted_lambda_km": 3513.840365810044,
+      "velocity_enhancement": 1.0341725662586232
+    },
+    {
+      "day_of_year": 9,
+      "orbital_speed_kms": 30.283871043418834,
+      "predicted_lambda_km": 3513.681597838897,
+      "velocity_enhancement": 1.0341258386150571
+    },
+    {
+      "day_of_year": 10,
+      "orbital_speed_kms": 30.283035265193043,
+      "predicted_lambda_km": 3513.487658428411,
+      "velocity_enhancement": 1.034068759522964
+    },
+    {
+      "day_of_year": 11,
+      "orbital_speed_kms": 30.28204817154415,
+      "predicted_lambda_km": 3513.258613697613,
+      "velocity_enhancement": 1.0340013484421016
+    },
+    {
+      "day_of_year": 12,
+      "orbital_speed_kms": 30.280910084134682,
+      "predicted_lambda_km": 3512.9945417143617,
+      "velocity_enhancement": 1.033923628348937
+    },
+    {
+      "day_of_year": 13,
+      "orbital_speed_kms": 30.27962137375675,
+      "predicted_lambda_km": 3512.695532459038,
+      "velocity_enhancement": 1.0338356257259602
+    },
+    {
+      "day_of_year": 14,
+      "orbital_speed_kms": 30.27818246017957,
+      "predicted_lambda_km": 3512.3616877827444,
+      "velocity_enhancement": 1.0337373705493809
+    },
+    {
+      "day_of_year": 15,
+      "orbital_speed_kms": 30.2765938119769,
+      "predicted_lambda_km": 3511.9931213600184,
+      "velocity_enhancement": 1.0336288962752118
+    },
+    {
+      "day_of_year": 16,
+      "orbital_speed_kms": 30.274855946334636,
+      "predicted_lambda_km": 3511.589958636121,
+      "velocity_enhancement": 1.033510239823755
+    },
+    {
+      "day_of_year": 17,
+      "orbital_speed_kms": 30.272969428838593,
+      "predicted_lambda_km": 3511.152336768927,
+      "velocity_enhancement": 1.0333814415624991
+    },
+    {
+      "day_of_year": 18,
+      "orbital_speed_kms": 30.270934873242634,
+      "predicted_lambda_km": 3510.6804045654694,
+      "velocity_enhancement": 1.0332425452874439
+    },
+    {
+      "day_of_year": 19,
+      "orbital_speed_kms": 30.26875294121738,
+      "predicted_lambda_km": 3510.1743224131947,
+      "velocity_enhancement": 1.033093598202867
+    },
+    {
+      "day_of_year": 20,
+      "orbital_speed_kms": 30.266424342079542,
+      "predicted_lambda_km": 3509.634262205979,
+      "velocity_enhancement": 1.0329346508995505
+    },
+    {
+      "day_of_year": 21,
+      "orbital_speed_kms": 30.26394983250219,
+      "predicted_lambda_km": 3509.060407264954,
+      "velocity_enhancement": 1.0327657573314777
+    },
+    {
+      "day_of_year": 22,
+      "orbital_speed_kms": 30.261330216206,
+      "predicted_lambda_km": 3508.4529522542193,
+      "velocity_enhancement": 1.0325869747910268
+    },
+    {
+      "day_of_year": 23,
+      "orbital_speed_kms": 30.258566343631877,
+      "predicted_lambda_km": 3507.812103091509,
+      "velocity_enhancement": 1.032398363882679
+    },
+    {
+      "day_of_year": 24,
+      "orbital_speed_kms": 30.25565911159495,
+      "predicted_lambda_km": 3507.1380768538747,
+      "velocity_enhancement": 1.0321999884952588
+    },
+    {
+      "day_of_year": 25,
+      "orbital_speed_kms": 30.252609462920372,
+      "predicted_lambda_km": 3506.43110167845,
+      "velocity_enhancement": 1.0319919157727289
+    },
+    {
+      "day_of_year": 26,
+      "orbital_speed_kms": 30.249418386061006,
+      "predicted_lambda_km": 3505.691416658407,
+      "velocity_enhancement": 1.031774216083567
+    },
+    {
+      "day_of_year": 27,
+      "orbital_speed_kms": 30.246086914697372,
+      "predicted_lambda_km": 3504.9192717341502,
+      "velocity_enhancement": 1.0315469629887446
+    },
+    {
+      "day_of_year": 28,
+      "orbital_speed_kms": 30.24261612732001,
+      "predicted_lambda_km": 3504.114927579855,
+      "velocity_enhancement": 1.0313102332083321
+    },
+    {
+      "day_of_year": 29,
+      "orbital_speed_kms": 30.239007146794616,
+      "predicted_lambda_km": 3503.2786554854238,
+      "velocity_enhancement": 1.0310641065867578
+    },
+    {
+      "day_of_year": 30,
+      "orbital_speed_kms": 30.235261139910186,
+      "predicted_lambda_km": 3502.4107372339727,
+      "velocity_enhancement": 1.03080866605675
+    },
+    {
+      "day_of_year": 31,
+      "orbital_speed_kms": 30.231379316910456,
+      "predicted_lambda_km": 3501.511464974909,
+      "velocity_enhancement": 1.0305439976019817
+    },
+    {
+      "day_of_year": 32,
+      "orbital_speed_kms": 30.227362931009,
+      "predicted_lambda_km": 3500.5811410927404,
+      "velocity_enhancement": 1.0302701902184603
+    },
+    {
+      "day_of_year": 33,
+      "orbital_speed_kms": 30.223213277888213,
+      "predicted_lambda_km": 3499.6200780716695,
+      "velocity_enhancement": 1.0299873358746752
+    },
+    {
+      "day_of_year": 34,
+      "orbital_speed_kms": 30.218931695182558,
+      "predicted_lambda_km": 3498.628598356122,
+      "velocity_enhancement": 1.0296955294705488
+    },
+    {
+      "day_of_year": 35,
+      "orbital_speed_kms": 30.214519561946386,
+      "predicted_lambda_km": 3497.607034207265,
+      "velocity_enhancement": 1.0293948687952088
+    },
+    {
+      "day_of_year": 36,
+      "orbital_speed_kms": 30.209978298106673,
+      "predicted_lambda_km": 3496.5557275556744,
+      "velocity_enhancement": 1.0290854544836257
+    },
+    {
+      "day_of_year": 37,
+      "orbital_speed_kms": 30.20530936390101,
+      "predicted_lambda_km": 3495.47502985022,
+      "velocity_enhancement": 1.0287673899721372
+    },
+    {
+      "day_of_year": 38,
+      "orbital_speed_kms": 30.20051425930119,
+      "predicted_lambda_km": 3494.365301903303,
+      "velocity_enhancement": 1.0284407814529004
+    },
+    {
+      "day_of_year": 39,
+      "orbital_speed_kms": 30.195594523422795,
+      "predicted_lambda_km": 3493.226913732555,
+      "velocity_enhancement": 1.0281057378273004
+    },
+    {
+      "day_of_year": 40,
+      "orbital_speed_kms": 30.190551733921072,
+      "predicted_lambda_km": 3492.060244399103,
+      "velocity_enhancement": 1.02776237065835
+    },
+    {
+      "day_of_year": 41,
+      "orbital_speed_kms": 30.18538750637356,
+      "predicted_lambda_km": 3490.8656818425447,
+      "velocity_enhancement": 1.0274107941221213
+    },
+    {
+      "day_of_year": 42,
+      "orbital_speed_kms": 30.18010349364977,
+      "predicted_lambda_km": 3489.64362271273,
+      "velocity_enhancement": 1.0270511249582353
+    },
+    {
+      "day_of_year": 43,
+      "orbital_speed_kms": 30.174701385268367,
+      "predicted_lambda_km": 3488.394472198471,
+      "velocity_enhancement": 1.0266834824194493
+    },
+    {
+      "day_of_year": 44,
+      "orbital_speed_kms": 30.169182906742147,
+      "predicted_lambda_km": 3487.118643853312,
+      "velocity_enhancement": 1.0263079882203796
+    },
+    {
+      "day_of_year": 45,
+      "orbital_speed_kms": 30.163549818911346,
+      "predicted_lambda_km": 3485.8165594184925,
+      "velocity_enhancement": 1.0259247664853957
+    },
+    {
+      "day_of_year": 46,
+      "orbital_speed_kms": 30.15780391726554,
+      "predicted_lambda_km": 3484.4886486431956,
+      "velocity_enhancement": 1.025533943695717
+    },
+    {
+      "day_of_year": 47,
+      "orbital_speed_kms": 30.151947031254622,
+      "predicted_lambda_km": 3483.1353491022405,
+      "velocity_enhancement": 1.0251356486357581
+    },
+    {
+      "day_of_year": 48,
+      "orbital_speed_kms": 30.145981023589215,
+      "predicted_lambda_km": 3481.757106011322,
+      "velocity_enhancement": 1.0247300123387504
+    },
+    {
+      "day_of_year": 49,
+      "orbital_speed_kms": 30.139907789530984,
+      "predicted_lambda_km": 3480.3543720399375,
+      "velocity_enhancement": 1.024317168031684
+    },
+    {
+      "day_of_year": 50,
+      "orbital_speed_kms": 30.133729256173183,
+      "predicted_lambda_km": 3478.927607122129,
+      "velocity_enhancement": 1.0238972510796065
+    },
+    {
+      "day_of_year": 51,
+      "orbital_speed_kms": 30.127447381711924,
+      "predicted_lambda_km": 3477.4772782651476,
+      "velocity_enhancement": 1.0234703989293104
+    },
+    {
+      "day_of_year": 52,
+      "orbital_speed_kms": 30.121064154708552,
+      "predicted_lambda_km": 3476.003859356199,
+      "velocity_enhancement": 1.0230367510524552
+    },
+    {
+      "day_of_year": 53,
+      "orbital_speed_kms": 30.11458159334352,
+      "predicted_lambda_km": 3474.5078309673772,
+      "velocity_enhancement": 1.0225964488881574
+    },
+    {
+      "day_of_year": 54,
+      "orbital_speed_kms": 30.108001744662218,
+      "predicted_lambda_km": 3472.9896801589125,
+      "velocity_enhancement": 1.0221496357850823
+    },
+    {
+      "day_of_year": 55,
+      "orbital_speed_kms": 30.10132668381319,
+      "predicted_lambda_km": 3471.449900280878,
+      "velocity_enhancement": 1.0216964569430853
+    },
+    {
+      "day_of_year": 56,
+      "orbital_speed_kms": 30.09455851327908,
+      "predicted_lambda_km": 3469.8889907734588,
+      "velocity_enhancement": 1.0212370593544264
+    },
+    {
+      "day_of_year": 57,
+      "orbital_speed_kms": 30.087699362100818,
+      "predicted_lambda_km": 3468.30745696594,
+      "velocity_enhancement": 1.0207715917446112
+    },
+    {
+      "day_of_year": 58,
+      "orbital_speed_kms": 30.08075138509542,
+      "predicted_lambda_km": 3466.7058098745097,
+      "velocity_enhancement": 1.0203002045128797
+    },
+    {
+      "day_of_year": 59,
+      "orbital_speed_kms": 30.073716762067832,
+      "predicted_lambda_km": 3465.084565999012,
+      "velocity_enhancement": 1.01982304967239
+    },
+    {
+      "day_of_year": 60,
+      "orbital_speed_kms": 30.066597697017205,
+      "predicted_lambda_km": 3463.4442471188,
+      "velocity_enhancement": 1.019340280790133
+    },
+    {
+      "day_of_year": 61,
+      "orbital_speed_kms": 30.059396417338057,
+      "predicted_lambda_km": 3461.7853800877583,
+      "velocity_enhancement": 1.018852052926606
+    },
+    {
+      "day_of_year": 62,
+      "orbital_speed_kms": 30.05211517301675,
+      "predicted_lambda_km": 3460.10849662868,
+      "velocity_enhancement": 1.0183585225752942
+    },
+    {
+      "day_of_year": 63,
+      "orbital_speed_kms": 30.044756235823627,
+      "predicted_lambda_km": 3458.4141331270657,
+      "velocity_enhancement": 1.0178598476019833
+    },
+    {
+      "day_of_year": 64,
+      "orbital_speed_kms": 30.03732189850127,
+      "predicted_lambda_km": 3456.7028304245005,
+      "velocity_enhancement": 1.017356187183947
+    },
+    {
+      "day_of_year": 65,
+      "orbital_speed_kms": 30.029814473949283,
+      "predicted_lambda_km": 3454.9751336117106,
+      "velocity_enhancement": 1.0168477017490407
+    },
+    {
+      "day_of_year": 66,
+      "orbital_speed_kms": 30.022236294406,
+      "predicted_lambda_km": 3453.2315918214153,
+      "velocity_enhancement": 1.0163345529147358
+    },
+    {
+      "day_of_year": 67,
+      "orbital_speed_kms": 30.01458971062749,
+      "predicted_lambda_km": 3451.472758021107,
+      "velocity_enhancement": 1.015816903427131
+    },
+    {
+      "day_of_year": 68,
+      "orbital_speed_kms": 30.00687709106431,
+      "predicted_lambda_km": 3449.6991888058465,
+      "velocity_enhancement": 1.0152949170999688
+    },
+    {
+      "day_of_year": 69,
+      "orbital_speed_kms": 29.999100821036354,
+      "predicted_lambda_km": 3447.9114441912134,
+      "velocity_enhancement": 1.014768758753699
+    },
+    {
+      "day_of_year": 70,
+      "orbital_speed_kms": 29.991263301906177,
+      "predicted_lambda_km": 3446.110087406487,
+      "velocity_enhancement": 1.0142385941546086
+    },
+    {
+      "day_of_year": 71,
+      "orbital_speed_kms": 29.983366950251256,
+      "predicted_lambda_km": 3444.2956846882175,
+      "velocity_enhancement": 1.0137045899540658
+    },
+    {
+      "day_of_year": 72,
+      "orbital_speed_kms": 29.975414197035466,
+      "predicted_lambda_km": 3442.468805074227,
+      "velocity_enhancement": 1.0131669136278931
+    },
+    {
+      "day_of_year": 73,
+      "orbital_speed_kms": 29.96740748678022,
+      "predicted_lambda_km": 3440.6300201982135,
+      "velocity_enhancement": 1.0126257334159154
+    },
+    {
+      "day_of_year": 74,
+      "orbital_speed_kms": 29.959349276735587,
+      "predicted_lambda_km": 3438.7799040849927,
+      "velocity_enhancement": 1.0120812182616976
+    },
+    {
+      "day_of_year": 75,
+      "orbital_speed_kms": 29.951242036051813,
+      "predicted_lambda_km": 3436.919032946536,
+      "velocity_enhancement": 1.0115335377525148
+    },
+    {
+      "day_of_year": 76,
+      "orbital_speed_kms": 29.943088244951525,
+      "predicted_lambda_km": 3435.04798497886,
+      "velocity_enhancement": 1.0109828620595742
+    },
+    {
+      "day_of_year": 77,
+      "orbital_speed_kms": 29.934890393903057,
+      "predicted_lambda_km": 3433.1673401598846,
+      "velocity_enhancement": 1.0104293618785232
+    },
+    {
+      "day_of_year": 78,
+      "orbital_speed_kms": 29.926650982795156,
+      "predicted_lambda_km": 3431.27768004834,
+      "velocity_enhancement": 1.0098732083702626
+    },
+    {
+      "day_of_year": 79,
+      "orbital_speed_kms": 29.918372520113465,
+      "predicted_lambda_km": 3429.379587583814,
+      "velocity_enhancement": 1.0093145731021
+    },
+    {
+      "day_of_year": 80,
+      "orbital_speed_kms": 29.910057522119114,
+      "predicted_lambda_km": 3427.4736468880383,
+      "velocity_enhancement": 1.008753627989264
+    },
+    {
+      "day_of_year": 81,
+      "orbital_speed_kms": 29.90170851202969,
+      "predicted_lambda_km": 3425.560443067482,
+      "velocity_enhancement": 1.0081905452368054
+    },
+    {
+      "day_of_year": 82,
+      "orbital_speed_kms": 29.893328019202983,
+      "predicted_lambda_km": 3423.6405620173455,
+      "velocity_enhancement": 1.0076254972819096
+    },
+    {
+      "day_of_year": 83,
+      "orbital_speed_kms": 29.88491857832374,
+      "predicted_lambda_km": 3421.7145902270204,
+      "velocity_enhancement": 1.007058656736641
+    },
+    {
+      "day_of_year": 84,
+      "orbital_speed_kms": 29.87648272859381,
+      "predicted_lambda_km": 3419.7831145871137,
+      "velocity_enhancement": 1.0064901963311474
+    },
+    {
+      "day_of_year": 85,
+      "orbital_speed_kms": 29.86802301292588,
+      "predicted_lambda_km": 3417.8467221980904,
+      "velocity_enhancement": 1.0059202888573404
+    },
+    {
+      "day_of_year": 86,
+      "orbital_speed_kms": 29.859541977141227,
+      "predicted_lambda_km": 3415.9060001806074,
+      "velocity_enhancement": 1.0053491071130747
+    },
+    {
+      "day_of_year": 87,
+      "orbital_speed_kms": 29.8510421691716,
+      "predicted_lambda_km": 3413.9615354876278,
+      "velocity_enhancement": 1.00477682384685
+    },
+    {
+      "day_of_year": 88,
+      "orbital_speed_kms": 29.842526138265658,
+      "predicted_lambda_km": 3412.013914718347,
+      "velocity_enhancement": 1.0042036117030475
+    },
+    {
+      "day_of_year": 89,
+      "orbital_speed_kms": 29.83399643420014,
+      "predicted_lambda_km": 3410.063723934016,
+      "velocity_enhancement": 1.0036296431677236
+    },
+    {
+      "day_of_year": 90,
+      "orbital_speed_kms": 29.825455606496057,
+      "predicted_lambda_km": 3408.111548475726,
+      "velocity_enhancement": 1.003055090514982
+    },
+    {
+      "day_of_year": 91,
+      "orbital_speed_kms": 29.816906203640144,
+      "predicted_lambda_km": 3406.1579727841927,
+      "velocity_enhancement": 1.0024801257539326
+    },
+    {
+      "day_of_year": 92,
+      "orbital_speed_kms": 29.808350772311822,
+      "predicted_lambda_km": 3404.2035802216014,
+      "velocity_enhancement": 1.0019049205762594
+    },
+    {
+      "day_of_year": 93,
+      "orbital_speed_kms": 29.799791856615933,
+      "predicted_lambda_km": 3402.24895289558,
+      "velocity_enhancement": 1.0013296463044115
+    },
+    {
+      "day_of_year": 94,
+      "orbital_speed_kms": 29.791231997321386,
+      "predicted_lambda_km": 3400.294671485314,
+      "velocity_enhancement": 1.0007544738404284
+    },
+    {
+      "day_of_year": 95,
+      "orbital_speed_kms": 29.782673731106062,
+      "predicted_lambda_km": 3398.341315069889,
+      "velocity_enhancement": 1.000179573615417
+    },
+    {
+      "day_of_year": 96,
+      "orbital_speed_kms": 29.77411958980807,
+      "predicted_lambda_km": 3396.3894609588824,
+      "velocity_enhancement": 0.9996051155396938
+    },
+    {
+      "day_of_year": 97,
+      "orbital_speed_kms": 29.76557209968362,
+      "predicted_lambda_km": 3394.439684525228,
+      "velocity_enhancement": 0.9990312689535932
+    },
+    {
+      "day_of_year": 98,
+      "orbital_speed_kms": 29.7570337806717,
+      "predicted_lambda_km": 3392.492559040437,
+      "velocity_enhancement": 0.9984582025789714
+    },
+    {
+      "day_of_year": 99,
+      "orbital_speed_kms": 29.748507145665737,
+      "predicted_lambda_km": 3390.5486555121593,
+      "velocity_enhancement": 0.9978860844713993
+    },
+    {
+      "day_of_year": 100,
+      "orbital_speed_kms": 29.739994699792398,
+      "predicted_lambda_km": 3388.608542524159,
+      "velocity_enhancement": 0.9973150819730631
+    },
+    {
+      "day_of_year": 101,
+      "orbital_speed_kms": 29.73149893969777,
+      "predicted_lambda_km": 3386.6727860787037,
+      "velocity_enhancement": 0.9967453616663791
+    },
+    {
+      "day_of_year": 102,
+      "orbital_speed_kms": 29.723022352840964,
+      "predicted_lambda_km": 3384.7419494414044,
+      "velocity_enhancement": 0.9961770893283266
+    },
+    {
+      "day_of_year": 103,
+      "orbital_speed_kms": 29.714567416795457,
+      "predicted_lambda_km": 3382.8165929885463,
+      "velocity_enhancement": 0.9956104298855161
+    },
+    {
+      "day_of_year": 104,
+      "orbital_speed_kms": 29.70613659855816,
+      "predicted_lambda_km": 3380.8972740569006,
+      "velocity_enhancement": 0.9950455473699863
+    },
+    {
+      "day_of_year": 105,
+      "orbital_speed_kms": 29.697732353866456,
+      "predicted_lambda_km": 3378.9845467960604,
+      "velocity_enhancement": 0.9944826048757447
+    },
+    {
+      "day_of_year": 106,
+      "orbital_speed_kms": 29.68935712652329,
+      "predicted_lambda_km": 3377.0789620233118,
+      "velocity_enhancement": 0.993921764516054
+    },
+    {
+      "day_of_year": 107,
+      "orbital_speed_kms": 29.68101334773049,
+      "predicted_lambda_km": 3375.1810670810532,
+      "velocity_enhancement": 0.9933631873814686
+    },
+    {
+      "day_of_year": 108,
+      "orbital_speed_kms": 29.672703435430332,
+      "predicted_lambda_km": 3373.2914056967647,
+      "velocity_enhancement": 0.9928070334986216
+    },
+    {
+      "day_of_year": 109,
+      "orbital_speed_kms": 29.664429793655582,
+      "predicted_lambda_km": 3371.4105178455607,
+      "velocity_enhancement": 0.9922534617897726
+    },
+    {
+      "day_of_year": 110,
+      "orbital_speed_kms": 29.65619481188801,
+      "predicted_lambda_km": 3369.5389396153023,
+      "velocity_enhancement": 0.9917026300331073
+    },
+    {
+      "day_of_year": 111,
+      "orbital_speed_kms": 29.648000864425594,
+      "predicted_lambda_km": 3367.677203074314,
+      "velocity_enhancement": 0.9911546948238061
+    },
+    {
+      "day_of_year": 112,
+      "orbital_speed_kms": 29.63985030975831,
+      "predicted_lambda_km": 3365.825836141652,
+      "velocity_enhancement": 0.9906098115358608
+    },
+    {
+      "day_of_year": 113,
+      "orbital_speed_kms": 29.63174548995281,
+      "predicted_lambda_km": 3363.9853624599864,
+      "velocity_enhancement": 0.9900681342846631
+    },
+    {
+      "day_of_year": 114,
+      "orbital_speed_kms": 29.62368873004593,
+      "predicted_lambda_km": 3362.1563012710553,
+      "velocity_enhancement": 0.9895298158903485
+    },
+    {
+      "day_of_year": 115,
+      "orbital_speed_kms": 29.615682337447073,
+      "predicted_lambda_km": 3360.3391672936914,
+      "velocity_enhancement": 0.9889950078418978
+    },
+    {
+      "day_of_year": 116,
+      "orbital_speed_kms": 29.60772860134962,
+      "predicted_lambda_km": 3358.5344706044266,
+      "velocity_enhancement": 0.9884638602619976
+    },
+    {
+      "day_of_year": 117,
+      "orbital_speed_kms": 29.599829792151404,
+      "predicted_lambda_km": 3356.7427165206773,
+      "velocity_enhancement": 0.9879365218726601
+    },
+    {
+      "day_of_year": 118,
+      "orbital_speed_kms": 29.591988160884203,
+      "predicted_lambda_km": 3354.9644054864643,
+      "velocity_enhancement": 0.9874131399615885
+    },
+    {
+      "day_of_year": 119,
+      "orbital_speed_kms": 29.584205938652424,
+      "predicted_lambda_km": 3353.200032960693,
+      "velocity_enhancement": 0.9868938603492967
+    },
+    {
+      "day_of_year": 120,
+      "orbital_speed_kms": 29.576485336080907,
+      "predicted_lambda_km": 3351.450089307968,
+      "velocity_enhancement": 0.9863788273569744
+    },
+    {
+      "day_of_year": 121,
+      "orbital_speed_kms": 29.568828542771957,
+      "predicted_lambda_km": 3349.71505969192,
+      "velocity_enhancement": 0.9858681837750911
+    },
+    {
+      "day_of_year": 122,
+      "orbital_speed_kms": 29.56123772677156,
+      "predicted_lambda_km": 3347.99542397104,
+      "velocity_enhancement": 0.9853620708327399
+    },
+    {
+      "day_of_year": 123,
+      "orbital_speed_kms": 29.5537150340449,
+      "predicted_lambda_km": 3346.291656597008,
+      "velocity_enhancement": 0.9848606281677131
+    },
+    {
+      "day_of_year": 124,
+      "orbital_speed_kms": 29.546262587961024,
+      "predicted_lambda_km": 3344.6042265154692,
+      "velocity_enhancement": 0.9843639937972998
+    },
+    {
+      "day_of_year": 125,
+      "orbital_speed_kms": 29.538882488786896,
+      "predicted_lambda_km": 3342.93359706928,
+      "velocity_enhancement": 0.9838723040898095
+    },
+    {
+      "day_of_year": 126,
+      "orbital_speed_kms": 29.531576813190597,
+      "predicted_lambda_km": 3341.2802259041655,
+      "velocity_enhancement": 0.9833856937368061
+    },
+    {
+      "day_of_year": 127,
+      "orbital_speed_kms": 29.524347613753847,
+      "predicted_lambda_km": 3339.644564876778,
+      "velocity_enhancement": 0.982904295726048
+    },
+    {
+      "day_of_year": 128,
+      "orbital_speed_kms": 29.517196918493802,
+      "predicted_lambda_km": 3338.0270599651503,
+      "velocity_enhancement": 0.9824282413151333
+    },
+    {
+      "day_of_year": 129,
+      "orbital_speed_kms": 29.510126730394038,
+      "predicted_lambda_km": 3336.4281511814847,
+      "velocity_enhancement": 0.9819576600058325
+    },
+    {
+      "day_of_year": 130,
+      "orbital_speed_kms": 29.503139026944826,
+      "predicted_lambda_km": 3334.848272487281,
+      "velocity_enhancement": 0.9814926795191093
+    },
+    {
+      "day_of_year": 131,
+      "orbital_speed_kms": 29.496235759692564,
+      "predicted_lambda_km": 3333.2878517107533,
+      "velocity_enhancement": 0.9810334257708153
+    },
+    {
+      "day_of_year": 132,
+      "orbital_speed_kms": 29.489418853798437,
+      "predicted_lambda_km": 3331.747310466531,
+      "velocity_enhancement": 0.9805800228480569
+    },
+    {
+      "day_of_year": 133,
+      "orbital_speed_kms": 29.482690207606268,
+      "predicted_lambda_km": 3330.2270640776023,
+      "velocity_enhancement": 0.9801325929862222
+    },
+    {
+      "day_of_year": 134,
+      "orbital_speed_kms": 29.4760516922194,
+      "predicted_lambda_km": 3328.727521499456,
+      "velocity_enhancement": 0.9796912565466546
+    },
+    {
+      "day_of_year": 135,
+      "orbital_speed_kms": 29.469505151086825,
+      "predicted_lambda_km": 3327.249085246427,
+      "velocity_enhancement": 0.9792561319949755
+    },
+    {
+      "day_of_year": 136,
+      "orbital_speed_kms": 29.46305239959822,
+      "predicted_lambda_km": 3325.792151320171,
+      "velocity_enhancement": 0.9788273358800336
+    },
+    {
+      "day_of_year": 137,
+      "orbital_speed_kms": 29.456695224688143,
+      "predicted_lambda_km": 3324.3571091402787,
+      "velocity_enhancement": 0.9784049828134832
+    },
+    {
+      "day_of_year": 138,
+      "orbital_speed_kms": 29.450435384449136,
+      "predicted_lambda_km": 3322.944341476969,
+      "velocity_enhancement": 0.977989185449975
+    },
+    {
+      "day_of_year": 139,
+      "orbital_speed_kms": 29.44427460775379,
+      "predicted_lambda_km": 3321.5542243858313,
+      "velocity_enhancement": 0.9775800544679504
+    },
+    {
+      "day_of_year": 140,
+      "orbital_speed_kms": 29.43821459388569,
+      "predicted_lambda_km": 3320.187127144596,
+      "velocity_enhancement": 0.9771776985510312
+    },
+    {
+      "day_of_year": 141,
+      "orbital_speed_kms": 29.432257012179203,
+      "predicted_lambda_km": 3318.843412191893,
+      "velocity_enhancement": 0.976782224369996
+    },
+    {
+      "day_of_year": 142,
+      "orbital_speed_kms": 29.426403501668066,
+      "predicted_lambda_km": 3317.5234350679534,
+      "velocity_enhancement": 0.976393736565328
+    },
+    {
+      "day_of_year": 143,
+      "orbital_speed_kms": 29.420655670742715,
+      "predicted_lambda_km": 3316.2275443572507,
+      "velocity_enhancement": 0.976012337730333
+    },
+    {
+      "day_of_year": 144,
+      "orbital_speed_kms": 29.415015096816234,
+      "predicted_lambda_km": 3314.956081632997,
+      "velocity_enhancement": 0.9756381283948045
+    },
+    {
+      "day_of_year": 145,
+      "orbital_speed_kms": 29.409483325999034,
+      "predicted_lambda_km": 3313.7093814035256,
+      "velocity_enhancement": 0.9752712070092421
+    },
+    {
+      "day_of_year": 146,
+      "orbital_speed_kms": 29.404061872781977,
+      "predicted_lambda_km": 3312.487771060452,
+      "velocity_enhancement": 0.9749116699295964
+    },
+    {
+      "day_of_year": 147,
+      "orbital_speed_kms": 29.398752219728106,
+      "predicted_lambda_km": 3311.2915708286487,
+      "velocity_enhancement": 0.9745596114025443
+    },
+    {
+      "day_of_year": 148,
+      "orbital_speed_kms": 29.39355581717273,
+      "predicted_lambda_km": 3310.1210937179394,
+      "velocity_enhancement": 0.9742151235512728
+    },
+    {
+      "day_of_year": 149,
+      "orbital_speed_kms": 29.38847408293198,
+      "predicted_lambda_km": 3308.9766454765336,
+      "velocity_enhancement": 0.9738782963617736
+    },
+    {
+      "day_of_year": 150,
+      "orbital_speed_kms": 29.383508402019597,
+      "predicted_lambda_km": 3307.8585245461045,
+      "velocity_enhancement": 0.9735492176696222
+    },
+    {
+      "day_of_year": 151,
+      "orbital_speed_kms": 29.378660126372033,
+      "predicted_lambda_km": 3306.7670220185432,
+      "velocity_enhancement": 0.9732279731472503
+    },
+    {
+      "day_of_year": 152,
+      "orbital_speed_kms": 29.37393057458172,
+      "predicted_lambda_km": 3305.702421594302,
+      "velocity_enhancement": 0.972914646291685
+    },
+    {
+      "day_of_year": 153,
+      "orbital_speed_kms": 29.36932103163848,
+      "predicted_lambda_km": 3304.6649995423204,
+      "velocity_enhancement": 0.9726093184127551
+    },
+    {
+      "day_of_year": 154,
+      "orbital_speed_kms": 29.36483274867898,
+      "predicted_lambda_km": 3303.6550246614943,
+      "velocity_enhancement": 0.9723120686217505
+    },
+    {
+      "day_of_year": 155,
+      "orbital_speed_kms": 29.360466942744203,
+      "predicted_lambda_km": 3302.6727582436524,
+      "velocity_enhancement": 0.9720229738205257
+    },
+    {
+      "day_of_year": 156,
+      "orbital_speed_kms": 29.35622479654485,
+      "predicted_lambda_km": 3301.718454038014,
+      "velocity_enhancement": 0.9717421086910397
+    },
+    {
+      "day_of_year": 157,
+      "orbital_speed_kms": 29.352107458234588,
+      "predicted_lambda_km": 3300.792358217082,
+      "velocity_enhancement": 0.9714695456853171
+    },
+    {
+      "day_of_year": 158,
+      "orbital_speed_kms": 29.34811604119118,
+      "predicted_lambda_km": 3299.8947093439697,
+      "velocity_enhancement": 0.9712053550158324
+    },
+    {
+      "day_of_year": 159,
+      "orbital_speed_kms": 29.344251623805242,
+      "predicted_lambda_km": 3299.025738341081,
+      "velocity_enhancement": 0.970949604646292
+    },
+    {
+      "day_of_year": 160,
+      "orbital_speed_kms": 29.340515249276823,
+      "predicted_lambda_km": 3298.1856684601744,
+      "velocity_enhancement": 0.9707023602828238
+    },
+    {
+      "day_of_year": 161,
+      "orbital_speed_kms": 29.33690792541946,
+      "predicted_lambda_km": 3297.374715253722,
+      "velocity_enhancement": 0.9704636853655474
+    },
+    {
+      "day_of_year": 162,
+      "orbital_speed_kms": 29.333430624471944,
+      "predicted_lambda_km": 3296.59308654759,
+      "velocity_enhancement": 0.9702336410605336
+    },
+    {
+      "day_of_year": 163,
+      "orbital_speed_kms": 29.33008428291746,
+      "predicted_lambda_km": 3295.840982414955,
+      "velocity_enhancement": 0.9700122862521282
+    },
+    {
+      "day_of_year": 164,
+      "orbital_speed_kms": 29.32686980131025,
+      "predicted_lambda_km": 3295.1185951514794,
+      "velocity_enhancement": 0.9697996775356452
+    },
+    {
+      "day_of_year": 165,
+      "orbital_speed_kms": 29.32378804410961,
+      "predicted_lambda_km": 3294.42610925169,
+      "velocity_enhancement": 0.9695958692104146
+    },
+    {
+      "day_of_year": 166,
+      "orbital_speed_kms": 29.3208398395213,
+      "predicted_lambda_km": 3293.7637013865465,
+      "velocity_enhancement": 0.9694009132731812
+    },
+    {
+      "day_of_year": 167,
+      "orbital_speed_kms": 29.318025979346135,
+      "predicted_lambda_km": 3293.131540382158,
+      "velocity_enhancement": 0.9692148594118396
+    },
+    {
+      "day_of_year": 168,
+      "orbital_speed_kms": 29.315347218835843,
+      "predicted_lambda_km": 3292.5297871996477,
+      "velocity_enhancement": 0.9690377549995088
+    },
+    {
+      "day_of_year": 169,
+      "orbital_speed_kms": 29.312804276556133,
+      "predicted_lambda_km": 3291.958594916126,
+      "velocity_enhancement": 0.9688696450889323
+    },
+    {
+      "day_of_year": 170,
+      "orbital_speed_kms": 29.31039783425683,
+      "predicted_lambda_km": 3291.418108706751,
+      "velocity_enhancement": 0.9687105724071976
+    },
+    {
+      "day_of_year": 171,
+      "orbital_speed_kms": 29.30812853674912,
+      "predicted_lambda_km": 3290.908465827856,
+      "velocity_enhancement": 0.9685605773507715
+    },
+    {
+      "day_of_year": 172,
+      "orbital_speed_kms": 29.30599699178984,
+      "predicted_lambda_km": 3290.429795601135,
+      "velocity_enhancement": 0.9684196979808444
+    },
+    {
+      "day_of_year": 173,
+      "orbital_speed_kms": 29.30400376997271,
+      "predicted_lambda_km": 3289.9822193988366,
+      "velocity_enhancement": 0.9682879700189736
+    },
+    {
+      "day_of_year": 174,
+      "orbital_speed_kms": 29.30214940462658,
+      "predicted_lambda_km": 3289.5658506299906,
+      "velocity_enhancement": 0.9681654268430294
+    },
+    {
+      "day_of_year": 175,
+      "orbital_speed_kms": 29.300434391720543,
+      "predicted_lambda_km": 3289.1807947276134,
+      "velocity_enhancement": 0.968052099483429
+    },
+    {
+      "day_of_year": 176,
+      "orbital_speed_kms": 29.298859189775925,
+      "predicted_lambda_km": 3288.8271491368864,
+      "velocity_enhancement": 0.9679480166196579
+    },
+    {
+      "day_of_year": 177,
+      "orbital_speed_kms": 29.297424219785146,
+      "predicted_lambda_km": 3288.505003304309,
+      "velocity_enhancement": 0.9678532045770768
+    },
+    {
+      "day_of_year": 178,
+      "orbital_speed_kms": 29.296129865137356,
+      "predicted_lambda_km": 3288.214438667781,
+      "velocity_enhancement": 0.9677676873240035
+    },
+    {
+      "day_of_year": 179,
+      "orbital_speed_kms": 29.29497647155085,
+      "predicted_lambda_km": 3287.9555286476307,
+      "velocity_enhancement": 0.9676914864690717
+    },
+    {
+      "day_of_year": 180,
+      "orbital_speed_kms": 29.293964347012302,
+      "predicted_lambda_km": 3287.728338638566,
+      "velocity_enhancement": 0.9676246212588622
+    },
+    {
+      "day_of_year": 181,
+      "orbital_speed_kms": 29.293093761722595,
+      "predicted_lambda_km": 3287.532926002516,
+      "velocity_enhancement": 0.9675671085757961
+    },
+    {
+      "day_of_year": 182,
+      "orbital_speed_kms": 29.29236494804952,
+      "predicted_lambda_km": 3287.3693400624065,
+      "velocity_enhancement": 0.9675189629363036
+    },
+    {
+      "day_of_year": 183,
+      "orbital_speed_kms": 29.291778100487015,
+      "predicted_lambda_km": 3287.2376220967926,
+      "velocity_enhancement": 0.9674801964892428
+    },
+    {
+      "day_of_year": 184,
+      "orbital_speed_kms": 29.291333375621164,
+      "predicted_lambda_km": 3287.1378053354033,
+      "velocity_enhancement": 0.9674508190145896
+    },
+    {
+      "day_of_year": 185,
+      "orbital_speed_kms": 29.29103089210283,
+      "predicted_lambda_km": 3287.0699149555494,
+      "velocity_enhancement": 0.9674308379223804
+    },
+    {
+      "day_of_year": 186,
+      "orbital_speed_kms": 29.29087073062694,
+      "predicted_lambda_km": 3287.0339680794186,
+      "velocity_enhancement": 0.9674202582519152
+    },
+    {
+      "day_of_year": 187,
+      "orbital_speed_kms": 29.29085293391836,
+      "predicted_lambda_km": 3287.029973772224,
+      "velocity_enhancement": 0.9674190826712139
+    },
+    {
+      "day_of_year": 188,
+      "orbital_speed_kms": 29.290977506724463,
+      "predicted_lambda_km": 3287.057933041231,
+      "velocity_enhancement": 0.9674273114767286
+    },
+    {
+      "day_of_year": 189,
+      "orbital_speed_kms": 29.291244415814315,
+      "predicted_lambda_km": 3287.1178388356575,
+      "velocity_enhancement": 0.967444942593315
+    },
+    {
+      "day_of_year": 190,
+      "orbital_speed_kms": 29.291653589984445,
+      "predicted_lambda_km": 3287.2096760474205,
+      "velocity_enhancement": 0.9674719715744523
+    },
+    {
+      "day_of_year": 191,
+      "orbital_speed_kms": 29.29220492007131,
+      "predicted_lambda_km": 3287.333421512774,
+      "velocity_enhancement": 0.9675083916027246
+    },
+    {
+      "day_of_year": 192,
+      "orbital_speed_kms": 29.292898258970304,
+      "predicted_lambda_km": 3287.489044014786,
+      "velocity_enhancement": 0.9675541934905507
+    },
+    {
+      "day_of_year": 193,
+      "orbital_speed_kms": 29.293733421661525,
+      "predicted_lambda_km": 3287.6765042867255,
+      "velocity_enhancement": 0.96760936568118
+    },
+    {
+      "day_of_year": 194,
+      "orbital_speed_kms": 29.294710185242106,
+      "predicted_lambda_km": 3287.895755016295,
+      "velocity_enhancement": 0.9676738942499389
+    },
+    {
+      "day_of_year": 195,
+      "orbital_speed_kms": 29.295828288965236,
+      "predicted_lambda_km": 3288.146740850763,
+      "velocity_enhancement": 0.967747762905741
+    },
+    {
+      "day_of_year": 196,
+      "orbital_speed_kms": 29.297087434285892,
+      "predicted_lambda_km": 3288.4293984029814,
+      "velocity_enhancement": 0.967830952992859
+    },
+    {
+      "day_of_year": 197,
+      "orbital_speed_kms": 29.298487284913243,
+      "predicted_lambda_km": 3288.7436562583102,
+      "velocity_enhancement": 0.967923443492961
+    },
+    {
+      "day_of_year": 198,
+      "orbital_speed_kms": 29.30002746686978,
+      "predicted_lambda_km": 3289.0894349824343,
+      "velocity_enhancement": 0.9680252110274127
+    },
+    {
+      "day_of_year": 199,
+      "orbital_speed_kms": 29.3017075685572,
+      "predicted_lambda_km": 3289.466647130116,
+      "velocity_enhancement": 0.9681362298598525
+    },
+    {
+      "day_of_year": 200,
+      "orbital_speed_kms": 29.303527140829058,
+      "predicted_lambda_km": 3289.875197254859,
+      "velocity_enhancement": 0.968256471899036
+    },
+    {
+      "day_of_year": 201,
+      "orbital_speed_kms": 29.305485697070218,
+      "predicted_lambda_km": 3290.314981919539,
+      "velocity_enhancement": 0.9683859067019652
+    },
+    {
+      "day_of_year": 202,
+      "orbital_speed_kms": 29.30758271328315,
+      "predicted_lambda_km": 3290.7858897079677,
+      "velocity_enhancement": 0.9685245014772912
+    },
+    {
+      "day_of_year": 203,
+      "orbital_speed_kms": 29.309817628181072,
+      "predicted_lambda_km": 3291.2878012374467,
+      "velocity_enhancement": 0.968672221089009
+    },
+    {
+      "day_of_year": 204,
+      "orbital_speed_kms": 29.312189843288017,
+      "predicted_lambda_km": 3291.8205891722987,
+      "velocity_enhancement": 0.9688290280604408
+    },
+    {
+      "day_of_year": 205,
+      "orbital_speed_kms": 29.3146987230458,
+      "predicted_lambda_km": 3292.3841182384062,
+      "velocity_enhancement": 0.9689948825785141
+    },
+    {
+      "day_of_year": 206,
+      "orbital_speed_kms": 29.317343594928023,
+      "predicted_lambda_km": 3292.978245238776,
+      "velocity_enhancement": 0.9691697424983425
+    },
+    {
+      "day_of_year": 207,
+      "orbital_speed_kms": 29.32012374956106,
+      "predicted_lambda_km": 3293.6028190701472,
+      "velocity_enhancement": 0.9693535633481148
+    },
+    {
+      "day_of_year": 208,
+      "orbital_speed_kms": 29.32303844085212,
+      "predicted_lambda_km": 3294.2576807406604,
+      "velocity_enhancement": 0.9695462983342937
+    },
+    {
+      "day_of_year": 209,
+      "orbital_speed_kms": 29.326086886124425,
+      "predicted_lambda_km": 3294.9426633886055,
+      "velocity_enhancement": 0.9697478983471346
+    },
+    {
+      "day_of_year": 210,
+      "orbital_speed_kms": 29.329268266259557,
+      "predicted_lambda_km": 3295.6575923022874,
+      "velocity_enhancement": 0.969958311966532
+    },
+    {
+      "day_of_year": 211,
+      "orbital_speed_kms": 29.332581725847007,
+      "predicted_lambda_km": 3296.4022849410144,
+      "velocity_enhancement": 0.9701774854681969
+    },
+    {
+      "day_of_year": 212,
+      "orbital_speed_kms": 29.336026373340996,
+      "predicted_lambda_km": 3297.1765509572388,
+      "velocity_enhancement": 0.970405362830173
+    },
+    {
+      "day_of_year": 213,
+      "orbital_speed_kms": 29.339601281224606,
+      "predicted_lambda_km": 3297.9801922198812,
+      "velocity_enhancement": 0.9706418857397009
+    },
+    {
+      "day_of_year": 214,
+      "orbital_speed_kms": 29.343305486181304,
+      "predicted_lambda_km": 3298.8130028388546,
+      "velocity_enhancement": 0.9708869936004368
+    },
+    {
+      "day_of_year": 215,
+      "orbital_speed_kms": 29.347137989273868,
+      "predicted_lambda_km": 3299.6747691908263,
+      "velocity_enhancement": 0.9711406235400338
+    },
+    {
+      "day_of_year": 216,
+      "orbital_speed_kms": 29.35109775613082,
+      "predicted_lambda_km": 3300.565269946226,
+      "velocity_enhancement": 0.9714027104180912
+    },
+    {
+      "day_of_year": 217,
+      "orbital_speed_kms": 29.355183717140395,
+      "predicted_lambda_km": 3301.484276097554,
+      "velocity_enhancement": 0.9716731868344856
+    },
+    {
+      "day_of_year": 218,
+      "orbital_speed_kms": 29.359394767652134,
+      "predicted_lambda_km": 3302.431550988995,
+      "velocity_enhancement": 0.9719519831380871
+    },
+    {
+      "day_of_year": 219,
+      "orbital_speed_kms": 29.36372976818611,
+      "predicted_lambda_km": 3303.40685034738,
+      "velocity_enhancement": 0.9722390274358719
+    },
+    {
+      "day_of_year": 220,
+      "orbital_speed_kms": 29.368187544649945,
+      "predicted_lambda_km": 3304.4099223145327,
+      "velocity_enhancement": 0.9725342456024413
+    },
+    {
+      "day_of_year": 221,
+      "orbital_speed_kms": 29.372766888563532,
+      "predicted_lambda_km": 3305.4405074809983,
+      "velocity_enhancement": 0.9728375612899501
+    },
+    {
+      "day_of_year": 222,
+      "orbital_speed_kms": 29.377466557291697,
+      "predicted_lambda_km": 3306.498338921235,
+      "velocity_enhancement": 0.9731488959384625
+    },
+    {
+      "day_of_year": 223,
+      "orbital_speed_kms": 29.38228527428475,
+      "predicted_lambda_km": 3307.5831422302645,
+      "velocity_enhancement": 0.9734681687867403
+    },
+    {
+      "day_of_year": 224,
+      "orbital_speed_kms": 29.387221729326964,
+      "predicted_lambda_km": 3308.694635561812,
+      "velocity_enhancement": 0.9737952968834661
+    },
+    {
+      "day_of_year": 225,
+      "orbital_speed_kms": 29.392274578793213,
+      "predicted_lambda_km": 3309.8325296680073,
+      "velocity_enhancement": 0.9741301950989298
+    },
+    {
+      "day_of_year": 226,
+      "orbital_speed_kms": 29.397442445913626,
+      "predicted_lambda_km": 3310.9965279406274,
+      "velocity_enhancement": 0.9744727761371663
+    },
+    {
+      "day_of_year": 227,
+      "orbital_speed_kms": 29.40272392104645,
+      "predicted_lambda_km": 3312.1863264539556,
+      "velocity_enhancement": 0.9748229505485686
+    },
+    {
+      "day_of_year": 228,
+      "orbital_speed_kms": 29.408117561959155,
+      "predicted_lambda_km": 3313.401614009266,
+      "velocity_enhancement": 0.9751806267429814
+    },
+    {
+      "day_of_year": 229,
+      "orbital_speed_kms": 29.413621894117867,
+      "predicted_lambda_km": 3314.6420721809945,
+      "velocity_enhancement": 0.9755457110032898
+    },
+    {
+      "day_of_year": 230,
+      "orbital_speed_kms": 29.419235410985085,
+      "predicted_lambda_km": 3315.907375364582,
+      "velocity_enhancement": 0.9759181074994989
+    },
+    {
+      "day_of_year": 231,
+      "orbital_speed_kms": 29.424956574325936,
+      "predicted_lambda_km": 3317.1971908260934,
+      "velocity_enhancement": 0.9762977183033391
+    },
+    {
+      "day_of_year": 232,
+      "orbital_speed_kms": 29.430783814522815,
+      "predicted_lambda_km": 3318.5111787535743,
+      "velocity_enhancement": 0.97668444340338
+    },
+    {
+      "day_of_year": 233,
+      "orbital_speed_kms": 29.436715530898663,
+      "predicted_lambda_km": 3319.84899231024,
+      "velocity_enhancement": 0.9770781807206852
+    },
+    {
+      "day_of_year": 234,
+      "orbital_speed_kms": 29.442750092048776,
+      "predicted_lambda_km": 3321.2102776894926,
+      "velocity_enhancement": 0.9774788261250041
+    },
+    {
+      "day_of_year": 235,
+      "orbital_speed_kms": 29.448885836181347,
+      "predicted_lambda_km": 3322.594674171822,
+      "velocity_enhancement": 0.9778862734515191
+    },
+    {
+      "day_of_year": 236,
+      "orbital_speed_kms": 29.455121071466657,
+      "predicted_lambda_km": 3324.001814183605,
+      "velocity_enhancement": 0.9783004145181511
+    },
+    {
+      "day_of_year": 237,
+      "orbital_speed_kms": 29.461454076395125,
+      "predicted_lambda_km": 3325.4313233578673,
+      "velocity_enhancement": 0.9787211391434418
+    },
+    {
+      "day_of_year": 238,
+      "orbital_speed_kms": 29.467883100144117,
+      "predicted_lambda_km": 3326.882820597013,
+      "velocity_enhancement": 0.9791483351650171
+    },
+    {
+      "day_of_year": 239,
+      "orbital_speed_kms": 29.474406362953655,
+      "predicted_lambda_km": 3328.355918137563,
+      "velocity_enhancement": 0.9795818884586394
+    },
+    {
+      "day_of_year": 240,
+      "orbital_speed_kms": 29.48102205651107,
+      "predicted_lambda_km": 3329.8502216169527,
+      "velocity_enhancement": 0.9800216829578676
+    },
+    {
+      "day_of_year": 241,
+      "orbital_speed_kms": 29.487728344344614,
+      "predicted_lambda_km": 3331.3653301423974,
+      "velocity_enhancement": 0.9804676006743256
+    },
+    {
+      "day_of_year": 242,
+      "orbital_speed_kms": 29.494523362226058,
+      "predicted_lambda_km": 3332.900836361875,
+      "velocity_enhancement": 0.9809195217185922
+    },
+    {
+      "day_of_year": 243,
+      "orbital_speed_kms": 29.501405218582413,
+      "predicted_lambda_km": 3334.456326537248,
+      "velocity_enhancement": 0.9813773243217235
+    },
+    {
+      "day_of_year": 244,
+      "orbital_speed_kms": 29.50837199491667,
+      "predicted_lambda_km": 3336.0313806195672,
+      "velocity_enhancement": 0.9818408848574146
+    },
+    {
+      "day_of_year": 245,
+      "orbital_speed_kms": 29.5154217462377,
+      "predicted_lambda_km": 3337.625572326568,
+      "velocity_enhancement": 0.9823100778648088
+    },
+    {
+      "day_of_year": 246,
+      "orbital_speed_kms": 29.522552501499334,
+      "predicted_lambda_km": 3339.2384692224255,
+      "velocity_enhancement": 0.9827847760719697
+    },
+    {
+      "day_of_year": 247,
+      "orbital_speed_kms": 29.529762264048586,
+      "predicted_lambda_km": 3340.8696327997454,
+      "velocity_enhancement": 0.9832648504200129
+    },
+    {
+      "day_of_year": 248,
+      "orbital_speed_kms": 29.537049012083084,
+      "predicted_lambda_km": 3342.518618563869,
+      "velocity_enhancement": 0.9837501700879183
+    },
+    {
+      "day_of_year": 249,
+      "orbital_speed_kms": 29.544410699117776,
+      "predicted_lambda_km": 3344.1849761194935,
+      "velocity_enhancement": 0.9842406025180231
+    },
+    {
+      "day_of_year": 250,
+      "orbital_speed_kms": 29.551845254460822,
+      "predicted_lambda_km": 3345.868249259636,
+      "velocity_enhancement": 0.9847360134422055
+    },
+    {
+      "day_of_year": 251,
+      "orbital_speed_kms": 29.559350583698794,
+      "predicted_lambda_km": 3347.5679760569774,
+      "velocity_enhancement": 0.9852362669087684
+    },
+    {
+      "day_of_year": 252,
+      "orbital_speed_kms": 29.566924569191062,
+      "predicted_lambda_km": 3349.2836889575856,
+      "velocity_enhancement": 0.9857412253100236
+    },
+    {
+      "day_of_year": 253,
+      "orbital_speed_kms": 29.57456507057355,
+      "predicted_lambda_km": 3351.0149148770906,
+      "velocity_enhancement": 0.986250749410597
+    },
+    {
+      "day_of_year": 254,
+      "orbital_speed_kms": 29.582269925271646,
+      "predicted_lambda_km": 3352.761175299266,
+      "velocity_enhancement": 0.9867646983764433
+    },
+    {
+      "day_of_year": 255,
+      "orbital_speed_kms": 29.590036949022455,
+      "predicted_lambda_km": 3354.5219863770976,
+      "velocity_enhancement": 0.9872829298045912
+    },
+    {
+      "day_of_year": 256,
+      "orbital_speed_kms": 29.59786393640622,
+      "predicted_lambda_km": 3356.2968590363234,
+      "velocity_enhancement": 0.9878052997536173
+    },
+    {
+      "day_of_year": 257,
+      "orbital_speed_kms": 29.60574866138702,
+      "predicted_lambda_km": 3358.0852990814747,
+      "velocity_enhancement": 0.9883316627748546
+    },
+    {
+      "day_of_year": 258,
+      "orbital_speed_kms": 29.61368887786265,
+      "predicted_lambda_km": 3359.8868073044328,
+      "velocity_enhancement": 0.9888618719443436
+    },
+    {
+      "day_of_year": 259,
+      "orbital_speed_kms": 29.621682320223677,
+      "predicted_lambda_km": 3361.7008795955226,
+      "velocity_enhancement": 0.989395778895527
+    },
+    {
+      "day_of_year": 260,
+      "orbital_speed_kms": 29.629726703921612,
+      "predicted_lambda_km": 3363.527007057134,
+      "velocity_enhancement": 0.9899332338526917
+    },
+    {
+      "day_of_year": 261,
+      "orbital_speed_kms": 29.63781972604622,
+      "predicted_lambda_km": 3365.3646761199147,
+      "velocity_enhancement": 0.9904740856651649
+    },
+    {
+      "day_of_year": 262,
+      "orbital_speed_kms": 29.645959065911878,
+      "predicted_lambda_km": 3367.2133686615252,
+      "velocity_enhancement": 0.991018181842266
+    },
+    {
+      "day_of_year": 263,
+      "orbital_speed_kms": 29.654142385652868,
+      "predicted_lambda_km": 3369.0725621279526,
+      "velocity_enhancement": 0.9915653685890102
+    },
+    {
+      "day_of_year": 264,
+      "orbital_speed_kms": 29.662367330827678,
+      "predicted_lambda_km": 3370.941729657413,
+      "velocity_enhancement": 0.9921154908425759
+    },
+    {
+      "day_of_year": 265,
+      "orbital_speed_kms": 29.67063153103219,
+      "predicted_lambda_km": 3372.8203402068475,
+      "velocity_enhancement": 0.992668392309533
+    },
+    {
+      "day_of_year": 266,
+      "orbital_speed_kms": 29.678932600521563,
+      "predicted_lambda_km": 3374.7078586809694,
+      "velocity_enhancement": 0.9932239155038239
+    },
+    {
+      "day_of_year": 267,
+      "orbital_speed_kms": 29.687268138840995,
+      "predicted_lambda_km": 3376.60374606394,
+      "velocity_enhancement": 0.9937819017855177
+    },
+    {
+      "day_of_year": 268,
+      "orbital_speed_kms": 29.695635731464975,
+      "predicted_lambda_km": 3378.507459553581,
+      "velocity_enhancement": 0.9943421914003107
+    },
+    {
+      "day_of_year": 269,
+      "orbital_speed_kms": 29.704032950445168,
+      "predicted_lambda_km": 3380.418452698198,
+      "velocity_enhancement": 0.9949046235197946
+    },
+    {
+      "day_of_year": 270,
+      "orbital_speed_kms": 29.712457355066736,
+      "predicted_lambda_km": 3382.336175535961,
+      "velocity_enhancement": 0.99546903628248
+    },
+    {
+      "day_of_year": 271,
+      "orbital_speed_kms": 29.72090649251293,
+      "predicted_lambda_km": 3384.260074736843,
+      "velocity_enhancement": 0.9960352668355689
+    },
+    {
+      "day_of_year": 272,
+      "orbital_speed_kms": 29.72937789853802,
+      "predicted_lambda_km": 3386.1895937471227,
+      "velocity_enhancement": 0.9966031513774855
+    },
+    {
+      "day_of_year": 273,
+      "orbital_speed_kms": 29.737869098148213,
+      "predicted_lambda_km": 3388.1241729364174,
+      "velocity_enhancement": 0.9971725252011486
+    },
+    {
+      "day_of_year": 274,
+      "orbital_speed_kms": 29.746377606290594,
+      "predicted_lambda_km": 3390.0632497472266,
+      "velocity_enhancement": 0.9977432227379859
+    },
+    {
+      "day_of_year": 275,
+      "orbital_speed_kms": 29.754900928549887,
+      "predicted_lambda_km": 3392.006258846995,
+      "velocity_enhancement": 0.998315077602687
+    },
+    {
+      "day_of_year": 276,
+      "orbital_speed_kms": 29.763436561852963,
+      "predicted_lambda_km": 3393.9526322826605,
+      "velocity_enhancement": 0.9988879226386895
+    },
+    {
+      "day_of_year": 277,
+      "orbital_speed_kms": 29.77198199518073,
+      "predicted_lambda_km": 3395.9017996376274,
+      "velocity_enhancement": 0.999461589964379
+    },
+    {
+      "day_of_year": 278,
+      "orbital_speed_kms": 29.780534710287608,
+      "predicted_lambda_km": 3397.8531881912213,
+      "velocity_enhancement": 1.0000359110200177
+    },
+    {
+      "day_of_year": 279,
+      "orbital_speed_kms": 29.78909218242801,
+      "predicted_lambda_km": 3399.8062230805017,
+      "velocity_enhancement": 1.0006107166153693
+    },
+    {
+      "day_of_year": 280,
+      "orbital_speed_kms": 29.79765188108999,
+      "predicted_lambda_km": 3401.7603274644775,
+      "velocity_enhancement": 1.001185836978029
+    },
+    {
+      "day_of_year": 281,
+      "orbital_speed_kms": 29.806211270735684,
+      "predicted_lambda_km": 3403.714922690648,
+      "velocity_enhancement": 1.00176110180244
+    },
+    {
+      "day_of_year": 282,
+      "orbital_speed_kms": 29.814767811548382,
+      "predicted_lambda_km": 3405.6694284638425,
+      "velocity_enhancement": 1.0023363402995837
+    },
+    {
+      "day_of_year": 283,
+      "orbital_speed_kms": 29.823318960186093,
+      "predicted_lambda_km": 3407.6232630173317,
+      "velocity_enhancement": 1.002911381247342
+    },
+    {
+      "day_of_year": 284,
+      "orbital_speed_kms": 29.831862170541335,
+      "predicted_lambda_km": 3409.5758432861476,
+      "velocity_enhancement": 1.0034860530415064
+    },
+    {
+      "day_of_year": 285,
+      "orbital_speed_kms": 29.840394894506947,
+      "predicted_lambda_km": 3411.526585082587,
+      "velocity_enhancement": 1.004060183747432
+    },
+    {
+      "day_of_year": 286,
+      "orbital_speed_kms": 29.848914582747717,
+      "predicted_lambda_km": 3413.4749032738428,
+      "velocity_enhancement": 1.0046336011523158
+    },
+    {
+      "day_of_year": 287,
+      "orbital_speed_kms": 29.85741868547756,
+      "predicted_lambda_km": 3415.4202119616903,
+      "velocity_enhancement": 1.0052061328180828
+    },
+    {
+      "day_of_year": 288,
+      "orbital_speed_kms": 29.865904653242026,
+      "predicted_lambda_km": 3417.3619246642324,
+      "velocity_enhancement": 1.0057776061348742
+    },
+    {
+      "day_of_year": 289,
+      "orbital_speed_kms": 29.87436993770593,
+      "predicted_lambda_km": 3419.2994544995813,
+      "velocity_enhancement": 1.0063478483751085
+    },
+    {
+      "day_of_year": 290,
+      "orbital_speed_kms": 29.88281199244572,
+      "predicted_lambda_km": 3421.2322143714523,
+      "velocity_enhancement": 1.0069166867481043
+    },
+    {
+      "day_of_year": 291,
+      "orbital_speed_kms": 29.89122827374651,
+      "predicted_lambda_km": 3423.1596171566234,
+      "velocity_enhancement": 1.0074839484552522
+    },
+    {
+      "day_of_year": 292,
+      "orbital_speed_kms": 29.899616241403308,
+      "predicted_lambda_km": 3425.0810758941448,
+      "velocity_enhancement": 1.0080494607457016
+    },
+    {
+      "day_of_year": 293,
+      "orbital_speed_kms": 29.907973359526302,
+      "predicted_lambda_km": 3426.9960039762946,
+      "velocity_enhancement": 1.0086130509725617
+    },
+    {
+      "day_of_year": 294,
+      "orbital_speed_kms": 29.916297097349847,
+      "predicted_lambda_km": 3428.903815341144,
+      "velocity_enhancement": 1.009174546649577
+    },
+    {
+      "day_of_year": 295,
+      "orbital_speed_kms": 29.924584930044897,
+      "predicted_lambda_km": 3430.803924666725,
+      "velocity_enhancement": 1.0097337755082718
+    },
+    {
+      "day_of_year": 296,
+      "orbital_speed_kms": 29.932834339534526,
+      "predicted_lambda_km": 3432.695747566666,
+      "velocity_enhancement": 1.0102905655555305
+    },
+    {
+      "day_of_year": 297,
+      "orbital_speed_kms": 29.9410428153123,
+      "predicted_lambda_km": 3434.578700787263,
+      "velocity_enhancement": 1.010844745131597
+    },
+    {
+      "day_of_year": 298,
+      "orbital_speed_kms": 29.949207855263115,
+      "predicted_lambda_km": 3436.4522024058697,
+      "velocity_enhancement": 1.0113961429684641
+    },
+    {
+      "day_of_year": 299,
+      "orbital_speed_kms": 29.95732696648623,
+      "predicted_lambda_km": 3438.3156720305606,
+      "velocity_enhancement": 1.0119445882486375
+    },
+    {
+      "day_of_year": 300,
+      "orbital_speed_kms": 29.96539766612014,
+      "predicted_lambda_km": 3440.1685310009293,
+      "velocity_enhancement": 1.0124899106642333
+    },
+    {
+      "day_of_year": 301,
+      "orbital_speed_kms": 29.97341748216893,
+      "predicted_lambda_km": 3442.0102025899864,
+      "velocity_enhancement": 1.0130319404763992
+    },
+    {
+      "day_of_year": 302,
+      "orbital_speed_kms": 29.981383954329846,
+      "predicted_lambda_km": 3443.8401122070386,
+      "velocity_enhancement": 1.0135705085750248
+    },
+    {
+      "day_of_year": 303,
+      "orbital_speed_kms": 29.9892946348216,
+      "predicted_lambda_km": 3445.6576876014415,
+      "velocity_enhancement": 1.0141054465387092
+    },
+    {
+      "day_of_year": 304,
+      "orbital_speed_kms": 29.997147089213236,
+      "predicted_lambda_km": 3447.4623590671704,
+      "velocity_enhancement": 1.0146365866949685
+    },
+    {
+      "day_of_year": 305,
+      "orbital_speed_kms": 30.004938897252977,
+      "predicted_lambda_km": 3449.2535596480693,
+      "velocity_enhancement": 1.015163762180644
+    },
+    {
+      "day_of_year": 306,
+      "orbital_speed_kms": 30.01266765369689,
+      "predicted_lambda_km": 3451.0307253437004,
+      "velocity_enhancement": 1.0156868070024863
+    },
+    {
+      "day_of_year": 307,
+      "orbital_speed_kms": 30.02033096913688,
+      "predicted_lambda_km": 3452.7932953156833,
+      "velocity_enhancement": 1.016205556097884
+    },
+    {
+      "day_of_year": 308,
+      "orbital_speed_kms": 30.027926470827627,
+      "predicted_lambda_km": 3454.540712094425,
+      "velocity_enhancement": 1.0167198453957071
+    },
+    {
+      "day_of_year": 309,
+      "orbital_speed_kms": 30.03545180351218,
+      "predicted_lambda_km": 3456.2724217861223,
+      "velocity_enhancement": 1.0172295118772305
+    },
+    {
+      "day_of_year": 310,
+      "orbital_speed_kms": 30.04290463024571,
+      "predicted_lambda_km": 3457.987874279932,
+      "velocity_enhancement": 1.0177343936371077
+    },
+    {
+      "day_of_year": 311,
+      "orbital_speed_kms": 30.0502826332171,
+      "predicted_lambda_km": 3459.686523455202,
+      "velocity_enhancement": 1.0182343299443615
+    },
+    {
+      "day_of_year": 312,
+      "orbital_speed_kms": 30.057583514567963,
+      "predicted_lambda_km": 3461.3678273886576,
+      "velocity_enhancement": 1.0187291613033613
+    },
+    {
+      "day_of_year": 313,
+      "orbital_speed_kms": 30.06480499720864,
+      "predicted_lambda_km": 3463.031248561383,
+      "velocity_enhancement": 1.019218729514742
+    },
+    {
+      "day_of_year": 314,
+      "orbital_speed_kms": 30.071944825630897,
+      "predicted_lambda_km": 3464.676254065566,
+      "velocity_enhancement": 1.01970287773625
+    },
+    {
+      "day_of_year": 315,
+      "orbital_speed_kms": 30.07900076671674,
+      "predicted_lambda_km": 3466.302315810788,
+      "velocity_enhancement": 1.0201814505434594
+    },
+    {
+      "day_of_year": 316,
+      "orbital_speed_kms": 30.085970610543086,
+      "predicted_lambda_km": 3467.908910729822,
+      "velocity_enhancement": 1.0206542939903394
+    },
+    {
+      "day_of_year": 317,
+      "orbital_speed_kms": 30.09285217118183,
+      "predicted_lambda_km": 3469.495520983772,
+      "velocity_enhancement": 1.0211212556696305
+    },
+    {
+      "day_of_year": 318,
+      "orbital_speed_kms": 30.09964328749486,
+      "predicted_lambda_km": 3471.0616341664445,
+      "velocity_enhancement": 1.0215821847729942
+    },
+    {
+      "day_of_year": 319,
+      "orbital_speed_kms": 30.106341823923653,
+      "predicted_lambda_km": 3472.606743507832,
+      "velocity_enhancement": 1.0220369321509004
+    },
+    {
+      "day_of_year": 320,
+      "orbital_speed_kms": 30.112945671272993,
+      "predicted_lambda_km": 3474.130348076578,
+      "velocity_enhancement": 1.0224853503722158
+    },
+    {
+      "day_of_year": 321,
+      "orbital_speed_kms": 30.119452747488456,
+      "predicted_lambda_km": 3475.631952981303,
+      "velocity_enhancement": 1.022927293783458
+    },
+    {
+      "day_of_year": 322,
+      "orbital_speed_kms": 30.125860998427143,
+      "predicted_lambda_km": 3477.11106957067,
+      "velocity_enhancement": 1.0233626185676756
+    },
+    {
+      "day_of_year": 323,
+      "orbital_speed_kms": 30.132168398621364,
+      "predicted_lambda_km": 3478.5672156320447,
+      "velocity_enhancement": 1.0237911828029185
+    },
+    {
+      "day_of_year": 324,
+      "orbital_speed_kms": 30.13837295203473,
+      "predicted_lambda_km": 3479.999915588642,
+      "velocity_enhancement": 1.0242128465202602
+    },
+    {
+      "day_of_year": 325,
+      "orbital_speed_kms": 30.14447269281033,
+      "predicted_lambda_km": 3481.408700695031,
+      "velocity_enhancement": 1.0246274717613375
+    },
+    {
+      "day_of_year": 326,
+      "orbital_speed_kms": 30.150465686010513,
+      "predicted_lambda_km": 3482.793109230854,
+      "velocity_enhancement": 1.025034922635365
+    },
+    {
+      "day_of_year": 327,
+      "orbital_speed_kms": 30.1563500283479,
+      "predicted_lambda_km": 3484.1526866926497,
+      "velocity_enhancement": 1.0254350653755913
+    },
+    {
+      "day_of_year": 328,
+      "orbital_speed_kms": 30.162123848907196,
+      "predicted_lambda_km": 3485.4869859836467,
+      "velocity_enhancement": 1.0258277683951575
+    },
+    {
+      "day_of_year": 329,
+      "orbital_speed_kms": 30.16778530985733,
+      "predicted_lambda_km": 3486.795567601396,
+      "velocity_enhancement": 1.026212902342321
+    },
+    {
+      "day_of_year": 330,
+      "orbital_speed_kms": 30.173332607153633,
+      "predicted_lambda_km": 3488.0779998231146,
+      "velocity_enhancement": 1.0265903401550036
+    },
+    {
+      "day_of_year": 331,
+      "orbital_speed_kms": 30.17876397122953,
+      "predicted_lambda_km": 3489.333858888623,
+      "velocity_enhancement": 1.0269599571146337
+    },
+    {
+      "day_of_year": 332,
+      "orbital_speed_kms": 30.184077667677396,
+      "predicted_lambda_km": 3490.5627291807455,
+      "velocity_enhancement": 1.0273216308992394
+    },
+    {
+      "day_of_year": 333,
+      "orbital_speed_kms": 30.189271997918183,
+      "predicted_lambda_km": 3491.7642034030446,
+      "velocity_enhancement": 1.0276752416357597
+    },
+    {
+      "day_of_year": 334,
+      "orbital_speed_kms": 30.194345299859336,
+      "predicted_lambda_km": 3492.9378827547525,
+      "velocity_enhancement": 1.028020671951528
+    },
+    {
+      "day_of_year": 335,
+      "orbital_speed_kms": 30.199295948540737,
+      "predicted_lambda_km": 3494.08337710282,
+      "velocity_enhancement": 1.0283578070249086
+    },
+    {
+      "day_of_year": 336,
+      "orbital_speed_kms": 30.204122356768167,
+      "predicted_lambda_km": 3495.2003051508973,
+      "velocity_enhancement": 1.0286865346350316
+    },
+    {
+      "day_of_year": 337,
+      "orbital_speed_kms": 30.208822975733977,
+      "predicted_lambda_km": 3496.2882946051914,
+      "velocity_enhancement": 1.029006745210605
+    },
+    {
+      "day_of_year": 338,
+      "orbital_speed_kms": 30.213396295624527,
+      "predicted_lambda_km": 3497.3469823370147,
+      "velocity_enhancement": 1.029318331877757
+    },
+    {
+      "day_of_year": 339,
+      "orbital_speed_kms": 30.21784084621409,
+      "predicted_lambda_km": 3498.376014541966,
+      "velocity_enhancement": 1.029621190506883
+    },
+    {
+      "day_of_year": 340,
+      "orbital_speed_kms": 30.222155197444774,
+      "predicted_lambda_km": 3499.375046895585,
+      "velocity_enhancement": 1.0299152197584593
+    },
+    {
+      "day_of_year": 341,
+      "orbital_speed_kms": 30.226337959992186,
+      "predicted_lambda_km": 3500.343744705388,
+      "velocity_enhancement": 1.0302003211277875
+    },
+    {
+      "day_of_year": 342,
+      "orbital_speed_kms": 30.230387785816404,
+      "predicted_lambda_km": 3501.281783059163,
+      "velocity_enhancement": 1.0304763989886407
+    },
+    {
+      "day_of_year": 343,
+      "orbital_speed_kms": 30.234303368697958,
+      "predicted_lambda_km": 3502.188846969416,
+      "velocity_enhancement": 1.0307433606357759
+    },
+    {
+      "day_of_year": 344,
+      "orbital_speed_kms": 30.238083444758484,
+      "predicted_lambda_km": 3503.0646315138592,
+      "velocity_enhancement": 1.0310011163262818
+    },
+    {
+      "day_of_year": 345,
+      "orbital_speed_kms": 30.241726792965693,
+      "predicted_lambda_km": 3503.9088419718482,
+      "velocity_enhancement": 1.0312495793197336
+    },
+    {
+      "day_of_year": 346,
+      "orbital_speed_kms": 30.245232235622325,
+      "predicted_lambda_km": 3504.721193956626,
+      "velocity_enhancement": 1.031488665917115
+    },
+    {
+      "day_of_year": 347,
+      "orbital_speed_kms": 30.248598638838846,
+      "predicted_lambda_km": 3505.501413543324,
+      "velocity_enhancement": 1.0317182954984903
+    },
+    {
+      "day_of_year": 348,
+      "orbital_speed_kms": 30.25182491298949,
+      "predicted_lambda_km": 3506.249237392595,
+      "velocity_enhancement": 1.0319383905593915
+    },
+    {
+      "day_of_year": 349,
+      "orbital_speed_kms": 30.254910013151402,
+      "predicted_lambda_km": 3506.964412869776,
+      "velocity_enhancement": 1.0321488767458893
+    },
+    {
+      "day_of_year": 350,
+      "orbital_speed_kms": 30.2578529395266,
+      "predicted_lambda_km": 3507.6466981594995,
+      "velocity_enhancement": 1.0323496828883252
+    },
+    {
+      "day_of_year": 351,
+      "orbital_speed_kms": 30.260652737846478,
+      "predicted_lambda_km": 3508.295862375681,
+      "velocity_enhancement": 1.032540741033682
+    },
+    {
+      "day_of_year": 352,
+      "orbital_speed_kms": 30.26330849975853,
+      "predicted_lambda_km": 3508.9116856667597,
+      "velocity_enhancement": 1.032721986476558
+    },
+    {
+      "day_of_year": 353,
+      "orbital_speed_kms": 30.265819363195153,
+      "predicted_lambda_km": 3509.4939593161316,
+      "velocity_enhancement": 1.0328933577887254
+    },
+    {
+      "day_of_year": 354,
+      "orbital_speed_kms": 30.268184512724186,
+      "predicted_lambda_km": 3510.042485837721,
+      "velocity_enhancement": 1.0330547968472588
+    },
+    {
+      "day_of_year": 355,
+      "orbital_speed_kms": 30.270403179880983,
+      "predicted_lambda_km": 3510.5570790665492,
+      "velocity_enhancement": 1.0332062488611906
+    },
+    {
+      "day_of_year": 356,
+      "orbital_speed_kms": 30.272474643481836,
+      "predicted_lambda_km": 3511.037564244309,
+      "velocity_enhancement": 1.0333476623966966
+    },
+    {
+      "day_of_year": 357,
+      "orbital_speed_kms": 30.27439822991848,
+      "predicted_lambda_km": 3511.4837780998055,
+      "velocity_enhancement": 1.0334789894007714
+    },
+    {
+      "day_of_year": 358,
+      "orbital_speed_kms": 30.27617331343353,
+      "predicted_lambda_km": 3511.895568924247,
+      "velocity_enhancement": 1.0336001852233871
+    },
+    {
+      "day_of_year": 359,
+      "orbital_speed_kms": 30.27779931637668,
+      "predicted_lambda_km": 3512.272796641318,
+      "velocity_enhancement": 1.0337112086381168
+    },
+    {
+      "day_of_year": 360,
+      "orbital_speed_kms": 30.279275709441375,
+      "predicted_lambda_km": 3512.6153328719424,
+      "velocity_enhancement": 1.0338120218611955
+    },
+    {
+      "day_of_year": 361,
+      "orbital_speed_kms": 30.280602011882014,
+      "predicted_lambda_km": 3512.9230609937536,
+      "velocity_enhancement": 1.033902590569023
+    },
+    {
+      "day_of_year": 362,
+      "orbital_speed_kms": 30.281777791711285,
+      "predicted_lambda_km": 3513.1958761951405,
+      "velocity_enhancement": 1.0339828839140701
+    },
+    {
+      "day_of_year": 363,
+      "orbital_speed_kms": 30.282802665877725,
+      "predicted_lambda_km": 3513.433685523909,
+      "velocity_enhancement": 1.0340528745392008
+    },
+    {
+      "day_of_year": 364,
+      "orbital_speed_kms": 30.28367630042321,
+      "predicted_lambda_km": 3513.6364079304503,
+      "velocity_enhancement": 1.034112538590377
+    },
+    {
+      "day_of_year": 365,
+      "orbital_speed_kms": 30.2843984106204,
+      "predicted_lambda_km": 3513.8039743054314,
+      "velocity_enhancement": 1.0341618557277517
+    }
+  ],
+  "evidence_assessment": {
+    "component_scores": {
+      "directional_asymmetry": 1.0,
+      "seasonal_predictions": 0.6681020053441412,
+      "sector_coverage": 1.0,
+      "theoretical_consistency": 0.9
+    },
+    "overall_score": 0.8920255013360353,
+    "classification": "IRREFUTABLE - Strong 4D motion signatures detected",
+    "key_metrics": {
+      "ew_ns_ratio": 4.612524984329116,
+      "seasonal_variation_percent": 6.681020053441412,
+      "sectors_analyzed": 8
+    }
+  },
+  "success": true
+}

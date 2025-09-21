@@ -1,0 +1,278 @@
+{
+  "analysis": "clock_stability_test",
+  "center": "CODE",
+  "n_clk_files": 10,
+  "n_measurements": 240,
+  "date_range": {
+    "start": "2022-11-27",
+    "end": "2022-12-29"
+  },
+  "diurnal_tests": {
+    "velocity_correlation": {
+      "correlation": NaN,
+      "p_value": NaN,
+      "significant": false
+    },
+    "day_night_difference": {
+      "significant": false,
+      "day_stability": 0.0,
+      "night_stability": 0.0
+    },
+    "hourly_variation": {
+      "f_statistic": NaN,
+      "p_value": NaN,
+      "significant": false
+    }
+  },
+  "stability_extremes": {
+    "most_stable_hour": 0,
+    "least_stable_hour": 0,
+    "relative_variation": NaN
+  },
+  "hourly_statistics": [
+    {
+      "utc_hour": 0,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.0,
+      "local_solar_time": 0,
+      "velocity_factor": 1.0
+    },
+    {
+      "utc_hour": 1,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.4,
+      "local_solar_time": 1,
+      "velocity_factor": 0.9659258262890683
+    },
+    {
+      "utc_hour": 2,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.1,
+      "local_solar_time": 2,
+      "velocity_factor": 0.8660254037844387
+    },
+    {
+      "utc_hour": 3,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.8,
+      "local_solar_time": 3,
+      "velocity_factor": 0.7071067811865476
+    },
+    {
+      "utc_hour": 4,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.1,
+      "local_solar_time": 4,
+      "velocity_factor": 0.5000000000000001
+    },
+    {
+      "utc_hour": 5,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.1,
+      "local_solar_time": 5,
+      "velocity_factor": 0.25881904510252074
+    },
+    {
+      "utc_hour": 6,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.2,
+      "local_solar_time": 6,
+      "velocity_factor": 6.123233995736766e-17
+    },
+    {
+      "utc_hour": 7,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.8,
+      "local_solar_time": 7,
+      "velocity_factor": -0.25881904510252063
+    },
+    {
+      "utc_hour": 8,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.4,
+      "local_solar_time": 8,
+      "velocity_factor": -0.4999999999999998
+    },
+    {
+      "utc_hour": 9,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.7,
+      "local_solar_time": 9,
+      "velocity_factor": -0.7071067811865475
+    },
+    {
+      "utc_hour": 10,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.9,
+      "local_solar_time": 10,
+      "velocity_factor": -0.8660254037844387
+    },
+    {
+      "utc_hour": 11,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.9,
+      "local_solar_time": 11,
+      "velocity_factor": -0.9659258262890682
+    },
+    {
+      "utc_hour": 12,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 314.1,
+      "local_solar_time": 12,
+      "velocity_factor": -1.0
+    },
+    {
+      "utc_hour": 13,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.8,
+      "local_solar_time": 13,
+      "velocity_factor": -0.9659258262890683
+    },
+    {
+      "utc_hour": 14,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.5,
+      "local_solar_time": 14,
+      "velocity_factor": -0.8660254037844388
+    },
+    {
+      "utc_hour": 15,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.5,
+      "local_solar_time": 15,
+      "velocity_factor": -0.7071067811865479
+    },
+    {
+      "utc_hour": 16,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.5,
+      "local_solar_time": 16,
+      "velocity_factor": -0.5000000000000004
+    },
+    {
+      "utc_hour": 17,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.5,
+      "local_solar_time": 17,
+      "velocity_factor": -0.25881904510252063
+    },
+    {
+      "utc_hour": 18,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.2,
+      "local_solar_time": 18,
+      "velocity_factor": -1.8369701987210297e-16
+    },
+    {
+      "utc_hour": 19,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 312.9,
+      "local_solar_time": 19,
+      "velocity_factor": 0.2588190451025203
+    },
+    {
+      "utc_hour": 20,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.0,
+      "local_solar_time": 20,
+      "velocity_factor": 0.5
+    },
+    {
+      "utc_hour": 21,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 313.0,
+      "local_solar_time": 21,
+      "velocity_factor": 0.7071067811865475
+    },
+    {
+      "utc_hour": 22,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 312.9,
+      "local_solar_time": 22,
+      "velocity_factor": 0.8660254037844384
+    },
+    {
+      "utc_hour": 23,
+      "stability_mean": 0.0,
+      "stability_std": 0.0,
+      "n_measurements": 10,
+      "global_rms": 0.0,
+      "avg_stations": 312.0,
+      "local_solar_time": 23,
+      "velocity_factor": 0.9659258262890681
+    }
+  ],
+  "verdict": {
+    "diurnal_pattern_found": false,
+    "tep_implications": "NONE DETECTED"
+  }
+}

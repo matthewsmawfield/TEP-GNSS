@@ -49,6 +49,7 @@ from typing import List, Dict, Tuple, Optional, Union
 import pandas as pd
 import numpy as np
 from scipy.optimize import curve_fit
+from scipy import stats
 import multiprocessing as mp
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from glob import glob
@@ -734,6 +735,239 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
     print_status(f"Enhanced Anisotropy complete: {len(sector_results)} sectors, CV = {lambda_cv:.3f}", "SUCCESS")
     return results
 
+def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Track anisotropy patterns by day-of-year to detect orbital motion signatures.
+    Tests whether E-W/N-S ratio varies seasonally in synchronization with Earth's 
+    orbital motion, which would support TEP coupling predictions.
+    """
+    print_status("Starting Temporal Orbital Tracking Analysis...", "PROCESS")
+    print_status("Testing for seasonal orbital motion signatures in GPS timing correlations", "PROCESS")
+    
+    # Check if we have date and coordinate information
+    required_cols = ['date', 'station1_lat', 'station1_lon', 'station2_lat', 'station2_lon']
+    has_required_data = all(col in complete_df.columns for col in required_cols)
+    
+    if not has_required_data:
+        return {'success': False, 'error': 'Date or coordinate columns not found in dataset'}
+    
+    # Convert date column to datetime and extract day of year
+    complete_df['date'] = pd.to_datetime(complete_df['date'])
+    complete_df['day_of_year'] = complete_df['date'].dt.dayofyear
+    
+    print_status(f"Temporal range: {complete_df['date'].min()} to {complete_df['date'].max()}", "INFO")
+    print_status(f"Day of year range: {complete_df['day_of_year'].min()} to {complete_df['day_of_year'].max()}", "INFO")
+    
+    # Compute azimuths for all pairs
+    def compute_azimuth(lat1, lon1, lat2, lon2):
+        """Compute azimuth from station 1 to station 2 in degrees"""
+        lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
+        dlon = lon2 - lon1
+        y = np.sin(dlon) * np.cos(lat2)
+        x = np.cos(lat1) * np.sin(lat2) - np.sin(lat1) * np.cos(lat2) * np.cos(dlon)
+        azimuth = np.arctan2(y, x)
+        return (np.degrees(azimuth) + 360) % 360
+    
+    complete_df['azimuth'] = complete_df.apply(
+        lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                   row['station2_lat'], row['station2_lon']), axis=1
+    )
+    
+    # Group into East-West vs North-South for temporal tracking
+    def classify_ew_ns(azimuth):
+        """Classify direction as East-West or North-South"""
+        # East-West: 45-135° and 225-315° (±45° around E and W)
+        if (45 <= azimuth <= 135) or (225 <= azimuth <= 315):
+            return 'EW'
+        else:
+            return 'NS'
+    
+    complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+    
+    # Analysis parameters
+    num_bins = TEPConfig.get_int('TEP_BINS')
+    max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
+    min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+    edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
+    
+    # Track E-W/N-S ratio by day of year (sample every 10 days for efficiency)
+    temporal_tracking = []
+    day_samples = range(5, 366, 10)  # Sample every 10 days starting from day 5
+    
+    print_status(f"Tracking E-W/N-S ratio across {len(day_samples)} day samples...", "PROCESS")
+    
+    for day_of_year in day_samples:
+        # Get data for this day (±2 day window for sufficient statistics)
+        day_window = 2
+        day_data = complete_df[
+            (complete_df['day_of_year'] >= day_of_year - day_window) &
+            (complete_df['day_of_year'] <= day_of_year + day_window)
+        ].copy()
+        
+        if len(day_data) < 1000:  # Need sufficient data
+            continue
+        
+        # Analyze E-W and N-S separately for this day
+        ew_data = day_data[day_data['ew_ns_class'] == 'EW'].copy()
+        ns_data = day_data[day_data['ew_ns_class'] == 'NS'].copy()
+        
+        if len(ew_data) < 500 or len(ns_data) < 500:
+            continue
+        
+        # Fit correlation models for E-W and N-S
+        ew_lambda = fit_directional_correlation(ew_data, edges, min_bin_count)
+        ns_lambda = fit_directional_correlation(ns_data, edges, min_bin_count)
+        
+        if ew_lambda is not None and ns_lambda is not None and ns_lambda > 0:
+            ew_ns_ratio = ew_lambda / ns_lambda
+            
+            # Calculate Earth's orbital parameters for this day
+            orbital_params = calculate_earth_orbital_motion(day_of_year)
+            
+            temporal_tracking.append({
+                'day_of_year': day_of_year,
+                'ew_lambda_km': ew_lambda,
+                'ns_lambda_km': ns_lambda,
+                'ew_ns_ratio': ew_ns_ratio,
+                'n_ew_pairs': len(ew_data),
+                'n_ns_pairs': len(ns_data),
+                'orbital_speed_kms': orbital_params['orbital_speed'],
+                'orbital_phase': orbital_params['orbital_phase'],
+                'earth_sun_distance_au': orbital_params['distance_au']
+            })
+    
+    if len(temporal_tracking) < 10:
+        return {'success': False, 'error': f'Insufficient temporal samples: {len(temporal_tracking)}'}
+    
+    # Statistical analysis of temporal patterns
+    days = [t['day_of_year'] for t in temporal_tracking]
+    ew_ns_ratios = [t['ew_ns_ratio'] for t in temporal_tracking]
+    orbital_speeds = [t['orbital_speed_kms'] for t in temporal_tracking]
+    
+    # Test correlation with orbital motion
+    orbital_correlation, orbital_p_value = stats.pearsonr(orbital_speeds, ew_ns_ratios)
+    
+    # Test for 365.25-day periodicity
+    def seasonal_model(day, amplitude, phase, offset):
+        return offset + amplitude * np.sin(2 * np.pi * day / 365.25 + phase)
+    
+    try:
+        from scipy.optimize import curve_fit
+        popt, pcov = curve_fit(seasonal_model, days, ew_ns_ratios, 
+                              p0=[0.5, 0, np.mean(ew_ns_ratios)],
+                              bounds=([-2, -2*np.pi, 0], [2, 2*np.pi, 10]))
+        
+        seasonal_fit = {
+            'amplitude': popt[0],
+            'phase': popt[1], 
+            'offset': popt[2],
+            'fit_success': True,
+            'seasonal_variation_percent': abs(popt[0]) / popt[2] * 100
+        }
+    except:
+        seasonal_fit = {'fit_success': False}
+    
+    # Overall results
+    results = {
+        'success': True,
+        'temporal_tracking_data': temporal_tracking,
+        'statistical_analysis': {
+            'orbital_speed_correlation': orbital_correlation,
+            'orbital_correlation_p_value': orbital_p_value,
+            'n_temporal_samples': len(temporal_tracking),
+            'mean_ew_ns_ratio': np.mean(ew_ns_ratios),
+            'ew_ns_ratio_std': np.std(ew_ns_ratios),
+            'ew_ns_ratio_range': [min(ew_ns_ratios), max(ew_ns_ratios)]
+        },
+        'seasonal_analysis': seasonal_fit,
+        'orbital_motion_evidence': {
+            'correlation_with_orbital_speed': orbital_correlation,
+            'significance_p_value': orbital_p_value,
+            'evidence_strength': classify_orbital_evidence(orbital_correlation, orbital_p_value),
+            'interpretation': f'E-W/N-S ratio {"correlates" if abs(orbital_correlation) > 0.3 else "does not correlate"} with orbital speed'
+        }
+    }
+    
+    # Critical assessment
+    if abs(orbital_correlation) > 0.5 and orbital_p_value < 0.05:
+        print_status(f"Strong correlation detected: E-W/N-S ratio correlates with orbital speed (r={orbital_correlation:.3f}, p={orbital_p_value:.4f})", "SUCCESS")
+        print_status("This suggests GPS timing correlations may track Earth's orbital motion", "INFO")
+    elif abs(orbital_correlation) > 0.3:
+        print_status(f"Moderate correlation with orbital motion detected (r={orbital_correlation:.3f})", "INFO")
+    
+    print_status(f"Temporal orbital tracking complete: {len(temporal_tracking)} samples analyzed", "SUCCESS")
+    return results
+
+def fit_directional_correlation(directional_df: pd.DataFrame, edges: np.ndarray, min_bin_count: int) -> Optional[float]:
+    """Fit correlation model to directional subset of data"""
+    try:
+        # Bin the data
+        directional_df['dist_bin'] = pd.cut(directional_df['dist_km'], bins=edges, right=False)
+        binned = directional_df.groupby('dist_bin', observed=True).agg(
+            mean_dist=('dist_km', 'mean'),
+            mean_coh=('coherence', 'mean'),
+            count=('coherence', 'size')
+        ).reset_index()
+        
+        # Filter for robust bins
+        binned = binned[binned['count'] >= min_bin_count].dropna()
+        
+        if len(binned) < 5:  # Need enough bins for fitting
+            return None
+        
+        # Fit exponential model
+        distances = binned['mean_dist'].values
+        coherences = binned['mean_coh'].values
+        weights = binned['count'].values
+        
+        c_range = coherences.max() - coherences.min()
+        p0 = [c_range, 3000, coherences.min()]
+        
+        popt, _ = curve_fit(
+            correlation_model, distances, coherences,
+            p0=p0, sigma=1.0/np.sqrt(weights),
+            bounds=([1e-10, 100, -1], [2, 20000, 1]),
+            maxfev=5000
+        )
+        
+        return popt[1]  # Return lambda
+        
+    except:
+        return None
+
+def calculate_earth_orbital_motion(day_of_year: int) -> Dict:
+    """Calculate Earth's orbital parameters for given day of year"""
+    # Perihelion occurs around January 4 (day 4)
+    perihelion_day = 4
+    orbital_phase = 2 * np.pi * (day_of_year - perihelion_day) / 365.25
+    
+    # Orbital parameters
+    mean_orbital_speed = 29.78  # km/s
+    eccentricity = 0.0167
+    distance_factor = (1 - eccentricity * np.cos(orbital_phase))
+    orbital_speed = mean_orbital_speed / distance_factor
+    
+    return {
+        'day_of_year': day_of_year,
+        'orbital_phase': orbital_phase,
+        'orbital_speed': orbital_speed,
+        'distance_au': distance_factor,
+        'speed_variation_percent': (orbital_speed - mean_orbital_speed) / mean_orbital_speed * 100
+    }
+
+def classify_orbital_evidence(correlation: float, p_value: float) -> str:
+    """Classify strength of orbital motion evidence"""
+    if abs(correlation) > 0.7 and p_value < 0.001:
+        return "Very strong correlation with orbital motion"
+    elif abs(correlation) > 0.5 and p_value < 0.01:
+        return "Strong correlation with orbital motion"
+    elif abs(correlation) > 0.3 and p_value < 0.05:
+        return "Moderate correlation with orbital motion"
+    elif abs(correlation) > 0.2:
+        return "Weak correlation with orbital motion"
+    else:
+        return "No significant correlation with orbital motion"
+
 def process_analysis_center(ac: str) -> Dict:
     """
     Process statistical validation for one analysis center.
@@ -788,6 +1022,12 @@ def process_analysis_center(ac: str) -> Dict:
             results['enhanced_anisotropy_analysis'] = run_enhanced_anisotropy_analysis(complete_df)
         else:
             results['enhanced_anisotropy_analysis'] = {'enabled': False}
+        
+        # Run Temporal Orbital Tracking analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_TEMPORAL_ORBITAL_TRACKING', True):
+            results['temporal_orbital_tracking'] = run_temporal_orbital_tracking_analysis(complete_df)
+        else:
+            results['temporal_orbital_tracking'] = {'enabled': False}
         
         # Clean up memory
         del complete_df

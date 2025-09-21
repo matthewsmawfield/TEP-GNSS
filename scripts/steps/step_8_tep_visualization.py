@@ -1458,11 +1458,11 @@ def main():
     print("STEP 8 COMPLETE")
     print("="*60)
     
-    print("\n📊 Outputs Created:")
+    print("\nOutputs Created:")
     for output in report['outputs_created']:
         print(f"   - {output}")
     
-    print("\n🔬 Key Insights:")
+    print("\nKey Insights:")
     for key, insight in report['key_insights'].items():
         print(f"   - {key.replace('_', ' ').title()}: {insight}")
     

@@ -11,7 +11,7 @@ abstract: >
   with distance-correlation methods; publication-ready research site and analysis package.
   We report distance-structured correlations in GNSS clock products using phase-coherent 
   analysis across 62.7M station-pair measurements, finding exponential correlation lengths 
-  of 3,299–3,818 km consistent with screened scalar-field models.
+  of 3,400–4,564 km consistent with screened scalar-field models.
 license: CC-BY-4.0
 version: "0.3"
 date-released: 2025-09-17
