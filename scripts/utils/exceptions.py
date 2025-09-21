@@ -74,9 +74,21 @@ class SafeErrorHandler:
         """
         try:
             return operation()
-        except (FileNotFoundError, PermissionError, OSError) as e:
+        except FileNotFoundError as e:
             if logger_func:
-                logger_func(f"{error_message}: {e}", "WARNING")
+                logger_func(f"{error_message}: File not found - {e}", "WARNING")
+            return return_on_error
+        except PermissionError as e:
+            if logger_func:
+                logger_func(f"{error_message}: Permission denied - {e}", "WARNING")
+            return return_on_error
+        except IsADirectoryError as e:
+            if logger_func:
+                logger_func(f"{error_message}: Expected a file but found a directory - {e}", "WARNING")
+            return return_on_error
+        except OSError as e:
+            if logger_func:
+                logger_func(f"{error_message}: An OS error occurred - {e}", "WARNING")
             return return_on_error
         except (UnicodeDecodeError, UnicodeError) as e:
             if logger_func:

@@ -131,7 +131,6 @@ def create_panel_a(ax):
             
         except Exception as e:
             print(f"Error processing {center}: {e}")
-            continue
     
     # Set limits to 0.4 as requested
     ax.set_xlim(0, 12000)
@@ -283,7 +282,7 @@ def create_panel_c(ax):
             all_y_values.extend(y_fit)
             ax.plot(x_fit, y_fit, color='#FF6347', linestyle='--', alpha=0.9, linewidth=1.5,
                    label=f'Exp. fit (λ={popt[1]:.0f} km)')
-        except:
+        except Exception:
             pass
         
     except Exception as e:

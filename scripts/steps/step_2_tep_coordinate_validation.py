@@ -172,7 +172,7 @@ def create_step_2_summary():
         coord_quality = "error"
     
     # Load our audit results if available
-    audit_file = Path("results/tmp/comprehensive_station_audit.json")
+    audit_file = Path("results/tmp/step_2_station_audit.json")
     center_breakdown = {}
     if audit_file.exists():
         try:
@@ -316,133 +316,39 @@ def audit_station_ids():
     """
     print_status("Running integrated station ID audit...", "PROCESS")
     
-    # Check if processed geospatial files exist (from later pipeline steps)
-    geospatial_files = [
-        Path('data/processed/step_4_geospatial_igs_combined.csv'),
-        Path('data/processed/step_4_geospatial_code.csv'),
-        Path('data/processed/step_4_geospatial_esa_final.csv'),
-    ]
-    
-    existing_files = [f for f in geospatial_files if f.exists()]
-    
-    if not existing_files:
-        print_status("No processed geospatial files found - audit will run after analysis steps", "INFO")
-        # Create a basic audit summary based on coordinate catalogue
-        coord_file = Path("data/coordinates/station_coords_global.csv")
-        if coord_file.exists():
-            df = safe_csv_read(coord_file)
-            verified_stations = df[df['has_coordinates'] == True] if 'has_coordinates' in df.columns else df
-            
-            summary = {
-                'audit_timestamp': datetime.now().isoformat(),
-                'status': 'preliminary_coordinate_based',
-                'coordinate_catalogue': {
-                    'total_stations': len(df),
-                    'verified_stations': len(verified_stations),
-                    'coordinate_sources': 'IGS_BKG_integrated'
-                },
-                'note': 'Full spatial audit will run after geospatial analysis completes'
-            }
-            
-            # Save preliminary summary
-            outdir = Path('results/tmp')
-            outdir.mkdir(parents=True, exist_ok=True)
-            try:
-                safe_json_write(summary, outdir / 'station_audit_preliminary.json', indent=2)
-            except (TEPFileError, TEPDataError) as e:
-                print_status(f"Failed to save preliminary audit: {e}", "WARNING")
-            
-            print_status(f"Preliminary audit complete: {len(verified_stations)} verified stations", "SUCCESS")
-        return
-    
-    print_status(f"Found {len(existing_files)} processed geospatial files for full audit", "INFO")
-    
-    # Extract station IDs from processed files
-    all_station_ids = set()
-    for file_path in existing_files:
-        print_status(f"Processing {file_path.name}...", "INFO")
-        try:
-            # Sample the file to avoid memory issues
-            sample_df = safe_csv_read(file_path, nrows=100000, usecols=['station_i', 'station_j'])
-            ids_i = sample_df['station_i'].dropna().astype(str).str.upper().str.strip()
-            ids_j = sample_df['station_j'].dropna().astype(str).str.upper().str.strip()
-            file_ids = set(ids_i.unique()) | set(ids_j.unique())
-            all_station_ids.update(file_ids)
-            print_status(f"  Found {len(file_ids)} unique stations in sample", "INFO")
-        except (TEPDataError, TEPFileError) as e:
-            print_status(f"  Error processing {file_path.name}: {e}", "WARNING")
-    
-    all_station_ids.discard('')
-    print_status(f"Total unique 9-char station IDs: {len(all_station_ids)}", "INFO")
-    
-    # Analyze 9-char → 4-char mapping
-    site_mapping = {}
-    for id9 in all_station_ids:
-        site4 = id9[:4]
-        if site4 not in site_mapping:
-            site_mapping[site4] = []
-        site_mapping[site4].append(id9)
-    
-    # Load coordinate catalogue for validation
+    # Create a basic audit summary based on coordinate catalogue
     coord_file = Path("data/coordinates/station_coords_global.csv")
-    coords_df = pd.read_csv(coord_file) if coord_file.exists() else pd.DataFrame()
-    
-    # Validate coordinate availability
-    sites_with_coords = 0
-    sites_missing_coords = 0
-    
-    for site4, variants in site_mapping.items():
-        has_coords = False
-        # Check if any variant has coordinates
-        for variant in variants:
-            if len(coords_df[coords_df['code'] == variant]) > 0:
-                has_coords = True
-                break
-        # Also check 4-char match
-        if not has_coords and len(coords_df[coords_df['code'] == site4]) > 0:
-            has_coords = True
-            
-        if has_coords:
-            sites_with_coords += 1
-        else:
-            sites_missing_coords += 1
-    
-    # Create comprehensive summary
-    summary = {
-        'audit_timestamp': datetime.now().isoformat(),
-        'status': 'complete_integrated_audit',
-        'station_mapping': {
-            'total_9char_ids': len(all_station_ids),
-            'total_4char_sites': len(site_mapping),
-            'sites_with_coordinates': sites_with_coords,
-            'sites_missing_coordinates': sites_missing_coords
-        },
-        'coordinate_validation': {
-            'catalogue_stations': len(coords_df),
-            'verified_stations': len(coords_df[coords_df['has_coordinates'] == True]) if 'has_coordinates' in coords_df.columns else len(coords_df),
-            'coverage_percentage': round(100 * sites_with_coords / len(site_mapping), 1) if site_mapping else 0
-        },
-        'spatial_verification': {
-            'method': 'integrated_coordinate_catalogue',
-            'co_location_status': 'verified_through_authoritative_sources',
-            'note': 'All coordinate variants from same authoritative source ensure co-location'
-        },
-        'files_processed': [f.name for f in existing_files]
-    }
-    
-    # Save comprehensive audit
-    outdir = Path('results/tmp')
-    outdir.mkdir(parents=True, exist_ok=True)
-    try:
-        safe_json_write(summary, outdir / 'step_2_station_audit.json', indent=2)
-    except (TEPFileError, TEPDataError) as e:
-        print_status(f"Failed to save station audit: {e}", "WARNING")
-    
-    print_status("Integrated station audit complete", "SUCCESS")
-    print_status(f"  9-char IDs: {len(all_station_ids)}", "INFO")
-    print_status(f"  4-char sites: {len(site_mapping)}", "INFO")
-    print_status(f"  Sites with coordinates: {sites_with_coords}", "SUCCESS")
-    print_status(f"  Coverage: {summary['coordinate_validation']['coverage_percentage']}%", "INFO")
+    if coord_file.exists():
+        df = safe_csv_read(coord_file)
+        verified_stations_df = df[df['has_coordinates'] == True] if 'has_coordinates' in df.columns else df
+        verified_stations = len(verified_stations_df)
+        
+        summary = {
+            'audit_timestamp': datetime.now().isoformat(),
+            'status': 'preliminary_coordinate_based',
+            'coordinate_catalogue': {
+                'total_stations': len(df),
+                'verified_stations': verified_stations,
+                'coordinate_sources': 'IGS_BKG_integrated'
+            },
+            'by_analysis_center': {},  # Keep structure consistent
+            'overall_statistics': {
+                'sites_with_coordinates': verified_stations
+            },
+            'note': 'This is a preliminary audit based on the coordinate catalogue.'
+        }
+        
+        # Save preliminary summary
+        outdir = Path('results/tmp')
+        outdir.mkdir(parents=True, exist_ok=True)
+        try:
+            safe_json_write(summary, outdir / 'step_2_station_audit.json', indent=2)
+        except (TEPFileError, TEPDataError) as e:
+            print_status(f"Failed to save preliminary audit: {e}", "WARNING")
+        
+        print_status(f"Preliminary audit complete: {verified_stations} verified stations", "SUCCESS")
+    else:
+        print_status("Coordinate file not found, cannot run audit.", "ERROR")
 
 
 if __name__ == "__main__":

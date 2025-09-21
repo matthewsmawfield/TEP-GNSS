@@ -300,7 +300,7 @@ def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
             weights = binned['count'].values
             
             c_range = coherences.max() - coherences.min()
-            p0 = [c_range, 3000, coherences.min()]
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
             
             popt, _ = curve_fit(
                 correlation_model, distances, coherences,
@@ -396,7 +396,7 @@ def run_lodo_analysis(complete_df: pd.DataFrame) -> Dict:
             weights = binned['count'].values
             
             c_range = coherences.max() - coherences.min()
-            p0 = [c_range, 3000, coherences.min()]
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
             
             popt, _ = curve_fit(
                 correlation_model, distances, coherences,
@@ -517,7 +517,7 @@ def run_block_bootstrap_analysis(complete_df: pd.DataFrame, n_bootstrap: int = 2
             weights = binned['count'].values
             
             c_range = coherences.max() - coherences.min()
-            p0 = [c_range, 3000, coherences.min()]
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
             
             popt, _ = curve_fit(
                 correlation_model, distances, coherences,
@@ -655,7 +655,7 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
             weights = binned['count'].values
             
             c_range = coherences.max() - coherences.min()
-            p0 = [c_range, 3000, coherences.min()]
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
             
             popt, pcov = curve_fit(
                 correlation_model, distances, coherences,
@@ -921,7 +921,7 @@ def fit_directional_correlation(directional_df: pd.DataFrame, edges: np.ndarray,
         weights = binned['count'].values
         
         c_range = coherences.max() - coherences.min()
-        p0 = [c_range, 3000, coherences.min()]
+        p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
         
         popt, _ = curve_fit(
             correlation_model, distances, coherences,
@@ -1024,7 +1024,7 @@ def process_analysis_center(ac: str) -> Dict:
             results['enhanced_anisotropy_analysis'] = {'enabled': False}
         
         # Run Temporal Orbital Tracking analysis if enabled
-        if TEPConfig.get_bool('TEP_ENABLE_TEMPORAL_ORBITAL_TRACKING', True):
+        if TEPConfig.get_bool('TEP_ENABLE_TEMPORAL_ORBITAL_TRACKING'):
             results['temporal_orbital_tracking'] = run_temporal_orbital_tracking_analysis(complete_df)
         else:
             results['temporal_orbital_tracking'] = {'enabled': False}

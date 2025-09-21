@@ -65,6 +65,69 @@ def print_status(text: str, status: str = "INFO"):
     prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]"}
     print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
 
+def ecef_to_geodetic(x, y, z):
+    """Convert ECEF coordinates to geodetic (lat, lon, height)."""
+    # WGS84 parameters
+    a = 6378137.0  # semi-major axis
+    f = 1 / 298.257223563  # flattening
+    e2 = 2 * f - f**2  # first eccentricity squared
+    
+    lon = np.arctan2(y, x)
+    p = np.sqrt(x**2 + y**2)
+    
+    if p == 0:
+        lat = np.pi/2 if z > 0 else -np.pi/2
+        h = abs(z) - a * np.sqrt(1 - e2)
+    else:
+        lat = np.arctan2(z, p * (1 - e2))
+        for _ in range(5):
+            N = a / np.sqrt(1 - e2 * np.sin(lat)**2)
+            h = p / np.cos(lat) - N
+            lat_new = np.arctan2(z, p * (1 - e2 * N / (N + h)))
+            if abs(lat_new - lat) < 1e-10:
+                break
+            lat = lat_new
+            
+    return np.degrees(lat), np.degrees(lon), h
+
+def great_circle_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """
+    Calculate great-circle distance between two points on WGS-84 ellipsoid.
+    """
+    R = 6371.0088  # Mean Earth radius in km (WGS-84 standard value)
+    
+    # Convert to radians
+    lat1_rad = np.radians(lat1)
+    lon1_rad = np.radians(lon1)
+    lat2_rad = np.radians(lat2)
+    lon2_rad = np.radians(lon2)
+    
+    # Haversine formula
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+    a = np.sin(dlat/2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    
+    return R * c
+
+def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.DataFrame):
+    """Calculate geodesic distance between stations in km using WGS-84 great-circle distance"""
+    
+    code1 = station1[:4] if len(station1) > 4 else station1
+    code2 = station2[:4] if len(station2) > 4 else station2
+    
+    try:
+        coord1 = coords_df[coords_df['coord_source_code'] == code1].iloc[0]
+        coord2 = coords_df[coords_df['coord_source_code'] == code2].iloc[0]
+        
+        lat1, lon1, _ = ecef_to_geodetic(coord1['X'], coord1['Y'], coord1['Z'])
+        lat2, lon2, _ = ecef_to_geodetic(coord2['X'], coord2['Y'], coord2['Z'])
+        
+        return great_circle_distance(lat1, lon1, lat2, lon2)
+        
+    except (KeyError, IndexError):
+        return None
+
 def correlation_model(r, amplitude, lambda_km, offset):
     """Exponential correlation model for TEP: C(r) = A * exp(-r/λ) + C₀"""
     return amplitude * np.exp(-r / lambda_km) + offset
@@ -163,34 +226,26 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42):
             df = pd.concat(scrambled_parts, ignore_index=True)
             print(f"    Station scrambling completed: {processed_days} days processed")
             
-            # Recalculate distances for scrambled stations - VECTORIZED for efficiency
-            print(f"    Computing distances for {len(df)} pairs using vectorized operations...")
+            # Recalculate distances for scrambled stations
+            print(f"    Computing great-circle distances for {len(df)} pairs...")
             coords_path = ROOT / 'data' / 'coordinates' / 'station_coords_global.csv'
             coords_df = pd.read_csv(coords_path)
             
-            # Extract station codes efficiently
-            df['station_i_code'] = df['station_i'].str[:4]
-            df['station_j_code'] = df['station_j'].str[:4]
+            # Vectorized approach for performance
+            # Create a mapping from station code to coordinates
+            coords_map = coords_df.set_index('coord_source_code')[['X', 'Y', 'Z']].to_dict('index')
+
+            # Map station codes to coordinates
+            coords_i = pd.DataFrame(df['station_i'].str[:4].map(coords_map).tolist(), index=df.index)
+            coords_j = pd.DataFrame(df['station_j'].str[:4].map(coords_map).tolist(), index=df.index)
+
+            # Convert ECEF to geodetic in a vectorized manner
+            lat1, lon1, _ = ecef_to_geodetic(coords_i['X'], coords_i['Y'], coords_i['Z'])
+            lat2, lon2, _ = ecef_to_geodetic(coords_j['X'], coords_j['Y'], coords_j['Z'])
+
+            # Calculate great-circle distance
+            df['dist_km'] = great_circle_distance(lat1, lon1, lat2, lon2)
             
-            # Create coordinate lookup dictionaries for O(1) access
-            coord_lookup = coords_df.set_index('code')[['X', 'Y', 'Z']].to_dict('index')
-            
-            # Vectorized coordinate lookup
-            coords_i = pd.DataFrame([coord_lookup.get(code, {'X': np.nan, 'Y': np.nan, 'Z': np.nan}) 
-                                   for code in df['station_i_code']], index=df.index)
-            coords_j = pd.DataFrame([coord_lookup.get(code, {'X': np.nan, 'Y': np.nan, 'Z': np.nan}) 
-                                   for code in df['station_j_code']], index=df.index)
-            
-            # Vectorized 3D Euclidean distance calculation (for null test scrambling)
-            # Note: Main analysis uses great-circle distance, but null test uses Euclidean 
-            # distance for computational efficiency with scrambled station positions
-            dx = coords_i['X'] - coords_j['X']
-            dy = coords_i['Y'] - coords_j['Y'] 
-            dz = coords_i['Z'] - coords_j['Z']
-            df['dist_km'] = np.sqrt(dx*dx + dy*dy + dz*dz) / 1000.0
-            
-            # Clean up temporary columns and invalid distances
-            df = df.drop(['station_i_code', 'station_j_code'], axis=1)
             df = df.dropna(subset=['dist_km']).copy()
             print(f"    Distance computation completed: {len(df)} valid pairs")
         

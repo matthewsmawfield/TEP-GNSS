@@ -19,6 +19,7 @@ import pandas as pd
 import json
 import os
 import sys
+import argparse
 from pathlib import Path
 from datetime import datetime
 from scipy.optimize import curve_fit
@@ -200,30 +201,25 @@ def export_null_test_results(root_dir):
     """
     print_status("Exporting null test results", "INFO")
     
-    # Read Step 6 null test results
-    null_results_file = root_dir / 'logs/step_6_null_tests.json'
-    if not null_results_file.exists():
-        print_status("Step 6 results not found", "WARNING")
-        return None
-    
-    try:
-        with open(null_results_file, 'r') as f:
-            step5_data = json.load(f)
-    except Exception as e:
-        print_status(f"Failed to load Step 6 results: {e}", "WARNING")
-        return None
-    
-    # Extract null test data
     null_data = []
     
     for ac in ['code', 'igs_combined', 'esa_final']:
-        if ac not in step5_data.get('null_tests', {}):
+        null_results_file = root_dir / f'results/outputs/step_6_null_tests_{ac}.json'
+        if not null_results_file.exists():
+            print_status(f"Step 6 results for {ac} not found", "WARNING")
             continue
-            
-        ac_results = step5_data['null_tests'][ac]
+        
+        try:
+            with open(null_results_file, 'r') as f:
+                step6_data = json.load(f)
+        except Exception as e:
+            print_status(f"Failed to load Step 6 results for {ac}: {e}", "WARNING")
+            continue
+        
+        ac_results = step6_data
         
         # Real data baseline
-        real_data = ac_results.get('real_data', {})
+        real_data = ac_results.get('real_signal', {})
         if real_data:
             null_data.append({
                 'analysis_center': ac.upper(),
@@ -237,18 +233,18 @@ def export_null_test_results(root_dir):
             })
         
         # Null tests
-        for test_name in ['distance_scrambling', 'phase_scrambling', 'station_scrambling']:
-            test_results = ac_results.get(test_name, {})
+        for test_name in ['distance', 'phase', 'station']:
+            test_results = ac_results.get('null_tests', {}).get(test_name, {})
             if test_results:
                 null_data.append({
                     'analysis_center': ac.upper(),
                     'test_type': test_name.replace('_', ' ').title(),
-                    'lambda_km': test_results.get('mean_lambda_km'),
-                    'r_squared': test_results.get('mean_r_squared'),
-                    'amplitude': test_results.get('mean_amplitude'),
-                    'offset': test_results.get('mean_offset'),
+                    'lambda_km': test_results.get('lambda_mean'),
+                    'r_squared': test_results.get('r_squared_mean'),
+                    'amplitude': test_results.get('amplitude_mean'),
+                    'offset': test_results.get('offset_mean'),
                     'passes_null': test_results.get('passes_null_test', False),
-                    'significance': test_results.get('significance', '')
+                    'significance': ac_results.get('validation_assessment', {}).get(test_name, {}).get('p_value')
                 })
     
     # Convert to DataFrame and save
@@ -327,7 +323,7 @@ def create_publication_figure(root_dir):
         results_file = root_dir / f'results/outputs/step_3_correlation_{ac}.json'
         
         if not binned_file.exists() or not results_file.exists():
-            ax.text(0.5, 0.5, f'No data\navailable', ha='center', va='center', 
+            ax.text(0.5, 0.5, 'No data\navailable', ha='center', va='center', 
                    transform=ax.transAxes, fontsize=12)
             ax.set_title(f'{ac.upper()}', fontweight='bold')
             continue
@@ -678,7 +674,7 @@ def create_three_globe_views(root_dir):
     print_status(f"Saved three-globe view: {output_file}", "SUCCESS")
     return str(output_file)
 
-def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, max_connections=1000):
+def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, max_connections=1000, diagnostic_mode=False, random_sampling=False, weak_coherence_mode=False):
     """Creates a single figure showing all three analysis centers' connections on three globes."""
     print_status("Creating combined three-globe connections visualization", "INFO")
     set_publication_style()
@@ -727,6 +723,135 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     
     font_props = {'family': 'Times New Roman', 'color': '#1e4a5f', 'fontweight': 'bold'}
     
+    # Load and merge ALL analysis centers together BEFORE globe loop
+    all_merged_pairs = []
+    
+    for analysis_center in analysis_centers:
+        pair_files = list(tmp_dir.glob(f'step_3_pairs_{analysis_center}_*.csv'))
+        if pair_files:
+            # Load more files for better coverage
+            for i, file_path in enumerate(pair_files[:10]):  # Increase to 10 files per AC
+                df = pd.read_csv(file_path)
+                # Calculate coherence and keep phase information for better visualization
+                df['coherence'] = np.abs(np.cos(df['plateau_phase']))  # Use absolute value
+                df['analysis_center'] = analysis_center
+                all_merged_pairs.append(df)
+                if i % 3 == 0:
+                    print(f"  Loaded {analysis_center} file {i+1}, coherence range: {df['coherence'].min():.3f} - {df['coherence'].max():.3f}")
+    
+    # Combine all analysis centers into one dataset
+    df_weak_underlay = pd.DataFrame()  # Initialize empty
+    df_filtered = pd.DataFrame()  # Initialize empty
+    
+    if all_merged_pairs:
+        df_all_merged = pd.concat(all_merged_pairs, ignore_index=True)
+        
+        # FIRST: Create weak correlation underlay from full dataset
+        print("🎨 Preparing weak correlations for background layer...")
+        df_weak_underlay = df_all_merged[(df_all_merged['coherence'] >= 0.1) & (df_all_merged['coherence'] < 0.3)].copy()
+        if len(df_weak_underlay) > max_connections // 2:
+            df_weak_underlay = df_weak_underlay.sample(n=max_connections // 2, random_state=42)
+        print(f"🎨 Selected {len(df_weak_underlay)} weak correlations for background")
+        
+        # SECOND: Filter based on coherence mode for main layer
+        if weak_coherence_mode:
+            print("🔍 Testing weak coherence hypothesis: selecting connections <0.2")
+            df_filtered = df_all_merged[df_all_merged['coherence'] < 0.2].copy()
+            coherence_threshold = 0.2  # Update for display
+        else:
+            df_filtered = df_all_merged[df_all_merged['coherence'] > coherence_threshold].copy()
+        # Selection strategy: prioritized vs random
+        if len(df_filtered) > max_connections:
+            if random_sampling:
+                print(f"🎲 Using random sampling of {max_connections} connections for comparison")
+                df_filtered = df_filtered.sample(n=max_connections, random_state=42)
+            else:
+                print(f"🎯 Using prioritized selection of {max_connections} connections")
+                # Calculate distances for TEP-significant range (3000-4500 km)
+                df_filtered['distance'] = np.sqrt((df_filtered['station1_lat'] - df_filtered['station2_lat'])**2 + 
+                                                (df_filtered['station1_lon'] - df_filtered['station2_lon'])**2) * 111  # rough km conversion
+                
+                # Create priority scoring: higher score = more important to show
+                df_filtered['tep_score'] = 0
+                
+                # Highest priority: TEP-significant distances (3000-4500 km) with high coherence
+                tep_range_mask = (df_filtered['distance'] >= 3000) & (df_filtered['distance'] <= 4500)
+                df_filtered.loc[tep_range_mask, 'tep_score'] += df_filtered.loc[tep_range_mask, 'coherence'] * 3
+                
+                # Medium priority: Other distances with very high coherence (>0.8)
+                high_coherence_mask = (df_filtered['coherence'] > 0.8) & (~tep_range_mask)
+                df_filtered.loc[high_coherence_mask, 'tep_score'] += df_filtered.loc[high_coherence_mask, 'coherence'] * 2
+                
+                # Lower priority: Geographic diversity - boost intercontinental connections
+                lat_diff = abs(df_filtered['station1_lat'] - df_filtered['station2_lat'])
+                lon_diff = abs(df_filtered['station1_lon'] - df_filtered['station2_lon'])
+                intercontinental_mask = (lat_diff > 30) | (lon_diff > 60)  # Rough intercontinental threshold
+                df_filtered.loc[intercontinental_mask, 'tep_score'] += 0.5
+                
+                # Select top connections by TEP score
+                df_filtered = df_filtered.nlargest(max_connections, 'tep_score')
+                df_filtered = df_filtered.drop(['distance', 'tep_score'], axis=1)
+        
+        print(f"Total merged pairs: {len(df_all_merged)}, after filtering (>{coherence_threshold}): {len(df_filtered)}")
+        print(f"Coherence range in filtered data: {df_filtered['coherence'].min():.3f} - {df_filtered['coherence'].max():.3f}")
+        
+        # DIAGNOSTIC ANALYSIS: Investigate directional bias
+        if diagnostic_mode or len(df_filtered) > 0:
+            print("\n" + "="*50)
+            print("🔍 DIRECTIONAL BIAS DIAGNOSTIC")
+            print("="*50)
+            
+            # Calculate connection orientations
+            lat_diff = df_filtered['station2_lat'] - df_filtered['station1_lat']
+            lon_diff = df_filtered['station2_lon'] - df_filtered['station1_lon']
+            
+            # Classify connections by dominant direction
+            abs_lat_diff = abs(lat_diff)
+            abs_lon_diff = abs(lon_diff)
+            
+            # Define directional categories
+            north_south = abs_lat_diff > abs_lon_diff
+            east_west = abs_lon_diff > abs_lat_diff
+            diagonal = abs(abs_lat_diff - abs_lon_diff) < 10  # Within 10 degrees
+            
+            print(f"📊 Connection Orientations:")
+            print(f"   North-South dominant: {north_south.sum()} ({north_south.mean()*100:.1f}%)")
+            print(f"   East-West dominant: {east_west.sum()} ({east_west.mean()*100:.1f}%)")
+            print(f"   Diagonal: {diagonal.sum()} ({diagonal.mean()*100:.1f}%)")
+            
+            # Analyze by coherence strength
+            high_coherence = df_filtered['coherence'] > 0.8
+            print(f"\n📈 High Coherence Connections (>{0.8}):")
+            if high_coherence.sum() > 0:
+                ns_high = (north_south & high_coherence).sum()
+                ew_high = (east_west & high_coherence).sum()
+                diag_high = (diagonal & high_coherence).sum()
+                total_high = high_coherence.sum()
+                print(f"   North-South: {ns_high}/{total_high} ({ns_high/total_high*100:.1f}%)")
+                print(f"   East-West: {ew_high}/{total_high} ({ew_high/total_high*100:.1f}%)")
+                print(f"   Diagonal: {diag_high}/{total_high} ({diag_high/total_high*100:.1f}%)")
+            
+            # Check longitude clustering
+            lon_diff_abs = abs(lon_diff)
+            similar_longitude = lon_diff_abs < 30  # Within 30 degrees longitude
+            print(f"\n🌍 Geographic Patterns:")
+            print(f"   Similar longitude pairs: {similar_longitude.sum()} ({similar_longitude.mean()*100:.1f}%)")
+            print(f"   Mean longitude difference: {lon_diff_abs.mean():.1f}°")
+            print(f"   Mean latitude difference: {abs_lat_diff.mean():.1f}°")
+            
+            # Distance analysis
+            distances = np.sqrt((lat_diff)**2 + (lon_diff * np.cos(np.radians((df_filtered['station1_lat'] + df_filtered['station2_lat'])/2)))**2) * 111
+            tep_range = (distances >= 3000) & (distances <= 4500)
+            print(f"\n📏 TEP Range Analysis (3000-4500 km):")
+            print(f"   Connections in TEP range: {tep_range.sum()} ({tep_range.mean()*100:.1f}%)")
+            if tep_range.sum() > 0:
+                ns_tep = (north_south & tep_range).sum()
+                ew_tep = (east_west & tep_range).sum()
+                print(f"   TEP range North-South: {ns_tep}/{tep_range.sum()} ({ns_tep/tep_range.sum()*100:.1f}%)")
+                print(f"   TEP range East-West: {ew_tep}/{tep_range.sum()} ({ew_tep/tep_range.sum()*100:.1f}%)")
+            
+            print("="*50)
+    
     for globe_idx, (ax, (view_name, center_lon)) in enumerate(zip(axes, views)):
         ax.set_aspect('equal')
         ax.axis('off')
@@ -757,39 +882,29 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
                                     y_proj.append(y)
                         
                         if len(x_proj) > 2 and ring_idx == 0:
-                            ax.fill(x_proj, y_proj, color='#F5F5F5', edgecolor='#CCCCCC', linewidth=0.3, zorder=1)
+                            ax.fill(x_proj, y_proj, color='#D0D0D0', edgecolor=None, zorder=1)
         
-        # Load and merge ALL analysis centers together
-        all_merged_pairs = []
-        
-        for analysis_center in analysis_centers:
-            pair_files = list(tmp_dir.glob(f'step_3_pairs_{analysis_center}_*.csv'))
-            if pair_files:
-                # Load more files for better coverage
-                for i, file_path in enumerate(pair_files[:10]):  # Increase to 10 files per AC
-                    df = pd.read_csv(file_path)
-                    # Calculate coherence and keep phase information for better visualization
-                    df['coherence'] = np.abs(np.cos(df['plateau_phase']))  # Use absolute value
-                    # Debug: print phase and coherence ranges
-                    print(f"    Phase range: {df['plateau_phase'].min():.3f} - {df['plateau_phase'].max():.3f}")
-                    print(f"    Coherence range: {df['coherence'].min():.3f} - {df['coherence'].max():.3f}")
-                    df['analysis_center'] = analysis_center
-                    all_merged_pairs.append(df)
-                    if i % 3 == 0:
-                        print(f"  Loaded {analysis_center} file {i+1}, coherence range: {df['coherence'].min():.3f} - {df['coherence'].max():.3f}")
-        
-        # Combine all analysis centers into one dataset
-        if all_merged_pairs:
-            df_all_merged = pd.concat(all_merged_pairs, ignore_index=True)
-            df_filtered = df_all_merged[df_all_merged['coherence'] > coherence_threshold].copy()
-            # Take a random sample instead of just the highest correlations to show variation
-            if len(df_filtered) > max_connections:
-                df_filtered = df_filtered.sample(n=max_connections, random_state=42)
+        # Draw weak correlations as background for THIS globe
+        if len(df_weak_underlay) > 0:
+            weak_drawn_this_globe = 0
+            for _, row in df_weak_underlay.iterrows():
+                try:
+                    lat1, lon1 = row['station1_lat'], row['station1_lon']
+                    lat2, lon2 = row['station2_lat'], row['station2_lon']
+                    
+                    arc_points = draw_great_circle_arc(lat1, lon1, lat2, lon2, center_lon)
+                    if arc_points:
+                        x_arc, y_arc = zip(*arc_points)
+                        ax.plot(x_arc, y_arc, color='#4A90C2', alpha=0.25, linewidth=0.3, zorder=1.5)
+                        weak_drawn_this_globe += 1
+                except (KeyError, ValueError):
+                    continue
             
-            print(f"Total merged pairs: {len(df_all_merged)}, after filtering (>{coherence_threshold}): {len(df_filtered)}")
-            print(f"Coherence range in filtered data: {df_filtered['coherence'].min():.3f} - {df_filtered['coherence'].max():.3f}")
+            if globe_idx == 0:  # Only print once
+                print(f"🎨 Drew weak correlation background layer across all globes")
+        
             
-            # Draw connection arcs colored by correlation strength
+            # Draw strong correlations on top of weak background
             drawn_connections = 0
             coherence_values = []  # Collect coherence values for proper normalization
             
@@ -818,14 +933,13 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
                             arc_points = draw_great_circle_arc(lat1, lon1, lat2, lon2, center_lon)
                             if arc_points:
                                 coherence = row['coherence']
-                                plateau_phase = row['plateau_phase']
                                 
                                 # Use actual coherence values for real correlation strength
                                 # Higher coherence = stronger correlation = darker colors
                                 
-                                # Create site-consistent colormap with better dynamic range
+                                # Create blue-to-purple colormap with lighter dark end
                                 from matplotlib.colors import LinearSegmentedColormap
-                                site_colors = ['#F8F8FF', '#4A90C2', '#495773', '#2D0140', '#220126']  # Light to dark site theme
+                                site_colors = ['#4A90C2', '#2E5A87', '#495773', '#2D0140', '#4A2C5A']  # Blue to lighter purple
                                 site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
                                 
                                 # Use actual data range for better color utilization
@@ -835,10 +949,13 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
                                     coherence_norm = coherence
                                 color = site_cmap(coherence_norm)
                                 
-                                # Enhanced line visibility with hierarchy based on correlation strength
-                                # Higher coherence = thicker lines, but keep all lines fully opaque
-                                alpha = 0.8  # Fixed alpha for visibility
-                                linewidth = 0.5 + (coherence_norm * 1.0)  # Range: 0.5 to 1.5
+                                # Variable line thickness based on correlation strength
+                                alpha = 0.5  # Slightly more opaque for visibility
+                                # Enhanced thickness for TEP-significant correlations
+                                if coherence > 0.8:  # Very strong correlations get extra thickness
+                                    linewidth = 0.5 + (coherence_norm * 0.8)  # Range: 0.5 to 1.3 for strong correlations
+                                else:
+                                    linewidth = 0.3 + (coherence_norm * 0.4)  # Range: 0.3 to 0.7 for moderate correlations
                                 
                                 x_arc, y_arc = zip(*arc_points)
                                 ax.plot(x_arc, y_arc, color=color, alpha=alpha, linewidth=linewidth, zorder=2)
@@ -850,8 +967,13 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
             if coherence_values:
                 print(f"Globe {globe_idx}: Coherence range {min(coherence_values):.3f} - {max(coherence_values):.3f}, connections: {drawn_connections}")
             
-            # Add connection count with subtle styling
-            ax.text(0.02, -0.15, f'Connections: {drawn_connections}',
+            # Add meaningful connection description
+            if weak_coherence_mode:
+                label_text = f'Weak Correlations: {drawn_connections}'
+            else:
+                label_text = f'Strong Correlations: {drawn_connections}'
+            
+            ax.text(0.02, -0.15, label_text,
                     transform=ax.transAxes, fontsize=9, color='#1e4a5f', fontweight='bold',
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, 
                              edgecolor='#495773', linewidth=0.5))
@@ -866,8 +988,8 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
                 x_stations.append(x)
                 y_stations.append(y)
         
-        ax.scatter(x_stations, y_stations, s=12, c='#2D0140', alpha=0.9, 
-                  edgecolors='white', linewidth=0.8, zorder=4)
+        ax.scatter(x_stations, y_stations, s=10, c='#2D0140', alpha=0.9, 
+                  edgecolors='#4A90C2', linewidth=0.5, zorder=4)
         
         ax.set_xlim(-1.1, 1.1)
         ax.set_ylim(-1.1, 1.1)
@@ -875,46 +997,12 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
         # Globe border
         ax.add_patch(plt.Circle((0, 0), 1, color='#1e4a5f', fill=False, lw=1, zorder=5))
     
-    fig.suptitle(f'GNSS Station Correlations: All Analysis Centers Combined\n(colored by correlation strength)', 
-                 fontsize=16, fontweight='bold', color='#1e4a5f', y=0.95)
-    
-    # Add colorbar legend using the same colormap as anisotropy heatmap
-    from matplotlib.patches import Patch
-    import matplotlib.colors as mcolors
-    from matplotlib.colors import LinearSegmentedColormap
-    
-    # Create site-consistent colormap matching the connections
-    site_colors = ['#F8F8FF', '#4A90C2', '#495773', '#2D0140', '#220126']  # Light to dark site theme
-    site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
-    
-    # Use actual data range for colorbar to match the connections
-    # Calculate the actual range from all loaded data
-    all_coherence_values = []
-    for analysis_center in ['code', 'esa_final', 'igs_combined']:
-        pair_files = list((root_dir / 'results/tmp').glob(f'step_3_pairs_{analysis_center}_*.csv'))
-        if pair_files:
-            for file_path in pair_files[:3]:  # Sample a few files to get range
-                try:
-                    df = pd.read_csv(file_path)
-                    df['coherence'] = np.abs(np.cos(df['plateau_phase']))
-                    all_coherence_values.extend(df['coherence'].tolist())
-                except:
-                    continue
-    
-    if all_coherence_values:
-        actual_min = min(all_coherence_values)
-        actual_max = max(all_coherence_values)
-        norm = mcolors.Normalize(vmin=actual_min, vmax=actual_max)
+    if weak_coherence_mode:
+        title_text = f'Global Timing Network Correlation Patterns\n(sample of weak correlations, coherence <{coherence_threshold})'
     else:
-        norm = mcolors.Normalize(vmin=0.0, vmax=1.0)
-    sm = plt.cm.ScalarMappable(cmap=site_cmap, norm=norm)
-    sm.set_array([])
+        title_text = f'Global Timing Network Correlation Patterns\n(sample of strongest correlations, coherence >{coherence_threshold}, with weak background)'
     
-    # Add colorbar at bottom
-    cbar_ax = fig.add_axes([0.2, 0.02, 0.6, 0.02])  # [left, bottom, width, height]
-    cbar = fig.colorbar(sm, cax=cbar_ax, orientation='horizontal')
-    cbar.set_label('Coherence (Correlation Strength)', fontsize=10, color='#1e4a5f')
-    cbar.ax.tick_params(labelsize=8, colors='#1e4a5f')
+    fig.suptitle(title_text, fontsize=16, fontweight='bold', color='#1e4a5f', y=0.95)
     
     fig.tight_layout(rect=[0, 0.08, 1, 0.92])
     
@@ -1199,7 +1287,7 @@ def create_correlation_vs_distance_all_centers(root_dir):
         results_file = root_dir / f'results/outputs/step_3_correlation_{ac}.json'
         
         if not binned_file.exists() or not results_file.exists():
-            ax.text(0.5, 0.5, f'No data\navailable', ha='center', va='center', 
+            ax.text(0.5, 0.5, 'No data\navailable', ha='center', va='center', 
                    transform=ax.transAxes, fontsize=12)
             ax.set_title(title, fontweight='bold')
             continue
@@ -1443,6 +1531,17 @@ def generate_summary_report(all_results, output_file):
 
 def main():
     """Main function to generate all TEP visualizations"""
+    parser = argparse.ArgumentParser(description='Generate TEP visualization figures.')
+    parser.add_argument('--only-globes', action='store_true', 
+                        help='If specified, only generate the three-globe connection visualization.')
+    parser.add_argument('--diagnostic', action='store_true',
+                        help='Enable diagnostic analysis of directional bias.')
+    parser.add_argument('--random-comparison', action='store_true',
+                        help='Generate comparison with random sampling instead of prioritized selection.')
+    parser.add_argument('--weak-coherence', action='store_true',
+                        help='Show weak coherence connections (<0.5) to test directional hypothesis.')
+    args = parser.parse_args()
+
     print("="*80)
     print("TEP GNSS Analysis Package v0.3")
     print("STEP 8: TEP Visualization")
@@ -1452,6 +1551,18 @@ def main():
     root_dir = Path(__file__).parent.parent.parent
     output_dir = root_dir / 'results/outputs'
     output_dir.mkdir(parents=True, exist_ok=True)
+    
+    if args.only_globes:
+        print("Generating only the three-globe connection visualization...")
+        if args.random_comparison:
+            print("🎲 Using random sampling for comparison...")
+        if args.diagnostic:
+            print("🔍 Diagnostic mode enabled...")
+        if args.weak_coherence:
+            print("🔍 Testing weak coherence directional hypothesis...")
+        create_combined_three_globe_connections(root_dir, diagnostic_mode=args.diagnostic, random_sampling=args.random_comparison, weak_coherence_mode=args.weak_coherence)
+        print_status("Three-globe connection visualization generated successfully!", "SUCCESS")
+        return True
     
     # Check prerequisites
     step3_complete = (root_dir / 'logs/step_3_correlation_analysis.json').exists()
@@ -1499,7 +1610,6 @@ def main():
     print("-"*60)
     all_results['station_map'] = create_station_map(root_dir)
     all_results['three_globe_view'] = create_three_globe_views(root_dir)
-    all_results['globe_connections'] = create_three_globe_views_with_connections(root_dir)
     all_results['combined_globe_connections'] = create_combined_three_globe_connections(root_dir)
 
     # 7. Correlation vs Distance All Centers

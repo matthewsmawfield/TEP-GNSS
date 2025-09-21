@@ -63,8 +63,8 @@ class TEPConfig:
         
         # Advanced options
         'TEP_USE_REAL_COHERENCY': False,
-        'TEP_COHERENCY_F1': 0.001,
-        'TEP_COHERENCY_F2': 0.01,
+        'TEP_COHERENCY_F1': 1e-5,  # 10 μHz
+        'TEP_COHERENCY_F2': 5e-4,  # 500 μHz
         
         # Statistical validation limits
         'TEP_LOSO_MAX_STATIONS': 50,
@@ -73,6 +73,17 @@ class TEPConfig:
         # Optional metadata flags
         'TEP_FETCH_CLOCK_METADATA': False,
         'TEP_REQUIRE_CLOCK_METADATA': False,
+
+        # Scientific constants for TEP analysis
+        'TEP_ROTATION_SIGNATURE_GRADIENT_STRENGTH': 0.05,
+        'TEP_ROTATION_SIGNATURE_LONGITUDE_CORR': 0.3,
+        'TEP_ANISOTROPY_CV_MODERATE_LOWER': 0.2,
+        'TEP_ANISOTROPY_CV_MODERATE_UPPER': 0.5,
+        'TEP_ANISOTROPY_CV_ISOTROPIC_THRESHOLD': 0.1,
+        'TEP_ANISOTROPY_CV_CHAOTIC_THRESHOLD': 0.8,
+        'TEP_DIPOLE_STRENGTH_THRESHOLD': 0.3,
+        'TEP_MIN_EPOCHS': 20,
+        'TEP_INITIAL_LAMBDA_GUESS': 3000
     }
     
     @staticmethod

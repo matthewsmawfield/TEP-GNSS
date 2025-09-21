@@ -108,15 +108,15 @@ from scripts.utils.exceptions import (
 # They are centralized here for clarity, maintainability, and to avoid "magic numbers".
 
 # Earth Motion Analysis Thresholds
-ROTATION_SIGNATURE_GRADIENT_STRENGTH = 0.05  # Minimum standard deviation of correlation gradient to be considered significant
-ROTATION_SIGNATURE_LONGITUDE_CORR = 0.3     # Minimum correlation between longitude and regional correlation strength
+ROTATION_SIGNATURE_GRADIENT_STRENGTH = TEPConfig.get_float('TEP_ROTATION_SIGNATURE_GRADIENT_STRENGTH')
+ROTATION_SIGNATURE_LONGITUDE_CORR = TEPConfig.get_float('TEP_ROTATION_SIGNATURE_LONGITUDE_CORR')
 
 # Anisotropy Analysis Thresholds (Coefficient of Variation of lambda_km)
-ANISOTROPY_CV_MODERATE_LOWER = 0.2          # Lower bound for moderate anisotropy, consistent with Earth's motion through a structured field
-ANISOTROPY_CV_MODERATE_UPPER = 0.5          # Upper bound for moderate anisotropy
-ANISOTROPY_CV_ISOTROPIC_THRESHOLD = 0.1     # Below this value, the field is suspiciously uniform (potential artifact)
-ANISOTROPY_CV_CHAOTIC_THRESHOLD = 0.8       # Above this value, variation is too high (potential artifact)
-DIPOLE_STRENGTH_THRESHOLD = 0.3             # Minimum dipole strength to be considered a strong indicator of Earth motion
+ANISOTROPY_CV_MODERATE_LOWER = TEPConfig.get_float('TEP_ANISOTROPY_CV_MODERATE_LOWER')
+ANISOTROPY_CV_MODERATE_UPPER = TEPConfig.get_float('TEP_ANISOTROPY_CV_MODERATE_UPPER')
+ANISOTROPY_CV_ISOTROPIC_THRESHOLD = TEPConfig.get_float('TEP_ANISOTROPY_CV_ISOTROPIC_THRESHOLD')
+ANISOTROPY_CV_CHAOTIC_THRESHOLD = TEPConfig.get_float('TEP_ANISOTROPY_CV_CHAOTIC_THRESHOLD')
+DIPOLE_STRENGTH_THRESHOLD = TEPConfig.get_float('TEP_DIPOLE_STRENGTH_THRESHOLD')
 
 def print_status(text: str, status: str = "INFO"):
     """Print verbose status message with timestamp"""
@@ -826,29 +826,6 @@ def compute_band_averaged_coherency(x, y, fs, f1=1e-5, f2=5e-4, nperseg=None):
 def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Dict]:
     """Process a single CLK file and extract plateau measurements for all station pairs"""
     
-    # Check if file is within date range (if configured)
-    from datetime import datetime, timedelta
-    
-    # NOTE: Date filtering is now handled in the main process_analysis_center function
-    # before files are dispatched to workers. This block is retained as a safeguard
-    # but should not filter any files in a standard run.
-    match = re.search(r'(\d{4})(\d{3})', file_path.name)
-    if match:
-        year = int(match.group(1))
-        day_of_year = int(match.group(2))
-        file_date = datetime(year, 1, 1) + timedelta(days=day_of_year - 1)
-        
-        # Get date range from config
-        start_date_str = TEPConfig.get_str('TEP_DATE_START')
-        end_date_str = TEPConfig.get_str('TEP_DATE_END')
-        if start_date_str and end_date_str:
-            start_date = datetime.fromisoformat(start_date_str)
-            end_date = datetime.fromisoformat(end_date_str)
-            
-            # Skip file if outside date range
-            if file_date < start_date or file_date > end_date:
-                return []
-    
     # Parse clock file
     records = []
     
@@ -926,7 +903,7 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
         # Missing values will be handled by dropna() and common_times intersection
         
         # Get stations with sufficient data (min 20 epochs)
-        min_epochs = 20
+        min_epochs = TEPConfig.get_int('TEP_MIN_EPOCHS')
         stations = []
         for station in pivot_df.columns:
             if pivot_df[station].count() >= min_epochs:
@@ -946,6 +923,10 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
             series1 = pivot_df[station1].dropna()
             series2 = pivot_df[station2].dropna()
             
+            # Ensure both series have data after dropping NaNs
+            if series1.empty or series2.empty:
+                continue
+
             # Find common time indices
             common_times = series1.index.intersection(series2.index)
             if len(common_times) < min_epochs:
@@ -965,9 +946,9 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
                 continue
             
             # Compute cross-power plateau and phase
-            use_real_coherency = os.getenv('TEP_USE_REAL_COHERENCY', '0') == '1'
-            f1 = float(os.getenv('TEP_COHERENCY_F1', '1e-5'))  # Default to v0.3 published method
-            f2 = float(os.getenv('TEP_COHERENCY_F2', '5e-4'))  # Default to v0.3 published method
+            use_real_coherency = TEPConfig.get_bool('TEP_USE_REAL_COHERENCY')
+            f1 = TEPConfig.get_float('TEP_COHERENCY_F1')
+            f2 = TEPConfig.get_float('TEP_COHERENCY_F2')
             
             plateau_value, plateau_phase = compute_cross_power_plateau(
                 series1_common, series2_common, fs=fs_hz,
@@ -1058,7 +1039,7 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
     use_real_coherency : bool
         If True, use band-averaged real coherency instead of plateau phase
     f1, f2 : float
-        Frequency band limits for coherency averaging (Hz)
+        Frequency band limits for coherency averaging (Hz) (default: 1e-5 to 5e-4 Hz)
     """
     n_points = len(series1)
     if n_points < 20:
@@ -1121,15 +1102,14 @@ def ecef_to_geodetic(x: float, y: float, z: float) -> Tuple[float, float, float]
     """
     Convert ECEF coordinates to geodetic (lat, lon, height) on WGS-84.
     
-    Parameters:
-    -----------
-    x, y, z : float
-        ECEF coordinates in meters
+    Args:
+        x (float): ECEF x-coordinate in meters.
+        y (float): ECEF y-coordinate in meters.
+        z (float): ECEF z-coordinate in meters.
         
     Returns:
-    --------
-    lat, lon, height : float
-        Latitude and longitude in degrees, height in meters
+        Tuple[float, float, float]: A tuple containing latitude (degrees), 
+                                     longitude (degrees), and height (meters).
     """
     # WGS-84 ellipsoid constants
     a = 6378137.0  # Semi-major axis in meters
@@ -1207,16 +1187,16 @@ def solar_zenith_angle(lat: float, lon: float, timestamp: pd.Timestamp) -> float
 
 def great_circle_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """
-    Calculate great-circle distance between two points on WGS-84 ellipsoid.
-    
-    Parameters:
-    -----------
-    lat1, lon1, lat2, lon2 : float
-        Latitude and longitude in degrees
-        
+    Calculate great-circle distance between two points on the WGS-84 ellipsoid.
+
+    Args:
+        lat1 (float): Latitude of point 1 in degrees.
+        lon1 (float): Longitude of point 1 in degrees.
+        lat2 (float): Latitude of point 2 in degrees.
+        lon2 (float): Longitude of point 2 in degrees.
+
     Returns:
-    --------
-    float : Distance in kilometers
+        float: Distance in kilometers.
     """
     R = 6371.0088  # Mean Earth radius in km (WGS-84 standard value)
     
@@ -1237,7 +1217,22 @@ def great_circle_distance(lat1: float, lon1: float, lat2: float, lon2: float) ->
     return R * c
 
 def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.DataFrame) -> Optional[float]:
-    """Calculate geodesic distance between stations in km using WGS-84 great-circle distance"""
+    """
+    Calculate the geodesic distance between two stations in kilometers.
+
+    This function extracts the 4-character station codes, retrieves their coordinates
+    from the provided DataFrame, and calculates the great-circle distance between them.
+    It can handle coordinates in either geodetic (lat/lon) or ECEF (X/Y/Z) formats.
+
+    Args:
+        station1 (str): The code for the first station.
+        station2 (str): The code for the second station.
+        coords_df (pd.DataFrame): DataFrame containing station coordinates.
+
+    Returns:
+        Optional[float]: The calculated distance in kilometers, or None if coordinates
+                         for either station cannot be found.
+    """
     
     # Extract 4-character station codes
     code1 = station1[:4] if len(station1) > 4 else station1
@@ -1298,8 +1293,22 @@ def calculate_baseline_distance(station1: str, station2: str, coords_df: pd.Data
         return None
 
 def process_file_worker(clk_file: Path):
-    """Worker function to process a single CLK file and return aggregated bin data.
-    Uses worker-global context set by the initializer to avoid re-pickling large objects."""
+    """
+    Worker function to process a single CLK file.
+
+    This function reads a single .CLK file, processes the clock data for all station
+    pairs, calculates their phase coherence, and aggregates the results into distance
+    bins. It also handles the writing of pair-level data to CSV files for use in
+    downstream analysis steps. It uses a worker-global context to avoid re-pickling
+    large objects.
+
+    Args:
+        clk_file (Path): The path to the .CLK file to process.
+
+    Returns:
+        dict: A dictionary containing the aggregated bin data, or an error dictionary
+              if processing fails.
+    """
     try:
         global WORKER_COORDS_DF, WORKER_EDGES, WORKER_NUM_BINS, WORKER_AC
         coords_df = WORKER_COORDS_DF
@@ -1457,6 +1466,12 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                     clk_files.append(f)
     else:
         clk_files = all_clk_files # No date range specified
+
+    file_limits = TEPConfig.get_file_limits()
+    limit = file_limits.get(ac)
+    if limit is not None:
+        clk_files = clk_files[:limit]
+        print_status(f"Limiting {ac} to {limit} files", "INFO")
 
     if not clk_files:
         print_status(f"No {ac.upper()} .CLK.gz files found in the specified date range", "WARNING")
@@ -1638,23 +1653,24 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         c_range = coherences.max() - coherences.min()
         
         # Define models to compare
+        initial_lambda_guess = TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS')
         models_to_fit = [
             {
                 'func': correlation_model,
                 'name': 'Exponential',
-                'p0': [c_range, 3000, coherences.min()],
+                'p0': [c_range, initial_lambda_guess, coherences.min()],
                 'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 'func': gaussian_model,
                 'name': 'Gaussian',
-                'p0': [c_range, 3000, coherences.min()],
+                'p0': [c_range, initial_lambda_guess, coherences.min()],
                 'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 'func': squared_exponential_model,
                 'name': 'Squared Exponential',
-                'p0': [c_range, 3000, coherences.min()],
+                'p0': [c_range, initial_lambda_guess, coherences.min()],
                 'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
@@ -1672,14 +1688,14 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             {
                 'func': matern_model, # This is Matérn with ν=1.5
                 'name': 'Matérn (ν=1.5)',
-                'p0': [c_range, 3000, coherences.min()],
+                'p0': [c_range, initial_lambda_guess, coherences.min()],
                 'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             },
             {
                 # Matérn with ν=2.5 by wrapping the general function
                 'func': lambda r, amp, l, off: matern_general_model(r, amp, l, off, nu=2.5),
                 'name': 'Matérn (ν=2.5)',
-                'p0': [c_range, 3000, coherences.min()],
+                'p0': [c_range, initial_lambda_guess, coherences.min()],
                 'bounds': ([1e-10, 100, -1], [5, 20000, 1])
             }
         ]
@@ -1875,7 +1891,7 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         elif best_result['name'] == 'Matérn (ν=1.5)':
             coherences_pred = matern_model(distances, *best_result['params'])
         elif best_result['name'] == 'Matérn (ν=2.5)':
-            coherences_pred = matern_general_model(distances, best_result['params'][0], best_result['params'][1], best_result['params'][2], nu=2.5)
+            coherences_pred = matern_general_model(distances, *best_result['params'], nu=2.5)
         else:
             coherences_pred = correlation_model(distances, *best_result['params'])  # Fallback to exponential
         
@@ -2012,10 +2028,7 @@ def main():
         print(f"PROCESSING {ac.upper()} - Phase-Coherent Analysis")
         print(f"{'='*60}")
         
-        # Limit files for testing using centralized config
-        max_files = TEPConfig.get_optional_int('TEP_MAX_FILES_PER_CENTER')
-        
-        result = process_analysis_center(ac, coords_df, max_files=max_files)
+        result = process_analysis_center(ac, coords_df)
         if result:
             results[ac] = result
         else:
