@@ -2,7 +2,7 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.4 (Jaipur)  
-**Date:** September 17, 2025  
+**Date:** September 21, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Overview
@@ -13,7 +13,7 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 Through analysis of 62.7 million station pair measurements from 529 global ground stations, we observe:
 
-- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (12.3% variation)
+- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (13.0% variation)
 - **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
 - **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
 - **Validation**: Comprehensive null tests confirm signal authenticity
