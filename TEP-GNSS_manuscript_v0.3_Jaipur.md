@@ -154,21 +154,23 @@ We observe distance-structured correlations in GNSS atomic clock data that exhib
 - All centers show consistent correlation patterns despite different processing strategies
 - Total data volume: 62.7 million station pair measurements from 2,734 files
 
+#### Experimental Setup
+
+**Figure 1. Global GNSS Station Network.** Three-panel analysis showing the experimental setup. **(a) Three-globe perspective:** Worldwide distribution of 529 ground stations. **(b) Station Coverage Map:** Station density and geographic coverage. **(c) Station Correlation Network:** High-coherence connections (>0.8) colored by correlation strength.
+
+*Figure 1a placeholder: (see results/figures/gnss_stations_three_globes.png)*
+*Figure 1b placeholder: (see results/figures/gnss_stations_map.png)*
+*Figure 1c placeholder: (see results/figures/gnss_three_globes_connections_combined.png)*
+
+**Figure 2. Station Pair Distance Distribution.** Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.
+
+*Figure 2 placeholder: (see results/figures/distance_distribution.png)*
+
 #### Distance-Dependent Correlation Structure (from IGS Combined analysis)
 
-**Figure 1. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.** Three-panel analysis demonstrating coherent, reproducible, and statistically strong TEP correlations across independent analysis centers. **(a) Multi-center reproducibility:** Exponential decay fits C(r) = A exp(−r/λ) + C₀ using consistent cos(Δφ) coherence metric. Data points show binned means with standard errors from real manuscript data. Shaded regions indicate 95% confidence intervals from error propagation. λ values vary by center (CODE: 4,549 ± 72 km; IGS Combined: 3,768 ± 46 km; ESA Final: 3,330 ± 50 km) but all remain within theoretically predicted range (1–10 Mm) for screened scalar fields. Excellent statistical fits (R² = 0.920–0.970). **(b) Statistical significance:** Station-day blocked permutation tests (N=300 total iterations) show real signal R² values as extreme outliers compared to null distributions (combined p < 0.01). Blocking methodology preserves within-station temporal correlation structure while testing spatial correlation significance. **(c) Signal vs. null comparison:** Direct comparison using real GNSS data demonstrates that distance-dependent coherence structure disappears under distance scrambling, confirming correlations are tied to spatial geometry rather than computational artifacts. Exponential fit overlay shows characteristic λ ≈ 3.9 Mm decay length.
+**Figure 3. Evidence for temporal equivalence principle signatures in GNSS atomic clock networks.** Three-panel analysis demonstrating coherent, reproducible, and statistically strong TEP correlations across independent analysis centers. **(a) Multi-center reproducibility:** Exponential decay fits C(r) = A exp(−r/λ) + C₀ using consistent cos(Δφ) coherence metric. Data points show binned means with standard errors from real manuscript data. Shaded regions indicate 95% confidence intervals from error propagation. λ values vary by center (CODE: 4,549 ± 72 km; ESA Final: 3,330 ± 50 km; IGS Combined: 3,768 ± 46 km) but all remain within theoretically predicted range (1–10 Mm) for screened scalar fields. Excellent statistical fits (R² = 0.920–0.970). **(b) Statistical significance:** Station-day blocked permutation tests (N=300 total iterations) show real signal R² values as extreme outliers compared to null distributions (combined p < 0.01). Blocking methodology preserves within-station temporal correlation structure while testing spatial correlation significance. **(c) Signal vs. null comparison:** Direct comparison using real GNSS data demonstrates that distance-dependent coherence structure disappears under distance scrambling, confirming correlations are tied to spatial geometry rather than computational artifacts. Exponential fit overlay shows characteristic λ ≈ 3.9 Mm decay length.
 
-*Figure 1 placeholder: (see results/figures/figure_1_TEP_site_themed.png)*
-
-**Figure 2. Global GNSS Station Network.** Three-panel analysis showing the experimental setup. **(a) Three-globe perspective:** Worldwide distribution of 529 ground stations. **(b) Station Coverage Map:** Station density and geographic coverage. **(c) Station Correlation Network:** High-coherence connections (>0.8) colored by correlation strength.
-
-*Figure 2a placeholder: (see results/figures/gnss_stations_three_globes.png)*
-*Figure 2b placeholder: (see results/figures/gnss_stations_map.png)*
-*Figure 2c placeholder: (see results/figures/gnss_three_globes_connections_combined.png)*
-
-**Figure 3. Station Pair Distance Distribution.** Optimal sampling across 0-15,000 km range with peak density at intercontinental scales (8,000-12,000 km), providing robust statistical power for TEP detection.
-
-*Figure 3 placeholder: (see results/figures/distance_distribution.png)*
+*Figure 3 placeholder: (see results/figures/figure_1_TEP_site_themed.png)*
 
 | Distance (km) | Mean Coherence | Station Pairs |
 |---------------|---------------:|--------------:|
@@ -253,33 +255,31 @@ To rigorously test whether this observed anisotropy could be a statistical artif
 
 #### Longitude-Distance Anisotropy Heatmaps
 
-*Figure 2a: Anisotropy heatmap for CODE analysis center (see results/figures/anisotropy_heatmap_code.png)*
+*Figure 5a: Anisotropy heatmap for CODE analysis center (see results/figures/anisotropy_heatmap_code.png)*
 
-*Figure 2b: Anisotropy heatmap for ESA_FINAL analysis center (see results/figures/anisotropy_heatmap_esa_final.png)*
+*Figure 5b: Anisotropy heatmap for ESA_FINAL analysis center (see results/figures/anisotropy_heatmap_esa_final.png)*
 
-*Figure 2c: Anisotropy heatmap for IGS_COMBINED analysis center (see results/figures/anisotropy_heatmap_igs_combined.png)*
+*Figure 5c: Anisotropy heatmap for IGS_COMBINED analysis center (see results/figures/anisotropy_heatmap_igs_combined.png)*
 
-**Figure 4. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The consistent reproduction of these anisotropy patterns across three independent analysis centers provides strong evidence for the robustness of the observed TEP signatures.
+**Figure 5. Longitude-Distance Anisotropy Analysis Across Three Independent Analysis Centers.** Two-dimensional heatmaps showing mean coherence as a function of station pair distance (x-axis, 0-8000 km) and longitude difference (y-axis, 0-180°) for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The consistent reproduction of these anisotropy patterns across three independent analysis centers provides strong evidence for the robustness of the observed TEP signatures.
 
-**Figure 5. Temporal Orbital Tracking Analysis.** [Placeholder] This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.
+**Figure 6. Temporal Orbital Tracking Analysis.** [Placeholder] This figure will display the correlation between the East-West/North-South anisotropy ratio and Earth's orbital speed. It is expected to show a significant negative correlation, providing strong evidence for velocity-dependent spacetime coupling as predicted by TEP theory.
 
-*Figure 5 placeholder: (A plot showing a negative correlation trend between the E-W/N-S anisotropy ratio and Earth's orbital speed over a 2.5-year period, with data points for each of the three analysis centers.)*
+*Figure 6 placeholder: (A plot showing a negative correlation trend between the E-W/N-S anisotropy ratio and Earth's orbital speed over a 2.5-year period, with data points for each of the three analysis centers.)*
 
 #### Model Validation Through Residual Analysis
 
-*Figure 3a: Exponential model residuals for CODE analysis center (see results/figures/residuals_code.png)*
+*Figure 4a: Exponential model residuals for CODE analysis center (see results/figures/residuals_code.png)*
 
-*Figure 3b: Exponential model residuals for ESA_FINAL analysis center (see results/figures/residuals_esa_final.png)*
+*Figure 4b: Exponential model residuals for ESA_FINAL analysis center (see results/figures/residuals_esa_final.png)*
 
-*Figure 3c: Exponential model residuals for IGS_COMBINED analysis center (see results/figures/residuals_igs_combined.png)*
+*Figure 4c: Exponential model residuals for IGS_COMBINED analysis center (see results/figures/residuals_igs_combined.png)*
 
-**Figure 6. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations.
+**Figure 4. Model Residual Analysis Across Three Analysis Centers.** Residual plots showing the difference between observed coherence values and exponential model predictions C(r) = A·exp(-r/λ) + C₀ as a function of distance for (a) CODE, (b) ESA_FINAL, and (c) IGS_COMBINED analysis centers. The residuals demonstrate excellent model fit quality with no systematic deviations.
 
 #### Distance Distribution Analysis
 
-*Figure 4: Distribution of station pair distances (see results/figures/distance_distribution.png)*
-
-**Figure 4. Distribution of Pairwise Distances Between GNSS Stations.** Histogram showing the distribution of great circle distances between all station pairs used in the TEP analysis. The distribution reveals optimal sampling across the critical distance range (0-15,000 km) with sufficient station pairs at all scales to enable robust exponential model fitting. Peak density occurs around 8,000-12,000 km (intercontinental pairs), providing strong statistical power for detecting long-range correlations predicted by TEP theory.
+*Figure 2: Distribution of station pair distances (see results/figures/distance_distribution.png)*
 
 ### 3.4 Comprehensive Circular Statistics Validation (Step 6 Complete Results)
 
