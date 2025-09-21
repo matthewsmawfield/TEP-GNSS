@@ -823,9 +823,9 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
                                 # Use actual coherence values for real correlation strength
                                 # Higher coherence = stronger correlation = darker colors
                                 
-                                # Create custom colormap with yellow for low correlations
+                                # Create custom colormap with dark colors for high correlations
                                 from matplotlib.colors import LinearSegmentedColormap
-                                site_colors = ['#FFFF00', '#4A90C2', '#495773', '#2D0140', '#220126']  # Yellow to dark purple
+                                site_colors = ['#220126', '#2D0140', '#495773', '#4A90C2', '#FFFF00']  # Dark purple to yellow (reversed)
                                 site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
                                 
                                 # Use fixed normalization range 0-1 to show true spectrum
@@ -880,8 +880,8 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.0, m
     import matplotlib.colors as mcolors
     from matplotlib.colors import LinearSegmentedColormap
     
-    # Create custom colormap with yellow for low correlations (better visibility)
-    site_colors = ['#FFFF00', '#4A90C2', '#495773', '#2D0140', '#220126']  # Yellow to dark purple
+    # Create custom colormap with dark colors for high correlations (reversed)
+    site_colors = ['#220126', '#2D0140', '#495773', '#4A90C2', '#FFFF00']  # Dark purple to yellow (reversed)
     site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
     
     # Create colorbar showing fixed 0-1 coherence range to show true spectrum
