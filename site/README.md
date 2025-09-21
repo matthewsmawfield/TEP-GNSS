@@ -1,6 +1,6 @@
 # Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17148714.svg)](https://doi.org/10.5281/zenodo.17148714)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17127229.svg)](https://doi.org/10.5281/zenodo.17127229)
 
 ![TEP-GNSS Analysis Overview](./og-image.jpg)
 
@@ -8,7 +8,7 @@
 **Version:** v0.3 (Jaipur)  
 **Date:** 17 Sep 2025  
 **Status:** Preprint (Analysis Package)  
-**DOI:** [10.5281/zenodo.17148714](https://doi.org/10.5281/zenodo.17148714)  
+**DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
 
 ## Abstract
@@ -33,7 +33,7 @@ This repository contains the complete analysis pipeline for testing the Temporal
 
 ## How to cite
 
-**Main DOI (always latest version):** **10.5281/zenodo.17148714**
+**Main DOI (always latest version):** **10.5281/zenodo.17127229**
 
 BibTeX:
 
@@ -44,8 +44,8 @@ BibTeX:
                   Clocks Across Independent Networks (Jaipur v0.3)},
   year         = {2025},
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.17148714},
-  url          = {https://doi.org/10.5281/zenodo.17148714},
+  doi          = {10.5281/zenodo.17127229},
+  url          = {https://doi.org/10.5281/zenodo.17127229},
   note         = {Preprint}
 }
 ```
@@ -54,4 +54,4 @@ BibTeX:
 
 **Contact:** matthewsmawfield@gmail.com  
 **Website:** https://matthewsmawfield.github.io/TEP-GNSS/  
-**Zenodo:** https://doi.org/10.5281/zenodo.17148714
+**Zenodo:** https://doi.org/10.5281/zenodo.17127229

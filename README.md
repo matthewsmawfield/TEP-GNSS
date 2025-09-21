@@ -3,7 +3,7 @@
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.3 (Jaipur)  
 **Date:** September 17, 2025  
-**DOI:** [10.5281/zenodo.17148714](https://doi.org/10.5281/zenodo.17148714)
+**DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Overview
 
@@ -147,8 +147,8 @@ If you use this analysis package, please cite both the analysis and underlying t
            Clocks Across Independent Networks},
   year = {2025},
   publisher = {Zenodo},
-  doi = {10.5281/zenodo.17148714},
-  url = {https://doi.org/10.5281/zenodo.17148714}
+  doi = {10.5281/zenodo.17127229},
+  url = {https://doi.org/10.5281/zenodo.17127229}
 }
 ```
 
