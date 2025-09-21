@@ -1467,11 +1467,10 @@
         <div class="update-notice" style="background-color: rgba(74, 144, 194, 0.1); padding: 15px; border-radius: 5px; margin: 15px 0; font-size: 14px;">
             <p><strong>Version 0.4 (Jaipur)</strong> incorporates methodological corrections and improved pipeline design:</p>
             <ol>
-                <li><strong>Fixed mathematical error in complex phase averaging:</strong> Replaced incorrect complex sum with magnitude-weighted phase average to eliminate destructive interference artifacts</li>
-                <li><strong>Implemented proper 10-500 μHz frequency band analysis:</strong> Now correctly analyzes the documented frequency range using magnitude-weighted averaging across the band</li>
-                <li><strong>Updated results:</strong> λ = 3,330–4,549 km with R² = 0.920–0.970 using the corrected methodology</li>
-                <li><strong>New geomagnetic analysis:</strong> Elevation–geomagnetic stratified control (IGRF‑14) confirms the elevation trend and reveals strong modulation of λ by geomagnetic latitude; results added in Section 3.5</li>
-                <li><strong>Repository cleanup:</strong> Removed legacy outputs and v0.3 manuscript; added step 5.5 cross‑validation and step 7 geomagnetic results</li>
+                <li><strong>Geomagnetic stratified analysis (new in v0.4):</strong> Added elevation–geomagnetic control using IGRF‑14 confirming the elevation trend and revealing strong modulation of λ by geomagnetic latitude (Section 3.5; table and updated figure planned)</li>
+                <li><strong>Temporal orbital tracking (new in v0.4):</strong> Added correlation of E–W/N–S anisotropy with Earth’s orbital speed (r = −0.512 to −0.638, p < 0.002 across centers), with seasonal periodicity analysis (Section 3.6)</li>
+                <li><strong>Repository cleanup:</strong> Pruned legacy outputs, relocated preliminary figures to <code>results/figures/</code>, renamed block‑wise CV outputs to <code>step_5_5_*</code>, added <code>step_7_advanced_analysis.json</code>, and removed the v0.3 manuscript in favor of v0.4</li>
+                <li><strong>Documentation/metadata updates:</strong> Updated DOI references and links, refreshed station coordinate dataset, and refined site text/figures for clarity</li>
             </ol>
         </div>
     </div>
