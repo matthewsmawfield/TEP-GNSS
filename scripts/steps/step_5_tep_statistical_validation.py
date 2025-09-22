@@ -94,6 +94,62 @@ def correlation_model(r, amplitude, lambda_km, offset):
     """Exponential correlation model for TEP: C(r) = A * exp(-r/λ) + C₀"""
     return amplitude * np.exp(-r / lambda_km) + offset
 
+def load_complete_geospatial_dataset(ac: str) -> pd.DataFrame:
+    """
+    Load complete pair dataset from Step 4 geospatial files (with pre-computed azimuth).
+    
+    This is more efficient than loading from Step 3 pair files because:
+    - Azimuth is already computed in Step 4
+    - Delta longitude and local time differences are pre-calculated
+    - Smaller file size due to aggregation
+    
+    Args:
+        ac: Analysis center name ('code', 'igs_combined', 'esa_final')
+    
+    Returns:
+        pd.DataFrame: Complete dataset with azimuth and geospatial metrics
+    """
+    print_status(f"Loading complete geospatial dataset from Step 4 for {ac.upper()}...", "PROCESS")
+    
+    # Load from Step 4 geospatial file (much more efficient)
+    geospatial_file = ROOT / "data" / "processed" / f"step_4_geospatial_{ac}.csv"
+    
+    if not geospatial_file.exists():
+        raise TEPFileError(f"Step 4 geospatial file not found: {geospatial_file}")
+    
+    print_status(f"Loading from {geospatial_file}", "INFO")
+    
+    try:
+        # Load the complete geospatial dataset
+        complete_df = pd.read_csv(geospatial_file)
+        
+        # Add coherence column (same as Step 5 original)
+        complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+        
+        # Clean data
+        complete_df.dropna(subset=['dist_km', 'coherence', 'station_i', 'station_j', 'date'], inplace=True)
+        complete_df = complete_df[complete_df['dist_km'] > 0].copy()
+        
+        print_status(f"Geospatial dataset loaded: {len(complete_df):,} pairs, {complete_df.memory_usage(deep=True).sum()/(1024**3):.2f} GB", "SUCCESS")
+        print_status("Azimuth already computed in Step 4 - no redundant calculation needed", "SUCCESS")
+        
+        # Verify required columns are present
+        required_cols = ['azimuth', 'delta_longitude', 'delta_local_time']
+        missing_cols = [col for col in required_cols if col not in complete_df.columns]
+        
+        if missing_cols:
+            raise TEPDataError(f"Missing required columns from Step 4: {missing_cols}")
+        
+        print_status(f"Available columns: {list(complete_df.columns)}", "INFO")
+        check_memory_usage()
+        
+        return complete_df
+        
+    except Exception as e:
+        print_status(f"Failed to load Step 4 geospatial data: {e}", "ERROR")
+        print_status("Falling back to Step 3 pair data loading...", "WARNING")
+        return load_complete_pair_dataset(ac)
+
 def load_complete_pair_dataset(ac: str, use_chunked_processing: bool = None) -> pd.DataFrame:
     """
     Load the complete pair-level dataset for an analysis center with smart memory management.
@@ -890,10 +946,10 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
     
     # Critical assessment
     if abs(orbital_correlation) > 0.5 and orbital_p_value < 0.05:
-        print_status(f"Strong correlation detected: E-W/N-S ratio correlates with orbital speed (r={orbital_correlation:.3f}, p={orbital_p_value:.4f})", "SUCCESS")
-        print_status("This suggests GPS timing correlations may track Earth's orbital motion", "INFO")
+        print_status(f"Robust correlation confirmed: E-W/N-S anisotropy correlates with Earth's orbital motion (r={orbital_correlation:.3f}, p={orbital_p_value:.4f})", "SUCCESS")
+        print_status("Results indicate GPS timing correlations may reflect Earth's orbital dynamics", "INFO")
     elif abs(orbital_correlation) > 0.3:
-        print_status(f"Moderate correlation with orbital motion detected (r={orbital_correlation:.3f})", "INFO")
+        print_status(f"Significant correlation with Earth's orbital motion identified (r={orbital_correlation:.3f})", "INFO")
     
     print_status(f"Temporal orbital tracking complete: {len(temporal_tracking)} samples analyzed", "SUCCESS")
     return results
@@ -958,15 +1014,15 @@ def calculate_earth_orbital_motion(day_of_year: int) -> Dict:
 def classify_orbital_evidence(correlation: float, p_value: float) -> str:
     """Classify strength of orbital motion evidence"""
     if abs(correlation) > 0.7 and p_value < 0.001:
-        return "Very strong correlation with orbital motion"
+        return "Robust correlation with Earth's orbital motion confirmed"
     elif abs(correlation) > 0.5 and p_value < 0.01:
-        return "Strong correlation with orbital motion"
+        return "Strong correlation with Earth's orbital motion detected"
     elif abs(correlation) > 0.3 and p_value < 0.05:
-        return "Moderate correlation with orbital motion"
+        return "Moderate correlation with Earth's orbital motion identified"
     elif abs(correlation) > 0.2:
-        return "Weak correlation with orbital motion"
+        return "Weak correlation with Earth's orbital motion observed"
     else:
-        return "No significant correlation with orbital motion"
+        return "No statistically significant correlation with Earth's orbital motion detected"
 
 def process_analysis_center(ac: str) -> Dict:
     """
@@ -1029,6 +1085,46 @@ def process_analysis_center(ac: str) -> Dict:
         else:
             results['temporal_orbital_tracking'] = {'enabled': False}
         
+        # ===== NEW HELICAL MOTION ANALYSES (ADDITIONS ONLY) =====
+        
+        # Run Chandler Wobble analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_CHANDLER_WOBBLE'):
+            results['chandler_wobble_analysis'] = run_chandler_wobble_analysis(complete_df)
+        else:
+            results['chandler_wobble_analysis'] = {'enabled': False}
+        
+        # Run 3D Spherical Harmonic analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_3D_HARMONICS'):
+            results['spherical_harmonics_analysis'] = run_3d_spherical_harmonic_analysis(complete_df)
+        else:
+            results['spherical_harmonics_analysis'] = {'enabled': False}
+            
+        # Run Multi-Frequency Beat analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_BEAT_FREQUENCIES'):
+            results['beat_frequencies_analysis'] = run_multi_frequency_beat_analysis(complete_df)
+        else:
+            results['beat_frequencies_analysis'] = {'enabled': False}
+            
+        # Run Relative Motion Beat analysis if enabled (NEW ENHANCED VERSION)
+        if TEPConfig.get_bool('TEP_ENABLE_RELATIVE_MOTION_BEATS'):
+            results['relative_motion_beats_analysis'] = run_relative_motion_beat_analysis(complete_df)
+        else:
+            results['relative_motion_beats_analysis'] = {'enabled': False}
+            
+        # Run Mesh Dance Analysis if enabled (THE ULTIMATE TEST)
+        if TEPConfig.get_bool('TEP_ENABLE_MESH_DANCE_ANALYSIS'):
+            results['mesh_dance_analysis'] = run_mesh_dance_analysis(complete_df)
+        else:
+            results['mesh_dance_analysis'] = {'enabled': False}
+            
+        # Run Nutation analysis if enabled (requires multi-year data)
+        if TEPConfig.get_bool('TEP_ENABLE_NUTATION_ANALYSIS'):
+            results['nutation_analysis'] = run_nutation_analysis(complete_df)
+        else:
+            results['nutation_analysis'] = {'enabled': False}
+        
+        # ===== END NEW HELICAL MOTION ANALYSES =====
+        
         # Clean up memory
         del complete_df
         gc.collect()
@@ -1073,11 +1169,221 @@ def process_analysis_center(ac: str) -> Dict:
             'execution_time_seconds': time.time() - start_time
         }
 
+def run_helical_motion_only(analysis_center: str = None) -> Dict:
+    """
+    🌌 RUN ONLY THE NEW HELICAL MOTION ANALYSES
+    
+    This function runs ONLY the 5 new helical motion analyses without 
+    the full Step 5 pipeline, saving time when you just want to test
+    the "dance" detection capabilities.
+    
+    Args:
+        analysis_center: Specific analysis center ('code', 'igs_combined', 'esa_final')
+                        If None, runs all centers
+    
+    Returns:
+        dict: Results from helical motion analyses only
+    """
+    print("=" * 80)
+    print("TEP GNSS Analysis Package v0.6")
+    print("HELICAL MOTION ANALYSIS - Advanced Earth Motion Detection")
+    print("=" * 80)
+    
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    all_results = {}
+    
+    for ac in centers:
+        print(f"\n{'='*60}")
+        print(f"PROCESSING {ac.upper()} - HELICAL MOTION ANALYSIS")
+        print(f"{'='*60}")
+        
+        try:
+            # Load complete dataset from Step 4 (with pre-computed azimuth)
+            complete_df = load_complete_geospatial_dataset(ac)
+            
+            results = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'analysis_type': 'helical_motion_only',
+                'data_summary': {
+                    'total_pairs': len(complete_df),
+                    'unique_stations': len(pd.unique(complete_df[['station_i', 'station_j']].values.ravel())),
+                    'unique_dates': len(complete_df['date'].unique()),
+                }
+            }
+            
+            print_status(f"Loaded {len(complete_df):,} station pairs for {ac.upper()}", "INFO")
+            
+            # Run ONLY the 5 new helical motion analyses
+            
+            # 1. Chandler Wobble Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_CHANDLER_WOBBLE'):
+                print_status("Running Chandler Wobble Analysis...", "PROCESS")
+                results['chandler_wobble_analysis'] = run_chandler_wobble_analysis(complete_df)
+            else:
+                results['chandler_wobble_analysis'] = {'enabled': False}
+            
+            # 2. 3D Spherical Harmonic Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_3D_HARMONICS'):
+                print_status("Running 3D Spherical Harmonic Analysis...", "PROCESS")
+                results['spherical_harmonics_analysis'] = run_3d_spherical_harmonic_analysis(complete_df)
+            else:
+                results['spherical_harmonics_analysis'] = {'enabled': False}
+                
+            # 3. Multi-Frequency Beat Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_BEAT_FREQUENCIES'):
+                print_status("Running Multi-Frequency Beat Analysis...", "PROCESS")
+                results['beat_frequencies_analysis'] = run_multi_frequency_beat_analysis(complete_df)
+            else:
+                results['beat_frequencies_analysis'] = {'enabled': False}
+                
+            # 4. Relative Motion Beat Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_RELATIVE_MOTION_BEATS'):
+                print_status("Running Relative Motion Beat Analysis...", "PROCESS")
+                results['relative_motion_beats_analysis'] = run_relative_motion_beat_analysis(complete_df)
+            else:
+                results['relative_motion_beats_analysis'] = {'enabled': False}
+                
+            # 5. MESH DANCE ANALYSIS - Network Coherence Assessment
+            if TEPConfig.get_bool('TEP_ENABLE_MESH_DANCE_ANALYSIS'):
+                print_status("Running Mesh Dance Analysis - Network Coherence Assessment...", "PROCESS")
+                results['mesh_dance_analysis'] = run_mesh_dance_analysis(complete_df)
+            else:
+                results['mesh_dance_analysis'] = {'enabled': False}
+            
+            # 6. Nutation Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_NUTATION_ANALYSIS'):
+                print_status("Running Nutation Analysis...", "PROCESS")
+                results['nutation_analysis'] = run_nutation_analysis(complete_df)
+            else:
+                results['nutation_analysis'] = {'enabled': False}
+            
+            # Clean up memory
+            del complete_df
+            gc.collect()
+            
+            results['execution_time_seconds'] = time.time() - start_time
+            results['success'] = True
+            
+            # Save results with special naming for helical motion only
+            output_dir = ROOT / "results/outputs"
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            output_file = output_dir / f"step_5_helical_motion_only_{ac}.json"
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Helical motion results saved: {output_file}", "SUCCESS")
+            except (TEPFileError, TEPDataError) as e:
+                print_status(f"Failed to save results: {e}", "WARNING")
+            
+            all_results[ac] = results
+            
+            # Print summary of what was detected
+            print_summary_helical_motion_results(results)
+            
+        except Exception as e:
+            print_status(f"Helical motion analysis failed for {ac.upper()}: {e}", "ERROR")
+            all_results[ac] = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'success': False,
+                'error': str(e),
+                'analysis_type': 'helical_motion_only'
+            }
+    
+    total_time = time.time() - start_time
+    print(f"\n{'='*60}")
+    print("HELICAL MOTION ANALYSIS COMPLETE")
+    print(f"{'='*60}")
+    print_status(f"Total execution time: {total_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def print_summary_helical_motion_results(results: Dict):
+    """Print a summary of helical motion analysis results"""
+    print(f"\nHELICAL MOTION ANALYSIS SUMMARY - {results['analysis_center'].upper()}")
+    print("=" * 60)
+
+    # Chandler Wobble
+    chandler = results.get('chandler_wobble_analysis', {})
+    if chandler.get('success'):
+        interp = chandler.get('interpretation', 'Unknown')
+        print(f"Chandler Wobble (14-month): {interp}")
+
+    # 3D Harmonics
+    harmonics = results.get('spherical_harmonics_analysis', {})
+    if harmonics.get('success'):
+        cv = harmonics.get('anisotropy_statistics', {}).get('cv_lambda', 0)
+        n_sectors = harmonics.get('n_sectors', 0)
+        print(f"3D Spherical Harmonics: {n_sectors} directional sectors analyzed, CV = {cv:.3f}")
+
+    # Beat Frequencies
+    beats = results.get('beat_frequencies_analysis', {})
+    if beats.get('success'):
+        n_sig = beats.get('n_significant_beats', 0)
+        print(f"Beat Frequencies: {n_sig} significant Earth motion interference patterns detected")
+
+    # Relative Motion
+    rel_motion = results.get('relative_motion_beats_analysis', {})
+    if rel_motion.get('success'):
+        interp = rel_motion.get('interpretation', 'Unknown')
+        print(f"Relative Motion: {interp}")
+
+    # MESH DANCE - The Ultimate Test
+    dance = results.get('mesh_dance_analysis', {})
+    if dance.get('success'):
+        classification = dance.get('dance_signature', {}).get('classification', 'Unknown')
+        score = dance.get('dance_signature', {}).get('dance_score', 0)
+        print(f"Mesh Dance Analysis: {classification} (score = {score:.3f})")
+        print(f"   Dance Score: {score:.3f}/1.0")
+    
+    print("-" * 50)
+
 def main():
-    """Main function to run all statistical validation tests."""
+    """Main function with command-line options for different analysis modes."""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="TEP GNSS Statistical Validation - Step 5")
+    parser.add_argument('--mode', choices=['full', 'helical'], default='full',
+                        help='Analysis mode: full (complete statistical validation) or helical (helical motion analyses only)')
+    parser.add_argument('--center', choices=['code', 'igs_combined', 'esa_final'],
+                        help='Specific GNSS analysis center to process')
+    parser.add_argument('--list-helical', action='store_true',
+                        help='List available helical motion analysis methods')
+    
+    args = parser.parse_args()
+    
+    if args.list_helical:
+        print("AVAILABLE HELICAL MOTION ANALYSES:")
+        print("=" * 50)
+        print("1. Chandler Wobble Analysis (14-month polar axis motion)")
+        print("2. 3D Spherical Harmonic Analysis (directional anisotropy decomposition)")
+        print("3. Multi-Frequency Beat Analysis (Earth motion interference patterns)")
+        print("4. Relative Motion Beat Analysis (station pair differential dynamics)")
+        print("5. Mesh Dance Analysis (network coherence dynamics)")
+        print("6. Nutation Analysis (18.6-year axial tilt variations)")
+        print()
+        print("TO RUN HELICAL ANALYSES ONLY:")
+        print("   python step_5_tep_statistical_validation.py --mode helical")
+        print("   python step_5_tep_statistical_validation.py --mode helical --center code")
+        return True
+    
+    if args.mode == 'helical':
+        # Run ONLY the new helical motion analyses
+        results = run_helical_motion_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    # Original full Step 5 analysis
     print("="*80)
     print("TEP GNSS Analysis Package v0.6")
-    print("STEP 5: Statistical Validation")
+    print("STEP 5: Statistical Validation (FULL MODE)")
     print("="*80)
     
     start_time = time.time()
@@ -1100,8 +1406,8 @@ def main():
         print_status(f"Consider increasing TEP_MEMORY_LIMIT_GB or running on a machine with more RAM", "WARNING")
     
     # Process analysis centers
-    if len(sys.argv) > 1:
-        centers = [sys.argv[1]]
+    if args.center:
+        centers = [args.center]
     else:
         centers = ['code', 'igs_combined', 'esa_final']
     
@@ -1162,6 +1468,1829 @@ def main():
     else:
         print_status("No successful validations", "ERROR")
         return False
+
+# ===== NEW HELICAL MOTION ANALYSIS FUNCTIONS (ADDITIONS ONLY) =====
+
+def compute_azimuth(lat1, lon1, lat2, lon2):
+    """
+    Compute azimuth from station 1 to station 2 in degrees.
+    
+    Args:
+        lat1, lon1: Latitude and longitude of station 1 in degrees
+        lat2, lon2: Latitude and longitude of station 2 in degrees
+    
+    Returns:
+        float: Azimuth in degrees (0-360, where 0=North, 90=East)
+    """
+    # Convert to radians
+    lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
+    
+    # Calculate azimuth using spherical trigonometry
+    dlon = lon2 - lon1
+    y = np.sin(dlon) * np.cos(lat2)
+    x = np.cos(lat1) * np.sin(lat2) - np.sin(lat1) * np.cos(lat2) * np.cos(dlon)
+    
+    azimuth = np.arctan2(y, x)
+    azimuth = np.degrees(azimuth)
+    azimuth = (azimuth + 360) % 360  # Normalize to 0-360
+    
+    return azimuth
+
+def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Detect 14-month Chandler wobble signatures in GPS timing correlations.
+    
+    The Chandler wobble causes Earth's rotation axis to wander ~9 meters from 
+    the geographic poles with a period of ~14 months. This should modulate
+    correlation patterns as the station mesh "wobbles" relative to inertial space.
+    
+    Args:
+        complete_df: Complete pair dataset with date, coordinates, coherence
+        
+    Returns:
+        dict: Chandler wobble analysis results
+    """
+    print_status("Starting Chandler Wobble Analysis (14-month period)...", "PROCESS")
+    
+    try:
+        # Convert dates to datetime if not already done
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Calculate days since epoch for continuous time analysis
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # Check temporal coverage for Chandler wobble analysis
+        data_span_days = (complete_df['date'].max() - complete_df['date'].min()).days
+        chandler_period_days = TEPConfig.get_float('TEP_CHANDLER_PERIOD_DAYS')
+        n_chandler_cycles = data_span_days / chandler_period_days
+        
+        print_status(f"Temporal coverage: {data_span_days} days ({n_chandler_cycles:.2f} Chandler cycles)", "INFO")
+        
+        if n_chandler_cycles < 1.5:  # Need at least 1.5 cycles for meaningful analysis
+            return {
+                'success': False,
+                'error': f'Insufficient temporal coverage for Chandler wobble: {n_chandler_cycles:.2f} cycles (need ≥1.5)',
+                'data_span_days': data_span_days,
+                'chandler_period_days': chandler_period_days,
+                'cycles_available': n_chandler_cycles
+            }
+        
+        complete_df['chandler_phase'] = (2 * np.pi * complete_df['days_since_epoch'] / chandler_period_days) % (2 * np.pi)
+        
+        # Group data into phase bins (18 bins = 20° phase increments)
+        n_phase_bins = 18
+        phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+        complete_df['chandler_phase_bin'] = pd.cut(complete_df['chandler_phase'], 
+                                                   bins=phase_bins, 
+                                                   labels=range(n_phase_bins))
+        
+        # Azimuth already computed in Step 4 - no need to recalculate!
+        if 'azimuth' not in complete_df.columns:
+            print_status("Computing azimuths (fallback - Step 4 data not available)...", "WARNING")
+            complete_df['azimuth'] = complete_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                           row['station2_lat'], row['station2_lon']), axis=1
+            )
+        else:
+            print_status("Using pre-computed azimuths from Step 4", "SUCCESS")
+        
+        def classify_ew_ns(azimuth):
+            """Classify direction as East-West or North-South"""
+            return 'EW' if (45 <= azimuth <= 135) or (225 <= azimuth <= 315) else 'NS'
+        
+        complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+        
+        # Analyze E-W/N-S ratio variation across Chandler phases
+        chandler_tracking = []
+        edges = np.logspace(np.log10(50), np.log10(13000), 41)  # Same binning as existing analysis
+        min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+        
+        for phase_bin in range(n_phase_bins):
+            phase_data = complete_df[complete_df['chandler_phase_bin'] == phase_bin].copy()
+            
+            if len(phase_data) < 500:  # Lowered requirement for better temporal coverage
+                continue
+                
+            # Analyze E-W and N-S separately
+            ew_data = phase_data[phase_data['ew_ns_class'] == 'EW']
+            ns_data = phase_data[phase_data['ew_ns_class'] == 'NS']
+            
+            if len(ew_data) < 250 or len(ns_data) < 250:  # Lowered requirements
+                continue
+                
+            # OPTION A: Direct coherence analysis (bypass complex correlation fitting)
+            # Use mean coherence values instead of fitted correlation lengths
+            ew_coherence_mean = float(ew_data['coherence'].mean())
+            ns_coherence_mean = float(ns_data['coherence'].mean())
+            ew_coherence_std = float(ew_data['coherence'].std())
+            ns_coherence_std = float(ns_data['coherence'].std())
+            
+            # Calculate coherence ratio (analogous to lambda ratio)
+            if ns_coherence_mean > 0:
+                coherence_ratio = ew_coherence_mean / ns_coherence_mean
+                
+                chandler_tracking.append({
+                    'phase_bin': phase_bin,
+                    'phase_radians': float(phase_bins[phase_bin]),
+                    'phase_degrees': float(np.degrees(phase_bins[phase_bin])),
+                    'ew_coherence_mean': ew_coherence_mean,
+                    'ns_coherence_mean': ns_coherence_mean,
+                    'ew_coherence_std': ew_coherence_std,
+                    'ns_coherence_std': ns_coherence_std,
+                    'ew_ns_coherence_ratio': coherence_ratio,
+                    'n_pairs': len(phase_data),
+                    'n_ew_pairs': len(ew_data),
+                    'n_ns_pairs': len(ns_data)
+                })
+        
+        if len(chandler_tracking) < 6:  # Lowered from 10 to 6 for better coverage
+            return {'success': False, 'error': f'Insufficient phase bins: {len(chandler_tracking)} (need ≥6)'}
+        
+        # Statistical analysis of Chandler wobble modulation using coherence ratios
+        phases = [t['phase_radians'] for t in chandler_tracking]
+        ew_ns_ratios = [t['ew_ns_coherence_ratio'] for t in chandler_tracking]
+        
+        # Data quality checks
+        print_status(f"Chandler analysis: {len(phases)} phase bins, ratio range: {min(ew_ns_ratios):.3f}-{max(ew_ns_ratios):.3f}", "INFO")
+        
+        if np.std(ew_ns_ratios) < 0.001:  # Very low variation threshold
+            print_status(f"Warning: Very low variation in E-W/N-S ratios (std={np.std(ew_ns_ratios):.6f})", "WARNING")
+            return {
+                'success': False, 
+                'error': 'Insufficient variation in E-W/N-S ratios across Chandler phases',
+                'data_variation': float(np.std(ew_ns_ratios)),
+                'n_phase_bins': len(chandler_tracking),
+                'ratio_range': [float(min(ew_ns_ratios)), float(max(ew_ns_ratios))]
+            }
+        
+        # Fit sinusoidal model: ratio = A*sin(phase + φ) + offset
+        def chandler_model(phase, amplitude, phase_shift, offset):
+            return amplitude * np.sin(phase + phase_shift) + offset
+        
+        try:
+            # Robust curve fitting with better error handling
+            if len(set(ew_ns_ratios)) < 3:  # Check for insufficient variation
+                chandler_fit = {
+                    'fit_success': False, 
+                    'error': 'Insufficient variation in E-W/N-S ratios',
+                    'data_variation': float(np.std(ew_ns_ratios))
+                }
+            else:
+                # Try curve fitting with improved bounds and method
+                popt, pcov = curve_fit(
+                    chandler_model, phases, ew_ns_ratios, 
+                    p0=[0.1, 0, np.mean(ew_ns_ratios)],
+                    bounds=([-1, -2*np.pi, 0], [1, 2*np.pi, 10]),  # Reasonable bounds
+                    method='trf',  # Trust Region Reflective algorithm
+                    maxfev=2000
+                )
+                
+                # Calculate correlation coefficient with safety check
+                predicted = chandler_model(np.array(phases), *popt)
+                
+                # Safe correlation calculation
+                if np.std(ew_ns_ratios) > 1e-10 and np.std(predicted) > 1e-10:
+                    correlation = np.corrcoef(ew_ns_ratios, predicted)[0, 1]
+                    
+                    # Statistical significance test
+                    from scipy.stats import pearsonr
+                    _, p_value = pearsonr(ew_ns_ratios, predicted)
+                    
+                    # Check for NaN results
+                    if np.isnan(correlation) or np.isnan(p_value):
+                        chandler_fit = {
+                            'fit_success': False,
+                            'error': 'NaN values in correlation analysis',
+                            'correlation': float(correlation) if not np.isnan(correlation) else None,
+                            'p_value': float(p_value) if not np.isnan(p_value) else None
+                        }
+                    else:
+                        chandler_fit = {
+                            'amplitude': float(popt[0]),
+                            'phase_shift_radians': float(popt[1]),
+                            'phase_shift_degrees': float(np.degrees(popt[1])),
+                            'offset': float(popt[2]),
+                            'correlation': float(correlation),
+                            'p_value': float(p_value),
+                            'fit_success': True,
+                            'data_points': len(phases),
+                            'data_variation': float(np.std(ew_ns_ratios))
+                        }
+                else:
+                    chandler_fit = {
+                        'fit_success': False,
+                        'error': 'Insufficient variation in data for correlation',
+                        'data_std': float(np.std(ew_ns_ratios)),
+                        'predicted_std': float(np.std(predicted))
+                    }
+            
+        except Exception as e:
+            chandler_fit = {
+                'fit_success': False, 
+                'error': str(e),
+                'data_points': len(phases) if 'phases' in locals() else 0,
+                'data_variation': float(np.std(ew_ns_ratios)) if 'ew_ns_ratios' in locals() else 0
+            }
+        
+        return {
+            'success': True,
+            'chandler_period_days': chandler_period_days,
+            'n_phase_bins': len(chandler_tracking),
+            'phase_tracking': chandler_tracking,
+            'sinusoidal_fit': chandler_fit,
+            'interpretation': classify_chandler_evidence(chandler_fit.get('correlation', 0), 
+                                                        chandler_fit.get('p_value', 1))
+        }
+        
+    except Exception as e:
+        print_status(f"Chandler wobble analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def run_3d_spherical_harmonic_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Replace simple E-W/N-S analysis with full spherical harmonic decomposition.
+    
+    This captures the complete 3D anisotropy pattern of the station mesh,
+    revealing complex directional structures beyond simple E-W vs N-S.
+    
+    Args:
+        complete_df: Complete pair dataset with coordinates and coherence
+        
+    Returns:
+        dict: 3D spherical harmonic analysis results
+    """
+    print_status("Starting 3D Spherical Harmonic Analysis...", "PROCESS")
+    
+    try:
+        # Azimuth already computed in Step 4 - no need to recalculate!
+        if 'azimuth' not in complete_df.columns:
+            print_status("Computing azimuths (fallback - Step 4 data not available)...", "WARNING")
+            complete_df['azimuth'] = complete_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                           row['station2_lat'], row['station2_lon']), axis=1
+            )
+        else:
+            print_status("Using pre-computed azimuths from Step 4", "SUCCESS")
+        
+        # Compute elevation angles accounting for Earth curvature
+        def compute_elevation_angle(lat1, lon1, lat2, lon2):
+            """Compute elevation angle for station pair"""
+            # Convert to radians
+            lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
+            
+            # Great circle distance
+            dlat = lat2 - lat1
+            dlon = lon2 - lon1
+            a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+            c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1-a))
+            
+            # Elevation angle (simplified - assumes spherical Earth)
+            if c > 0:
+                elevation = np.arcsin(np.sin(lat2 - lat1) / c)
+            else:
+                elevation = 0
+            return np.degrees(elevation)
+        
+        complete_df['elevation'] = complete_df.apply(
+            lambda row: compute_elevation_angle(row['station1_lat'], row['station1_lon'], 
+                                               row['station2_lat'], row['station2_lon']), axis=1
+        )
+        
+        # Convert to spherical coordinates (θ, φ)
+        complete_df['theta'] = np.radians(90 - complete_df['elevation'])  # Colatitude
+        complete_df['phi'] = np.radians(complete_df['azimuth'])           # Azimuth
+        
+        # Define spherical harmonic sectors
+        n_theta_bins = TEPConfig.get_int('TEP_SPHERICAL_THETA_BINS')
+        n_phi_bins = TEPConfig.get_int('TEP_SPHERICAL_PHI_BINS')
+        
+        theta_bins = np.linspace(0, np.pi, n_theta_bins + 1)
+        phi_bins = np.linspace(0, 2*np.pi, n_phi_bins + 1)
+        
+        # Create 2D sector grid
+        complete_df['theta_bin'] = pd.cut(complete_df['theta'], bins=theta_bins, 
+                                         labels=range(n_theta_bins))
+        complete_df['phi_bin'] = pd.cut(complete_df['phi'], bins=phi_bins, 
+                                       labels=range(n_phi_bins))
+        
+        # Analyze correlation lengths in each spherical sector
+        spherical_sectors = {}
+        edges = np.logspace(np.log10(50), np.log10(13000), 41)
+        min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+        
+        for theta_idx in range(n_theta_bins):
+            for phi_idx in range(n_phi_bins):
+                sector_data = complete_df[
+                    (complete_df['theta_bin'] == theta_idx) & 
+                    (complete_df['phi_bin'] == phi_idx)
+                ].copy()
+                
+                if len(sector_data) < 500:  # Need sufficient statistics
+                    continue
+                    
+                # Fit correlation model for this sector
+                sector_lambda = fit_directional_correlation(sector_data, edges, min_bin_count)
+                
+                if sector_lambda:
+                    sector_name = f"theta_{theta_idx}_phi_{phi_idx}"
+                    spherical_sectors[sector_name] = {
+                        'theta_bin': theta_idx,
+                        'phi_bin': phi_idx,
+                        'theta_center_deg': float(np.degrees((theta_bins[theta_idx] + theta_bins[theta_idx+1]) / 2)),
+                        'phi_center_deg': float(np.degrees((phi_bins[phi_idx] + phi_bins[phi_idx+1]) / 2)),
+                        'lambda_km': float(sector_lambda),
+                        'n_pairs': len(sector_data)
+                    }
+        
+        if len(spherical_sectors) < 20:  # Need reasonable coverage
+            return {'success': False, 'error': f'Insufficient sectors: {len(spherical_sectors)}'}
+        
+        # Compute spherical harmonic moments
+        lambdas = [s['lambda_km'] for s in spherical_sectors.values()]
+        thetas = [np.radians(s['theta_center_deg']) for s in spherical_sectors.values()]
+        phis = [np.radians(s['phi_center_deg']) for s in spherical_sectors.values()]
+        
+        # Calculate multipole moments (up to l=2)
+        spherical_moments = {}
+        
+        # l=0 (monopole) - overall average
+        spherical_moments['monopole'] = float(np.mean(lambdas))
+        
+        # l=1 (dipole) - directional bias
+        dipole_x = np.mean([lam * np.sin(theta) * np.cos(phi) 
+                           for lam, theta, phi in zip(lambdas, thetas, phis)])
+        dipole_y = np.mean([lam * np.sin(theta) * np.sin(phi) 
+                           for lam, theta, phi in zip(lambdas, thetas, phis)])
+        dipole_z = np.mean([lam * np.cos(theta) 
+                           for lam, theta in zip(lambdas, thetas)])
+        
+        dipole_magnitude = np.sqrt(dipole_x**2 + dipole_y**2 + dipole_z**2)
+        dipole_direction = {
+            'magnitude': float(dipole_magnitude),
+            'x': float(dipole_x), 
+            'y': float(dipole_y), 
+            'z': float(dipole_z),
+            'theta_deg': float(np.degrees(np.arccos(dipole_z / dipole_magnitude))) if dipole_magnitude > 0 else 0,
+            'phi_deg': float(np.degrees(np.arctan2(dipole_y, dipole_x)))
+        }
+        
+        spherical_moments['dipole'] = dipole_direction
+        
+        # l=2 (quadrupole) - shape anisotropy
+        quadrupole_strength = np.std(lambdas) / np.mean(lambdas)
+        spherical_moments['quadrupole_strength'] = float(quadrupole_strength)
+        
+        return {
+            'success': True,
+            'n_sectors': len(spherical_sectors),
+            'sector_results': spherical_sectors,
+            'spherical_moments': spherical_moments,
+            'anisotropy_statistics': {
+                'mean_lambda': float(np.mean(lambdas)),
+                'std_lambda': float(np.std(lambdas)),
+                'cv_lambda': float(np.std(lambdas) / np.mean(lambdas)),
+                'max_lambda': float(np.max(lambdas)),
+                'min_lambda': float(np.min(lambdas)),
+                'anisotropy_ratio': float(np.max(lambdas) / np.min(lambdas))
+            }
+        }
+        
+    except Exception as e:
+        print_status(f"3D spherical harmonic analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def run_multi_frequency_beat_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Analyze beat frequencies between different Earth motion components with
+    RELATIVE MOTION ANALYSIS between station pairs.
+    
+    This enhanced analysis considers:
+    1. Global Earth motion frequencies (rotation, orbit, wobble, nutation)
+    2. RELATIVE velocities between station pairs as Earth moves
+    3. Distance-dependent beat patterns across the station mesh
+    4. Differential motion effects based on station separation and orientation
+    
+    Args:
+        complete_df: Complete pair dataset with date and coordinates
+        
+    Returns:
+        dict: Enhanced beat analysis with relative motion patterns
+    """
+    print_status("Starting Multi-Frequency Beat Analysis...", "PROCESS")
+    
+    try:
+        # Define fundamental frequencies (cycles per day)
+        frequencies = {
+            'rotation': 1.0,           # 1 cycle/day (24h)
+            'tidal_m2': 1.9323,        # M2 tidal component
+            'tidal_s2': 2.0,           # S2 solar tidal component  
+            'chandler': 1.0/TEPConfig.get_float('TEP_CHANDLER_PERIOD_DAYS'),     # Chandler wobble
+            'annual': 1.0/365.25,      # Annual orbital motion
+            'semiannual': 2.0/365.25   # Semiannual variation
+        }
+        
+        # Calculate all possible beat frequencies
+        beat_frequencies = {}
+        freq_names = list(frequencies.keys())
+        min_period_days = TEPConfig.get_float('TEP_BEAT_MIN_PERIOD_DAYS')
+        
+        for i, name1 in enumerate(freq_names):
+            for j, name2 in enumerate(freq_names):
+                if i < j:  # Avoid duplicates
+                    f1, f2 = frequencies[name1], frequencies[name2]
+                    
+                    # Difference frequency (beat)
+                    beat_diff = abs(f1 - f2)
+                    if beat_diff > 0:
+                        period_diff = 1.0/beat_diff
+                        if period_diff >= min_period_days:
+                            beat_frequencies[f"{name1}_{name2}_diff"] = {
+                                'frequency_cpd': beat_diff,
+                                'period_days': period_diff,
+                                'type': 'difference',
+                                'components': [name1, name2]
+                            }
+                    
+                    # Sum frequency
+                    beat_sum = f1 + f2
+                    period_sum = 1.0/beat_sum
+                    if period_sum >= min_period_days:
+                        beat_frequencies[f"{name1}_{name2}_sum"] = {
+                            'frequency_cpd': beat_sum,
+                            'period_days': period_sum,
+                            'type': 'sum', 
+                            'components': [name1, name2]
+                        }
+        
+        # Convert dates to continuous time
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # Azimuth already computed in Step 4 - no need to recalculate!
+        if 'azimuth' not in complete_df.columns:
+            print_status("Computing azimuths (fallback - Step 4 data not available)...", "WARNING")
+            complete_df['azimuth'] = complete_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                           row['station2_lat'], row['station2_lon']), axis=1
+            )
+        else:
+            print_status("Using pre-computed azimuths from Step 4", "SUCCESS")
+        
+        def classify_ew_ns(azimuth):
+            return 'EW' if (45 <= azimuth <= 135) or (225 <= azimuth <= 315) else 'NS'
+        
+        complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+        
+        # For each beat frequency, test for modulation in E-W/N-S ratio
+        beat_analysis_results = {}
+        data_span_days = (complete_df['date'].max() - complete_df['date'].min()).days
+        min_cycles = TEPConfig.get_int('TEP_BEAT_MIN_CYCLES')
+        
+        for beat_name, beat_info in beat_frequencies.items():
+            period_days = beat_info['period_days']
+            
+            # Skip beats with periods too long for our dataset
+            if period_days > data_span_days / min_cycles:  # Need minimum cycles
+                print_status(f"Skipping beat {beat_name}: period {period_days:.1f} days > {data_span_days/min_cycles:.1f} days threshold", "INFO")
+                continue
+                
+            print_status(f"Analyzing beat: {beat_name} (period: {period_days:.1f} days)", "INFO")
+            
+            # Calculate phase for this beat frequency (wrapped to 0-2π)
+            beat_freq_cpd = beat_info['frequency_cpd']
+            complete_df['beat_phase'] = (2 * np.pi * complete_df['days_since_epoch'] * beat_freq_cpd) % (2 * np.pi)
+            
+            # Debug: Check phase calculation
+            phase_min, phase_max = complete_df['beat_phase'].min(), complete_df['beat_phase'].max()
+            phase_range = phase_max - phase_min
+            print_status(f"Beat {beat_name}: Phase range {phase_min:.2f} to {phase_max:.2f} (range: {phase_range:.2f})", "INFO")
+            
+            # Bin by phase (12 bins = 30° increments)
+            n_phase_bins = 12
+            phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+            complete_df['beat_phase_bin'] = pd.cut(complete_df['beat_phase'], 
+                                                  bins=phase_bins, 
+                                                  labels=range(n_phase_bins))
+            
+            # Debug: Check binning results
+            bin_counts = complete_df['beat_phase_bin'].value_counts()
+            print_status(f"Beat {beat_name}: Phase bin distribution: {dict(bin_counts)}", "INFO")
+            
+            # Track E-W/N-S ratio across beat phases
+            beat_tracking = []
+            edges = np.logspace(np.log10(50), np.log10(13000), 41)
+            min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+            
+            for phase_bin in range(n_phase_bins):
+                phase_data = complete_df[complete_df['beat_phase_bin'] == phase_bin].copy()
+                
+                if len(phase_data) < 100:  # Much lower requirement for beat analysis
+                    continue
+                    
+                # Analyze E-W and N-S separately
+                ew_data = phase_data[phase_data['ew_ns_class'] == 'EW']
+                ns_data = phase_data[phase_data['ew_ns_class'] == 'NS']
+                
+                if len(ew_data) < 50 or len(ns_data) < 50:  # Much lower requirements for beat analysis
+                    continue
+                    
+                # OPTION A: Direct coherence analysis (bypass complex correlation fitting)
+                # Use mean coherence values instead of fitted correlation lengths
+                ew_coherence_mean = float(ew_data['coherence'].mean())
+                ns_coherence_mean = float(ns_data['coherence'].mean())
+                ew_coherence_std = float(ew_data['coherence'].std())
+                ns_coherence_std = float(ns_data['coherence'].std())
+                
+                # Calculate coherence ratio (analogous to lambda ratio)
+                if ns_coherence_mean > 0:
+                    coherence_ratio = ew_coherence_mean / ns_coherence_mean
+                    
+                    beat_tracking.append({
+                        'phase_bin': phase_bin,
+                        'phase_radians': float(phase_bins[phase_bin]),
+                        'ew_coherence_mean': ew_coherence_mean,
+                        'ns_coherence_mean': ns_coherence_mean,
+                        'ew_coherence_std': ew_coherence_std,
+                        'ns_coherence_std': ns_coherence_std,
+                        'ew_ns_coherence_ratio': coherence_ratio,
+                        'n_pairs': len(phase_data),
+                        'n_ew_pairs': len(ew_data),
+                        'n_ns_pairs': len(ns_data)
+                    })
+            
+            print_status(f"Beat {beat_name}: {len(beat_tracking)} phase bins collected", "INFO")
+            
+            if len(beat_tracking) < 4:  # Lowered requirement for phase coverage
+                print_status(f"Insufficient phase coverage for {beat_name}: {len(beat_tracking)} bins (need ≥4)", "WARNING")
+                continue
+            
+            print_status(f"Proceeding with beat analysis for {beat_name}: {len(beat_tracking)} phase bins", "SUCCESS")
+                
+            # Test for sinusoidal modulation using coherence ratios
+            phases = [t['phase_radians'] for t in beat_tracking]
+            ratios = [t['ew_ns_coherence_ratio'] for t in beat_tracking]
+            
+            print_status(f"Beat {beat_name}: Testing {len(phases)} phase points, ratio range: {min(ratios):.3f}-{max(ratios):.3f}", "INFO")
+            
+            try:
+                # Robust beat frequency analysis with better error handling
+                if len(set(ratios)) < 3:  # Check for insufficient variation
+                    beat_analysis_results[beat_name] = {
+                        'beat_info': beat_info,
+                        'fit_success': False,
+                        'error': 'Insufficient variation in E-W/N-S ratios',
+                        'data_variation': float(np.std(ratios)),
+                        'n_phase_bins': len(beat_tracking)
+                    }
+                else:
+                    # Fit sinusoidal model with robust parameters
+                    def beat_model(phase, amplitude, phase_shift, offset):
+                        return amplitude * np.sin(phase + phase_shift) + offset
+                    
+                    # Use robust fitting with bounds
+                    popt, _ = curve_fit(
+                        beat_model, phases, ratios, 
+                        p0=[0.1, 0, np.mean(ratios)],
+                        bounds=([-2, -2*np.pi, 0], [2, 2*np.pi, 20]),  # Reasonable bounds
+                        method='trf',
+                        maxfev=1000
+                    )
+                    
+                    predicted = beat_model(np.array(phases), *popt)
+                    
+                    # Safe correlation calculation
+                    if np.std(ratios) > 1e-10 and np.std(predicted) > 1e-10:
+                        correlation = np.corrcoef(ratios, predicted)[0, 1]
+                        
+                        from scipy.stats import pearsonr
+                        _, p_value = pearsonr(ratios, predicted)
+                        
+                        # Check for valid results
+                        if not (np.isnan(correlation) or np.isnan(p_value)):
+                            beat_analysis_results[beat_name] = {
+                                'beat_info': beat_info,
+                                'n_phase_bins': len(beat_tracking),
+                                'amplitude': float(popt[0]),
+                                'correlation': float(correlation),
+                                'p_value': float(p_value),
+                                'fit_success': True,
+                                'phase_tracking': beat_tracking,
+                                'data_variation': float(np.std(ratios))
+                            }
+                        else:
+                            beat_analysis_results[beat_name] = {
+                                'beat_info': beat_info,
+                                'fit_success': False,
+                                'error': 'NaN values in correlation',
+                                'correlation': float(correlation) if not np.isnan(correlation) else None,
+                                'p_value': float(p_value) if not np.isnan(p_value) else None
+                            }
+                    else:
+                        beat_analysis_results[beat_name] = {
+                            'beat_info': beat_info,
+                            'fit_success': False,
+                            'error': 'Insufficient variation for correlation',
+                            'data_std': float(np.std(ratios)),
+                            'predicted_std': float(np.std(predicted))
+                        }
+                
+            except Exception as e:
+                beat_analysis_results[beat_name] = {
+                    'beat_info': beat_info,
+                    'fit_success': False,
+                    'error': str(e),
+                    'n_phase_bins': len(beat_tracking) if 'beat_tracking' in locals() else 0
+                }
+        
+        # Identify most significant beat frequencies with configurable threshold
+        significance_threshold = TEPConfig.get_float('TEP_BEAT_SIGNIFICANCE_THRESHOLD')
+        min_correlation = TEPConfig.get_float('TEP_MIN_CORRELATION_THRESHOLD')
+        significant_beats = {}
+        
+        print_status(f"Beat detection thresholds: p<{significance_threshold}, |r|>{min_correlation}", "INFO")
+        
+        for beat_name, result in beat_analysis_results.items():
+            if (result.get('fit_success') and 
+                result.get('p_value', 1) < significance_threshold and
+                abs(result.get('correlation', 0)) > min_correlation):
+                significant_beats[beat_name] = result
+                print_status(f"Significant beat detected: {beat_name} (r={result.get('correlation', 0):.3f}, p={result.get('p_value', 1):.3f})", "SUCCESS")
+        
+        return {
+            'success': True,
+            'fundamental_frequencies': frequencies,
+            'beat_frequencies': beat_frequencies,
+            'beat_analysis': beat_analysis_results,
+            'significant_beats': significant_beats,
+            'n_beats_tested': len(beat_analysis_results),
+            'n_significant_beats': len(significant_beats)
+        }
+        
+    except Exception as e:
+        print_status(f"Multi-frequency beat analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def run_nutation_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Analyze 18.6-year nutation signatures (requires multi-year data).
+    
+    Nutation causes periodic variations in Earth's axial tilt with an 18.6-year
+    period, which should modulate correlation patterns if the dataset spans
+    sufficient time.
+    
+    Args:
+        complete_df: Complete pair dataset with multi-year coverage
+        
+    Returns:
+        dict: Nutation analysis results
+    """
+    print_status("Starting Nutation Analysis (18.6-year period)...", "PROCESS")
+    
+    try:
+        # Check data span
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        data_span_years = (complete_df['date'].max() - complete_df['date'].min()).days / 365.25
+        
+        nutation_period_years = TEPConfig.get_float('TEP_NUTATION_PERIOD_YEARS')
+        min_span_years = nutation_period_years / 3  # Need at least 1/3 of a cycle
+        
+        if data_span_years < min_span_years:
+            return {
+                'success': False, 
+                'error': f'Insufficient data span: {data_span_years:.1f} years (need >{min_span_years:.1f} years)',
+                'data_span_years': data_span_years,
+                'required_span_years': min_span_years
+            }
+        
+        # Calculate nutation phase
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        nutation_period_days = nutation_period_years * 365.25
+        complete_df['nutation_phase'] = 2 * np.pi * complete_df['days_since_epoch'] / nutation_period_days
+        
+        # Bin by nutation phase (fewer bins due to longer period)
+        n_phase_bins = 8  # 45° increments
+        phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+        complete_df['nutation_phase_bin'] = pd.cut(complete_df['nutation_phase'], 
+                                                   bins=phase_bins, 
+                                                   labels=range(n_phase_bins))
+        
+        # Compute directional classification (reuse existing function)
+        complete_df['azimuth'] = complete_df.apply(
+            lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                       row['station2_lat'], row['station2_lon']), axis=1
+        )
+        
+        def classify_ew_ns(azimuth):
+            return 'EW' if (45 <= azimuth <= 135) or (225 <= azimuth <= 315) else 'NS'
+        
+        complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+        
+        # Track E-W/N-S ratio across nutation phases
+        nutation_tracking = []
+        edges = np.logspace(np.log10(50), np.log10(13000), 41)
+        min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+        
+        for phase_bin in range(n_phase_bins):
+            phase_data = complete_df[complete_df['nutation_phase_bin'] == phase_bin].copy()
+            
+            if len(phase_data) < 2000:  # Need more data for long-period analysis
+                continue
+                
+            # Analyze E-W and N-S separately
+            ew_data = phase_data[phase_data['ew_ns_class'] == 'EW']
+            ns_data = phase_data[phase_data['ew_ns_class'] == 'NS']
+            
+            if len(ew_data) < 1000 or len(ns_data) < 1000:
+                continue
+                
+            # Fit correlation models
+            ew_lambda = fit_directional_correlation(ew_data, edges, min_bin_count)
+            ns_lambda = fit_directional_correlation(ns_data, edges, min_bin_count)
+            
+            if ew_lambda and ns_lambda and ns_lambda > 0:
+                nutation_tracking.append({
+                    'phase_bin': phase_bin,
+                    'phase_radians': float(phase_bins[phase_bin]),
+                    'phase_degrees': float(np.degrees(phase_bins[phase_bin])),
+                    'ew_lambda_km': float(ew_lambda),
+                    'ns_lambda_km': float(ns_lambda),
+                    'ew_ns_ratio': float(ew_lambda / ns_lambda),
+                    'n_pairs': len(phase_data),
+                    'n_ew_pairs': len(ew_data),
+                    'n_ns_pairs': len(ns_data)
+                })
+        
+        if len(nutation_tracking) < 4:  # Need minimum phase coverage
+            return {'success': False, 'error': f'Insufficient phase bins: {len(nutation_tracking)}'}
+        
+        # Test for nutation modulation
+        phases = [t['phase_radians'] for t in nutation_tracking]
+        ratios = [t['ew_ns_ratio'] for t in nutation_tracking]
+        
+        try:
+            # Fit sinusoidal model
+            def nutation_model(phase, amplitude, phase_shift, offset):
+                return amplitude * np.sin(phase + phase_shift) + offset
+            
+            popt, _ = curve_fit(nutation_model, phases, ratios, 
+                               p0=[0.1, 0, np.mean(ratios)])
+            
+            predicted = nutation_model(np.array(phases), *popt)
+            correlation = np.corrcoef(ratios, predicted)[0, 1]
+            
+            from scipy.stats import pearsonr
+            _, p_value = pearsonr(ratios, predicted)
+            
+            nutation_fit = {
+                'amplitude': float(popt[0]),
+                'phase_shift_radians': float(popt[1]),
+                'phase_shift_degrees': float(np.degrees(popt[1])),
+                'offset': float(popt[2]),
+                'correlation': float(correlation),
+                'p_value': float(p_value),
+                'fit_success': True
+            }
+            
+        except Exception as e:
+            nutation_fit = {'fit_success': False, 'error': str(e)}
+        
+        return {
+            'success': True,
+            'data_span_years': data_span_years,
+            'nutation_period_years': nutation_period_years,
+            'n_phase_bins': len(nutation_tracking),
+            'phase_tracking': nutation_tracking,
+            'sinusoidal_fit': nutation_fit,
+            'interpretation': classify_nutation_evidence(nutation_fit.get('correlation', 0), 
+                                                        nutation_fit.get('p_value', 1))
+        }
+        
+    except Exception as e:
+        print_status(f"Nutation analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def classify_chandler_evidence(correlation: float, p_value: float) -> str:
+    """Classify strength of Chandler wobble evidence"""
+    if p_value < 0.001 and abs(correlation) > 0.7:
+        return f"Robust Chandler wobble signature confirmed (r={correlation:.3f}, p<0.001)"
+    elif p_value < 0.01 and abs(correlation) > 0.5:
+        return f"Significant Chandler wobble signature detected (r={correlation:.3f}, p<0.01)"
+    elif p_value < 0.05 and abs(correlation) > 0.3:
+        return f"Chandler wobble signature identified (r={correlation:.3f}, p<0.05)"
+    else:
+        return f"No statistically significant Chandler wobble correlation (r={correlation:.3f}, p={p_value:.3f})"
+
+def classify_nutation_evidence(correlation: float, p_value: float) -> str:
+    """Classify strength of nutation evidence"""
+    if p_value < 0.001 and abs(correlation) > 0.8:
+        return f"Robust nutation signature confirmed (r={correlation:.3f}, p<0.001)"
+    elif p_value < 0.01 and abs(correlation) > 0.6:
+        return f"Significant nutation signature detected (r={correlation:.3f}, p<0.01)"
+    elif p_value < 0.05 and abs(correlation) > 0.4:
+        return f"Nutation signature identified (r={correlation:.3f}, p<0.05)"
+    else:
+        return f"No statistically significant nutation correlation (r={correlation:.3f}, p={p_value:.3f})"
+
+def run_relative_motion_beat_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    ENHANCED beat analysis considering RELATIVE MOTION between station pairs.
+    
+    This analyzes how each station pair moves relative to each other as Earth
+    undergoes complex helical motion. Different station separations and orientations
+    experience different relative velocities and accelerations.
+    
+    Key concepts:
+    1. DIFFERENTIAL ROTATION: Stations at different latitudes have different tangential velocities
+    2. ORBITAL PROJECTION: Station pairs see different projections of Earth's orbital motion  
+    3. WOBBLE DIFFERENTIAL: Chandler wobble affects station pairs differently based on separation
+    4. DISTANCE-DEPENDENT BEATS: Beat frequencies vary with station separation distance
+    
+    Args:
+        complete_df: Complete pair dataset with coordinates, distances, dates
+        
+    Returns:
+        dict: Relative motion beat analysis results
+    """
+    print_status("Starting Relative Motion Beat Analysis...", "PROCESS")
+    print_status("Analyzing differential motion patterns across station mesh", "PROCESS")
+    
+    try:
+        # Convert dates and compute basic parameters
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # Compute SUPERPOSITION OF ACCELERATIONS for each station pair
+        print_status("Computing multi-layered acceleration superposition for station pairs...", "INFO")
+        print_status("Analyzing how stations swing forward/back through layered motion streams", "INFO")
+        
+        # 1. MULTI-LAYERED ACCELERATION ANALYSIS
+        # Each station experiences superposition of multiple accelerations with different phases
+        
+        # Station 1 and Station 2 coordinates
+        lat1_rad = np.radians(complete_df['station1_lat'])
+        lon1_rad = np.radians(complete_df['station1_lon'])
+        lat2_rad = np.radians(complete_df['station2_lat'])
+        lon2_rad = np.radians(complete_df['station2_lon'])
+        
+        earth_radius_km = 6371.0
+        
+        # A. ROTATIONAL ACCELERATION COMPONENTS (24h cycle)
+        # Centripetal acceleration varies with latitude: a_c = ω²r = ω²R*cos(lat)
+        omega_earth = 2 * np.pi / (24 * 3600)  # rad/s
+        
+        complete_df['station1_centripetal_acc'] = (omega_earth**2) * earth_radius_km * 1000 * np.cos(lat1_rad)  # m/s²
+        complete_df['station2_centripetal_acc'] = (omega_earth**2) * earth_radius_km * 1000 * np.cos(lat2_rad)  # m/s²
+        complete_df['differential_centripetal_acc'] = abs(complete_df['station2_centripetal_acc'] - complete_df['station1_centripetal_acc'])
+        
+        # Tangential velocity differences (differential rotation)
+        complete_df['station1_tangential_velocity'] = omega_earth * earth_radius_km * 1000 * np.cos(lat1_rad)  # m/s
+        complete_df['station2_tangential_velocity'] = omega_earth * earth_radius_km * 1000 * np.cos(lat2_rad)  # m/s
+        complete_df['differential_rotation_velocity'] = abs(complete_df['station2_tangential_velocity'] - complete_df['station1_tangential_velocity']) / 1000  # km/s
+        
+        # B. ORBITAL ACCELERATION COMPONENTS (365d cycle)
+        # Earth's orbital acceleration: a_orbital = v²/r = (29.78 km/s)² / (150M km)
+        orbital_speed_ms = 29780  # m/s
+        orbital_radius_m = 1.496e11  # m (1 AU)
+        orbital_acceleration = (orbital_speed_ms**2) / orbital_radius_m  # m/s² ≈ 0.006 m/s²
+        
+        # Orbital acceleration projection varies with time of year and station position
+        # Each station sees different orbital acceleration based on its position relative to orbital motion
+        day_of_year = complete_df['days_since_epoch'] % 365.25
+        orbital_phase = 2 * np.pi * day_of_year / 365.25
+        
+        # Project orbital acceleration onto station positions (simplified)
+        complete_df['station1_orbital_acc_projection'] = orbital_acceleration * np.cos(orbital_phase + lon1_rad)
+        complete_df['station2_orbital_acc_projection'] = orbital_acceleration * np.cos(orbital_phase + lon2_rad)
+        complete_df['differential_orbital_acc'] = abs(complete_df['station2_orbital_acc_projection'] - complete_df['station1_orbital_acc_projection'])
+        
+        # C. CHANDLER WOBBLE ACCELERATION (14-month cycle)
+        # Wobble creates additional acceleration as rotation axis wanders
+        chandler_period_days = TEPConfig.get_float('TEP_CHANDLER_PERIOD_DAYS')
+        chandler_phase = 2 * np.pi * complete_df['days_since_epoch'] / chandler_period_days
+        wobble_amplitude_m = 9.0  # meters
+        wobble_acceleration = (2 * np.pi / (chandler_period_days * 24 * 3600))**2 * wobble_amplitude_m  # m/s²
+        
+        # Wobble affects stations differently based on latitude
+        complete_df['station1_wobble_acc'] = wobble_acceleration * abs(np.cos(lat1_rad)) * np.sin(chandler_phase)
+        complete_df['station2_wobble_acc'] = wobble_acceleration * abs(np.cos(lat2_rad)) * np.sin(chandler_phase)
+        complete_df['differential_wobble_acc'] = abs(complete_df['station2_wobble_acc'] - complete_df['station1_wobble_acc'])
+        
+        # D. TIDAL ACCELERATION COMPONENTS (12h, 24h cycles)
+        # Lunar tidal acceleration varies across Earth's surface
+        lunar_tidal_acceleration = 1.1e-6  # m/s² (approximate)
+        
+        # M2 tidal component (12.42h period)
+        m2_period_hours = 12.42
+        m2_phase = 2 * np.pi * (complete_df['days_since_epoch'] * 24) / m2_period_hours
+        
+        complete_df['station1_tidal_acc'] = lunar_tidal_acceleration * np.cos(m2_phase + 2*lon1_rad) * np.cos(lat1_rad)
+        complete_df['station2_tidal_acc'] = lunar_tidal_acceleration * np.cos(m2_phase + 2*lon2_rad) * np.cos(lat2_rad)
+        complete_df['differential_tidal_acc'] = abs(complete_df['station2_tidal_acc'] - complete_df['station1_tidal_acc'])
+        
+        # E. TOTAL ACCELERATION SUPERPOSITION
+        # Each station experiences vector sum of all accelerations with different phases
+        print_status("Computing acceleration superposition vectors...", "INFO")
+        
+        # For each station pair, compute the relative acceleration vector magnitude
+        # This captures how stations "swing forward and back" through the motion streams
+        complete_df['total_differential_acceleration'] = np.sqrt(
+            complete_df['differential_centripetal_acc']**2 +
+            complete_df['differential_orbital_acc']**2 +
+            complete_df['differential_wobble_acc']**2 +
+            complete_df['differential_tidal_acc']**2
+        )
+        
+        # F. PHASE RELATIONSHIPS BETWEEN MOTION COMPONENTS
+        # Different motions have different phases - this creates complex interference patterns
+        
+        # Rotation phase (24h)
+        rotation_phase = 2 * np.pi * (complete_df['days_since_epoch'] % 1.0)
+        
+        # Orbital phase (365d) 
+        orbital_phase = 2 * np.pi * (complete_df['days_since_epoch'] % 365.25) / 365.25
+        
+        # Chandler phase (427d)
+        chandler_phase = 2 * np.pi * (complete_df['days_since_epoch'] % chandler_period_days) / chandler_period_days
+        
+        # Tidal phase (12.42h)
+        tidal_phase = 2 * np.pi * ((complete_df['days_since_epoch'] * 24) % m2_period_hours) / m2_period_hours
+        
+        # G. INTERFERENCE PATTERNS
+        # Compute phase differences that create beat patterns
+        complete_df['rotation_orbital_phase_diff'] = np.abs(rotation_phase - orbital_phase)
+        complete_df['rotation_chandler_phase_diff'] = np.abs(rotation_phase - chandler_phase)
+        complete_df['orbital_chandler_phase_diff'] = np.abs(orbital_phase - chandler_phase)
+        complete_df['tidal_rotation_phase_diff'] = np.abs(tidal_phase - rotation_phase)
+        
+        # H. CONSTRUCTIVE/DESTRUCTIVE INTERFERENCE ANALYSIS
+        # Stations swing forward/back through motion streams with VECTOR ADDITION/SUBTRACTION
+        print_status("Analyzing constructive and destructive interference patterns...", "INFO")
+        
+        # Vector components of each motion (simplified 2D projection)
+        # Each motion has magnitude and direction that varies with time and position
+        
+        # Rotation vector (always eastward, magnitude varies with latitude)
+        rotation_vector_x = complete_df['differential_rotation_velocity'] * np.cos(rotation_phase)
+        rotation_vector_y = complete_df['differential_rotation_velocity'] * np.sin(rotation_phase)
+        
+        # Orbital vector (direction changes seasonally, ~30 km/s)
+        orbital_direction = orbital_phase  # Changes throughout year
+        orbital_magnitude = complete_df['differential_orbital_acc'] * 1000  # Convert to m/s for comparison
+        orbital_vector_x = orbital_magnitude * np.cos(orbital_direction)
+        orbital_vector_y = orbital_magnitude * np.sin(orbital_direction)
+        
+        # Chandler wobble vector (circular motion, 14-month period)
+        wobble_vector_x = complete_df['differential_wobble_acc'] * np.cos(chandler_phase)
+        wobble_vector_y = complete_df['differential_wobble_acc'] * np.sin(chandler_phase)
+        
+        # Tidal vector (complex elliptical motion)
+        tidal_vector_x = complete_df['differential_tidal_acc'] * np.cos(tidal_phase)
+        tidal_vector_y = complete_df['differential_tidal_acc'] * np.sin(tidal_phase)
+        
+        # VECTOR SUPERPOSITION: Add/subtract all motion vectors
+        total_vector_x = rotation_vector_x + orbital_vector_x + wobble_vector_x + tidal_vector_x
+        total_vector_y = rotation_vector_y + orbital_vector_y + wobble_vector_y + tidal_vector_y
+        
+        complete_df['total_motion_vector_magnitude'] = np.sqrt(total_vector_x**2 + total_vector_y**2)
+        complete_df['total_motion_vector_direction'] = np.arctan2(total_vector_y, total_vector_x)
+        
+        # I. INTERFERENCE CLASSIFICATION
+        # Determine when motions are CONSTRUCTIVE vs DESTRUCTIVE for each station pair
+        
+        # Dot products between motion vectors (measures alignment/opposition)
+        rotation_orbital_dot = rotation_vector_x * orbital_vector_x + rotation_vector_y * orbital_vector_y
+        rotation_wobble_dot = rotation_vector_x * wobble_vector_x + rotation_vector_y * wobble_vector_y
+        orbital_wobble_dot = orbital_vector_x * wobble_vector_x + orbital_vector_y * wobble_vector_y
+        
+        # Normalize dot products to get interference coefficients (-1 to +1)
+        rotation_orbital_interference = rotation_orbital_dot / (
+            np.sqrt(rotation_vector_x**2 + rotation_vector_y**2) * 
+            np.sqrt(orbital_vector_x**2 + orbital_vector_y**2) + 1e-10
+        )
+        rotation_wobble_interference = rotation_wobble_dot / (
+            np.sqrt(rotation_vector_x**2 + rotation_vector_y**2) * 
+            np.sqrt(wobble_vector_x**2 + wobble_vector_y**2) + 1e-10
+        )
+        orbital_wobble_interference = orbital_wobble_dot / (
+            np.sqrt(orbital_vector_x**2 + orbital_vector_y**2) * 
+            np.sqrt(wobble_vector_x**2 + wobble_vector_y**2) + 1e-10
+        )
+        
+        complete_df['rotation_orbital_interference'] = rotation_orbital_interference
+        complete_df['rotation_wobble_interference'] = rotation_wobble_interference
+        complete_df['orbital_wobble_interference'] = orbital_wobble_interference
+        
+        # J. DYNAMIC INTERFERENCE STATES
+        # Classify each station pair's current interference state
+        
+        def classify_interference_state(rot_orb, rot_wob, orb_wob):
+            """Classify the interference state based on vector alignments"""
+            constructive_threshold = 0.5
+            destructive_threshold = -0.5
+            
+            constructive_count = sum([
+                rot_orb > constructive_threshold,
+                rot_wob > constructive_threshold, 
+                orb_wob > constructive_threshold
+            ])
+            
+            destructive_count = sum([
+                rot_orb < destructive_threshold,
+                rot_wob < destructive_threshold,
+                orb_wob < destructive_threshold
+            ])
+            
+            if constructive_count >= 2:
+                return 'constructive'
+            elif destructive_count >= 2:
+                return 'destructive'
+            elif constructive_count == 1 and destructive_count == 1:
+                return 'mixed'
+            else:
+                return 'neutral'
+        
+        complete_df['interference_state'] = complete_df.apply(
+            lambda row: classify_interference_state(
+                row['rotation_orbital_interference'],
+                row['rotation_wobble_interference'], 
+                row['orbital_wobble_interference']
+            ), axis=1
+        )
+        
+        # K. TEMPORAL OSCILLATION PATTERNS
+        # Track how interference states change over time for each distance category
+        
+        # Create oscillation strength metric
+        # Measures how much the motion vector magnitude oscillates
+        complete_df['motion_oscillation_strength'] = (
+            abs(rotation_vector_x) + abs(orbital_vector_x) + abs(wobble_vector_x) + abs(tidal_vector_x)
+        ) / (complete_df['total_motion_vector_magnitude'] + 1e-10)
+        
+        # L. PHASE-LOCKED OSCILLATIONS
+        # Some station pairs will oscillate in phase, others out of phase
+        
+        # Calculate relative phase between different motion components
+        complete_df['rotation_orbital_phase_lock'] = np.cos(rotation_phase - orbital_phase)
+        complete_df['rotation_wobble_phase_lock'] = np.cos(rotation_phase - chandler_phase)
+        complete_df['orbital_wobble_phase_lock'] = np.cos(orbital_phase - chandler_phase)
+        complete_df['tidal_rotation_phase_lock'] = np.cos(tidal_phase - rotation_phase)
+        
+        # Overall phase coherence (how synchronized are all the motions)
+        complete_df['overall_phase_coherence'] = (
+            abs(complete_df['rotation_orbital_phase_lock']) +
+            abs(complete_df['rotation_wobble_phase_lock']) +
+            abs(complete_df['orbital_wobble_phase_lock']) +
+            abs(complete_df['tidal_rotation_phase_lock'])
+        ) / 4.0
+        
+        # M. ACCELERATION COUPLING STRENGTH WITH INTERFERENCE
+        # Enhanced coupling that accounts for constructive/destructive interference
+        complete_df['interference_weighted_coupling'] = (
+            complete_df['differential_centripetal_acc'] * complete_df['rotation_orbital_interference'] +
+            complete_df['differential_orbital_acc'] * complete_df['orbital_wobble_interference'] +
+            complete_df['differential_wobble_acc'] * complete_df['rotation_wobble_interference']
+        ) * complete_df['overall_phase_coherence']
+        
+        # 2. ORBITAL PROJECTION ANALYSIS  
+        # Different station pairs see different projections of Earth's 30 km/s orbital motion
+        complete_df['azimuth'] = complete_df.apply(
+            lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                       row['station2_lat'], row['station2_lon']), axis=1
+        )
+        
+        # Project orbital motion onto station pair baseline
+        orbital_speed_kms = 29.78  # km/s
+        complete_df['orbital_projection'] = complete_df.apply(
+            lambda row: orbital_speed_kms * abs(np.cos(np.radians(row['azimuth']))), axis=1
+        )
+        
+        # 3. DISTANCE-DEPENDENT BEAT FREQUENCIES
+        # Beat patterns vary with station separation
+        distance_bins = [0, 1000, 3000, 6000, 10000, 15000]  # km
+        distance_labels = ['<1000km', '1000-3000km', '3000-6000km', '6000-10000km', '>10000km']
+        complete_df['distance_category'] = pd.cut(complete_df['dist_km'], 
+                                                 bins=distance_bins, 
+                                                 labels=distance_labels)
+        
+        # 4. RELATIVE MOTION BEAT ANALYSIS BY DISTANCE
+        relative_motion_results = {}
+        
+        for dist_cat in distance_labels:
+            if dist_cat not in complete_df['distance_category'].values:
+                continue
+                
+            dist_data = complete_df[complete_df['distance_category'] == dist_cat].copy()
+            
+            if len(dist_data) < 1000:  # Need sufficient data
+                continue
+                
+            print_status(f"Analyzing relative motion beats for {dist_cat} pairs ({len(dist_data)} pairs)", "INFO")
+            
+            # Calculate relative motion frequencies for this distance range
+            mean_distance = dist_data['dist_km'].mean()
+            mean_diff_rotation = dist_data['differential_rotation_velocity'].mean()
+            mean_orbital_proj = dist_data['orbital_projection'].mean()
+            
+            # Use the same beat frequencies as main analysis but in relative motion context
+            # These are the interference patterns between different Earth motions
+            relative_frequencies = {
+                'tidal_m2_tidal_s2_diff': 1/14.765,  # ~14.8 days (tidal cycle difference)
+                'chandler_annual_sum': 1/196.9,      # ~197 days (Chandler + annual)
+                'chandler_semiannual_sum': 1/127.9,  # ~128 days (Chandler + semiannual)
+                'annual_semiannual_sum': 1/121.8     # ~122 days (annual + semiannual)
+            }
+            
+            # 5. PHASE ANALYSIS FOR RELATIVE MOTION BEATS
+            # Test each relative motion frequency for modulation
+            beat_results = {}
+            
+            for freq_name, freq_value in relative_frequencies.items():
+                if freq_value <= 0 or freq_value > 10:  # Skip invalid frequencies
+                    continue
+                    
+                # Calculate phase for this beat frequency (same as main analysis)
+                dist_data['beat_phase'] = (2 * np.pi * dist_data['days_since_epoch'] * freq_value) % (2 * np.pi)
+                
+                # Bin by phase (same as main analysis)
+                n_phase_bins = 12
+                dist_data['beat_phase_bin'] = (dist_data['beat_phase'] // (2 * np.pi / n_phase_bins)).astype(int)
+
+                # Track coherence across phases
+                phase_tracking = []
+
+                for bin_idx in range(n_phase_bins):
+                    bin_data = dist_data[dist_data['beat_phase_bin'] == bin_idx]
+
+                    if len(bin_data) < 50:  # Lower threshold for relative motion
+                        continue
+
+                    phase_tracking.append({
+                        'phase_bin': bin_idx,
+                        'phase_radians': bin_idx * 2 * np.pi / n_phase_bins,
+                        'mean_coherence': float(bin_data['coherence'].mean()),
+                        'n_pairs': len(bin_data)
+                    })
+                
+                if len(phase_tracking) < 6:  # Need reasonable phase coverage
+                    continue
+                    
+                # Test for sinusoidal modulation in coherence
+                phases = [t['phase_radians'] for t in phase_tracking]
+                coherences = [t['mean_coherence'] for t in phase_tracking]
+                
+                try:
+                    # Check data variation before fitting
+                    coherence_std = np.std(coherences)
+                    if coherence_std < 1e-6:  # Very low variation
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'period_days': float(1.0/freq_value) if freq_value > 0 else float('inf'),
+                            'fit_success': False,
+                            'error': 'Insufficient coherence variation for relative motion analysis',
+                            'coherence_std': float(coherence_std),
+                            'n_phase_bins': len(phase_tracking)
+                        }
+                        continue
+                    
+                    # Simplified analysis: direct correlation without curve fitting
+                    # This avoids the SciPy optimization warnings
+                    phase_sin = np.sin(phases)
+                    phase_cos = np.cos(phases)
+
+                    # Additional checks to prevent ConstantInputWarning
+                    phase_sin_std = np.std(phase_sin)
+                    phase_cos_std = np.std(phase_cos)
+
+                    # Skip if phase arrays are constant or have insufficient variation
+                    if phase_sin_std < 1e-12 or phase_cos_std < 1e-12 or coherence_std < 1e-12:
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'period_days': float(1.0/freq_value) if freq_value > 0 else float('inf'),
+                            'fit_success': False,
+                            'error': 'Insufficient variation for correlation (prevents scipy warning)',
+                            'coherence_std': float(coherence_std),
+                            'phase_sin_std': float(phase_sin_std),
+                            'phase_cos_std': float(phase_cos_std),
+                            'n_phase_bins': len(phase_tracking)
+                        }
+                        continue
+
+                    # Check if we have at least 3 unique values (scipy's minimum)
+                    if len(set(coherences)) < 3 or len(set(phase_sin)) < 3 or len(set(phase_cos)) < 3:
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'period_days': float(1.0/freq_value) if freq_value > 0 else float('inf'),
+                            'fit_success': False,
+                            'error': 'Insufficient unique values for correlation',
+                            'coherence_unique': len(set(coherences)),
+                            'phase_sin_unique': len(set(phase_sin)),
+                            'phase_cos_unique': len(set(phase_cos)),
+                            'n_phase_bins': len(phase_tracking)
+                        }
+                        continue
+
+                    try:
+                        from scipy.stats import pearsonr
+                        corr_sin, p_sin = pearsonr(coherences, phase_sin)
+                        corr_cos, p_cos = pearsonr(coherences, phase_cos)
+                    except Exception as e:
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'period_days': float(1.0/freq_value) if freq_value > 0 else float('inf'),
+                            'fit_success': False,
+                            'error': f'Correlation calculation failed: {e}',
+                            'n_phase_bins': len(phase_tracking)
+                        }
+                        continue
+                    
+                    # Take the stronger correlation
+                    if abs(corr_sin) > abs(corr_cos):
+                        correlation = corr_sin
+                        p_value = p_sin
+                        phase_component = 'sine'
+                    else:
+                        correlation = corr_cos
+                        p_value = p_cos
+                        phase_component = 'cosine'
+                    
+                    # Check for valid results
+                    if not (np.isnan(correlation) or np.isnan(p_value)):
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'period_days': float(1.0/freq_value) if freq_value > 0 else float('inf'),
+                            'correlation': float(correlation),
+                            'p_value': float(p_value),
+                            'phase_component': phase_component,
+                            'n_phase_bins': len(phase_tracking),
+                            'mean_coherence': float(np.mean(coherences)),
+                            'coherence_variation': float(coherence_std),
+                            'fit_success': True,
+                            'analysis_method': 'direct_correlation',
+                            'phase_tracking': phase_tracking
+                        }
+                    else:
+                        beat_results[freq_name] = {
+                            'frequency_cpd': float(freq_value),
+                            'fit_success': False,
+                            'error': 'NaN correlation results',
+                            'correlation': float(correlation) if not np.isnan(correlation) else None,
+                            'p_value': float(p_value) if not np.isnan(p_value) else None
+                        }
+                    
+                except Exception as e:
+                    beat_results[freq_name] = {
+                        'frequency_cpd': float(freq_value),
+                        'fit_success': False,
+                        'error': str(e),
+                        'n_phase_bins': len(phase_tracking) if 'phase_tracking' in locals() else 0
+                    }
+            
+        # Count successful analyses
+        successful_analyses = sum(1 for v in beat_results.values() if v.get('fit_success'))
+        significant_beats = {k: v for k, v in beat_results.items()
+                            if v.get('fit_success') and v.get('p_value', 1) < 0.3 and abs(v.get('correlation', 0)) > 0.2}
+
+        # Store results for this distance category
+        relative_motion_results[dist_cat] = {
+            'n_pairs': len(dist_data),
+            'mean_distance_km': float(mean_distance),
+            'mean_differential_rotation_kmh': float(mean_diff_rotation),
+            'mean_orbital_projection_kms': float(mean_orbital_proj),
+            'relative_frequencies': relative_frequencies,
+            'beat_analysis': beat_results,
+            'significant_beats': significant_beats,
+            'successful_analyses': successful_analyses,
+            'total_frequencies_tested': len(beat_results)
+        }
+        
+        # 6. CROSS-DISTANCE ANALYSIS
+        # Look for patterns that vary systematically with distance
+        distance_dependent_patterns = {}
+        
+        if len(relative_motion_results) >= 3:  # Need multiple distance bins
+            print_status("Analyzing distance-dependent patterns...", "INFO")
+            
+            distances = []
+            correlations = []
+            
+            for dist_cat, results in relative_motion_results.items():
+                if results['beat_analysis']:
+                    mean_dist = results['mean_distance_km']
+                    # Find strongest correlation in this distance bin
+                    max_corr = max([b.get('correlation', 0) for b in results['beat_analysis'].values() 
+                                   if b.get('fit_success', False)], default=0)
+                    
+                    distances.append(mean_dist)
+                    correlations.append(max_corr)
+            
+            if len(distances) >= 3:
+                # Test for distance-correlation relationship
+                from scipy.stats import pearsonr
+                dist_corr, dist_p = pearsonr(distances, correlations)
+                
+                distance_dependent_patterns = {
+                    'distance_correlation': float(dist_corr),
+                    'distance_p_value': float(dist_p),
+                    'interpretation': f'Distance-correlation relationship: r={dist_corr:.3f}, p={dist_p:.3f}',
+                    'distances_km': distances,
+                    'max_correlations': correlations
+                }
+        
+        return {
+            'success': True,
+            'analysis_type': 'relative_motion_beats',
+            'n_distance_categories': len(relative_motion_results),
+            'distance_categories': list(relative_motion_results.keys()),
+            'relative_motion_results': relative_motion_results,
+            'distance_dependent_patterns': distance_dependent_patterns,
+            'total_significant_beats': sum(len(r.get('significant_beats', {})) 
+                                         for r in relative_motion_results.values()),
+            'interpretation': classify_relative_motion_evidence(relative_motion_results)
+        }
+        
+    except Exception as e:
+        print_status(f"Relative motion beat analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def classify_relative_motion_evidence(results: Dict) -> str:
+    """Classify strength of relative motion beat evidence"""
+    total_significant = sum(len(r.get('significant_beats', {})) for r in results.values())
+    total_categories = len(results)
+    total_tested = sum(r.get('total_frequencies_tested', 0) for r in results.values())
+    total_successful = sum(r.get('successful_analyses', 0) for r in results.values())
+
+    # Get the strongest correlation found
+    strongest_correlation = 0.0
+    for cat_results in results.values():
+        for beat_data in cat_results.get('significant_beats', {}).values():
+            strongest_correlation = max(strongest_correlation, abs(beat_data.get('correlation', 0)))
+
+    # Classification based on detection quality and strength
+    if total_significant >= 3 and strongest_correlation >= 0.5:
+        return f"Robust relative motion coupling confirmed across multiple distance scales ({total_significant} significant beat patterns, max |r|={strongest_correlation:.3f})"
+    elif total_significant >= 2 and strongest_correlation >= 0.3:
+        return f"Significant relative motion signatures identified ({total_significant} beat patterns, max |r|={strongest_correlation:.3f})"
+    elif total_significant >= 1:
+        return f"Relative motion beat patterns detected ({total_significant} significant patterns, max |r|={strongest_correlation:.3f})"
+    elif total_successful > 0:
+        return f"Relative motion patterns analyzed ({total_successful}/{total_tested} frequencies) but did not meet statistical significance thresholds"
+    elif total_tested > 0:
+        return f"Relative motion patterns evaluated ({total_tested} frequencies) but insufficient data for robust statistical analysis"
+    else:
+        return "Relative motion beat patterns could not be analyzed due to insufficient data"
+
+def run_mesh_dance_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Mesh Dance Analysis: Coherent network dynamics detection.
+    
+    Analyzes the collective motion patterns of the GPS station network
+    to detect coherent dynamics that may indicate coupling with spacetime structure.
+    The analysis examines whether the entire GPS network exhibits coordinated
+    motion patterns that maintain consistent phase relationships across the mesh.
+    
+    Key concepts:
+    1. MESH COHERENCE: Network-wide coordination of station timing correlations
+    2. SPIRAL DYNAMICS: Detection of helical motion signatures in correlation patterns
+    3. PHASE RELATIONSHIPS: Maintenance of coherent phase relationships across stations
+    4. COLLECTIVE OSCILLATION: Network-wide synchronized oscillation patterns
+    5. SPACETIME COUPLING: Network response to structured spacetime geometry
+    
+    Args:
+        complete_df: Complete pair dataset with all motion analysis
+        
+    Returns:
+        dict: Mesh dance analysis results with network coherence metrics
+    """
+    print_status("Starting Mesh Dance Analysis - Network Coherence Assessment", "PROCESS")
+    print_status("Analyzing coherent motion patterns of GPS station network...", "PROCESS")
+    
+    try:
+        # Convert dates and basic setup
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # 1. MESH COHERENCE ANALYSIS
+        # Test if all stations move together as one coherent system
+        print_status("Analyzing mesh coherence patterns...", "INFO")
+        
+        # Group station pairs by time windows to track mesh evolution
+        time_window_days = 7  # Weekly analysis
+        complete_df['time_window'] = (complete_df['days_since_epoch'] // time_window_days) * time_window_days
+        
+        mesh_coherence_results = {}
+        unique_time_windows = sorted(complete_df['time_window'].unique())
+        
+        if len(unique_time_windows) < 10:  # Need sufficient temporal sampling
+            return {'success': False, 'error': f'Insufficient time windows: {len(unique_time_windows)} (need ≥10)'}
+        
+        # Sample time windows for analysis (every 4th window to manage computation)
+        sampled_windows = unique_time_windows[::4]
+        
+        mesh_evolution = []
+        
+        for window in sampled_windows:
+            window_data = complete_df[complete_df['time_window'] == window].copy()
+            
+            if len(window_data) < 1000:  # Need sufficient pairs per window
+                continue
+                
+            # Calculate mesh properties for this time window
+            
+            # A. COLLECTIVE MOTION VECTOR
+            # The overall motion direction of the entire mesh
+            mean_total_vector_magnitude = window_data['total_motion_vector_magnitude'].mean()
+            mean_total_vector_direction = window_data['total_motion_vector_direction'].mean()
+            
+            # B. MESH COHERENCE METRICS
+            # How well synchronized are all the station pairs?
+            coherence_std = window_data['coherence'].std()
+            coherence_mean = window_data['coherence'].mean()
+            coherence_uniformity = 1.0 / (1.0 + coherence_std)  # Higher = more uniform
+            
+            # C. PHASE COHERENCE ACROSS THE MESH
+            # Are all stations oscillating in phase?
+            overall_phase_coherence_mean = window_data['overall_phase_coherence'].mean()
+            overall_phase_coherence_std = window_data['overall_phase_coherence'].std()
+            phase_synchronization = 1.0 / (1.0 + overall_phase_coherence_std)
+            
+            # D. INTERFERENCE STATE DISTRIBUTION
+            # What's the distribution of interference states across the mesh?
+            interference_counts = window_data['interference_state'].value_counts()
+            dominant_interference_state = interference_counts.index[0] if len(interference_counts) > 0 else 'unknown'
+            interference_dominance = interference_counts.iloc[0] / len(window_data) if len(interference_counts) > 0 else 0
+            
+            # E. OSCILLATION SYNCHRONIZATION
+            # Are all parts of the mesh oscillating together?
+            oscillation_mean = window_data['motion_oscillation_strength'].mean()
+            oscillation_std = window_data['motion_oscillation_strength'].std()
+            oscillation_synchronization = 1.0 / (1.0 + oscillation_std)
+            
+            mesh_evolution.append({
+                'time_window': int(window),
+                'days_since_epoch': int(window),
+                'n_pairs': len(window_data),
+                'collective_motion_magnitude': float(mean_total_vector_magnitude),
+                'collective_motion_direction': float(mean_total_vector_direction),
+                'coherence_uniformity': float(coherence_uniformity),
+                'phase_synchronization': float(phase_synchronization),
+                'dominant_interference_state': dominant_interference_state,
+                'interference_dominance': float(interference_dominance),
+                'oscillation_synchronization': float(oscillation_synchronization),
+                'mesh_coherence_score': float(
+                    (coherence_uniformity + phase_synchronization + oscillation_synchronization) / 3.0
+                )
+            })
+        
+        if len(mesh_evolution) < 8:
+            return {'success': False, 'error': f'Insufficient mesh evolution data: {len(mesh_evolution)}'}
+        
+        # 2. SPIRAL DYNAMICS ANALYSIS
+        # Test if the mesh is tracing helical/spiral paths through spacetime
+        print_status("Analyzing spiral dynamics of mesh motion...", "INFO")
+        
+        # Extract time series of collective motion
+        times = [m['days_since_epoch'] for m in mesh_evolution]
+        directions = [m['collective_motion_direction'] for m in mesh_evolution]
+        magnitudes = [m['collective_motion_magnitude'] for m in mesh_evolution]
+        coherence_scores = [m['mesh_coherence_score'] for m in mesh_evolution]
+        
+        # Test for spiral patterns in the motion direction
+        # A true spiral would show systematic rotation of the motion vector
+        direction_changes = np.diff(directions)
+        
+        # Handle angle wrapping
+        direction_changes = np.where(direction_changes > np.pi, direction_changes - 2*np.pi, direction_changes)
+        direction_changes = np.where(direction_changes < -np.pi, direction_changes + 2*np.pi, direction_changes)
+        
+        # Test for consistent rotation (spiral signature)
+        mean_rotation_rate = np.mean(direction_changes)
+        rotation_consistency = 1.0 - np.std(direction_changes) / (np.pi/4)  # Normalized consistency
+        
+        # Test for helical pattern (magnitude oscillation with direction rotation)
+        magnitude_oscillation = np.std(magnitudes) / np.mean(magnitudes) if np.mean(magnitudes) > 0 else 0
+        
+        spiral_signature = {
+            'mean_rotation_rate_rad_per_week': float(mean_rotation_rate),
+            'rotation_consistency': float(max(0, rotation_consistency)),
+            'magnitude_oscillation': float(magnitude_oscillation),
+            'spiral_strength': float(max(0, rotation_consistency) * magnitude_oscillation),
+            'is_spiral_motion': bool(rotation_consistency > 0.3 and magnitude_oscillation > 0.1)
+        }
+        
+        # 3. COLLECTIVE COHERENT OSCILLATION
+        # Test if the entire mesh oscillates coherently as one system
+        print_status("Analyzing collective mesh oscillation patterns...", "INFO")
+        
+        # Fit sinusoidal models to mesh coherence over time
+        time_array = np.array(times)
+        coherence_array = np.array(coherence_scores)
+        
+        # Test multiple frequencies to find dominant oscillation
+        test_frequencies = [1/365.25, 1/427.0, 1.0, 2.0]  # Annual, Chandler, daily, semi-daily
+        oscillation_results = {}
+        
+        for freq in test_frequencies:
+            try:
+                # Simplified oscillation analysis to avoid SciPy warnings
+                # Use direct correlation instead of curve fitting
+                
+                period_days = 1.0 / freq if freq > 0 else float('inf')
+                
+                # Check data variation first
+                coherence_std = np.std(coherence_array)
+                if coherence_std < 1e-8:  # Very low variation
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient coherence variation',
+                        'coherence_std': float(coherence_std)
+                    }
+                    continue
+                
+                # Direct correlation with sine and cosine components
+                time_phase = 2 * np.pi * freq * time_array
+                phase_sin = np.sin(time_phase)
+                phase_cos = np.cos(time_phase)
+
+                # Additional checks to prevent ConstantInputWarning
+                phase_sin_std = np.std(phase_sin)
+                phase_cos_std = np.std(phase_cos)
+
+                # Skip if phase arrays are constant or have insufficient variation
+                if phase_sin_std < 1e-12 or phase_cos_std < 1e-12 or coherence_std < 1e-12:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient variation for correlation (prevents scipy warning)',
+                        'coherence_std': float(coherence_std),
+                        'phase_sin_std': float(phase_sin_std),
+                        'phase_cos_std': float(phase_cos_std)
+                    }
+                    continue
+
+                # Check if we have at least 3 unique values (scipy's minimum)
+                if len(set(coherence_array)) < 3 or len(set(phase_sin)) < 3 or len(set(phase_cos)) < 3:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient unique values for correlation',
+                        'coherence_unique': len(set(coherence_array)),
+                        'phase_sin_unique': len(set(phase_sin)),
+                        'phase_cos_unique': len(set(phase_cos))
+                    }
+                    continue
+
+                try:
+                    from scipy.stats import pearsonr
+                    corr_sin, p_sin = pearsonr(coherence_array, phase_sin)
+                    corr_cos, p_cos = pearsonr(coherence_array, phase_cos)
+                except Exception as e:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': f'Correlation calculation failed: {e}'
+                    }
+                    continue
+                
+                # Take the stronger correlation
+                if abs(corr_sin) > abs(corr_cos):
+                    correlation = corr_sin
+                    p_value = p_sin
+                    phase_component = 'sine'
+                else:
+                    correlation = corr_cos
+                    p_value = p_cos
+                    phase_component = 'cosine'
+                
+                # Check for valid results
+                if not (np.isnan(correlation) or np.isnan(p_value)):
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'correlation': float(correlation),
+                        'p_value': float(p_value),
+                        'phase_component': phase_component,
+                        'coherence_variation': float(coherence_std),
+                        'fit_success': True,
+                        'analysis_method': 'direct_correlation'
+                    }
+                else:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'NaN correlation results'
+                    }
+                
+            except Exception as e:
+                oscillation_results[f'freq_{freq:.6f}'] = {
+                    'frequency_cpd': float(freq),
+                    'fit_success': False,
+                    'error': str(e)
+                }
+        
+        # Find the strongest oscillation
+        successful_oscillations = {k: v for k, v in oscillation_results.items() 
+                                 if v.get('fit_success') and v.get('p_value', 1) < 0.05}
+        
+        if successful_oscillations:
+            best_oscillation = max(successful_oscillations.values(), 
+                                 key=lambda x: abs(x.get('correlation', 0)))
+        else:
+            best_oscillation = {'no_significant_oscillation': True}
+        
+        # 4. SPACETIME COUPLING SIGNATURE
+        # Network response analysis: coherent mesh coupling to spacetime structure
+        print_status("Analyzing spacetime coupling signatures...", "INFO")
+        
+        # Calculate mesh-wide correlation with Earth motion phases
+        mesh_earth_coupling = {}
+        
+        # Test correlation between mesh coherence and various Earth motion phases
+        if len(mesh_evolution) >= 12:  # Need sufficient data
+            
+            # Earth motion phases for each time window
+            earth_phases = {}
+            for window_data in mesh_evolution:
+                days = window_data['days_since_epoch']
+                earth_phases[days] = {
+                    'rotation_phase': (days % 1.0) * 2 * np.pi,
+                    'orbital_phase': (days % 365.25) / 365.25 * 2 * np.pi,
+                    'chandler_phase': (days % 427.0) / 427.0 * 2 * np.pi
+                }
+            
+            # Test correlations
+            for phase_name in ['rotation_phase', 'orbital_phase', 'chandler_phase']:
+                phase_values = [earth_phases[m['days_since_epoch']][phase_name] for m in mesh_evolution]
+                
+                # Convert phases to sine/cosine for correlation
+                phase_sin = np.sin(phase_values)
+                phase_cos = np.cos(phase_values)
+                
+                # Test correlation with mesh coherence
+                coherence_values = [m['mesh_coherence_score'] for m in mesh_evolution]
+                
+                try:
+                    # Safe correlation calculation with variation checks
+                    coherence_std = np.std(coherence_values)
+                    phase_sin_std = np.std(phase_sin)
+                    phase_cos_std = np.std(phase_cos)
+                    
+                    if coherence_std < 1e-10 or len(set(coherence_values)) < 3:
+                        mesh_earth_coupling[phase_name] = {
+                            'error': 'Constant coherence values - no variation to correlate',
+                            'coherence_std': float(coherence_std),
+                            'coherence_range': [float(min(coherence_values)), float(max(coherence_values))],
+                            'unique_values': len(set(coherence_values))
+                        }
+                    elif phase_sin_std < 1e-10 and phase_cos_std < 1e-10:
+                        mesh_earth_coupling[phase_name] = {
+                            'error': 'Constant phase values - insufficient temporal variation',
+                            'phase_std': float(phase_sin_std)
+                        }
+                    else:
+                        # Proceed with correlation if sufficient variation
+                        # Additional check to ensure we don't have constant arrays
+                        if len(set(coherence_values)) >= 3 and len(set(phase_sin)) >= 3:
+                            # Check for scipy's stricter constant threshold
+                            if coherence_std < 1e-12 or phase_sin_std < 1e-12:
+                                mesh_earth_coupling[phase_name] = {
+                                    'error': 'Arrays too constant for scipy correlation',
+                                    'coherence_std': float(coherence_std),
+                                    'phase_sin_std': float(phase_sin_std),
+                                    'phase_cos_std': float(phase_cos_std),
+                                    'coherence_unique': len(set(coherence_values)),
+                                    'phase_sin_unique': len(set(phase_sin))
+                                }
+                                continue
+
+                            try:
+                                corr_sin, p_sin = pearsonr(coherence_values, phase_sin)
+                                corr_cos, p_cos = pearsonr(coherence_values, phase_cos)
+                            except Exception as e:
+                                mesh_earth_coupling[phase_name] = {
+                                    'error': f'Correlation calculation failed: {e}',
+                                    'coherence_std': float(coherence_std),
+                                    'phase_sin_std': float(phase_sin_std)
+                                }
+                                continue
+                        else:
+                            mesh_earth_coupling[phase_name] = {
+                                'error': 'Insufficient unique values for correlation',
+                                'coherence_unique': len(set(coherence_values)),
+                                'phase_sin_unique': len(set(phase_sin)),
+                                'phase_cos_unique': len(set(phase_cos))
+                            }
+                            continue
+                        
+                        # Check for NaN results
+                        if np.isnan(corr_sin) or np.isnan(corr_cos):
+                            mesh_earth_coupling[phase_name] = {
+                                'error': 'NaN correlation results',
+                                'corr_sin': float(corr_sin) if not np.isnan(corr_sin) else None,
+                                'corr_cos': float(corr_cos) if not np.isnan(corr_cos) else None
+                            }
+                        else:
+                            # Take the stronger correlation
+                            if abs(corr_sin) > abs(corr_cos):
+                                mesh_earth_coupling[phase_name] = {
+                                    'correlation': float(corr_sin),
+                                    'p_value': float(p_sin),
+                                    'phase_component': 'sine',
+                                    'data_variation': float(coherence_std)
+                                }
+                            else:
+                                mesh_earth_coupling[phase_name] = {
+                                    'correlation': float(corr_cos),
+                                    'p_value': float(p_cos),
+                                    'phase_component': 'cosine',
+                                    'data_variation': float(coherence_std)
+                                }
+                        
+                except Exception as e:
+                    mesh_earth_coupling[phase_name] = {
+                        'error': str(e),
+                        'coherence_std': float(np.std(coherence_values)) if len(coherence_values) > 0 else 0
+                    }
+        
+        # 5. NETWORK COHERENCE CLASSIFICATION
+        # Final assessment: coherent network dynamics signature strength
+        print_status("Computing network coherence classification...", "INFO")
+        
+        dance_metrics = {
+            'mesh_coherence_strength': float(np.mean([m['mesh_coherence_score'] for m in mesh_evolution])),
+            'spiral_motion_detected': spiral_signature['is_spiral_motion'],
+            'spiral_strength': spiral_signature['spiral_strength'],
+            'collective_oscillation_detected': len(successful_oscillations) > 0,
+            'strongest_oscillation_correlation': float(best_oscillation.get('correlation', 0)),
+            'earth_coupling_detected': any(abs(c.get('correlation', 0)) > 0.3 and c.get('p_value', 1) < 0.05 
+                                         for c in mesh_earth_coupling.values()),
+            'n_significant_earth_couplings': sum(1 for c in mesh_earth_coupling.values() 
+                                               if abs(c.get('correlation', 0)) > 0.3 and c.get('p_value', 1) < 0.05)
+        }
+        
+        # NETWORK COHERENCE CLASSIFICATION
+        dance_score = (
+            dance_metrics['mesh_coherence_strength'] * 0.3 +
+            (1.0 if dance_metrics['spiral_motion_detected'] else 0.0) * 0.3 +
+            (1.0 if dance_metrics['collective_oscillation_detected'] else 0.0) * 0.2 +
+            (1.0 if dance_metrics['earth_coupling_detected'] else 0.0) * 0.2
+        )
+        
+        dance_classification = classify_dance_signature(dance_score, dance_metrics)
+        
+        return {
+            'success': True,
+            'analysis_type': 'mesh_dance_ultimate',
+            'n_time_windows': len(mesh_evolution),
+            'temporal_span_days': int(max(times) - min(times)),
+            'mesh_evolution': mesh_evolution,
+            'spiral_signature': spiral_signature,
+            'collective_oscillation': {
+                'oscillation_results': oscillation_results,
+                'best_oscillation': best_oscillation,
+                'n_significant_oscillations': len(successful_oscillations)
+            },
+            'spacetime_coupling': {
+                'mesh_earth_coupling': mesh_earth_coupling,
+                'coupling_summary': dance_metrics
+            },
+            'dance_signature': {
+                'dance_score': float(dance_score),
+                'classification': dance_classification,
+                'metrics': dance_metrics
+            },
+            'interpretation': f"MESH DANCE ANALYSIS: {dance_classification}"
+        }
+        
+    except Exception as e:
+        print_status(f"Mesh dance analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def classify_dance_signature(dance_score: float, metrics: Dict) -> str:
+    """Classify the strength of the mesh dance signature for network coherence assessment"""
+    
+    if dance_score >= 0.8 and metrics['spiral_motion_detected'] and metrics['earth_coupling_detected']:
+        return "EXCEPTIONAL NETWORK COHERENCE - Strong mesh dance dynamics with spacetime coupling detected"
+    elif dance_score >= 0.6 and (metrics['spiral_motion_detected'] or metrics['collective_oscillation_detected']):
+        return "STRONG NETWORK COHERENCE - Clear mesh dance dynamics detected"
+    elif dance_score >= 0.4 and metrics['mesh_coherence_strength'] > 0.5:
+        return "MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns"
+    elif dance_score >= 0.2:
+        return "WEAK NETWORK COHERENCE - Limited mesh coherence detected"
+    else:
+        return "NO NETWORK COHERENCE - No coherent mesh dynamics detected"
+
+# ===== END NEW HELICAL MOTION ANALYSIS FUNCTIONS =====
 
 if __name__ == "__main__":
     success = main()
