@@ -1,0 +1,3331 @@
+{
+  "analysis_center": "CODE",
+  "timestamp": "2025-09-22T05:16:53.168133",
+  "analysis_type": "helical_motion_only",
+  "data_summary": {
+    "total_pairs": 39068753,
+    "unique_stations": 345,
+    "unique_dates": 912
+  },
+  "chandler_wobble_analysis": {
+    "success": true,
+    "chandler_period_days": 427.0,
+    "n_phase_bins": 18,
+    "phase_tracking": [
+      {
+        "phase_bin": 0,
+        "phase_radians": 0.0,
+        "phase_degrees": 0.0,
+        "ew_coherence_mean": 0.0032078920654455916,
+        "ns_coherence_mean": 0.008303336157936035,
+        "ew_coherence_std": 0.7180294990491651,
+        "ns_coherence_std": 0.7167785212182165,
+        "ew_ns_coherence_ratio": 0.3863377327412671,
+        "n_pairs": 2068763,
+        "n_ew_pairs": 939717,
+        "n_ns_pairs": 1129046
+      },
+      {
+        "phase_bin": 1,
+        "phase_radians": 0.3490658503988659,
+        "phase_degrees": 20.0,
+        "ew_coherence_mean": 0.0029302787165737193,
+        "ns_coherence_mean": 0.00612526833054752,
+        "ew_coherence_std": 0.717902044871953,
+        "ns_coherence_std": 0.7178727651351552,
+        "ew_ns_coherence_ratio": 0.4783918937820297,
+        "n_pairs": 2105171,
+        "n_ew_pairs": 956896,
+        "n_ns_pairs": 1148275
+      },
+      {
+        "phase_bin": 2,
+        "phase_radians": 0.6981317007977318,
+        "phase_degrees": 40.0,
+        "ew_coherence_mean": 0.005323720612181408,
+        "ns_coherence_mean": 0.009558547443002436,
+        "ew_coherence_std": 0.7171034023912356,
+        "ns_coherence_std": 0.7181655850036746,
+        "ew_ns_coherence_ratio": 0.5569591660162513,
+        "n_pairs": 2078621,
+        "n_ew_pairs": 945028,
+        "n_ns_pairs": 1133593
+      },
+      {
+        "phase_bin": 3,
+        "phase_radians": 1.0471975511965976,
+        "phase_degrees": 59.99999999999999,
+        "ew_coherence_mean": -0.0028662931959192086,
+        "ns_coherence_mean": 0.01172442062409822,
+        "ew_coherence_std": 0.7144298696817388,
+        "ns_coherence_std": 0.7158519251573252,
+        "ew_ns_coherence_ratio": -0.2444720543399703,
+        "n_pairs": 2009174,
+        "n_ew_pairs": 915299,
+        "n_ns_pairs": 1093875
+      },
+      {
+        "phase_bin": 4,
+        "phase_radians": 1.3962634015954636,
+        "phase_degrees": 80.0,
+        "ew_coherence_mean": -0.0008104633852025861,
+        "ns_coherence_mean": 0.013987728848315797,
+        "ew_coherence_std": 0.7135169177475318,
+        "ns_coherence_std": 0.7138770253164741,
+        "ew_ns_coherence_ratio": -0.05794102773876479,
+        "n_pairs": 2045979,
+        "n_ew_pairs": 931101,
+        "n_ns_pairs": 1114878
+      },
+      {
+        "phase_bin": 5,
+        "phase_radians": 1.7453292519943295,
+        "phase_degrees": 100.0,
+        "ew_coherence_mean": 0.005466437935943095,
+        "ns_coherence_mean": 0.011560063630894818,
+        "ew_coherence_std": 0.7126519169192002,
+        "ns_coherence_std": 0.7151329168333593,
+        "ew_ns_coherence_ratio": 0.4728726510928349,
+        "n_pairs": 2047807,
+        "n_ew_pairs": 929438,
+        "n_ns_pairs": 1118369
+      },
+      {
+        "phase_bin": 6,
+        "phase_radians": 2.0943951023931953,
+        "phase_degrees": 119.99999999999999,
+        "ew_coherence_mean": 0.0007381615814377344,
+        "ns_coherence_mean": 0.010979258921820343,
+        "ew_coherence_std": 0.7147025838774205,
+        "ns_coherence_std": 0.7177991423828387,
+        "ew_ns_coherence_ratio": 0.06723236847713839,
+        "n_pairs": 2025657,
+        "n_ew_pairs": 915747,
+        "n_ns_pairs": 1109910
+      },
+      {
+        "phase_bin": 7,
+        "phase_radians": 2.443460952792061,
+        "phase_degrees": 140.0,
+        "ew_coherence_mean": 0.0008500869697545166,
+        "ns_coherence_mean": 0.013648050859728237,
+        "ew_coherence_std": 0.7108265372160014,
+        "ns_coherence_std": 0.7141920317357903,
+        "ew_ns_coherence_ratio": 0.062286327805452193,
+        "n_pairs": 1921284,
+        "n_ew_pairs": 867975,
+        "n_ns_pairs": 1053309
+      },
+      {
+        "phase_bin": 8,
+        "phase_radians": 2.792526803190927,
+        "phase_degrees": 160.0,
+        "ew_coherence_mean": 0.0034174495169952065,
+        "ns_coherence_mean": 0.010624257045661289,
+        "ew_coherence_std": 0.7121727121630506,
+        "ns_coherence_std": 0.7154916473412036,
+        "ew_ns_coherence_ratio": 0.3216647999297812,
+        "n_pairs": 2024856,
+        "n_ew_pairs": 915571,
+        "n_ns_pairs": 1109285
+      },
+      {
+        "phase_bin": 9,
+        "phase_radians": 3.141592653589793,
+        "phase_degrees": 180.0,
+        "ew_coherence_mean": -0.0008504927172477328,
+        "ns_coherence_mean": 0.01289881948672609,
+        "ew_coherence_std": 0.7134807691375541,
+        "ns_coherence_std": 0.7150715430896859,
+        "ew_ns_coherence_ratio": -0.06593570195497017,
+        "n_pairs": 1996948,
+        "n_ew_pairs": 902240,
+        "n_ns_pairs": 1094708
+      },
+      {
+        "phase_bin": 10,
+        "phase_radians": 3.490658503988659,
+        "phase_degrees": 200.0,
+        "ew_coherence_mean": -0.00037929573852079647,
+        "ns_coherence_mean": 0.01585481488287679,
+        "ew_coherence_std": 0.7129165963543954,
+        "ns_coherence_std": 0.7149681311927196,
+        "ew_ns_coherence_ratio": -0.02392306320337023,
+        "n_pairs": 1929043,
+        "n_ew_pairs": 870130,
+        "n_ns_pairs": 1058913
+      },
+      {
+        "phase_bin": 11,
+        "phase_radians": 3.839724354387525,
+        "phase_degrees": 220.0,
+        "ew_coherence_mean": -0.003450526552843059,
+        "ns_coherence_mean": 0.011700223087955548,
+        "ew_coherence_std": 0.715700986284726,
+        "ns_coherence_std": 0.7161094183447457,
+        "ew_ns_coherence_ratio": -0.2949111762146743,
+        "n_pairs": 2009172,
+        "n_ew_pairs": 908505,
+        "n_ns_pairs": 1100667
+      },
+      {
+        "phase_bin": 12,
+        "phase_radians": 4.1887902047863905,
+        "phase_degrees": 239.99999999999997,
+        "ew_coherence_mean": 0.002181798652661818,
+        "ns_coherence_mean": 0.010525763327128623,
+        "ew_coherence_std": 0.7159012723703359,
+        "ns_coherence_std": 0.7189476043227756,
+        "ew_ns_coherence_ratio": 0.20728175096228407,
+        "n_pairs": 2930043,
+        "n_ew_pairs": 1330818,
+        "n_ns_pairs": 1599225
+      },
+      {
+        "phase_bin": 13,
+        "phase_radians": 4.537856055185257,
+        "phase_degrees": 260.0,
+        "ew_coherence_mean": 0.0005278277112039115,
+        "ns_coherence_mean": 0.01045728393827068,
+        "ew_coherence_std": 0.7170410120511811,
+        "ns_coherence_std": 0.7190220249728678,
+        "ew_ns_coherence_ratio": 0.050474646602280016,
+        "n_pairs": 3057363,
+        "n_ew_pairs": 1388417,
+        "n_ns_pairs": 1668946
+      },
+      {
+        "phase_bin": 14,
+        "phase_radians": 4.886921905584122,
+        "phase_degrees": 280.0,
+        "ew_coherence_mean": 0.0028228838716778705,
+        "ns_coherence_mean": 0.010551826094255989,
+        "ew_coherence_std": 0.7183508587262196,
+        "ns_coherence_std": 0.7188498971477769,
+        "ew_ns_coherence_ratio": 0.2675256250872577,
+        "n_pairs": 2516896,
+        "n_ew_pairs": 1144536,
+        "n_ns_pairs": 1372360
+      },
+      {
+        "phase_bin": 15,
+        "phase_radians": 5.235987755982989,
+        "phase_degrees": 300.0,
+        "ew_coherence_mean": 0.0026409491904086937,
+        "ns_coherence_mean": 0.007210729795360793,
+        "ew_coherence_std": 0.7166299587359137,
+        "ns_coherence_std": 0.7171494477859649,
+        "ew_ns_coherence_ratio": 0.36625269083135187,
+        "n_pairs": 2084044,
+        "n_ew_pairs": 945024,
+        "n_ns_pairs": 1139020
+      },
+      {
+        "phase_bin": 16,
+        "phase_radians": 5.585053606381854,
+        "phase_degrees": 320.0,
+        "ew_coherence_mean": 0.00785155566709881,
+        "ns_coherence_mean": 0.007249563146488041,
+        "ew_coherence_std": 0.7177139147697184,
+        "ns_coherence_std": 0.7172434554635733,
+        "ew_ns_coherence_ratio": 1.0830384546553535,
+        "n_pairs": 2119287,
+        "n_ew_pairs": 963039,
+        "n_ns_pairs": 1156248
+      },
+      {
+        "phase_bin": 17,
+        "phase_radians": 5.93411945678072,
+        "phase_degrees": 339.99999999999994,
+        "ew_coherence_mean": 0.006823589299969978,
+        "ns_coherence_mean": 0.006498729577541101,
+        "ew_coherence_std": 0.7160565361655647,
+        "ns_coherence_std": 0.7160704543358303,
+        "ew_ns_coherence_ratio": 1.0499881890072111,
+        "n_pairs": 2052611,
+        "n_ew_pairs": 933436,
+        "n_ns_pairs": 1119175
+      }
+    ],
+    "sinusoidal_fit": {
+      "amplitude": -0.3338936966370357,
+      "phase_shift_radians": -1.3217833953256923,
+      "phase_shift_degrees": -75.7326099826342,
+      "offset": 0.2601735151965971,
+      "correlation": 0.6351647934653333,
+      "p_value": 0.004621300147308177,
+      "fit_success": true,
+      "data_points": 18,
+      "data_variation": 0.3717121915837771
+    },
+    "interpretation": "Significant Chandler wobble signature detected (r=0.635, p<0.01)"
+  },
+  "spherical_harmonics_analysis": {
+    "success": true,
+    "n_sectors": 49,
+    "sector_results": {
+      "theta_0_phi_0": {
+        "theta_bin": 0,
+        "phi_bin": 0,
+        "theta_center_deg": 14.999999999999998,
+        "phi_center_deg": 14.999999999999998,
+        "lambda_km": 1030.3207336922817,
+        "n_pairs": 619599
+      },
+      "theta_0_phi_10": {
+        "theta_bin": 0,
+        "phi_bin": 10,
+        "theta_center_deg": 14.999999999999998,
+        "phi_center_deg": 314.99999999999994,
+        "lambda_km": 14120.792164510136,
+        "n_pairs": 3225
+      },
+      "theta_0_phi_11": {
+        "theta_bin": 0,
+        "phi_bin": 11,
+        "theta_center_deg": 14.999999999999998,
+        "phi_center_deg": 345.0,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 626049
+      },
+      "theta_1_phi_0": {
+        "theta_bin": 1,
+        "phi_bin": 0,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 14.999999999999998,
+        "lambda_km": 2802.7684468143934,
+        "n_pairs": 1196104
+      },
+      "theta_1_phi_1": {
+        "theta_bin": 1,
+        "phi_bin": 1,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 45.0,
+        "lambda_km": 2085.8817892021925,
+        "n_pairs": 1887895
+      },
+      "theta_1_phi_2": {
+        "theta_bin": 1,
+        "phi_bin": 2,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 74.99999999999999,
+        "lambda_km": 19999.999999997657,
+        "n_pairs": 84119
+      },
+      "theta_1_phi_3": {
+        "theta_bin": 1,
+        "phi_bin": 3,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 105.0,
+        "lambda_km": 101.33000661235587,
+        "n_pairs": 27658
+      },
+      "theta_1_phi_4": {
+        "theta_bin": 1,
+        "phi_bin": 4,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 135.0,
+        "lambda_km": 100.65563110646053,
+        "n_pairs": 17924
+      },
+      "theta_1_phi_8": {
+        "theta_bin": 1,
+        "phi_bin": 8,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 255.00000000000003,
+        "lambda_km": 1713.358272921841,
+        "n_pairs": 19175
+      },
+      "theta_1_phi_9": {
+        "theta_bin": 1,
+        "phi_bin": 9,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 285.0,
+        "lambda_km": 1015.0124324360826,
+        "n_pairs": 72378
+      },
+      "theta_1_phi_10": {
+        "theta_bin": 1,
+        "phi_bin": 10,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 314.99999999999994,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 1478931
+      },
+      "theta_1_phi_11": {
+        "theta_bin": 1,
+        "phi_bin": 11,
+        "theta_center_deg": 45.0,
+        "phi_center_deg": 345.0,
+        "lambda_km": 19999.999999999396,
+        "n_pairs": 1587249
+      },
+      "theta_2_phi_0": {
+        "theta_bin": 2,
+        "phi_bin": 0,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 14.999999999999998,
+        "lambda_km": 109.64148457695569,
+        "n_pairs": 1663793
+      },
+      "theta_2_phi_1": {
+        "theta_bin": 2,
+        "phi_bin": 1,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 45.0,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 2780633
+      },
+      "theta_2_phi_2": {
+        "theta_bin": 2,
+        "phi_bin": 2,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 74.99999999999999,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 1082077
+      },
+      "theta_2_phi_3": {
+        "theta_bin": 2,
+        "phi_bin": 3,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 105.0,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 357051
+      },
+      "theta_2_phi_4": {
+        "theta_bin": 2,
+        "phi_bin": 4,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 135.0,
+        "lambda_km": 6034.91165670067,
+        "n_pairs": 225842
+      },
+      "theta_2_phi_6": {
+        "theta_bin": 2,
+        "phi_bin": 6,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 194.99999999999997,
+        "lambda_km": 5011.736208436955,
+        "n_pairs": 212027
+      },
+      "theta_2_phi_7": {
+        "theta_bin": 2,
+        "phi_bin": 7,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 225.0,
+        "lambda_km": 4711.849776695882,
+        "n_pairs": 285754
+      },
+      "theta_2_phi_8": {
+        "theta_bin": 2,
+        "phi_bin": 8,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 255.00000000000003,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 368770
+      },
+      "theta_2_phi_9": {
+        "theta_bin": 2,
+        "phi_bin": 9,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 285.0,
+        "lambda_km": 19999.999999999913,
+        "n_pairs": 1201391
+      },
+      "theta_2_phi_10": {
+        "theta_bin": 2,
+        "phi_bin": 10,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 314.99999999999994,
+        "lambda_km": 5577.683985316306,
+        "n_pairs": 2955653
+      },
+      "theta_2_phi_11": {
+        "theta_bin": 2,
+        "phi_bin": 11,
+        "theta_center_deg": 74.99999999999999,
+        "phi_center_deg": 345.0,
+        "lambda_km": 2429.406683747845,
+        "n_pairs": 1764136
+      },
+      "theta_3_phi_0": {
+        "theta_bin": 3,
+        "phi_bin": 0,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 14.999999999999998,
+        "lambda_km": 323.70488990083777,
+        "n_pairs": 758924
+      },
+      "theta_3_phi_1": {
+        "theta_bin": 3,
+        "phi_bin": 1,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 45.0,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 1469073
+      },
+      "theta_3_phi_2": {
+        "theta_bin": 3,
+        "phi_bin": 2,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 74.99999999999999,
+        "lambda_km": 4881.345898038592,
+        "n_pairs": 1616216
+      },
+      "theta_3_phi_3": {
+        "theta_bin": 3,
+        "phi_bin": 3,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 105.0,
+        "lambda_km": 6095.403318770587,
+        "n_pairs": 1580648
+      },
+      "theta_3_phi_4": {
+        "theta_bin": 3,
+        "phi_bin": 4,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 135.0,
+        "lambda_km": 1189.7027300216187,
+        "n_pairs": 503827
+      },
+      "theta_3_phi_5": {
+        "theta_bin": 3,
+        "phi_bin": 5,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 165.0,
+        "lambda_km": 1407.8121342754107,
+        "n_pairs": 569070
+      },
+      "theta_3_phi_6": {
+        "theta_bin": 3,
+        "phi_bin": 6,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 194.99999999999997,
+        "lambda_km": 19999.999999999996,
+        "n_pairs": 420711
+      },
+      "theta_3_phi_7": {
+        "theta_bin": 3,
+        "phi_bin": 7,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 225.0,
+        "lambda_km": 1339.5800540763846,
+        "n_pairs": 687765
+      },
+      "theta_3_phi_8": {
+        "theta_bin": 3,
+        "phi_bin": 8,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 255.00000000000003,
+        "lambda_km": 19999.999999998636,
+        "n_pairs": 1417976
+      },
+      "theta_3_phi_9": {
+        "theta_bin": 3,
+        "phi_bin": 9,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 285.0,
+        "lambda_km": 9093.475064572756,
+        "n_pairs": 1225865
+      },
+      "theta_3_phi_10": {
+        "theta_bin": 3,
+        "phi_bin": 10,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 314.99999999999994,
+        "lambda_km": 1647.8600070634964,
+        "n_pairs": 1163862
+      },
+      "theta_3_phi_11": {
+        "theta_bin": 3,
+        "phi_bin": 11,
+        "theta_center_deg": 105.0,
+        "phi_center_deg": 345.0,
+        "lambda_km": 100.31655661092088,
+        "n_pairs": 814660
+      },
+      "theta_4_phi_1": {
+        "theta_bin": 4,
+        "phi_bin": 1,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 45.0,
+        "lambda_km": 1119.2224610403453,
+        "n_pairs": 26244
+      },
+      "theta_4_phi_2": {
+        "theta_bin": 4,
+        "phi_bin": 2,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 74.99999999999999,
+        "lambda_km": 8660.854997802888,
+        "n_pairs": 89767
+      },
+      "theta_4_phi_3": {
+        "theta_bin": 4,
+        "phi_bin": 3,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 105.0,
+        "lambda_km": 19991.492044614974,
+        "n_pairs": 491773
+      },
+      "theta_4_phi_4": {
+        "theta_bin": 4,
+        "phi_bin": 4,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 135.0,
+        "lambda_km": 2156.6787896269007,
+        "n_pairs": 1088955
+      },
+      "theta_4_phi_5": {
+        "theta_bin": 4,
+        "phi_bin": 5,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 165.0,
+        "lambda_km": 2775.1724691993813,
+        "n_pairs": 792079
+      },
+      "theta_4_phi_6": {
+        "theta_bin": 4,
+        "phi_bin": 6,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 194.99999999999997,
+        "lambda_km": 1716.5363951710815,
+        "n_pairs": 580181
+      },
+      "theta_4_phi_7": {
+        "theta_bin": 4,
+        "phi_bin": 7,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 225.0,
+        "lambda_km": 4863.9221473795,
+        "n_pairs": 1191263
+      },
+      "theta_4_phi_8": {
+        "theta_bin": 4,
+        "phi_bin": 8,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 255.00000000000003,
+        "lambda_km": 1734.0527619360407,
+        "n_pairs": 624027
+      },
+      "theta_4_phi_9": {
+        "theta_bin": 4,
+        "phi_bin": 9,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 285.0,
+        "lambda_km": 111.30740895441977,
+        "n_pairs": 93557
+      },
+      "theta_4_phi_10": {
+        "theta_bin": 4,
+        "phi_bin": 10,
+        "theta_center_deg": 135.0,
+        "phi_center_deg": 314.99999999999994,
+        "lambda_km": 110.83644028427051,
+        "n_pairs": 27943
+      },
+      "theta_5_phi_4": {
+        "theta_bin": 5,
+        "phi_bin": 4,
+        "theta_center_deg": 165.0,
+        "phi_center_deg": 135.0,
+        "lambda_km": 19999.999999999993,
+        "n_pairs": 34940
+      },
+      "theta_5_phi_5": {
+        "theta_bin": 5,
+        "phi_bin": 5,
+        "theta_center_deg": 165.0,
+        "phi_center_deg": 165.0,
+        "lambda_km": 3621.033658116491,
+        "n_pairs": 487698
+      },
+      "theta_5_phi_6": {
+        "theta_bin": 5,
+        "phi_bin": 6,
+        "theta_center_deg": 165.0,
+        "phi_center_deg": 194.99999999999997,
+        "lambda_km": 892.4181658604956,
+        "n_pairs": 550007
+      },
+      "theta_5_phi_7": {
+        "theta_bin": 5,
+        "phi_bin": 7,
+        "theta_center_deg": 165.0,
+        "phi_center_deg": 225.0,
+        "lambda_km": 427.03569423025147,
+        "n_pairs": 41909
+      }
+    },
+    "spherical_moments": {
+      "monopole": 7777.655374700277,
+      "dipole": {
+        "magnitude": 956.4945028645066,
+        "x": 469.2855913368571,
+        "y": 351.7156610988716,
+        "z": 755.6115811125578,
+        "theta_deg": 37.816352247308316,
+        "phi_deg": 36.85047274527022
+      },
+      "quadrupole_strength": 1.0482446354419541
+    },
+    "anisotropy_statistics": {
+      "mean_lambda": 7777.655374700277,
+      "std_lambda": 8152.885522845848,
+      "cv_lambda": 1.0482446354419541,
+      "max_lambda": 19999.999999999996,
+      "min_lambda": 100.31655661092088,
+      "anisotropy_ratio": 199.36888461562995
+    }
+  },
+  "beat_frequencies_analysis": {
+    "success": true,
+    "fundamental_frequencies": {
+      "rotation": 1.0,
+      "tidal_m2": 1.9323,
+      "tidal_s2": 2.0,
+      "chandler": 0.00234192037470726,
+      "annual": 0.0027378507871321013,
+      "semiannual": 0.0054757015742642025
+    },
+    "beat_frequencies": {
+      "tidal_m2_tidal_s2_diff": {
+        "frequency_cpd": 0.0677000000000001,
+        "period_days": 14.771048744460836,
+        "type": "difference",
+        "components": [
+          "tidal_m2",
+          "tidal_s2"
+        ]
+      },
+      "chandler_annual_diff": {
+        "frequency_cpd": 0.0003959304124248413,
+        "period_days": 2525.696356275304,
+        "type": "difference",
+        "components": [
+          "chandler",
+          "annual"
+        ]
+      },
+      "chandler_annual_sum": {
+        "frequency_cpd": 0.005079771161839362,
+        "period_days": 196.8592615967182,
+        "type": "sum",
+        "components": [
+          "chandler",
+          "annual"
+        ]
+      },
+      "chandler_semiannual_diff": {
+        "frequency_cpd": 0.0031337811995569426,
+        "period_days": 319.10332480818414,
+        "type": "difference",
+        "components": [
+          "chandler",
+          "semiannual"
+        ]
+      },
+      "chandler_semiannual_sum": {
+        "frequency_cpd": 0.007817621948971462,
+        "period_days": 127.91613696944843,
+        "type": "sum",
+        "components": [
+          "chandler",
+          "semiannual"
+        ]
+      },
+      "annual_semiannual_diff": {
+        "frequency_cpd": 0.0027378507871321013,
+        "period_days": 365.25,
+        "type": "difference",
+        "components": [
+          "annual",
+          "semiannual"
+        ]
+      },
+      "annual_semiannual_sum": {
+        "frequency_cpd": 0.008213552361396304,
+        "period_days": 121.75,
+        "type": "sum",
+        "components": [
+          "annual",
+          "semiannual"
+        ]
+      }
+    },
+    "beat_analysis": {
+      "tidal_m2_tidal_s2_diff": {
+        "beat_info": {
+          "frequency_cpd": 0.0677000000000001,
+          "period_days": 14.771048744460836,
+          "type": "difference",
+          "components": [
+            "tidal_m2",
+            "tidal_s2"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": -0.11653139450141174,
+        "correlation": 0.6462736890610152,
+        "p_value": 0.023166939962732804,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0019652132963482753,
+            "ns_coherence_mean": 0.008826647214095174,
+            "ew_coherence_std": 0.7162575190005631,
+            "ns_coherence_std": 0.7171133762408065,
+            "ew_ns_coherence_ratio": 0.2226455015909153,
+            "n_pairs": 3262128,
+            "n_ew_pairs": 1478939,
+            "n_ns_pairs": 1783189
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.0009712016352816332,
+            "ns_coherence_mean": 0.01097648053969534,
+            "ew_coherence_std": 0.714410061417916,
+            "ns_coherence_std": 0.7161208260240602,
+            "ew_ns_coherence_ratio": 0.08848024025272763,
+            "n_pairs": 3304133,
+            "n_ew_pairs": 1499030,
+            "n_ns_pairs": 1805103
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": -0.00030497891879498104,
+            "ns_coherence_mean": 0.011662310855855054,
+            "ew_coherence_std": 0.7150519189528061,
+            "ns_coherence_std": 0.716177068675704,
+            "ew_ns_coherence_ratio": -0.026150813725040318,
+            "n_pairs": 3244064,
+            "n_ew_pairs": 1473915,
+            "n_ns_pairs": 1770149
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.000988934284784147,
+            "ns_coherence_mean": 0.011072499128261368,
+            "ew_coherence_std": 0.7151457564768113,
+            "ns_coherence_std": 0.71709844881359,
+            "ew_ns_coherence_ratio": 0.08931446038771844,
+            "n_pairs": 3248144,
+            "n_ew_pairs": 1474622,
+            "n_ns_pairs": 1773522
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.003268612953429112,
+            "ns_coherence_mean": 0.012255116798867963,
+            "ew_coherence_std": 0.7147630251091301,
+            "ns_coherence_std": 0.7156215561177531,
+            "ew_ns_coherence_ratio": 0.26671414129084775,
+            "n_pairs": 3246907,
+            "n_ew_pairs": 1473006,
+            "n_ns_pairs": 1773901
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.002713601263199628,
+            "ns_coherence_mean": 0.012014626644606301,
+            "ew_coherence_std": 0.7151331384653887,
+            "ns_coherence_std": 0.7172813449242428,
+            "ew_ns_coherence_ratio": 0.22585814303416898,
+            "n_pairs": 3265270,
+            "n_ew_pairs": 1480688,
+            "n_ns_pairs": 1784582
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.0018855531994837083,
+            "ns_coherence_mean": 0.009553818734744247,
+            "ew_coherence_std": 0.7149413520341389,
+            "ns_coherence_std": 0.7158842055038828,
+            "ew_ns_coherence_ratio": 0.19736120726537776,
+            "n_pairs": 3217296,
+            "n_ew_pairs": 1459829,
+            "n_ns_pairs": 1757467
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.0018793070495771967,
+            "ns_coherence_mean": 0.01029880389040406,
+            "ew_coherence_std": 0.7155654865221622,
+            "ns_coherence_std": 0.7167692483022767,
+            "ew_ns_coherence_ratio": 0.18247818577536432,
+            "n_pairs": 3221400,
+            "n_ew_pairs": 1461893,
+            "n_ns_pairs": 1759507
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.003481061756561553,
+            "ns_coherence_mean": 0.007907745131843665,
+            "ew_coherence_std": 0.7175524234763153,
+            "ns_coherence_std": 0.7189543282716233,
+            "ew_ns_coherence_ratio": 0.4402091491977505,
+            "n_pairs": 3241998,
+            "n_ew_pairs": 1469336,
+            "n_ns_pairs": 1772662
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.003312663594433434,
+            "ns_coherence_mean": 0.008707752805259565,
+            "ew_coherence_std": 0.7156715680124502,
+            "ns_coherence_std": 0.717078495589104,
+            "ew_ns_coherence_ratio": 0.3804269216774911,
+            "n_pairs": 3264231,
+            "n_ew_pairs": 1479883,
+            "n_ns_pairs": 1784348
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": 0.0009498993748150614,
+            "ns_coherence_mean": 0.010805118031214641,
+            "ew_coherence_std": 0.7147336412841829,
+            "ns_coherence_std": 0.715985504774333,
+            "ew_ns_coherence_ratio": 0.08791198504920728,
+            "n_pairs": 3296611,
+            "n_ew_pairs": 1495380,
+            "n_ns_pairs": 1801231
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": 0.0035517878667019804,
+            "ns_coherence_mean": 0.011692002912019396,
+            "ew_coherence_std": 0.7158701113302579,
+            "ns_coherence_std": 0.7169158870634528,
+            "ew_ns_coherence_ratio": 0.3037792492380187,
+            "n_pairs": 3256571,
+            "n_ew_pairs": 1477513,
+            "n_ns_pairs": 1779058
+          }
+        ],
+        "data_variation": 0.12750037741918396
+      },
+      "chandler_annual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.005079771161839362,
+          "period_days": 196.8592615967182,
+          "type": "sum",
+          "components": [
+            "chandler",
+            "annual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.37797779392937536,
+        "correlation": 0.9189397128979312,
+        "p_value": 2.402677625766407e-05,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0012193857962992708,
+            "ns_coherence_mean": 0.01119578218003133,
+            "ew_coherence_std": 0.714628476062923,
+            "ns_coherence_std": 0.7163047434514768,
+            "ew_ns_coherence_ratio": 0.10891474813382432,
+            "n_pairs": 3552586,
+            "n_ew_pairs": 1608023,
+            "n_ns_pairs": 1944563
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.002406040891087905,
+            "ns_coherence_mean": 0.012063155294397936,
+            "ew_coherence_std": 0.7155322663013354,
+            "ns_coherence_std": 0.7175703524548298,
+            "ew_ns_coherence_ratio": 0.199453694524289,
+            "n_pairs": 3477314,
+            "n_ew_pairs": 1578356,
+            "n_ns_pairs": 1898958
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": 0.004002999338234159,
+            "ns_coherence_mean": 0.009343646405939049,
+            "ew_coherence_std": 0.7169010105528969,
+            "ns_coherence_std": 0.717417009899646,
+            "ew_ns_coherence_ratio": 0.42841939477608604,
+            "n_pairs": 3512024,
+            "n_ew_pairs": 1589803,
+            "n_ns_pairs": 1922221
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.006614276376576203,
+            "ns_coherence_mean": 0.008941378503710224,
+            "ew_coherence_std": 0.7169082284158353,
+            "ns_coherence_std": 0.7178400824652825,
+            "ew_ns_coherence_ratio": 0.7397378797722979,
+            "n_pairs": 3285249,
+            "n_ew_pairs": 1484418,
+            "n_ns_pairs": 1800831
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.0031093972029118495,
+            "ns_coherence_mean": 0.007143367066182349,
+            "ew_coherence_std": 0.7160147847446044,
+            "ns_coherence_std": 0.7171196928160117,
+            "ew_ns_coherence_ratio": 0.43528453376449744,
+            "n_pairs": 2758335,
+            "n_ew_pairs": 1249435,
+            "n_ns_pairs": 1508900
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.004221402868336026,
+            "ns_coherence_mean": 0.006290974586045955,
+            "ew_coherence_std": 0.7150568154707823,
+            "ns_coherence_std": 0.7167730887491904,
+            "ew_ns_coherence_ratio": 0.6710252617614356,
+            "n_pairs": 2845563,
+            "n_ew_pairs": 1290731,
+            "n_ns_pairs": 1554832
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.004799395897105406,
+            "ns_coherence_mean": 0.008060141740463338,
+            "ew_coherence_std": 0.7150940194636398,
+            "ns_coherence_std": 0.7157973271657634,
+            "ew_ns_coherence_ratio": 0.5954480766773107,
+            "n_pairs": 2790510,
+            "n_ew_pairs": 1264815,
+            "n_ns_pairs": 1525695
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.0008776195412608,
+            "ns_coherence_mean": 0.01238025220318809,
+            "ew_coherence_std": 0.7152104756168007,
+            "ns_coherence_std": 0.7154868817601242,
+            "ew_ns_coherence_ratio": 0.07088866420950622,
+            "n_pairs": 2849832,
+            "n_ew_pairs": 1291359,
+            "n_ns_pairs": 1558473
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.00212058437189032,
+            "ns_coherence_mean": 0.011254667321664101,
+            "ew_coherence_std": 0.714729497709087,
+            "ns_coherence_std": 0.716279207944217,
+            "ew_ns_coherence_ratio": 0.1884182189737771,
+            "n_pairs": 3482475,
+            "n_ew_pairs": 1581229,
+            "n_ns_pairs": 1901246
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": -0.0008944887911864817,
+            "ns_coherence_mean": 0.012493959081912146,
+            "ew_coherence_std": 0.7136732916018602,
+            "ns_coherence_std": 0.715228978115887,
+            "ew_ns_coherence_ratio": -0.07159370263037423,
+            "n_pairs": 3484384,
+            "n_ew_pairs": 1588349,
+            "n_ns_pairs": 1896035
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": -0.0006496216407922051,
+            "ns_coherence_mean": 0.012512738102721412,
+            "ew_coherence_std": 0.7154875715659079,
+            "ns_coherence_std": 0.7171853721488659,
+            "ew_ns_coherence_ratio": -0.05191682551486617,
+            "n_pairs": 3576443,
+            "n_ew_pairs": 1628665,
+            "n_ns_pairs": 1947778
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": -0.0018888059665896544,
+            "ns_coherence_mean": 0.012409238245113597,
+            "ew_coherence_std": 0.7158539402175657,
+            "ns_coherence_std": 0.7176890717006771,
+            "ew_ns_coherence_ratio": -0.1522096626143359,
+            "n_pairs": 3454038,
+            "n_ew_pairs": 1568851,
+            "n_ns_pairs": 1885187
+          }
+        ],
+        "data_variation": 0.29084678540044756
+      },
+      "chandler_semiannual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.007817621948971462,
+          "period_days": 127.91613696944843,
+          "type": "sum",
+          "components": [
+            "chandler",
+            "semiannual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.5095008377734928,
+        "correlation": 0.9331568440441202,
+        "p_value": 9.38701269769328e-06,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0008531249353589949,
+            "ns_coherence_mean": 0.013908862490677569,
+            "ew_coherence_std": 0.7153981081930497,
+            "ns_coherence_std": 0.7168277104736526,
+            "ew_ns_coherence_ratio": 0.06133678695369969,
+            "n_pairs": 3172728,
+            "n_ew_pairs": 1444394,
+            "n_ns_pairs": 1728334
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 1.3252438186644422e-05,
+            "ns_coherence_mean": 0.012269694530659486,
+            "ew_coherence_std": 0.7158181911280904,
+            "ns_coherence_std": 0.7170461920280108,
+            "ew_ns_coherence_ratio": 0.0010800952015169781,
+            "n_pairs": 3226507,
+            "n_ew_pairs": 1467035,
+            "n_ns_pairs": 1759472
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": -0.001515013633963748,
+            "ns_coherence_mean": 0.012694841523454008,
+            "ew_coherence_std": 0.7155696685927548,
+            "ns_coherence_std": 0.7163675877297048,
+            "ew_ns_coherence_ratio": -0.1193408859153323,
+            "n_pairs": 3285515,
+            "n_ew_pairs": 1489776,
+            "n_ns_pairs": 1795739
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.0027200246666845493,
+            "ns_coherence_mean": 0.01062015301321946,
+            "ew_coherence_std": 0.7139324880374469,
+            "ns_coherence_std": 0.7160540479832765,
+            "ew_ns_coherence_ratio": 0.2561191597991848,
+            "n_pairs": 3131879,
+            "n_ew_pairs": 1416153,
+            "n_ns_pairs": 1715726
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.004545695203397996,
+            "ns_coherence_mean": 0.008554231519343564,
+            "ew_coherence_std": 0.714266328587887,
+            "ns_coherence_std": 0.7165656108214761,
+            "ew_ns_coherence_ratio": 0.5313972614744971,
+            "n_pairs": 3173831,
+            "n_ew_pairs": 1441011,
+            "n_ns_pairs": 1732820
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.006045286132870088,
+            "ns_coherence_mean": 0.007890100504966663,
+            "ew_coherence_std": 0.7154425296134503,
+            "ns_coherence_std": 0.7160912747559219,
+            "ew_ns_coherence_ratio": 0.766186201185232,
+            "n_pairs": 3211706,
+            "n_ew_pairs": 1455825,
+            "n_ns_pairs": 1755881
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.00789954418978569,
+            "ns_coherence_mean": 0.009189625449487565,
+            "ew_coherence_std": 0.7157590121943476,
+            "ns_coherence_std": 0.7171244871084763,
+            "ew_ns_coherence_ratio": 0.8596154689009863,
+            "n_pairs": 3046759,
+            "n_ew_pairs": 1379376,
+            "n_ns_pairs": 1667383
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.00451147975772185,
+            "ns_coherence_mean": 0.007044423351345086,
+            "ew_coherence_std": 0.7158324852363602,
+            "ns_coherence_std": 0.7167311826007752,
+            "ew_ns_coherence_ratio": 0.640432798074297,
+            "n_pairs": 3220958,
+            "n_ew_pairs": 1456365,
+            "n_ns_pairs": 1764593
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.0047486229024462255,
+            "ns_coherence_mean": 0.009416679164771513,
+            "ew_coherence_std": 0.7175616234979684,
+            "ns_coherence_std": 0.7188554678862628,
+            "ew_ns_coherence_ratio": 0.5042778690189608,
+            "n_pairs": 3622725,
+            "n_ew_pairs": 1640262,
+            "n_ns_pairs": 1982463
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.002516039708261807,
+            "ns_coherence_mean": 0.009355807532528543,
+            "ew_coherence_std": 0.7152847396725408,
+            "ns_coherence_std": 0.7163708661173828,
+            "ew_ns_coherence_ratio": 0.2689281175904878,
+            "n_pairs": 3427745,
+            "n_ew_pairs": 1556190,
+            "n_ns_pairs": 1871555
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": -0.0025869981303140916,
+            "ns_coherence_mean": 0.012933375837929393,
+            "ew_coherence_std": 0.7151216204325618,
+            "ns_coherence_std": 0.7158282820789589,
+            "ew_ns_coherence_ratio": -0.20002497126289842,
+            "n_pairs": 3254239,
+            "n_ew_pairs": 1478389,
+            "n_ns_pairs": 1775850
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": -0.004772605520119604,
+            "ns_coherence_mean": 0.01199161990717338,
+            "ew_coherence_std": 0.7147061658434226,
+            "ns_coherence_std": 0.7168792933045047,
+            "ew_ns_coherence_ratio": -0.3979950629743221,
+            "n_pairs": 3294161,
+            "n_ew_pairs": 1499258,
+            "n_ns_pairs": 1794903
+          }
+        ],
+        "data_variation": 0.3860781815490485
+      },
+      "annual_semiannual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.008213552361396304,
+          "period_days": 121.75,
+          "type": "sum",
+          "components": [
+            "annual",
+            "semiannual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.460837903304082,
+        "correlation": 0.961994594760772,
+        "p_value": 5.858242535078135e-07,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.005425302737501609,
+            "ns_coherence_mean": 0.007648424814625838,
+            "ew_coherence_std": 0.7147608970797937,
+            "ns_coherence_std": 0.7169115439524334,
+            "ew_ns_coherence_ratio": 0.7093359572714864,
+            "n_pairs": 3420940,
+            "n_ew_pairs": 1547903,
+            "n_ns_pairs": 1873037
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.004925034109055101,
+            "ns_coherence_mean": 0.007114758928622529,
+            "ew_coherence_std": 0.7149259221093791,
+            "ns_coherence_std": 0.7162272565578303,
+            "ew_ns_coherence_ratio": 0.6922278264751586,
+            "n_pairs": 3487605,
+            "n_ew_pairs": 1579567,
+            "n_ns_pairs": 1908038
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": 0.00450015564858503,
+            "ns_coherence_mean": 0.007928292656928527,
+            "ew_coherence_std": 0.7160945831222468,
+            "ns_coherence_std": 0.7177484479457399,
+            "ew_ns_coherence_ratio": 0.5676071562081337,
+            "n_pairs": 3418184,
+            "n_ew_pairs": 1549701,
+            "n_ns_pairs": 1868483
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.0021728186027690304,
+            "ns_coherence_mean": 0.010295057850392825,
+            "ew_coherence_std": 0.7174699777367349,
+            "ns_coherence_std": 0.7185673157624175,
+            "ew_ns_coherence_ratio": 0.21105453066357688,
+            "n_pairs": 3510568,
+            "n_ew_pairs": 1591005,
+            "n_ns_pairs": 1919563
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": -0.002405536909089235,
+            "ns_coherence_mean": 0.010141159719968991,
+            "ew_coherence_std": 0.7165760734184856,
+            "ns_coherence_std": 0.7176403730778959,
+            "ew_ns_coherence_ratio": -0.23720530743170176,
+            "n_pairs": 3447073,
+            "n_ew_pairs": 1562396,
+            "n_ns_pairs": 1884677
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": -0.0017622667124692062,
+            "ns_coherence_mean": 0.011616464527764301,
+            "ew_coherence_std": 0.7173858627205988,
+            "ns_coherence_std": 0.7178954461590564,
+            "ew_ns_coherence_ratio": -0.15170422190480112,
+            "n_pairs": 3474027,
+            "n_ew_pairs": 1579889,
+            "n_ns_pairs": 1894138
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": -0.00155378595877348,
+            "ns_coherence_mean": 0.015252333251575824,
+            "ew_coherence_std": 0.7141412339704173,
+            "ns_coherence_std": 0.7153856497398855,
+            "ew_ns_coherence_ratio": -0.10187201742480598,
+            "n_pairs": 3083740,
+            "n_ew_pairs": 1404245,
+            "n_ns_pairs": 1679495
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 1.0588582531635897e-05,
+            "ns_coherence_mean": 0.01342127646162752,
+            "ew_coherence_std": 0.7144384586297834,
+            "ns_coherence_std": 0.7152020818015901,
+            "ew_ns_coherence_ratio": 0.000788940050665783,
+            "n_pairs": 3023790,
+            "n_ew_pairs": 1373416,
+            "n_ns_pairs": 1650374
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 2.4533902437867835e-05,
+            "ns_coherence_mean": 0.013975120347554508,
+            "ew_coherence_std": 0.7141536196724166,
+            "ns_coherence_std": 0.7163313953565812,
+            "ew_ns_coherence_ratio": 0.001755541406994824,
+            "n_pairs": 3098673,
+            "n_ew_pairs": 1405759,
+            "n_ns_pairs": 1692914
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.0024570872204152227,
+            "ns_coherence_mean": 0.010293376228678,
+            "ew_coherence_std": 0.7137223404211825,
+            "ns_coherence_std": 0.7153496176502399,
+            "ew_ns_coherence_ratio": 0.23870566525778214,
+            "n_pairs": 3017219,
+            "n_ew_pairs": 1371513,
+            "n_ns_pairs": 1645706
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": 0.004908226123840222,
+            "ns_coherence_mean": 0.009666372470894012,
+            "ew_coherence_std": 0.7153256058598566,
+            "ns_coherence_std": 0.7162159919861216,
+            "ew_ns_coherence_ratio": 0.5077629833341478,
+            "n_pairs": 3080026,
+            "n_ew_pairs": 1397136,
+            "n_ns_pairs": 1682890
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": 0.006018319698116272,
+            "ns_coherence_mean": 0.009337086227155891,
+            "ew_coherence_std": 0.7152987008474334,
+            "ns_coherence_std": 0.716650289641706,
+            "ew_ns_coherence_ratio": 0.6445607924892724,
+            "n_pairs": 2966176,
+            "n_ew_pairs": 1343082,
+            "n_ns_pairs": 1623094
+          }
+        ],
+        "data_variation": 0.33873538190757035
+      }
+    },
+    "significant_beats": {
+      "tidal_m2_tidal_s2_diff": {
+        "beat_info": {
+          "frequency_cpd": 0.0677000000000001,
+          "period_days": 14.771048744460836,
+          "type": "difference",
+          "components": [
+            "tidal_m2",
+            "tidal_s2"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": -0.11653139450141174,
+        "correlation": 0.6462736890610152,
+        "p_value": 0.023166939962732804,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0019652132963482753,
+            "ns_coherence_mean": 0.008826647214095174,
+            "ew_coherence_std": 0.7162575190005631,
+            "ns_coherence_std": 0.7171133762408065,
+            "ew_ns_coherence_ratio": 0.2226455015909153,
+            "n_pairs": 3262128,
+            "n_ew_pairs": 1478939,
+            "n_ns_pairs": 1783189
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.0009712016352816332,
+            "ns_coherence_mean": 0.01097648053969534,
+            "ew_coherence_std": 0.714410061417916,
+            "ns_coherence_std": 0.7161208260240602,
+            "ew_ns_coherence_ratio": 0.08848024025272763,
+            "n_pairs": 3304133,
+            "n_ew_pairs": 1499030,
+            "n_ns_pairs": 1805103
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": -0.00030497891879498104,
+            "ns_coherence_mean": 0.011662310855855054,
+            "ew_coherence_std": 0.7150519189528061,
+            "ns_coherence_std": 0.716177068675704,
+            "ew_ns_coherence_ratio": -0.026150813725040318,
+            "n_pairs": 3244064,
+            "n_ew_pairs": 1473915,
+            "n_ns_pairs": 1770149
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.000988934284784147,
+            "ns_coherence_mean": 0.011072499128261368,
+            "ew_coherence_std": 0.7151457564768113,
+            "ns_coherence_std": 0.71709844881359,
+            "ew_ns_coherence_ratio": 0.08931446038771844,
+            "n_pairs": 3248144,
+            "n_ew_pairs": 1474622,
+            "n_ns_pairs": 1773522
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.003268612953429112,
+            "ns_coherence_mean": 0.012255116798867963,
+            "ew_coherence_std": 0.7147630251091301,
+            "ns_coherence_std": 0.7156215561177531,
+            "ew_ns_coherence_ratio": 0.26671414129084775,
+            "n_pairs": 3246907,
+            "n_ew_pairs": 1473006,
+            "n_ns_pairs": 1773901
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.002713601263199628,
+            "ns_coherence_mean": 0.012014626644606301,
+            "ew_coherence_std": 0.7151331384653887,
+            "ns_coherence_std": 0.7172813449242428,
+            "ew_ns_coherence_ratio": 0.22585814303416898,
+            "n_pairs": 3265270,
+            "n_ew_pairs": 1480688,
+            "n_ns_pairs": 1784582
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.0018855531994837083,
+            "ns_coherence_mean": 0.009553818734744247,
+            "ew_coherence_std": 0.7149413520341389,
+            "ns_coherence_std": 0.7158842055038828,
+            "ew_ns_coherence_ratio": 0.19736120726537776,
+            "n_pairs": 3217296,
+            "n_ew_pairs": 1459829,
+            "n_ns_pairs": 1757467
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.0018793070495771967,
+            "ns_coherence_mean": 0.01029880389040406,
+            "ew_coherence_std": 0.7155654865221622,
+            "ns_coherence_std": 0.7167692483022767,
+            "ew_ns_coherence_ratio": 0.18247818577536432,
+            "n_pairs": 3221400,
+            "n_ew_pairs": 1461893,
+            "n_ns_pairs": 1759507
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.003481061756561553,
+            "ns_coherence_mean": 0.007907745131843665,
+            "ew_coherence_std": 0.7175524234763153,
+            "ns_coherence_std": 0.7189543282716233,
+            "ew_ns_coherence_ratio": 0.4402091491977505,
+            "n_pairs": 3241998,
+            "n_ew_pairs": 1469336,
+            "n_ns_pairs": 1772662
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.003312663594433434,
+            "ns_coherence_mean": 0.008707752805259565,
+            "ew_coherence_std": 0.7156715680124502,
+            "ns_coherence_std": 0.717078495589104,
+            "ew_ns_coherence_ratio": 0.3804269216774911,
+            "n_pairs": 3264231,
+            "n_ew_pairs": 1479883,
+            "n_ns_pairs": 1784348
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": 0.0009498993748150614,
+            "ns_coherence_mean": 0.010805118031214641,
+            "ew_coherence_std": 0.7147336412841829,
+            "ns_coherence_std": 0.715985504774333,
+            "ew_ns_coherence_ratio": 0.08791198504920728,
+            "n_pairs": 3296611,
+            "n_ew_pairs": 1495380,
+            "n_ns_pairs": 1801231
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": 0.0035517878667019804,
+            "ns_coherence_mean": 0.011692002912019396,
+            "ew_coherence_std": 0.7158701113302579,
+            "ns_coherence_std": 0.7169158870634528,
+            "ew_ns_coherence_ratio": 0.3037792492380187,
+            "n_pairs": 3256571,
+            "n_ew_pairs": 1477513,
+            "n_ns_pairs": 1779058
+          }
+        ],
+        "data_variation": 0.12750037741918396
+      },
+      "chandler_annual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.005079771161839362,
+          "period_days": 196.8592615967182,
+          "type": "sum",
+          "components": [
+            "chandler",
+            "annual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.37797779392937536,
+        "correlation": 0.9189397128979312,
+        "p_value": 2.402677625766407e-05,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0012193857962992708,
+            "ns_coherence_mean": 0.01119578218003133,
+            "ew_coherence_std": 0.714628476062923,
+            "ns_coherence_std": 0.7163047434514768,
+            "ew_ns_coherence_ratio": 0.10891474813382432,
+            "n_pairs": 3552586,
+            "n_ew_pairs": 1608023,
+            "n_ns_pairs": 1944563
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.002406040891087905,
+            "ns_coherence_mean": 0.012063155294397936,
+            "ew_coherence_std": 0.7155322663013354,
+            "ns_coherence_std": 0.7175703524548298,
+            "ew_ns_coherence_ratio": 0.199453694524289,
+            "n_pairs": 3477314,
+            "n_ew_pairs": 1578356,
+            "n_ns_pairs": 1898958
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": 0.004002999338234159,
+            "ns_coherence_mean": 0.009343646405939049,
+            "ew_coherence_std": 0.7169010105528969,
+            "ns_coherence_std": 0.717417009899646,
+            "ew_ns_coherence_ratio": 0.42841939477608604,
+            "n_pairs": 3512024,
+            "n_ew_pairs": 1589803,
+            "n_ns_pairs": 1922221
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.006614276376576203,
+            "ns_coherence_mean": 0.008941378503710224,
+            "ew_coherence_std": 0.7169082284158353,
+            "ns_coherence_std": 0.7178400824652825,
+            "ew_ns_coherence_ratio": 0.7397378797722979,
+            "n_pairs": 3285249,
+            "n_ew_pairs": 1484418,
+            "n_ns_pairs": 1800831
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.0031093972029118495,
+            "ns_coherence_mean": 0.007143367066182349,
+            "ew_coherence_std": 0.7160147847446044,
+            "ns_coherence_std": 0.7171196928160117,
+            "ew_ns_coherence_ratio": 0.43528453376449744,
+            "n_pairs": 2758335,
+            "n_ew_pairs": 1249435,
+            "n_ns_pairs": 1508900
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.004221402868336026,
+            "ns_coherence_mean": 0.006290974586045955,
+            "ew_coherence_std": 0.7150568154707823,
+            "ns_coherence_std": 0.7167730887491904,
+            "ew_ns_coherence_ratio": 0.6710252617614356,
+            "n_pairs": 2845563,
+            "n_ew_pairs": 1290731,
+            "n_ns_pairs": 1554832
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.004799395897105406,
+            "ns_coherence_mean": 0.008060141740463338,
+            "ew_coherence_std": 0.7150940194636398,
+            "ns_coherence_std": 0.7157973271657634,
+            "ew_ns_coherence_ratio": 0.5954480766773107,
+            "n_pairs": 2790510,
+            "n_ew_pairs": 1264815,
+            "n_ns_pairs": 1525695
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.0008776195412608,
+            "ns_coherence_mean": 0.01238025220318809,
+            "ew_coherence_std": 0.7152104756168007,
+            "ns_coherence_std": 0.7154868817601242,
+            "ew_ns_coherence_ratio": 0.07088866420950622,
+            "n_pairs": 2849832,
+            "n_ew_pairs": 1291359,
+            "n_ns_pairs": 1558473
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.00212058437189032,
+            "ns_coherence_mean": 0.011254667321664101,
+            "ew_coherence_std": 0.714729497709087,
+            "ns_coherence_std": 0.716279207944217,
+            "ew_ns_coherence_ratio": 0.1884182189737771,
+            "n_pairs": 3482475,
+            "n_ew_pairs": 1581229,
+            "n_ns_pairs": 1901246
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": -0.0008944887911864817,
+            "ns_coherence_mean": 0.012493959081912146,
+            "ew_coherence_std": 0.7136732916018602,
+            "ns_coherence_std": 0.715228978115887,
+            "ew_ns_coherence_ratio": -0.07159370263037423,
+            "n_pairs": 3484384,
+            "n_ew_pairs": 1588349,
+            "n_ns_pairs": 1896035
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": -0.0006496216407922051,
+            "ns_coherence_mean": 0.012512738102721412,
+            "ew_coherence_std": 0.7154875715659079,
+            "ns_coherence_std": 0.7171853721488659,
+            "ew_ns_coherence_ratio": -0.05191682551486617,
+            "n_pairs": 3576443,
+            "n_ew_pairs": 1628665,
+            "n_ns_pairs": 1947778
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": -0.0018888059665896544,
+            "ns_coherence_mean": 0.012409238245113597,
+            "ew_coherence_std": 0.7158539402175657,
+            "ns_coherence_std": 0.7176890717006771,
+            "ew_ns_coherence_ratio": -0.1522096626143359,
+            "n_pairs": 3454038,
+            "n_ew_pairs": 1568851,
+            "n_ns_pairs": 1885187
+          }
+        ],
+        "data_variation": 0.29084678540044756
+      },
+      "chandler_semiannual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.007817621948971462,
+          "period_days": 127.91613696944843,
+          "type": "sum",
+          "components": [
+            "chandler",
+            "semiannual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.5095008377734928,
+        "correlation": 0.9331568440441202,
+        "p_value": 9.38701269769328e-06,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.0008531249353589949,
+            "ns_coherence_mean": 0.013908862490677569,
+            "ew_coherence_std": 0.7153981081930497,
+            "ns_coherence_std": 0.7168277104736526,
+            "ew_ns_coherence_ratio": 0.06133678695369969,
+            "n_pairs": 3172728,
+            "n_ew_pairs": 1444394,
+            "n_ns_pairs": 1728334
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 1.3252438186644422e-05,
+            "ns_coherence_mean": 0.012269694530659486,
+            "ew_coherence_std": 0.7158181911280904,
+            "ns_coherence_std": 0.7170461920280108,
+            "ew_ns_coherence_ratio": 0.0010800952015169781,
+            "n_pairs": 3226507,
+            "n_ew_pairs": 1467035,
+            "n_ns_pairs": 1759472
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": -0.001515013633963748,
+            "ns_coherence_mean": 0.012694841523454008,
+            "ew_coherence_std": 0.7155696685927548,
+            "ns_coherence_std": 0.7163675877297048,
+            "ew_ns_coherence_ratio": -0.1193408859153323,
+            "n_pairs": 3285515,
+            "n_ew_pairs": 1489776,
+            "n_ns_pairs": 1795739
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.0027200246666845493,
+            "ns_coherence_mean": 0.01062015301321946,
+            "ew_coherence_std": 0.7139324880374469,
+            "ns_coherence_std": 0.7160540479832765,
+            "ew_ns_coherence_ratio": 0.2561191597991848,
+            "n_pairs": 3131879,
+            "n_ew_pairs": 1416153,
+            "n_ns_pairs": 1715726
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": 0.004545695203397996,
+            "ns_coherence_mean": 0.008554231519343564,
+            "ew_coherence_std": 0.714266328587887,
+            "ns_coherence_std": 0.7165656108214761,
+            "ew_ns_coherence_ratio": 0.5313972614744971,
+            "n_pairs": 3173831,
+            "n_ew_pairs": 1441011,
+            "n_ns_pairs": 1732820
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": 0.006045286132870088,
+            "ns_coherence_mean": 0.007890100504966663,
+            "ew_coherence_std": 0.7154425296134503,
+            "ns_coherence_std": 0.7160912747559219,
+            "ew_ns_coherence_ratio": 0.766186201185232,
+            "n_pairs": 3211706,
+            "n_ew_pairs": 1455825,
+            "n_ns_pairs": 1755881
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": 0.00789954418978569,
+            "ns_coherence_mean": 0.009189625449487565,
+            "ew_coherence_std": 0.7157590121943476,
+            "ns_coherence_std": 0.7171244871084763,
+            "ew_ns_coherence_ratio": 0.8596154689009863,
+            "n_pairs": 3046759,
+            "n_ew_pairs": 1379376,
+            "n_ns_pairs": 1667383
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 0.00451147975772185,
+            "ns_coherence_mean": 0.007044423351345086,
+            "ew_coherence_std": 0.7158324852363602,
+            "ns_coherence_std": 0.7167311826007752,
+            "ew_ns_coherence_ratio": 0.640432798074297,
+            "n_pairs": 3220958,
+            "n_ew_pairs": 1456365,
+            "n_ns_pairs": 1764593
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 0.0047486229024462255,
+            "ns_coherence_mean": 0.009416679164771513,
+            "ew_coherence_std": 0.7175616234979684,
+            "ns_coherence_std": 0.7188554678862628,
+            "ew_ns_coherence_ratio": 0.5042778690189608,
+            "n_pairs": 3622725,
+            "n_ew_pairs": 1640262,
+            "n_ns_pairs": 1982463
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.002516039708261807,
+            "ns_coherence_mean": 0.009355807532528543,
+            "ew_coherence_std": 0.7152847396725408,
+            "ns_coherence_std": 0.7163708661173828,
+            "ew_ns_coherence_ratio": 0.2689281175904878,
+            "n_pairs": 3427745,
+            "n_ew_pairs": 1556190,
+            "n_ns_pairs": 1871555
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": -0.0025869981303140916,
+            "ns_coherence_mean": 0.012933375837929393,
+            "ew_coherence_std": 0.7151216204325618,
+            "ns_coherence_std": 0.7158282820789589,
+            "ew_ns_coherence_ratio": -0.20002497126289842,
+            "n_pairs": 3254239,
+            "n_ew_pairs": 1478389,
+            "n_ns_pairs": 1775850
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": -0.004772605520119604,
+            "ns_coherence_mean": 0.01199161990717338,
+            "ew_coherence_std": 0.7147061658434226,
+            "ns_coherence_std": 0.7168792933045047,
+            "ew_ns_coherence_ratio": -0.3979950629743221,
+            "n_pairs": 3294161,
+            "n_ew_pairs": 1499258,
+            "n_ns_pairs": 1794903
+          }
+        ],
+        "data_variation": 0.3860781815490485
+      },
+      "annual_semiannual_sum": {
+        "beat_info": {
+          "frequency_cpd": 0.008213552361396304,
+          "period_days": 121.75,
+          "type": "sum",
+          "components": [
+            "annual",
+            "semiannual"
+          ]
+        },
+        "n_phase_bins": 12,
+        "amplitude": 0.460837903304082,
+        "correlation": 0.961994594760772,
+        "p_value": 5.858242535078135e-07,
+        "fit_success": true,
+        "phase_tracking": [
+          {
+            "phase_bin": 0,
+            "phase_radians": 0.0,
+            "ew_coherence_mean": 0.005425302737501609,
+            "ns_coherence_mean": 0.007648424814625838,
+            "ew_coherence_std": 0.7147608970797937,
+            "ns_coherence_std": 0.7169115439524334,
+            "ew_ns_coherence_ratio": 0.7093359572714864,
+            "n_pairs": 3420940,
+            "n_ew_pairs": 1547903,
+            "n_ns_pairs": 1873037
+          },
+          {
+            "phase_bin": 1,
+            "phase_radians": 0.5235987755982988,
+            "ew_coherence_mean": 0.004925034109055101,
+            "ns_coherence_mean": 0.007114758928622529,
+            "ew_coherence_std": 0.7149259221093791,
+            "ns_coherence_std": 0.7162272565578303,
+            "ew_ns_coherence_ratio": 0.6922278264751586,
+            "n_pairs": 3487605,
+            "n_ew_pairs": 1579567,
+            "n_ns_pairs": 1908038
+          },
+          {
+            "phase_bin": 2,
+            "phase_radians": 1.0471975511965976,
+            "ew_coherence_mean": 0.00450015564858503,
+            "ns_coherence_mean": 0.007928292656928527,
+            "ew_coherence_std": 0.7160945831222468,
+            "ns_coherence_std": 0.7177484479457399,
+            "ew_ns_coherence_ratio": 0.5676071562081337,
+            "n_pairs": 3418184,
+            "n_ew_pairs": 1549701,
+            "n_ns_pairs": 1868483
+          },
+          {
+            "phase_bin": 3,
+            "phase_radians": 1.5707963267948966,
+            "ew_coherence_mean": 0.0021728186027690304,
+            "ns_coherence_mean": 0.010295057850392825,
+            "ew_coherence_std": 0.7174699777367349,
+            "ns_coherence_std": 0.7185673157624175,
+            "ew_ns_coherence_ratio": 0.21105453066357688,
+            "n_pairs": 3510568,
+            "n_ew_pairs": 1591005,
+            "n_ns_pairs": 1919563
+          },
+          {
+            "phase_bin": 4,
+            "phase_radians": 2.0943951023931953,
+            "ew_coherence_mean": -0.002405536909089235,
+            "ns_coherence_mean": 0.010141159719968991,
+            "ew_coherence_std": 0.7165760734184856,
+            "ns_coherence_std": 0.7176403730778959,
+            "ew_ns_coherence_ratio": -0.23720530743170176,
+            "n_pairs": 3447073,
+            "n_ew_pairs": 1562396,
+            "n_ns_pairs": 1884677
+          },
+          {
+            "phase_bin": 5,
+            "phase_radians": 2.617993877991494,
+            "ew_coherence_mean": -0.0017622667124692062,
+            "ns_coherence_mean": 0.011616464527764301,
+            "ew_coherence_std": 0.7173858627205988,
+            "ns_coherence_std": 0.7178954461590564,
+            "ew_ns_coherence_ratio": -0.15170422190480112,
+            "n_pairs": 3474027,
+            "n_ew_pairs": 1579889,
+            "n_ns_pairs": 1894138
+          },
+          {
+            "phase_bin": 6,
+            "phase_radians": 3.141592653589793,
+            "ew_coherence_mean": -0.00155378595877348,
+            "ns_coherence_mean": 0.015252333251575824,
+            "ew_coherence_std": 0.7141412339704173,
+            "ns_coherence_std": 0.7153856497398855,
+            "ew_ns_coherence_ratio": -0.10187201742480598,
+            "n_pairs": 3083740,
+            "n_ew_pairs": 1404245,
+            "n_ns_pairs": 1679495
+          },
+          {
+            "phase_bin": 7,
+            "phase_radians": 3.665191429188092,
+            "ew_coherence_mean": 1.0588582531635897e-05,
+            "ns_coherence_mean": 0.01342127646162752,
+            "ew_coherence_std": 0.7144384586297834,
+            "ns_coherence_std": 0.7152020818015901,
+            "ew_ns_coherence_ratio": 0.000788940050665783,
+            "n_pairs": 3023790,
+            "n_ew_pairs": 1373416,
+            "n_ns_pairs": 1650374
+          },
+          {
+            "phase_bin": 8,
+            "phase_radians": 4.1887902047863905,
+            "ew_coherence_mean": 2.4533902437867835e-05,
+            "ns_coherence_mean": 0.013975120347554508,
+            "ew_coherence_std": 0.7141536196724166,
+            "ns_coherence_std": 0.7163313953565812,
+            "ew_ns_coherence_ratio": 0.001755541406994824,
+            "n_pairs": 3098673,
+            "n_ew_pairs": 1405759,
+            "n_ns_pairs": 1692914
+          },
+          {
+            "phase_bin": 9,
+            "phase_radians": 4.71238898038469,
+            "ew_coherence_mean": 0.0024570872204152227,
+            "ns_coherence_mean": 0.010293376228678,
+            "ew_coherence_std": 0.7137223404211825,
+            "ns_coherence_std": 0.7153496176502399,
+            "ew_ns_coherence_ratio": 0.23870566525778214,
+            "n_pairs": 3017219,
+            "n_ew_pairs": 1371513,
+            "n_ns_pairs": 1645706
+          },
+          {
+            "phase_bin": 10,
+            "phase_radians": 5.235987755982988,
+            "ew_coherence_mean": 0.004908226123840222,
+            "ns_coherence_mean": 0.009666372470894012,
+            "ew_coherence_std": 0.7153256058598566,
+            "ns_coherence_std": 0.7162159919861216,
+            "ew_ns_coherence_ratio": 0.5077629833341478,
+            "n_pairs": 3080026,
+            "n_ew_pairs": 1397136,
+            "n_ns_pairs": 1682890
+          },
+          {
+            "phase_bin": 11,
+            "phase_radians": 5.759586531581287,
+            "ew_coherence_mean": 0.006018319698116272,
+            "ns_coherence_mean": 0.009337086227155891,
+            "ew_coherence_std": 0.7152987008474334,
+            "ns_coherence_std": 0.716650289641706,
+            "ew_ns_coherence_ratio": 0.6445607924892724,
+            "n_pairs": 2966176,
+            "n_ew_pairs": 1343082,
+            "n_ns_pairs": 1623094
+          }
+        ],
+        "data_variation": 0.33873538190757035
+      }
+    },
+    "n_beats_tested": 4,
+    "n_significant_beats": 4
+  },
+  "relative_motion_beats_analysis": {
+    "success": true,
+    "analysis_type": "relative_motion_beats",
+    "n_distance_categories": 1,
+    "distance_categories": [
+      ">10000km"
+    ],
+    "relative_motion_results": {
+      ">10000km": {
+        "n_pairs": 10866100,
+        "mean_distance_km": 12346.72234356226,
+        "mean_differential_rotation_kmh": 0.11083910887700435,
+        "mean_orbital_projection_kms": 19.999330224638012,
+        "relative_frequencies": {
+          "tidal_m2_tidal_s2_diff": 0.06772773450728073,
+          "chandler_annual_sum": 0.005078720162519045,
+          "chandler_semiannual_sum": 0.007818608287724784,
+          "annual_semiannual_sum": 0.008210180623973728
+        },
+        "beat_analysis": {
+          "tidal_m2_tidal_s2_diff": {
+            "frequency_cpd": 0.06772773450728073,
+            "period_days": 14.765,
+            "correlation": 0.7385584124564232,
+            "p_value": 0.006079853492390257,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009898061707029658,
+            "coherence_variation": 0.0020102084248521295,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.00901870001548072,
+                "n_pairs": 906141
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.007911961867491166,
+                "n_pairs": 894806
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.008258862909785898,
+                "n_pairs": 904227
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.011119059436676116,
+                "n_pairs": 919679
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.012552467809896125,
+                "n_pairs": 916665
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.013722439055956012,
+                "n_pairs": 903695
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.012514668596990118,
+                "n_pairs": 904574
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.009267791781679982,
+                "n_pairs": 914749
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.009238455273931773,
+                "n_pairs": 909755
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.008797781650281987,
+                "n_pairs": 896297
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.009448366749438932,
+                "n_pairs": 880526
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.006926185336747059,
+                "n_pairs": 914986
+              }
+            ]
+          },
+          "chandler_annual_sum": {
+            "frequency_cpd": 0.005078720162519045,
+            "period_days": 196.9,
+            "correlation": -0.8371334685359897,
+            "p_value": 0.0006819157064453673,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.00960383591144096,
+            "coherence_variation": 0.0038828997461020157,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.010536534422134739,
+                "n_pairs": 971591
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.01636059683870472,
+                "n_pairs": 977013
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.01218673648220655,
+                "n_pairs": 952721
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.0066241564987130274,
+                "n_pairs": 917831
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.006157255299067905,
+                "n_pairs": 768942
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.0060939074216273545,
+                "n_pairs": 781504
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.004186866918775892,
+                "n_pairs": 787676
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.005588284964295922,
+                "n_pairs": 779683
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.007306832690827366,
+                "n_pairs": 1003920
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.013961735060171678,
+                "n_pairs": 960882
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.013409913092595163,
+                "n_pairs": 995890
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.012833211248171205,
+                "n_pairs": 968447
+              }
+            ]
+          },
+          "chandler_semiannual_sum": {
+            "frequency_cpd": 0.007818608287724784,
+            "period_days": 127.9,
+            "correlation": -0.8272941673806834,
+            "p_value": 0.0008984688457258402,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009933018495143824,
+            "coherence_variation": 0.0037312431375969577,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.015710632119217884,
+                "n_pairs": 885343
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.011720859338513322,
+                "n_pairs": 913496
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.011032480394931357,
+                "n_pairs": 891175
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.008584200268253562,
+                "n_pairs": 875615
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.0078072542536148015,
+                "n_pairs": 890335
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.009536873241706776,
+                "n_pairs": 867142
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.005667654107610212,
+                "n_pairs": 867197
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.00712144544177721,
+                "n_pairs": 894417
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.004896360354726087,
+                "n_pairs": 985934
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.007733823808436786,
+                "n_pairs": 969023
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.011438058169919461,
+                "n_pairs": 917495
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.017946580443018414,
+                "n_pairs": 908928
+              }
+            ]
+          },
+          "annual_semiannual_sum": {
+            "frequency_cpd": 0.008210180623973728,
+            "period_days": 121.8,
+            "correlation": 0.8126214340844166,
+            "p_value": 0.0013157498256571364,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009894383179965867,
+            "coherence_variation": 0.002754823657217615,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.006037509693500929,
+                "n_pairs": 963958
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.009387549121610342,
+                "n_pairs": 971505
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.006032627872552768,
+                "n_pairs": 965100
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.010640468233840208,
+                "n_pairs": 954936
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.014510158327146553,
+                "n_pairs": 974874
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.01423626179337159,
+                "n_pairs": 929301
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.011811016995088124,
+                "n_pairs": 869307
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.010392139529972335,
+                "n_pairs": 835310
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.011697223806417455,
+                "n_pairs": 854667
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.009240558421025476,
+                "n_pairs": 843001
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.0073953744584397485,
+                "n_pairs": 834621
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.007351709906624876,
+                "n_pairs": 869520
+              }
+            ]
+          }
+        },
+        "significant_beats": {
+          "tidal_m2_tidal_s2_diff": {
+            "frequency_cpd": 0.06772773450728073,
+            "period_days": 14.765,
+            "correlation": 0.7385584124564232,
+            "p_value": 0.006079853492390257,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009898061707029658,
+            "coherence_variation": 0.0020102084248521295,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.00901870001548072,
+                "n_pairs": 906141
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.007911961867491166,
+                "n_pairs": 894806
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.008258862909785898,
+                "n_pairs": 904227
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.011119059436676116,
+                "n_pairs": 919679
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.012552467809896125,
+                "n_pairs": 916665
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.013722439055956012,
+                "n_pairs": 903695
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.012514668596990118,
+                "n_pairs": 904574
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.009267791781679982,
+                "n_pairs": 914749
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.009238455273931773,
+                "n_pairs": 909755
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.008797781650281987,
+                "n_pairs": 896297
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.009448366749438932,
+                "n_pairs": 880526
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.006926185336747059,
+                "n_pairs": 914986
+              }
+            ]
+          },
+          "chandler_annual_sum": {
+            "frequency_cpd": 0.005078720162519045,
+            "period_days": 196.9,
+            "correlation": -0.8371334685359897,
+            "p_value": 0.0006819157064453673,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.00960383591144096,
+            "coherence_variation": 0.0038828997461020157,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.010536534422134739,
+                "n_pairs": 971591
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.01636059683870472,
+                "n_pairs": 977013
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.01218673648220655,
+                "n_pairs": 952721
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.0066241564987130274,
+                "n_pairs": 917831
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.006157255299067905,
+                "n_pairs": 768942
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.0060939074216273545,
+                "n_pairs": 781504
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.004186866918775892,
+                "n_pairs": 787676
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.005588284964295922,
+                "n_pairs": 779683
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.007306832690827366,
+                "n_pairs": 1003920
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.013961735060171678,
+                "n_pairs": 960882
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.013409913092595163,
+                "n_pairs": 995890
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.012833211248171205,
+                "n_pairs": 968447
+              }
+            ]
+          },
+          "chandler_semiannual_sum": {
+            "frequency_cpd": 0.007818608287724784,
+            "period_days": 127.9,
+            "correlation": -0.8272941673806834,
+            "p_value": 0.0008984688457258402,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009933018495143824,
+            "coherence_variation": 0.0037312431375969577,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.015710632119217884,
+                "n_pairs": 885343
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.011720859338513322,
+                "n_pairs": 913496
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.011032480394931357,
+                "n_pairs": 891175
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.008584200268253562,
+                "n_pairs": 875615
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.0078072542536148015,
+                "n_pairs": 890335
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.009536873241706776,
+                "n_pairs": 867142
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.005667654107610212,
+                "n_pairs": 867197
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.00712144544177721,
+                "n_pairs": 894417
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.004896360354726087,
+                "n_pairs": 985934
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.007733823808436786,
+                "n_pairs": 969023
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.011438058169919461,
+                "n_pairs": 917495
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.017946580443018414,
+                "n_pairs": 908928
+              }
+            ]
+          },
+          "annual_semiannual_sum": {
+            "frequency_cpd": 0.008210180623973728,
+            "period_days": 121.8,
+            "correlation": 0.8126214340844166,
+            "p_value": 0.0013157498256571364,
+            "phase_component": "cosine",
+            "n_phase_bins": 12,
+            "mean_coherence": -0.009894383179965867,
+            "coherence_variation": 0.002754823657217615,
+            "fit_success": true,
+            "analysis_method": "direct_correlation",
+            "phase_tracking": [
+              {
+                "phase_bin": 0,
+                "phase_radians": 0.0,
+                "mean_coherence": -0.006037509693500929,
+                "n_pairs": 963958
+              },
+              {
+                "phase_bin": 1,
+                "phase_radians": 0.5235987755982988,
+                "mean_coherence": -0.009387549121610342,
+                "n_pairs": 971505
+              },
+              {
+                "phase_bin": 2,
+                "phase_radians": 1.0471975511965976,
+                "mean_coherence": -0.006032627872552768,
+                "n_pairs": 965100
+              },
+              {
+                "phase_bin": 3,
+                "phase_radians": 1.5707963267948966,
+                "mean_coherence": -0.010640468233840208,
+                "n_pairs": 954936
+              },
+              {
+                "phase_bin": 4,
+                "phase_radians": 2.0943951023931953,
+                "mean_coherence": -0.014510158327146553,
+                "n_pairs": 974874
+              },
+              {
+                "phase_bin": 5,
+                "phase_radians": 2.6179938779914944,
+                "mean_coherence": -0.01423626179337159,
+                "n_pairs": 929301
+              },
+              {
+                "phase_bin": 6,
+                "phase_radians": 3.141592653589793,
+                "mean_coherence": -0.011811016995088124,
+                "n_pairs": 869307
+              },
+              {
+                "phase_bin": 7,
+                "phase_radians": 3.665191429188092,
+                "mean_coherence": -0.010392139529972335,
+                "n_pairs": 835310
+              },
+              {
+                "phase_bin": 8,
+                "phase_radians": 4.1887902047863905,
+                "mean_coherence": -0.011697223806417455,
+                "n_pairs": 854667
+              },
+              {
+                "phase_bin": 9,
+                "phase_radians": 4.71238898038469,
+                "mean_coherence": -0.009240558421025476,
+                "n_pairs": 843001
+              },
+              {
+                "phase_bin": 10,
+                "phase_radians": 5.235987755982989,
+                "mean_coherence": -0.0073953744584397485,
+                "n_pairs": 834621
+              },
+              {
+                "phase_bin": 11,
+                "phase_radians": 5.759586531581287,
+                "mean_coherence": -0.007351709906624876,
+                "n_pairs": 869520
+              }
+            ]
+          }
+        },
+        "successful_analyses": 4,
+        "total_frequencies_tested": 4
+      }
+    },
+    "distance_dependent_patterns": {},
+    "total_significant_beats": 4,
+    "interpretation": "Robust relative motion coupling confirmed across multiple distance scales (4 significant beat patterns, max |r|=0.837)"
+  },
+  "mesh_dance_analysis": {
+    "success": true,
+    "analysis_type": "mesh_dance_ultimate",
+    "n_time_windows": 33,
+    "temporal_span_days": 896,
+    "mesh_evolution": [
+      {
+        "time_window": 8400,
+        "days_since_epoch": 8400,
+        "n_pairs": 256243,
+        "collective_motion_magnitude": 4.82974330994119,
+        "collective_motion_direction": 0.043692257205287265,
+        "coherence_uniformity": 0.5825520721745251,
+        "phase_synchronization": 0.9237281249097733,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9986741358577844,
+        "mesh_coherence_score": 0.834984777647361
+      },
+      {
+        "time_window": 8428,
+        "days_since_epoch": 8428,
+        "n_pairs": 310243,
+        "collective_motion_magnitude": 4.6939237708598665,
+        "collective_motion_direction": 0.4857117536370778,
+        "coherence_uniformity": 0.5835188183925745,
+        "phase_synchronization": 0.9273696370117858,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9726409638608838,
+        "mesh_coherence_score": 0.8278431397550814
+      },
+      {
+        "time_window": 8456,
+        "days_since_epoch": 8456,
+        "n_pairs": 311431,
+        "collective_motion_magnitude": 4.74020703298321,
+        "collective_motion_direction": 0.9443681162965722,
+        "coherence_uniformity": 0.5819168974092733,
+        "phase_synchronization": 0.9255063368863833,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9232920105901083,
+        "mesh_coherence_score": 0.8102384149619217
+      },
+      {
+        "time_window": 8484,
+        "days_since_epoch": 8484,
+        "n_pairs": 310588,
+        "collective_motion_magnitude": 4.611438013979102,
+        "collective_motion_direction": 1.4059589486026007,
+        "coherence_uniformity": 0.5834797281126313,
+        "phase_synchronization": 0.9366397921281804,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8697286682548593,
+        "mesh_coherence_score": 0.7966160628318902
+      },
+      {
+        "time_window": 8512,
+        "days_since_epoch": 8512,
+        "n_pairs": 324101,
+        "collective_motion_magnitude": 4.496843762609192,
+        "collective_motion_direction": 1.8765929062233357,
+        "coherence_uniformity": 0.5826626392706055,
+        "phase_synchronization": 0.9170996393009228,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8556506340428326,
+        "mesh_coherence_score": 0.7851376375381203
+      },
+      {
+        "time_window": 8540,
+        "days_since_epoch": 8540,
+        "n_pairs": 321333,
+        "collective_motion_magnitude": 4.60232865928865,
+        "collective_motion_direction": 2.3501405577260237,
+        "coherence_uniformity": 0.5818700443801758,
+        "phase_synchronization": 0.929477958797621,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.7622872111060489,
+        "mesh_coherence_score": 0.7578784047612818
+      },
+      {
+        "time_window": 8568,
+        "days_since_epoch": 8568,
+        "n_pairs": 333561,
+        "collective_motion_magnitude": 4.639329267667169,
+        "collective_motion_direction": 2.7897183022419045,
+        "coherence_uniformity": 0.5810263760394065,
+        "phase_synchronization": 0.9240837966414948,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.49244264800114773,
+        "mesh_coherence_score": 0.6658509402273497
+      },
+      {
+        "time_window": 8596,
+        "days_since_epoch": 8596,
+        "n_pairs": 324073,
+        "collective_motion_magnitude": 4.6245973621878935,
+        "collective_motion_direction": -2.7882288315197665,
+        "coherence_uniformity": 0.5816867484330824,
+        "phase_synchronization": 0.9245293051875656,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.5727035816270658,
+        "mesh_coherence_score": 0.692973211749238
+      },
+      {
+        "time_window": 8624,
+        "days_since_epoch": 8624,
+        "n_pairs": 323143,
+        "collective_motion_magnitude": 4.603252394585646,
+        "collective_motion_direction": -2.301337313457403,
+        "coherence_uniformity": 0.5839001982518578,
+        "phase_synchronization": 0.9349776138725231,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.7874993675425057,
+        "mesh_coherence_score": 0.7687923932222955
+      },
+      {
+        "time_window": 8652,
+        "days_since_epoch": 8652,
+        "n_pairs": 307534,
+        "collective_motion_magnitude": 4.602871625420286,
+        "collective_motion_direction": -1.8172634361832667,
+        "coherence_uniformity": 0.5831508900409093,
+        "phase_synchronization": 0.9284344978992148,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8574368564531135,
+        "mesh_coherence_score": 0.7896740814644126
+      },
+      {
+        "time_window": 8680,
+        "days_since_epoch": 8680,
+        "n_pairs": 320410,
+        "collective_motion_magnitude": 4.546642203128548,
+        "collective_motion_direction": -1.3537221594600384,
+        "coherence_uniformity": 0.5832112239205571,
+        "phase_synchronization": 0.9253449365890186,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8798637140797122,
+        "mesh_coherence_score": 0.7961399581964294
+      },
+      {
+        "time_window": 8708,
+        "days_since_epoch": 8708,
+        "n_pairs": 315010,
+        "collective_motion_magnitude": 4.683461074451185,
+        "collective_motion_direction": -0.8930605437547852,
+        "coherence_uniformity": 0.5842089211059929,
+        "phase_synchronization": 0.9368624878981088,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9325682978360156,
+        "mesh_coherence_score": 0.8178799022800392
+      },
+      {
+        "time_window": 8736,
+        "days_since_epoch": 8736,
+        "n_pairs": 309025,
+        "collective_motion_magnitude": 4.794730470119356,
+        "collective_motion_direction": -0.4310187274397049,
+        "coherence_uniformity": 0.5833954019705389,
+        "phase_synchronization": 0.9289339328353597,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9749587677039987,
+        "mesh_coherence_score": 0.8290960341699658
+      },
+      {
+        "time_window": 8764,
+        "days_since_epoch": 8764,
+        "n_pairs": 290041,
+        "collective_motion_magnitude": 4.791768305998012,
+        "collective_motion_direction": 0.016509413962884252,
+        "coherence_uniformity": 0.5838624071111577,
+        "phase_synchronization": 0.9289190286939871,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9992767710367375,
+        "mesh_coherence_score": 0.8373527356139608
+      },
+      {
+        "time_window": 8792,
+        "days_since_epoch": 8792,
+        "n_pairs": 316820,
+        "collective_motion_magnitude": 4.680428634152062,
+        "collective_motion_direction": 0.4648311565142327,
+        "coherence_uniformity": 0.5836298717494907,
+        "phase_synchronization": 0.9321101506385081,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9741565339287024,
+        "mesh_coherence_score": 0.8299655187722337
+      },
+      {
+        "time_window": 8820,
+        "days_since_epoch": 8820,
+        "n_pairs": 306676,
+        "collective_motion_magnitude": 4.710550296351343,
+        "collective_motion_direction": 0.9232558845158585,
+        "coherence_uniformity": 0.5827239994470952,
+        "phase_synchronization": 0.9276318424387815,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9250630733692184,
+        "mesh_coherence_score": 0.8118063050850317
+      },
+      {
+        "time_window": 8848,
+        "days_since_epoch": 8848,
+        "n_pairs": 306079,
+        "collective_motion_magnitude": 4.628374189895189,
+        "collective_motion_direction": 1.3846206359720856,
+        "coherence_uniformity": 0.5823691427449108,
+        "phase_synchronization": 0.9121746401314866,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8708814720280129,
+        "mesh_coherence_score": 0.7884750849681369
+      },
+      {
+        "time_window": 8876,
+        "days_since_epoch": 8876,
+        "n_pairs": 295524,
+        "collective_motion_magnitude": 4.4880840074443125,
+        "collective_motion_direction": 1.8553924523994232,
+        "coherence_uniformity": 0.5820720824606305,
+        "phase_synchronization": 0.9369604583763286,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8571269644991847,
+        "mesh_coherence_score": 0.7920531684453812
+      },
+      {
+        "time_window": 8904,
+        "days_since_epoch": 8904,
+        "n_pairs": 300476,
+        "collective_motion_magnitude": 4.5635333350029,
+        "collective_motion_direction": 2.3282175963127467,
+        "coherence_uniformity": 0.5826512072511636,
+        "phase_synchronization": 0.9197494719323523,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.7683645491322139,
+        "mesh_coherence_score": 0.7569217427719099
+      },
+      {
+        "time_window": 8932,
+        "days_since_epoch": 8932,
+        "n_pairs": 300484,
+        "collective_motion_magnitude": 4.629861883457351,
+        "collective_motion_direction": 2.762596504862477,
+        "coherence_uniformity": 0.5807313802353273,
+        "phase_synchronization": 0.9277767540441355,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.5131744025003969,
+        "mesh_coherence_score": 0.67389417892662
+      },
+      {
+        "time_window": 8960,
+        "days_since_epoch": 8960,
+        "n_pairs": 296969,
+        "collective_motion_magnitude": 4.62107905111155,
+        "collective_motion_direction": -2.8070976838632613,
+        "coherence_uniformity": 0.5836910174129152,
+        "phase_synchronization": 0.926942201257059,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.5577613991638974,
+        "mesh_coherence_score": 0.6894648726112905
+      },
+      {
+        "time_window": 8988,
+        "days_since_epoch": 8988,
+        "n_pairs": 295528,
+        "collective_motion_magnitude": 4.573849488154023,
+        "collective_motion_direction": -2.3210484533000177,
+        "coherence_uniformity": 0.5831078477320754,
+        "phase_synchronization": 0.9225861156418109,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.780971608814309,
+        "mesh_coherence_score": 0.7622218573960652
+      },
+      {
+        "time_window": 9016,
+        "days_since_epoch": 9016,
+        "n_pairs": 282344,
+        "collective_motion_magnitude": 4.6422808674504745,
+        "collective_motion_direction": -1.8353115588317286,
+        "coherence_uniformity": 0.5830610529758797,
+        "phase_synchronization": 0.9368713721385865,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8545240724899131,
+        "mesh_coherence_score": 0.7914854992014598
+      },
+      {
+        "time_window": 9044,
+        "days_since_epoch": 9044,
+        "n_pairs": 285766,
+        "collective_motion_magnitude": 4.538576480421773,
+        "collective_motion_direction": -1.3745399545703,
+        "coherence_uniformity": 0.5802755844224994,
+        "phase_synchronization": 0.9253919461867628,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8769205646059721,
+        "mesh_coherence_score": 0.7941960317384114
+      },
+      {
+        "time_window": 9072,
+        "days_since_epoch": 9072,
+        "n_pairs": 280085,
+        "collective_motion_magnitude": 4.616878770736274,
+        "collective_motion_direction": -0.9147689870982139,
+        "coherence_uniformity": 0.5844784042834226,
+        "phase_synchronization": 0.9264310648509346,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9316769297825583,
+        "mesh_coherence_score": 0.8141954663056384
+      },
+      {
+        "time_window": 9100,
+        "days_since_epoch": 9100,
+        "n_pairs": 288037,
+        "collective_motion_magnitude": 4.7856627655911534,
+        "collective_motion_direction": -0.45219125634007107,
+        "coherence_uniformity": 0.5838733215372062,
+        "phase_synchronization": 0.9347233571134582,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9737813288732331,
+        "mesh_coherence_score": 0.8307926691746325
+      },
+      {
+        "time_window": 9128,
+        "days_since_epoch": 9128,
+        "n_pairs": 272195,
+        "collective_motion_magnitude": 4.841592393554673,
+        "collective_motion_direction": -0.00403843870025636,
+        "coherence_uniformity": 0.5834719543107747,
+        "phase_synchronization": 0.9285030766535479,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9995045471017798,
+        "mesh_coherence_score": 0.8371598593553675
+      },
+      {
+        "time_window": 9156,
+        "days_since_epoch": 9156,
+        "n_pairs": 280039,
+        "collective_motion_magnitude": 4.682746820949368,
+        "collective_motion_direction": 0.44405007245267814,
+        "coherence_uniformity": 0.5843140662814547,
+        "phase_synchronization": 0.9270749948990515,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9753623012270068,
+        "mesh_coherence_score": 0.8289171208025045
+      },
+      {
+        "time_window": 9184,
+        "days_since_epoch": 9184,
+        "n_pairs": 286595,
+        "collective_motion_magnitude": 4.6874080816047945,
+        "collective_motion_direction": 0.9013734553714104,
+        "coherence_uniformity": 0.5836987219365525,
+        "phase_synchronization": 0.9343183159163275,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.9269361933482703,
+        "mesh_coherence_score": 0.8149844104003834
+      },
+      {
+        "time_window": 9212,
+        "days_since_epoch": 9212,
+        "n_pairs": 276374,
+        "collective_motion_magnitude": 4.62416030819302,
+        "collective_motion_direction": 1.3631554685424239,
+        "coherence_uniformity": 0.5836650577899541,
+        "phase_synchronization": 0.9267097798358986,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8725364369697519,
+        "mesh_coherence_score": 0.7943037581985349
+      },
+      {
+        "time_window": 9240,
+        "days_since_epoch": 9240,
+        "n_pairs": 284295,
+        "collective_motion_magnitude": 4.469339108610876,
+        "collective_motion_direction": 1.833617191620983,
+        "coherence_uniformity": 0.5821854803476388,
+        "phase_synchronization": 0.9280090041539696,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.8583490844064203,
+        "mesh_coherence_score": 0.789514522969343
+      },
+      {
+        "time_window": 9268,
+        "days_since_epoch": 9268,
+        "n_pairs": 282323,
+        "collective_motion_magnitude": 4.558256015591717,
+        "collective_motion_direction": 2.3109399451797943,
+        "coherence_uniformity": 0.5816845086140655,
+        "phase_synchronization": 0.9323874723371948,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.7788872085970961,
+        "mesh_coherence_score": 0.7643197298494521
+      },
+      {
+        "time_window": 9296,
+        "days_since_epoch": 9296,
+        "n_pairs": 270812,
+        "collective_motion_magnitude": 4.6753825629032635,
+        "collective_motion_direction": 2.7383658832479827,
+        "coherence_uniformity": 0.5805337132657298,
+        "phase_synchronization": 0.9238258780257839,
+        "dominant_interference_state": "neutral",
+        "interference_dominance": 1.0,
+        "oscillation_synchronization": 0.5265827216997276,
+        "mesh_coherence_score": 0.6769807709970804
+      }
+    ],
+    "spiral_signature": {
+      "mean_rotation_rate_rad_per_week": 0.47690763251255835,
+      "rotation_consistency": 0.9213969348311503,
+      "magnitude_oscillation": 0.02004400888848618,
+      "spiral_strength": 0.018468488351579496,
+      "is_spiral_motion": false
+    },
+    "collective_oscillation": {
+      "oscillation_results": {
+        "freq_0.002738": {
+          "frequency_cpd": 0.0027378507871321013,
+          "period_days": 365.25,
+          "correlation": 0.8816134730601084,
+          "p_value": 1.2450527293176927e-11,
+          "phase_component": "cosine",
+          "coherence_variation": 0.04954500213598337,
+          "fit_success": true,
+          "analysis_method": "direct_correlation"
+        },
+        "freq_0.002342": {
+          "frequency_cpd": 0.00234192037470726,
+          "period_days": 427.0,
+          "correlation": -0.6772293426527919,
+          "p_value": 1.5019497711269916e-05,
+          "phase_component": "cosine",
+          "coherence_variation": 0.04954500213598337,
+          "fit_success": true,
+          "analysis_method": "direct_correlation"
+        },
+        "freq_1.000000": {
+          "frequency_cpd": 1.0,
+          "period_days": 1.0,
+          "fit_success": false,
+          "error": "Insufficient variation for correlation (prevents scipy warning)",
+          "coherence_std": 0.04954500213598337,
+          "phase_sin_std": 2.102097641436199e-12,
+          "phase_cos_std": 0.0
+        },
+        "freq_2.000000": {
+          "frequency_cpd": 2.0,
+          "period_days": 0.5,
+          "fit_success": false,
+          "error": "Insufficient variation for correlation (prevents scipy warning)",
+          "coherence_std": 0.04954500213598337,
+          "phase_sin_std": 4.204195282872398e-12,
+          "phase_cos_std": 0.0
+        }
+      },
+      "best_oscillation": {
+        "frequency_cpd": 0.0027378507871321013,
+        "period_days": 365.25,
+        "correlation": 0.8816134730601084,
+        "p_value": 1.2450527293176927e-11,
+        "phase_component": "cosine",
+        "coherence_variation": 0.04954500213598337,
+        "fit_success": true,
+        "analysis_method": "direct_correlation"
+      },
+      "n_significant_oscillations": 2
+    },
+    "aether_interaction": {
+      "mesh_earth_coupling": {
+        "rotation_phase": {
+          "error": "Constant phase values - insufficient temporal variation",
+          "phase_std": 0.0
+        },
+        "orbital_phase": {
+          "correlation": 0.8816134730601091,
+          "p_value": 1.2450527293175857e-11,
+          "phase_component": "cosine",
+          "data_variation": 0.04954500213598337
+        },
+        "chandler_phase": {
+          "correlation": -0.6772293426527927,
+          "p_value": 1.501949771126948e-05,
+          "phase_component": "cosine",
+          "data_variation": 0.04954500213598337
+        }
+      },
+      "coupling_summary": {
+        "mesh_coherence_strength": 0.7833972806784492,
+        "spiral_motion_detected": false,
+        "spiral_strength": 0.018468488351579496,
+        "collective_oscillation_detected": true,
+        "strongest_oscillation_correlation": 0.8816134730601084,
+        "earth_coupling_detected": true,
+        "n_significant_earth_couplings": 2
+      }
+    },
+    "dance_signature": {
+      "dance_score": 0.6350191842035348,
+      "classification": "STRONG DANCE SIGNATURE - Clear coherent mesh dynamics detected",
+      "metrics": {
+        "mesh_coherence_strength": 0.7833972806784492,
+        "spiral_motion_detected": false,
+        "spiral_strength": 0.018468488351579496,
+        "collective_oscillation_detected": true,
+        "strongest_oscillation_correlation": 0.8816134730601084,
+        "earth_coupling_detected": true,
+        "n_significant_earth_couplings": 2
+      }
+    },
+    "interpretation": "MESH DANCE ANALYSIS: STRONG DANCE SIGNATURE - Clear coherent mesh dynamics detected"
+  },
+  "nutation_analysis": {
+    "enabled": false
+  },
+  "execution_time_seconds": 2966.0554070472717,
+  "success": true
+}

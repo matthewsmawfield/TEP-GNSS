@@ -2,7 +2,7 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.6 (Jaipur)  
-**Date:** September 21, 2025  
+**Date:** September 22, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Overview

@@ -25,7 +25,7 @@ class TEPConfig:
         # Analysis parameters
         'TEP_BINS': 40,
         'TEP_MAX_DISTANCE_KM': 13000.0,
-        'TEP_MIN_BIN_COUNT': 200,
+        'TEP_MIN_BIN_COUNT': 50,  # Lowered for beat frequency analysis
         'TEP_BOOTSTRAP_ITER': 1000,
         'TEP_NULL_ITERATIONS': 100,
         
@@ -83,7 +83,24 @@ class TEPConfig:
         'TEP_ANISOTROPY_CV_CHAOTIC_THRESHOLD': 0.8,
         'TEP_DIPOLE_STRENGTH_THRESHOLD': 0.3,
         'TEP_MIN_EPOCHS': 20,
-        'TEP_INITIAL_LAMBDA_GUESS': 3000
+        'TEP_INITIAL_LAMBDA_GUESS': 3000,
+        
+        # NEW: Helical Motion Analysis Configuration (ADDITIONS ONLY)
+        'TEP_ENABLE_CHANDLER_WOBBLE': True,
+        'TEP_ENABLE_3D_HARMONICS': True,  
+        'TEP_ENABLE_BEAT_FREQUENCIES': True,
+        'TEP_ENABLE_RELATIVE_MOTION_BEATS': True,  # NEW: Enhanced relative motion analysis
+        'TEP_ENABLE_MESH_DANCE_ANALYSIS': True,   # NEW: The ultimate "dance" analysis
+        'TEP_ENABLE_NUTATION_ANALYSIS': False,  # Requires multi-year data
+        'TEP_CHANDLER_PERIOD_DAYS': 427.0,
+        'TEP_SPHERICAL_THETA_BINS': 6,
+        'TEP_SPHERICAL_PHI_BINS': 12,
+        'TEP_BEAT_MIN_PERIOD_DAYS': 7.0,
+        'TEP_BEAT_MIN_CYCLES': 3,
+        'TEP_BEAT_SIGNIFICANCE_THRESHOLD': 0.3,  # Much more sensitive threshold
+        'TEP_MESH_COHERENCE_THRESHOLD': 0.05,   # More sensitive mesh analysis
+        'TEP_MIN_CORRELATION_THRESHOLD': 0.2,   # Minimum correlation to consider significant
+        'TEP_NUTATION_PERIOD_YEARS': 18.6
     }
     
     @staticmethod
