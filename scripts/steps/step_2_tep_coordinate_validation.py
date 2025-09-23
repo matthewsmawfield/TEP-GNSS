@@ -33,26 +33,22 @@ from scripts.utils.exceptions import (
     safe_csv_read, safe_json_read, safe_json_write,
     validate_file_exists, validate_directory_exists
 )
+from scripts.utils.logger import TEPLogger
+
+# Instantiate the logger
+logger = TEPLogger().logger
 
 def print_step_header():
     """Print formatted step header"""
     print(f"\n{'='*80}")
-    print("TEP GNSS Analysis Package v0.6")
+    print("TEP GNSS Analysis Package v0.7")
     print("STEP 2: Coordinate Validation")
     print("Validating station coordinates for precision distance calculations")
     print(f"{'='*80}")
 
-def print_status(text: str, status: str = "INFO"):
-    """Print status message"""
-    prefixes = {
-        "INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", "ERROR": "[ERROR]",
-        "PROCESS": "[PROCESSING]", "TEST": "[TEST]", "COMPLETE": "[COMPLETE]"
-    }
-    print(f"{prefixes.get(status, '[INFO]')} {text}")
-
 def check_step_1_completion():
     """Check that Step 1 completed successfully"""
-    print_status("Checking Step 1 completion...", "TEST")
+    logger.test("Checking Step 1 completion...")
     
     required_files = [
         "logs/step_1_data_acquisition.json",
@@ -65,23 +61,23 @@ def check_step_1_completion():
             missing_files.append(file_path)
     
     if missing_files:
-        print_status("Step 1 not completed. Missing:", "ERROR")
+        logger.error("Step 1 not completed. Missing:")
         for file_path in missing_files:
-            print_status(f"  Missing: {file_path}", "ERROR")
+            logger.error(f"  Missing: {file_path}")
         return False
     
-    print_status("Step 1 completion verified", "SUCCESS")
+    logger.success("Step 1 completion verified")
     return True
 
 def validate_coordinate_data():
     """Validate the coordinate data from Step 1"""
-    print_status("Validating coordinate data...", "PROCESS")
+    logger.process("Validating coordinate data...")
     
     # Check the single comprehensive coordinate file
     coord_file = Path("data/coordinates/station_coords_global.csv")
     
     if not coord_file.exists():
-        print_status("Station coordinates file not found", "ERROR")
+        logger.error("Station coordinates file not found")
         return False
     
     try:
@@ -91,12 +87,12 @@ def validate_coordinate_data():
         # Check if this is the new comprehensive format
         if 'has_coordinates' in df.columns:
             verified_stations = df[df['has_coordinates'] == True]
-            print_status(f"Comprehensive coordinate catalogue: {len(df)} stations", "INFO")
-            print_status(f"Verified stations for analysis: {len(verified_stations)}", "SUCCESS")
+            logger.info(f"Comprehensive coordinate catalogue: {len(df)} stations")
+            logger.success(f"Verified stations for analysis: {len(verified_stations)}")
         else:
             # Legacy format - all stations are considered verified
             verified_stations = df
-            print_status(f"Legacy coordinate catalogue: {len(df)} stations (all verified)", "INFO")
+            logger.info(f"Legacy coordinate catalogue: {len(df)} stations (all verified)")
 
         # Require only real ECEF coordinates (no inference). LLH is optional.
         required_cols = ['code', 'X', 'Y', 'Z']
@@ -105,7 +101,7 @@ def validate_coordinate_data():
             
         missing_cols = [col for col in required_cols if col not in df.columns]
         if missing_cols:
-            print_status(f"Missing columns: {missing_cols}", "ERROR")
+            logger.error(f"Missing columns: {missing_cols}")
             return False
 
         # Validate only verified stations (has_coordinates=True)
@@ -121,23 +117,23 @@ def validate_coordinate_data():
         )
         valid_coords = int(valid_mask.sum())
 
-        print_status(f"ECEF coordinate validation (verified stations only):", "INFO")
-        print_status(f"  Verified stations: {n_verified}/{n_total}", "INFO")
-        print_status(f"  Valid ECEF coords: {valid_coords}/{n_verified}", "INFO")
-        print_status("  ECEF ranges:", "INFO")
-        print_status(f"    X: {verified_stations['X'].min():.0f} to {verified_stations['X'].max():.0f} m", "INFO")
-        print_status(f"    Y: {verified_stations['Y'].min():.0f} to {verified_stations['Y'].max():.0f} m", "INFO")
-        print_status(f"    Z: {verified_stations['Z'].min():.0f} to {verified_stations['Z'].max():.0f} m", "INFO")
+        logger.info(f"ECEF coordinate validation (verified stations only):")
+        logger.info(f"  Verified stations: {n_verified}/{n_total}")
+        logger.info(f"  Valid ECEF coords: {valid_coords}/{n_verified}")
+        logger.info(f"  ECEF ranges:")
+        logger.info(f"    X: {verified_stations['X'].min():.0f} to {verified_stations['X'].max():.0f} m")
+        logger.info(f"    Y: {verified_stations['Y'].min():.0f} to {verified_stations['Y'].max():.0f} m")
+        logger.info(f"    Z: {verified_stations['Z'].min():.0f} to {verified_stations['Z'].max():.0f} m")
 
         if valid_coords >= max(10, int(n_verified * 0.95)):  # Stricter validation for verified stations
-            print_status("Coordinate validation passed - verified stations have valid ECEF", "SUCCESS")
+            logger.success("Coordinate validation passed - verified stations have valid ECEF")
             return True
         else:
-            print_status("Too many invalid ECEF coordinates in verified stations", "ERROR")
+            logger.error("Too many invalid ECEF coordinates in verified stations")
             return False
             
     except (TEPDataError, TEPFileError) as e:
-        print_status(f"Error reading coordinate file: {e}", "ERROR")
+        logger.error(f"Error reading coordinate file: {e}")
         return False
 
 def create_step_2_summary():
@@ -145,7 +141,7 @@ def create_step_2_summary():
     coord_file = Path("data/coordinates/station_coords_global.csv")
     
     if not coord_file.exists():
-        print_status("Coordinate file not found for summary", "ERROR")
+        logger.error("Coordinate file not found for summary")
         return None
     
     try:
@@ -166,7 +162,7 @@ def create_step_2_summary():
         verified_stations = n_verified
         
     except (TEPDataError, TEPFileError) as e:
-        print_status(f"Error reading coordinate file: {e}", "ERROR")
+        logger.error(f"Error reading coordinate file: {e}")
         n_total = 0
         verified_stations = 0
         coord_quality = "error"
@@ -179,9 +175,9 @@ def create_step_2_summary():
             audit_data = safe_json_read(audit_file)
             center_breakdown = audit_data.get('by_analysis_center', {})
             verified_stations = audit_data['overall_statistics']['sites_with_coordinates']
-            print_status(f"Using audit results: {verified_stations} verified stations", "SUCCESS")
+            logger.success(f"Using audit results: {verified_stations} verified stations")
         except (TEPDataError, TEPFileError) as e:
-            print_status(f"Could not load audit results: {e}", "WARNING")
+            logger.warning(f"Could not load audit results: {e}")
     
     summary = {
         'step': 2,
@@ -216,15 +212,15 @@ def create_step_2_summary():
     try:
         safe_json_write(summary, summary_file, indent=2)
     except (TEPFileError, TEPDataError) as e:
-        print_status(f"Failed to save summary: {e}", "WARNING")
+        logger.warning(f"Failed to save summary: {e}")
     
-    print_status(f"Validation summary saved: {summary_file}", "SUCCESS")
-    print_status(f"Pipeline configured for {verified_stations} verified stations", "SUCCESS")
+    logger.success(f"Validation summary saved: {summary_file}")
+    logger.success(f"Pipeline configured for {verified_stations} verified stations")
     return summary
 
 def validate_step_2_completion():
     """Validate Step 2 completion"""
-    print_status("Validating Step 2 completion...", "TEST")
+    logger.test("Validating Step 2 completion...")
     
     validation_checks = [
         ("Step 2 summary exists", Path("logs/step_2_coordinate_validation.json").exists()),
@@ -239,12 +235,12 @@ def validate_step_2_completion():
     
     for check_name, passed in validation_checks:
         status_icon = "SUCCESS" if passed else "ERROR"
-        print_status(f"{check_name}: {'PASS' if passed else 'FAIL'}", status_icon)
+        (logger.info if passed else logger.error)(f"{check_name}: {'PASS' if passed else 'FAIL'}")
     
     if all_passed:
-        print_status("All validation checks passed", "SUCCESS")
+        logger.success("All validation checks passed")
     else:
-        print_status("Validation checks failed", "ERROR")
+        logger.error("Validation checks failed")
     
     return all_passed
 
@@ -271,19 +267,19 @@ def main():
     
     # Validate coordinate data (Step 1 should have created this)
     if not validate_coordinate_data():
-        print_status("Coordinate validation failed", "ERROR")
+        logger.error("Coordinate validation failed")
         return False
     
-    print_status("Coordinate data looks good - no additional processing needed", "SUCCESS")
+    logger.success("Coordinate data looks good - no additional processing needed")
     
     # Run comprehensive station audit for pipeline consistency (always enabled)
-    print_status("Running comprehensive station audit for pipeline consistency...", "PROCESS")
+    logger.process("Running comprehensive station audit for pipeline consistency...")
     try:
         audit_station_ids()
-        print_status("Station ID audit complete - pipeline will use verified counts", "SUCCESS")
+        logger.success("Station ID audit complete - pipeline will use verified counts")
     except (TEPDataError, TEPFileError, ValueError, TypeError) as e:
-        print_status(f"Station audit failed: {e}", "WARNING")
-        print_status("Continuing with basic validation...", "INFO")
+        logger.warning(f"Station audit failed: {e}")
+        logger.info("Continuing with basic validation...")
     
     # Create completion summary
     summary = create_step_2_summary()
@@ -295,15 +291,15 @@ def main():
     elapsed_time = time.time() - start_time
     
     print(f"\n{'='*80}")
-    print_status("COORDINATE VALIDATION COMPLETE", "SUCCESS")
+    logger.success("COORDINATE VALIDATION COMPLETE")
     print(f"{'='*80}")
     
-    print_status(f"Execution time: {elapsed_time:.1f} seconds", "INFO")
+    logger.info(f"Execution time: {elapsed_time:.1f} seconds")
     
     if validation_success:
-        print_status("Station coordinates validated and ready for analysis", "SUCCESS")
+        logger.success("Station coordinates validated and ready for analysis")
     else:
-        print_status("Coordinate validation failed", "ERROR")
+        logger.error("Coordinate validation failed")
         return False
     
     return True
@@ -314,7 +310,7 @@ def audit_station_ids():
     Integrated station ID audit - validates 9-char → 4-char mappings and spatial co-location.
     This replaces the separate audit script and provides definitive station counts.
     """
-    print_status("Running integrated station ID audit...", "PROCESS")
+    logger.process("Running integrated station ID audit...")
     
     # Create a basic audit summary based on coordinate catalogue
     coord_file = Path("data/coordinates/station_coords_global.csv")
@@ -344,11 +340,11 @@ def audit_station_ids():
         try:
             safe_json_write(summary, outdir / 'step_2_station_audit.json', indent=2)
         except (TEPFileError, TEPDataError) as e:
-            print_status(f"Failed to save preliminary audit: {e}", "WARNING")
+            logger.warning(f"Failed to save preliminary audit: {e}")
         
-        print_status(f"Preliminary audit complete: {verified_stations} verified stations", "SUCCESS")
+        logger.success(f"Preliminary audit complete: {verified_stations} verified stations")
     else:
-        print_status("Coordinate file not found, cannot run audit.", "ERROR")
+        logger.error("Coordinate file not found, cannot run audit.")
 
 
 if __name__ == "__main__":

@@ -14,7 +14,11 @@ Theory: Temporal Equivalence Principle (TEP)
 import functools
 from typing import Optional, Callable, Any, Union, List
 from pathlib import Path
+import logging
+from scripts.utils.logger import TEPLogger
 
+# Instantiate the logger
+logger = TEPLogger().logger
 
 # Custom exception hierarchy for TEP-specific errors
 class TEPError(Exception):
@@ -72,27 +76,25 @@ class SafeErrorHandler:
         Returns:
             Result of operation or return_on_error value
         """
+        if logger_func is None:
+            logger_func = logger.warning # Use the centralized logger by default
+            
         try:
             return operation()
         except FileNotFoundError as e:
-            if logger_func:
-                logger_func(f"{error_message}: File not found - {e}", "WARNING")
+            logger_func(f"{error_message}: File not found - {e}")
             return return_on_error
         except PermissionError as e:
-            if logger_func:
-                logger_func(f"{error_message}: Permission denied - {e}", "WARNING")
+            logger_func(f"{error_message}: Permission denied - {e}")
             return return_on_error
         except IsADirectoryError as e:
-            if logger_func:
-                logger_func(f"{error_message}: Expected a file but found a directory - {e}", "WARNING")
-            return return_on_error
+            logger_func(f"{error_message}: Expected a file but found a directory - {e}")
+            return return_on_on_error
         except OSError as e:
-            if logger_func:
-                logger_func(f"{error_message}: An OS error occurred - {e}", "WARNING")
+            logger_func(f"{error_message}: An OS error occurred - {e}")
             return return_on_error
         except (UnicodeDecodeError, UnicodeError) as e:
-            if logger_func:
-                logger_func(f"{error_message} - encoding issue: {e}", "WARNING")
+            logger_func(f"{error_message} - encoding issue: {e}")
             return return_on_error
     
     @staticmethod
@@ -120,6 +122,10 @@ class SafeErrorHandler:
         import socket
         import time
         
+        if logger_func is None:
+            logger_func = logger.warning # Use the centralized logger by default for warnings
+        error_logger_func = logger.error # Use error level for network failures
+
         last_error = None
         for attempt in range(max_retries + 1):
             try:
@@ -127,18 +133,16 @@ class SafeErrorHandler:
             except (urllib.error.URLError, urllib.error.HTTPError, socket.error, 
                    ConnectionError, TimeoutError) as e:
                 last_error = e
-                if logger_func and attempt == 0:
-                    logger_func(f"{error_message}: {e}", "WARNING")
+                if attempt == 0:
+                    logger_func(f"{error_message}: {e}")
                 
                 if attempt < max_retries:
-                    if logger_func:
-                        logger_func(f"Retrying network operation (attempt {attempt + 2}/{max_retries + 1})", "INFO")
+                    logger.info(f"Retrying network operation (attempt {attempt + 2}/{max_retries + 1})")
                     time.sleep(2 ** attempt)  # Exponential backoff
                     continue
                 break
         
-        if logger_func:
-            logger_func(f"{error_message} - all retries failed: {last_error}", "ERROR")
+        error_logger_func(f"{error_message} - all retries failed: {last_error}")
         return return_on_error
     
     @staticmethod
@@ -160,19 +164,19 @@ class SafeErrorHandler:
         Returns:
             Result of operation or return_on_error value
         """
+        if logger_func is None:
+            logger_func = logger.warning # Use the centralized logger by default
+            
         try:
             return operation()
         except (ValueError, TypeError, KeyError, IndexError) as e:
-            if logger_func:
-                logger_func(f"{error_message} - data error: {e}", "WARNING")
+            logger_func(f"{error_message} - data error: {e}")
             return return_on_error
         except (MemoryError, OverflowError) as e:
-            if logger_func:
-                logger_func(f"{error_message} - resource error: {e}", "ERROR")
+            logger_func(f"{error_message} - resource error: {e}")
             return return_on_error
         except ImportError as e:
-            if logger_func:
-                logger_func(f"{error_message} - missing dependency: {e}", "ERROR")
+            logger_func(f"{error_message} - missing dependency: {e}")
             return return_on_error
     
     @staticmethod
@@ -194,20 +198,20 @@ class SafeErrorHandler:
         Returns:
             Result of operation or return_on_error value
         """
+        if logger_func is None:
+            logger_func = logger.warning # Use the centralized logger by default
+            
         try:
             return operation()
         except (RuntimeError, ArithmeticError, ZeroDivisionError) as e:
-            if logger_func:
-                logger_func(f"{error_message} - computation error: {e}", "WARNING")
+            logger_func(f"{error_message} - computation error: {e}")
             return return_on_error
         except (ValueError, TypeError) as e:
-            if logger_func:
-                logger_func(f"{error_message} - parameter error: {e}", "WARNING")
+            logger_func(f"{error_message} - parameter error: {e}")
             return return_on_error
         # Let scipy-specific errors be handled by caller
         except ImportError as e:
-            if logger_func:
-                logger_func(f"{error_message} - missing scipy/numpy: {e}", "ERROR")
+            logger_func(f"{error_message} - missing scipy/numpy: {e}")
             return return_on_error
 
 
@@ -231,14 +235,16 @@ def safe_operation(
     Returns:
         Decorated function
     """
+    if logger_func is None:
+        logger_func = logger.error # Use the centralized logger for decorator by default
+        
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
             except error_types as e:
-                if logger_func:
-                    logger_func(f"{error_message}: {e}", "ERROR")
+                logger_func(f"{error_message}: {e}")
                 if reraise:
                     raise
                 return return_on_error

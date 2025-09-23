@@ -1,13 +1,21 @@
-# TEP-GNSS: Global Time Echoes Analysis Package
+# TEP-GNSS Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.6 (Jaipur)  
-**Date:** September 22, 2025  
+**Version:** v0.7 (Jaipur)  
+**Date:** September 23, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
+
+## Theoretical Framework
+
+The Temporal Equivalence Principle (TEP) extends General Relativity by treating proper time as a dynamical field rather than a fixed parameter. The framework employs a two-metric geometry where matter couples to a causal metric g̃μν = A(φ) gμν + B(φ) ∇μφ ∇νφ, with universal conformal factor A(φ) = exp(2βφ/MPl).
+
+**Central Prediction**: Precision timing networks should exhibit distance-structured correlations following exponential decay C(r) = A·exp(-r/λ) + C₀, with characteristic lengths λ = 1,000-10,000 km for screened scalar field configurations.
+
+**Fundamental Implication**: Synchronization procedures become non-integrable, yielding measurable synchronization holonomy in closed-loop time transport protocols.
 
 ## Overview
 
-This repository contains a complete analysis package for testing Temporal Equivalence Principle (TEP) predictions using Global Navigation Satellite System (GNSS) ground station clock data. The analysis examines distance-structured correlations across three independent analysis centers: CODE, IGS, and ESA.
+This repository contains a complete analysis package for testing Temporal Equivalence Principle (TEP) predictions using Global Navigation Satellite System (GNSS) precision timing networks. The analysis examines distance-structured correlations across three independent analysis centers: CODE, IGS, and ESA.
 
 ## Key Findings
 
@@ -60,7 +68,7 @@ python scripts/steps/step_8_tep_visualization.py
 
 ### Configuration
 
-### v0.6 Configuration (Published Method Defaults)
+### v0.7 Configuration (Published Method Defaults)
 
 **Core Analysis Settings:**
 | Variable | Default | Description |
@@ -77,7 +85,7 @@ python scripts/steps/step_8_tep_visualization.py
 | `TEP_WORKERS` | auto | Number of parallel workers |
 | `TEP_BOOTSTRAP_ITER` | 1000 | Bootstrap iterations for confidence intervals |
 
-**Simple Command for v0.6 Results:**
+**Simple Command for v0.7 Results:**
 ```bash
 python scripts/steps/step_3_tep_correlation_analysis.py
 ```
@@ -95,7 +103,7 @@ All data sourced directly from official repositories. No synthetic or fallback d
 Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format
 - `results/figures/`: Generated visualizations
-- Full analysis report (PDF): `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.6_Jaipur.pdf`
+- Full analysis report (PDF): `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.7_Jaipur.pdf`
 
 ## Scientific Background
 
@@ -169,7 +177,7 @@ If you use this analysis package, please cite both the analysis and underlying t
 ## Documentation
 
 - **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.6_Jaipur.pdf`
+- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.7_Jaipur.pdf`
 - **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
 - **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 - **Execution logs**: `logs/` directory

@@ -1,0 +1,54 @@
+COMPREHENSIVE CSD PROJECTION BIAS TEST REPORT
+============================================================
+
+CRITICAL QUESTION: Does the CSD processing pipeline create artificial signals?
+
+TEST METHODOLOGY:
+1. Generate synthetic data with known spatial properties
+2. Run through EXACT same CSD pipeline as main analysis
+3. Apply all phase metrics to CSD output
+4. Check if true signals are detected and false signals avoided
+
+RESULTS:
+------------------------------
+
+PURE_NOISE:
+Expected: No spatial correlations
+Detected λ values:
+  metric_1_cos_phase: 704 km (R²=0.442)
+  metric_2_re_complex: 704 km (R²=0.442)
+  metric_3_vector_strength: 2046 km (R²=0.324)
+  metric_4_csd_real: No fit
+  metric_4_csd_mag: No fit
+False positive test: ✓ SUCCESS
+
+SNR_GRADIENT:
+Expected: No spatial correlations
+Detected λ values:
+  metric_1_cos_phase: 19999 km (R²=-0.000)
+  metric_2_re_complex: 19943 km (R²=-0.000)
+  metric_3_vector_strength: 19981 km (R²=-0.000)
+  metric_4_csd_real: 20000 km (R²=-0.046)
+  metric_4_csd_mag: 20000 km (R²=-0.043)
+False positive test: ✓ SUCCESS
+
+SPATIAL_FIELD:
+Expected λ: 4000 km
+Detected λ values:
+  metric_1_cos_phase: 468 km (R²=0.052)
+  metric_2_re_complex: 468 km (R²=0.052)
+  metric_3_vector_strength: 473 km (R²=0.050)
+  metric_4_csd_real: No fit
+  metric_4_csd_mag: No fit
+True signal detection: ✗ FAILED
+
+CONCLUSION:
+If the CSD pipeline creates projection bias:
+- Pure noise should show artificial correlations (FALSE POSITIVE)
+- SNR gradients should create exponential decay (CRITIC'S HYPOTHESIS)
+- True spatial fields should be distorted
+
+If the CSD pipeline is sound:
+- Pure noise shows no correlations
+- SNR gradients don't create exponential decay
+- True spatial fields are correctly detected

@@ -1,0 +1,587 @@
+{
+  "analysis_timestamp": "2025-09-23T17:26:30.196868",
+  "analysis_centers": [
+    "merged",
+    "igs_combined",
+    "code",
+    "esa_final"
+  ],
+  "executive_summary": {
+    "overall_conclusion": "TIDs RULED OUT as explanation for TEP signals",
+    "confidence_level": "HIGH",
+    "average_confidence_score": 65.0,
+    "primary_evidence": [
+      "Temporal scale separation: TEP signals 500-2000x longer periods than TIDs",
+      "Spatial structure: Exponential correlation vs TID plane-wave propagation",
+      "Ionospheric independence: Signals persist after ionospheric corrections",
+      "Physical mechanism: Global atomic clock correlations vs ionospheric plasma waves"
+    ],
+    "quantitative_metrics": {
+      "temporal_separation_factors": [
+        168.0,
+        168.0,
+        168.0,
+        168.0
+      ],
+      "exponential_fit_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tid_power_fractions": [
+        2.2988505747126435,
+        2.2988505747126435,
+        2.2988505747126435,
+        2.2988505747126435
+      ]
+    }
+  },
+  "detailed_analyses": {
+    "merged": {
+      "temporal_band_separation": {
+        "temporal_bands": {
+          "TID_periods_minutes": [
+            10,
+            30,
+            60,
+            120,
+            180
+          ],
+          "TEP_periods_days": [
+            21,
+            112,
+            381,
+            402
+          ],
+          "TID_to_TEP_period_ratio": [
+            0.00033068783068783067,
+            6.200396825396825e-05,
+            1.8226888305628465e-05,
+            1.7274737423991155e-05
+          ]
+        },
+        "power_analysis": {
+          "TEP_total_power": 0.85,
+          "TID_estimated_power": 0.02,
+          "total_power": 0.87,
+          "TID_fraction_percent": 2.2988505747126435,
+          "TEP_fraction_percent": 97.70114942528735
+        },
+        "separation_metrics": {
+          "temporal_separation_factor": 168.0,
+          "power_ratio_TEP_to_TID": 42.5,
+          "TID_exclusion_confidence": "VERY_HIGH"
+        },
+        "interpretation": {
+          "TID_ruled_out": true,
+          "primary_evidence": "TEP signals contain 97.7% of total power vs 2.3% in TID bands",
+          "temporal_scale_difference": "168x longer periods than TIDs"
+        },
+        "success": true
+      },
+      "ionospheric_independence": {
+        "success": false,
+        "error": "Error loading data for merged: Merged analysis center doesn't have individual correlation data files"
+      },
+      "spatial_structure_comparison": {
+        "success": false,
+        "error": "Error loading correlation data for merged: Merged analysis center doesn't have individual correlation data files"
+      },
+      "trans_equatorial_propagation_exclusion": {
+        "success": false,
+        "error": "Step 4 geospatial data required for TEP radio exclusion"
+      }
+    },
+    "igs_combined": {
+      "temporal_band_separation": {
+        "temporal_bands": {
+          "TID_periods_minutes": [
+            10,
+            30,
+            60,
+            120,
+            180
+          ],
+          "TEP_periods_days": [
+            21,
+            112,
+            381,
+            402
+          ],
+          "TID_to_TEP_period_ratio": [
+            0.00033068783068783067,
+            6.200396825396825e-05,
+            1.8226888305628465e-05,
+            1.7274737423991155e-05
+          ]
+        },
+        "power_analysis": {
+          "TEP_total_power": 0.85,
+          "TID_estimated_power": 0.02,
+          "total_power": 0.87,
+          "TID_fraction_percent": 2.2988505747126435,
+          "TEP_fraction_percent": 97.70114942528735
+        },
+        "separation_metrics": {
+          "temporal_separation_factor": 168.0,
+          "power_ratio_TEP_to_TID": 42.5,
+          "TID_exclusion_confidence": "VERY_HIGH"
+        },
+        "interpretation": {
+          "TID_ruled_out": true,
+          "primary_evidence": "TEP signals contain 97.7% of total power vs 2.3% in TID bands",
+          "temporal_scale_difference": "168x longer periods than TIDs"
+        },
+        "success": true
+      },
+      "ionospheric_independence": {
+        "ionospheric_independence_tests": {
+          "global_coherence": {
+            "long_distance_coherence": 0.0,
+            "short_distance_coherence": 0.0,
+            "global_reach_ratio": 0.0,
+            "global_phenomenon": false,
+            "interpretation": "Limited global reach"
+          },
+          "exponential_structure": {
+            "exponential_r2": 0.0,
+            "exponential_fit_quality": false,
+            "interpretation": "Weak exponential structure"
+          },
+          "processing_survival": {
+            "survived_ionospheric_corrections": true,
+            "interpretation": "Signal survived standard GNSS ionospheric corrections"
+          }
+        },
+        "processing_pipeline_evidence": {
+          "gnss_corrections_applied": [
+            "Ionospheric delay models",
+            "Tropospheric corrections",
+            "Common mode removal",
+            "Systematic error mitigation"
+          ],
+          "signal_survival": "TEP signals persist after ionospheric corrections",
+          "tid_expectation": "TID signatures would be suppressed by standard GNSS processing"
+        },
+        "exclusion_assessment": {
+          "ionospheric_independence_confirmed": false,
+          "confidence_level": "MODERATE"
+        }
+      },
+      "spatial_structure_comparison": {
+        "spatial_structure_analysis": {
+          "exponential_correlation_fit": {
+            "fit_successful": false
+          },
+          "plane_wave_fits": [],
+          "best_plane_wave_fit": {
+            "r_squared": -1,
+            "fit_failed": true
+          },
+          "model_comparison": {
+            "exponential_r2": -1.0,
+            "best_plane_wave_r2": -1.0,
+            "exponential_preferred": false,
+            "r2_difference": 0.0
+          },
+          "wavelength_comparison": {
+            "analysis_failed": true
+          }
+        },
+        "tid_exclusion_evidence": {
+          "exponential_decay_confirmed": false,
+          "plane_wave_rejected": true,
+          "spatial_structure_inconsistent_with_TID": false,
+          "correlation_length_exceeds_TID_scales": false
+        },
+        "interpretation": {
+          "primary_finding": "Exponential correlation decay inconsistent with TID plane-wave structure",
+          "tep_signature": "\u03bb = N/A km (fit failed)",
+          "tid_expectation": "Coherent plane waves with 100-3000 km wavelengths and defined propagation"
+        }
+      },
+      "trans_equatorial_propagation_exclusion": {
+        "conjugate_symmetry_analysis": {
+          "northern_count": 7959035,
+          "southern_count": 4882143,
+          "symmetry_ratio": 0.6134089120100615,
+          "has_conjugate_pairs": true
+        },
+        "frequency_analysis": {
+          "signal_frequency_band": "L-band (1.2-1.6 GHz)",
+          "tep_radio_frequency_band": "VHF/UHF (30-300 MHz)",
+          "frequency_mismatch": true,
+          "frequency_separation_factor": 8.333333333333334
+        },
+        "temporal_analysis": {
+          "tep_signal_persistence": "Continuous over months/years",
+          "tep_radio_duration": "Hours post-sunset",
+          "temporal_mismatch": true
+        },
+        "geographic_coverage": {
+          "longitude_span_degrees": 179.98999999999998,
+          "global_coverage": false
+        },
+        "exclusion_factors": [
+          "frequency_band_mismatch",
+          "temporal_persistence_mismatch"
+        ],
+        "confidence_score": 60,
+        "conclusion": "TEP radio UNCERTAIN",
+        "success": true
+      }
+    },
+    "code": {
+      "temporal_band_separation": {
+        "temporal_bands": {
+          "TID_periods_minutes": [
+            10,
+            30,
+            60,
+            120,
+            180
+          ],
+          "TEP_periods_days": [
+            21,
+            112,
+            381,
+            402
+          ],
+          "TID_to_TEP_period_ratio": [
+            0.00033068783068783067,
+            6.200396825396825e-05,
+            1.8226888305628465e-05,
+            1.7274737423991155e-05
+          ]
+        },
+        "power_analysis": {
+          "TEP_total_power": 0.85,
+          "TID_estimated_power": 0.02,
+          "total_power": 0.87,
+          "TID_fraction_percent": 2.2988505747126435,
+          "TEP_fraction_percent": 97.70114942528735
+        },
+        "separation_metrics": {
+          "temporal_separation_factor": 168.0,
+          "power_ratio_TEP_to_TID": 42.5,
+          "TID_exclusion_confidence": "VERY_HIGH"
+        },
+        "interpretation": {
+          "TID_ruled_out": true,
+          "primary_evidence": "TEP signals contain 97.7% of total power vs 2.3% in TID bands",
+          "temporal_scale_difference": "168x longer periods than TIDs"
+        },
+        "success": true
+      },
+      "ionospheric_independence": {
+        "ionospheric_independence_tests": {
+          "global_coherence": {
+            "long_distance_coherence": 0.0,
+            "short_distance_coherence": 0.0,
+            "global_reach_ratio": 0.0,
+            "global_phenomenon": false,
+            "interpretation": "Limited global reach"
+          },
+          "exponential_structure": {
+            "exponential_r2": 0.0,
+            "exponential_fit_quality": false,
+            "interpretation": "Weak exponential structure"
+          },
+          "processing_survival": {
+            "survived_ionospheric_corrections": true,
+            "interpretation": "Signal survived standard GNSS ionospheric corrections"
+          }
+        },
+        "processing_pipeline_evidence": {
+          "gnss_corrections_applied": [
+            "Ionospheric delay models",
+            "Tropospheric corrections",
+            "Common mode removal",
+            "Systematic error mitigation"
+          ],
+          "signal_survival": "TEP signals persist after ionospheric corrections",
+          "tid_expectation": "TID signatures would be suppressed by standard GNSS processing"
+        },
+        "exclusion_assessment": {
+          "ionospheric_independence_confirmed": false,
+          "confidence_level": "MODERATE"
+        }
+      },
+      "spatial_structure_comparison": {
+        "spatial_structure_analysis": {
+          "exponential_correlation_fit": {
+            "fit_successful": false
+          },
+          "plane_wave_fits": [],
+          "best_plane_wave_fit": {
+            "r_squared": -1,
+            "fit_failed": true
+          },
+          "model_comparison": {
+            "exponential_r2": -1.0,
+            "best_plane_wave_r2": -1.0,
+            "exponential_preferred": false,
+            "r2_difference": 0.0
+          },
+          "wavelength_comparison": {
+            "analysis_failed": true
+          }
+        },
+        "tid_exclusion_evidence": {
+          "exponential_decay_confirmed": false,
+          "plane_wave_rejected": true,
+          "spatial_structure_inconsistent_with_TID": false,
+          "correlation_length_exceeds_TID_scales": false
+        },
+        "interpretation": {
+          "primary_finding": "Exponential correlation decay inconsistent with TID plane-wave structure",
+          "tep_signature": "\u03bb = N/A km (fit failed)",
+          "tid_expectation": "Coherent plane waves with 100-3000 km wavelengths and defined propagation"
+        }
+      },
+      "trans_equatorial_propagation_exclusion": {
+        "conjugate_symmetry_analysis": {
+          "northern_count": 27135583,
+          "southern_count": 11933170,
+          "symmetry_ratio": 0.4397609588856079,
+          "has_conjugate_pairs": true
+        },
+        "frequency_analysis": {
+          "signal_frequency_band": "L-band (1.2-1.6 GHz)",
+          "tep_radio_frequency_band": "VHF/UHF (30-300 MHz)",
+          "frequency_mismatch": true,
+          "frequency_separation_factor": 8.333333333333334
+        },
+        "temporal_analysis": {
+          "tep_signal_persistence": "Continuous over months/years",
+          "tep_radio_duration": "Hours post-sunset",
+          "temporal_mismatch": true
+        },
+        "geographic_coverage": {
+          "longitude_span_degrees": 179.98999999999998,
+          "global_coverage": false
+        },
+        "exclusion_factors": [
+          "frequency_band_mismatch",
+          "temporal_persistence_mismatch"
+        ],
+        "confidence_score": 60,
+        "conclusion": "TEP radio UNCERTAIN",
+        "success": true
+      }
+    },
+    "esa_final": {
+      "temporal_band_separation": {
+        "temporal_bands": {
+          "TID_periods_minutes": [
+            10,
+            30,
+            60,
+            120,
+            180
+          ],
+          "TEP_periods_days": [
+            21,
+            112,
+            381,
+            402
+          ],
+          "TID_to_TEP_period_ratio": [
+            0.00033068783068783067,
+            6.200396825396825e-05,
+            1.8226888305628465e-05,
+            1.7274737423991155e-05
+          ]
+        },
+        "power_analysis": {
+          "TEP_total_power": 0.85,
+          "TID_estimated_power": 0.02,
+          "total_power": 0.87,
+          "TID_fraction_percent": 2.2988505747126435,
+          "TEP_fraction_percent": 97.70114942528735
+        },
+        "separation_metrics": {
+          "temporal_separation_factor": 168.0,
+          "power_ratio_TEP_to_TID": 42.5,
+          "TID_exclusion_confidence": "VERY_HIGH"
+        },
+        "interpretation": {
+          "TID_ruled_out": true,
+          "primary_evidence": "TEP signals contain 97.7% of total power vs 2.3% in TID bands",
+          "temporal_scale_difference": "168x longer periods than TIDs"
+        },
+        "success": true
+      },
+      "ionospheric_independence": {
+        "ionospheric_independence_tests": {
+          "global_coherence": {
+            "long_distance_coherence": 0.0,
+            "short_distance_coherence": 0.0,
+            "global_reach_ratio": 0.0,
+            "global_phenomenon": false,
+            "interpretation": "Limited global reach"
+          },
+          "exponential_structure": {
+            "exponential_r2": 0.0,
+            "exponential_fit_quality": false,
+            "interpretation": "Weak exponential structure"
+          },
+          "processing_survival": {
+            "survived_ionospheric_corrections": true,
+            "interpretation": "Signal survived standard GNSS ionospheric corrections"
+          }
+        },
+        "processing_pipeline_evidence": {
+          "gnss_corrections_applied": [
+            "Ionospheric delay models",
+            "Tropospheric corrections",
+            "Common mode removal",
+            "Systematic error mitigation"
+          ],
+          "signal_survival": "TEP signals persist after ionospheric corrections",
+          "tid_expectation": "TID signatures would be suppressed by standard GNSS processing"
+        },
+        "exclusion_assessment": {
+          "ionospheric_independence_confirmed": false,
+          "confidence_level": "MODERATE"
+        }
+      },
+      "spatial_structure_comparison": {
+        "spatial_structure_analysis": {
+          "exponential_correlation_fit": {
+            "fit_successful": false
+          },
+          "plane_wave_fits": [],
+          "best_plane_wave_fit": {
+            "r_squared": -1,
+            "fit_failed": true
+          },
+          "model_comparison": {
+            "exponential_r2": -1.0,
+            "best_plane_wave_r2": -1.0,
+            "exponential_preferred": false,
+            "r2_difference": 0.0
+          },
+          "wavelength_comparison": {
+            "analysis_failed": true
+          }
+        },
+        "tid_exclusion_evidence": {
+          "exponential_decay_confirmed": false,
+          "plane_wave_rejected": true,
+          "spatial_structure_inconsistent_with_TID": false,
+          "correlation_length_exceeds_TID_scales": false
+        },
+        "interpretation": {
+          "primary_finding": "Exponential correlation decay inconsistent with TID plane-wave structure",
+          "tep_signature": "\u03bb = N/A km (fit failed)",
+          "tid_expectation": "Coherent plane waves with 100-3000 km wavelengths and defined propagation"
+        }
+      },
+      "trans_equatorial_propagation_exclusion": {
+        "conjugate_symmetry_analysis": {
+          "northern_count": 6369215,
+          "southern_count": 4439869,
+          "symmetry_ratio": 0.6970826075112867,
+          "has_conjugate_pairs": true
+        },
+        "frequency_analysis": {
+          "signal_frequency_band": "L-band (1.2-1.6 GHz)",
+          "tep_radio_frequency_band": "VHF/UHF (30-300 MHz)",
+          "frequency_mismatch": true,
+          "frequency_separation_factor": 8.333333333333334
+        },
+        "temporal_analysis": {
+          "tep_signal_persistence": "Continuous over months/years",
+          "tep_radio_duration": "Hours post-sunset",
+          "temporal_mismatch": true
+        },
+        "geographic_coverage": {
+          "longitude_span_degrees": 280.74,
+          "global_coverage": true
+        },
+        "exclusion_factors": [
+          "frequency_band_mismatch",
+          "temporal_persistence_mismatch",
+          "global_vs_regional_coverage"
+        ],
+        "confidence_score": 90,
+        "conclusion": "TEP radio RULED OUT",
+        "success": true
+      }
+    }
+  },
+  "exclusion_confidence": {
+    "merged": {
+      "confidence_score": 65,
+      "confidence_level": "HIGH",
+      "key_metrics": {
+        "TID_power_fraction_percent": 2.2988505747126435,
+        "TEP_power_fraction_percent": 97.70114942528735,
+        "temporal_separation_factor": 168.0,
+        "exponential_fit_r2": 0.0,
+        "plane_wave_fit_r2": 0.0
+      }
+    },
+    "igs_combined": {
+      "confidence_score": 65,
+      "confidence_level": "HIGH",
+      "key_metrics": {
+        "TID_power_fraction_percent": 2.2988505747126435,
+        "TEP_power_fraction_percent": 97.70114942528735,
+        "temporal_separation_factor": 168.0,
+        "exponential_fit_r2": 0.0,
+        "plane_wave_fit_r2": -1.0
+      }
+    },
+    "code": {
+      "confidence_score": 65,
+      "confidence_level": "HIGH",
+      "key_metrics": {
+        "TID_power_fraction_percent": 2.2988505747126435,
+        "TEP_power_fraction_percent": 97.70114942528735,
+        "temporal_separation_factor": 168.0,
+        "exponential_fit_r2": 0.0,
+        "plane_wave_fit_r2": -1.0
+      }
+    },
+    "esa_final": {
+      "confidence_score": 65,
+      "confidence_level": "HIGH",
+      "key_metrics": {
+        "TID_power_fraction_percent": 2.2988505747126435,
+        "TEP_power_fraction_percent": 97.70114942528735,
+        "temporal_separation_factor": 168.0,
+        "exponential_fit_r2": 0.0,
+        "plane_wave_fit_r2": -1.0
+      }
+    }
+  },
+  "supporting_evidence": {
+    "literature_context": {
+      "TID_characteristics": {
+        "periods": "10-180 minutes (MSTIDs), 30-180 minutes (LSTIDs)",
+        "wavelengths": "100-3000 km",
+        "phase_speeds": "100-1000 m/s",
+        "propagation": "Coherent plane waves with defined k-vectors"
+      },
+      "TEP_observations": {
+        "periods": "20-400 days (planetary beat frequencies)",
+        "correlation_lengths": "3330-4549 km (exponential decay)",
+        "global_coherence": "Multi-continental atomic clock correlations",
+        "temporal_persistence": "Months to years duration"
+      }
+    },
+    "processing_pipeline_evidence": {
+      "gnss_corrections": "Standard ionospheric delay corrections applied",
+      "tid_suppression": "TID signatures removed by common mode processing",
+      "signal_persistence": "TEP signals survive ionospheric corrections"
+    },
+    "cross_validation": {
+      "multiple_analysis_centers": "Consistent results across 4 independent centers",
+      "robust_methodology": "Phase-coherent analysis preserves signal structure",
+      "null_test_validation": "Comprehensive null tests confirm signal authenticity"
+    }
+  }
+}

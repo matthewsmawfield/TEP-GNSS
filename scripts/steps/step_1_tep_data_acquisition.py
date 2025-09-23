@@ -1,14 +1,30 @@
 #!/usr/bin/env python3
 """
-TEP GNSS Analysis - STEP 1: Data Acquisition
-===========================================
+TEP-GNSS Data Acquisition and Station Catalogue Construction
 
-Acquires authoritative GNSS data and station coordinates from official sources.
-Downloads precision clock products and establishes comprehensive station catalogue
-for temporal equivalence principle analysis.
+Implementation of precision timing network data acquisition following the
+methodology described in Smawfield (2025) for Temporal Equivalence Principle
+analysis.
 
-Sources: IGS, CODE, ESA analysis centers; ITRF2014 coordinate framework
-Validation: Strict authentication, no synthetic data, complete provenance
+Theoretical Background:
+    Acquires chronometric observables from Global Navigation Satellite System
+    precision timing networks. Establishes comprehensive station catalogue with
+    ECEF coordinates for spatial correlation analysis.
+
+Data Sources:
+    - CODE: Center for Orbit Determination in Europe
+    - IGS: International GNSS Service  
+    - ESA: European Space Agency Final Products
+    - ITRF2014: International Terrestrial Reference Frame
+
+Validation Protocol:
+    - Strict authentication against official repositories
+    - No synthetic or fallback data permitted
+    - Complete provenance tracking for reproducibility
+
+References:
+    Smawfield, M.L. (2025). Global Time Echoes: Distance-Structured Correlations
+    in GNSS Clocks Across Independent Networks. Zenodo.
 
 Author: Matthew Lukin Smawfield
 Theory: Temporal Equivalence Principle (TEP)
@@ -37,6 +53,10 @@ from scripts.utils.exceptions import (
     SafeErrorHandler, TEPDataError, TEPNetworkError, TEPFileError, 
     safe_csv_read, safe_json_read, safe_json_write
 )
+from scripts.utils.logger import TEPLogger # Import the centralized logger
+
+# Instantiate the logger
+logger = TEPLogger().logger
 
 # Station catalogue building functions (integrated from utils)
 import json
@@ -103,9 +123,9 @@ def calculate_geomagnetic_coordinates(lat_deg: float, lon_deg: float, height_m: 
     except Exception as e:
         # Only log the first few failures to avoid log spam
         if not hasattr(calculate_geomagnetic_coordinates, '_error_logged'):
-            print_status(f"Geomagnetic calculation failed: {e}", "WARNING")
+            logger.warning(f"Geomagnetic calculation failed: {e}")
             if "No module named 'pyIGRF'" in str(e):
-                print_status("Install pyIGRF with: pip install pyigrf==0.3.3", "INFO")
+                logger.info("Install pyIGRF with: pip install pyigrf==0.3.3")
             calculate_geomagnetic_coordinates._error_logged = True
         return None, None
 
@@ -119,14 +139,14 @@ def add_geomagnetic_coordinates(coords_df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         DataFrame with added geomagnetic coordinate columns
     """
-    print_status("Calculating geomagnetic coordinates for all stations...", "PROCESS")
+    logger.process("Calculating geomagnetic coordinates for all stations...")
     
     # Check if we have required columns
     required_cols = ['lat_deg', 'lon_deg', 'height_m']
     missing_cols = [col for col in required_cols if col not in coords_df.columns]
     
     if missing_cols:
-        print_status(f"Missing required columns for geomagnetic calculation: {missing_cols}", "ERROR")
+        logger.error(f"Missing required columns for geomagnetic calculation: {missing_cols}")
         return coords_df
     
     # Initialize new columns
@@ -153,9 +173,9 @@ def add_geomagnetic_coordinates(coords_df: pd.DataFrame) -> pd.DataFrame:
             failed_calculations += 1
     
     if successful_calculations > 0:
-        print_status(f"Geomagnetic coordinate calculation complete: {successful_calculations} successful, {failed_calculations} failed", "SUCCESS")
+        logger.success(f"Geomagnetic coordinate calculation complete: {successful_calculations} successful, {failed_calculations} failed")
     else:
-        print_status(f"Geomagnetic coordinate calculation: {failed_calculations} failed (pyIGRF not installed)", "WARNING")
+        logger.warning(f"Geomagnetic coordinate calculation: {failed_calculations} failed (pyIGRF not installed)")
     
     return coords_df
 
@@ -163,7 +183,7 @@ def fetch_igs_coordinates():
     """Fetch coordinates from IGS network JSON"""
     def _fetch_operation():
         url = "https://files.igs.org/pub/station/general/IGSNetworkWithFormer.json"
-        print_status("Fetching IGS network coordinates...", "INFO")
+        logger.info("Fetching IGS network coordinates...")
         
         # Create secure SSL context
         ssl_context = ssl.create_default_context()
@@ -201,14 +221,14 @@ def fetch_igs_coordinates():
             except (KeyError, ValueError, TypeError):
                 continue  # Skip malformed station entries
         
-        print_status(f"Retrieved {len(rows)} stations from IGS", "SUCCESS")
+        logger.success(f"Retrieved {len(rows)} stations from IGS")
         return pd.DataFrame(rows)
     
     # Use safe network operation handler
     result = SafeErrorHandler.safe_network_operation(
         _fetch_operation,
         error_message="IGS coordinate fetch failed",
-        logger_func=print_status,
+        logger_func=logger.warning, # Pass the logger's warning method
         return_on_error=pd.DataFrame(),
         max_retries=2
     )
@@ -216,12 +236,12 @@ def fetch_igs_coordinates():
 
 def build_coordinate_catalogue():
     """Build comprehensive coordinate catalogue with metadata"""
-    print_status("Building comprehensive coordinate catalogue...", "PROCESS")
+    logger.process("Building comprehensive coordinate catalogue...")
     
     # Fetch from IGS (primary and sufficient source)
     igs_df = fetch_igs_coordinates()
     if len(igs_df) == 0:
-        print_status("No coordinate sources available", "ERROR")
+        logger.error("No coordinate sources available")
         return None
     
     # Use IGS data directly (766 stations is comprehensive)
@@ -254,21 +274,21 @@ def build_coordinate_catalogue():
     
     # Report geomagnetic coordinate statistics
     valid_geomag = result_df['geomag_lat'].notna().sum()
-    print_status(f"Built coordinate catalogue: {len(result_df)} unique stations", "SUCCESS")
-    print_status(f"Geomagnetic coordinates: {valid_geomag}/{len(result_df)} stations ({100*valid_geomag/len(result_df):.1f}%)", "SUCCESS")
+    logger.success(f"Built coordinate catalogue: {len(result_df)} unique stations")
+    logger.success(f"Geomagnetic coordinates: {valid_geomag}/{len(result_df)} stations ({100*valid_geomag/len(result_df):.1f}%)")
     
     return result_df
 
 def download_station_clock_metadata():
     """Download clock metadata from IGS sources with smart existing data checks."""
-    print_status("Downloading station clock metadata", "INFO")
+    logger.info("Downloading station clock metadata")
     
     # Check if clock metadata already exists
     metadata_file = PACKAGE_ROOT / "results" / "outputs" / "step_1_station_metadata.json"
     station_logs_dir = PACKAGE_ROOT / "data" / "station_logs"
     
     if metadata_file.exists() and not TEPConfig.get_bool("TEP_REBUILD_METADATA"):
-        print_status("Using existing clock metadata", "SUCCESS")
+        logger.success("Using existing clock metadata")
         return True
     
     # Download clock metadata using existing functions
@@ -295,7 +315,7 @@ def download_station_clock_metadata():
             result = SafeErrorHandler.safe_network_operation(
                 _fetch_log_list,
                 error_message="Failed to fetch station log list",
-                logger_func=print_status,
+                logger_func=logger.warning,
                 return_on_error=[],
                 max_retries=2
             )
@@ -348,20 +368,20 @@ def download_station_clock_metadata():
             result = SafeErrorHandler.safe_file_operation(
                 _parse_operation,
                 error_message=f"Failed to parse oscillator type from {log_file_path}",
-                logger_func=None,  # Don't log every failed parse
+                logger_func=logger.debug, # Use debug level for parsing failures
                 return_on_error="UNKNOWN"
             )
             return result if result is not None else "UNKNOWN"
         
         # Download metadata
-        print_status("Fetching station log URLs...", "INFO")
+        logger.info("Fetching station log URLs...")
         urls = get_station_log_urls()
         
         if not urls:
-            print_status("No station log URLs found", "ERROR")
+            logger.error("No station log URLs found")
             return False
         
-        print_status(f"Downloading metadata for {len(urls)} stations...", "INFO")
+        logger.info(f"Downloading metadata for {len(urls)} stations...")
         
         station_metadata = {}
         with ThreadPoolExecutor(max_workers=4) as executor:
@@ -376,17 +396,17 @@ def download_station_clock_metadata():
         # Save metadata using safe JSON write
         try:
             safe_json_write(station_metadata, metadata_file, indent=4)
-            print_status(f"Clock metadata saved for {len(station_metadata)} stations", "SUCCESS")
+            logger.success(f"Clock metadata saved for {len(station_metadata)} stations")
             return True
         except (TEPFileError, TEPDataError) as e:
-            print_status(f"Failed to save clock metadata: {e}", "ERROR")
+            logger.error(f"Failed to save clock metadata: {e}")
             return False
         
     except (ImportError, RuntimeError) as e:
-        print_status(f"Clock metadata download failed - system error: {e}", "ERROR")
+        logger.error(f"Clock metadata download failed - system error: {e}")
         return False
     except (KeyError, ValueError, TypeError) as e:
-        print_status(f"Clock metadata download failed - data error: {e}", "ERROR")
+        logger.error(f"Clock metadata download failed - data error: {e}")
         return False
 
 def build_and_write_catalogue(min_target: int = 0, out_path = None):
@@ -397,34 +417,34 @@ def build_and_write_catalogue(min_target: int = 0, out_path = None):
     if out_path is None:
         out_path = PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv"
     
-    print_status("Building comprehensive station catalogue from authoritative sources", "INFO")
+    logger.info("Building comprehensive station catalogue from authoritative sources")
     
     # Check if we should rebuild coordinates
     rebuild_coords = TEPConfig.get_bool("TEP_REBUILD_COORDS")
     
     if rebuild_coords or not out_path.exists():
-        print_status("Fetching coordinates from authoritative sources...", "INFO")
+        logger.info("Fetching coordinates from authoritative sources...")
         
         # Build coordinates directly (no external script)
         coords_df = build_coordinate_catalogue()
         
         if coords_df is None or len(coords_df) == 0:
-            print_status("Coordinate building failed - no stations retrieved", "ERROR")
+            logger.error("Coordinate building failed - no stations retrieved")
             return False
         
         # Save the comprehensive catalogue
         coords_df.to_csv(out_path, index=False)
-        print_status(f"Station catalogue built: {len(coords_df)} stations saved to {out_path}", "SUCCESS")
+        logger.success(f"Station catalogue built: {len(coords_df)} stations saved to {out_path}")
         
         # Report verification statistics
         verified_stations = coords_df[coords_df['has_coordinates'] == True]
         
-        print_status(f"Coordinate verification summary:", "INFO")
-        print_status(f"  Total stations in catalogue: {len(coords_df)}", "INFO")
-        print_status(f"  Verified stations for analysis: {len(verified_stations)}", "SUCCESS")
+        logger.info(f"Coordinate verification summary:")
+        logger.info(f"  Total stations in catalogue: {len(coords_df)}")
+        logger.success(f"  Verified stations for analysis: {len(verified_stations)}")
         
     else:
-        print_status(f"Using existing station catalogue: {out_path}", "SUCCESS")
+        logger.success(f"Using existing station catalogue: {out_path}")
     
     # Verify coordinate catalogue and optionally fetch clock metadata
     if out_path.exists():
@@ -436,7 +456,7 @@ def build_and_write_catalogue(min_target: int = 0, out_path = None):
         if not all(col in df.columns for col in required_cols):
             raise RuntimeError(f"Station catalogue missing required columns: {required_cols}")
         
-        print_status(f"Final station catalogue: {len(df)} stations", "SUCCESS")
+        logger.success(f"Final station catalogue: {len(df)} stations")
 
         # Optional: fetch clock metadata (does not alter coordinate CSV)
         if TEPConfig.get_bool("TEP_FETCH_CLOCK_METADATA"):
@@ -446,13 +466,9 @@ def build_and_write_catalogue(min_target: int = 0, out_path = None):
                 if TEPConfig.get_bool("TEP_REQUIRE_CLOCK_METADATA"):
                     raise RuntimeError(msg)
                 else:
-                    print_status(msg, "ERROR")
+                    logger.error(msg)
     
     return True
-
-def print_status(text, status="INFO"):
-    icons = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "ERROR": "[ERROR]", "DOWNLOAD": ""}
-    print(f"{icons.get(status, '')} {text}")
 
 def gps_week_from_date(date: datetime) -> int:
     """Convert UTC date to GPS week number."""
@@ -465,10 +481,10 @@ def download_station_coordinates_from_igs() -> bool:
     if TEPConfig.get_bool("TEP_SKIP_COORDS"):
         coord_path = PACKAGE_ROOT / "data" / "coordinates" / "station_coords_global.csv"
         if coord_path.exists() and coord_path.stat().st_size > 0:
-            print_status(f"Using existing coordinates: {coord_path}", "SUCCESS")
+            logger.success(f"Using existing coordinates: {coord_path}")
             return True
         else:
-            print_status("TEP_SKIP_COORDS=1 but no existing coordinates found", "ERROR")
+            logger.error("TEP_SKIP_COORDS=1 but no existing coordinates found")
             return False
     
     min_target = TEPConfig.get_int("TEP_MIN_STATIONS")
@@ -479,10 +495,10 @@ def download_station_coordinates_from_igs() -> bool:
         )
         return True
     except (TEPNetworkError, TEPFileError, TEPDataError) as e:
-        print_status(f"CRITICAL: Station catalogue build failed: {e}", "ERROR")
+        logger.error(f"CRITICAL: Station catalogue build failed: {e}")
         return False
     except (RuntimeError, ValueError, TypeError) as e:
-        print_status(f"CRITICAL: Station catalogue build failed - system error: {e}", "ERROR")
+        logger.error(f"CRITICAL: Station catalogue build failed - system error: {e}")
         return False
 
 def download_small_real_clk_samples() -> bool:
@@ -497,12 +513,12 @@ def download_small_real_clk_samples() -> bool:
     existing_code = len(list((raw_dir / "code").glob("*.CLK.gz")))
     existing_esa = len(list((raw_dir / "esa_final").glob("*.CLK.gz")))
     
-    print_status(f"Existing clock files: IGS:{existing_igs} CODE:{existing_code} ESA:{existing_esa}", "INFO")
+    logger.info(f"Existing clock files: IGS:{existing_igs} CODE:{existing_code} ESA:{existing_esa}")
     
     # Skip download if we have sufficient files and not forcing rebuild
     if (existing_igs > 50 and existing_code > 50 and existing_esa > 50 and 
         not TEPConfig.get_bool("TEP_REBUILD_CLK")):
-        print_status("Using existing clock files (sufficient coverage)", "SUCCESS")
+        logger.success("Using existing clock files (sufficient coverage)")
         return True
 
     def day_of_year(d: datetime) -> int:
@@ -520,7 +536,7 @@ def download_small_real_clk_samples() -> bool:
             ds, de = de, ds
         # Build inclusive daily range
         date_list = [ds + timedelta(days=i) for i in range((de - ds).days + 1)]
-        print_status(f"Using date filter {ds.date()} → {de.date()} ({len(date_list)} days)", "INFO")
+        logger.info(f"Using date filter {ds.date()} → {de.date()} ({len(date_list)} days)")
     except (ValueError, TypeError) as e:
         raise RuntimeError(f"Invalid date configuration in TEPConfig: {e}. Set TEP_DATE_START and TEP_DATE_END.")
 
@@ -535,7 +551,7 @@ def download_small_real_clk_samples() -> bool:
     files_per_code = file_limits['code']
     files_per_esa = file_limits['esa_final']
     
-    print_status(f"File limits: IGS:{files_per_igs or 'unlimited'} CODE:{files_per_code or 'unlimited'} ESA:{files_per_esa or 'unlimited'}", "INFO")
+    logger.info(f"File limits: IGS:{files_per_igs or 'unlimited'} CODE:{files_per_code or 'unlimited'} ESA:{files_per_esa or 'unlimited'}")
     
     def safe_download_file(url: str, destination_path: Path, timeout: int = None) -> bool:
         """Safely download a file with proper error handling and SSL"""
@@ -560,7 +576,7 @@ def download_small_real_clk_samples() -> bool:
         result = SafeErrorHandler.safe_network_operation(
             _download_operation,
             error_message=f"Download failed for {url}",
-            logger_func=None,  # Don't log every failed download
+            logger_func=logger.debug,  # Use debug level for individual download failures
             return_on_error=False,
             max_retries=1  # Limited retries for bulk downloads
         )
@@ -589,7 +605,7 @@ def download_small_real_clk_samples() -> bool:
         if safe_download_file(igs_url, igs_dst):
             successes["igs_combined"] += 1
             downloaded["igs_combined"].append(igs_dst.name)
-            print_status(f"IGS sample: {igs_dst.name}", "SUCCESS")
+            logger.success(f"IGS sample: {igs_dst.name}")
 
     # CODE (year path)
     for d in code_dates:
@@ -603,7 +619,7 @@ def download_small_real_clk_samples() -> bool:
         if safe_download_file(code_url, code_dst):
             successes["code"] += 1
             downloaded["code"].append(code_dst.name)
-            print_status(f"CODE sample: {code_dst.name}", "SUCCESS")
+            logger.success(f"CODE sample: {code_dst.name}")
 
     # ESA (navigation-office week path)
     for d in esa_dates:
@@ -618,7 +634,7 @@ def download_small_real_clk_samples() -> bool:
         if safe_download_file(esa_url, esa_dst):
             successes["esa_final"] += 1
             downloaded["esa_final"].append(esa_dst.name)
-            print_status(f"ESA sample: {esa_dst.name}", "SUCCESS")
+            logger.success(f"ESA sample: {esa_dst.name}")
 
     # Strict enforcement - check total files (existing + new downloads)
     total_igs = existing_igs + successes["igs_combined"]
@@ -626,18 +642,17 @@ def download_small_real_clk_samples() -> bool:
     total_esa = existing_esa + successes["esa_final"]
     
     if total_igs < 1:
-        print_status("CRITICAL: No IGS Combined .CLK files available", "ERROR")
+        logger.error("CRITICAL: No IGS Combined .CLK files available")
         return False
     if total_code < 1:
-        print_status("CRITICAL: No CODE .CLK files available", "ERROR")
+        logger.error("CRITICAL: No CODE .CLK files available")
         return False
     if total_esa < 1:
-        print_status("CRITICAL: No ESA .CLK files available", "ERROR")
+        logger.error("CRITICAL: No ESA .CLK files available")
         return False
 
-    print_status(
-        f" Clock files available -> IGS:{total_igs} CODE:{total_code} ESA:{total_esa}",
-        "SUCCESS"
+    logger.success(
+        f" Clock files available -> IGS:{total_igs} CODE:{total_code} ESA:{total_esa}"
     )
 
     # Write a clean JSON summary of what we downloaded
@@ -655,13 +670,13 @@ def download_small_real_clk_samples() -> bool:
         (PACKAGE_ROOT / "logs").mkdir(exist_ok=True)
         safe_json_write(summary, PACKAGE_ROOT / "logs" / "step_1_downloads.json", indent=2)
     except (TEPFileError, TEPDataError) as e:
-        print_status(f"Failed to write download summary: {e}", "WARNING")
+        logger.warning(f"Failed to write download summary: {e}")
 
     return True
 
 def main():
     print("="*80)
-    print("TEP GNSS Analysis Package v0.6")
+    print("TEP GNSS Analysis Package v0.7")
     print("STEP 1: Data Acquisition")
     print("Acquiring authoritative GNSS data and coordinates")
     print("="*80)
@@ -670,12 +685,12 @@ def main():
 
     ok_coords = download_station_coordinates_from_igs()
     if not ok_coords:
-        print_status("Data acquisition failed: coordinates unavailable", "ERROR")
+        logger.error("Data acquisition failed: coordinates unavailable")
         return False
 
     ok_clk = download_small_real_clk_samples()
     if not ok_clk:
-        print_status("Data acquisition failed: clock products unavailable", "ERROR")
+        logger.error("Data acquisition failed: clock products unavailable")
         return False
 
     # Final summary
@@ -704,10 +719,10 @@ def main():
         safe_json_write(final_summary, PACKAGE_ROOT / "logs" / "step_1_data_acquisition.json", indent=2)
         
     except (TEPFileError, TEPDataError) as e:
-        print_status(f"Failed to create final summary: {e}", "WARNING")
+        logger.warning(f"Failed to create final summary: {e}")
 
-    print_status("Data acquisition completed successfully", "SUCCESS")
-    print_status("Ready for coordinate validation (Step 2)", "SUCCESS")
+    logger.success("Data acquisition completed successfully")
+    logger.info("Ready for coordinate validation (Step 2)")
     return True
 
 if __name__ == "__main__":

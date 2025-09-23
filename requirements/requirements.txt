@@ -13,9 +13,18 @@ psutil==5.9.8
 seaborn==0.13.2
 
 # Geomagnetic field calculations
-pyIGRF==0.4.1
+pyIGRF==1.0.0
 
 # Pin setuptools/wheel for reproducible builds (optional)
 setuptools==70.0.0
 wheel==0.43.0
+
+pyproj==3.6.1
+PyWavelets==1.6.0
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
+
+cartopy==0.23.0
+statsmodels==0.14.2
+scikit-learn==1.5.0
 

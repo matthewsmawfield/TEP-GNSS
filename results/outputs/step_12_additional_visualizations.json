@@ -1,0 +1,70 @@
+{
+  "step": 12,
+  "title": "Additional Visualizations - Orbital Dance",
+  "timestamp": "2025-09-23T14:14:11.224311",
+  "success": true,
+  "outputs": {
+    "main_visualization": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/figure_10_orbital_dance_visualization.png",
+    "wave_interference": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/figure_10_wave_interference_patterns.png",
+    "beat_patterns_analyzed": 4
+  },
+  "beat_patterns": {
+    "annual_semiannual_sum": {
+      "period_days": 121.75,
+      "frequency_cpd": 0.008213552361396304,
+      "components": [
+        "annual",
+        "semiannual"
+      ],
+      "correlation": 0.914,
+      "color": "#2D0140",
+      "name": "Annual+Semiannual Beat"
+    },
+    "chandler_semiannual_sum": {
+      "period_days": 127.92,
+      "frequency_cpd": 0.007817621948971462,
+      "components": [
+        "chandler",
+        "semiannual"
+      ],
+      "correlation": 0.905,
+      "color": "#4A90C2",
+      "name": "Chandler+Semiannual Beat"
+    },
+    "chandler_annual_sum": {
+      "period_days": 196.86,
+      "frequency_cpd": 0.005079771161839362,
+      "components": [
+        "chandler",
+        "annual"
+      ],
+      "correlation": 0.833,
+      "color": "#495773",
+      "name": "Chandler+Annual Beat"
+    },
+    "tidal_m2_s2_diff": {
+      "period_days": 14.77,
+      "frequency_cpd": 0.0677,
+      "components": [
+        "tidal_m2",
+        "tidal_s2"
+      ],
+      "correlation": 0.632,
+      "color": "#8B4513",
+      "name": "Tidal M2-S2 Beat"
+    }
+  },
+  "summary": {
+    "visualizations_created": 2,
+    "patterns_visualized": [
+      "annual_semiannual_sum",
+      "chandler_semiannual_sum",
+      "chandler_annual_sum",
+      "tidal_m2_s2_diff"
+    ],
+    "correlation_range": [
+      0.632,
+      0.914
+    ]
+  }
+}

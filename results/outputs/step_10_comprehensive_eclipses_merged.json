@@ -1,0 +1,84 @@
+{
+  "success": true,
+  "analysis_center": "merged",
+  "resolution": "1min",
+  "eclipses_analyzed": [
+    {
+      "date": "2023-04-20",
+      "type": "Hybrid",
+      "location": "Indian Ocean/Australia",
+      "baseline_coherence": 0.7053368745273377,
+      "maximum_coherence": 0.6371023491969671,
+      "effect_percent": -9.674033471750102,
+      "status": "analyzed"
+    },
+    {
+      "date": "2023-10-14",
+      "type": "Annular",
+      "location": "Americas",
+      "baseline_coherence": 0.650066860779722,
+      "maximum_coherence": 0.5962791253317286,
+      "effect_percent": -8.27418511743204,
+      "status": "analyzed"
+    },
+    {
+      "date": "2024-04-08",
+      "type": "Total",
+      "location": "North America",
+      "baseline_coherence": 0.6275628448589353,
+      "maximum_coherence": 0.6682880828971873,
+      "effect_percent": 6.489427851230787,
+      "status": "analyzed"
+    },
+    {
+      "date": "2024-10-02",
+      "type": "Annular",
+      "location": "South Pacific/South America",
+      "baseline_coherence": 0.7390058861403394,
+      "maximum_coherence": 0.4904057954352064,
+      "effect_percent": -33.63979845999807,
+      "status": "analyzed"
+    },
+    {
+      "date": "2025-03-29",
+      "type": "Partial",
+      "location": "Europe/Asia/Africa",
+      "baseline_coherence": 0.7141425183964019,
+      "maximum_coherence": 0.6869297703733471,
+      "effect_percent": -3.810548640089463,
+      "status": "analyzed"
+    }
+  ],
+  "eclipse_summary": {
+    "Hybrid": {
+      "average_effect_percent": -9.674033471750102,
+      "number_of_events": 1,
+      "individual_effects": [
+        -9.674033471750102
+      ]
+    },
+    "Annular": {
+      "average_effect_percent": -20.956991788715055,
+      "number_of_events": 2,
+      "individual_effects": [
+        -8.27418511743204,
+        -33.63979845999807
+      ]
+    },
+    "Total": {
+      "average_effect_percent": 6.489427851230787,
+      "number_of_events": 1,
+      "individual_effects": [
+        6.489427851230787
+      ]
+    },
+    "Partial": {
+      "average_effect_percent": -3.810548640089463,
+      "number_of_events": 1,
+      "individual_effects": [
+        -3.810548640089463
+      ]
+    }
+  },
+  "interpretation": "Analyzed 5 eclipses across 4 types"
+}

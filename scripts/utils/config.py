@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 """
-TEP GNSS Analysis - Centralized Configuration Management
-========================================================
+TEP-GNSS Analysis Configuration
 
-Provides consistent environment variable handling and configuration management
-across all TEP analysis steps. Eliminates the inconsistent parsing patterns
-that were scattered throughout the codebase.
+Theoretical Framework:
+    The analysis implements phase-coherent cross-spectral methods to detect
+    signatures of the Temporal Equivalence Principle in Global Navigation
+    Satellite System timing data. The methodology follows Smawfield (2025)
+    and employs multi-center validation across CODE, IGS, and ESA products.
+
+Parameter Specifications:
+    TEP_LAMBDA_RANGE: Predicted correlation lengths for screened scalar
+                      fields (Khoury & Weltman 2004; Damour & Polyakov 1994)
+    TEP_COUPLING_BOUND: Maximum coupling strength β/MPl consistent with
+                        PPN constraints (Cassini: |γ-1| < 2.3×10⁻⁵)
+    TEP_SCREENING_SCALE: Chameleon screening length near Earth's surface
 
 Author: Matthew Lukin Smawfield
 Theory: Temporal Equivalence Principle (TEP)
@@ -100,7 +108,31 @@ class TEPConfig:
         'TEP_BEAT_SIGNIFICANCE_THRESHOLD': 0.3,  # Much more sensitive threshold
         'TEP_MESH_COHERENCE_THRESHOLD': 0.05,   # More sensitive mesh analysis
         'TEP_MIN_CORRELATION_THRESHOLD': 0.2,   # Minimum correlation to consider significant
-        'TEP_NUTATION_PERIOD_YEARS': 18.6
+        'TEP_NUTATION_PERIOD_YEARS': 18.6,
+        
+        # NEW: Astronomical Event Analysis Configuration
+        'TEP_ENABLE_JUPITER_OPPOSITION': True,   # Jupiter opposition pulse analysis
+        'TEP_ENABLE_SATURN_OPPOSITION': True,    # Saturn opposition analysis (smaller signal)
+        'TEP_ENABLE_MARS_OPPOSITION': True,      # Mars opposition analysis (weakest signal)
+        'TEP_ENABLE_LUNAR_STANDSTILL': True,     # Major Lunar Standstill analysis
+        'TEP_ENABLE_SOLAR_ECLIPSE': True,        # Solar eclipse ionospheric effects
+        'TEP_ENABLE_PERIHELION_APHELION': True,  # Earth perihelion/aphelion analysis
+        'TEP_EVENT_WINDOW_DAYS': 60,             # ±60 days around each event
+        'TEP_JUPITER_AMPLITUDE_FRACTION': 0.0022, # 0.22% of solar annual amplitude
+        'TEP_SATURN_AMPLITUDE_FRACTION': 0.00019, # 0.019% of solar annual amplitude
+        'TEP_MARS_AMPLITUDE_FRACTION': 0.00005,  # 0.005% of solar annual amplitude (estimated)
+        'TEP_EVENT_MIN_PAIRS': 1000,             # Minimum pairs needed per event window
+        'TEP_STORM_SCRUBBING': False,            # Enable geomagnetic storm removal
+        
+        # Major Lunar Standstill Configuration
+        'TEP_LUNAR_STANDSTILL_WINDOW_MONTHS': 6, # ±6 months around peak
+        'TEP_SIDEREAL_DAY_HOURS': 23.934469591,  # Precise sidereal day length
+        'TEP_LUNAR_STANDSTILL_PEAK_DATE': '2024-12-15', # Approximate peak date
+        
+        # Solar Eclipse Configuration
+        'TEP_ECLIPSE_WINDOW_HOURS': 12,          # ±12 hours around eclipse
+        'TEP_SOLAR_ECLIPSE_DATE': '2024-04-08',  # Total solar eclipse date
+        'TEP_ECLIPSE_TOTALITY_DURATION': 4.5,    # Duration of totality in minutes
     }
     
     @staticmethod

@@ -55,7 +55,7 @@ def csv_count(p: Path) -> int:
 
 def main():
     print("="*80)
-    print("TEP GNSS Analysis Package v0.6")
+    print("TEP GNSS Analysis Package v0.7")
     print("STEP 0: Provenance Documentation")
     print("="*80)
     
