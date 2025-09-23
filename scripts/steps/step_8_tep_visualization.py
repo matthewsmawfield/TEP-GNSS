@@ -180,7 +180,7 @@ def create_residual_plots(root_dir):
         
         # Save plot
         plot_file = figures_dir / f'residuals_{ac}.png'
-        plt.savefig(plot_file, dpi=150, bbox_inches='tight')
+        plt.savefig(plot_file, dpi=300, bbox_inches='tight')
         plt.close()
         
         print_status(f"Saved residual plot: {plot_file}", "SUCCESS")
@@ -1498,15 +1498,34 @@ def create_distance_distribution_plot(root_dir):
 def generate_summary_report(all_results, output_file):
     """Generate comprehensive visualization and export summary"""
     
+    def make_json_serializable(obj):
+        """Convert non-serializable objects to serializable format"""
+        if hasattr(obj, 'to_dict'):
+            return obj.to_dict()
+        elif hasattr(obj, '__dict__'):
+            return str(obj)
+        elif isinstance(obj, (pd.DataFrame, pd.Series)):
+            return f"DataFrame/Series with shape {obj.shape}"
+        else:
+            return obj
+    
+    # Clean all_results to ensure JSON serializability
+    clean_results = {}
+    for key, value in all_results.items():
+        if isinstance(value, dict):
+            clean_results[key] = {k: make_json_serializable(v) for k, v in value.items()}
+        else:
+            clean_results[key] = make_json_serializable(value)
+    
     report = {
         'analysis_timestamp': datetime.now().isoformat(),
         'step_8_analyses': {
-            'residual_analysis': all_results.get('residuals', {}),
-            'null_tests_export': all_results.get('null_export', {}),
-            'method_comparison': all_results.get('methods', {}),
-            'publication_figure': all_results.get('publication_figure', {}),
-            'correlation_all_centers': all_results.get('correlation_all_centers', {}),
-            'distance_distribution': all_results.get('distance_distribution', {})
+            'residual_analysis': clean_results.get('residuals', {}),
+            'null_tests_export': clean_results.get('null_export', {}),
+            'method_comparison': clean_results.get('methods', {}),
+            'publication_figure': clean_results.get('publication_figure', {}),
+            'correlation_all_centers': clean_results.get('correlation_all_centers', {}),
+            'distance_distribution': clean_results.get('distance_distribution', {})
         },
         'outputs_created': [
             'Residual plots for model validation',

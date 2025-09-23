@@ -1083,6 +1083,267 @@ def analyze_mars_opposition_high_resolution(analysis_center: str = 'merged') -> 
     except Exception as e:
         return {'success': False, 'error': str(e)}
 
+def analyze_supermoon_perigee_high_resolution(analysis_center: str = 'merged') -> Dict:
+    """
+    Analyze supermoon perigee effects using high-resolution approach.
+    
+    Supermoon catalog (full supermoons, UTC):
+    - 2023: 2023-07-03, 2023-08-01, 2023-08-30, 2023-09-29
+    - 2024: 2024-08-19, 2024-09-17, 2024-10-17, 2024-11-15
+    - 2025: 2025-10-07, 2025-11-05, 2025-12-04
+    
+    Total: 11 independent events spanning 2023–2025
+    Expected effect: ~0.0047% of solar annual variation (ΔU/c² ≈ 1.6×10⁻¹⁴)
+    
+    This provides a robust, date-locked micro-stack at ~0.005% signal level
+    for sensitivity testing.
+    """
+    try:
+        print_status("Starting Supermoon Perigee High-Resolution Analysis...", "PROCESS")
+        print_status("Analyzing GPS timing correlations around supermoon perigee events", "INFO")
+        
+        # Define supermoon perigee dates (notable events with strong perigee-apogee contrast)
+        supermoon_dates = [
+            '2023-07-03',  # July 2023 supermoon
+            '2023-08-01',  # August 2023 supermoon  
+            '2023-08-30',  # August 2023 blue supermoon
+            '2023-09-29',  # September 2023 supermoon
+            '2024-08-19',  # August 2024 supermoon
+            '2024-09-17',  # September 2024 supermoon
+            '2024-10-17',  # October 2024 supermoon
+            '2024-11-15',  # November 2024 supermoon
+            '2025-10-07',  # October 2025 supermoon
+            '2025-11-05',  # November 2025 supermoon
+            '2025-12-04'   # December 2025 supermoon
+        ]
+        
+        # Load correlation data
+        try:
+            df = load_geospatial_data(analysis_center)
+        except FileNotFoundError as e:
+            return {'success': False, 'error': str(e)}
+        
+        results = {'success': True, 'analysis_center': analysis_center, 'supermoon_perigees': []}
+        
+        for supermoon_date in supermoon_dates:
+            event_date = pd.to_datetime(supermoon_date)
+            
+            # Define analysis window (±5 days for supermoon - shorter due to rapid lunar motion)
+            window_start = event_date - pd.Timedelta(days=5)
+            window_end = event_date + pd.Timedelta(days=5)
+            
+            window_data = df[(df['date'] >= window_start) & (df['date'] <= window_end)].copy()
+            
+            if len(window_data) < 5:  # Need at least 5 days of data
+                print_status(f"Insufficient data for supermoon {supermoon_date}", "WARNING")
+                continue
+                
+            # Use amplitude metric (center-invariant)
+            window_data['coherence_abs'] = window_data['coherence'].abs()
+
+            # Determine native cadence (seconds) and choose bin unit
+            times = window_data['date'].sort_values().unique()
+            if len(times) < 2:
+                print_status(f"Insufficient data points for supermoon {supermoon_date}", "WARNING")
+                continue
+            diffs = (pd.Series(times[1:]) - pd.Series(times[:-1])).dt.total_seconds()
+            step_seconds = float(np.nanmedian(diffs)) if len(diffs) else 0.0
+            step_hours = step_seconds / 3600.0 if step_seconds > 0 else 24.0
+            # Bin by hour for sub-daily, else by day
+            use_hour_bins = step_hours <= 6.0
+
+            if use_hour_bins:
+                rel_hours = ((window_data['date'] - event_date).dt.total_seconds() / 3600.0)
+                window_data['bin_offset'] = rel_hours.round().astype(int)
+                amp_by_bin = window_data.groupby('bin_offset')['coherence_abs'].median()
+                idx_series = pd.Series(amp_by_bin.index.values, index=amp_by_bin.index)
+                # Peak = |h|<=24, Baseline = 48<=|h|<=72
+                peak_window = amp_by_bin[idx_series.abs() <= 24]
+                baseline_window = amp_by_bin[(idx_series.abs() >= 48) & (idx_series.abs() <= 72)]
+                min_needed = 6
+            else:
+                rel_days = (window_data['date'] - event_date).dt.days
+                window_data['bin_offset'] = rel_days.astype(int)
+                amp_by_bin = window_data.groupby('bin_offset')['coherence_abs'].median()
+                idx_series = pd.Series(amp_by_bin.index.values, index=amp_by_bin.index)
+                # Peak = |d|<=1, Baseline = 4<=|d|<=5 (original logic but robust median)
+                peak_window = amp_by_bin[idx_series.abs() <= 1]
+                baseline_window = amp_by_bin[(idx_series.abs() >= 4) & (idx_series.abs() <= 5)]
+                min_needed = 3
+
+            # Require minimum coverage per window
+            if len(peak_window) < min_needed or len(baseline_window) < min_needed:
+                print_status(f"Insufficient window coverage for supermoon {supermoon_date}", "WARNING")
+                continue
+
+            median_peak_amp = float(np.median(peak_window.values))
+            median_base_amp = float(np.median(baseline_window.values))
+
+            effect_abs = float(median_peak_amp - median_base_amp)
+            effect_pct = float(100.0 * effect_abs / median_base_amp) if median_base_amp > 0 else float('nan')
+
+            perigee_result = {
+                'date': supermoon_date,
+                'peak_median_amplitude': float(median_peak_amp),
+                'baseline_median_amplitude': float(median_base_amp),
+                'effect_size_abs': float(effect_abs),
+                'effect_size_percent': float(effect_pct),
+                'data_points_peak': int(len(peak_window)),
+                'data_points_baseline': int(len(baseline_window)),
+                'expected_amplitude_percent': 0.0047
+            }
+
+            results['supermoon_perigees'].append(perigee_result)
+            msg_pct = f"{effect_pct:+.3f}%" if np.isfinite(effect_pct) else "NaN%"
+            print_status(f"Supermoon perigee {supermoon_date}: {msg_pct} (abs {effect_abs:+.4f})", "SUCCESS")
+        
+        if results['supermoon_perigees']:
+            # Calculate stacked statistics across all events
+            effect_sizes = [r['effect_size_percent'] for r in results['supermoon_perigees'] if np.isfinite(r.get('effect_size_percent', np.nan))]
+            avg_effect = float(np.mean(effect_sizes)) if effect_sizes else float('nan')
+            std_effect = float(np.std(effect_sizes)) if effect_sizes else float('nan')
+            n_events = len(effect_sizes)
+            
+            # Statistical significance of stacked signal
+            if n_events > 1 and np.isfinite(std_effect) and np.isfinite(avg_effect):
+                sem_effect = float(std_effect / np.sqrt(n_events))
+                t_stat = float(avg_effect / sem_effect) if sem_effect > 0 else 0.0
+                # Rough t-test approximation
+                is_significant = abs(t_stat) > 2.0  # ~95% confidence for multiple events
+            else:
+                is_significant = False
+                sem_effect = 0.0
+            
+            results.update({
+                'average_effect_percent': float(avg_effect),
+                'effect_std': float(std_effect),
+                'standard_error': float(sem_effect),
+                'n_events': n_events,
+                'statistically_significant': bool(is_significant),
+                'interpretation': f"Supermoon perigees show stacked average {avg_effect:+.3f}±{sem_effect:.3f}% coherence modulation across {n_events} events"
+            })
+            
+            # Compare to expected amplitude
+            if abs(avg_effect) > 0.002:  # Detection threshold ~0.002% (conservative)
+                results['detection_status'] = f"Signal detected at {abs(avg_effect):.3f}% level (expected ~0.005%)"
+            else:
+                results['detection_status'] = f"Signal below detection threshold ({abs(avg_effect):.3f}% < 0.002%)"
+                
+        else:
+            results['interpretation'] = "Insufficient data for supermoon perigee analysis"
+            results['detection_status'] = "No data available for analysis"
+            
+        return results
+        
+    except Exception as e:
+        return {'success': False, 'error': str(e)}
+
+def _compute_supermoon_curve(df: pd.DataFrame, event_date: pd.Timestamp) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Build an event-locked curve of |coherence| median vs hours from perigee
+    over ±120h. Falls back to daily bins if sub-daily cadence not available.
+    Returns (x_hours, y_median)
+    """
+    # Prepare amplitude
+    data = df.copy()
+    data = data[(data['date'] >= event_date - pd.Timedelta(hours=120)) &
+                (data['date'] <= event_date + pd.Timedelta(hours=120))]
+    if data.empty:
+        return np.array([]), np.array([])
+    data['coherence_abs'] = data['coherence'].abs()
+    # Detect cadence
+    times = data['date'].sort_values().unique()
+    if len(times) >= 2:
+        diffs = (pd.Series(times[1:]) - pd.Series(times[:-1])).dt.total_seconds()
+        step_seconds = float(np.nanmedian(diffs)) if len(diffs) else 0.0
+        step_hours = step_seconds / 3600.0 if step_seconds > 0 else 24.0
+    else:
+        step_hours = 24.0
+    use_hour_bins = step_hours <= 6.0
+    if use_hour_bins:
+        rel_hours = ((data['date'] - event_date).dt.total_seconds() / 3600.0)
+        data['bin'] = rel_hours.round().astype(int)
+        ser = data.groupby('bin')['coherence_abs'].median().sort_index()
+        # Ensure full grid
+        idx = np.arange(-120, 121, 1)
+        ser = ser.reindex(idx)
+        return idx, ser.values.astype(float)
+    else:
+        rel_days = (data['date'] - event_date).dt.days
+        data['bin'] = rel_days.astype(int)
+        ser = data.groupby('bin')['coherence_abs'].median().sort_index()
+        idx_days = np.arange(-5, 6, 1)
+        ser = ser.reindex(idx_days)
+        return (idx_days * 24).astype(int), ser.values.astype(float)
+
+def plot_supermoon_perigee_curves() -> Optional[str]:
+    """
+    Create a figure akin to planetary opposition curves but for supermoon perigees
+    across CODE / ESA / IGS. Saves to results/figures/figure_16_supermoon_perigee_curves.png
+    Returns the file path on success.
+    """
+    try:
+        import matplotlib.pyplot as plt
+        centers = ['code', 'esa_final', 'igs_combined']
+        titles = ['CODE', 'ESA', 'IGS']
+        # Reuse supermoon date list from analysis function
+        supermoon_dates = [
+            '2023-07-03','2023-08-01','2023-08-30','2023-09-29',
+            '2024-08-19','2024-09-17','2024-10-17','2024-11-15'
+        ]
+        event_ts = [pd.to_datetime(d) for d in supermoon_dates]
+
+        fig, axes = plt.subplots(1, 3, figsize=(16, 4.5), sharey=True)
+        for ax, center, title in zip(axes, centers, titles):
+            try:
+                df = load_geospatial_data(center)
+            except FileNotFoundError:
+                ax.set_title(f"{title} (no data)")
+                continue
+            for d in event_ts:
+                xh, yh = _compute_supermoon_curve(df, d)
+                if xh.size == 0:
+                    continue
+                # Smooth with small window to reduce noise
+                y = pd.Series(yh).rolling(3, min_periods=1, center=True).median().values
+                ax.plot(xh/24.0, y, alpha=0.9, linewidth=1.2, label=d.date())
+            ax.axvline(0.0, color='crimson', linestyle='--', alpha=0.6)
+            ax.set_title(f"Supermoon - {title}")
+            ax.set_xlabel("Days from Perigee")
+            ax.grid(alpha=0.2)
+        axes[0].set_ylabel("Median |coherence|")
+        # Legend outside
+        handles, labels = axes[0].get_legend_handles_labels()
+        if not handles:
+            for ax in axes[1:]:
+                h, l = ax.get_legend_handles_labels()
+                if h:
+                    handles, labels = h, l
+                    break
+        if handles:
+            fig.legend(handles, labels, loc='upper center', ncol=min(len(labels), 6), fontsize=8)
+        fig.suptitle("Supermoon Perigee Modulation Curves (Event-Locked, 2023–2024)", y=0.98, fontsize=12)
+        fig.tight_layout(rect=[0, 0, 1, 0.94])
+
+        out_dir = ROOT / 'results' / 'figures'
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / 'figure_16_supermoon_perigee_curves.png'
+        fig.savefig(out_path, dpi=200)
+        plt.close(fig)
+        # Copy to site if exists
+        site_dir = ROOT / 'site' / 'figures'
+        try:
+            site_dir.mkdir(parents=True, exist_ok=True)
+            import shutil
+            shutil.copy(str(out_path), str(site_dir / out_path.name))
+        except Exception:
+            pass
+        print_status(f"Supermoon curves figure saved: {out_path}", "SUCCESS")
+        return str(out_path)
+    except Exception as e:
+        print_status(f"Failed to create supermoon curves figure: {e}", "ERROR")
+        return None
+
 def analyze_lunar_standstill_high_resolution(analysis_center: str = 'merged') -> Dict:
     """
     Analyze Major Lunar Standstill effects using high-resolution approach.
@@ -1259,6 +1520,11 @@ def analyze_all_astronomical_events(analysis_center: str = 'merged') -> Dict:
         mars_results = analyze_mars_opposition_high_resolution(analysis_center)
         results['events_analyzed']['mars'] = mars_results
         
+        # Analyze Supermoon Perigees
+        print_status("Analyzing Supermoon Perigees...", "PROCESS")
+        supermoon_results = analyze_supermoon_perigee_high_resolution(analysis_center)
+        results['events_analyzed']['supermoon'] = supermoon_results
+        
         # Analyze Lunar Standstill
         print_status("Analyzing Lunar Standstill...", "PROCESS")
         lunar_results = analyze_lunar_standstill_high_resolution(analysis_center)
@@ -1268,7 +1534,7 @@ def analyze_all_astronomical_events(analysis_center: str = 'merged') -> Dict:
         successful_analyses = sum(1 for event_result in results['events_analyzed'].values() 
                                 if event_result.get('success'))
         
-        results['interpretation'] = f"Comprehensive astronomical analysis: {successful_analyses}/4 event types analyzed successfully"
+        results['interpretation'] = f"Comprehensive astronomical analysis: {successful_analyses}/5 event types analyzed successfully"
         
         return results
         
@@ -1522,7 +1788,7 @@ def _extract_band_power(coeffs: np.ndarray, periods: np.ndarray, target_period: 
         return np.zeros(coeffs.shape[1])
     
     # Average power across the band
-    band_power = np.mean(np.abs(coeffs[period_mask, :]), axis=0)
+    band_power = np.mean(np.abs(coeffs[period_mask, :])**2, axis=0)  # Power is squared magnitude
     return band_power
 
 def _find_stable_peak_period(power_slice: np.ndarray, periods: np.ndarray, window: int = 3) -> float:
@@ -1730,7 +1996,7 @@ def analyze_hilbert_instantaneous_frequency(analysis_center: str = 'merged') -> 
         axes[-1].set_xlabel('Days index')
         plot_path = ROOT / 'results' / 'figures' / f'step_10_hilbert_if_{analysis_center}.png'
         plt.tight_layout()
-        plt.savefig(plot_path, dpi=200, bbox_inches='tight')
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
         plt.close()
         print_status(f"Hilbert IF plot saved: {plot_path}", "SUCCESS")
         
@@ -1774,7 +2040,7 @@ def analyze_wavelet_time_frequency(analysis_center: str = 'merged', verbose: boo
 
         coeffs, freqs = pywt.cwt(y_white, scales, wavelet, sampling_period=1.0)
         periods = 1.0 / freqs
-        power = np.abs(coeffs)
+        power = np.abs(coeffs)**2  # Power is squared magnitude, not just magnitude
 
         # Find dominant ~112d signal
         target_112d = 112.0
@@ -1782,27 +2048,76 @@ def analyze_wavelet_time_frequency(analysis_center: str = 'merged', verbose: boo
         signal_112d = power[period_idx_112, :]
         max_power_112d = np.max(signal_112d)
 
-        # Create basic plot
+        # Create styled plot with site theme
         import matplotlib.pyplot as plt
         import matplotlib.dates as mdates
+        import matplotlib as mpl
+        
+        # Set site theme styling
+        mpl.rcParams.update({
+            'font.family': 'Times New Roman',
+            'font.size': 12,
+            'axes.titlesize': 14,
+            'axes.labelsize': 12,
+            'xtick.labelsize': 10,
+            'ytick.labelsize': 10,
+            'legend.fontsize': 10,
+            'figure.titlesize': 16,
+            'axes.grid': True,
+            'grid.color': '#495773',
+            'grid.linestyle': '--',
+            'grid.linewidth': 0.5,
+            'axes.edgecolor': '#1e4a5f',
+            'axes.labelcolor': '#1e4a5f',
+            'axes.titlecolor': '#2D0140',
+            'xtick.color': '#1e4a5f',
+            'ytick.color': '#1e4a5f',
+            'text.color': '#1e4a5f',
+        })
 
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), facecolor='white')
 
-        # Scalogram
-        extent = [0, len(y_white), np.log10(periods.min()), np.log10(periods.max())]
-        im = ax1.imshow(power, aspect='auto', extent=extent, origin='lower', cmap='plasma')
-        ax1.axhline(y=np.log10(target_112d), color='white', linestyle='--', linewidth=2, label='112d signal')
-        ax1.set_title(f'Wavelet Scalogram - {analysis_center.upper()}', fontsize=14)
-        ax1.set_xlabel('Days from Start', fontsize=12)
-        ax1.set_ylabel('Log₁₀(Period) [days]', fontsize=12)
-        plt.colorbar(im, ax=ax1, label='Power')
+        # Scalogram with site theme colors and proper y-axis
+        extent = [0, len(y_white), periods.min(), periods.max()]
+        im = ax1.imshow(power, aspect='auto', extent=extent, origin='lower', cmap='viridis')
+        ax1.axhline(y=target_112d, color='#F2EC99', linestyle='--', linewidth=3, 
+                   label='112d signal', alpha=0.9)
+        ax1.set_title(f'Wavelet Scalogram - {analysis_center.upper()}', 
+                     fontsize=14, color='#2D0140', fontweight='bold')
+        ax1.set_xlabel('Days from Start', fontsize=12, color='#1e4a5f')
+        ax1.set_ylabel('Period [days]', fontsize=12, color='#1e4a5f')
+        
+        # Set meaningful y-axis ticks for periods
+        period_ticks = [20, 30, 50, 80, 112, 150, 200]
+        period_ticks = [p for p in period_ticks if periods.min() <= p <= periods.max()]
+        ax1.set_yticks(period_ticks)
+        ax1.set_yticklabels([f'{p}' for p in period_ticks])
+        
+        # Style colorbar
+        cbar = plt.colorbar(im, ax=ax1, label='Power')
+        cbar.set_label('Power', color='#1e4a5f', fontsize=12)
+        cbar.ax.tick_params(colors='#1e4a5f')
+        
+        # Style axes
+        ax1.tick_params(colors='#1e4a5f')
+        ax1.spines['top'].set_color('#1e4a5f')
+        ax1.spines['bottom'].set_color('#1e4a5f')
+        ax1.spines['left'].set_color('#1e4a5f')
+        ax1.spines['right'].set_color('#1e4a5f')
 
-        # 112d signal evolution
-        ax2.plot(signal_112d, color='blue', linewidth=2)
-        ax2.set_title('112-Day Signal Evolution', fontsize=14)
-        ax2.set_xlabel('Days from Start', fontsize=12)
-        ax2.set_ylabel('Power', fontsize=12)
-        ax2.grid(True, alpha=0.3)
+        # 112d signal evolution with site theme
+        ax2.plot(signal_112d, color='#2D0140', linewidth=2.5, alpha=0.8)
+        ax2.set_title('112-Day Signal Evolution', fontsize=14, color='#2D0140', fontweight='bold')
+        ax2.set_xlabel('Days from Start', fontsize=12, color='#1e4a5f')
+        ax2.set_ylabel('Power', fontsize=12, color='#1e4a5f')
+        ax2.grid(True, alpha=0.3, color='#495773', linestyle='--')
+        
+        # Style second axes
+        ax2.tick_params(colors='#1e4a5f')
+        ax2.spines['top'].set_color('#1e4a5f')
+        ax2.spines['bottom'].set_color('#1e4a5f')
+        ax2.spines['left'].set_color('#1e4a5f')
+        ax2.spines['right'].set_color('#1e4a5f')
 
         plt.tight_layout()
 
@@ -1930,7 +2245,7 @@ def _get_barcode_on_off_series(analysis_center: str) -> np.ndarray:
     scales = (fourier_factor * 1.0) / (np.linspace(1./max_period, 1./min_period, total_scales))
     
     coeffs, freqs = pywt.cwt(y_white, scales, wavelet, sampling_period=1.0)
-    power = np.abs(coeffs)
+    power = np.abs(coeffs)**2  # Power is squared magnitude
 
     # Generate surrogates to find significance threshold
     surrogates = _generate_ar1_surrogates(y_white, phi_ar1, n_surrogates=100)
@@ -1950,7 +2265,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="TEP GNSS High-Resolution Astronomical Events - Step 10")
-    parser.add_argument('--event', choices=['eclipse', 'all-eclipses', 'differential', 'jupiter', 'saturn', 'mars', 'lunar', 'all-astronomical', 'wavelet-analysis', 'hilbert-if', 'comprehensive'], default='comprehensive',
+    parser.add_argument('--event', choices=['eclipse', 'all-eclipses', 'differential', 'jupiter', 'saturn', 'mars', 'supermoon', 'lunar', 'all-astronomical', 'wavelet-analysis', 'hilbert-if', 'comprehensive'], default='comprehensive',
                         help='Event type to analyze at high resolution')
     parser.add_argument('--center', choices=['code', 'igs_combined', 'esa_final', 'merged'], default='merged',
                         help='GPS analysis center to process, or "merged" to combine all three')
@@ -2013,6 +2328,8 @@ def main():
         results = analyze_saturn_opposition_high_resolution(args.center)
     elif args.event == 'mars':
         results = analyze_mars_opposition_high_resolution(args.center)
+    elif args.event == 'supermoon':
+        results = analyze_supermoon_perigee_high_resolution(args.center)
     elif args.event == 'lunar':
         results = analyze_lunar_standstill_high_resolution(args.center)
     elif args.event == 'all-astronomical':
@@ -2064,14 +2381,31 @@ def main():
                         n_events = summary['number_of_events']
                         print(f"{eclipse_type:<10}: {avg_effect:+.1f}% (n={n_events})")
         
-        elif args.event in ['jupiter', 'saturn', 'mars']:
-            # Opposition results
-            opposition_key = f"{args.event}_oppositions"
+        elif args.event in ['jupiter', 'saturn', 'mars', 'supermoon']:
+            # Opposition/Perigee results
+            if args.event == 'supermoon':
+                opposition_key = 'supermoon_perigees'
+            else:
+                opposition_key = f"{args.event}_oppositions"
             if opposition_key in results and results[opposition_key]:
-                print(f"\n{args.event.upper()} OPPOSITIONS:")
-                print("-" * 30)
-                for opposition in results[opposition_key]:
-                    print(f"{opposition['date']}: {opposition['effect_size_percent']:+.2f}% effect")
+                if args.event == 'supermoon':
+                    print(f"\nSUPERMOON PERIGEES:")
+                    print("-" * 30)
+                    for perigee in results[opposition_key]:
+                        print(f"{perigee['date']}: {perigee['effect_size_percent']:+.3f}% effect")
+                    # Show stacked statistics for supermoon
+                    if 'average_effect_percent' in results:
+                        avg = results['average_effect_percent']
+                        sem = results.get('standard_error', 0)
+                        n = results.get('n_events', 0)
+                        sig_status = "SIGNIFICANT" if results.get('statistically_significant') else "not significant"
+                        print(f"\nStacked Analysis: {avg:+.3f}±{sem:.3f}% across {n} events ({sig_status})")
+                        print(f"Detection Status: {results.get('detection_status', 'Unknown')}")
+                else:
+                    print(f"\n{args.event.upper()} OPPOSITIONS:")
+                    print("-" * 30)
+                    for opposition in results[opposition_key]:
+                        print(f"{opposition['date']}: {opposition['effect_size_percent']:+.2f}% effect")
                 
                 if 'average_effect_percent' in results:
                     print(f"\nAverage Effect: {results['average_effect_percent']:+.2f}%")

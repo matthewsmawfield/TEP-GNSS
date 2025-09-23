@@ -1,0 +1,93 @@
+{
+  "success": true,
+  "analysis_center": "merged",
+  "supermoon_perigees": [
+    {
+      "date": "2023-07-03",
+      "peak_median_amplitude": 0.723728531834211,
+      "baseline_median_amplitude": 0.7116897220517988,
+      "effect_size_abs": 0.01203880978241223,
+      "effect_size_percent": 1.6915812339827512,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2023-08-01",
+      "peak_median_amplitude": 0.6975628984338376,
+      "baseline_median_amplitude": 0.7063144755236215,
+      "effect_size_abs": -0.008751577089783913,
+      "effect_size_percent": -1.2390482416909252,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2023-08-30",
+      "peak_median_amplitude": 0.7028518247616746,
+      "baseline_median_amplitude": 0.7023372501278455,
+      "effect_size_abs": 0.0005145746338290902,
+      "effect_size_percent": 0.07326603191492731,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2023-09-29",
+      "peak_median_amplitude": 0.6953459902425742,
+      "baseline_median_amplitude": 0.6995658544380097,
+      "effect_size_abs": -0.004219864195435519,
+      "effect_size_percent": -0.6032118589929623,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2024-08-19",
+      "peak_median_amplitude": 0.7128453162103132,
+      "baseline_median_amplitude": 0.7158785766386772,
+      "effect_size_abs": -0.0030332604283639375,
+      "effect_size_percent": -0.4237115800568096,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2024-09-17",
+      "peak_median_amplitude": 0.7248527131154348,
+      "baseline_median_amplitude": 0.7133723707313515,
+      "effect_size_abs": 0.011480342384083242,
+      "effect_size_percent": 1.6093057223836074,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2024-10-17",
+      "peak_median_amplitude": 0.7080764216156828,
+      "baseline_median_amplitude": 0.7121330603644285,
+      "effect_size_abs": -0.004056638748745622,
+      "effect_size_percent": -0.5696461763296974,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    },
+    {
+      "date": "2024-11-15",
+      "peak_median_amplitude": 0.6870162548002443,
+      "baseline_median_amplitude": 0.6830667307674179,
+      "effect_size_abs": 0.003949524032826446,
+      "effect_size_percent": 0.5782047133797893,
+      "data_points_peak": 3,
+      "data_points_baseline": 4,
+      "expected_amplitude_percent": 0.0047
+    }
+  ],
+  "average_effect_percent": 0.1395924805738351,
+  "effect_std": 1.0023874910403128,
+  "standard_error": 0.35439749614558735,
+  "n_events": 8,
+  "statistically_significant": false,
+  "interpretation": "Supermoon perigees show stacked average +0.140\u00b10.354% coherence modulation across 8 events",
+  "detection_status": "Signal detected at 0.140% level (expected ~0.005%)"
+}

@@ -1,11 +1,12 @@
 {
   "step": 12,
-  "title": "Additional Visualizations - Orbital Dance",
-  "timestamp": "2025-09-23T14:14:11.224311",
+  "title": "Additional Visualizations - Orbital Dance & Planetary Oppositions",
+  "timestamp": "2025-09-23T22:30:13.677200",
   "success": true,
   "outputs": {
     "main_visualization": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/figure_10_orbital_dance_visualization.png",
     "wave_interference": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/figure_10_wave_interference_patterns.png",
+    "figure_15_planetary_oppositions": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/figure_15_planetary_opposition_curves.png",
     "beat_patterns_analyzed": 4
   },
   "beat_patterns": {
@@ -55,7 +56,7 @@
     }
   },
   "summary": {
-    "visualizations_created": 2,
+    "visualizations_created": 3,
     "patterns_visualized": [
       "annual_semiannual_sum",
       "chandler_semiannual_sum",

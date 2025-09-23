@@ -1151,10 +1151,10 @@
                 <tbody>
                     <tr style="border: 1px solid #495773;">
                         <td style="padding: 6px; border: 1px solid #495773; font-weight: bold;">Exponential</td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);">118.9</td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);"><strong>0.0</strong></td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);">78.4</td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);"><strong>0.0</strong></td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);">118.9</td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);"><strong>0.0</strong></td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);">78.4</td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);"><strong>0.0</strong></td>
                         <td style="padding: 6px; border: 1px solid #495773;">82.0</td>
                         <td style="padding: 6px; border: 1px solid #495773;">2.0</td>
                     </tr>
@@ -1164,8 +1164,8 @@
                         <td style="padding: 6px; border: 1px solid #495773;">1.7</td>
                         <td style="padding: 6px; border: 1px solid #495773;">82.8</td>
                         <td style="padding: 6px; border: 1px solid #495773;">4.4</td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);">80.0</td>
-                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(40, 167, 69, 0.1);"><strong>0.0</strong></td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);">80.0</td>
+                        <td style="padding: 6px; border: 1px solid #495773; background-color: rgba(73, 87, 115, 0.15);"><strong>0.0</strong></td>
                     </tr>
                     <tr style="border: 1px solid #495773;">
                         <td style="padding: 6px; border: 1px solid #495773;">Matérn (ν=2.5)</td>
@@ -1804,11 +1804,11 @@
     <p>While the helical motion analysis reveals the integrated effect of Earth's dynamics, time-frequency analysis provides a powerful lens to decompose the TEP signal into its constituent periodicities. Using wavelet and Hilbert transform techniques, we investigate the temporal evolution of specific frequencies, revealing a persistent and structured signal landscape that is remarkably consistent across all independent analysis centers.</p>
 
     <figure style="text-align:center; margin: 30px 0;">
-        <img src="figures/step_10_wavelet_restored_merged.png" alt="Wavelet scalogram of the merged dataset showing a persistent 112-day signal" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 13. Wavelet Scalogram of Merged GNSS Data.</b> The top panel shows time vs. period, with color indicating signal power. A strong, persistent power band is clearly visible around the 112-day period (log₁₀(112) ≈ 2.05, marked by dashed line). The bottom panel shows the evolution of signal power specifically at the 112-day band, revealing structured amplitude modulation over the ~900-day observation period.</figcaption>
+        <img src="figures/step_10_wavelet_restored_merged.png" alt="Wavelet scalogram of the merged dataset showing a subtle 112-day signal with max power ~0.014" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 13. Wavelet Scalogram of Merged GNSS Data.</b> The top panel shows time vs. period, with color indicating signal power. A subtle but persistent signal is detectable around the 112-day period (marked by dashed line), with maximum power ~0.014. The bottom panel shows the evolution of signal power specifically at the 112-day band, revealing structured amplitude modulation over the ~900-day observation period.</figcaption>
     </figure>
 
-    <p>The wavelet analysis identifies the ~112-day period as the most dominant, persistent signal beyond the annual cycle. To further investigate this and other periodicities, we employ Hilbert instantaneous frequency analysis. This technique isolates specific frequency bands and tracks their precise period as it evolves over time. This provides a high-resolution view of how closely the GNSS network's correlations lock onto known astronomical and geophysical cycles.</p>
+    <p>The wavelet analysis identifies the ~112-day period as a detectable, persistent signal beyond the annual cycle, though with relatively modest amplitude (max power ~0.014). To further investigate this and other periodicities, we employ Hilbert instantaneous frequency analysis. This technique isolates specific frequency bands and tracks their precise period as it evolves over time. This provides a high-resolution view of how closely the GNSS network's correlations lock onto known astronomical and geophysical cycles.</p>
 
     <figure style="text-align:center; margin: 30px 0; border: 2px dashed #495773; padding: 20px; background-color: #f8f8ff;">
         <div style="font-size: 18px; font-weight: bold; color: #2D0140; margin-bottom: 10px;">Placeholder for Figure 14</div>
@@ -1893,7 +1893,7 @@
     </div>
 
     <figure style="margin: 20px 0; text-align: center;">
-        <img src="figures/figure_15_planetary_opposition_curves.png" alt="Planetary opposition coherence curves" style="max-width: 100%; border: 1px solid #495773; border-radius: 4px;">
+        <img src="figures/figure_15_planetary_opposition_curves.png" alt="Planetary opposition coherence curves" style="max-width: 100%;">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 15. Planetary Opposition Coherence Modulation Curves:</b> Coherence modulation curves for planetary oppositions (2023-2025). Curves show temporal evolution of effects around opposition dates, with cross-center validation.</figcaption>
     </figure>
 
