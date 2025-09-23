@@ -1,0 +1,42 @@
+{
+  "old_method": {
+    "name": "\u00b15 Day Window Method",
+    "approach": "Arbitrary windows around opposition dates",
+    "issues": [
+      "Ignores gradual orbital changes over months/years",
+      "Arbitrary baseline choice (30-60 days away)",
+      "No multi-body interactions considered",
+      "Step-function assumptions vs smooth physics",
+      "Produces physically implausible effects (17-81%)"
+    ],
+    "sample_results": {
+      "jupiter_2024-12-07": "+17.3%",
+      "saturn_2024-09-08": "-81.2%",
+      "mars_2025-01-16": "-60.2%"
+    }
+  },
+  "new_method": {
+    "name": "Orbital Mechanics Method",
+    "approach": "Continuous gravitational field modeling",
+    "improvements": [
+      "Full orbital cycle analysis (\u00b1120 days)",
+      "Multi-body gravitational interactions",
+      "Gradual 1/r\u00b2 physics modeling",
+      "Phase-locked analysis with proper baselines",
+      "Physically realistic effect magnitudes"
+    ],
+    "sample_correlations": {
+      "total_gravitational_field": "-0.0775",
+      "jupiter": "-0.0859",
+      "saturn": "-0.0236",
+      "mars": "-0.0455"
+    }
+  },
+  "key_findings": [
+    "Old method detected noise/artifacts, not real astronomical signals",
+    "True TEP effects (if any) are at ~0.08% correlation level",
+    "Large percentages (17-81%) were statistical artifacts",
+    "Proper physics shows much weaker but more realistic signals",
+    "Multi-body interactions properly accounted for"
+  ]
+}
