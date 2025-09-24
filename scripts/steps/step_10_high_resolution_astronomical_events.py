@@ -1295,6 +1295,160 @@ def analyze_mercury_opposition_high_resolution(analysis_center: str = 'merged') 
         print_status(f"Mercury opposition analysis failed: {e}", "ERROR")
         return {'success': False, 'error': str(e)}
 
+def analyze_continuous_gravitational_field(analysis_center: str = 'merged') -> Dict:
+    """
+    Analyze continuous gravitational field effects using the complete 2.5-year dataset.
+    
+    This creates the "gravitational key" pattern by tracking Earth's orbital position
+    and all planetary gravitational influences throughout the entire analysis period
+    (2023-01-01 to 2025-06-30).
+    
+    Instead of discrete opposition events, this analyzes the continuous gravitational
+    field pattern created by all planets simultaneously.
+    """
+    try:
+        print_status("Starting Continuous Gravitational Field Analysis...", "PROCESS")
+        print_status("Creating complete 'gravitational key' pattern for 2023-2025", "INFO")
+        
+        # Load correlation data
+        try:
+            df = load_geospatial_data(analysis_center)
+        except FileNotFoundError as e:
+            return {'success': False, 'error': str(e)}
+        
+        # Define analysis period
+        start_date = pd.to_datetime('2023-01-01')
+        end_date = pd.to_datetime('2025-06-30')
+        
+        # Group data by day for efficiency
+        daily_data = df.groupby(df['date'].dt.date).agg({
+            'coherence': ['median', 'std', 'count']
+        }).reset_index()
+        daily_data.columns = ['date', 'coherence_median', 'coherence_std', 'coherence_count']
+        daily_data['date'] = pd.to_datetime(daily_data['date'])
+        
+        # Filter to analysis period
+        period_data = daily_data[
+            (daily_data['date'] >= start_date) & 
+            (daily_data['date'] <= end_date)
+        ].copy()
+        
+        if len(period_data) < 100:
+            return {'success': False, 'error': 'Insufficient data for continuous analysis'}
+        
+        print_status(f"Analyzing {len(period_data)} days of data from {start_date.date()} to {end_date.date()}", "INFO")
+        
+        # Calculate continuous gravitational potential for each day
+        try:
+            # Planetary masses (relative to Earth mass = 1.0)
+            planet_masses = {
+                'mercury': 0.055,
+                'venus': 0.815,
+                'mars': 0.107,
+                'jupiter': 317.8,
+                'saturn': 95.2
+            }
+            
+            # Orbital periods (days)
+            orbital_periods = {
+                'mercury': 88.0,
+                'venus': 225.0,
+                'mars': 687.0,  # 1.88 years
+                'jupiter': 4333.0,  # 11.86 years
+                'saturn': 10759.0  # 29.46 years
+            }
+            
+            # Average distances from Sun (AU)
+            avg_distances = {
+                'mercury': 0.39,
+                'venus': 0.72,
+                'mars': 1.52,
+                'jupiter': 5.20,
+                'saturn': 9.58
+            }
+            
+            # Calculate days from start of analysis period
+            period_data['days_from_start'] = (period_data['date'] - start_date).dt.days
+            
+            # Initialize total gravitational potential
+            period_data['total_gravitational_potential'] = 0.0
+            
+            # Calculate gravitational potential from each planet
+            for planet, mass in planet_masses.items():
+                period = orbital_periods[planet]
+                avg_dist = avg_distances[planet]
+                
+                # Calculate orbital phase (0 to 2π over one orbital period)
+                orbital_phase = (period_data['days_from_start'] / period) * 2 * np.pi
+                
+                # Calculate planet distance from Earth using simplified orbital mechanics
+                # Earth is at 1.0 AU, so planet distance varies as:
+                # distance = sqrt(avg_dist^2 + 1.0^2 - 2*avg_dist*1.0*cos(phase))
+                # Simplified: distance ≈ avg_dist + 1.0 * cos(phase)
+                planet_distance = avg_dist + 1.0 * np.cos(orbital_phase)
+                planet_distance = np.maximum(planet_distance, 0.1)  # Minimum distance
+                
+                # Calculate gravitational potential (mass / distance^2)
+                planet_potential = mass / (planet_distance ** 2)
+                
+                # Add to total gravitational potential
+                period_data['total_gravitational_potential'] += planet_potential
+                
+                # Store individual planet potentials for analysis
+                period_data[f'{planet}_potential'] = planet_potential
+                period_data[f'{planet}_distance'] = planet_distance
+            
+            # Calculate correlation between GPS coherence and total gravitational potential
+            total_correlation = period_data['coherence_median'].corr(period_data['total_gravitational_potential'])
+            
+            # Calculate individual planet correlations
+            planet_correlations = {}
+            for planet in planet_masses.keys():
+                corr = period_data['coherence_median'].corr(period_data[f'{planet}_potential'])
+                planet_correlations[planet] = float(corr) if not np.isnan(corr) else 0.0
+            
+            # Calculate effect sizes
+            total_effect_percent = float(total_correlation * 100) if not np.isnan(total_correlation) else 0.0
+            planet_effects = {planet: float(corr * 100) for planet, corr in planet_correlations.items()}
+            
+            # Statistical analysis
+            potential_range = period_data['total_gravitational_potential'].max() - period_data['total_gravitational_potential'].min()
+            coherence_range = period_data['coherence_median'].max() - period_data['coherence_median'].min()
+            
+            results = {
+                'success': True,
+                'analysis_center': analysis_center,
+                'analysis_period': {
+                    'start_date': start_date.strftime('%Y-%m-%d'),
+                    'end_date': end_date.strftime('%Y-%m-%d'),
+                    'total_days': len(period_data),
+                    'data_points': int(period_data['coherence_count'].sum())
+                },
+                'gravitational_analysis': {
+                    'total_correlation': float(total_correlation) if not np.isnan(total_correlation) else 0.0,
+                    'total_effect_percent': total_effect_percent,
+                    'planet_correlations': planet_correlations,
+                    'planet_effects_percent': planet_effects,
+                    'potential_range': float(potential_range),
+                    'coherence_range': float(coherence_range)
+                },
+                'method': 'continuous_gravitational_field',
+                'interpretation': f"Continuous gravitational field analysis shows {total_effect_percent:+.2f}% correlation with GPS coherence over {len(period_data)} days"
+            }
+            
+            print_status(f"Continuous gravitational field correlation: {total_effect_percent:+.2f}%", "SUCCESS")
+            print_status(f"Individual planet effects: {planet_effects}", "INFO")
+            
+            return results
+            
+        except Exception as calc_error:
+            print_status(f"Gravitational field calculation failed: {calc_error}", "ERROR")
+            return {'success': False, 'error': str(calc_error)}
+        
+    except Exception as e:
+        print_status(f"Continuous gravitational field analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
 def analyze_venus_elongation_high_resolution(analysis_center: str = 'merged') -> Dict:
     """
     Analyze Venus maximum elongation effects using proper orbital mechanics approach.
@@ -2088,6 +2242,11 @@ def analyze_all_astronomical_events(analysis_center: str = 'merged') -> Dict:
         venus_results = analyze_venus_elongation_high_resolution(analysis_center)
         results['events_analyzed']['venus'] = venus_results
         
+        # Analyze continuous gravitational field (the "gravitational key")
+        print_status("Analyzing continuous gravitational field...", "PROCESS")
+        gravitational_field_results = analyze_continuous_gravitational_field(analysis_center)
+        results['events_analyzed']['gravitational_field'] = gravitational_field_results
+        
         # Analyze Supermoon Perigees
         print_status("Analyzing Supermoon Perigees...", "PROCESS")
         supermoon_results = analyze_supermoon_perigee_high_resolution(analysis_center)
@@ -2833,7 +2992,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="TEP GNSS High-Resolution Astronomical Events - Step 10")
-    parser.add_argument('--event', choices=['eclipse', 'all-eclipses', 'differential', 'jupiter', 'saturn', 'mars', 'mercury', 'venus', 'supermoon', 'lunar', 'all-astronomical', 'wavelet-analysis', 'hilbert-if', 'comprehensive'], default='comprehensive',
+    parser.add_argument('--event', choices=['eclipse', 'all-eclipses', 'differential', 'jupiter', 'saturn', 'mars', 'mercury', 'venus', 'gravitational-field', 'supermoon', 'lunar', 'all-astronomical', 'wavelet-analysis', 'hilbert-if', 'comprehensive'], default='comprehensive',
                         help='Event type to analyze at high resolution')
     parser.add_argument('--center', choices=['code', 'igs_combined', 'esa_final', 'merged'], default='merged',
                         help='GPS analysis center to process, or "merged" to combine all three')
@@ -2900,6 +3059,8 @@ def main():
         results = analyze_mercury_opposition_high_resolution(args.center)
     elif args.event == 'venus':
         results = analyze_venus_elongation_high_resolution(args.center)
+    elif args.event == 'gravitational-field':
+        results = analyze_continuous_gravitational_field(args.center)
     elif args.event == 'supermoon':
         results = analyze_supermoon_perigee_high_resolution(args.center)
     elif args.event == 'lunar':
