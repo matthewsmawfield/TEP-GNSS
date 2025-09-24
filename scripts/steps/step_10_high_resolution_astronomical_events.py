@@ -41,6 +41,8 @@ from datetime import datetime, timedelta
 import math
 import itertools
 import json
+from multiprocessing import Pool, cpu_count
+from functools import partial
 
 # Anchor to package root
 ROOT = Path(__file__).resolve().parents[2]
@@ -60,7 +62,7 @@ def print_status(text: str, status: str = "INFO"):
                 "PROCESS": "[PROCESSING]", "INFO": "[INFO]"}
     print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
 
-def parse_clk_file_high_resolution(clk_file_path: Path) -> pd.DataFrame:
+def parse_clk_file_high_resolution(clk_file_path: Path, time_filter_start: datetime = None, time_filter_end: datetime = None) -> pd.DataFrame:
     """
     Parse a GPS CLK file at full temporal resolution (30-second intervals).
     
@@ -124,17 +126,22 @@ def parse_clk_file_high_resolution(clk_file_path: Path) -> pd.DataFrame:
 
 def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int = 5) -> pd.DataFrame:
     """
-    Compute phase coherence between station pairs at high temporal resolution.
+    Compute phase coherence between station pairs at high temporal resolution using 
+    the SAME methodology as the main TEP analysis: cos(phase(CSD)).
+    
+    This function implements the proper cross-spectral density analysis with phase
+    coherence extraction, ensuring methodological consistency with the main TEP results.
     
     Args:
         df: Clock data with datetime, station, clock_bias columns
         time_window_minutes: Time window for coherence calculation
         
     Returns:
-        DataFrame with coherence data at specified resolution
+        DataFrame with coherence data using proper cos(phase(CSD)) methodology
     """
     try:
         print_status(f"Input data: {len(df)} measurements, {df['station'].nunique()} stations", "INFO")
+        print_status("Using proper cos(phase(CSD)) methodology for eclipse analysis", "INFO")
         
         # Group data into time windows
         df['time_bin'] = df['datetime'].dt.floor(f'{time_window_minutes}min')
@@ -150,34 +157,42 @@ def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int
             if len(station_means) < 3:
                 continue
             
-            # Calculate coherence for station pairs using simplified approach
+            # Calculate coherence for station pairs using PROPER TEP methodology
             stations = list(station_means.index)
             
             for i, station1 in enumerate(stations):
                 for j, station2 in enumerate(stations):
                     if i < j:  # Avoid duplicates
-                        bias1 = station_means[station1]
-                        bias2 = station_means[station2]
+                        # Get time series for both stations in this time window
+                        station1_data = time_data[time_data['station'] == station1]['clock_bias'].values
+                        station2_data = time_data[time_data['station'] == station2]['clock_bias'].values
                         
-                        # Coherence measure: normalized inverse of bias difference
-                        # GPS clock biases are in seconds, typically ~1e-4 to 1e-6 range
-                        bias_diff = abs(bias1 - bias2)
+                        # Ensure we have enough data points for spectral analysis
+                        if len(station1_data) < 10 or len(station2_data) < 10:
+                            continue
                         
-                        # Normalize by typical GPS clock bias scale (~1e-4)
-                        normalized_diff = bias_diff / 1e-4
-                        coherence = 1.0 / (1.0 + normalized_diff)  # Coherence between 0 and 1
+                        # Compute proper cross-spectral density coherence
+                        plateau_magnitude, plateau_phase = compute_cross_power_plateau_eclipse(
+                            station1_data, station2_data, 
+                            fs=1.0/(time_window_minutes*60)  # Sampling frequency in Hz
+                        )
                         
-                        coherence_data.append({
-                            'datetime': time_bin,
-                            'station_i': station1,
-                            'station_j': station2,
-                            'coherence': coherence,
-                            'bias_diff': bias_diff,
-                            'n_epochs': len(time_data)
-                        })
+                        if not np.isnan(plateau_magnitude):
+                            # Calculate coherence using cos(phase) - IDENTICAL to main TEP analysis
+                            coherence = np.cos(plateau_phase)
+                            
+                            coherence_data.append({
+                                'datetime': time_bin,
+                                'station_i': station1,
+                                'station_j': station2,
+                                'coherence': coherence,
+                                'phase_rad': plateau_phase,
+                                'plateau_magnitude': plateau_magnitude,
+                                'n_epochs': len(time_data)
+                            })
         
         result_df = pd.DataFrame(coherence_data)
-        print_status(f"Computed coherence: {len(result_df)} pairs across {len(df.groupby('time_bin'))} time bins", "SUCCESS")
+        print_status(f"Computed proper phase coherence: {len(result_df)} pairs across {len(df.groupby('time_bin'))} time bins", "SUCCESS")
         
         return result_df
         
@@ -186,6 +201,117 @@ def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int
         import traceback
         traceback.print_exc()
         return pd.DataFrame()
+
+
+def compute_station_pair_coherence(args) -> Tuple[str, str, float, float, float]:
+    """
+    Compute coherence for a single station pair - designed for parallel processing.
+    
+    Args:
+        args: Tuple of (s1, s2, station1_data, station2_data, fs, time_resolution, 
+                       mag1, mag2, is_s1_eclipse, is_s2_eclipse)
+    
+    Returns:
+        Tuple of (s1, s2, coherence, mag1, mag2) or (s1, s2, np.nan, mag1, mag2) if failed
+    """
+    s1, s2, station1_data, station2_data, fs, time_resolution, mag1, mag2, is_s1_eclipse, is_s2_eclipse = args
+    
+    try:
+        # Ensure we have enough data points for spectral analysis
+        if len(station1_data) < 10 or len(station2_data) < 10:
+            return s1, s2, np.nan, mag1, mag2
+        
+        # Compute proper cross-spectral density coherence
+        plateau_magnitude, plateau_phase = compute_cross_power_plateau_eclipse(
+            station1_data, station2_data, fs
+        )
+        
+        if np.isnan(plateau_magnitude):
+            return s1, s2, np.nan, mag1, mag2
+        
+        # Calculate coherence using cos(phase) - IDENTICAL to main TEP analysis
+        coherence = np.cos(plateau_phase)
+        
+        return s1, s2, coherence, mag1, mag2
+        
+    except Exception as e:
+        return s1, s2, np.nan, mag1, mag2
+
+
+def compute_cross_power_plateau_eclipse(series1: np.ndarray, series2: np.ndarray, fs: float, 
+                                      f1: float = 0.00001, f2: float = 0.0005, verbose: bool = False) -> Tuple[float, float]:
+    """
+    Compute cross-power spectral density plateau for eclipse analysis using 
+    IDENTICAL methodology to the main TEP analysis.
+    
+    This ensures methodological consistency between eclipse analysis and baseline TEP results.
+    
+    Args:
+        series1, series2: Clock offset time series (in seconds) from two GNSS stations
+        fs: Sampling frequency in Hz
+        f1, f2: Frequency band limits for coherency averaging (Hz)
+                Default TEP band: 10 μHz to 500 μHz (periods: 28 hours to 33 minutes)
+        verbose: If True, log computation details
+    
+    Returns:
+        plateau_value: Phase-coherent correlation strength using cos(phase(CSD))
+        plateau_phase: Representative phase difference in radians
+    """
+    n_points = len(series1)
+    if n_points < 20:
+        return np.nan, np.nan
+    
+    if verbose:
+        print_status(f"    Computing CSD for {n_points} points, fs={fs:.6f} Hz", "DEBUG")
+    
+    try:
+        # STEP 1: Detrend both time series (IDENTICAL to main analysis)
+        # Use polynomial detrending like main TEP analysis
+        time_indices = np.arange(n_points)
+        series1_detrended = series1 - np.polyval(np.polyfit(time_indices, series1, 1), time_indices)
+        series2_detrended = series2 - np.polyval(np.polyfit(time_indices, series2, 1), time_indices)
+        
+        # STEP 2: Compute cross-power spectral density using Welch's method
+        # Use IDENTICAL parameters as main TEP analysis
+        from scipy.signal import csd
+        nperseg = min(1024, n_points)  # IDENTICAL to main analysis
+        
+        frequencies, cross_psd = csd(series1_detrended, series2_detrended,
+                                   fs=fs, nperseg=nperseg, detrend='constant')
+        
+        # STEP 3: Select the TEP frequency band for analysis
+        band_mask = (frequencies > 0) & (frequencies >= f1) & (frequencies <= f2)
+        if not np.any(band_mask):
+            return np.nan, np.nan
+            
+        band_csd = cross_psd[band_mask]  # Complex cross-spectral density in TEP band
+        
+        # STEP 4: Phase-coherent correlation extraction (IDENTICAL to main analysis)
+        magnitudes = np.abs(band_csd)  # Correlation strength at each frequency
+        if np.sum(magnitudes) == 0:
+            return np.nan, np.nan
+        phases = np.angle(band_csd)  # Phase relationships at each frequency
+        
+        # STEP 5: Circular statistics for phase averaging (IDENTICAL to main analysis)
+        # Convert phases to complex unit vectors: e^(iφ)
+        complex_phases = np.exp(1j * phases)
+        
+        # Magnitude-weighted average of unit vectors
+        weighted_complex = np.average(complex_phases, weights=magnitudes)
+        
+        # Extract representative phase
+        weighted_phase = np.angle(weighted_complex)
+        
+        # STEP 6: Return magnitude and phase (IDENTICAL to main analysis)
+        # The main TEP analysis stores plateau (magnitude) and plateau_phase separately
+        # Then calculates coherence = cos(plateau_phase) in the calling function
+        avg_magnitude = np.mean(magnitudes)
+        
+        return float(avg_magnitude), float(weighted_phase)
+        
+    except Exception as e:
+        print_status(f"Cross-power plateau calculation failed: {e}", "ERROR")
+        return np.nan, np.nan
 
 def analyze_solar_eclipse_high_resolution(analysis_center: str = 'igs_combined') -> Dict:
     """
@@ -610,11 +736,18 @@ def analyze_eclipse_differential_coherence(analysis_center: str = 'merged', reso
         
         # --- Differential Coherence Analysis ---
         print_status("Starting Differential Coherence Analysis...", "PROCESS")
+        print_status(f"Total time bins to process: {len(eclipse_data.groupby('time_bin'))}", "INFO")
         
         # Track coherence evolution across eclipse progression
         temporal_evolution = []
+        total_pairs_processed = 0
+        start_time = time.time()
         
-        for time_bin, time_data in eclipse_data.groupby('time_bin'):
+        for bin_idx, (time_bin, time_data) in enumerate(eclipse_data.groupby('time_bin')):
+            if bin_idx % 10 == 0:  # Log every 10th bin
+                elapsed = time.time() - start_time
+                print_status(f"Processing time bin {bin_idx+1}/{len(eclipse_data.groupby('time_bin'))} "
+                           f"({time_bin}) - Elapsed: {elapsed:.1f}s", "INFO")
             
             # --- Pre-filter the data for this bin ---
             known_station_codes = station_coords.index
@@ -626,6 +759,12 @@ def analyze_eclipse_differential_coherence(analysis_center: str = 'merged', reso
             station_means = time_data.groupby('station')['clock_bias'].mean()
             known_stations_list = station_means.index.tolist()
             current_time = time_bin
+            
+            # Log station count for this time bin
+            n_stations = len(known_stations_list)
+            n_pairs = n_stations * (n_stations - 1) // 2
+            if bin_idx % 10 == 0:
+                print_status(f"  Time bin {bin_idx+1}: {n_stations} stations, {n_pairs} pairs to process", "INFO")
 
             # --- Dynamic Magnitude Calculation ---
             station_magnitudes = {
@@ -643,27 +782,57 @@ def analyze_eclipse_differential_coherence(analysis_center: str = 'merged', reso
                 'inter_gradient': [] # One in eclipse, one distant
             }
             
+            # Prepare arguments for parallel processing
+            pair_args = []
             for i, s1 in enumerate(known_stations_list):
                 for j, s2 in enumerate(known_stations_list):
                     if i < j:
                         mag1 = station_magnitudes.get(s1, 0)
                         mag2 = station_magnitudes.get(s2, 0)
-
                         is_s1_eclipse = mag1 > 0.1
                         is_s2_eclipse = mag2 > 0.1
-
-                        # Calculate coherence
-                        bias1 = station_means[s1]
-                        bias2 = station_means[s2]
-                        coherence = 1.0 / (1.0 + (abs(bias1 - bias2) / 1e-4))
-
-                        # Categorize the pair
-                        if is_s1_eclipse and is_s2_eclipse:
-                            pair_coherences['intra_eclipse'].append(coherence)
-                        elif not is_s1_eclipse and not is_s2_eclipse:
-                            pair_coherences['intra_distant'].append(coherence)
-                        elif is_s1_eclipse != is_s2_eclipse:
-                            pair_coherences['inter_gradient'].append(coherence)
+                        
+                        # Get time series for both stations in this time window
+                        station1_data = time_data[time_data['station'] == s1]['clock_bias'].values
+                        station2_data = time_data[time_data['station'] == s2]['clock_bias'].values
+                        
+                        fs = 1.0/(int(time_resolution.replace('min', ''))*60) if 'min' in time_resolution else 1.0/30
+                        
+                        pair_args.append((s1, s2, station1_data, station2_data, fs, time_resolution, 
+                                        mag1, mag2, is_s1_eclipse, is_s2_eclipse))
+            
+            # Process station pairs in parallel
+            n_workers = min(cpu_count(), 8)  # Use up to 8 cores
+            if bin_idx % 10 == 0:
+                print_status(f"  Processing {len(pair_args)} pairs using {n_workers} workers", "INFO")
+            
+            with Pool(processes=n_workers) as pool:
+                results = pool.map(compute_station_pair_coherence, pair_args)
+            
+            # Process results and categorize pairs
+            pairs_processed_this_bin = 0
+            for s1, s2, coherence, mag1, mag2 in results:
+                if not np.isnan(coherence):
+                    pairs_processed_this_bin += 1
+                    total_pairs_processed += 1
+                    
+                    is_s1_eclipse = mag1 > 0.1
+                    is_s2_eclipse = mag2 > 0.1
+                    
+                    # Categorize the pair
+                    if is_s1_eclipse and is_s2_eclipse:
+                        pair_coherences['intra_eclipse'].append(coherence)
+                    elif not is_s1_eclipse and not is_s2_eclipse:
+                        pair_coherences['intra_distant'].append(coherence)
+                    elif is_s1_eclipse != is_s2_eclipse:
+                        pair_coherences['inter_gradient'].append(coherence)
+            
+            # Log progress every 10th bin
+            if bin_idx % 10 == 0:
+                elapsed = time.time() - start_time
+                rate = total_pairs_processed / elapsed if elapsed > 0 else 0
+                print_status(f"  Processed {total_pairs_processed} pairs total "
+                           f"({rate:.1f} pairs/sec) - Elapsed: {elapsed:.1f}s", "INFO")
             
             # --- Aggregate and Store Results ---
             pair_stats = {}
@@ -676,7 +845,15 @@ def analyze_eclipse_differential_coherence(analysis_center: str = 'merged', reso
                     }
 
             if 'inter_gradient' not in pair_stats: # Skip if no gradient pairs
+                if bin_idx % 10 == 0:
+                    print_status(f"  Time bin {bin_idx+1}: Skipped (no gradient pairs)", "INFO")
                 continue
+            
+            # Log completion of this time bin
+            if bin_idx % 10 == 0:
+                elapsed = time.time() - start_time
+                print_status(f"  Time bin {bin_idx+1}: Completed {pairs_processed_this_bin} pairs "
+                           f"in {elapsed:.1f}s total", "INFO")
 
             temporal_evolution.append({
                 'datetime': time_bin.isoformat(),
@@ -696,7 +873,12 @@ def analyze_eclipse_differential_coherence(analysis_center: str = 'merged', reso
         if not temporal_evolution:
             return {'success': False, 'error': 'No temporal evolution data computed with differential analysis'}
         
+        # Final summary
+        total_elapsed = time.time() - start_time
         print_status(f"Tracked differential coherence across {len(temporal_evolution)} time periods", "SUCCESS")
+        print_status(f"Total pairs processed: {total_pairs_processed:,}", "SUCCESS")
+        print_status(f"Total computation time: {total_elapsed:.1f}s", "SUCCESS")
+        print_status(f"Average processing rate: {total_pairs_processed/total_elapsed:.1f} pairs/sec", "SUCCESS")
 
         # --- Analyze Differential Signature ---
         differential_signature = {}

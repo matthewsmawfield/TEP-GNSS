@@ -1,0 +1,170 @@
+{
+  "pure_noise": {
+    "description": "Pure uncorrelated noise (geometric imprint baseline)",
+    "category": "baseline",
+    "n_realizations": 5,
+    "r_squared_mean": 0.01238829086371318,
+    "r_squared_std": 0.016371489486860947,
+    "r_squared_max": 0.0406945435665923,
+    "lambda_mean": 362.9741530532825,
+    "lambda_std": 322.8369786659565,
+    "individual_results": [
+      {
+        "realization": 0,
+        "lambda": 101.1457677122707,
+        "r_squared": -2.7189361873070084e-12,
+        "n_pairs": 315
+      },
+      {
+        "realization": 1,
+        "lambda": 100.25489398180726,
+        "r_squared": -1.509903313490213e-14,
+        "n_pairs": 315
+      },
+      {
+        "realization": 2,
+        "lambda": 803.0629089270541,
+        "r_squared": 0.0406945435665923,
+        "n_pairs": 315
+      },
+      {
+        "realization": 3,
+        "lambda": 710.4070512188474,
+        "r_squared": 0.021246910754707637,
+        "n_pairs": 315
+      },
+      {
+        "realization": 4,
+        "lambda": 100.00014342643325,
+        "r_squared": 0.0,
+        "n_pairs": 315
+      }
+    ]
+  },
+  "gnss_composite": {
+    "description": "Realistic GNSS noise (white + flicker + random walk)",
+    "category": "realistic",
+    "n_realizations": 5,
+    "r_squared_mean": 0.015840585108791872,
+    "r_squared_std": 0.02220434371324848,
+    "r_squared_max": 0.056678250734867985,
+    "lambda_mean": 105.04687717755743,
+    "lambda_std": 9.952707270949848,
+    "individual_results": [
+      {
+        "realization": 0,
+        "lambda": 100.10071499302066,
+        "r_squared": -1.2878587085651816e-14,
+        "n_pairs": 315
+      },
+      {
+        "realization": 1,
+        "lambda": 124.95182447644189,
+        "r_squared": 0.0,
+        "n_pairs": 315
+      },
+      {
+        "realization": 2,
+        "lambda": 100.18184641832129,
+        "r_squared": -9.592326932761353e-14,
+        "n_pairs": 315
+      },
+      {
+        "realization": 3,
+        "lambda": 100.00000000000294,
+        "r_squared": 0.022524674809200174,
+        "n_pairs": 315
+      },
+      {
+        "realization": 4,
+        "lambda": 100.00000000000036,
+        "r_squared": 0.056678250734867985,
+        "n_pairs": 315
+      }
+    ]
+  },
+  "snr_gradient": {
+    "description": "SNR gradient (latitude-dependent)",
+    "category": "realistic",
+    "n_realizations": 5,
+    "r_squared_mean": 0.012388290865796181,
+    "r_squared_std": 0.016371489489125264,
+    "r_squared_max": 0.04069454357436253,
+    "lambda_mean": 370.03930098338,
+    "lambda_std": 317.1634321745137,
+    "individual_results": [
+      {
+        "realization": 0,
+        "lambda": 117.5747990114559,
+        "r_squared": -3.1086244689504383e-15,
+        "n_pairs": 315
+      },
+      {
+        "realization": 1,
+        "lambda": 119.15200400599954,
+        "r_squared": 0.0,
+        "n_pairs": 315
+      },
+      {
+        "realization": 2,
+        "lambda": 803.0625279676533,
+        "r_squared": 0.04069454357436253,
+        "n_pairs": 315
+      },
+      {
+        "realization": 3,
+        "lambda": 710.40703048992,
+        "r_squared": 0.021246910754621484,
+        "n_pairs": 315
+      },
+      {
+        "realization": 4,
+        "lambda": 100.00014344187083,
+        "r_squared": 0.0,
+        "n_pairs": 315
+      }
+    ]
+  },
+  "power_law": {
+    "description": "Power-law correlations (\u03b1=1.5)",
+    "category": "control",
+    "n_realizations": 5,
+    "r_squared_mean": 0.017508885747229752,
+    "r_squared_std": 0.028323998169678313,
+    "r_squared_max": 0.07303060609015988,
+    "lambda_mean": 706.0125485146294,
+    "lambda_std": 954.9353345144543,
+    "individual_results": [
+      {
+        "realization": 0,
+        "lambda": 200.0471432075731,
+        "r_squared": 2.4364167945378767e-06,
+        "n_pairs": 315
+      },
+      {
+        "realization": 1,
+        "lambda": 2591.7917292964007,
+        "r_squared": 0.07303060609015988,
+        "n_pairs": 315
+      },
+      {
+        "realization": 2,
+        "lambda": 100.16632743552341,
+        "r_squared": -7.37188088351104e-14,
+        "n_pairs": 315
+      },
+      {
+        "realization": 3,
+        "lambda": 520.0024316050208,
+        "r_squared": 0.014511386229275391,
+        "n_pairs": 315
+      },
+      {
+        "realization": 4,
+        "lambda": 118.0551110286293,
+        "r_squared": -7.327471962526033e-15,
+        "n_pairs": 315
+      }
+    ]
+  }
+}
