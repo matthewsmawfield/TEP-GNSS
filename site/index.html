@@ -330,7 +330,7 @@
             color: #220126; 
         }
         
-        .version, .date, .status, .doi {
+        .version, .date, .status-chip, .doi {
             font-size: 14px;
             color: #495773;
             margin-bottom: 5px;
@@ -647,8 +647,8 @@
         <div class="title">Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks</div>
         <div class="author">Matthew Lukin Smawfield</div>
         <div class="version">Version: v0.7 (Jaipur)</div>
-        <div class="status-chip">Working Draft</div>
-        <div class="date">Date: 23 September 2025</div>
+        <div class="status-chip">Status: Preprint (WIP)</div>
+        <div class="date">Date: 24 September 2025</div>
         <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17127229">10.5281/zenodo.17127229</a></div>
         
     </div>
@@ -1823,8 +1823,8 @@
             <li><strong>Outer Planet Non-Significance:</strong> Jupiter (0.21 orbits) and Saturn (0.08 orbits) show no statistical significance after rigorous controls, consistent with incomplete orbital cycle limitations</li>
         </ul>
         
-        <h4>Cross-Planetary Orbital Periodicity Results (Independent Centers Only)</h4>
-        <p style="font-size: 13px; color: #666; margin-bottom: 10px;"><em>Note: Showing results from the three independent processing centers only, focusing on statistically significant effects.</em></p>
+        <h4>Cross-Planetary Orbital Periodicity Results</h4>
+        <p style="font-size: 13px; color: #666; margin-bottom: 10px;"><em>Results from advanced sham controls analysis across three processing centers, with statistical significance testing.</em></p>
         <div style="overflow-x: auto; margin: 20px 0;">
             <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px;">
                 <thead>
@@ -1842,8 +1842,8 @@
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;"><strong>Mercury</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">88 days</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(46, 204, 113, 0.1);"><strong>10.36</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #27ae60;"><strong>HIGH</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(74, 144, 194, 0.15);"><strong>10.36</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #4A90C2;"><strong>HIGH</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+0.88%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-0.46%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+3.98%</td>
@@ -1851,17 +1851,17 @@
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;"><strong>Venus</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">225 days</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(46, 204, 113, 0.1);"><strong>4.05</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #27ae60;"><strong>HIGH</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(46, 204, 113, 0.1);"><strong>+15.0%*</strong></td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(46, 204, 113, 0.1);"><strong>+8.3%*</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(74, 144, 194, 0.15);"><strong>4.05</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #4A90C2;"><strong>HIGH</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(74, 144, 194, 0.2);"><strong>+15.0%*</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(74, 144, 194, 0.2);"><strong>+8.3%*</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+1.8%</td>
                     </tr>
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;"><strong>Mars</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">687 days</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(241, 196, 15, 0.1);">1.33</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #f39c12;">MEDIUM</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(107, 115, 161, 0.1);">1.33</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #6B73A1;">MEDIUM</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-4.76%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-10.40%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+3.39%</td>
@@ -1869,8 +1869,8 @@
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;"><strong>Jupiter</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">4333 days</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(231, 76, 60, 0.1);">0.21</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #e74c3c;">LOW</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(73, 87, 115, 0.1);">0.21</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #495773;">LOW</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-11.73%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-8.77%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+7.94%</td>
@@ -1878,8 +1878,8 @@
                     <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;"><strong>Saturn</strong></td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">10759 days</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(231, 76, 60, 0.1);">0.08</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #e74c3c;">LOW</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; background-color: rgba(73, 87, 115, 0.1);">0.08</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center; color: #495773;">LOW</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-3.07%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">+1.30%</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">-2.91%</td>
