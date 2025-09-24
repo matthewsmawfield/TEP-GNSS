@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "analysis_center": "merged",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_days": 912
+  },
+  "model_comparisons": {
+    "highly_simplified": {
+      "correlation": 0.10422124402044686,
+      "effect_percent": 10.422124402044686,
+      "description": "Original simplified model (mass/distance^2, circular orbits)"
+    },
+    "moderately_corrected": {
+      "correlation": -0.025287475921829724,
+      "effect_percent": -2.5287475921829725,
+      "description": "Current corrected model (proper masses, law of cosines, -GM/r)"
+    },
+    "ultra_simplified": {
+      "correlation": 2.0066798019528506e-16,
+      "effect_percent": 2.0066798019528506e-14,
+      "description": "Ultra-simplified model (constant distances, no orbital motion)"
+    }
+  },
+  "interpretation": "Strongest TEP signal detected by highly_simplified model: +10.42%",
+  "tep_hypothesis": "Simplified models may be more sensitive to TEP effects than 'correct' orbital mechanics"
+}

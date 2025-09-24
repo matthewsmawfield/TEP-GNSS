@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "analysis_center": "code",
+  "data_points": 15004,
+  "investigation_type": "full_orbital_sequence",
+  "temporal_correlations": {
+    "day_of_year": 0.00030926739572618967,
+    "month": 0.0011704568570644464,
+    "orbital_phase": 0.007027329278302263
+  },
+  "geometry_correlations": {
+    "baseline_length": -0.034032115618820066,
+    "jupiter_alignment": -0.006796661458645379
+  },
+  "tep_correlations": {
+    "gravitational_potential_diff": -0.010482920693812502,
+    "tidal_acceleration_diff": 0.010453146907822923,
+    "earth_jupiter_distance": 0.0023242032200243286
+  },
+  "control_correlations": {
+    "random_phase": 0.006121883043015701,
+    "random_distance": -0.006428022472870599,
+    "random_tidal": 0.005147458562976613
+  },
+  "orbital_cycle_analysis": {
+    "phase_coherence_correlation": 0.5872956324866162,
+    "distance_coherence_correlation": 0.3659976939619221,
+    "phase_bins": 5
+  },
+  "station_pair_analysis": {
+    "tidal_correlation": 0.008289208494318913,
+    "baseline_correlation": -0.037514318673475315,
+    "unique_pairs": 13008
+  },
+  "physical_magnitudes": {
+    "tidal_acceleration_std": 7.273511439031812e-27,
+    "potential_difference_std": 0.0011287455351470025
+  },
+  "suspicious_patterns": [
+    "Strong baseline length correlation (-3.40%)"
+  ],
+  "verdict": "LIKELY SYSTEMATIC ARTIFACTS",
+  "likely_artifacts": true,
+  "conclusion": "Analysis reveals likely systematic artifacts rather than real TEP effects"
+}

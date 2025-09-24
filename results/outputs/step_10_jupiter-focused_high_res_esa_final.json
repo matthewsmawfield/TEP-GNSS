@@ -1,0 +1,162 @@
+{
+  "success": true,
+  "analysis_center": "esa_final",
+  "focus": "Jupiter gravitational potential",
+  "main_result": {
+    "jupiter_correlation_percent": -1.6459032124258393,
+    "data_points": 15000,
+    "statistical_significance": "significant",
+    "p_value": 0.046
+  },
+  "bootstrap_validation": {
+    "mean_percent": -1.6502950650532207,
+    "std_percent": 0.8160038395508143,
+    "confidence_95": [
+      -3.171427931422159,
+      -0.04731160672312283
+    ]
+  },
+  "opposition_analysis": {
+    "opposition_1": {
+      "date": "2023-11-03",
+      "window_correlation_percent": -0.059532533554997456,
+      "data_points": 1341906,
+      "peak_coherence": 0.006225980385624086,
+      "baseline_coherence": 0.00990988969603973,
+      "effect_size": -0.003683909310415643,
+      "effect_percent": -37.17406977685974
+    },
+    "opposition_2": {
+      "date": "2024-12-07",
+      "window_correlation_percent": -0.1044610713530236,
+      "data_points": 1380375,
+      "peak_coherence": 0.003953984694433029,
+      "baseline_coherence": 0.003371209913308146,
+      "effect_size": 0.000582774781124883,
+      "effect_percent": 17.28681381792123
+    }
+  },
+  "monthly_correlations": {
+    "2023-01": {
+      "correlation_percent": 2.89360339053513,
+      "data_points": 483
+    },
+    "2023-02": {
+      "correlation_percent": -0.32033295873482287,
+      "data_points": 439
+    },
+    "2023-03": {
+      "correlation_percent": -1.0917651312536794,
+      "data_points": 493
+    },
+    "2023-04": {
+      "correlation_percent": 0.07293702918109041,
+      "data_points": 520
+    },
+    "2023-05": {
+      "correlation_percent": -4.263862947634134,
+      "data_points": 471
+    },
+    "2023-06": {
+      "correlation_percent": -7.069264663415867,
+      "data_points": 450
+    },
+    "2023-07": {
+      "correlation_percent": 12.776493724974255,
+      "data_points": 494
+    },
+    "2023-08": {
+      "correlation_percent": 6.0584272228429725,
+      "data_points": 470
+    },
+    "2023-09": {
+      "correlation_percent": -1.4436374217374703,
+      "data_points": 435
+    },
+    "2023-10": {
+      "correlation_percent": 7.5634620238851795,
+      "data_points": 459
+    },
+    "2023-11": {
+      "correlation_percent": 5.062571459772402,
+      "data_points": 479
+    },
+    "2023-12": {
+      "correlation_percent": -1.3228006667399217,
+      "data_points": 490
+    },
+    "2024-01": {
+      "correlation_percent": 1.027060128807907,
+      "data_points": 460
+    },
+    "2024-02": {
+      "correlation_percent": -4.594520614675048,
+      "data_points": 443
+    },
+    "2024-03": {
+      "correlation_percent": -8.451098581587143,
+      "data_points": 501
+    },
+    "2024-04": {
+      "correlation_percent": -4.19765330986948,
+      "data_points": 490
+    },
+    "2024-05": {
+      "correlation_percent": 3.2019251618357636,
+      "data_points": 477
+    },
+    "2024-06": {
+      "correlation_percent": 2.9003466659264587,
+      "data_points": 423
+    },
+    "2024-07": {
+      "correlation_percent": -1.3281408039849159,
+      "data_points": 450
+    },
+    "2024-08": {
+      "correlation_percent": -3.966770032951793,
+      "data_points": 510
+    },
+    "2024-09": {
+      "correlation_percent": 5.865046128866385,
+      "data_points": 462
+    },
+    "2024-10": {
+      "correlation_percent": 2.8314177464747345,
+      "data_points": 440
+    },
+    "2024-11": {
+      "correlation_percent": -0.7366662911173787,
+      "data_points": 487
+    },
+    "2024-12": {
+      "correlation_percent": -4.0148778085666095,
+      "data_points": 464
+    },
+    "2025-01": {
+      "correlation_percent": 1.272848274170926,
+      "data_points": 506
+    },
+    "2025-02": {
+      "correlation_percent": -1.5636878109534638,
+      "data_points": 583
+    },
+    "2025-03": {
+      "correlation_percent": 4.662734929536071,
+      "data_points": 663
+    },
+    "2025-04": {
+      "correlation_percent": -1.593014920816958,
+      "data_points": 664
+    },
+    "2025-05": {
+      "correlation_percent": -2.9523356211471676,
+      "data_points": 633
+    },
+    "2025-06": {
+      "correlation_percent": -1.2241002369365497,
+      "data_points": 661
+    }
+  },
+  "conclusion": "Jupiter shows statistically significant TEP correlation"
+}

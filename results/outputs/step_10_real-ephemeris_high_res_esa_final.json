@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "analysis_center": "esa_final",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_days": 912
+  },
+  "ephemeris_source": "JPL DE432s",
+  "total_correlation": 0.12246012795719435,
+  "total_effect_percent": 12.246012795719436,
+  "planet_correlations": {
+    "mercury": -0.05186444467796645,
+    "venus": -0.16680221556348715,
+    "mars": 0.06348680146994262,
+    "jupiter": 0.13812709596530234,
+    "saturn": 0.03337318928496786
+  },
+  "gravitational_constant_used": 6.6743e-11,
+  "method": "real_ephemeris_gravitational_field"
+}

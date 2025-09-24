@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "analysis_center": "merged",
+  "data_points": 10000,
+  "hypothesis": "Sophisticated models mask TEP effects by removing anomalous signals",
+  "model_correlations": {
+    "level0_pure_kepler": -0.2370936418353537,
+    "level1_elliptical_kepler": -0.41927234991730117,
+    "level3_jpl_ephemeris": 0.9842564373709206,
+    "kepler_jpl_difference": -1.2213500792062741,
+    "elliptical_jpl_difference": -1.4035287872882218,
+    "kepler_jpl_ratio": -0.24088604639321662,
+    "elliptical_jpl_ratio": -0.42597877341522217
+  },
+  "masking_evidence": {
+    "kepler_stronger": false,
+    "elliptical_stronger": false,
+    "jpl_strongest": true,
+    "significant_difference": true,
+    "kepler_jpl_ratio": -0.24088604639321662,
+    "elliptical_jpl_ratio": -0.42597877341522217,
+    "strongest_model": "JPL Ephemeris",
+    "hypothesis_supported": false
+  },
+  "level0_kepler": {
+    "description": "Pure Kepler orbits - circular, no corrections",
+    "correlation_percent": -0.2370936418353537,
+    "method": "circular_orbits_no_perturbations"
+  },
+  "level1_elliptical": {
+    "description": "Elliptical Kepler orbits - includes eccentricity",
+    "correlation_percent": -0.41927234991730117,
+    "method": "elliptical_orbits_with_eccentricity"
+  },
+  "level3_jpl": {
+    "description": "JPL DE432s ephemeris - full corrections",
+    "correlation_percent": 0.9842564373709206,
+    "method": "jpl_ephemeris_full_corrections"
+  },
+  "strongest_model": "JPL Ephemeris",
+  "strongest_correlation_percent": 0.9842564373709206,
+  "conclusion": "JPL ephemeris enhances TEP detection",
+  "recommendation": "JPL ephemeris optimal for TEP analysis",
+  "interpretation": "Precise ephemeris reveals true TEP coupling"
+}

@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "analysis_center": "code",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_data_points": 50025
+  },
+  "ephemeris_source": "JPL DE432s",
+  "station_geometry": {
+    "earth_radius": 6371000.0,
+    "rotation_period": 86164.1,
+    "accounts_for_rotation": true,
+    "accounts_for_station_positions": true
+  },
+  "total_correlation": 0.0005173809107911035,
+  "total_effect_percent": 0.05173809107911034,
+  "planet_correlations": {
+    "mercury": -0.00530064622609277,
+    "venus": -0.008308471080314158,
+    "mars": 0.003896250168295226,
+    "jupiter": 0.0012977140300686704,
+    "saturn": -0.0014733993696694663
+  },
+  "gravitational_constant_used": 6.6743e-11,
+  "method": "station_aware_gravitational_field"
+}

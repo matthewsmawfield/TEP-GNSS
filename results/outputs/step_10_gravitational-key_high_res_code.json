@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "analysis_center": "code",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_data_points": 100177
+  },
+  "ephemeris_source": "JPL DE432s",
+  "gravitational_key_analysis": {
+    "key_correlations": {
+      "total_gravitational_key": -0.004412807733188872,
+      "fast_layer": -0.0020101292902334495,
+      "medium_layer": -0.0011770152769741797,
+      "slow_layer": -0.00433072058038076,
+      "rotation_component": 0.0013522379559168368,
+      "orbital_component": -0.004335304057305217
+    },
+    "planet_key_correlations": {
+      "mercury": 0.0010362756562829094,
+      "venus": -0.0020419666692940083,
+      "mars": -0.0011770152769741797,
+      "jupiter": -0.00439900729216108,
+      "saturn": -0.0007966551478650382
+    },
+    "key_statistics": {
+      "key_range": 76082.7245277609,
+      "key_std": 24973.126599657637,
+      "key_complexity": 11142.557662211013,
+      "temporal_layers": 912
+    },
+    "key_layers": {
+      "fast_layer": "Mercury, Venus (short periods)",
+      "medium_layer": "Mars (medium period)",
+      "slow_layer": "Jupiter, Saturn (long periods)"
+    }
+  },
+  "method": "gravitational_key_temporal_pattern"
+}

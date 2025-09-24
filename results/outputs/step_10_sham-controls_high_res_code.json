@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "analysis_center": "code",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_days": 912
+  },
+  "validation_results": {
+    "mercury": {
+      "real_correlation": 0.048977596429877195,
+      "sham_random_dates": 0.034261694833774455,
+      "sham_fake_positions": -0.03408796860057605,
+      "tep_effect_beyond_sham": 0.01471590159610274
+    },
+    "venus": {
+      "real_correlation": 0.048260167867726717,
+      "sham_random_dates": -0.017220969164196447,
+      "sham_fake_positions": 0.0112279023665558,
+      "tep_effect_beyond_sham": 0.06548113703192317
+    },
+    "mars": {
+      "real_correlation": 0.01601617464523419,
+      "sham_random_dates": 0.03427331905459421,
+      "sham_fake_positions": 0.04057710259958478,
+      "tep_effect_beyond_sham": -0.018257144409360018
+    },
+    "jupiter": {
+      "real_correlation": 0.05258593410783251,
+      "sham_random_dates": 0.0057956411526362125,
+      "sham_fake_positions": -0.00027977341164870306,
+      "tep_effect_beyond_sham": 0.046790292955196294
+    },
+    "saturn": {
+      "real_correlation": -0.023411400940030424,
+      "sham_random_dates": 0.02204795973792644,
+      "sham_fake_positions": 0.00027100786458843804,
+      "tep_effect_beyond_sham": -0.04545936067795686
+    }
+  },
+  "gps_systematic_correlations": {
+    "seasonal_correlation": 0.00878408323046743,
+    "solar_cycle_correlation": 0.00030816572807251835,
+    "interpretation": "Test against known GPS systematic patterns"
+  },
+  "solar_lunar_correlations": {
+    "lunar_cycle_correlation": -0.005505134195285462,
+    "solar_rotation_correlation": -0.005887047674020226,
+    "interpretation": "Test against solar/lunar cycles"
+  }
+}

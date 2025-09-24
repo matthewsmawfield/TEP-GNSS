@@ -1,0 +1,158 @@
+{
+  "success": true,
+  "analysis_center": "igs_combined",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30",
+    "total_days": 910
+  },
+  "real_correlations": {
+    "mercury": 0.010771436343666714,
+    "venus": 0.10609425900429346,
+    "mars": -0.14393994545946573,
+    "jupiter": -0.13078715919604414,
+    "saturn": -0.021046117630121784
+  },
+  "control_results": {
+    "time_shuffled_mercury": -0.035146458885224566,
+    "time_shuffled_venus": -0.06409801333410307,
+    "time_shuffled_mars": -0.03552744113737318,
+    "time_shuffled_jupiter": -0.0436445752316956,
+    "time_shuffled_saturn": 0.01077005800824192,
+    "gps_annual_cycle": 0.08594251804814983,
+    "gps_monthly_cycle": 0.009924381501980755,
+    "gps_solar_cycle": -0.10546423470413674,
+    "gps_random_walk": 0.09077853609844942,
+    "lunar_phase_cycle": -0.0023936846183372786,
+    "solar_rotation_cycle": -0.02372570743513075,
+    "earth_orbital_eccentricity": 0.10420549174411774,
+    "stellar_day_variation": 0.08602840873481529
+  },
+  "statistical_validation": {
+    "permutation_tests": {
+      "mercury": {
+        "p_value": 0.352,
+        "significant": false,
+        "confidence_interval": [
+          -0.06511830546228102,
+          0.06305005815943854
+        ],
+        "interpretation": "Permutation test with 1000 shuffles"
+      },
+      "venus": {
+        "p_value": 0.002,
+        "significant": true,
+        "confidence_interval": [
+          -0.06544292927347407,
+          0.06762008834562747
+        ],
+        "interpretation": "Permutation test with 1000 shuffles"
+      },
+      "mars": {
+        "p_value": 1.0,
+        "significant": false,
+        "confidence_interval": [
+          -0.06268851126732801,
+          0.06524502787717922
+        ],
+        "interpretation": "Permutation test with 1000 shuffles"
+      },
+      "jupiter": {
+        "p_value": 1.0,
+        "significant": false,
+        "confidence_interval": [
+          -0.06738193552102917,
+          0.06728093154559389
+        ],
+        "interpretation": "Permutation test with 1000 shuffles"
+      },
+      "saturn": {
+        "p_value": 0.752,
+        "significant": false,
+        "confidence_interval": [
+          -0.05933515794786178,
+          0.06255823086080635
+        ],
+        "interpretation": "Permutation test with 1000 shuffles"
+      }
+    },
+    "multiple_comparison_corrections": {
+      "bonferroni": {
+        "corrected_p_values": [
+          1.0,
+          0.01,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "significant": [
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "interpretation": "Conservative correction for multiple testing"
+      },
+      "fdr_benjamini_hochberg": {
+        "corrected_p_values": [
+          0.8799999999999999,
+          0.01,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "significant": [
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "interpretation": "Less conservative correction for multiple testing"
+      }
+    }
+  },
+  "tep_effects_beyond_controls": {
+    "mercury": {
+      "real_correlation": 0.010771436343666714,
+      "time_shuffled_control": -0.035146458885224566,
+      "tep_effect_beyond_control": 0.04591789522889128,
+      "significant": false,
+      "corrected_significant_bonferroni": false,
+      "corrected_significant_fdr": false
+    },
+    "venus": {
+      "real_correlation": 0.10609425900429346,
+      "time_shuffled_control": -0.06409801333410307,
+      "tep_effect_beyond_control": 0.17019227233839654,
+      "significant": true,
+      "corrected_significant_bonferroni": true,
+      "corrected_significant_fdr": true
+    },
+    "mars": {
+      "real_correlation": -0.14393994545946573,
+      "time_shuffled_control": -0.03552744113737318,
+      "tep_effect_beyond_control": -0.10841250432209254,
+      "significant": false,
+      "corrected_significant_bonferroni": false,
+      "corrected_significant_fdr": false
+    },
+    "jupiter": {
+      "real_correlation": -0.13078715919604414,
+      "time_shuffled_control": -0.0436445752316956,
+      "tep_effect_beyond_control": -0.08714258396434854,
+      "significant": false,
+      "corrected_significant_bonferroni": false,
+      "corrected_significant_fdr": false
+    },
+    "saturn": {
+      "real_correlation": -0.021046117630121784,
+      "time_shuffled_control": 0.01077005800824192,
+      "tep_effect_beyond_control": -0.031816175638363704,
+      "significant": false,
+      "corrected_significant_bonferroni": false,
+      "corrected_significant_fdr": false
+    }
+  }
+}
