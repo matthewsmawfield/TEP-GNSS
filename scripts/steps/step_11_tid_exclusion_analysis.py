@@ -16,6 +16,10 @@ Key Tests:
 Author: Matthew Lukin Smawfield
 Date: September 2025
 Theory: Temporal Equivalence Principle (TEP) vs TID exclusion
+
+Outputs:
+  - results/outputs/step_11_tid_exclusion_comprehensive.json
+  - results/figures/step_11_tid_exclusion_analysis.png
 """
 
 import os
