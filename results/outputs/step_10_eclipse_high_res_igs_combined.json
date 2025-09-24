@@ -1,0 +1,48 @@
+{
+  "success": true,
+  "analysis_type": "high_resolution_solar_eclipse",
+  "eclipse_datetime": "2024-04-08T18:18:00",
+  "temporal_resolution_minutes": 5,
+  "analysis_center": "igs_combined",
+  "temporal_evolution": [
+    {
+      "datetime": "2024-04-08T18:18:00",
+      "minutes_from_eclipse": 0,
+      "mean_coherence": -3.5744025045214742e-09,
+      "std_coherence": 2.8514717646094756e-07,
+      "n_pairs": 11193,
+      "eclipse_phase": "totality"
+    },
+    {
+      "datetime": "2024-04-09T03:08:00",
+      "minutes_from_eclipse": 530,
+      "mean_coherence": 1.1895871253597952e-12,
+      "std_coherence": 1.2181052650249475e-11,
+      "n_pairs": 21,
+      "eclipse_phase": "baseline"
+    }
+  ],
+  "phase_statistics": {
+    "baseline": {
+      "n_bins": 1,
+      "mean_coherence": 1.1895871253597952e-12,
+      "std_coherence": NaN
+    },
+    "totality": {
+      "n_bins": 1,
+      "mean_coherence": -3.5744025045214742e-09,
+      "std_coherence": NaN
+    }
+  },
+  "enhancement_analysis": {
+    "baseline_coherence": 1.1895871253597952e-12,
+    "totality_coherence": -3.5744025045214742e-09,
+    "enhancement_ratio": -3004.7420893533817,
+    "enhancement_percent": -300574.2089353382,
+    "significant": true
+  },
+  "interpretation": "Significant eclipse suppression: 300574.2% change in timing coherence",
+  "n_temporal_bins": 2,
+  "total_measurements": 172422,
+  "eclipse_window_pairs": 11225
+}

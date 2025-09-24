@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "analysis_type": "high_resolution_solar_eclipse",
+  "eclipse_datetime": "2024-04-08T18:18:00",
+  "temporal_resolution_minutes": 5,
+  "analysis_center": "code",
+  "temporal_evolution": [
+    {
+      "datetime": "2024-04-08T18:13:00",
+      "minutes_from_eclipse": -5,
+      "mean_coherence": -4.0594677606070025e-10,
+      "std_coherence": 2.1710882811290436e-09,
+      "n_pairs": 18,
+      "eclipse_phase": "totality"
+    },
+    {
+      "datetime": "2024-04-08T18:18:00",
+      "minutes_from_eclipse": 0,
+      "mean_coherence": -7.865615319259354e-09,
+      "std_coherence": 1.443787847860611e-06,
+      "n_pairs": 38647,
+      "eclipse_phase": "totality"
+    }
+  ],
+  "phase_statistics": {
+    "totality": {
+      "n_bins": 2,
+      "mean_coherence": -4.135781047660027e-09,
+      "std_coherence": 5.274782212299742e-09
+    }
+  },
+  "enhancement_analysis": {},
+  "interpretation": "No significant eclipse signature detected at 5-minute resolution",
+  "n_temporal_bins": 2,
+  "total_measurements": 281767,
+  "eclipse_window_pairs": 38669
+}
