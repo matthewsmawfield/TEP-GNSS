@@ -1338,33 +1338,46 @@ def analyze_continuous_gravitational_field(analysis_center: str = 'merged') -> D
         
         print_status(f"Analyzing {len(period_data)} days of data from {start_date.date()} to {end_date.date()}", "INFO")
         
-        # Calculate continuous gravitational potential for each day
+        # Calculate continuous gravitational potential for each day using proper orbital mechanics
         try:
-            # Planetary masses (relative to Earth mass = 1.0)
-            planet_masses = {
-                'mercury': 0.055,
-                'venus': 0.815,
-                'mars': 0.107,
-                'jupiter': 317.8,
-                'saturn': 95.2
+            # Planetary masses (kg) - actual masses for proper gravitational calculations
+            planet_masses_kg = {
+                'mercury': 3.3011e23,    # kg
+                'venus': 4.8675e24,      # kg  
+                'mars': 6.4171e23,       # kg
+                'jupiter': 1.8982e27,    # kg
+                'saturn': 5.6834e26      # kg
+            }
+            
+            # Gravitational constant (m³/kg/s²)
+            G = 6.67430e-11
+            
+            # Orbital elements (approximate, for simplified calculations)
+            # Semi-major axes (AU)
+            semi_major_axes = {
+                'mercury': 0.387,
+                'venus': 0.723,
+                'mars': 1.524,
+                'jupiter': 5.203,
+                'saturn': 9.537
             }
             
             # Orbital periods (days)
             orbital_periods = {
-                'mercury': 88.0,
-                'venus': 225.0,
-                'mars': 687.0,  # 1.88 years
-                'jupiter': 4333.0,  # 11.86 years
-                'saturn': 10759.0  # 29.46 years
+                'mercury': 87.97,
+                'venus': 224.70,
+                'mars': 686.98,
+                'jupiter': 4332.59,
+                'saturn': 10759.22
             }
             
-            # Average distances from Sun (AU)
-            avg_distances = {
-                'mercury': 0.39,
-                'venus': 0.72,
-                'mars': 1.52,
-                'jupiter': 5.20,
-                'saturn': 9.58
+            # Mean anomalies at epoch (degrees) - approximate starting positions
+            mean_anomalies_epoch = {
+                'mercury': 174.8,   # degrees at 2023-01-01
+                'venus': 50.1,
+                'mars': 19.4,
+                'jupiter': 20.0,
+                'saturn': 317.7
             }
             
             # Calculate days from start of analysis period
@@ -1373,37 +1386,49 @@ def analyze_continuous_gravitational_field(analysis_center: str = 'merged') -> D
             # Initialize total gravitational potential
             period_data['total_gravitational_potential'] = 0.0
             
-            # Calculate gravitational potential from each planet
-            for planet, mass in planet_masses.items():
+            # Calculate gravitational potential from each planet using proper orbital mechanics
+            for planet, mass_kg in planet_masses_kg.items():
                 period = orbital_periods[planet]
-                avg_dist = avg_distances[planet]
+                a = semi_major_axes[planet]  # AU
+                M0 = np.radians(mean_anomalies_epoch[planet])  # Convert to radians
                 
-                # Calculate orbital phase (0 to 2π over one orbital period)
-                orbital_phase = (period_data['days_from_start'] / period) * 2 * np.pi
+                # Calculate mean anomaly for each day
+                # M = M0 + n * t, where n = 2π/P is mean motion
+                mean_motion = 2 * np.pi / period  # radians per day
+                mean_anomaly = M0 + mean_motion * period_data['days_from_start']
                 
-                # Calculate planet distance from Earth using simplified orbital mechanics
-                # Earth is at 1.0 AU, so planet distance varies as:
-                # distance = sqrt(avg_dist^2 + 1.0^2 - 2*avg_dist*1.0*cos(phase))
-                # Simplified: distance ≈ avg_dist + 1.0 * cos(phase)
-                planet_distance = avg_dist + 1.0 * np.cos(orbital_phase)
-                planet_distance = np.maximum(planet_distance, 0.1)  # Minimum distance
+                # For simplified circular orbits, distance from Sun ≈ semi-major axis
+                # Distance from Earth = |r_planet - r_earth|
+                # Assuming Earth at 1 AU and circular orbits
+                earth_distance = 1.0  # AU
                 
-                # Calculate gravitational potential (mass / distance^2)
-                planet_potential = mass / (planet_distance ** 2)
+                # Calculate planet distance from Earth using law of cosines
+                # d = sqrt(a² + 1² - 2*a*cos(θ))
+                # where θ is the angle between Earth and planet as seen from Sun
+                angle_difference = mean_anomaly - (2 * np.pi * period_data['days_from_start'] / 365.25)
+                planet_distance_au = np.sqrt(a**2 + earth_distance**2 - 2*a*earth_distance*np.cos(angle_difference))
+                
+                # Convert AU to meters for gravitational calculations
+                au_to_meters = 1.496e11  # meters per AU
+                planet_distance_m = planet_distance_au * au_to_meters
+                
+                # Calculate gravitational potential: Φ = -GM/r (proper formula)
+                # Use negative sign for gravitational potential
+                planet_potential = -G * mass_kg / planet_distance_m
                 
                 # Add to total gravitational potential
                 period_data['total_gravitational_potential'] += planet_potential
                 
                 # Store individual planet potentials for analysis
                 period_data[f'{planet}_potential'] = planet_potential
-                period_data[f'{planet}_distance'] = planet_distance
+                period_data[f'{planet}_distance_au'] = planet_distance_au
             
             # Calculate correlation between GPS coherence and total gravitational potential
             total_correlation = period_data['coherence_median'].corr(period_data['total_gravitational_potential'])
             
             # Calculate individual planet correlations
             planet_correlations = {}
-            for planet in planet_masses.keys():
+            for planet in planet_masses_kg.keys():
                 corr = period_data['coherence_median'].corr(period_data[f'{planet}_potential'])
                 planet_correlations[planet] = float(corr) if not np.isnan(corr) else 0.0
             
