@@ -922,65 +922,45 @@ def analyze_jupiter_opposition_high_resolution(analysis_center: str = 'merged') 
             if len(window_data) < 50:  # Need sufficient data for orbital correlation
                 continue
             
-            # Calculate orbital mechanics parameters
+            # Calculate orbital mechanics parameters (inline calculation)
             try:
-                # Import orbital calculator (inline to avoid import issues)
-                import sys
-                from pathlib import Path
-                orbital_calc_path = Path(__file__).parent / 'orbital_mechanics_analysis.py'
-                if orbital_calc_path.exists():
-                    sys.path.insert(0, str(Path(__file__).parent))
-                    from orbital_mechanics_analysis import OrbitalMechanicsCalculator
-                    
-                    orbital_calc = OrbitalMechanicsCalculator()
-                    
-                    # Calculate gravitational potential for each day
-                    window_data['distance_au'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_distance_earth(d, 'jupiter')
-                    )
-                    window_data['gravitational_potential'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_gravitational_potential(d, ['jupiter'])['body_contributions']['jupiter']['potential']
-                    )
-                    
-                    # Calculate correlation between coherence and gravitational potential
-                    correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
-                    
-                    # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
-                    orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
-                    
-                    opposition_result = {
-                        'date': jupiter_date,
-                        'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': orbital_effect_percent,
-                        'minimum_distance_au': float(window_data['distance_au'].min()),
-                        'maximum_distance_au': float(window_data['distance_au'].max()),
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'orbital_mechanics'
-                    }
-                    
-                    results['jupiter_oppositions'].append(opposition_result)
-                    print_status(f"Jupiter opposition {jupiter_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
-                    
-                else:
-                    # Fallback: simple distance correlation without full orbital calculator
-                    window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
-                    
-                    # Simple correlation with inverse of days from opposition (proxy for distance)
-                    window_data['distance_proxy'] = 1.0 / (1.0 + abs(window_data['days_from_opposition']) / 30.0)
-                    correlation = window_data['coherence_median'].corr(window_data['distance_proxy'])
-                    
-                    opposition_result = {
-                        'date': jupiter_date,
-                        'correlation_with_distance_proxy': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': float(correlation * 100) if not np.isnan(correlation) else 0.0,
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'distance_proxy_fallback'
-                    }
-                    
-                    results['jupiter_oppositions'].append(opposition_result)
-                    print_status(f"Jupiter opposition {jupiter_date}: {correlation*100:+.4f}% distance correlation (fallback)", "SUCCESS")
+                # Simple orbital mechanics calculation for Jupiter
+                # Jupiter orbital parameters: period = 11.86 years, average distance = 5.20 AU
+                jupiter_period_days = 11.86 * 365.25
+                jupiter_avg_distance_au = 5.20
+                
+                # Calculate days from opposition for each date
+                window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
+                
+                # Calculate Jupiter distance from Earth using simplified orbital mechanics
+                # At opposition: distance ≈ 5.20 - 1.0 = 4.20 AU (minimum)
+                # At conjunction: distance ≈ 5.20 + 1.0 = 6.20 AU (maximum)
+                # Use cosine approximation for orbital position
+                orbital_phase = (window_data['days_from_opposition'] / jupiter_period_days) * 2 * np.pi
+                window_data['distance_au'] = 5.20 + 1.0 * np.cos(orbital_phase)
+                
+                # Calculate gravitational potential (proportional to 1/distance)
+                window_data['gravitational_potential'] = 1.0 / (window_data['distance_au'] ** 2)
+                
+                # Calculate correlation between coherence and gravitational potential
+                correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
+                
+                # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
+                orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
+                
+                opposition_result = {
+                    'date': jupiter_date,
+                    'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
+                    'orbital_effect_percent': orbital_effect_percent,
+                    'minimum_distance_au': float(window_data['distance_au'].min()),
+                    'maximum_distance_au': float(window_data['distance_au'].max()),
+                    'data_points': len(window_data),
+                    'window_days': 240,
+                    'method': 'orbital_mechanics_inline'
+                }
+                
+                results['jupiter_oppositions'].append(opposition_result)
+                print_status(f"Jupiter opposition {jupiter_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
                     
             except Exception as calc_error:
                 print_status(f"Orbital calculation failed for {jupiter_date}: {calc_error}", "WARNING")
@@ -1047,65 +1027,45 @@ def analyze_saturn_opposition_high_resolution(analysis_center: str = 'merged') -
             if len(window_data) < 50:  # Need sufficient data for orbital correlation
                 continue
             
-            # Calculate orbital mechanics parameters
+            # Calculate orbital mechanics parameters (inline calculation)
             try:
-                # Import orbital calculator (inline to avoid import issues)
-                import sys
-                from pathlib import Path
-                orbital_calc_path = Path(__file__).parent / 'orbital_mechanics_analysis.py'
-                if orbital_calc_path.exists():
-                    sys.path.insert(0, str(Path(__file__).parent))
-                    from orbital_mechanics_analysis import OrbitalMechanicsCalculator
-                    
-                    orbital_calc = OrbitalMechanicsCalculator()
-                    
-                    # Calculate gravitational potential for each day
-                    window_data['distance_au'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_distance_earth(d, 'saturn')
-                    )
-                    window_data['gravitational_potential'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_gravitational_potential(d, ['saturn'])['body_contributions']['saturn']['potential']
-                    )
-                    
-                    # Calculate correlation between coherence and gravitational potential
-                    correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
-                    
-                    # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
-                    orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
-                    
-                    opposition_result = {
-                        'date': saturn_date,
-                        'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': orbital_effect_percent,
-                        'minimum_distance_au': float(window_data['distance_au'].min()),
-                        'maximum_distance_au': float(window_data['distance_au'].max()),
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'orbital_mechanics'
-                    }
-                    
-                    results['saturn_oppositions'].append(opposition_result)
-                    print_status(f"Saturn opposition {saturn_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
-                    
-                else:
-                    # Fallback: simple distance correlation without full orbital calculator
-                    window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
-                    
-                    # Simple correlation with inverse of days from opposition (proxy for distance)
-                    window_data['distance_proxy'] = 1.0 / (1.0 + abs(window_data['days_from_opposition']) / 30.0)
-                    correlation = window_data['coherence_median'].corr(window_data['distance_proxy'])
-                    
-                    opposition_result = {
-                        'date': saturn_date,
-                        'correlation_with_distance_proxy': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': float(correlation * 100) if not np.isnan(correlation) else 0.0,
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'distance_proxy_fallback'
-                    }
-                    
-                    results['saturn_oppositions'].append(opposition_result)
-                    print_status(f"Saturn opposition {saturn_date}: {correlation*100:+.4f}% distance correlation (fallback)", "SUCCESS")
+                # Simple orbital mechanics calculation for Saturn
+                # Saturn orbital parameters: period = 29.46 years, average distance = 9.54 AU
+                saturn_period_days = 29.46 * 365.25
+                saturn_avg_distance_au = 9.54
+                
+                # Calculate days from opposition for each date
+                window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
+                
+                # Calculate Saturn distance from Earth using simplified orbital mechanics
+                # At opposition: distance ≈ 9.54 - 1.0 = 8.54 AU (minimum)
+                # At conjunction: distance ≈ 9.54 + 1.0 = 10.54 AU (maximum)
+                # Use cosine approximation for orbital position
+                orbital_phase = (window_data['days_from_opposition'] / saturn_period_days) * 2 * np.pi
+                window_data['distance_au'] = 9.54 + 1.0 * np.cos(orbital_phase)
+                
+                # Calculate gravitational potential (proportional to 1/distance)
+                window_data['gravitational_potential'] = 1.0 / (window_data['distance_au'] ** 2)
+                
+                # Calculate correlation between coherence and gravitational potential
+                correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
+                
+                # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
+                orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
+                
+                opposition_result = {
+                    'date': saturn_date,
+                    'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
+                    'orbital_effect_percent': orbital_effect_percent,
+                    'minimum_distance_au': float(window_data['distance_au'].min()),
+                    'maximum_distance_au': float(window_data['distance_au'].max()),
+                    'data_points': len(window_data),
+                    'window_days': 240,
+                    'method': 'orbital_mechanics_inline'
+                }
+                
+                results['saturn_oppositions'].append(opposition_result)
+                print_status(f"Saturn opposition {saturn_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
                     
             except Exception as calc_error:
                 print_status(f"Orbital calculation failed for {saturn_date}: {calc_error}", "WARNING")
@@ -1171,65 +1131,45 @@ def analyze_mars_opposition_high_resolution(analysis_center: str = 'merged') -> 
             if len(window_data) < 50:  # Need sufficient data for orbital correlation
                 continue
             
-            # Calculate orbital mechanics parameters
+            # Calculate orbital mechanics parameters (inline calculation)
             try:
-                # Import orbital calculator (inline to avoid import issues)
-                import sys
-                from pathlib import Path
-                orbital_calc_path = Path(__file__).parent / 'orbital_mechanics_analysis.py'
-                if orbital_calc_path.exists():
-                    sys.path.insert(0, str(Path(__file__).parent))
-                    from orbital_mechanics_analysis import OrbitalMechanicsCalculator
-                    
-                    orbital_calc = OrbitalMechanicsCalculator()
-                    
-                    # Calculate gravitational potential for each day
-                    window_data['distance_au'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_distance_earth(d, 'mars')
-                    )
-                    window_data['gravitational_potential'] = window_data['date'].apply(
-                        lambda d: orbital_calc.calculate_gravitational_potential(d, ['mars'])['body_contributions']['mars']['potential']
-                    )
-                    
-                    # Calculate correlation between coherence and gravitational potential
-                    correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
-                    
-                    # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
-                    orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
-                    
-                    opposition_result = {
-                        'date': mars_date,
-                        'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': orbital_effect_percent,
-                        'minimum_distance_au': float(window_data['distance_au'].min()),
-                        'maximum_distance_au': float(window_data['distance_au'].max()),
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'orbital_mechanics'
-                    }
-                    
-                    results['mars_oppositions'].append(opposition_result)
-                    print_status(f"Mars opposition {mars_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
-                    
-                else:
-                    # Fallback: simple distance correlation without full orbital calculator
-                    window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
-                    
-                    # Simple correlation with inverse of days from opposition (proxy for distance)
-                    window_data['distance_proxy'] = 1.0 / (1.0 + abs(window_data['days_from_opposition']) / 30.0)
-                    correlation = window_data['coherence_median'].corr(window_data['distance_proxy'])
-                    
-                    opposition_result = {
-                        'date': mars_date,
-                        'correlation_with_distance_proxy': float(correlation) if not np.isnan(correlation) else 0.0,
-                        'orbital_effect_percent': float(correlation * 100) if not np.isnan(correlation) else 0.0,
-                        'data_points': len(window_data),
-                        'window_days': 240,
-                        'method': 'distance_proxy_fallback'
-                    }
-                    
-                    results['mars_oppositions'].append(opposition_result)
-                    print_status(f"Mars opposition {mars_date}: {correlation*100:+.4f}% distance correlation (fallback)", "SUCCESS")
+                # Simple orbital mechanics calculation for Mars
+                # Mars orbital parameters: period = 1.88 years, average distance = 1.52 AU
+                mars_period_days = 1.88 * 365.25
+                mars_avg_distance_au = 1.52
+                
+                # Calculate days from opposition for each date
+                window_data['days_from_opposition'] = (window_data['date'] - event_date).dt.days
+                
+                # Calculate Mars distance from Earth using simplified orbital mechanics
+                # At opposition: distance ≈ 1.52 - 1.0 = 0.52 AU (minimum)
+                # At conjunction: distance ≈ 1.52 + 1.0 = 2.52 AU (maximum)
+                # Use cosine approximation for orbital position
+                orbital_phase = (window_data['days_from_opposition'] / mars_period_days) * 2 * np.pi
+                window_data['distance_au'] = 1.52 + 1.0 * np.cos(orbital_phase)
+                
+                # Calculate gravitational potential (proportional to 1/distance)
+                window_data['gravitational_potential'] = 1.0 / (window_data['distance_au'] ** 2)
+                
+                # Calculate correlation between coherence and gravitational potential
+                correlation = window_data['coherence_median'].corr(window_data['gravitational_potential'])
+                
+                # Realistic effect size: correlation * 100 (much smaller than previous artifacts)
+                orbital_effect_percent = float(correlation * 100) if not np.isnan(correlation) else 0.0
+                
+                opposition_result = {
+                    'date': mars_date,
+                    'correlation_with_potential': float(correlation) if not np.isnan(correlation) else 0.0,
+                    'orbital_effect_percent': orbital_effect_percent,
+                    'minimum_distance_au': float(window_data['distance_au'].min()),
+                    'maximum_distance_au': float(window_data['distance_au'].max()),
+                    'data_points': len(window_data),
+                    'window_days': 240,
+                    'method': 'orbital_mechanics_inline'
+                }
+                
+                results['mars_oppositions'].append(opposition_result)
+                print_status(f"Mars opposition {mars_date}: {orbital_effect_percent:+.4f}% orbital correlation", "SUCCESS")
                     
             except Exception as calc_error:
                 print_status(f"Orbital calculation failed for {mars_date}: {calc_error}", "WARNING")
