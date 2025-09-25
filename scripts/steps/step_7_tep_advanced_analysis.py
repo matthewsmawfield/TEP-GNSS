@@ -272,8 +272,15 @@ def analyze_elevation_dependence_fixed(root_dir):
             results[ac] = {'error': 'No pairs with elevation data after coordinate mapping fix'}
             continue
         
-        # Compute coherence and elevation metrics
-        df_valid['coherence'] = np.cos(df_valid['plateau_phase'])
+        # Compute coherence and elevation metrics - handle different column names
+        if 'phase' in df_valid.columns:
+            df_valid['coherence'] = np.cos(df_valid['phase'])
+        elif 'plateau_phase' in df_valid.columns:
+            df_valid['coherence'] = np.cos(df_valid['plateau_phase'])
+        else:
+            print_status(f"No phase column found for {ac}", "ERROR")
+            results[ac] = {'error': 'No phase column found'}
+            continue
         df_valid['elev_diff_m'] = np.abs(df_valid['elev_j'] - df_valid['elev_i'])
         df_valid['mean_elev_m'] = (df_valid['elev_i'] + df_valid['elev_j']) / 2
         
@@ -296,6 +303,7 @@ def analyze_elevation_dependence_fixed(root_dir):
             
             # Bin analysis
             edges = np.logspace(np.log10(50), np.log10(20000), 41)
+            subset = subset.copy()  # Avoid SettingWithCopyWarning
             subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
             binned = subset.groupby('dist_bin', observed=True).agg(
                 mean_dist=('dist_km', 'mean'),
@@ -360,6 +368,7 @@ def analyze_elevation_dependence_fixed(root_dir):
                     
                     # Bin analysis for this stratum
                     edges = np.logspace(np.log10(50), np.log10(20000), 31)  # Fewer bins for smaller samples
+                    subset = subset.copy()  # Avoid SettingWithCopyWarning
                     subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
                     binned = subset.groupby('dist_bin', observed=True).agg(
                         mean_dist=('dist_km', 'mean'),
@@ -504,7 +513,7 @@ def analyze_regional_jackknife(root_dir):
         
         # Filter valid elevation data
         df_valid = df_with_coords.dropna(subset=['lat_i', 'lon_i', 'lat_j', 'lon_j', 'elev_i', 'elev_j']).copy()
-        df_valid['coherence'] = np.cos(df_valid['plateau_phase'])
+        df_valid['coherence'] = np.cos(df_valid['phase'])
         df_valid['mean_elev_m'] = (df_valid['elev_i'] + df_valid['elev_j']) / 2
         
         print_status(f"Base dataset: {len(df_valid)} pairs with coordinates and elevation", "INFO")
@@ -557,7 +566,8 @@ def analyze_regional_jackknife(root_dir):
                     
                     # Distance binning and exponential fit
                     edges = np.logspace(np.log10(50), np.log10(20000), 31)
-                    subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
+                    subset = subset.copy()  # Avoid SettingWithCopyWarning
+        subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
                     binned = subset.groupby('dist_bin', observed=True).agg(
                         mean_dist=('dist_km', 'mean'),
                         mean_coh=('coherence', 'mean'),
@@ -656,15 +666,25 @@ def analyze_circular_statistics(root_dir):
             if len(group) < 50:
                 continue
             
-            phases = group['plateau_phase'].values
+            # Handle different phase column names across centers
+            if 'phase' in group.columns:
+                phases = group['phase'].values
+            elif 'plateau_phase' in group.columns:
+                phases = group['plateau_phase'].values
+            else:
+                continue  # Skip if no phase column
             coherences = np.cos(phases)
             
             # Phase Locking Value (PLV)
             plv = np.abs(np.mean(np.exp(1j * phases)))
             
-            # Rayleigh test for uniformity
+            # Rayleigh test for uniformity (implement manually since stats.rayleightest doesn't exist)
             try:
-                rayleigh_stat, rayleigh_p = stats.rayleightest(phases)
+                # Manual Rayleigh test implementation
+                n = len(phases)
+                R = n * plv  # R statistic
+                rayleigh_stat = R**2 / n
+                rayleigh_p = np.exp(-rayleigh_stat) if rayleigh_stat < 50 else 0.0
             except:
                 rayleigh_p = np.nan
             

@@ -1,0 +1,89 @@
+{
+  "success": true,
+  "analysis_type": "venus_multi_center",
+  "centers_analyzed": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "successful_centers": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "center_results": {
+    "code": {
+      "success": true,
+      "analysis_center": "code",
+      "venus_conjunctions": [
+        {
+          "date": "2023-08-13",
+          "peak_coherence": 0.002928078727143662,
+          "baseline_coherence": 0.00866959427999071,
+          "effect_size_percent": -66.22588517317791,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        },
+        {
+          "date": "2025-03-22",
+          "peak_coherence": 0.008496968532962291,
+          "baseline_coherence": 0.005334162341512253,
+          "effect_size_percent": 59.293399580961605,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        }
+      ],
+      "average_effect_percent": -3.4662427961081548,
+      "interpretation": "Venus superior conjunctions show average -3.47% coherence modulation"
+    },
+    "igs_combined": {
+      "success": true,
+      "analysis_center": "igs_combined",
+      "venus_conjunctions": [
+        {
+          "date": "2023-08-13",
+          "peak_coherence": 0.011658384455250482,
+          "baseline_coherence": 0.01811260476630126,
+          "effect_size_percent": -35.63386047631835,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        },
+        {
+          "date": "2025-03-22",
+          "peak_coherence": 0.010793269752197427,
+          "baseline_coherence": 0.013808311689992567,
+          "effect_size_percent": -21.834978855382158,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        }
+      ],
+      "average_effect_percent": -28.734419665850254,
+      "interpretation": "Venus superior conjunctions show average -28.73% coherence modulation"
+    },
+    "esa_final": {
+      "success": true,
+      "analysis_center": "esa_final",
+      "venus_conjunctions": [
+        {
+          "date": "2023-08-13",
+          "peak_coherence": 0.010225764940813,
+          "baseline_coherence": 0.010354061345532507,
+          "effect_size_percent": -1.2390925689740337,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        },
+        {
+          "date": "2025-03-22",
+          "peak_coherence": 0.024696315055072145,
+          "baseline_coherence": 0.01210526397842226,
+          "effect_size_percent": 104.01302358291025,
+          "data_points_peak": 7,
+          "data_points_baseline": 42
+        }
+      ],
+      "average_effect_percent": 51.38696550696811,
+      "interpretation": "Venus superior conjunctions show average +51.39% coherence modulation"
+    }
+  },
+  "interpretation": "Venus analysis completed for 3/3 analysis centers"
+}

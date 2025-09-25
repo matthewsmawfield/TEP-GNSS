@@ -1,0 +1,929 @@
+{
+  "success": true,
+  "analysis_type": "orbital-periodicity_multi_center",
+  "centers_analyzed": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "successful_centers": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "center_results": {
+    "code": {
+      "success": true,
+      "analysis_center": "code",
+      "orbital_periodicity_analysis": {
+        "mercury": {
+          "orbital_period_days": 87.97,
+          "orbits_completed": 10.355803114698192,
+          "completeness_ratio": 0.35580311469819215,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "venus": {
+          "orbital_period_days": 224.7,
+          "orbits_completed": 4.054294615042279,
+          "completeness_ratio": 0.05429461504227895,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "mars": {
+          "orbital_period_days": 686.98,
+          "orbits_completed": 1.3260939183091212,
+          "completeness_ratio": 0.32609391830912116,
+          "signal_coherence": "high",
+          "expected_signal_strength": "weak"
+        },
+        "jupiter": {
+          "orbital_period_days": 4332.59,
+          "orbits_completed": 0.21026683808068614,
+          "completeness_ratio": 0.21026683808068614,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        },
+        "saturn": {
+          "orbital_period_days": 10759.22,
+          "orbits_completed": 0.08467156541087552,
+          "completeness_ratio": 0.08467156541087552,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        }
+      },
+      "signal_periodicity_results": {
+        "mercury": {
+          "autocorrelation_peaks": 9,
+          "periodic_snr": 2.85,
+          "orbital_phase_coverage": 10.355803114698192,
+          "signal_quality": "excellent"
+        },
+        "venus": {
+          "autocorrelation_peaks": 3,
+          "periodic_snr": 3.84,
+          "orbital_phase_coverage": 4.054294615042279,
+          "signal_quality": "excellent"
+        },
+        "mars": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 3.24,
+          "orbital_phase_coverage": 1.3260939183091212,
+          "signal_quality": "excellent"
+        },
+        "jupiter": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.21026683808068614,
+          "signal_quality": "poor"
+        },
+        "saturn": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.08467156541087552,
+          "signal_quality": "poor"
+        }
+      },
+      "venus_specific_analysis": {
+        "phase_dependent_correlations": {
+          "phase_000_010": {
+            "correlation": 0.001866311116684195,
+            "data_points": 1352382,
+            "phase_range": "0.0\u00b0 - 10.0\u00b0"
+          },
+          "phase_010_020": {
+            "correlation": -0.002572277663754612,
+            "data_points": 1312958,
+            "phase_range": "10.0\u00b0 - 20.0\u00b0"
+          },
+          "phase_020_030": {
+            "correlation": 0.0011909539362057792,
+            "data_points": 1083539,
+            "phase_range": "20.0\u00b0 - 30.0\u00b0"
+          },
+          "phase_030_040": {
+            "correlation": 0.0008148171913865882,
+            "data_points": 1075655,
+            "phase_range": "30.0\u00b0 - 40.0\u00b0"
+          },
+          "phase_040_050": {
+            "correlation": -0.002674417919358907,
+            "data_points": 1077403,
+            "phase_range": "40.0\u00b0 - 50.0\u00b0"
+          },
+          "phase_050_060": {
+            "correlation": -0.00017935736228365674,
+            "data_points": 1059791,
+            "phase_range": "50.0\u00b0 - 60.0\u00b0"
+          },
+          "phase_060_070": {
+            "correlation": -0.00013201464880295942,
+            "data_points": 1072689,
+            "phase_range": "60.0\u00b0 - 70.0\u00b0"
+          },
+          "phase_070_080": {
+            "correlation": 0.0005249045902216656,
+            "data_points": 1067511,
+            "phase_range": "70.0\u00b0 - 80.0\u00b0"
+          },
+          "phase_080_090": {
+            "correlation": -0.000818239670660934,
+            "data_points": 1080535,
+            "phase_range": "80.0\u00b0 - 90.0\u00b0"
+          },
+          "phase_090_100": {
+            "correlation": 0.0004441005127232076,
+            "data_points": 1071932,
+            "phase_range": "90.0\u00b0 - 100.0\u00b0"
+          },
+          "phase_100_110": {
+            "correlation": 0.0015739141129597362,
+            "data_points": 1056200,
+            "phase_range": "100.0\u00b0 - 110.0\u00b0"
+          },
+          "phase_110_120": {
+            "correlation": 0.0011135735800550343,
+            "data_points": 1032207,
+            "phase_range": "110.0\u00b0 - 120.0\u00b0"
+          },
+          "phase_120_130": {
+            "correlation": 0.0039050545076562268,
+            "data_points": 1111692,
+            "phase_range": "120.0\u00b0 - 130.0\u00b0"
+          },
+          "phase_130_140": {
+            "correlation": -0.0007811097493413878,
+            "data_points": 1081863,
+            "phase_range": "130.0\u00b0 - 140.0\u00b0"
+          },
+          "phase_140_150": {
+            "correlation": 0.0015948015266846927,
+            "data_points": 1072326,
+            "phase_range": "140.0\u00b0 - 150.0\u00b0"
+          },
+          "phase_150_160": {
+            "correlation": -0.000598661795083363,
+            "data_points": 1041181,
+            "phase_range": "150.0\u00b0 - 160.0\u00b0"
+          },
+          "phase_160_170": {
+            "correlation": 0.0036639619949880246,
+            "data_points": 1137277,
+            "phase_range": "160.0\u00b0 - 170.0\u00b0"
+          },
+          "phase_170_180": {
+            "correlation": -0.0003539437137640603,
+            "data_points": 1086979,
+            "phase_range": "170.0\u00b0 - 180.0\u00b0"
+          },
+          "phase_180_190": {
+            "correlation": -0.0018351943865744028,
+            "data_points": 1041137,
+            "phase_range": "180.0\u00b0 - 190.0\u00b0"
+          },
+          "phase_190_200": {
+            "correlation": -0.003418892800522966,
+            "data_points": 1078653,
+            "phase_range": "190.0\u00b0 - 200.0\u00b0"
+          },
+          "phase_200_210": {
+            "correlation": -0.0019518056942508864,
+            "data_points": 1123525,
+            "phase_range": "200.0\u00b0 - 210.0\u00b0"
+          },
+          "phase_210_220": {
+            "correlation": -0.00051394368365004,
+            "data_points": 1065590,
+            "phase_range": "210.0\u00b0 - 220.0\u00b0"
+          },
+          "phase_220_230": {
+            "correlation": 0.0004573539889612264,
+            "data_points": 1014852,
+            "phase_range": "220.0\u00b0 - 230.0\u00b0"
+          },
+          "phase_230_240": {
+            "correlation": -0.002232963796076932,
+            "data_points": 1060569,
+            "phase_range": "230.0\u00b0 - 240.0\u00b0"
+          },
+          "phase_240_250": {
+            "correlation": -0.0006842875963493204,
+            "data_points": 1107389,
+            "phase_range": "240.0\u00b0 - 250.0\u00b0"
+          },
+          "phase_250_260": {
+            "correlation": -0.0029109078511354814,
+            "data_points": 1018102,
+            "phase_range": "250.0\u00b0 - 260.0\u00b0"
+          },
+          "phase_260_270": {
+            "correlation": 0.0005615955272484228,
+            "data_points": 1085405,
+            "phase_range": "260.0\u00b0 - 270.0\u00b0"
+          },
+          "phase_270_280": {
+            "correlation": 0.0013519076981193612,
+            "data_points": 1078883,
+            "phase_range": "270.0\u00b0 - 280.0\u00b0"
+          },
+          "phase_280_290": {
+            "correlation": 0.0006429041527884335,
+            "data_points": 1109375,
+            "phase_range": "280.0\u00b0 - 290.0\u00b0"
+          },
+          "phase_290_300": {
+            "correlation": 0.00573031773375165,
+            "data_points": 1016137,
+            "phase_range": "290.0\u00b0 - 300.0\u00b0"
+          },
+          "phase_300_310": {
+            "correlation": 0.001484430193141674,
+            "data_points": 1067296,
+            "phase_range": "300.0\u00b0 - 310.0\u00b0"
+          },
+          "phase_310_320": {
+            "correlation": -0.0030828109819257,
+            "data_points": 1067817,
+            "phase_range": "310.0\u00b0 - 320.0\u00b0"
+          },
+          "phase_320_330": {
+            "correlation": 0.003610379720904003,
+            "data_points": 1066488,
+            "phase_range": "320.0\u00b0 - 330.0\u00b0"
+          },
+          "phase_330_340": {
+            "correlation": -0.002853774241174311,
+            "data_points": 1074610,
+            "phase_range": "330.0\u00b0 - 340.0\u00b0"
+          },
+          "phase_340_350": {
+            "correlation": 0.001247549362724008,
+            "data_points": 1065296,
+            "phase_range": "340.0\u00b0 - 350.0\u00b0"
+          },
+          "phase_350_360": {
+            "correlation": 0.0010368751873103142,
+            "data_points": 1053509,
+            "phase_range": "350.0\u00b0 - 360.0\u00b0"
+          }
+        },
+        "phase_coverage_uniformity": 1.5986105077709065
+      },
+      "center_comparison": {
+        "merged": {
+          "venus_correlation": 0.08032779770265633,
+          "venus_periodicity_effect": "preserved"
+        },
+        "esa_final": {
+          "venus_correlation": 0.17712699667813864,
+          "venus_periodicity_effect": "preserved"
+        },
+        "igs_combined": {
+          "venus_correlation": 0.10609425900429346,
+          "venus_periodicity_effect": "preserved"
+        },
+        "code": {
+          "venus_correlation": 0.048260167867726717,
+          "venus_periodicity_effect": "attenuated"
+        }
+      },
+      "comprehensive_assessment": {
+        "hypothesis": "Venus shows stronger TEP effects due to more complete orbital cycles",
+        "analysis_window_days": 911.0,
+        "venus_orbits_completed": 4.054294615042279,
+        "venus_signal_coherence": "excellent",
+        "venus_phase_coverage": 4.054294615042279,
+        "venus_periodic_snr": 3.84,
+        "other_planets_incomplete": 2,
+        "center_processing_effects": {
+          "merged": {
+            "venus_correlation": 0.08032779770265633,
+            "venus_periodicity_effect": "preserved"
+          },
+          "esa_final": {
+            "venus_correlation": 0.17712699667813864,
+            "venus_periodicity_effect": "preserved"
+          },
+          "igs_combined": {
+            "venus_correlation": 0.10609425900429346,
+            "venus_periodicity_effect": "preserved"
+          },
+          "code": {
+            "venus_correlation": 0.048260167867726717,
+            "venus_periodicity_effect": "attenuated"
+          }
+        }
+      },
+      "method": "orbital_periodicity_effects_analysis"
+    },
+    "igs_combined": {
+      "success": true,
+      "analysis_center": "igs_combined",
+      "orbital_periodicity_analysis": {
+        "mercury": {
+          "orbital_period_days": 87.97,
+          "orbits_completed": 10.355803114698192,
+          "completeness_ratio": 0.35580311469819215,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "venus": {
+          "orbital_period_days": 224.7,
+          "orbits_completed": 4.054294615042279,
+          "completeness_ratio": 0.05429461504227895,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "mars": {
+          "orbital_period_days": 686.98,
+          "orbits_completed": 1.3260939183091212,
+          "completeness_ratio": 0.32609391830912116,
+          "signal_coherence": "high",
+          "expected_signal_strength": "weak"
+        },
+        "jupiter": {
+          "orbital_period_days": 4332.59,
+          "orbits_completed": 0.21026683808068614,
+          "completeness_ratio": 0.21026683808068614,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        },
+        "saturn": {
+          "orbital_period_days": 10759.22,
+          "orbits_completed": 0.08467156541087552,
+          "completeness_ratio": 0.08467156541087552,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        }
+      },
+      "signal_periodicity_results": {
+        "mercury": {
+          "autocorrelation_peaks": 9,
+          "periodic_snr": 2.85,
+          "orbital_phase_coverage": 10.355803114698192,
+          "signal_quality": "excellent"
+        },
+        "venus": {
+          "autocorrelation_peaks": 3,
+          "periodic_snr": 3.84,
+          "orbital_phase_coverage": 4.054294615042279,
+          "signal_quality": "excellent"
+        },
+        "mars": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 3.24,
+          "orbital_phase_coverage": 1.3260939183091212,
+          "signal_quality": "excellent"
+        },
+        "jupiter": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.21026683808068614,
+          "signal_quality": "poor"
+        },
+        "saturn": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.08467156541087552,
+          "signal_quality": "poor"
+        }
+      },
+      "venus_specific_analysis": {
+        "phase_dependent_correlations": {
+          "phase_000_010": {
+            "correlation": -0.0004384932019650905,
+            "data_points": 520407,
+            "phase_range": "0.0\u00b0 - 10.0\u00b0"
+          },
+          "phase_010_020": {
+            "correlation": -0.00387750828967539,
+            "data_points": 487536,
+            "phase_range": "10.0\u00b0 - 20.0\u00b0"
+          },
+          "phase_020_030": {
+            "correlation": 0.006318536008341434,
+            "data_points": 339040,
+            "phase_range": "20.0\u00b0 - 30.0\u00b0"
+          },
+          "phase_030_040": {
+            "correlation": 0.0011501744428286352,
+            "data_points": 346695,
+            "phase_range": "30.0\u00b0 - 40.0\u00b0"
+          },
+          "phase_040_050": {
+            "correlation": 0.0020604149941093027,
+            "data_points": 327765,
+            "phase_range": "40.0\u00b0 - 50.0\u00b0"
+          },
+          "phase_050_060": {
+            "correlation": -0.0035038853683500635,
+            "data_points": 299009,
+            "phase_range": "50.0\u00b0 - 60.0\u00b0"
+          },
+          "phase_060_070": {
+            "correlation": 0.0014585142365820653,
+            "data_points": 317817,
+            "phase_range": "60.0\u00b0 - 70.0\u00b0"
+          },
+          "phase_070_080": {
+            "correlation": 0.00426717826655989,
+            "data_points": 314197,
+            "phase_range": "70.0\u00b0 - 80.0\u00b0"
+          },
+          "phase_080_090": {
+            "correlation": -0.0008850796996537778,
+            "data_points": 300660,
+            "phase_range": "80.0\u00b0 - 90.0\u00b0"
+          },
+          "phase_090_100": {
+            "correlation": -0.007176275857183473,
+            "data_points": 291508,
+            "phase_range": "90.0\u00b0 - 100.0\u00b0"
+          },
+          "phase_100_110": {
+            "correlation": 0.01111710316997803,
+            "data_points": 296982,
+            "phase_range": "100.0\u00b0 - 110.0\u00b0"
+          },
+          "phase_110_120": {
+            "correlation": 0.001875213470891164,
+            "data_points": 259034,
+            "phase_range": "110.0\u00b0 - 120.0\u00b0"
+          },
+          "phase_120_130": {
+            "correlation": 0.010224977858404198,
+            "data_points": 295667,
+            "phase_range": "120.0\u00b0 - 130.0\u00b0"
+          },
+          "phase_130_140": {
+            "correlation": 0.0016288618844565199,
+            "data_points": 326747,
+            "phase_range": "130.0\u00b0 - 140.0\u00b0"
+          },
+          "phase_140_150": {
+            "correlation": -0.00798420560740407,
+            "data_points": 336238,
+            "phase_range": "140.0\u00b0 - 150.0\u00b0"
+          },
+          "phase_150_160": {
+            "correlation": 0.001943518123632965,
+            "data_points": 334321,
+            "phase_range": "150.0\u00b0 - 160.0\u00b0"
+          },
+          "phase_160_170": {
+            "correlation": -0.00514022645075792,
+            "data_points": 381273,
+            "phase_range": "160.0\u00b0 - 170.0\u00b0"
+          },
+          "phase_170_180": {
+            "correlation": 0.002341546686540818,
+            "data_points": 375178,
+            "phase_range": "170.0\u00b0 - 180.0\u00b0"
+          },
+          "phase_180_190": {
+            "correlation": 0.0068735753212934994,
+            "data_points": 356237,
+            "phase_range": "180.0\u00b0 - 190.0\u00b0"
+          },
+          "phase_190_200": {
+            "correlation": 0.0018576389107078555,
+            "data_points": 376723,
+            "phase_range": "190.0\u00b0 - 200.0\u00b0"
+          },
+          "phase_200_210": {
+            "correlation": -0.0037591351856493998,
+            "data_points": 377679,
+            "phase_range": "200.0\u00b0 - 210.0\u00b0"
+          },
+          "phase_210_220": {
+            "correlation": -0.0035652927259894737,
+            "data_points": 369962,
+            "phase_range": "210.0\u00b0 - 220.0\u00b0"
+          },
+          "phase_220_230": {
+            "correlation": 0.004589185857548881,
+            "data_points": 346230,
+            "phase_range": "220.0\u00b0 - 230.0\u00b0"
+          },
+          "phase_230_240": {
+            "correlation": 0.0033335223381249692,
+            "data_points": 343519,
+            "phase_range": "230.0\u00b0 - 240.0\u00b0"
+          },
+          "phase_240_250": {
+            "correlation": -0.0007608241388241424,
+            "data_points": 371329,
+            "phase_range": "240.0\u00b0 - 250.0\u00b0"
+          },
+          "phase_250_260": {
+            "correlation": -0.003146800458280954,
+            "data_points": 348354,
+            "phase_range": "250.0\u00b0 - 260.0\u00b0"
+          },
+          "phase_260_270": {
+            "correlation": -0.0008174910151283789,
+            "data_points": 347641,
+            "phase_range": "260.0\u00b0 - 270.0\u00b0"
+          },
+          "phase_270_280": {
+            "correlation": 0.005273033441296283,
+            "data_points": 376957,
+            "phase_range": "270.0\u00b0 - 280.0\u00b0"
+          },
+          "phase_280_290": {
+            "correlation": 0.006441027379927258,
+            "data_points": 384565,
+            "phase_range": "280.0\u00b0 - 290.0\u00b0"
+          },
+          "phase_290_300": {
+            "correlation": 0.0034690485798571603,
+            "data_points": 370435,
+            "phase_range": "290.0\u00b0 - 300.0\u00b0"
+          },
+          "phase_300_310": {
+            "correlation": 0.0004321565983283838,
+            "data_points": 380118,
+            "phase_range": "300.0\u00b0 - 310.0\u00b0"
+          },
+          "phase_310_320": {
+            "correlation": 0.0029865849521243095,
+            "data_points": 389442,
+            "phase_range": "310.0\u00b0 - 320.0\u00b0"
+          },
+          "phase_320_330": {
+            "correlation": 0.006527489127594279,
+            "data_points": 386960,
+            "phase_range": "320.0\u00b0 - 330.0\u00b0"
+          },
+          "phase_330_340": {
+            "correlation": -0.004310863764392983,
+            "data_points": 371806,
+            "phase_range": "330.0\u00b0 - 340.0\u00b0"
+          },
+          "phase_340_350": {
+            "correlation": -0.001781454209998736,
+            "data_points": 375322,
+            "phase_range": "340.0\u00b0 - 350.0\u00b0"
+          },
+          "phase_350_360": {
+            "correlation": -0.0004341599312688654,
+            "data_points": 417825,
+            "phase_range": "350.0\u00b0 - 360.0\u00b0"
+          }
+        },
+        "phase_coverage_uniformity": 1.5986105077709065
+      },
+      "center_comparison": {
+        "merged": {
+          "venus_correlation": 0.08032779770265633,
+          "venus_periodicity_effect": "preserved"
+        },
+        "esa_final": {
+          "venus_correlation": 0.17712699667813864,
+          "venus_periodicity_effect": "preserved"
+        },
+        "igs_combined": {
+          "venus_correlation": 0.10609425900429346,
+          "venus_periodicity_effect": "preserved"
+        },
+        "code": {
+          "venus_correlation": 0.048260167867726717,
+          "venus_periodicity_effect": "attenuated"
+        }
+      },
+      "comprehensive_assessment": {
+        "hypothesis": "Venus shows stronger TEP effects due to more complete orbital cycles",
+        "analysis_window_days": 911.0,
+        "venus_orbits_completed": 4.054294615042279,
+        "venus_signal_coherence": "excellent",
+        "venus_phase_coverage": 4.054294615042279,
+        "venus_periodic_snr": 3.84,
+        "other_planets_incomplete": 2,
+        "center_processing_effects": {
+          "merged": {
+            "venus_correlation": 0.08032779770265633,
+            "venus_periodicity_effect": "preserved"
+          },
+          "esa_final": {
+            "venus_correlation": 0.17712699667813864,
+            "venus_periodicity_effect": "preserved"
+          },
+          "igs_combined": {
+            "venus_correlation": 0.10609425900429346,
+            "venus_periodicity_effect": "preserved"
+          },
+          "code": {
+            "venus_correlation": 0.048260167867726717,
+            "venus_periodicity_effect": "attenuated"
+          }
+        }
+      },
+      "method": "orbital_periodicity_effects_analysis"
+    },
+    "esa_final": {
+      "success": true,
+      "analysis_center": "esa_final",
+      "orbital_periodicity_analysis": {
+        "mercury": {
+          "orbital_period_days": 87.97,
+          "orbits_completed": 10.355803114698192,
+          "completeness_ratio": 0.35580311469819215,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "venus": {
+          "orbital_period_days": 224.7,
+          "orbits_completed": 4.054294615042279,
+          "completeness_ratio": 0.05429461504227895,
+          "signal_coherence": "high",
+          "expected_signal_strength": "strong"
+        },
+        "mars": {
+          "orbital_period_days": 686.98,
+          "orbits_completed": 1.3260939183091212,
+          "completeness_ratio": 0.32609391830912116,
+          "signal_coherence": "high",
+          "expected_signal_strength": "weak"
+        },
+        "jupiter": {
+          "orbital_period_days": 4332.59,
+          "orbits_completed": 0.21026683808068614,
+          "completeness_ratio": 0.21026683808068614,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        },
+        "saturn": {
+          "orbital_period_days": 10759.22,
+          "orbits_completed": 0.08467156541087552,
+          "completeness_ratio": 0.08467156541087552,
+          "signal_coherence": "low",
+          "expected_signal_strength": "weak"
+        }
+      },
+      "signal_periodicity_results": {
+        "mercury": {
+          "autocorrelation_peaks": 9,
+          "periodic_snr": 2.85,
+          "orbital_phase_coverage": 10.355803114698192,
+          "signal_quality": "excellent"
+        },
+        "venus": {
+          "autocorrelation_peaks": 3,
+          "periodic_snr": 3.84,
+          "orbital_phase_coverage": 4.054294615042279,
+          "signal_quality": "excellent"
+        },
+        "mars": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 3.24,
+          "orbital_phase_coverage": 1.3260939183091212,
+          "signal_quality": "excellent"
+        },
+        "jupiter": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.21026683808068614,
+          "signal_quality": "poor"
+        },
+        "saturn": {
+          "autocorrelation_peaks": 0,
+          "periodic_snr": 0.0,
+          "orbital_phase_coverage": 0.08467156541087552,
+          "signal_quality": "poor"
+        }
+      },
+      "venus_specific_analysis": {
+        "phase_dependent_correlations": {
+          "phase_000_010": {
+            "correlation": 0.0029631824108779592,
+            "data_points": 385461,
+            "phase_range": "0.0\u00b0 - 10.0\u00b0"
+          },
+          "phase_010_020": {
+            "correlation": 5.606460683746803e-06,
+            "data_points": 369587,
+            "phase_range": "10.0\u00b0 - 20.0\u00b0"
+          },
+          "phase_020_030": {
+            "correlation": -0.00012622023434321432,
+            "data_points": 276999,
+            "phase_range": "20.0\u00b0 - 30.0\u00b0"
+          },
+          "phase_030_040": {
+            "correlation": -0.00362215419837257,
+            "data_points": 277885,
+            "phase_range": "30.0\u00b0 - 40.0\u00b0"
+          },
+          "phase_040_050": {
+            "correlation": -0.0008308630982857193,
+            "data_points": 277291,
+            "phase_range": "40.0\u00b0 - 50.0\u00b0"
+          },
+          "phase_050_060": {
+            "correlation": -0.0007547543865651066,
+            "data_points": 278185,
+            "phase_range": "50.0\u00b0 - 60.0\u00b0"
+          },
+          "phase_060_070": {
+            "correlation": 0.00038838738267075226,
+            "data_points": 277292,
+            "phase_range": "60.0\u00b0 - 70.0\u00b0"
+          },
+          "phase_070_080": {
+            "correlation": 0.006736418878000992,
+            "data_points": 277440,
+            "phase_range": "70.0\u00b0 - 80.0\u00b0"
+          },
+          "phase_080_090": {
+            "correlation": -0.001951028685467556,
+            "data_points": 278184,
+            "phase_range": "80.0\u00b0 - 90.0\u00b0"
+          },
+          "phase_090_100": {
+            "correlation": 0.0044965239214454856,
+            "data_points": 277144,
+            "phase_range": "90.0\u00b0 - 100.0\u00b0"
+          },
+          "phase_100_110": {
+            "correlation": 0.0020773762868688712,
+            "data_points": 277441,
+            "phase_range": "100.0\u00b0 - 110.0\u00b0"
+          },
+          "phase_110_120": {
+            "correlation": 0.0016601441200433393,
+            "data_points": 265829,
+            "phase_range": "110.0\u00b0 - 120.0\u00b0"
+          },
+          "phase_120_130": {
+            "correlation": 0.0012253040126849759,
+            "data_points": 286697,
+            "phase_range": "120.0\u00b0 - 130.0\u00b0"
+          },
+          "phase_130_140": {
+            "correlation": -0.0012819533317238304,
+            "data_points": 303538,
+            "phase_range": "130.0\u00b0 - 140.0\u00b0"
+          },
+          "phase_140_150": {
+            "correlation": -0.0009815738965228249,
+            "data_points": 303561,
+            "phase_range": "140.0\u00b0 - 150.0\u00b0"
+          },
+          "phase_150_160": {
+            "correlation": 0.0003860389418723239,
+            "data_points": 294544,
+            "phase_range": "150.0\u00b0 - 160.0\u00b0"
+          },
+          "phase_160_170": {
+            "correlation": 0.00918931687550269,
+            "data_points": 320280,
+            "phase_range": "160.0\u00b0 - 170.0\u00b0"
+          },
+          "phase_170_180": {
+            "correlation": -0.0029643154227237322,
+            "data_points": 307142,
+            "phase_range": "170.0\u00b0 - 180.0\u00b0"
+          },
+          "phase_180_190": {
+            "correlation": 0.001091366256065928,
+            "data_points": 295018,
+            "phase_range": "180.0\u00b0 - 190.0\u00b0"
+          },
+          "phase_190_200": {
+            "correlation": 0.003265112086992583,
+            "data_points": 305594,
+            "phase_range": "190.0\u00b0 - 200.0\u00b0"
+          },
+          "phase_200_210": {
+            "correlation": -0.0014003828478637427,
+            "data_points": 321914,
+            "phase_range": "200.0\u00b0 - 210.0\u00b0"
+          },
+          "phase_210_220": {
+            "correlation": 0.008168781677795167,
+            "data_points": 305033,
+            "phase_range": "210.0\u00b0 - 220.0\u00b0"
+          },
+          "phase_220_230": {
+            "correlation": 0.002753131328653594,
+            "data_points": 294038,
+            "phase_range": "220.0\u00b0 - 230.0\u00b0"
+          },
+          "phase_230_240": {
+            "correlation": -0.0017523914254078856,
+            "data_points": 305651,
+            "phase_range": "230.0\u00b0 - 240.0\u00b0"
+          },
+          "phase_240_250": {
+            "correlation": 0.0011004140289324164,
+            "data_points": 317718,
+            "phase_range": "240.0\u00b0 - 250.0\u00b0"
+          },
+          "phase_250_260": {
+            "correlation": -0.0009253313986684644,
+            "data_points": 291536,
+            "phase_range": "250.0\u00b0 - 260.0\u00b0"
+          },
+          "phase_260_270": {
+            "correlation": 0.0025436106370461493,
+            "data_points": 302791,
+            "phase_range": "260.0\u00b0 - 270.0\u00b0"
+          },
+          "phase_270_280": {
+            "correlation": 0.0015534539577665102,
+            "data_points": 302887,
+            "phase_range": "270.0\u00b0 - 280.0\u00b0"
+          },
+          "phase_280_290": {
+            "correlation": 0.007075394040604829,
+            "data_points": 317843,
+            "phase_range": "280.0\u00b0 - 290.0\u00b0"
+          },
+          "phase_290_300": {
+            "correlation": 0.0009090374498987,
+            "data_points": 292158,
+            "phase_range": "290.0\u00b0 - 300.0\u00b0"
+          },
+          "phase_300_310": {
+            "correlation": 0.0013335807307969783,
+            "data_points": 302919,
+            "phase_range": "300.0\u00b0 - 310.0\u00b0"
+          },
+          "phase_310_320": {
+            "correlation": 0.000752156535350871,
+            "data_points": 301917,
+            "phase_range": "310.0\u00b0 - 320.0\u00b0"
+          },
+          "phase_320_330": {
+            "correlation": 0.006568233994354758,
+            "data_points": 305940,
+            "phase_range": "320.0\u00b0 - 330.0\u00b0"
+          },
+          "phase_330_340": {
+            "correlation": 0.0028125958408825175,
+            "data_points": 302582,
+            "phase_range": "330.0\u00b0 - 340.0\u00b0"
+          },
+          "phase_340_350": {
+            "correlation": 0.0013990380625196258,
+            "data_points": 303526,
+            "phase_range": "340.0\u00b0 - 350.0\u00b0"
+          },
+          "phase_350_360": {
+            "correlation": 0.001470213556900478,
+            "data_points": 305519,
+            "phase_range": "350.0\u00b0 - 360.0\u00b0"
+          }
+        },
+        "phase_coverage_uniformity": 1.5986105077709065
+      },
+      "center_comparison": {
+        "merged": {
+          "venus_correlation": 0.08032779770265633,
+          "venus_periodicity_effect": "preserved"
+        },
+        "esa_final": {
+          "venus_correlation": 0.17712699667813864,
+          "venus_periodicity_effect": "preserved"
+        },
+        "igs_combined": {
+          "venus_correlation": 0.10609425900429346,
+          "venus_periodicity_effect": "preserved"
+        },
+        "code": {
+          "venus_correlation": 0.048260167867726717,
+          "venus_periodicity_effect": "attenuated"
+        }
+      },
+      "comprehensive_assessment": {
+        "hypothesis": "Venus shows stronger TEP effects due to more complete orbital cycles",
+        "analysis_window_days": 911.0,
+        "venus_orbits_completed": 4.054294615042279,
+        "venus_signal_coherence": "excellent",
+        "venus_phase_coverage": 4.054294615042279,
+        "venus_periodic_snr": 3.84,
+        "other_planets_incomplete": 2,
+        "center_processing_effects": {
+          "merged": {
+            "venus_correlation": 0.08032779770265633,
+            "venus_periodicity_effect": "preserved"
+          },
+          "esa_final": {
+            "venus_correlation": 0.17712699667813864,
+            "venus_periodicity_effect": "preserved"
+          },
+          "igs_combined": {
+            "venus_correlation": 0.10609425900429346,
+            "venus_periodicity_effect": "preserved"
+          },
+          "code": {
+            "venus_correlation": 0.048260167867726717,
+            "venus_periodicity_effect": "attenuated"
+          }
+        }
+      },
+      "method": "orbital_periodicity_effects_analysis"
+    }
+  },
+  "interpretation": "Orbital-Periodicity analysis completed for 3/3 analysis centers"
+}
