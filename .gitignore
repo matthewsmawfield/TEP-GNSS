@@ -66,4 +66,5 @@ logs/*.log
 # Data directories (keep structure but ignore large files)
 data/raw/*/
 data/processed/*.csv
+data/historical_code/raw/
 results/tmp/

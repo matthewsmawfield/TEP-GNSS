@@ -1657,7 +1657,7 @@ def main():
     args = parser.parse_args()
 
     print("="*80)
-    print("TEP GNSS Analysis Package v0.8")
+    print("TEP GNSS Analysis Package v0.9")
     print("STEP 8: TEP Visualization")
     print("="*80)
     

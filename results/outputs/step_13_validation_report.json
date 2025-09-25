@@ -476,7 +476,7 @@
             "leakage_ratio": 5.083979091784077
           }
         },
-        "timestamp": "2025-09-25T01:03:45.135907"
+        "timestamp": "2025-09-25T23:34:02.651552"
       },
       "enhanced_binned_test": {
         "test_name": "enhanced_real_data_zero_lag_test",
@@ -490,7 +490,7 @@
             "amplitude": 2306.50283920334,
             "correlation_length": 296.2105999517338,
             "offset": -0.03133877937770056,
-            "r_squared": 0.9153714844476125,
+            "r_squared": 0.7416927139336934,
             "n_bins": 5,
             "total_pairs": 2352
           },
@@ -498,7 +498,7 @@
             "amplitude": 2.2275087966640468e-05,
             "correlation_length": 100.28237536780404,
             "offset": 0.6326911851366014,
-            "r_squared": -0.008837195635937434,
+            "r_squared": -7.105427357601002e-15,
             "n_bins": 5,
             "total_pairs": 2352
           },
@@ -506,7 +506,7 @@
             "amplitude": 0.3970634572211957,
             "correlation_length": 1551.8058853847501,
             "offset": 0.46823740211816156,
-            "r_squared": 0.17721651297171326,
+            "r_squared": 0.18805858373457873,
             "n_bins": 5,
             "total_pairs": 2352
           },
@@ -514,7 +514,7 @@
             "amplitude": 0.10036868532678819,
             "correlation_length": 19999.999999992626,
             "offset": 0.6753705824039448,
-            "r_squared": -0.18064355156388223,
+            "r_squared": 0.2974842838357341,
             "n_bins": 5,
             "total_pairs": 2352
           }
@@ -523,7 +523,7 @@
           "zero_lag_leakage_detected": false,
           "evidence_summary": [],
           "recommendations": [
-            "Enhanced zero-lag test with binning shows improved R\u00b2=0.915",
+            "Enhanced zero-lag test with binning shows improved R\u00b2=0.742",
             "Correlation length \u03bb=296km within expected TEP range",
             "Binned averaging successfully extracts signal from noise (matching Step 3 approach)",
             "Zero-lag robust metrics remain negligible, confirming no common-mode contamination",
@@ -531,35 +531,35 @@
           ],
           "metric_comparison": {
             "imaginary_coherency": {
-              "r_squared": -0.008837195635937434,
+              "r_squared": -7.105427357601002e-15,
               "correlation_length": 100.28237536780404,
               "valid_fit": false
             },
             "pli": {
-              "r_squared": 0.17721651297171326,
+              "r_squared": 0.18805858373457873,
               "correlation_length": 1551.8058853847501,
               "valid_fit": true
             },
             "wpli": {
-              "r_squared": -0.18064355156388223,
+              "r_squared": 0.2974842838357341,
               "correlation_length": 19999.999999992626,
-              "valid_fit": false
+              "valid_fit": true
             }
           },
           "step3_comparison": {
             "original_r2": 0.92,
             "original_lambda": 4549,
-            "enhanced_r2": 0.9153714844476125,
+            "enhanced_r2": 0.7416927139336934,
             "enhanced_lambda": 296.2105999517338,
-            "r2_ratio": 0.9949690048343613,
+            "r2_ratio": 0.8061877325366232,
             "lambda_ratio": 0.06511554186672538
           },
           "summary_statistics": {
-            "enhanced_cos_phase_r2": 0.9153714844476125,
+            "enhanced_cos_phase_r2": 0.7416927139336934,
             "enhanced_cos_phase_lambda": 296.2105999517338,
-            "max_robust_r2": 0.17721651297171326,
-            "leakage_ratio": 5.165271955180166,
-            "step3_r2_recovery": 0.9949690048343613
+            "max_robust_r2": 0.2974842838357341,
+            "leakage_ratio": 2.4932164629686584,
+            "step3_r2_recovery": 0.8061877325366232
           }
         },
         "bin_data": {
@@ -606,7 +606,7 @@
             0.7284548227689494
           ]
         },
-        "timestamp": "2025-09-25T01:04:12.782214"
+        "timestamp": "2025-09-25T23:34:30.376617"
       },
       "combined_assessment": {
         "overall_zero_lag_leakage_detected": false,

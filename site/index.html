@@ -70,7 +70,7 @@
     <meta name="citation_journal_title" content="Preprint">
     <meta name="citation_doi" content="10.5281/zenodo.17127229">
     <meta name="citation_abstract_html_url" content="https://matthewsmawfield.github.io/TEP-GNSS/">
-    <meta name="citation_pdf_url" content="https://matthewsmawfield.github.io/TEP-GNSS/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.8_Jaipur.pdf">
+    <meta name="citation_pdf_url" content="https://zenodo.org/records/17204347/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.9_Jaipur.pdf?download=1">
     <meta name="citation_language" content="en">
     <meta name="citation_keywords" content="TEP-GNSS; GNSS; atomic clocks; distance correlations; phase coherence; temporal equivalence principle">
     
@@ -136,7 +136,7 @@
       },
       "datePublished": "2025-09-17",
       "dateModified": "2025-09-25",
-        "version": "Jaipur v0.8",
+        "version": "Jaipur v0.9",
       "publisher": {
         "@type": "Organization",
         "name": "Independent Research",
@@ -617,12 +617,17 @@
             }
         }
 
+        header .title { border-bottom: none; padding-bottom: 0; }
+        .doi .pdf-link { display: inline-flex; align-items: center; margin-left: 8px; color: #495773; opacity: 0.8; }
+        .doi .pdf-link:hover { color: #2D0140; opacity: 1; text-decoration: none; }
+        .doi .pdf-link svg { width: 14px; height: 14px; vertical-align: middle; }
         /* Print styles */
         @media print {
             body {
                 font-size: 12pt;
                 line-height: 1.4;
             }
+            .no-print { display: none !important; }
             
             .abstract, .theorem, .principle {
                 break-inside: avoid;
@@ -639,16 +644,22 @@
     </style>
   </head>
   <body>
-    <div class="header">
+    <header class="header" role="banner">
         <img src="og-image.jpg" alt="Global Time Echoes - Distance-structured correlations in GNSS clocks analysis overview" class="header-image" loading="eager">
-        <div class="title">Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks</div>
+        <h1 class="title">Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks</h1>
         <div class="author">Matthew Lukin Smawfield</div>
-        <div class="version">Version: v0.8 (Jaipur)</div>
+        <div class="version">Version: v0.9 (Jaipur)</div>
         <div class="status-chip">Status: Preprint</div>
         <div class="date">First published: 17 September 2025 · Last updated: 25 September 2025</div>
-        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17127229">10.5281/zenodo.17127229</a></div>
+        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17127229">10.5281/zenodo.17127229</a><a class="pdf-link no-print" href="https://zenodo.org/records/17204347/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.9_Jaipur.pdf?download=1" aria-label="Download PDF (v0.9)" title="Download PDF (v0.9)">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+        </a></div>
         
-    </div>
+    </header>
+
+    <main id="main-content" role="main">
 
     <div class="abstract">
         <h2>Abstract</h2>
@@ -662,7 +673,7 @@
     </div>
 
 
-    <h1>1. Introduction</h1>
+    <h2>1. Introduction</h2>
     
     <h2>1.1 The Temporal Equivalence Principle</h2>
     <p>The Temporal Equivalence Principle (TEP) represents a fundamental extension to Einstein's General Relativity, proposing that gravitational fields couple directly to atomic transition frequencies through a conformal rescaling of spacetime. This framework builds upon extensive theoretical work in scalar-tensor gravity (Damour &amp; Polyakov 1994; Damour &amp; Nordtvedt 1993) and varying constants theories (Barrow &amp; Magueijo 1999; Uzan 2003). The coupling, if present, would manifest as correlated fluctuations in atomic clock frequencies across spatially separated precision timing networks, with correlation structure determined by the underlying field's screening properties, similar to chameleon mechanisms (Khoury &amp; Weltman 2004).</p>
@@ -706,7 +717,7 @@
     
     <p>The conformal coupling A(φ) = exp(2βφ/M<sub>Pl</sub>) implies that eclipse-induced changes in the electromagnetic environment will manifest as measurable variations in atomic clock coherence. Different eclipse types—total, annular, and hybrid—are predicted to produce distinct φ field responses based on their differential ionospheric effects. Total eclipses, with complete solar blockage, should create uniform ionospheric depletion potentially enhancing field coherence. Annular eclipses, leaving a ring of sunlight, may create complex field patterns leading to coherence disruption. These predictions provide testable hypotheses for validating TEP dynamics.</p>
 
-    <h1>2. Methods</h1>
+    <h2>2. Methods</h2>
     
     <h2>2.1 Data Architecture</h2>
     <p>Our analysis employs a rigorous three-way validation approach using independent clock products from major analysis centers. To ensure cross-validation integrity, we restrict our analysis to the common temporal overlap period (2023-01-01 to 2025-06-30) when all three centers have available data:</p>
@@ -781,7 +792,7 @@
             <li><strong>Bias characterization complete:</strong> Comprehensive testing across 25 realizations spanning 4 scenarios reveals minimal bias for realistic GNSS scenarios (R² ≤ 0.057) vs genuine TEP signals (R² ≥ 0.920), providing 16.2× signal-to-bias separation and 6.5× correlation length separation. Clear quantitative thresholds distinguish methodological artifacts from genuine correlations.</li>
             <li><strong>Zero-lag leakage immunity:</strong> Comprehensive testing using zero-lag robust metrics (Imaginary Coherency, PLI, wPLI) demonstrates that cos(phase(CSD)) is not inflated by common-mode artifacts from GNSS processing, network datum constraints, or shared environmental drivers. Real data validation shows 5-10× separation between phase-alignment and robust metrics, confirming authentic field-structured coupling rather than instantaneous processing artifacts.</li>
         </ul>
-        <p style="margin-top:10px;"><em>Bottom line:</em> Amplitude was already "engineered away" by standard GNSS processing. Phase survives and uniquely encodes the spatial structure predicted by TEP, making cos(phase(CSD)) the only viable detector for these heavily processed data. <strong>However, this represents only a fraction of the original signal strength—detailed analysis in Section 4.3 demonstrates that GNSS processing systematically suppresses TEP signals by 68-93%, suggesting raw data access could reveal 3-18× stronger correlations.</strong></p>
+        <p style="margin-top:10px;"><em>Bottom line:</em> Amplitude was already "engineered away" by standard GNSS processing. Phase survives and uniquely encodes the spatial structure predicted by TEP, making cos(phase(CSD)) the only viable detector for these heavily processed data. However, this represents only a fraction of the original signal strength—detailed analysis in Section 4.3 demonstrates that GNSS processing systematically suppresses TEP signals by 68-93%, suggesting raw data access could reveal 3-18× stronger correlations.</p>
         
         <h3>Zero-Lag/Common-Mode Leakage Validation</h3>
         <div style="background-color: rgba(107, 115, 161, 0.1); border: 1px solid #6B73A1; padding: 15px; margin: 15px 0; border-radius: 5px;">
@@ -887,6 +898,8 @@
         </ul>
     </div>
     
+    </main>
+
     <div class="experimental-section">
         <h3>Exponential model fitting</h3>
         <ul>
@@ -964,7 +977,7 @@
         </ul>
     </div>
     
-    <h1>3. Results</h1>
+    <h2>3. Results</h2>
 
     <div class="experimental-section" style="background-color: #f8f8ff; border: 2px solid #2D0140;">
         <h3 style="margin-top:0;">Key Research Findings</h3>
@@ -1439,17 +1452,17 @@
             </table>
         </div>
         
-        <p>All null tests demonstrate that the real signal's goodness-of-fit (R²) is an extreme outlier compared to the distributions generated from scrambled data. The high z-scores (11.1 to 21.5) and significant p-values provide strong statistical evidence against the null hypothesis, confirming the signal's authenticity. <strong>Station scrambling achieves strong signal destruction (18-32x reduction) with significantly higher variance than distance/phase scrambling</strong>, demonstrating that the TEP correlations are fundamentally dependent on the specific physical configuration of the global GNSS station network.</p>
+        <p>All null tests demonstrate that the real signal's goodness-of-fit (R²) is an extreme outlier compared to the distributions generated from scrambled data. The high z-scores (11.1 to 21.5) and significant p-values provide strong statistical evidence against the null hypothesis, confirming the signal's authenticity. Station scrambling achieves strong signal destruction (18-32x reduction) with significantly higher variance than distance/phase scrambling, demonstrating that the TEP correlations are fundamentally dependent on the specific physical configuration of the global GNSS station network.</p>
         
         <h3>Complete Validation Achievement</h3>
-        <p><strong>All 9 scrambling tests across 3 analysis centers show statistically significant signal destruction (p &lt; 0.01)</strong>, providing consistent evidence that the observed correlations represent genuine physical phenomena tied to the spatial and temporal structure of the GNSS network rather than computational artifacts.</p>
+        <p>All 9 scrambling tests across 3 analysis centers show statistically significant signal destruction (p &lt; 0.01), providing consistent evidence that the observed correlations represent genuine physical phenomena tied to the spatial and temporal structure of the GNSS network rather than computational artifacts.</p>
         
         <h3>Validation of physical phenomenon</h3>
         <p>The comprehensive null tests demonstrate that the observed correlations represent a real physical phenomenon rather than a mathematical artifact of the analysis method. The three scrambling methods show distinct patterns of signal destruction:</p>
         <ul style="margin-left: 20px;">
             <li><strong>Distance scrambling:</strong> Preserves phase relationships but randomizes spatial structure → consistent signal reduction (27-29x)</li>
             <li><strong>Phase scrambling:</strong> Preserves spatial structure but randomizes temporal relationships → consistent signal reduction (30-32x)</li>
-            <li><strong>Station scrambling:</strong> Destroys both spatial and temporal relationships → <strong>chaotic signal destruction (18-32x) with high variance indicating unpredictable, random-like correlations</strong></li>
+            <li><strong>Station scrambling:</strong> Destroys both spatial and temporal relationships → chaotic signal destruction (18-32x) with high variance indicating unpredictable, random-like correlations</li>
         </ul>
         <p>The systematic progression from consistent weak correlations (distance/phase scrambling) to chaotic, unpredictable results (station scrambling) provides compelling evidence that the observed phase-coherent correlations are intrinsically tied to both the temporal evolution and spatial configuration of the station network. The high variance in station scrambling results actually strengthens the validation by demonstrating that destroying the complete physical network configuration produces random, meaningless correlations rather than systematic patterns.</p>
     </div>
@@ -2437,7 +2450,7 @@
         </ul>
     </div>
 
-    <h1>4. Discussion</h1>
+    <h2>4. Discussion</h2>
     
     <h2>4.1 Theoretical Implications</h2>
     <p>The observed correlation lengths appear consistent with TEP theoretical predictions:</p>
@@ -3016,7 +3029,7 @@
 
     <div class="experimental-section">
         <h3>Implications for TEP</h3>
-        <p>This orbital mechanics analysis provides <strong>compelling evidence</strong> for TEP through consistent methodology and realistic physics:</p>
+        <p>This orbital mechanics analysis provides compelling evidence for TEP through consistent methodology and realistic physics:</p>
         
         <ol>
             <li><strong>Real Physical Effects:</strong> Orbital mechanics analysis reveals genuine gravitational coupling correlations following 1/r² physics</li>
@@ -3030,9 +3043,9 @@
         </div>
     </div>
 
-    <h1>5. Conclusions</h1>
+    <h2>5. Conclusions</h2>
     
-    <p>The comprehensive analysis of GNSS clock products across three independent analysis centers reveals robust evidence for distance-structured correlations consistent with the Temporal Equivalence Principle. The observed exponential decay patterns (λ = 3,330–4,549 km), validated through rigorous cross-validation (LOSO CV ≤ 0.016, block-wise CV-RMSE ≤ 0.045), comprehensive null testing (27–29× signal destruction), ionospheric independence validation using real space weather data (r = 0.12-0.13, p > 0.29), and synthetic validation refuting projection bias concerns, demonstrate a genuine physical phenomenon. <strong>Critically, systematic analysis of GNSS processing effects (Section 4.3) demonstrates that standard corrections suppress TEP signals by 68-93%, indicating our results represent conservative lower bounds with raw data potentially revealing 3-18× stronger correlations.</strong> Independent replication with raw data access remains the highest priority next step.</p>
+    <p>The comprehensive analysis of GNSS clock products across three independent analysis centers reveals robust evidence for distance-structured correlations consistent with the Temporal Equivalence Principle. The observed exponential decay patterns (λ = 3,330–4,549 km), validated through rigorous cross-validation (LOSO CV ≤ 0.016, block-wise CV-RMSE ≤ 0.045), comprehensive null testing (27–29× signal destruction), ionospheric independence validation using real space weather data (r = 0.12-0.13, p > 0.29), and synthetic validation refuting projection bias concerns, demonstrate a genuine physical phenomenon. Critically, systematic analysis of GNSS processing effects (Section 4.3) demonstrates that standard corrections suppress TEP signals by 68-93%, indicating our results represent conservative lower bounds with raw data potentially revealing 3-18× stronger correlations. Independent replication with raw data access remains the highest priority next step.</p>
     <p>All headline fits are evaluated at the distance-bin level (effective N ≈ 28–35) with autocorrelation handled in the binning/bootstrap, ensuring significance reflects spatial independence rather than raw pair counts.</p>
 
     <p>The detection of coherent network dynamics, including the Chandler wobble, multiple beat frequencies, and a consistent 'mesh dance' signature across 62.7 million station pairs, aligns with TEP predictions. Our gravitational–temporal field correlation analysis using high-precision NASA/JPL DE440/441 ephemeris and multi-center GNSS data shows strong anti-phase correlations (r = -0.440, p = 2.08×10<sup>-48</sup>) between stacked planetary gravitational influences and temporal field coherence. Individual planetary signatures (Jupiter: r = -0.257, Sun: r = -0.227, Mars: r = -0.106) support disformal coupling expectations. Independent replication using alternative pipelines and datasets will strengthen these conclusions.</p>
@@ -3045,9 +3058,9 @@
     <p>Targeted exclusions of ionospheric alternatives indicate scale and frequency incompatibilities with TIDs and trans‑equatorial propagation (TEQ), supporting a field‑level interpretation of the eclipse responses.</p>
     <p>All code, configuration, and figure generators are openly available (repository link; DOI snapshot), enabling full reproduction of the pipeline and figures reported here.</p>
 
-    <p>Future work should prioritize <strong>raw GNSS data analysis</strong> to overcome the systematic signal suppression documented in Section 4.3, potentially revealing 3-18× stronger TEP correlations. Additional priorities include independent replication of both baseline correlations and eclipse effects, detailed modeling of systematic effects, higher resolution eclipse analysis, and extension to other precision timing systems. <strong>Access to unprocessed pseudorange and carrier phase measurements represents the most critical need for advancing TEP research beyond the conservative lower bounds established by this processed-data analysis.</strong></p>
+    <p>Future work should prioritize raw GNSS data analysis to overcome the systematic signal suppression documented in Section 4.3, potentially revealing 3-18× stronger TEP correlations. Additional priorities include independent replication of both baseline correlations and eclipse effects, detailed modeling of systematic effects, higher resolution eclipse analysis, and extension to other precision timing systems. Access to unprocessed pseudorange and carrier phase measurements represents the most critical need for advancing TEP research beyond the conservative lower bounds established by this processed-data analysis.</p>
     
-    <h1>6. Analysis Package</h1>
+    <h2>6. Analysis Package</h2>
     
     <p>This work provides a complete, reproducible analysis pipeline for testing TEP predictions using GNSS data:</p>
     
@@ -3287,7 +3300,7 @@
         </ul>
     
     <div class="references">
-        <h1>References</h1>
+        <h2>References</h2>
         <div class="ref-item">Barrow, J. D. &amp; Magueijo, J. (1999). Varying-α theories and solutions to the cosmological problems. <em>Physics Letters B</em>, 447(3-4), 246-250.</div>
         <div class="ref-item">Bevis, M., et al. (1994). GPS meteorology: Mapping zenith wet delays onto precipitable water. <em>Journal of Applied Meteorology</em>, 33(3), 379-386.</div>
         <div class="ref-item">Bothwell, T., et al. (2022). Resolving the gravitational redshift across a millimetre-scale atomic sample. <em>Nature</em>, 602(7897), 420-424.</div>
@@ -3317,14 +3330,14 @@
 
     <div class="experimental-section">
         <h2>How to cite</h2>
-         <p><strong>Cite as:</strong> Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.8 (Jaipur). Zenodo. <a href="https://doi.org/10.5281/zenodo.17127229">https://doi.org/10.5281/zenodo.17127229</a></p>
+         <p><strong>Cite as:</strong> Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.9 (Jaipur). Zenodo. <a href="https://doi.org/10.5281/zenodo.17127229">https://doi.org/10.5281/zenodo.17127229</a></p>
         
         <div style="background-color: rgba(73, 87, 115, 0.03); padding: 15px; border-radius: 5px; margin: 15px 0; overflow-x: auto;">
             <strong>BibTeX:</strong>
 <pre style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; font-family: 'Courier New', monospace; font-size: 13px; margin: 10px 0; line-height: 1.4;">@misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS
-                   Clocks Across Independent Networks (Jaipur v0.8)},
+                   Clocks Across Independent Networks (Jaipur v0.9)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},
@@ -3343,19 +3356,17 @@
     
     
     <div class="experimental-section">
-         <h2>Version 0.8 Updates</h2>
+         <h2>Version 0.9 Updates</h2>
         <div class="update-notice" style="background-color: rgba(74, 144, 194, 0.1); padding: 15px; border-radius: 5px; margin: 15px 0; font-size: 14px;">
-            <p><strong>Version 0.8 (Jaipur)</strong> introduces major new analytical capabilities:</p>
+            <p><strong>Version 0.9 (Jaipur)</strong> refines and enhances the major analytical capabilities introduced in v0.8:</p>
            <ol>
-                <li><strong>Enhanced Theoretical Foundation:</strong> Mathematical derivation of cos(phase(CSD)) method from Wiener-Khinchin theorem with amplitude-invariant validation (Section 2.2)</li>
-                <li><strong>Comprehensive Gravitational-Temporal Field Analysis:</strong> Strong evidence for TEP theory through extraordinary correlation (r = -0.440, p = 2.08×10<sup>-48</sup>) between stacked planetary gravitational influences and temporal field coherence using NASA/JPL DE440/441 ephemeris and 62.7M+ authentic GNSS measurements. Individual planetary signatures confirm disformal coupling: Jupiter (r = -0.257, p = 3.56×10<sup>-15</sup>), Sun (r = -0.227, p = 3.70×10<sup>-12</sup>), Mars (r = -0.106, p = 1.29×10<sup>-3</sup>), demonstrating planet-specific temporal field interactions (Section 3.8)</li>
-                <li><strong>High-Resolution Astronomical Analysis:</strong> Complete Step 10 featuring 5 solar eclipses at 1-minute resolution, cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness (Venus: ESA +17.7%, IGS +10.6%, CODE +4.8%), and cross-center validation (Section 3.9 and 3.10)</li>
-                <li><strong>Enhanced TID Analysis:</strong> Step 11 provides evidence against Traveling Ionospheric Disturbances through spatial structure analysis and power distribution, with comprehensive ionospheric controls validation in Step 16</li>
-                <li><strong>Comprehensive Bias Characterization:</strong> Step 13 addresses circular reasoning criticism with ALL validation criteria passing (100%), featuring 16.2× signal-to-bias separation, 6.5× correlation length separation, multi-center consistency (CV=13.0%), and clear quantitative thresholds for distinguishing genuine signals from artifacts</li>
-                <li><strong>Ionospheric Independence Validation (NEW):</strong> Step 16 provides comprehensive real data validation using 62+ million authentic TEP measurements correlated with real space weather indices (GFZ Potsdam Kp index, NOAA F10.7 solar flux). Results demonstrate weak correlations (Kp: r = -0.122, p = 0.290; F10.7: r = -0.129, p = 0.497) and consistent coherence across geomagnetic storm conditions, providing strong evidence for non-ionospheric origin and definitively excluding ionospheric contamination</li>
-                <li><strong>Zero-Lag/Common-Mode Leakage Testing:</strong> Comprehensive validation using zero-lag robust metrics (Imaginary Coherency, PLI, wPLI) demonstrates immunity to instantaneous coupling artifacts from GNSS processing. Real data testing across 2,388 station pairs shows 5.1× separation between cos(phase(CSD)) and robust metrics, confirming authentic field-structured coupling rather than common-mode contamination</li>
-                <li><strong>Complete Documentation:</strong> Theoretical foundations, results interpretation guide, quantitative TID exclusion summary, and balanced methodology validation framework with clear peer review criteria</li>
-           </ol>
+                <li><strong>Enhanced Theoretical Foundation:</strong> Further refinements to the mathematical derivation of cos(phase(CSD)) method from Wiener-Khinchin theorem with improved amplitude-invariant validation</li>
+                <li><strong>Refined Methodological Transparency:</strong> Enhanced circular statistics validation framework eliminating circular reasoning concerns, with improved phase distribution analysis demonstrating genuine structure and method consistency</li>
+                <li><strong>Expanded Dataset Transparency:</strong> Improved documentation of station pair count differences across analysis centers with strengthened multi-center validation approach</li>
+                <li><strong>Extended Eclipse Analysis Integration:</strong> Enhanced high-resolution analysis of solar eclipse events with improved multi-eclipse validation and eclipse type hierarchy discovery</li>
+                <li><strong>Optimized Helical Motion Analysis:</strong> Refined Earth's orbital dance signatures detection in GPS networks with improved Chandler wobble analysis and enhanced 3D spherical harmonic decomposition</li>
+                <li><strong>Updated Documentation and Citations:</strong> Comprehensive updates to all references, figures, and documentation reflecting the latest research developments and peer review feedback</li>
+            </ol>
         </div>
     </div>
     

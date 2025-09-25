@@ -1846,10 +1846,11 @@ class MethodologyValidator:
                 popt, _ = curve_fit(exp_decay, distances, values, p0=p0, bounds=bounds, 
                                    sigma=1/np.sqrt(bin_counts), maxfev=2000)
                 
-                # Calculate R² 
+                # Calculate R² with proper weighting (consistent with fitting)
                 y_pred = exp_decay(distances, *popt)
-                ss_res = np.sum((values - y_pred) ** 2)
-                ss_tot = np.sum((values - np.mean(values)) ** 2)
+                weighted_mean = np.average(values, weights=bin_counts)
+                ss_res = np.sum(bin_counts * (values - y_pred) ** 2)
+                ss_tot = np.sum(bin_counts * (values - weighted_mean) ** 2)
                 r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
                 
                 enhanced_fit_results[metric_name] = {

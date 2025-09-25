@@ -567,7 +567,7 @@ def analyze_regional_jackknife(root_dir):
                     # Distance binning and exponential fit
                     edges = np.logspace(np.log10(50), np.log10(20000), 31)
                     subset = subset.copy()  # Avoid SettingWithCopyWarning
-        subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
+                    subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
                     binned = subset.groupby('dist_bin', observed=True).agg(
                         mean_dist=('dist_km', 'mean'),
                         mean_coh=('coherence', 'mean'),
@@ -678,13 +678,17 @@ def analyze_circular_statistics(root_dir):
             # Phase Locking Value (PLV)
             plv = np.abs(np.mean(np.exp(1j * phases)))
             
-            # Rayleigh test for uniformity (implement manually since stats.rayleightest doesn't exist)
+            # Rayleigh test for uniformity (corrected implementation)
             try:
-                # Manual Rayleigh test implementation
+                # Corrected Rayleigh test implementation
                 n = len(phases)
                 R = n * plv  # R statistic
-                rayleigh_stat = R**2 / n
-                rayleigh_p = np.exp(-rayleigh_stat) if rayleigh_stat < 50 else 0.0
+                rayleigh_stat = 2 * R**2 / n  # Correct formula: 2*R²/n
+                # Correct p-value approximation for large n
+                if rayleigh_stat < 50:
+                    rayleigh_p = np.exp(-rayleigh_stat * (1 - (2 + rayleigh_stat) / (4 * n)))
+                else:
+                    rayleigh_p = 0.0
             except:
                 rayleigh_p = np.nan
             
@@ -782,10 +786,10 @@ def analyze_model_comparison(root_dir):
                 ss_tot = np.sum(weights * (coherences - np.average(coherences, weights=weights))**2)
                 r_squared = 1 - ss_res/ss_tot
                 
-                # AIC calculation
+                # AIC calculation (already correct - standardized formulation)
                 n = len(distances)
                 k = len(popt)
-                aic = 2*k + n*np.log(ss_res/n)
+                aic = 2*k + n*np.log(ss_res/n)  # Standard AIC formulation
                 
                 ac_results[model_name] = {
                     'r_squared': float(r_squared),
@@ -817,7 +821,7 @@ def main():
     VERBOSE = args.verbose
     
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.8")
+    print("TEP GNSS Analysis Package v0.9")
     print("STEP 7: Advanced TEP Analysis")
     print("Focused validation: Elevation, Circular Statistics, Model Comparison")
     print("="*80)

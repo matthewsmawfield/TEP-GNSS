@@ -1,7 +1,7 @@
 # TEP-GNSS Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.8 (Jaipur)  
+**Version:** v0.9 (Jaipur)  
 **Date:** September 25, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
@@ -114,7 +114,7 @@ python scripts/steps/step_16_realistic_ionospheric_validation.py
 
 ### Configuration
 
-### v0.8 Configuration (Jaipur Release - Published Method Defaults)
+### v0.9 Configuration (Jaipur Release - Published Method Defaults)
 
 **Core Analysis Settings:**
 | Variable | Default | Description |
@@ -155,7 +155,7 @@ Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format (50+ files)
 - `results/figures/`: Generated visualizations (40+ publication-quality figures)
 - `site/`: Complete project website and documentation
-- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.8_Jaipur.pdf`
+- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.9_Jaipur.pdf`
 
 ### Key Result Files
 - **Core Analysis**: `step_3_correlation_{center}.json` - Main correlation analysis results
@@ -252,7 +252,7 @@ If you use this analysis package, please cite both the analysis and underlying t
 ## Documentation
 
 - **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.8_Jaipur.pdf`
+- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.9_Jaipur.pdf`
 - **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
 - **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 - **Execution logs**: `logs/` directory
