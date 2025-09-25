@@ -2,7 +2,7 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.7 (Jaipur)  
-**Date:** September 23, 2025  
+**Date:** September 25, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Framework
