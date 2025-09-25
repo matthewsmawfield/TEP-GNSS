@@ -1,0 +1,719 @@
+{
+  "success": true,
+  "analysis_type": "supermoon_multi_center",
+  "centers_analyzed": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "successful_centers": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "center_results": {
+    "code": {
+      "success": true,
+      "analysis_center": "code",
+      "supermoon_perigees": [
+        {
+          "date": "2023-07-03",
+          "peak_median_amplitude": 0.7328688875924465,
+          "baseline_median_amplitude": 0.728243239225477,
+          "effect_size_abs": 0.004625648366969548,
+          "effect_size_percent": 0.6351790332978794,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-01",
+          "peak_median_amplitude": 0.718422640642598,
+          "baseline_median_amplitude": 0.725548468534723,
+          "effect_size_abs": -0.007125827892125014,
+          "effect_size_percent": -0.9821298233205477,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-30",
+          "peak_median_amplitude": 0.7191480637947503,
+          "baseline_median_amplitude": 0.7200653199244967,
+          "effect_size_abs": -0.0009172561297464688,
+          "effect_size_percent": -0.12738512803847415,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-09-29",
+          "peak_median_amplitude": 0.7158985508632857,
+          "baseline_median_amplitude": 0.7177967241308791,
+          "effect_size_abs": -0.0018981732675934504,
+          "effect_size_percent": -0.2644444037957671,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-08-19",
+          "peak_median_amplitude": 0.7294799106110624,
+          "baseline_median_amplitude": 0.7322317519927406,
+          "effect_size_abs": -0.002751841381678166,
+          "effect_size_percent": -0.375815631347471,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-09-17",
+          "peak_median_amplitude": 0.7362886987431313,
+          "baseline_median_amplitude": 0.7299847959749006,
+          "effect_size_abs": 0.006303902768230674,
+          "effect_size_percent": 0.8635663102834574,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-10-17",
+          "peak_median_amplitude": 0.7151078800064181,
+          "baseline_median_amplitude": 0.7216454720296418,
+          "effect_size_abs": -0.006537592023223682,
+          "effect_size_percent": -0.9059285032076178,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-11-15",
+          "peak_median_amplitude": 0.7165355703882206,
+          "baseline_median_amplitude": 0.7203527998011776,
+          "effect_size_abs": -0.003817229412957035,
+          "effect_size_percent": -0.5299110955091195,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        }
+      ],
+      "sham_perigees": [
+        {
+          "date": "2023-06-04",
+          "effect_size_percent": 2.65000236707583,
+          "effect_size_abs": 0.019392902439091197,
+          "peak_median_amplitude": 0.7511998879736165,
+          "baseline_median_amplitude": 0.7318069855345253,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": -0.9821298233205477,
+          "effect_size_abs": -0.007125827892125014,
+          "peak_median_amplitude": 0.718422640642598,
+          "baseline_median_amplitude": 0.725548468534723,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-07-03",
+          "effect_size_percent": 0.6351790332978794,
+          "effect_size_abs": 0.004625648366969548,
+          "peak_median_amplitude": 0.7328688875924465,
+          "baseline_median_amplitude": 0.728243239225477,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-30",
+          "effect_size_percent": -0.12738512803847415,
+          "effect_size_abs": -0.0009172561297464688,
+          "peak_median_amplitude": 0.7191480637947503,
+          "baseline_median_amplitude": 0.7200653199244967,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": -0.9821298233205477,
+          "effect_size_abs": -0.007125827892125014,
+          "peak_median_amplitude": 0.718422640642598,
+          "baseline_median_amplitude": 0.725548468534723,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-09-28",
+          "effect_size_percent": 0.38443625930537423,
+          "effect_size_abs": 0.002761727209816711,
+          "peak_median_amplitude": 0.7211453715639651,
+          "baseline_median_amplitude": 0.7183836443541484,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-31",
+          "effect_size_percent": -0.701583650762026,
+          "effect_size_abs": -0.005081073219345811,
+          "peak_median_amplitude": 0.7191480637947503,
+          "baseline_median_amplitude": 0.7242291370140961,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-10-28",
+          "effect_size_percent": 0.7145368809145587,
+          "effect_size_abs": 0.005156590327643262,
+          "peak_median_amplitude": 0.7268254734009951,
+          "baseline_median_amplitude": 0.7216688830733519,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-07-21",
+          "effect_size_percent": 0.09432407599363404,
+          "effect_size_abs": 0.0006803698339827857,
+          "peak_median_amplitude": 0.7219912619000806,
+          "baseline_median_amplitude": 0.7213108920660978,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-17",
+          "effect_size_percent": 0.8635663102834574,
+          "effect_size_abs": 0.006303902768230674,
+          "peak_median_amplitude": 0.7362886987431313,
+          "baseline_median_amplitude": 0.7299847959749006,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-08-19",
+          "effect_size_percent": -0.375815631347471,
+          "effect_size_abs": -0.002751841381678166,
+          "peak_median_amplitude": 0.7294799106110624,
+          "baseline_median_amplitude": 0.7322317519927406,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-16",
+          "effect_size_percent": -0.3306467795098545,
+          "effect_size_abs": -0.002398361273799221,
+          "peak_median_amplitude": 0.7229561325321026,
+          "baseline_median_amplitude": 0.7253544938059018,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-18",
+          "effect_size_percent": -0.9598496131115799,
+          "effect_size_abs": -0.007005289209988774,
+          "peak_median_amplitude": 0.7228266672023778,
+          "baseline_median_amplitude": 0.7298319564123665,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-11-15",
+          "effect_size_percent": -0.5299110955091195,
+          "effect_size_abs": -0.003817229412957035,
+          "peak_median_amplitude": 0.7165355703882206,
+          "baseline_median_amplitude": 0.7203527998011776,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-17",
+          "effect_size_percent": -0.9059285032076178,
+          "effect_size_abs": -0.006537592023223682,
+          "peak_median_amplitude": 0.7151078800064181,
+          "baseline_median_amplitude": 0.7216454720296418,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-12-14",
+          "effect_size_percent": 0.28149075490597236,
+          "effect_size_abs": 0.002042966873244234,
+          "peak_median_amplitude": 0.727809919300032,
+          "baseline_median_amplitude": 0.7257669524267878,
+          "event_type": "sham"
+        }
+      ],
+      "space_weather_filtering": true,
+      "average_effect_percent": -0.21085865520470753,
+      "effect_std": 0.6211878350218039,
+      "standard_error": 0.21962306526725392,
+      "n_events": 8,
+      "statistically_significant": false,
+      "interpretation": "Supermoon perigees show stacked average -0.211\u00b10.220% coherence modulation across 8 events",
+      "detection_status": "Signal detected at 0.211% level (expected ~0.005%)",
+      "null_test_comparison": {
+        "real_mean_effect": -0.21085865520470753,
+        "sham_mean_effect": -0.0169902728969083,
+        "effect_difference": -0.19386838230779924,
+        "real_n": 8,
+        "sham_n": 16,
+        "t_statistic": -0.5338437605727773,
+        "significant_difference": false,
+        "interpretation": "Real events: -0.211%, Sham events: -0.017%, Difference: -0.194%"
+      }
+    },
+    "igs_combined": {
+      "success": true,
+      "analysis_center": "igs_combined",
+      "supermoon_perigees": [
+        {
+          "date": "2023-07-03",
+          "peak_median_amplitude": 0.7224993354189233,
+          "baseline_median_amplitude": 0.727370923142705,
+          "effect_size_abs": -0.004871587723781712,
+          "effect_size_percent": -0.6697528824404135,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-01",
+          "peak_median_amplitude": 0.7249787675192247,
+          "baseline_median_amplitude": 0.7487360339922138,
+          "effect_size_abs": -0.023757266472989036,
+          "effect_size_percent": -3.1729829198037622,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-30",
+          "peak_median_amplitude": 0.7267121976893599,
+          "baseline_median_amplitude": 0.7196858805434576,
+          "effect_size_abs": 0.007026317145902294,
+          "effect_size_percent": 0.9763033200813249,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-09-29",
+          "peak_median_amplitude": 0.7298031239729952,
+          "baseline_median_amplitude": 0.7179848498849715,
+          "effect_size_abs": 0.011818274088023717,
+          "effect_size_percent": 1.646033908642658,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-08-19",
+          "peak_median_amplitude": 0.7306386003940045,
+          "baseline_median_amplitude": 0.7235949380010562,
+          "effect_size_abs": 0.007043662392948291,
+          "effect_size_percent": 0.973426156408243,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-09-17",
+          "peak_median_amplitude": 0.7394541129055661,
+          "baseline_median_amplitude": 0.7257420848636621,
+          "effect_size_abs": 0.013712028041903968,
+          "effect_size_percent": 1.889380308498977,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-10-17",
+          "peak_median_amplitude": 0.7242789710952205,
+          "baseline_median_amplitude": 0.7214888096288746,
+          "effect_size_abs": 0.0027901614663459195,
+          "effect_size_percent": 0.38672276397206296,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-11-15",
+          "peak_median_amplitude": 0.7218353280685671,
+          "baseline_median_amplitude": 0.7192584772132343,
+          "effect_size_abs": 0.0025768508553327685,
+          "effect_size_percent": 0.3582649265833852,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        }
+      ],
+      "sham_perigees": [
+        {
+          "date": "2023-06-04",
+          "effect_size_percent": 0.47463540111396524,
+          "effect_size_abs": 0.003403186161734184,
+          "peak_median_amplitude": 0.7204137913013708,
+          "baseline_median_amplitude": 0.7170106051396367,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": -3.1729829198037622,
+          "effect_size_abs": -0.023757266472989036,
+          "peak_median_amplitude": 0.7249787675192247,
+          "baseline_median_amplitude": 0.7487360339922138,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-07-03",
+          "effect_size_percent": -0.6697528824404135,
+          "effect_size_abs": -0.004871587723781712,
+          "peak_median_amplitude": 0.7224993354189233,
+          "baseline_median_amplitude": 0.727370923142705,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-30",
+          "effect_size_percent": 0.9763033200813249,
+          "effect_size_abs": 0.007026317145902294,
+          "peak_median_amplitude": 0.7267121976893599,
+          "baseline_median_amplitude": 0.7196858805434576,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": -3.1729829198037622,
+          "effect_size_abs": -0.023757266472989036,
+          "peak_median_amplitude": 0.7249787675192247,
+          "baseline_median_amplitude": 0.7487360339922138,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-09-28",
+          "effect_size_percent": 2.430027358836611,
+          "effect_size_abs": 0.017571104853410957,
+          "peak_median_amplitude": 0.7406536985334764,
+          "baseline_median_amplitude": 0.7230825936800654,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-31",
+          "effect_size_percent": 6.330498436380018,
+          "effect_size_abs": 0.04618153051811047,
+          "peak_median_amplitude": 0.775690130547377,
+          "baseline_median_amplitude": 0.7295086000292665,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-10-28",
+          "effect_size_percent": -1.4165094781521355,
+          "effect_size_abs": -0.010507576607896252,
+          "peak_median_amplitude": 0.7312860202555425,
+          "baseline_median_amplitude": 0.7417935968634387,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-07-21",
+          "effect_size_percent": 0.5694210424271713,
+          "effect_size_abs": 0.004080023251325171,
+          "peak_median_amplitude": 0.7206013576112166,
+          "baseline_median_amplitude": 0.7165213343598914,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-17",
+          "effect_size_percent": 1.889380308498977,
+          "effect_size_abs": 0.013712028041903968,
+          "peak_median_amplitude": 0.7394541129055661,
+          "baseline_median_amplitude": 0.7257420848636621,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-08-19",
+          "effect_size_percent": 0.973426156408243,
+          "effect_size_abs": 0.007043662392948291,
+          "peak_median_amplitude": 0.7306386003940045,
+          "baseline_median_amplitude": 0.7235949380010562,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-16",
+          "effect_size_percent": 0.632938824856906,
+          "effect_size_abs": 0.004563463473536977,
+          "peak_median_amplitude": 0.7255594419661945,
+          "baseline_median_amplitude": 0.7209959784926575,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-18",
+          "effect_size_percent": 0.14083781709718277,
+          "effect_size_abs": 0.001023118558247993,
+          "peak_median_amplitude": 0.7274747061613186,
+          "baseline_median_amplitude": 0.7264515876030706,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-11-15",
+          "effect_size_percent": 0.3582649265833852,
+          "effect_size_abs": 0.0025768508553327685,
+          "peak_median_amplitude": 0.7218353280685671,
+          "baseline_median_amplitude": 0.7192584772132343,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-17",
+          "effect_size_percent": 0.38672276397206296,
+          "effect_size_abs": 0.0027901614663459195,
+          "peak_median_amplitude": 0.7242789710952205,
+          "baseline_median_amplitude": 0.7214888096288746,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-12-14",
+          "effect_size_percent": 0.33730189454856563,
+          "effect_size_abs": 0.0024398885340821685,
+          "peak_median_amplitude": 0.7257944185605558,
+          "baseline_median_amplitude": 0.7233545300264737,
+          "event_type": "sham"
+        }
+      ],
+      "space_weather_filtering": true,
+      "average_effect_percent": 0.29842444774280946,
+      "effect_std": 1.5108670032443083,
+      "standard_error": 0.534172151732524,
+      "n_events": 8,
+      "statistically_significant": false,
+      "interpretation": "Supermoon perigees show stacked average +0.298\u00b10.534% coherence modulation across 8 events",
+      "detection_status": "Signal detected at 0.298% level (expected ~0.005%)",
+      "null_test_comparison": {
+        "real_mean_effect": 0.29842444774280946,
+        "sham_mean_effect": 0.4417206281627712,
+        "effect_difference": -0.14329618041996173,
+        "real_n": 8,
+        "sham_n": 16,
+        "t_statistic": -0.16961799350826134,
+        "significant_difference": false,
+        "interpretation": "Real events: +0.298%, Sham events: +0.442%, Difference: -0.143%"
+      }
+    },
+    "esa_final": {
+      "success": true,
+      "analysis_center": "esa_final",
+      "supermoon_perigees": [
+        {
+          "date": "2023-07-03",
+          "peak_median_amplitude": 0.7135609254488955,
+          "baseline_median_amplitude": 0.7173871605239946,
+          "effect_size_abs": -0.0038262350750991603,
+          "effect_size_percent": -0.5333570609633433,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-01",
+          "peak_median_amplitude": 0.7195532280403286,
+          "baseline_median_amplitude": 0.7051369893955655,
+          "effect_size_abs": 0.014416238644763157,
+          "effect_size_percent": 2.044459284020907,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-08-30",
+          "peak_median_amplitude": 0.7164110918146155,
+          "baseline_median_amplitude": 0.7146964399581621,
+          "effect_size_abs": 0.0017146518564533642,
+          "effect_size_percent": 0.23991330592800195,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2023-09-29",
+          "peak_median_amplitude": 0.7146333396525969,
+          "baseline_median_amplitude": 0.7098507717977112,
+          "effect_size_abs": 0.004782567854885733,
+          "effect_size_percent": 0.673742713947297,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-08-19",
+          "peak_median_amplitude": 0.7162606376948729,
+          "baseline_median_amplitude": 0.7191891170350156,
+          "effect_size_abs": -0.002928479340142731,
+          "effect_size_percent": -0.40719183185306046,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-09-17",
+          "peak_median_amplitude": 0.7306683438708409,
+          "baseline_median_amplitude": 0.7291433841220407,
+          "effect_size_abs": 0.001524959748800181,
+          "effect_size_percent": 0.2091440150192654,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-10-17",
+          "peak_median_amplitude": 0.7210851754356682,
+          "baseline_median_amplitude": 0.72292750416374,
+          "effect_size_abs": -0.0018423287280717737,
+          "effect_size_percent": -0.2548428047709877,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        },
+        {
+          "date": "2024-11-15",
+          "peak_median_amplitude": 0.7175914836945929,
+          "baseline_median_amplitude": 0.7078141646938836,
+          "effect_size_abs": 0.009777319000709328,
+          "effect_size_percent": 1.3813398330249347,
+          "data_points_peak": 3,
+          "data_points_baseline": 4,
+          "expected_amplitude_percent": 0.0047
+        }
+      ],
+      "sham_perigees": [
+        {
+          "date": "2023-06-04",
+          "effect_size_percent": -0.5063249692284276,
+          "effect_size_abs": -0.003625422489724306,
+          "peak_median_amplitude": 0.7124013804643095,
+          "baseline_median_amplitude": 0.7160268029540338,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": 2.044459284020907,
+          "effect_size_abs": 0.014416238644763157,
+          "peak_median_amplitude": 0.7195532280403286,
+          "baseline_median_amplitude": 0.7051369893955655,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-07-03",
+          "effect_size_percent": -0.5333570609633433,
+          "effect_size_abs": -0.0038262350750991603,
+          "peak_median_amplitude": 0.7135609254488955,
+          "baseline_median_amplitude": 0.7173871605239946,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-30",
+          "effect_size_percent": 0.23991330592800195,
+          "effect_size_abs": 0.0017146518564533642,
+          "peak_median_amplitude": 0.7164110918146155,
+          "baseline_median_amplitude": 0.7146964399581621,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-01",
+          "effect_size_percent": 2.044459284020907,
+          "effect_size_abs": 0.014416238644763157,
+          "peak_median_amplitude": 0.7195532280403286,
+          "baseline_median_amplitude": 0.7051369893955655,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-09-28",
+          "effect_size_percent": 0.4172274805953177,
+          "effect_size_abs": 0.002980224976586787,
+          "peak_median_amplitude": 0.7172728147970072,
+          "baseline_median_amplitude": 0.7142925898204204,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-08-31",
+          "effect_size_percent": 1.1097875777147637,
+          "effect_size_abs": 0.0078990009493487,
+          "peak_median_amplitude": 0.7196569182270003,
+          "baseline_median_amplitude": 0.7117579172776516,
+          "event_type": "sham"
+        },
+        {
+          "date": "2023-10-28",
+          "effect_size_percent": -1.2911892428581504,
+          "effect_size_abs": -0.009483994602579982,
+          "peak_median_amplitude": 0.725032239562011,
+          "baseline_median_amplitude": 0.734516234164591,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-07-21",
+          "effect_size_percent": 0.5934106515754963,
+          "effect_size_abs": 0.0042478280529687495,
+          "peak_median_amplitude": 0.7200806230476036,
+          "baseline_median_amplitude": 0.7158327949946348,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-17",
+          "effect_size_percent": 0.2091440150192654,
+          "effect_size_abs": 0.001524959748800181,
+          "peak_median_amplitude": 0.7306683438708409,
+          "baseline_median_amplitude": 0.7291433841220407,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-08-19",
+          "effect_size_percent": -0.40719183185306046,
+          "effect_size_abs": -0.002928479340142731,
+          "peak_median_amplitude": 0.7162606376948729,
+          "baseline_median_amplitude": 0.7191891170350156,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-16",
+          "effect_size_percent": 0.29862503710008864,
+          "effect_size_abs": 0.002146929603343506,
+          "peak_median_amplitude": 0.7210851754356682,
+          "baseline_median_amplitude": 0.7189382458323247,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-09-18",
+          "effect_size_percent": -0.42731088642706366,
+          "effect_size_abs": -0.0031028969860623645,
+          "peak_median_amplitude": 0.723042184878588,
+          "baseline_median_amplitude": 0.7261450818646503,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-11-15",
+          "effect_size_percent": 1.3813398330249347,
+          "effect_size_abs": 0.009777319000709328,
+          "peak_median_amplitude": 0.7175914836945929,
+          "baseline_median_amplitude": 0.7078141646938836,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-10-17",
+          "effect_size_percent": -0.2548428047709877,
+          "effect_size_abs": -0.0018423287280717737,
+          "peak_median_amplitude": 0.7210851754356682,
+          "baseline_median_amplitude": 0.72292750416374,
+          "event_type": "sham"
+        },
+        {
+          "date": "2024-12-14",
+          "effect_size_percent": -2.12132657283334,
+          "effect_size_abs": -0.015468941813652215,
+          "peak_median_amplitude": 0.7137418271341573,
+          "baseline_median_amplitude": 0.7292107689478096,
+          "event_type": "sham"
+        }
+      ],
+      "space_weather_filtering": true,
+      "average_effect_percent": 0.4191509317941269,
+      "effect_std": 0.8480022202843249,
+      "standard_error": 0.2998140602121473,
+      "n_events": 8,
+      "statistically_significant": false,
+      "interpretation": "Supermoon perigees show stacked average +0.419\u00b10.300% coherence modulation across 8 events",
+      "detection_status": "Signal detected at 0.419% level (expected ~0.005%)",
+      "null_test_comparison": {
+        "real_mean_effect": 0.4191509317941269,
+        "sham_mean_effect": 0.17480144375408188,
+        "effect_difference": 0.244349488040045,
+        "real_n": 8,
+        "sham_n": 16,
+        "t_statistic": 0.5554801067896482,
+        "significant_difference": false,
+        "interpretation": "Real events: +0.419%, Sham events: +0.175%, Difference: +0.244%"
+      }
+    }
+  },
+  "interpretation": "Supermoon analysis completed for 3/3 analysis centers"
+}

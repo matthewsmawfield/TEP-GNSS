@@ -7,7 +7,7 @@ Analyzes rapid transient astronomical events at sub-daily temporal resolution
 by processing original GPS CLK files directly, bypassing the daily aggregation
 used in previous steps.
 
-METHODOLOGICAL CORRECTION (v0.7.1):
+METHODOLOGICAL CORRECTION (v0.8.1):
 ===================================
 This version implements proper TEP cos(phase(CSD)) methodology for eclipse analysis,
 replacing the previously flawed approach that used simple bias differences.
@@ -47,7 +47,7 @@ Algorithm Overview:
 
 Author: Matthew Lukin Smawfield
 Date: September 2025
-Methodological Fix: September 2025 (v0.7.1)
+Methodological Fix: September 2025 (v0.8.1)
 """
 
 import os
@@ -1281,57 +1281,38 @@ def analyze_mars_opposition_high_resolution(analysis_center: str = 'merged') -> 
 
 def get_geomagnetic_solar_data(start_date: pd.Timestamp, end_date: pd.Timestamp) -> pd.DataFrame:
     """
-    Fetch or simulate geomagnetic and solar activity indices for the given date range.
+    Fetch authentic space weather data using centralized utility module.
     
-    In a production system, this would fetch real Kp, Ap, and F10.7 data from 
-    NOAA/SWPC or similar sources. For now, we'll simulate realistic data patterns.
+    This function now uses real data from official sources instead of synthetic simulation.
+    
+    Data sources:
+    - NOAA Space Weather Prediction Center (Kp/Ap indices)
+    - Space Weather Canada (F10.7 solar flux)
+    - Climatological quiet conditions as fallback (NOT synthetic patterns)
     
     Returns DataFrame with columns: date, kp_index, ap_index, f107_flux
     """
     try:
-        # Generate date range
+        # Import the centralized space weather utility
+        from scripts.utils.space_weather_data import get_authentic_space_weather_data
+        
+        # Fetch authentic space weather data
+        return get_authentic_space_weather_data(start_date, end_date)
+        
+    except ImportError as e:
+        print_status(f"Space weather utility unavailable: {e}", "WARNING")
+        print_status("Using climatological quiet conditions", "WARNING")
+        
+        # Fallback to climatological quiet conditions
         dates = pd.date_range(start=start_date, end=end_date, freq='D')
-        
-        # Simulate realistic space weather patterns
-        np.random.seed(42)  # Reproducible for testing
-        n_days = len(dates)
-        
-        # Kp index (0-9, typically 0-3 quiet, 4-5 unsettled, 6+ storm)
-        base_kp = np.random.exponential(1.5, n_days)  # Most days quiet
-        kp_index = np.clip(base_kp, 0, 9)
-        
-        # Add occasional storm periods (realistic clustering)
-        storm_prob = 0.05  # 5% chance of storm initiation
-        for i in range(1, n_days):
-            if np.random.random() < storm_prob:
-                # Storm lasts 1-3 days
-                storm_duration = np.random.randint(1, 4)
-                storm_intensity = np.random.uniform(5, 8)
-                for j in range(min(storm_duration, n_days - i)):
-                    kp_index[i + j] = max(kp_index[i + j], storm_intensity)
-        
-        # Ap index (roughly 2^(kp/3) * 4, but with noise)
-        ap_index = 4 * (2 ** (kp_index / 3)) * np.random.lognormal(0, 0.2, n_days)
-        ap_index = np.clip(ap_index, 0, 400)
-        
-        # F10.7 solar flux (65-300 typical range, 11-year cycle + 27-day rotation)
-        days_since_2020 = (dates - pd.Timestamp('2020-01-01')).days
-        solar_cycle = 80 + 60 * np.sin(2 * np.pi * days_since_2020 / (11 * 365.25))  # 11-year cycle
-        solar_rotation = 15 * np.sin(2 * np.pi * days_since_2020 / 27)  # 27-day rotation
-        f107_flux = solar_cycle + solar_rotation + np.random.normal(0, 10, n_days)
-        f107_flux = np.clip(f107_flux, 65, 300)
-        
         return pd.DataFrame({
             'date': dates,
-            'kp_index': kp_index,
-            'ap_index': ap_index,
-            'f107_flux': f107_flux
+            'kp_index': 2.0,  # Quiet geomagnetic conditions
+            'ap_index': 7.0,  # Quiet geomagnetic conditions
+            'f107_flux': 120.0  # Solar minimum conditions
         })
-        
-    except Exception as e:
-        print_status(f"Failed to get space weather data: {e}", "WARNING")
-        # Return empty DataFrame on failure
-        return pd.DataFrame(columns=['date', 'kp_index', 'ap_index', 'f107_flux'])
+
+# Note: Space weather data fetching functions moved to scripts.utils.space_weather_data module
 
 def generate_sham_dates(real_dates: List[str], offset_days: int = 29) -> List[str]:
     """
@@ -3063,7 +3044,7 @@ def main():
     args = parser.parse_args()
     
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.7")
+    print("TEP GNSS Analysis Package v0.8")
     print("STEP 10: High-Resolution Astronomical Event Analysis")
     print("=" * 80)
     print(f"Event: {args.event.upper()}")

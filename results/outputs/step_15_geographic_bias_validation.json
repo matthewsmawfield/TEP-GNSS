@@ -1,0 +1,153 @@
+{
+  "validation_approach": "statistical_resampling",
+  "baseline_correlations": {
+    "code": {
+      "model_name": "Exponential",
+      "amplitude": 0.11380180404602341,
+      "amplitude_error": 0.006691601536686151,
+      "lambda_km": 4548.589996454075,
+      "lambda_error": 863.8727687865282,
+      "offset": -0.021333501759585174,
+      "offset_error": 0.006422060137015559,
+      "r_squared": 0.9204857128576932,
+      "n_bins": 28
+    },
+    "esa_final": {
+      "model_name": "Exponential",
+      "amplitude": 0.24970183578486854,
+      "amplitude_error": 0.012211200540047828,
+      "lambda_km": 3329.7779129995965,
+      "lambda_error": 309.0630540973198,
+      "offset": -0.024730381429403616,
+      "offset_error": 0.004399046002406915,
+      "r_squared": 0.9701459935123946,
+      "n_bins": 25
+    },
+    "igs_combined": {
+      "model_name": "Mat\u00e9rn (\u03bd=1.5)",
+      "amplitude": 0.15195426809145546,
+      "amplitude_error": 0.006288354269547537,
+      "lambda_km": 3397.731172199082,
+      "lambda_error": 209.7936810195667,
+      "offset": -0.012869265134664081,
+      "offset_error": 0.0026320964673659285,
+      "r_squared": 0.9681814097833041,
+      "n_bins": 28
+    }
+  },
+  "geographic_subsets": {
+    "n_balanced_subsets": 10,
+    "n_elevation_bands": 4,
+    "hemisphere_stats": {
+      "north_count": 559,
+      "south_count": 207,
+      "hemisphere_ratio": 2.7004830917874396
+    }
+  },
+  "validation_results": {
+    "geographic_consistency": {
+      "code": {
+        "lambda_mean": 4538.581427258418,
+        "lambda_std": 295.6908622810507,
+        "lambda_cv": 0.06515050286531185,
+        "n_samples": 20,
+        "consistency_rating": "excellent"
+      },
+      "esa_final": {
+        "lambda_mean": 3296.043308017718,
+        "lambda_std": 116.71351376603276,
+        "lambda_cv": 0.035410188173839785,
+        "n_samples": 20,
+        "consistency_rating": "excellent"
+      },
+      "igs_combined": {
+        "lambda_mean": 3783.5666654282677,
+        "lambda_std": 152.02392569113192,
+        "lambda_cv": 0.04018005737290851,
+        "n_samples": 20,
+        "consistency_rating": "excellent"
+      }
+    },
+    "hemisphere_validation": {
+      "expected_balance": 0.5,
+      "observed_balance": 0.7297650130548303,
+      "hemisphere_bias": 0.22976501305483032,
+      "bias_severity": "moderate",
+      "north_stations": 559,
+      "south_stations": 207,
+      "hemisphere_ratio": 2.7004830917874396
+    },
+    "elevation_validation": {
+      "sea_level": {
+        "elevation_range": "-100-100m",
+        "n_stations": 346,
+        "hemisphere_balance": 0.7052023121387283,
+        "estimated_correlation_strength": 0.876878612716763,
+        "representativeness": "high"
+      },
+      "low_elevation": {
+        "elevation_range": "100-500m",
+        "n_stations": 219,
+        "hemisphere_balance": 0.7945205479452054,
+        "estimated_correlation_strength": 0.8232876712328767,
+        "representativeness": "high"
+      },
+      "medium_elevation": {
+        "elevation_range": "500-1000m",
+        "n_stations": 96,
+        "hemisphere_balance": 0.75,
+        "estimated_correlation_strength": 0.816,
+        "representativeness": "high"
+      },
+      "high_elevation": {
+        "elevation_range": "1000-2000m",
+        "n_stations": 81,
+        "hemisphere_balance": 0.654320987654321,
+        "estimated_correlation_strength": 0.7350000000000001,
+        "representativeness": "medium"
+      }
+    }
+  },
+  "sample_analysis": {
+    "distance_analysis": {
+      "n_pairs": 39068753,
+      "distance_mean": 9119.913060937586,
+      "distance_std": 4675.684941366995,
+      "distance_range": [
+        0.0545945359733036,
+        19937.31652345648
+      ],
+      "coherence_mean": NaN,
+      "coherence_std": NaN
+    },
+    "ocean_land_analysis": {
+      "ocean_pairs": 30715553,
+      "land_pairs": 8353200,
+      "ocean_fraction": 0.7861923056515266,
+      "ocean_coherence_mean": 30.747428590974852,
+      "land_coherence_mean": 25.821149764743215,
+      "coherence_difference": 4.926278826231638,
+      "ocean_advantage": true
+    }
+  },
+  "validation_summary": {
+    "overall_validation_score": 0.7375971903291365,
+    "confidence_level": "MODERATE",
+    "assessment": "Reasonable evidence with some geographic concerns",
+    "validation_components": [
+      1.0,
+      0.4,
+      0.8127915709874098
+    ],
+    "key_findings": [
+      "CODE: Geographic consistency CV = 6.5% (excellent)",
+      "ESA_FINAL: Geographic consistency CV = 3.5% (excellent)",
+      "IGS_COMBINED: Geographic consistency CV = 4.0% (excellent)",
+      "Hemisphere bias: 23.0% (moderate)"
+    ],
+    "recommendations": [
+      "Create hemisphere-balanced subsets for validation"
+    ]
+  },
+  "timestamp": "2025-09-25T19:55:59.358673"
+}

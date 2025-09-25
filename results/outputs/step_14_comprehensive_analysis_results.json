@@ -1,0 +1,194 @@
+{
+  "analysis_type": "comprehensive_gravitational_temporal_correlation",
+  "ephemeris_source": "NASA_JPL_DE440_441",
+  "tep_method": "phase_coherent_cross_spectral_density",
+  "data_summary": {
+    "total_days": 912,
+    "date_range": [
+      "2023-01-01",
+      "2025-06-30"
+    ]
+  },
+  "correlations": {
+    "sun_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.07905258932366618,
+        "pearson_p": 0.016949592681447054,
+        "spearman_rho": -0.08562179537112835,
+        "spearman_p": 0.009683607253825766,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.05523562288412744,
+        "pearson_p": 0.09550162242354343,
+        "spearman_rho": -0.06284573480029287,
+        "spearman_p": 0.0578052097845595,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.22736792479784937,
+        "pearson_p": 3.701259522724678e-12,
+        "spearman_rho": -0.1983588743916785,
+        "spearman_p": 1.520003312904673e-09,
+        "n_points": 912
+      }
+    },
+    "jupiter_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.09066153495608423,
+        "pearson_p": 0.006147520437155666,
+        "spearman_rho": -0.08764614284637644,
+        "spearman_p": 0.008089213061879487,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.08691778026049676,
+        "pearson_p": 0.008633620660588703,
+        "spearman_rho": -0.0772165706297055,
+        "spearman_p": 0.01969154570460936,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.25656140310185394,
+        "pearson_p": 3.562113694462784e-15,
+        "spearman_rho": -0.27171255202375577,
+        "spearman_p": 6.716914977046828e-17,
+        "n_points": 912
+      }
+    },
+    "saturn_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.03826286231422259,
+        "pearson_p": 0.24835626878125586,
+        "spearman_rho": -0.024215555070559808,
+        "spearman_p": 0.4651470167549764,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.0524408214366792,
+        "pearson_p": 0.11351377646588647,
+        "spearman_rho": -0.03702177867821898,
+        "spearman_p": 0.2640444695613809,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.03161798840908681,
+        "pearson_p": 0.3401994572533527,
+        "spearman_rho": -0.03974908873989859,
+        "spearman_p": 0.23044093926541537,
+        "n_points": 912
+      }
+    },
+    "venus_influence": {
+      "coherence_mean": {
+        "pearson_r": 0.141960545150425,
+        "pearson_p": 1.6846647940434973e-05,
+        "spearman_rho": 0.046780945176828084,
+        "spearman_p": 0.15807105268745836,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": 0.12965459991102948,
+        "pearson_p": 8.61198315850344e-05,
+        "spearman_rho": 0.046218919976356555,
+        "spearman_p": 0.1631329313426222,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.040745769047265123,
+        "pearson_p": 0.21895253722607172,
+        "spearman_rho": -0.019138882538172686,
+        "spearman_p": 0.5637761511430917,
+        "n_points": 912
+      }
+    },
+    "mars_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.04011705231283641,
+        "pearson_p": 0.22615071858049288,
+        "spearman_rho": -0.06401789279924966,
+        "spearman_p": 0.053281897453866744,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.020488219304641817,
+        "pearson_p": 0.5366103150491468,
+        "spearman_rho": -0.03859768614001908,
+        "spearman_p": 0.24423770281924248,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.10642525093053196,
+        "pearson_p": 0.001287689232597023,
+        "spearman_rho": -0.017246407781452228,
+        "spearman_p": 0.6029559153090494,
+        "n_points": 912
+      }
+    },
+    "stacked_planetary_influence": {
+      "coherence_mean": {
+        "pearson_r": 0.006401066755381615,
+        "pearson_p": 0.8469238539014183,
+        "spearman_rho": -0.01663417096766416,
+        "spearman_p": 0.6158879168863,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": 0.0023386714772929557,
+        "pearson_p": 0.9437721706912192,
+        "spearman_rho": -0.011128247674177187,
+        "spearman_p": 0.7371610643056246,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.22360956074020746,
+        "pearson_p": 8.475657901274293e-12,
+        "spearman_rho": -0.20813506284867722,
+        "spearman_p": 2.2019758863216857e-10,
+        "n_points": 912
+      }
+    },
+    "total_gravitational_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.0790331857141373,
+        "pearson_p": 0.01697672501640947,
+        "spearman_rho": -0.08554211172390862,
+        "spearman_p": 0.009751726913603728,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.055223352872346254,
+        "pearson_p": 0.0955753858869951,
+        "spearman_rho": -0.06280374941222037,
+        "spearman_p": 0.0579729670235354,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.22745816240882297,
+        "pearson_p": 3.627700505325333e-12,
+        "spearman_rho": -0.19855160535734812,
+        "spearman_p": 1.4645620167438003e-09,
+        "n_points": 912
+      }
+    }
+  },
+  "advanced_pattern_analysis": {
+    "smoothed_correlation": -0.4397164325003494,
+    "smoothed_p_value": 2.0833784350737216e-44,
+    "optimal_lag_days": 0,
+    "max_cross_correlation": -401.0213864403186,
+    "smoothing_window": 31,
+    "pattern_relationship": "anti_phase"
+  },
+  "pattern_extremes": {
+    "peak_periods": 92,
+    "valley_periods": 92,
+    "peak_coherence_mean": 0.009053664909847855,
+    "valley_coherence_mean": 0.00882367065098834,
+    "peak_coherence_std": 0.7150023057566027,
+    "valley_coherence_std": 0.71687900852587,
+    "coherence_mean_difference": 0.0002299942588595144,
+    "coherence_std_difference": -0.0018767027692673244
+  },
+  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_comprehensive_gravitational_temporal_analysis.png"
+}

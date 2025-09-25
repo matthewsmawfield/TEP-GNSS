@@ -1,7 +1,7 @@
 # TEP-GNSS Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.7 (Jaipur)  
+**Version:** v0.8 (Jaipur)  
 **Date:** September 25, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
@@ -21,33 +21,55 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 Through analysis of 62.7 million station pair measurements from 529 global ground stations, we observe:
 
-- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (13.0% variation)
+- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (12.3% variation)
 - **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
 - **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
-- **Validation**: Comprehensive null tests confirm signal authenticity
+- **Multi-center validation**: Comprehensive null tests confirm signal authenticity (8.5–44× destruction under scrambling)
+- **Advanced validation**: Circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5) and comprehensive bias testing
+- **Gravitational coupling**: Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
 
 ## Installation
 
 ### Prerequisites
 - Python 3.8+
-- Internet connection for data download
+- Internet connection for data download (GNSS clock products)
+- ~10 GB disk space for complete analysis
 
 ### Setup
 ```bash
+# Clone the repository
+git clone https://github.com/matthewsmawfield/TEP-GNSS.git
+cd TEP-GNSS
+
+# Install dependencies
 pip install -r requirements/requirements.txt
+
+# Verify installation
+python scripts/steps/step_0_provenance_snapshot.py
 ```
+
+### Key Dependencies
+- **Core**: numpy, pandas, scipy, matplotlib
+- **Geospatial**: cartopy, pyproj
+- **Advanced**: scikit-learn, statsmodels, PyWavelets
+- **Specialized**: pyIGRF (geomagnetic field calculations)
 
 ## Usage
 
 ### Complete Analysis Pipeline
+
+#### Core Pipeline (Steps 0-8)
 ```bash
+# Step 0: Provenance snapshot
+python scripts/steps/step_0_provenance_snapshot.py
+
 # Step 1: Download GNSS clock data
 python scripts/steps/step_1_tep_data_acquisition.py
 
 # Step 2: Validate station coordinates  
 python scripts/steps/step_2_tep_coordinate_validation.py
 
-# Step 3: Correlation analysis
+# Step 3: Correlation analysis (CORE ANALYSIS)
 python scripts/steps/step_3_tep_correlation_analysis.py
 
 # Step 4: Geospatial processing
@@ -66,9 +88,33 @@ python scripts/steps/step_7_tep_advanced_analysis.py
 python scripts/steps/step_8_tep_visualization.py
 ```
 
+#### Extended Analysis Pipeline (Steps 9-16)
+```bash
+# Step 9: Synthesis figure generation
+python scripts/steps/step_9_tep_synthesis_figure.py
+
+# Step 10: High-resolution astronomical events
+python scripts/steps/step_10_high_resolution_astronomical_events.py
+
+# Step 11: TID exclusion analysis
+python scripts/steps/step_11_tid_exclusion_analysis.py
+
+# Step 13: Methodology validation
+python scripts/steps/step_13_methodology_validation.py
+
+# Step 14: Gravitational temporal field analysis
+python scripts/steps/step_14_gravitational_temporal_field_analysis.py
+
+# Step 15: Geographic bias validation
+python scripts/steps/step_15_geographic_bias_validation.py
+
+# Step 16: Realistic ionospheric validation
+python scripts/steps/step_16_realistic_ionospheric_validation.py
+```
+
 ### Configuration
 
-### v0.7 Configuration (Published Method Defaults)
+### v0.8 Configuration (Jaipur Release - Published Method Defaults)
 
 **Core Analysis Settings:**
 | Variable | Default | Description |
@@ -85,9 +131,14 @@ python scripts/steps/step_8_tep_visualization.py
 | `TEP_WORKERS` | auto | Number of parallel workers |
 | `TEP_BOOTSTRAP_ITER` | 1000 | Bootstrap iterations for confidence intervals |
 
-**Simple Command for v0.7 Results:**
+**Quick Start (Core Results):**
 ```bash
+# Download data and run core analysis
+python scripts/steps/step_1_tep_data_acquisition.py
 python scripts/steps/step_3_tep_correlation_analysis.py
+
+# Generate visualizations
+python scripts/steps/step_8_tep_visualization.py
 ```
 
 ## Data Sources
@@ -101,13 +152,34 @@ All data sourced directly from official repositories. No synthetic or fallback d
 ## Results
 
 Main outputs are located in:
-- `results/outputs/`: Analysis results in JSON format
-- `results/figures/`: Generated visualizations
-- Full analysis report (PDF): `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.7_Jaipur.pdf`
+- `results/outputs/`: Analysis results in JSON format (50+ files)
+- `results/figures/`: Generated visualizations (40+ publication-quality figures)
+- `site/`: Complete project website and documentation
+- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.8_Jaipur.pdf`
+
+### Key Result Files
+- **Core Analysis**: `step_3_correlation_{center}.json` - Main correlation analysis results
+- **Statistical Validation**: `step_5_statistical_validation_{center}.json` - Comprehensive validation
+- **Null Tests**: `step_6_null_tests_{center}.json` - Signal authenticity validation
+- **Methodology Validation**: `step_13_validation_report.json` - Bias characterization and validation
+- **Advanced Findings**: `step_14_comprehensive_analysis_results.json` - Gravitational-temporal correlations
 
 ## Scientific Background
 
 This analysis implements **Clock Network Correlation Analysis**, a key experimental test from the Temporal Equivalence Principle (TEP) framework ([Smawfield, 2025](https://matthewsmawfield.github.io/TEP/); [DOI: 10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)).
+
+### Breakthrough Discovery (Step 14)
+
+**Major Finding**: Direct experimental evidence of gravitational-temporal field coupling has been discovered through comprehensive analysis of planetary gravitational influences on Earth's temporal field structure.
+
+![Gravitational-Temporal Field Coupling](figures/step_14_comprehensive_gravitational_temporal_analysis.png)
+
+- **Stacked gravitational correlation**: r = -0.458, p < 10⁻⁴⁸ with Earth's temporal field
+- **Individual planetary signatures**: Venus (stabilizer), Jupiter (moderate stabilizer), Mars (destabilizer), Saturn (disruptor)
+- **Temporal stability difference**: 0.47% more stable during high gravity periods
+- **Optimal coupling lag**: 42 days between gravitational and temporal patterns
+
+This provides the first direct experimental validation of TEP's core prediction that gravitational fields couple to temporal field dynamics.
 
 ### Theoretical Foundation
 
@@ -129,19 +201,22 @@ The TEP proposes that gravitational fields couple directly to clock transition f
 
 ## Methodology
 
-1. **Phase-coherent analysis**: Preserves complex cross-spectral density phase information
+1. **Phase-coherent analysis**: Preserves complex cross-spectral density phase information using cos(phase(CSD))
 2. **Distance binning**: 40 logarithmic bins from 50 km to 13,000 km
-3. **Exponential fitting**: Nonlinear least squares optimization
-4. **Multi-center validation**: Independent analysis across three data products
-5. **Statistical validation**: Comprehensive null tests and bootstrap confidence intervals
+3. **Exponential fitting**: Nonlinear least squares optimization with model comparison (7 models tested)
+4. **Multi-center validation**: Independent analysis across CODE, IGS, and ESA data products
+5. **Statistical validation**: Comprehensive null tests, bootstrap confidence intervals, and circular statistics
+6. **Advanced validation**: Geometric bias characterization, ionospheric controls, and gravitational coupling analysis
 
 ## Quality Assurance
 
-- Multi-center consistency validation
-- Comprehensive null testing (distance/phase/station scrambling)
-- Bootstrap confidence intervals
-- ECEF coordinate validation against ITRF2014
-- Complete reproducibility with version control
+- **Multi-center consistency**: 12.3% variation across independent analysis centers
+- **Comprehensive null testing**: Distance/phase/station scrambling (8.5–44× signal destruction)
+- **Statistical robustness**: Bootstrap confidence intervals and circular statistics
+- **Bias characterization**: Geometric artifact detection and mitigation (Step 13)
+- **Coordinate validation**: ECEF validation against ITRF2014
+- **Ionospheric controls**: Realistic ionospheric validation and TID exclusion
+- **Complete reproducibility**: Version control with execution logs and checkpointing
 
 ## Citation
 
@@ -177,7 +252,7 @@ If you use this analysis package, please cite both the analysis and underlying t
 ## Documentation
 
 - **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.7_Jaipur.pdf`
+- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.8_Jaipur.pdf`
 - **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
 - **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 - **Execution logs**: `logs/` directory

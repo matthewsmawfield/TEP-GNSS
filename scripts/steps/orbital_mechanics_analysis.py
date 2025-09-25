@@ -9,7 +9,7 @@ Proper orbital mechanics approach to planetary opposition analysis:
 - Accounts for multi-body interactions and Earth's orbital position
 - Replaces arbitrary ±5 day windows with physics-based analysis
 
-Author: TEP-GNSS Analysis Pipeline v0.7
+Author: TEP-GNSS Analysis Pipeline v0.8
 """
 
 import numpy as np

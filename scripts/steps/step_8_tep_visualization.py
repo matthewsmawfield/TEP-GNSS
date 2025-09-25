@@ -767,9 +767,13 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
                 df_filtered = df_filtered.sample(n=max_connections, random_state=42)
             else:
                 print(f"🎯 Using prioritized selection of {max_connections} connections")
-                # Calculate distances for TEP-significant range (3000-4500 km)
-                df_filtered['distance'] = np.sqrt((df_filtered['station1_lat'] - df_filtered['station2_lat'])**2 + 
-                                                (df_filtered['station1_lon'] - df_filtered['station2_lon'])**2) * 111  # rough km conversion
+                # Calculate distances for TEP-significant range (3000-4500 km) using proper great-circle distance
+                df_filtered['distance'] = df_filtered.apply(
+                    lambda row: haversine_distance(
+                        row['station1_lat'], row['station1_lon'],
+                        row['station2_lat'], row['station2_lon']
+                    ), axis=1
+                )
                 
                 # Create priority scoring: higher score = more important to show
                 df_filtered['tep_score'] = 0
@@ -1209,6 +1213,32 @@ def create_three_globe_views_with_connections(root_dir, analysis_center='code', 
     print_status(f"Saved three-globe connections view: {output_file}", "SUCCESS")
     return str(output_file)
 
+def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """
+    Calculate great-circle distance between two points using Haversine formula.
+    Uses WGS-84 standard Earth radius for accurate distance calculations.
+
+    Args:
+        lat1, lon1: Latitude and longitude of first point in degrees
+        lat2, lon2: Latitude and longitude of second point in degrees
+
+    Returns:
+        Distance in kilometers
+    """
+    R = 6371.0088  # WGS-84 standard Earth radius in km
+
+    # Convert to radians
+    lat1_rad, lon1_rad = np.radians(lat1), np.radians(lon1)
+    lat2_rad, lon2_rad = np.radians(lat2), np.radians(lon2)
+
+    # Haversine formula
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+    a = np.sin(dlat/2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+
+    return R * c
+
 def draw_great_circle_arc(lat1, lon1, lat2, lon2, center_lon, num_points=50):
     """Draw a great circle arc between two points on orthographic projection."""
     # Convert to radians
@@ -1548,6 +1578,71 @@ def generate_summary_report(all_results, output_file):
     
     return report
 
+def generate_station_distance_matrix(root_dir: Path) -> str:
+    """
+    Generate pairwise distance matrix for all GNSS stations using proper great-circle distances.
+    Creates the step_8_station_distances.csv file expected by visualization functions.
+
+    Args:
+        root_dir: Root directory of the TEP project
+
+    Returns:
+        Path to the generated distance matrix file
+    """
+    print_status("Generating station distance matrix with proper great-circle distances", "INFO")
+
+    # Load station coordinates
+    coords_file = root_dir / 'data/coordinates/station_coords_global.csv'
+    if not coords_file.exists():
+        print_status(f"Station coordinates file not found: {coords_file}", "ERROR")
+        return None
+
+    try:
+        coords_df = pd.read_csv(coords_file)
+        # Filter for stations with valid coordinates
+        valid_coords = coords_df.dropna(subset=['lat_deg', 'lon_deg']).copy()
+        print_status(f"Processing {len(valid_coords)} stations with valid coordinates", "INFO")
+
+        # Generate all pairwise combinations
+        station_pairs = []
+        total_stations = len(valid_coords)
+
+        for i, station1 in enumerate(valid_coords['coord_source_code']):
+            for j, station2 in enumerate(valid_coords['coord_source_code']):
+                if i < j:  # Only calculate each pair once
+                    try:
+                        lat1 = valid_coords.loc[valid_coords['coord_source_code'] == station1, 'lat_deg'].iloc[0]
+                        lon1 = valid_coords.loc[valid_coords['coord_source_code'] == station1, 'lon_deg'].iloc[0]
+                        lat2 = valid_coords.loc[valid_coords['coord_source_code'] == station2, 'lat_deg'].iloc[0]
+                        lon2 = valid_coords.loc[valid_coords['coord_source_code'] == station2, 'lon_deg'].iloc[0]
+
+                        distance_km = haversine_distance(lat1, lon1, lat2, lon2)
+                        station_pairs.append({
+                            'station1': station1,
+                            'station2': station2,
+                            'distance_km': distance_km
+                        })
+                    except (IndexError, KeyError) as e:
+                        print_status(f"Error calculating distance for {station1}-{station2}: {e}", "WARNING")
+                        continue
+
+        # Create output directory
+        output_dir = root_dir / 'data/processed'
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Save distance matrix
+        distance_df = pd.DataFrame(station_pairs)
+        output_file = output_dir / 'step_8_station_distances.csv'
+        distance_df.to_csv(output_file, index=False)
+
+        print_status(f"Generated station distance matrix with {len(station_pairs)} pairs", "SUCCESS")
+        print_status(f"Saved to: {output_file}", "SUCCESS")
+        return str(output_file)
+
+    except Exception as e:
+        print_status(f"Failed to generate station distance matrix: {e}", "ERROR")
+        return None
+
 def main():
     """Main function to generate all TEP visualizations"""
     parser = argparse.ArgumentParser(description='Generate TEP visualization figures.')
@@ -1562,7 +1657,7 @@ def main():
     args = parser.parse_args()
 
     print("="*80)
-    print("TEP GNSS Analysis Package v0.7")
+    print("TEP GNSS Analysis Package v0.8")
     print("STEP 8: TEP Visualization")
     print("="*80)
     
@@ -1588,9 +1683,19 @@ def main():
     if not step3_complete:
         print_status("Step 3 must be completed before running Step 8", "ERROR")
         return False
-    
+
     # Run all visualization and export tasks
     all_results = {}
+
+    # Generate station distance matrix if needed
+    print("\n" + "="*60)
+    print("GENERATING STATION DISTANCE MATRIX")
+    print("="*60)
+    distance_matrix_file = generate_station_distance_matrix(root_dir)
+    if distance_matrix_file:
+        all_results['distance_matrix'] = {'file': distance_matrix_file}
+    else:
+        print_status("Warning: Could not generate station distance matrix", "WARNING")
     
     # 1. Residual plots
     print("\n" + "-"*60)

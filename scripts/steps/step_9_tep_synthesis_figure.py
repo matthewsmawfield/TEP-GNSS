@@ -319,7 +319,7 @@ def create_panel_c(ax):
 def main():
     """Generate site-themed figure."""
     print("="*80)
-    print("TEP GNSS Analysis Package v0.7")
+    print("TEP GNSS Analysis Package v0.8")
     print("STEP 9: Synthesis Figure Generation")
     print("="*80)
     

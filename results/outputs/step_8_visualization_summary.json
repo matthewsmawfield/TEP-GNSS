@@ -1,0 +1,222 @@
+{
+  "analysis_timestamp": "2025-09-25T15:49:15.343018",
+  "step_8_analyses": {
+    "residual_analysis": {
+      "code": {
+        "mean": -0.0034899953514624734,
+        "std": 0.045519656027764345,
+        "max": 0.16461800900286233,
+        "n_points": 21
+      },
+      "igs_combined": {
+        "mean": -0.015354626381626012,
+        "std": 0.06046760842826352,
+        "max": 0.24771689112155787,
+        "n_points": 21
+      },
+      "esa_final": {
+        "mean": -0.015998572921987357,
+        "std": 0.06792164804305362,
+        "max": 0.25431936250194387,
+        "n_points": 18
+      }
+    },
+    "null_tests_export": {
+      "analysis_center": {
+        "0": "CODE",
+        "1": "CODE",
+        "2": "CODE",
+        "3": "CODE",
+        "4": "IGS_COMBINED",
+        "5": "IGS_COMBINED",
+        "6": "IGS_COMBINED",
+        "7": "IGS_COMBINED",
+        "8": "ESA_FINAL",
+        "9": "ESA_FINAL",
+        "10": "ESA_FINAL",
+        "11": "ESA_FINAL"
+      },
+      "test_type": {
+        "0": "Real Data (Baseline)",
+        "1": "Distance",
+        "2": "Phase",
+        "3": "Station",
+        "4": "Real Data (Baseline)",
+        "5": "Distance",
+        "6": "Phase",
+        "7": "Station",
+        "8": "Real Data (Baseline)",
+        "9": "Distance",
+        "10": "Phase",
+        "11": "Station"
+      },
+      "lambda_km": {
+        "0": 4548.589996454075,
+        "1": 5844.391475499916,
+        "2": 4580.261001477418,
+        "3": 6448.886184239011,
+        "4": 3768.172094585321,
+        "5": 6963.592701921772,
+        "6": 7225.747218600297,
+        "7": 6817.679776267646,
+        "8": 3329.7779129995965,
+        "9": 5000.77739869871,
+        "10": 7910.30735248452,
+        "11": 7578.937087869958
+      },
+      "r_squared": {
+        "0": 0.9204857128576932,
+        "1": 0.03414447133247407,
+        "2": 0.028605178960164252,
+        "3": 0.02923057182009727,
+        "4": 0.9658709167990942,
+        "5": 0.03446068007668711,
+        "6": 0.03261856446007728,
+        "7": 0.05466587720503416,
+        "8": 0.9701459935123946,
+        "9": 0.03386474883237936,
+        "10": 0.030006647209519524,
+        "11": 0.05053293406352232
+      },
+      "amplitude": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null
+      },
+      "offset": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null
+      },
+      "passes_null": {
+        "0": "N/A",
+        "1": false,
+        "2": false,
+        "3": false,
+        "4": "N/A",
+        "5": false,
+        "6": false,
+        "7": false,
+        "8": "N/A",
+        "9": false,
+        "10": false,
+        "11": false
+      },
+      "significance": {
+        "0": "Baseline",
+        "1": 0.009900990099009901,
+        "2": 0.009900990099009901,
+        "3": 0.009900990099009901,
+        "4": "Baseline",
+        "5": 0.009900990099009901,
+        "6": 0.009900990099009901,
+        "7": 0.009900990099009901,
+        "8": "Baseline",
+        "9": 0.009900990099009901,
+        "10": 0.009900990099009901,
+        "11": 0.009900990099009901
+      }
+    },
+    "method_comparison": {
+      "methods_available": {
+        "phase_alignment": {
+          "description": "cos(phase(CSD)) method",
+          "formula": "coherence = cos(phase(cross_spectral_density))",
+          "advantages": [
+            "Captures phase relationships directly",
+            "Well-tested on current dataset",
+            "Computationally efficient"
+          ],
+          "results_available": true
+        },
+        "band_averaged": {
+          "description": "Band-averaged real coherency",
+          "formula": "\u03b3(f) = S_xy(f) / \u221a(S_xx(f) * S_yy(f))",
+          "advantages": [
+            "More robust to noise",
+            "Standard in signal processing",
+            "Frequency-selective analysis",
+            "Higher R\u00b2 values observed"
+          ],
+          "results_available": true,
+          "implementation": "Use TEP_USE_REAL_COHERENCY=1"
+        }
+      },
+      "comparison_results": {
+        "note": "Both methods show strong distance-structured correlations",
+        "phase_alignment_lambda": "2,716 km (R\u00b2 = 0.801)",
+        "band_averaged_lambda": "3,934 km (R\u00b2 = 0.927)",
+        "consistency": "Both methods detect TEP-consistent correlation lengths",
+        "recommendation": "Band-averaged method shows higher statistical significance"
+      }
+    },
+    "publication_figure": {
+      "file": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/tep_correlation_publication.png"
+    },
+    "correlation_all_centers": {
+      "code_plot": {
+        "lambda_km": 4548.589996454075,
+        "r_squared": 0.9204857128576932,
+        "amplitude": 0.11380180404602341,
+        "offset": -0.021333501759585174
+      },
+      "esa_final_plot": {
+        "lambda_km": 3329.7779129995965,
+        "r_squared": 0.9701459935123946,
+        "amplitude": 0.24970183578486854,
+        "offset": -0.024730381429403616
+      },
+      "igs_combined_plot": {
+        "lambda_km": 3768.172094585321,
+        "r_squared": 0.9658709167990942,
+        "amplitude": 0.19362539538097395,
+        "offset": -0.020986986886067833
+      },
+      "output_file": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/correlation_vs_distance_all_centers.png"
+    },
+    "distance_distribution": {
+      "total_pairs": 292995,
+      "mean_distance_km": 9068.24831816326,
+      "median_distance_km": 9021.373671098532,
+      "std_distance_km": 4492.372814027383,
+      "min_distance_km": 0.0,
+      "max_distance_km": 19946.198144170678,
+      "pairs_under_3000km": 30567,
+      "pairs_3000_5000km": 30076,
+      "pairs_over_5000km": 232352,
+      "output_file": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/distance_distribution.png"
+    }
+  },
+  "outputs_created": [
+    "Residual plots for model validation",
+    "Null test results CSV export",
+    "Method comparison analysis",
+    "Publication-quality correlation figure",
+    "Correlation vs distance all centers plot",
+    "Distance distribution analysis"
+  ],
+  "key_insights": {
+    "model_quality": "Residuals show good fit with minimal systematic patterns",
+    "method_robustness": "Both coherency methods detect strong correlations",
+    "null_validation": "Comprehensive export confirms signal authenticity",
+    "publication_ready": "High-quality figures generated for publication"
+  }
+}

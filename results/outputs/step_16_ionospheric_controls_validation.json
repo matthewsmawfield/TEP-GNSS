@@ -1,0 +1,413 @@
+{
+  "validation_approach": "ionospheric_controls_resampling",
+  "analysis_period": {
+    "start_date": "2023-01-01",
+    "end_date": "2025-06-30"
+  },
+  "ionospheric_data_sources": {
+    "tec": true,
+    "geomagnetic": true,
+    "solar": true
+  },
+  "tec_correlation_analysis": {
+    "code": {
+      "tec_tep_correlation": 0.01123255508074661,
+      "tec_tep_p_value": 0.24023892847200665,
+      "contamination_risk": "LOW",
+      "interpretation": "Weak TEC correlation supports non-ionospheric origin",
+      "tep_amplitude": 0.11380180404602341,
+      "tep_lambda_km": 4548.589996454075,
+      "tep_r_squared": 0.9204857128576932
+    },
+    "esa_final": {
+      "tec_tep_correlation": 0.006138896874712144,
+      "tec_tep_p_value": 0.5209889125541715,
+      "contamination_risk": "LOW",
+      "interpretation": "Weak TEC correlation supports non-ionospheric origin",
+      "tep_amplitude": 0.24970183578486854,
+      "tep_lambda_km": 3329.7779129995965,
+      "tep_r_squared": 0.9701459935123946
+    },
+    "igs_combined": {
+      "tec_tep_correlation": 0.010896049409996224,
+      "tec_tep_p_value": 0.2546175653757912,
+      "contamination_risk": "LOW",
+      "interpretation": "Weak TEC correlation supports non-ionospheric origin",
+      "tep_amplitude": 0.15195426809145546,
+      "tep_lambda_km": 3397.731172199082,
+      "tep_r_squared": 0.9681814097833041
+    }
+  },
+  "local_time_binning_analysis": {
+    "code": {
+      "time_bins": {
+        "dawn": {
+          "time_range": "04:00-08:00 LT",
+          "lambda_km": 4084.065040275603,
+          "r_squared": 0.9123899212335379,
+          "n_pairs": 3006
+        },
+        "morning": {
+          "time_range": "08:00-12:00 LT",
+          "lambda_km": 3864.2852844048284,
+          "r_squared": 0.9275752905593168,
+          "n_pairs": 2646
+        },
+        "afternoon": {
+          "time_range": "12:00-16:00 LT",
+          "lambda_km": 3954.7128565433254,
+          "r_squared": 0.8634050001477465,
+          "n_pairs": 3329
+        },
+        "evening": {
+          "time_range": "16:00-20:00 LT",
+          "lambda_km": 4050.8469520883673,
+          "r_squared": 0.9062784154660903,
+          "n_pairs": 3980
+        },
+        "night": {
+          "time_range": "20:00-24:00 LT",
+          "lambda_km": 4105.437805210765,
+          "r_squared": 0.9170914920824946,
+          "n_pairs": 4081
+        },
+        "midnight": {
+          "time_range": "00:00-04:00 LT",
+          "lambda_km": 3943.666023038557,
+          "r_squared": 0.8593533874075925,
+          "n_pairs": 2828
+        }
+      },
+      "lambda_statistics": {
+        "mean": 4000.5023269269077,
+        "std": 86.03379826039868,
+        "cv": 0.021505748835918773
+      },
+      "local_time_dependence": "LOW",
+      "interpretation": "Weak local-time dependence supports non-ionospheric origin"
+    },
+    "esa_final": {
+      "time_bins": {
+        "dawn": {
+          "time_range": "04:00-08:00 LT",
+          "lambda_km": 3817.1898364557796,
+          "r_squared": 0.8730961696616177,
+          "n_pairs": 4681
+        },
+        "morning": {
+          "time_range": "08:00-12:00 LT",
+          "lambda_km": 3955.7349000262175,
+          "r_squared": 0.8540715628761377,
+          "n_pairs": 3699
+        },
+        "afternoon": {
+          "time_range": "12:00-16:00 LT",
+          "lambda_km": 3972.7343255347287,
+          "r_squared": 0.8640748319268283,
+          "n_pairs": 4006
+        },
+        "evening": {
+          "time_range": "16:00-20:00 LT",
+          "lambda_km": 4017.178971754842,
+          "r_squared": 0.9492568939674358,
+          "n_pairs": 2329
+        },
+        "night": {
+          "time_range": "20:00-24:00 LT",
+          "lambda_km": 4086.696053529959,
+          "r_squared": 0.8650892772697957,
+          "n_pairs": 2484
+        },
+        "midnight": {
+          "time_range": "00:00-04:00 LT",
+          "lambda_km": 4093.3178662655837,
+          "r_squared": 0.9205478610707473,
+          "n_pairs": 4475
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3990.4753255945184,
+        "std": 93.18226080483493,
+        "cv": 0.02335116826989833
+      },
+      "local_time_dependence": "LOW",
+      "interpretation": "Weak local-time dependence supports non-ionospheric origin"
+    },
+    "igs_combined": {
+      "time_bins": {
+        "dawn": {
+          "time_range": "04:00-08:00 LT",
+          "lambda_km": 4147.773081008471,
+          "r_squared": 0.9450016579405167,
+          "n_pairs": 2221
+        },
+        "morning": {
+          "time_range": "08:00-12:00 LT",
+          "lambda_km": 3868.4063787306604,
+          "r_squared": 0.897650162709452,
+          "n_pairs": 2832
+        },
+        "afternoon": {
+          "time_range": "12:00-16:00 LT",
+          "lambda_km": 4005.28320627074,
+          "r_squared": 0.9222346510807246,
+          "n_pairs": 1797
+        },
+        "evening": {
+          "time_range": "16:00-20:00 LT",
+          "lambda_km": 4004.355388055295,
+          "r_squared": 0.9270603224495048,
+          "n_pairs": 3171
+        },
+        "night": {
+          "time_range": "20:00-24:00 LT",
+          "lambda_km": 3930.0585161778554,
+          "r_squared": 0.8894642588694834,
+          "n_pairs": 1515
+        },
+        "midnight": {
+          "time_range": "00:00-04:00 LT",
+          "lambda_km": 3972.975409751147,
+          "r_squared": 0.9073359994118712,
+          "n_pairs": 2521
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3988.1419966656945,
+        "std": 85.61455530654952,
+        "cv": 0.021467278591917736
+      },
+      "local_time_dependence": "LOW",
+      "interpretation": "Weak local-time dependence supports non-ionospheric origin"
+    }
+  },
+  "geomagnetic_stratification_analysis": {
+    "code": {
+      "geomagnetic_conditions": {
+        "quiet": {
+          "lambda_km": 4616.535027337035,
+          "r_squared": 0.9330913406055292,
+          "n_days": 90
+        },
+        "unsettled": {
+          "lambda_km": 4458.770219090734,
+          "r_squared": 0.9018986468478242,
+          "n_days": 86
+        },
+        "active": {
+          "lambda_km": 4662.985069341018,
+          "r_squared": 0.9026032412076623,
+          "n_days": 65
+        },
+        "storm": {
+          "lambda_km": 4448.782465864683,
+          "r_squared": 0.9259192731816474,
+          "n_days": 73
+        }
+      },
+      "lambda_statistics": {
+        "mean": 4546.768195408367,
+        "std": 94.49685134205183,
+        "cv": 0.02078330085916434
+      },
+      "geomagnetic_dependence": "LOW",
+      "interpretation": "Weak geomagnetic dependence supports non-ionospheric origin"
+    },
+    "esa_final": {
+      "geomagnetic_conditions": {
+        "quiet": {
+          "lambda_km": 3338.94973311797,
+          "r_squared": 0.8846899815259374,
+          "n_days": 180
+        },
+        "unsettled": {
+          "lambda_km": 3381.079766358045,
+          "r_squared": 0.9103842292078885,
+          "n_days": 58
+        },
+        "active": {
+          "lambda_km": 3406.3844099080084,
+          "r_squared": 0.958753375583163,
+          "n_days": 53
+        },
+        "storm": {
+          "lambda_km": 3356.413425313509,
+          "r_squared": 0.9511281935268194,
+          "n_days": 195
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3370.7068336743832,
+        "std": 25.462237414879542,
+        "cv": 0.007553975670771504
+      },
+      "geomagnetic_dependence": "LOW",
+      "interpretation": "Weak geomagnetic dependence supports non-ionospheric origin"
+    },
+    "igs_combined": {
+      "geomagnetic_conditions": {
+        "quiet": {
+          "lambda_km": 3385.73198887482,
+          "r_squared": 0.890214218738681,
+          "n_days": 146
+        },
+        "unsettled": {
+          "lambda_km": 3472.3512846523836,
+          "r_squared": 0.9472376735783657,
+          "n_days": 158
+        },
+        "active": {
+          "lambda_km": 3341.909147224505,
+          "r_squared": 0.9497478185299922,
+          "n_days": 55
+        },
+        "storm": {
+          "lambda_km": 3549.485882122718,
+          "r_squared": 0.9192606351630386,
+          "n_days": 182
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3437.369575718607,
+        "std": 79.95767615581879,
+        "cv": 0.023261297452748606
+      },
+      "geomagnetic_dependence": "LOW",
+      "interpretation": "Weak geomagnetic dependence supports non-ionospheric origin"
+    }
+  },
+  "frequency_filtering_analysis": {
+    "code": {
+      "frequency_bands": {
+        "low_tep": {
+          "frequency_range": "10-90 \u00b5Hz",
+          "description": "TID-free TEP band",
+          "lambda_km": 4542.009386355296,
+          "r_squared": 0.8742318267491405
+        },
+        "overlap": {
+          "frequency_range": "92-500 \u00b5Hz",
+          "description": "TID-TEP overlap zone",
+          "lambda_km": 4502.545290162894,
+          "r_squared": 0.9128480005044585
+        },
+        "high_tid": {
+          "frequency_range": "600-1667 \u00b5Hz",
+          "description": "TEP-free TID band",
+          "lambda_km": 4521.457817417517,
+          "r_squared": 0.8918398966682618
+        }
+      },
+      "lambda_statistics": {
+        "mean": 4522.0041646452355,
+        "std": 16.115780952029727,
+        "cv": 0.003563858051708375
+      },
+      "band_consistency": "HIGH",
+      "interpretation": "High cross-band consistency supports genuine TEP signal"
+    },
+    "esa_final": {
+      "frequency_bands": {
+        "low_tep": {
+          "frequency_range": "10-90 \u00b5Hz",
+          "description": "TID-free TEP band",
+          "lambda_km": 3329.402352729577,
+          "r_squared": 0.8704047717607004
+        },
+        "overlap": {
+          "frequency_range": "92-500 \u00b5Hz",
+          "description": "TID-TEP overlap zone",
+          "lambda_km": 3450.2471895569133,
+          "r_squared": 0.9252271607296236
+        },
+        "high_tid": {
+          "frequency_range": "600-1667 \u00b5Hz",
+          "description": "TEP-free TID band",
+          "lambda_km": 3302.809498705311,
+          "r_squared": 0.8542768882769981
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3360.8196803306005,
+        "std": 64.15997987377949,
+        "cv": 0.019090574912209553
+      },
+      "band_consistency": "HIGH",
+      "interpretation": "High cross-band consistency supports genuine TEP signal"
+    },
+    "igs_combined": {
+      "frequency_bands": {
+        "low_tep": {
+          "frequency_range": "10-90 \u00b5Hz",
+          "description": "TID-free TEP band",
+          "lambda_km": 3396.6430695889176,
+          "r_squared": 0.9265492938529045
+        },
+        "overlap": {
+          "frequency_range": "92-500 \u00b5Hz",
+          "description": "TID-TEP overlap zone",
+          "lambda_km": 3477.719493453564,
+          "r_squared": 0.8861822429145301
+        },
+        "high_tid": {
+          "frequency_range": "600-1667 \u00b5Hz",
+          "description": "TEP-free TID band",
+          "lambda_km": 3401.008164904009,
+          "r_squared": 0.922106141346386
+        }
+      },
+      "lambda_statistics": {
+        "mean": 3425.1235759821634,
+        "std": 37.23359965829471,
+        "cv": 0.010870731765529912
+      },
+      "band_consistency": "HIGH",
+      "interpretation": "High cross-band consistency supports genuine TEP signal"
+    }
+  },
+  "validation_summary": {
+    "overall_validation_score": 0.8915311605816724,
+    "score_std": 0.009449424799497532,
+    "confidence_level": "HIGH",
+    "assessment": "Strong evidence for ionospheric independence",
+    "center_scores": {
+      "code": {
+        "individual_scores": [
+          0.9625581497308446,
+          0.8566283410938749,
+          0.8268058261736305,
+          0.9643614194829162
+        ],
+        "overall_score": 0.9025884341203165,
+        "n_tests": 4
+      },
+      "esa_final": {
+        "individual_scores": [
+          0.9795370104176262,
+          0.8443255448673445,
+          0.9370502027435708,
+          0.8090942508779044
+        ],
+        "overall_score": 0.8925017522266114,
+        "n_tests": 4
+      },
+      "igs_combined": {
+        "individual_scores": [
+          0.9636798353000126,
+          0.8568848093872151,
+          0.8061558545604283,
+          0.8912926823447009
+        ],
+        "overall_score": 0.8795032953980892,
+        "n_tests": 4
+      }
+    },
+    "validation_tests": {
+      "tec_correlation": true,
+      "local_time_binning": true,
+      "geomagnetic_stratification": true,
+      "frequency_filtering": true
+    }
+  },
+  "timestamp": "2025-09-25T20:39:40.668144"
+}
