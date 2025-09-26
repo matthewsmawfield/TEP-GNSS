@@ -1,0 +1,12 @@
+{
+  "acquisition_date": "2025-09-26T13:13:09.726427",
+  "years": "2010-2025",
+  "total_files": 5660,
+  "successful_downloads": 0,
+  "failed_downloads": 0,
+  "skipped_files": 5660,
+  "total_size_gb": 0.0,
+  "total_time_minutes": 0.0071996649106343584,
+  "success_rate": 0.0,
+  "parallel_workers": 10
+}

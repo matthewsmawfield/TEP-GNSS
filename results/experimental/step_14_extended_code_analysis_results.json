@@ -4,236 +4,243 @@
   "tep_method": "phase_coherent_cross_spectral_density",
   "data_center": "CODE_only",
   "data_summary": {
-    "total_days": 897,
+    "total_days": 1993,
     "date_range": [
-      "2023-01-16",
+      "2020-01-01",
       "2025-06-30"
     ],
-    "analysis_span_years": 2.4531143052703626
+    "analysis_span_years": 5.494866529774128
   },
   "correlations": {
     "sun_influence": {
       "coherence_mean": {
-        "pearson_r": 0.034572567034999224,
-        "pearson_p": 0.3009901938938731,
-        "spearman_rho": 0.05299253889569324,
-        "spearman_p": 0.11273348265784186,
-        "n_points": 897
+        "pearson_r": -0.042342655056774696,
+        "pearson_p": 0.05876250256778009,
+        "spearman_rho": -0.012097811458302027,
+        "spearman_p": 0.5893598944168155,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.050696522871442815,
-        "pearson_p": 0.1292118579991089,
-        "spearman_rho": 0.07116621969828368,
-        "spearman_p": 0.03307630751645492,
-        "n_points": 897
+        "pearson_r": -0.05852627095597348,
+        "pearson_p": 0.008964866270223637,
+        "spearman_rho": -0.03572257314444498,
+        "spearman_p": 0.11087509019168687,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.3138062668947228,
-        "pearson_p": 5.992525729674968e-22,
-        "spearman_rho": -0.29616550807815206,
-        "spearman_p": 1.2826269454270455e-19,
-        "n_points": 897
+        "pearson_r": 0.00456339808096341,
+        "pearson_p": 0.8386683131382231,
+        "spearman_rho": -0.04119330285453717,
+        "spearman_p": 0.06597103013557244,
+        "n_points": 1993
       }
     },
     "jupiter_influence": {
       "coherence_mean": {
-        "pearson_r": 0.05229914797204782,
-        "pearson_p": 0.11752561552380118,
-        "spearman_rho": 0.05322729040592408,
-        "spearman_p": 0.11114637865216245,
-        "n_points": 897
+        "pearson_r": 0.05102568098726371,
+        "pearson_p": 0.0227268304125298,
+        "spearman_rho": 0.055932478336235304,
+        "spearman_p": 0.01251134726373045,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.05219942821318181,
-        "pearson_p": 0.11822773176927595,
-        "spearman_rho": 0.05600934270774252,
-        "spearman_p": 0.09364920905569145,
-        "n_points": 897
+        "pearson_r": 0.07590858583874086,
+        "pearson_p": 0.0006949665612813601,
+        "spearman_rho": 0.07370561681720271,
+        "spearman_p": 0.0009917489043588445,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.28392210005754615,
-        "pearson_p": 4.2966395830471784e-18,
-        "spearman_rho": -0.31825802108949436,
-        "spearman_p": 1.459112298095079e-22,
-        "n_points": 897
+        "pearson_r": 0.09123159437492619,
+        "pearson_p": 4.526725999934978e-05,
+        "spearman_rho": 0.012553665809451157,
+        "spearman_p": 0.5754084149912824,
+        "n_points": 1993
       }
     },
     "saturn_influence": {
       "coherence_mean": {
-        "pearson_r": -0.013521689860792333,
-        "pearson_p": 0.6858981398069309,
-        "spearman_rho": -0.023090576872531937,
-        "spearman_p": 0.48976064670495434,
-        "n_points": 897
+        "pearson_r": 0.10364050556490877,
+        "pearson_p": 3.5450664512606694e-06,
+        "spearman_rho": 0.0999654062265991,
+        "spearman_p": 7.779572666420272e-06,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": -0.025372636387203985,
-        "pearson_p": 0.4478693382761175,
-        "spearman_rho": -0.03909231987630844,
-        "spearman_p": 0.24215077132879304,
-        "n_points": 897
+        "pearson_r": 0.12476232389454855,
+        "pearson_p": 2.295412997257778e-08,
+        "spearman_rho": 0.12008097179174375,
+        "spearman_p": 7.578726918244473e-08,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": 0.012933461942158397,
-        "pearson_p": 0.6988800794059239,
-        "spearman_rho": 0.009010357863788192,
-        "spearman_p": 0.7875533966261202,
-        "n_points": 897
+        "pearson_r": -0.07381395838885534,
+        "pearson_p": 0.0009747657389499978,
+        "spearman_rho": -0.08455341116901022,
+        "spearman_p": 0.00015738287466910016,
+        "n_points": 1993
       }
     },
     "venus_influence": {
       "coherence_mean": {
-        "pearson_r": 0.05065120175420031,
-        "pearson_p": 0.12955498445970293,
-        "spearman_rho": 0.06385907806486145,
-        "spearman_p": 0.05589397242915976,
-        "n_points": 897
+        "pearson_r": 0.07509629673719764,
+        "pearson_p": 0.0007931876443394791,
+        "spearman_rho": 0.09342898965729671,
+        "spearman_p": 2.947614024153795e-05,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.04770090527495952,
-        "pearson_p": 0.15344717307031466,
-        "spearman_rho": 0.06416101782162834,
-        "spearman_p": 0.05474182670150205,
-        "n_points": 897
+        "pearson_r": 0.08324194400820092,
+        "pearson_p": 0.0001989869901969,
+        "spearman_rho": 0.10542541273400965,
+        "spearman_p": 2.3969339313871252e-06,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.012766252061469727,
-        "pearson_p": 0.7025866354732336,
-        "spearman_rho": 0.007500442933651996,
-        "spearman_p": 0.8225021942578256,
-        "n_points": 897
+        "pearson_r": -0.0457117796668032,
+        "pearson_p": 0.04130068775803413,
+        "spearman_rho": -0.07010635125077928,
+        "spearman_p": 0.001738270033303944,
+        "n_points": 1993
       }
     },
     "mars_influence": {
       "coherence_mean": {
-        "pearson_r": -0.0009148698505410346,
-        "pearson_p": 0.9781709173352985,
-        "spearman_rho": -0.0471666811207578,
-        "spearman_p": 0.1581102290996725,
-        "n_points": 897
+        "pearson_r": 0.015503579764957085,
+        "pearson_p": 0.48910432713633567,
+        "spearman_rho": 0.019527321953407,
+        "spearman_p": 0.3835931306342949,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.01927439536835007,
-        "pearson_p": 0.5642665029203245,
-        "spearman_rho": -0.020892568504411246,
-        "spearman_p": 0.532018821661889,
-        "n_points": 897
+        "pearson_r": -0.021122452217692034,
+        "pearson_p": 0.34594501003719025,
+        "spearman_rho": -0.01916938769324253,
+        "spearman_p": 0.39237334665639234,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.1467202527048747,
-        "pearson_p": 1.024034154873268e-05,
-        "spearman_rho": -0.03382066121880443,
-        "spearman_p": 0.311631587822887,
-        "n_points": 897
+        "pearson_r": 0.23950204321465832,
+        "pearson_p": 2.139317874403082e-27,
+        "spearman_rho": 0.1329158131938177,
+        "spearman_p": 2.5771690062491963e-09,
+        "n_points": 1993
       }
     },
     "stacked_planetary_influence": {
       "coherence_mean": {
-        "pearson_r": 0.06804278673533487,
-        "pearson_p": 0.04161011835478725,
-        "spearman_rho": 0.06591571012506424,
-        "spearman_p": 0.04843104747049028,
-        "n_points": 897
+        "pearson_r": 0.0867314910652666,
+        "pearson_p": 0.00010582435132983398,
+        "spearman_rho": 0.08365994585719448,
+        "spearman_p": 0.00018471972786979847,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.06623832514654468,
-        "pearson_p": 0.04733983146636678,
-        "spearman_rho": 0.06533908167217695,
-        "spearman_p": 0.05043397696315828,
-        "n_points": 897
+        "pearson_r": 0.11107518507444601,
+        "pearson_p": 6.66048207680786e-07,
+        "spearman_rho": 0.09910502307131772,
+        "spearman_p": 9.315179971315731e-06,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.22876571789444963,
-        "pearson_p": 4.087416526075191e-12,
-        "spearman_rho": -0.22753179146311223,
-        "spearman_p": 5.359683335985297e-12,
-        "n_points": 897
+        "pearson_r": 0.052124318990226674,
+        "pearson_p": 0.019959435740098657,
+        "spearman_rho": 0.00513987631166188,
+        "spearman_p": 0.8186223843225237,
+        "n_points": 1993
       }
     },
     "total_gravitational_influence": {
       "coherence_mean": {
-        "pearson_r": 0.03460699039406651,
-        "pearson_p": 0.3005088699382933,
-        "spearman_rho": 0.05305159671595955,
-        "spearman_p": 0.11233253640800477,
-        "n_points": 897
+        "pearson_r": -0.042293434479029356,
+        "pearson_p": 0.059057223086601385,
+        "spearman_rho": -0.012166220761923661,
+        "spearman_p": 0.5872563043348282,
+        "n_points": 1993
       },
       "coherence_median": {
-        "pearson_r": 0.050726447964040446,
-        "pearson_p": 0.12898568148299538,
-        "spearman_rho": 0.07119358714540035,
-        "spearman_p": 0.03300870008928767,
-        "n_points": 897
+        "pearson_r": -0.05846350590545033,
+        "pearson_p": 0.00903878835901259,
+        "spearman_rho": -0.03570893342466418,
+        "spearman_p": 0.11101152629610683,
+        "n_points": 1993
       },
       "coherence_std": {
-        "pearson_r": -0.31388043251082265,
-        "pearson_p": 5.8542814482980695e-22,
-        "spearman_rho": -0.29632713563187074,
-        "spearman_p": 1.223115189779027e-19,
-        "n_points": 897
+        "pearson_r": 0.004594868667163441,
+        "pearson_p": 0.8375711544138374,
+        "spearman_rho": -0.041101476525890676,
+        "spearman_p": 0.06657707700994135,
+        "n_points": 1993
       }
     }
   },
   "extended_pattern_analysis": {
-    "smoothed_correlation": -0.43943391299660456,
-    "smoothed_p_value": 1.2086901893313494e-43,
-    "optimal_lag_days": 4,
-    "max_cross_correlation": -395.236732703032,
-    "smoothing_window": 44,
+    "smoothed_correlation": 0.05134071972071464,
+    "smoothed_p_value": 0.02190109077185642,
+    "optimal_lag_days": 557,
+    "max_cross_correlation": -371.38606528263017,
+    "smoothing_window": 91,
     "pattern_relationship": "anti_phase"
   },
   "yearly_analysis": {
     "years_covered": [
+      2020,
+      2021,
+      2022,
       2023,
       2024,
       2025
     ],
     "yearly_statistics": {
       "total_planetary_influence_mean": {
+        "2020": 0.0,
+        "2021": 0.0,
+        "2022": 0.0,
         "2023": 0.0,
         "2024": 0.0,
         "2025": 0.0
       },
       "total_planetary_influence_std": {
+        "2020": 0.0,
+        "2021": 0.0,
+        "2022": 0.0,
         "2023": 0.0,
         "2024": 0.0,
         "2025": 0.0
       },
       "coherence_mean_mean": {
+        "2020": -0.002256,
+        "2021": -0.006413,
+        "2022": -0.000706,
         "2023": 0.006912,
         "2024": 0.006311,
         "2025": 0.006901
       },
       "coherence_mean_std": {
+        "2020": 0.013631,
+        "2021": 0.013091,
+        "2022": 0.013148,
         "2023": 0.007183,
         "2024": 0.007129,
         "2025": 0.007057
       },
       "coherence_std_mean": {
+        "2020": 1.812007,
+        "2021": 1.812292,
+        "2022": 1.815772,
         "2023": 0.716079,
         "2024": 0.71548,
         "2025": 0.717448
       },
       "coherence_std_std": {
+        "2020": 0.009572,
+        "2021": 0.009082,
+        "2022": 0.009474,
         "2023": 0.005069,
         "2024": 0.005292,
         "2025": 0.006356
       }
     }
   },
-  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_extended_code_gravitational_temporal_analysis.png",
-  "data_assessment": {
-    "total_files": 912,
-    "date_range": {
-      "start": "2023-01-01",
-      "end": "2025-06-30",
-      "span_days": 911,
-      "span_years": 2.4941820670773445
-    },
-    "yearly_coverage": {
-      "2023": 365,
-      "2024": 366,
-      "2025": 181
-    }
-  }
+  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_extended_code_gravitational_temporal_analysis.png"
 }

@@ -25,6 +25,8 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional
+import tempfile
+import subprocess
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from scipy import stats
@@ -32,6 +34,72 @@ from scipy.signal import savgol_filter, correlate
 import seaborn as sns
 from astropy.time import Time
 from astropy.coordinates import solar_system_ephemeris, get_body_barycentric_posvel
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed, wait, FIRST_COMPLETED
+from multiprocessing import cpu_count
+import time
+
+# Minimal logger to ensure immediate flush for progress lines
+def log(message: str) -> None:
+    print(message, flush=True)
+
+# Checkpoint system for resuming interrupted processing
+def save_checkpoint(checkpoint_data: dict, checkpoint_dir: str = '/Users/matthewsmawfield/www/TEP-GNSS/data/experimental/checkpoints') -> str:
+    """Save processing checkpoint to allow resuming."""
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    checkpoint_file = os.path.join(checkpoint_dir, f'step14_extended_checkpoint_{timestamp}.json')
+    
+    with open(checkpoint_file, 'w') as f:
+        json.dump(checkpoint_data, f, indent=2, default=str)
+    
+    log(f"  💾 Checkpoint saved: {os.path.basename(checkpoint_file)}")
+    return checkpoint_file
+
+def load_latest_checkpoint(checkpoint_dir: str = '/Users/matthewsmawfield/www/TEP-GNSS/data/experimental/checkpoints') -> tuple:
+    """Load the most recent checkpoint if available."""
+    if not os.path.exists(checkpoint_dir):
+        return None, {}
+    
+    checkpoint_files = [f for f in os.listdir(checkpoint_dir) if f.startswith('step14_extended_checkpoint_') and f.endswith('.json')]
+    if not checkpoint_files:
+        return None, {}
+    
+    # Get most recent checkpoint
+    latest_file = max(checkpoint_files, key=lambda f: os.path.getctime(os.path.join(checkpoint_dir, f)))
+    checkpoint_path = os.path.join(checkpoint_dir, latest_file)
+    
+    try:
+        with open(checkpoint_path, 'r') as f:
+            checkpoint_data = json.load(f)
+        log(f"  📂 Found checkpoint: {latest_file} ({len(checkpoint_data.get('processed_files', []))} files)")
+        return checkpoint_path, checkpoint_data
+    except Exception as e:
+        log(f"  ⚠️  Failed to load checkpoint {latest_file}: {e}")
+        return None, {}
+
+def cleanup_old_checkpoints(checkpoint_dir: str = '/Users/matthewsmawfield/www/TEP-GNSS/data/experimental/checkpoints', keep_count: int = 5):
+    """Keep only the most recent N checkpoints to save disk space."""
+    if not os.path.exists(checkpoint_dir):
+        return
+    
+    checkpoint_files = [f for f in os.listdir(checkpoint_dir) if f.startswith('step14_extended_checkpoint_') and f.endswith('.json')]
+    if len(checkpoint_files) <= keep_count:
+        return
+    
+    # Sort by creation time, keep newest
+    checkpoint_files.sort(key=lambda f: os.path.getctime(os.path.join(checkpoint_dir, f)), reverse=True)
+    files_to_delete = checkpoint_files[keep_count:]
+    
+    for file_to_delete in files_to_delete:
+        try:
+            os.remove(os.path.join(checkpoint_dir, file_to_delete))
+            log(f"  🗑️  Cleaned up old checkpoint: {file_to_delete}")
+        except Exception as e:
+            log(f"  ⚠️  Failed to delete {file_to_delete}: {e}")
+
+# Add project root to path for imports
+sys.path.append('/Users/matthewsmawfield/www/TEP-GNSS')
+from scripts.steps.step_3_tep_correlation_analysis import process_single_clk_file
 from astropy import units as u
 import glob
 from pathlib import Path
@@ -103,10 +171,100 @@ def calculate_high_precision_gravitational_influence(date: datetime) -> Dict:
         print(f"Error calculating positions for {date}: {e}")
         return None
 
-def extract_extended_code_tep_coherence_data(start_year: int = 2010, end_year: int = 2025) -> pd.DataFrame:
+def process_single_historical_file(args):
+    """Process a single historical CLK file (for parallel execution)."""
+    clk_file, start_year, end_year, coords_file = args
+    
+    try:
+        # Extract date from filename (handle both legacy and modern formats)
+        filename = os.path.basename(clk_file)
+        
+        if filename.startswith('COD0OPSFIN_'):
+            # Modern format: COD0OPSFIN_20200010000_01D_30S_CLK.CLK.gz
+            parts = filename.split('_')
+            if len(parts) >= 2:
+                date_part = parts[1]  # 20200010000
+                year = int(date_part[:4])
+                doy = int(date_part[4:7])  # Day of year
+                date = datetime(year, 1, 1) + timedelta(days=doy - 1)
+            else:
+                return None
+        elif filename.startswith('COD') and (filename.endswith('.CLK.Z') or filename.endswith('.CLK')):
+            # Legacy format: CODWWWWd.CLK(.Z) where WWWW = GPS week, d = day-of-week (0-6)
+            code = filename[3:8]
+            if len(code) != 5 or not code.isdigit():
+                return None
+            gps_week = int(code[:4])
+            day_of_week = int(code[4])
+            gps_epoch = datetime(1980, 1, 6)
+            date = gps_epoch + timedelta(weeks=gps_week, days=day_of_week)
+        else:
+            return None
+        
+        # Skip if outside our year range
+        if not (start_year <= date.year <= end_year):
+            return None
+        
+        # Load coordinates using official pipeline method
+        coords_file = '/Users/matthewsmawfield/www/TEP-GNSS/data/coordinates/station_coords_global.csv'
+        if not os.path.exists(coords_file):
+            return {'error': f"Coordinates file not found: {coords_file}"}
+        coords_df = pd.read_csv(coords_file)
+        
+        # Process the CLK file (handle .Z by temporary decompression)
+        input_path = Path(clk_file)
+        temp_path = None
+        try:
+            if input_path.suffix == '.Z':
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.CLK') as tmp:
+                    temp_path = Path(tmp.name)
+                # Use gzip -dc which can decompress .Z on macOS/Linux
+                proc = subprocess.run(['gzip', '-dc', str(input_path)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if proc.returncode != 0 or not proc.stdout:
+                    # Fallback to uncompress -c if available
+                    proc2 = subprocess.run(['uncompress', '-c', str(input_path)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    if proc2.returncode != 0 or not proc2.stdout:
+                        return {'error': f"Failed to decompress {filename}: {proc.stderr.decode(errors='ignore') or proc2.stderr.decode(errors='ignore')}"}
+                    temp_data = proc2.stdout
+                else:
+                    temp_data = proc.stdout
+                with open(temp_path, 'wb') as f:
+                    f.write(temp_data)
+                parse_path = temp_path
+            else:
+                parse_path = input_path
+            
+            clk_data = process_single_clk_file(parse_path, coords_df)
+        finally:
+            if temp_path and temp_path.exists():
+                try:
+                    temp_path.unlink()
+                except Exception:
+                    pass
+        
+        if clk_data:
+            # Extract coherence values from the processed data
+            coherence_values = []
+            for entry in clk_data:
+                if 'plateau_phase' in entry and entry['plateau_phase'] is not None:
+                    coherence_values.append(entry['plateau_phase'])
+            
+            if coherence_values:
+                return {
+                    'date': date,
+                    'coherence_values': coherence_values,
+                    'filename': filename
+                }
+        
+        return None
+        
+    except Exception as e:
+        return {'error': f"Error processing {filename}: {e}"}
+
+def extract_extended_code_tep_coherence_data(start_year: int = 2020, end_year: int = 2025) -> pd.DataFrame:
     """
     Extract CODE-only TEP coherence data for extended time period.
-    Uses existing Step 3 pair-level outputs but only from CODE center.
+    Uses both processed Step 3 outputs AND raw historical CLK files.
     """
     print(f"Extracting extended CODE TEP coherence data from {start_year} to {end_year}...")
     
@@ -118,11 +276,48 @@ def extract_extended_code_tep_coherence_data(start_year: int = 2010, end_year: i
     
     print("Processing CODE center for extended timeframe...")
     
-    # Find all daily pair files for CODE center
+    # Find processed Step 3 files (modern data 2023+)
     pair_files = glob.glob('/Users/matthewsmawfield/www/TEP-GNSS/results/tmp/step_3_pairs_code_*.csv')
-    print(f"  Found {len(pair_files)} CODE daily files")
     
-    # Filter files by year range
+    # Find raw historical CLK files (legacy data 2010-2022)
+    historical_files = []
+    for year in range(start_year, end_year + 1):
+        # Look for ALL file formats in each year (mixed formats exist)
+        if year >= 2020 and year <= 2022:
+            # Historical years 2020-2022: Look for both modern (.gz) and legacy (.CLK.Z) formats
+            
+            # Modern format files
+            modern_pattern = f'/Users/matthewsmawfield/www/TEP-GNSS/data/historical_code/raw/{year}/COD0OPSFIN_*.CLK.gz'
+            modern_files = glob.glob(modern_pattern)
+            historical_files.extend(modern_files)
+            
+            # Legacy format files  
+            clk_z_pattern = f'/Users/matthewsmawfield/www/TEP-GNSS/data/historical_code/raw/{year}/*.CLK.Z'
+            clk_pattern = f'/Users/matthewsmawfield/www/TEP-GNSS/data/historical_code/raw/{year}/*.CLK'
+            clk_z_files = glob.glob(clk_z_pattern)
+            historical_files.extend(clk_z_files)
+            
+            # Only add .CLK files if no corresponding .CLK.Z exists
+            for clk_file in glob.glob(clk_pattern):
+                clk_z_file = clk_file + '.Z'
+                if not os.path.exists(clk_z_file):
+                    historical_files.append(clk_file)
+        elif year < 2020:
+            # Pre-2020 legacy format only: COD15645.CLK.Z
+            clk_z_pattern = f'/Users/matthewsmawfield/www/TEP-GNSS/data/historical_code/raw/{year}/*.CLK.Z'
+            clk_pattern = f'/Users/matthewsmawfield/www/TEP-GNSS/data/historical_code/raw/{year}/*.CLK'
+            historical_files.extend(glob.glob(clk_z_pattern))
+            for clk_file in glob.glob(clk_pattern):
+                clk_z_file = clk_file + '.Z'
+                if not os.path.exists(clk_z_file):
+                    historical_files.append(clk_file)
+        # Skip 2023+ as they should be processed files, not historical
+    
+    print(f"  Found {len(pair_files)} processed CODE files (2023-2025)")
+    print(f"  Found {len(historical_files)} historical CODE files (2020-2022)")
+    print(f"  TOTAL FILES: {len(pair_files) + len(historical_files)} across {start_year}-{end_year}")
+    
+    # Filter processed files by year range (these are already 2023+)
     filtered_files = []
     for file_path in pair_files:
         try:
@@ -151,7 +346,8 @@ def extract_extended_code_tep_coherence_data(start_year: int = 2010, end_year: i
             print(f"Error processing filename {filename}: {e}")
             continue
     
-    print(f"  Filtered to {len(filtered_files)} files within {start_year}-{end_year}")
+    print(f"  Filtered to {len(filtered_files)} processed files within {start_year}-{end_year}")
+    print(f"  + {len(historical_files)} historical files = {len(filtered_files) + len(historical_files)} TOTAL")
     
     # Process filtered files
     for file_path, date in filtered_files:
@@ -173,8 +369,155 @@ def extract_extended_code_tep_coherence_data(start_year: int = 2010, end_year: i
             print(f"Error processing {filename}: {e}")
             continue
     
+    # Check for existing checkpoint
+    checkpoint_path, checkpoint_data = load_latest_checkpoint()
+    processed_files_set = set(checkpoint_data.get('processed_files', []))
+    all_daily_data = checkpoint_data.get('daily_data', {})
+    
+    # Filter out already processed files
+    if processed_files_set:
+        remaining_files = [f for f in historical_files if os.path.basename(f) not in processed_files_set]
+        log(f"  📂 Resuming from checkpoint: {len(processed_files_set)} files already processed")
+        log(f"  📋 Remaining files to process: {len(remaining_files)}")
+        historical_files = remaining_files
+    
+    if not historical_files:
+        log("  ✅ All historical files already processed!")
+        historical_processed = len(processed_files_set)
+    else:
+        # Process historical CLK files in parallel
+        print("🚀 Processing historical CLK files in parallel...")
+        print(f"  Total files: {len(historical_files)}")
+        
+        # Process all historical files for full analysis
+        print(f"  Processing {len(historical_files)} historical files for complete analysis...")
+        
+        # Determine optimal number of workers (env override), default 12
+        try:
+            requested_workers = int(os.getenv('TEP_HIST_WORKERS', '12'))
+        except Exception:
+            requested_workers = 12
+        max_workers = max(1, min(cpu_count(), requested_workers))
+        log(f"  Using {max_workers} parallel workers (CPU cores: {cpu_count()})")
+        
+        coords_file = '/Users/matthewsmawfield/www/TEP-GNSS/data/coordinates/station_coords_global.csv'
+        if not os.path.exists(coords_file):
+            print(f"  ERROR: Coordinates file not found: {coords_file}")
+            return pd.DataFrame()
+        
+        # Prepare arguments for parallel processing
+        process_args = [(clk_file, start_year, end_year, coords_file) for clk_file in historical_files]
+        
+        historical_processed = len(processed_files_set)  # Start from checkpoint count
+        start_time = time.time()
+    
+    # Use ProcessPoolExecutor for CPU-intensive tasks
+    log("  🔄 Starting parallel processing...")
+    log(f"  📋 Sample files to process:")
+    for i, clk_file in enumerate(historical_files[:5]):
+        log(f"    {i+1}. {os.path.basename(clk_file)}")
+    log(f"    ... and {len(historical_files)-5} more files")
+    
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks and keep mapping for filenames
+        future_to_args = {executor.submit(process_single_historical_file, args): args for args in process_args}
+        all_futures = set(future_to_args.keys())
+        log(f"  ⚡ Processing {len(all_futures)} files with {max_workers} workers...")
+        log(f"  📊 Progress will be shown for EVERY file completion; heartbeat printed if none finish in 30s...")
+        completed_count = 0
+
+        last_heartbeat = time.time()
+        pending = set(all_futures)
+        # Stabilize ETA with exponential moving average of completion rate
+        ema_rate = 0.0
+        last_completion_ts = time.time()
+
+        while pending:
+            # Wait for at least one future to complete, or timeout for heartbeat
+            done, pending = wait(pending, timeout=30, return_when=FIRST_COMPLETED)
+
+            if not done:
+                # Heartbeat (no completions in the last 30s)
+                elapsed = time.time() - start_time
+                rate = ema_rate if ema_rate > 0 else ((completed_count / elapsed) if elapsed > 0 else 0)
+                progress_pct = (completed_count / len(all_futures)) * 100
+                in_progress = len(pending)
+                log(f"    [{completed_count:4d}/{len(all_futures)}] ⏳ Still processing... running ~{min(max_workers, in_progress)} workers | {rate:.2f} files/s | {progress_pct:4.1f}% | {elapsed:.0f}s elapsed")
+                last_heartbeat = time.time()
+                continue
+
+            # Handle all newly completed futures
+            for future in done:
+                completed_count += 1
+                args = future_to_args.get(future)
+                filename = os.path.basename(args[0]) if args else "unknown"
+                try:
+                    result = future.result()
+
+                    if result and 'error' not in result:
+                        date = result['date']
+                        coherence_values = result['coherence_values']
+
+                        if date not in all_daily_data:
+                            all_daily_data[date] = []
+                        all_daily_data[date].extend(coherence_values)
+                        historical_processed += 1
+                        processed_files_set.add(filename)  # Track all processed files
+
+                        # Show progress for EVERY file completion (EMA-smoothed rate)
+                        now = time.time()
+                        dt = max(1e-6, now - last_completion_ts)
+                        inst_rate = 1.0 / dt
+                        ema_rate = inst_rate if ema_rate == 0 else (0.85 * ema_rate + 0.15 * inst_rate)
+                        last_completion_ts = now
+                        elapsed = now - start_time
+                        rate = ema_rate if ema_rate > 0 else (completed_count / elapsed if elapsed > 0 else 0)
+                        eta = (len(all_futures) - completed_count) / rate if rate > 0 else 0
+                        progress_pct = (completed_count / len(all_futures)) * 100
+                        log(f"    [{completed_count:4d}/{len(all_futures)}] ✓ {filename} | {len(coherence_values):5d} values | {rate:.2f} files/s | {progress_pct:4.1f}% | ETA: {eta/60:.1f}m")
+
+                        # Save checkpoint every 50 files
+                        if completed_count % 50 == 0:
+                            processed_files_set.add(filename)
+                            checkpoint_data = {
+                                'processed_files': list(processed_files_set),
+                                'daily_data': all_daily_data,
+                                'completed_count': completed_count + len(processed_files_set) - len(historical_files),
+                                'timestamp': datetime.now().isoformat(),
+                                'total_files': len(all_futures) + len(processed_files_set) - len(historical_files)
+                            }
+                            save_checkpoint(checkpoint_data)
+                            cleanup_old_checkpoints()
+
+                    elif result and 'error' in result:
+                        log(f"    [{completed_count:4d}/{len(all_futures)}] ✗ {filename} | {result['error']}")
+                    else:
+                        log(f"    [{completed_count:4d}/{len(all_futures)}] ⚠ {filename} | No result")
+
+                except Exception as e:
+                    log(f"    [{completed_count:4d}/{len(all_futures)}] ✗ {filename} | ERROR: {e}")
+    
+        elapsed_total = time.time() - start_time
+        print(f"  ⚡ Parallel processing complete! {elapsed_total:.1f}s | {len(historical_files)/elapsed_total:.1f} files/s")
+        
+        # Save final checkpoint
+        final_checkpoint_data = {
+            'processed_files': list(processed_files_set),
+            'daily_data': all_daily_data,
+            'completed_count': len(processed_files_set),
+            'timestamp': datetime.now().isoformat(),
+            'total_files': len(processed_files_set),
+            'status': 'completed'
+        }
+        save_checkpoint(final_checkpoint_data)
+        cleanup_old_checkpoints()
+    
+    print(f"  ✅ COMPLETED: Processed {historical_processed} historical CLK files")
+    print(f"  📊 Total unique dates with historical data: {len([d for d in all_daily_data.keys() if isinstance(d, datetime)])}")
+    
     # Aggregate daily data
-    print(f"Aggregating extended CODE data...")
+    print(f"📈 Aggregating extended CODE data...")
+    print(f"  Combining processed files and historical files...")
     daily_aggregated = []
     
     for date, coherence_values in all_daily_data.items():
@@ -189,7 +532,7 @@ def extract_extended_code_tep_coherence_data(start_year: int = 2010, end_year: i
     
     if daily_aggregated:
         tep_df = pd.DataFrame(daily_aggregated).sort_values('date').reset_index(drop=True)
-        print(f"Successfully extracted extended CODE TEP data for {len(tep_df)} days")
+        print(f"✅ Successfully extracted extended CODE TEP data for {len(tep_df)} days")
         
         # Show statistics
         print(f"  Date range: {tep_df['date'].min().strftime('%Y-%m-%d')} to {tep_df['date'].max().strftime('%Y-%m-%d')}")
@@ -402,12 +745,12 @@ def create_extended_visualization(combined_df: pd.DataFrame, analysis_results: D
     
     # Add span info to title
     span_years = analysis_results['data_summary']['analysis_span_years']
-    ax1.set_title(f'Extended Stacked Planetary Gravitational Influences ({span_years:.1f} Years)\n' + 
-                  'CODE-Only Analysis with NASA/JPL DE440/441 Ephemeris', fontsize=14, fontweight='bold')
+    ax1.set_title(f'Historical Stacked Planetary Gravitational Influences ({span_years:.1f} Years)\n' + 
+                  'CODE-Only Analysis 2020-2022 with NASA/JPL DE440/441 Ephemeris', fontsize=14, fontweight='bold')
     ax1.legend(loc='upper right', fontsize=10)
     ax1.grid(True, alpha=0.3)
     
-    # Panel 2: Extended TEP Temporal Field Signatures
+    # Panel 2: Historical TEP Temporal Field Signatures
     ax2 = fig.add_subplot(gs[1, 0])
     
     ax2_twin = ax2.twinx()
@@ -419,8 +762,8 @@ def create_extended_visualization(combined_df: pd.DataFrame, analysis_results: D
     
     ax2.set_ylabel('TEP Coherence Mean', fontsize=12, fontweight='bold', color=colors['temporal'])
     ax2_twin.set_ylabel('TEP Coherence Variability (Std)', fontsize=12, fontweight='bold', color=colors['secondary'])
-    ax2.set_title('Extended TEP Temporal Field Signatures (CODE Only)\n' +
-                  'Phase-Coherent Cross-Spectral Density Analysis', fontsize=14, fontweight='bold')
+    ax2.set_title('Historical TEP Temporal Field Signatures (CODE Only)\n' +
+                  'Phase-Coherent Cross-Spectral Density Analysis 2020-2022', fontsize=14, fontweight='bold')
     
     lines1, labels1 = ax2.get_legend_handles_labels()
     lines2, labels2 = ax2_twin.get_legend_handles_labels()
@@ -457,8 +800,8 @@ def create_extended_visualization(combined_df: pd.DataFrame, analysis_results: D
                           edgecolor='#2D0140', alpha=0.95, linewidth=1))
     
     ax3.set_ylabel('Normalized Pattern Amplitude', fontsize=12, fontweight='bold')
-    ax3.set_title('Extended Gravitational-Temporal Field Pattern Correlation\n' +
-                  'Long-Term Smoothed Patterns Reveal Multi-Year Coupling', fontsize=14, fontweight='bold')
+    ax3.set_title('Historical Gravitational-Temporal Field Pattern Correlation\n' +
+                  'Smoothed Patterns Reveal 2020-2022 Coupling', fontsize=14, fontweight='bold')
     ax3.legend(loc='upper right', fontsize=10)
     ax3.grid(True, alpha=0.3)
     ax3.axhline(y=0, color='#220126', linestyle='-', alpha=0.8, linewidth=1.5)
@@ -499,11 +842,9 @@ def create_extended_visualization(combined_df: pd.DataFrame, analysis_results: D
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
         ax.tick_params(axis='x', rotation=45)
     
-    plt.tight_layout()
-    
-    # Save the figure
-    output_path = '/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_extended_code_gravitational_temporal_analysis.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    # Save the figure with proper layout (skip tight_layout to avoid warnings)
+    output_path = '/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_historical_2020_2022_gravitational_temporal_analysis.png'
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close()
     
     print(f"Extended analysis visualization saved: {output_path}")
@@ -570,51 +911,65 @@ def main():
     print("EXPERIMENTAL - Does not disrupt existing pipeline")
     print()
     
-    # First assess what data is available
-    data_assessment = assess_data_availability()
-    print("DATA AVAILABILITY ASSESSMENT:")
-    print(json.dumps(data_assessment, indent=2))
+    # Use focused date range for 2020-2022 analysis
+    start_year, end_year = 2020, 2022
+    start_date = f"{start_year}-01-01"
+    end_date = f"{end_year}-12-31"
+    
+    print(f"FOCUSED ANALYSIS: Using {start_year}-{end_year} date range")
+    print(f"This will analyze historical raw files for the {start_year}-{end_year} period only")
     print()
     
-    if 'error' in data_assessment:
-        print("ERROR: No CODE data available for extended analysis")
-        return None
+    print(f"🌌 Generating gravitational data for focused period: {start_date} to {end_date}")
     
-    # Determine optimal date range based on available data
-    available_span = data_assessment['date_range']['span_years']
-    if available_span < 3:
-        print(f"WARNING: Available data span ({available_span:.1f} years) may be too short for meaningful extended analysis")
-        print("Proceeding with available data...")
-    
-    # Use the full available range
-    start_date = data_assessment['date_range']['start']
-    end_date = data_assessment['date_range']['end']
-    
-    print(f"Generating gravitational data for extended period: {start_date} to {end_date}")
-    
-    # Generate gravitational data for the extended period
+    # Generate gravitational data for the extended period using parallel processing
     start = datetime.strptime(start_date, '%Y-%m-%d')
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
-    data_list = []
+    # Generate all dates
+    dates = []
     current_date = start
-    
     while current_date <= end:
-        gravitational_data = calculate_high_precision_gravitational_influence(current_date)
-        
-        if gravitational_data:
-            data_entry = {'date': current_date}
-            data_entry.update(gravitational_data)
-            data_list.append(data_entry)
-        
+        dates.append(current_date)
         current_date += timedelta(days=1)
-        
-        # Progress indicator
-        if len(data_list) % 100 == 0:
-            print(f"  Processed {len(data_list)} days...")
     
+    print(f"  Computing gravitational influences for {len(dates)} days...")
+    print(f"  Using {min(cpu_count(), 4)} workers for gravitational calculations...")
+    
+    data_list = []
+    start_time = time.time()
+    
+    # Use ThreadPoolExecutor for I/O bound astronomical calculations
+    with ThreadPoolExecutor(max_workers=min(cpu_count(), 4)) as executor:
+        # Submit all gravitational calculations
+        future_to_date = {executor.submit(calculate_high_precision_gravitational_influence, date): date 
+                         for date in dates}
+        
+        for i, future in enumerate(future_to_date):
+            try:
+                gravitational_data = future.result()
+                date = future_to_date[future]
+                
+                if gravitational_data:
+                    data_entry = {'date': date}
+                    data_entry.update(gravitational_data)
+                    data_list.append(data_entry)
+                
+                # Show progress every 200 days
+                if (i + 1) % 200 == 0:
+                    elapsed = time.time() - start_time
+                    rate = (i + 1) / elapsed if elapsed > 0 else 0
+                    eta = (len(dates) - i - 1) / rate if rate > 0 else 0
+                    print(f"    [{i+1:4d}/{len(dates)}] Gravitational data | {rate:.1f} days/s | ETA: {eta/60:.1f}m")
+                    
+            except Exception as e:
+                print(f"Error calculating gravitational influence for {future_to_date[future]}: {e}")
+                continue
+    
+    elapsed_total = time.time() - start_time
+    print(f"  ⚡ Gravitational calculations complete! {elapsed_total:.1f}s | {len(dates)/elapsed_total:.1f} days/s")
     gravitational_df = pd.DataFrame(data_list)
-    print(f"Generated gravitational data for {len(gravitational_df)} days")
+    print(f"✅ Generated gravitational data for {len(gravitational_df)} days")
     
     # Extract extended CODE TEP coherence data
     start_year = start.year
@@ -622,21 +977,32 @@ def main():
     tep_df = extract_extended_code_tep_coherence_data(start_year, end_year)
     
     # Merge datasets
-    print("Merging extended gravitational and temporal field datasets...")
+    print("🔗 Merging extended gravitational and temporal field datasets...")
+    print(f"  Gravitational data: {len(gravitational_df)} days")
+    print(f"  TEP coherence data: {len(tep_df)} days")
     combined_df = pd.merge(gravitational_df, tep_df, on='date', how='inner')
-    print(f"Extended combined dataset: {len(combined_df)} days of synchronized data")
+    print(f"✅ Extended combined dataset: {len(combined_df)} days of synchronized data")
+    print(f"  Final date range: {combined_df['date'].min().strftime('%Y-%m-%d')} to {combined_df['date'].max().strftime('%Y-%m-%d')}")
+    print(f"  Analysis span: {(combined_df['date'].max() - combined_df['date'].min()).days / 365.25:.2f} years")
     
     if len(combined_df) < 100:
         print("WARNING: Very limited data available for analysis")
         return None
     
     # Perform extended correlation analysis
+    print("🔬 Performing extended correlation analysis...")
+    print("  Computing planetary gravitational influences...")
+    print("  Calculating cross-correlations with TEP coherence...")
+    print("  Performing statistical significance tests...")
     analysis_results = perform_extended_correlation_analysis(combined_df)
+    print("✅ Correlation analysis complete!")
     
     # Create extended visualization
+    print("📊 Creating extended timeframe visualization...")
     figure_path = create_extended_visualization(combined_df, analysis_results)
+    print(f"✅ Visualization saved: {figure_path}")
     analysis_results['figure_path'] = figure_path
-    analysis_results['data_assessment'] = data_assessment
+    # analysis_results['data_assessment'] = data_assessment  # Skip data assessment for extended analysis
     
     # Save results
     results_path = '/Users/matthewsmawfield/www/TEP-GNSS/results/experimental/step_14_extended_code_analysis_results.json'
@@ -644,7 +1010,7 @@ def main():
     with open(results_path, 'w') as f:
         json.dump(analysis_results, f, indent=2, default=str)
     
-    data_path = '/Users/matthewsmawfield/www/TEP-GNSS/data/experimental/step_14_extended_code_gravitational_temporal_data.csv'
+    data_path = '/Users/matthewsmawfield/www/TEP-GNSS/data/experimental/step_14_historical_2020_2022_gravitational_temporal_data.csv'
     os.makedirs(os.path.dirname(data_path), exist_ok=True)
     combined_df.to_csv(data_path, index=False)
     

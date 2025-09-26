@@ -44,7 +44,8 @@ def print_progress_header():
     print("=" * 120)
     print("🚀 AGGRESSIVE HISTORICAL CODE DATA ACQUISITION")
     print("=" * 120)
-    print(f"Target: 2010-2025 (15.5 years)")
+    cutoff_date = datetime(2025, 6, 30)
+    print(f"Target: 2010-{cutoff_date.strftime('%Y-%m-%d')} (through end of June 2025)")
     print(f"Expected files: ~5,650")
     print(f"Parallel downloads: 10")
     print(f"Start time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -182,7 +183,7 @@ def download_file_aggressive(url: str, destination: Path, year: int, date_str: s
     print(f"✗ {date_str} | FAILED | {result['error']} | {destination.name}", flush=True)
     return result
 
-def generate_download_tasks(start_year: int, end_year: int) -> List[Dict]:
+def generate_download_tasks(start_year: int, end_year: int, cutoff_date: datetime = None) -> List[Dict]:
     """Generate all download tasks for the specified year range."""
     tasks = []
     
@@ -190,13 +191,18 @@ def generate_download_tasks(start_year: int, end_year: int) -> List[Dict]:
         year_start = datetime(year, 1, 1)
         year_end = datetime(year, 12, 31)
         
+        # For the final year, don't go beyond the cutoff date
+        if year == end_year and cutoff_date:
+            year_end = min(year_end, cutoff_date)
+        
         current_date = year_start
         while current_date <= year_end:
             date_str = current_date.strftime('%Y-%m-%d')
             doy = current_date.timetuple().tm_yday
             
             # Determine format and URL
-            if year >= 2022:
+            # Modern format started mid-2022 (around November 27, day 331)
+            if year >= 2023 or (year == 2022 and doy >= 331):
                 # Modern format
                 filename = f"COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
                 url = f"http://ftp.aiub.unibe.ch/CODE/{year}/{filename}"
@@ -255,7 +261,9 @@ def main():
     
     # Configuration
     start_year = 2010
-    end_year = 2025
+    # Use end of June 2025 as specified
+    cutoff_date = datetime(2025, 6, 30)
+    end_year = cutoff_date.year
     max_workers = 10
     output_dir = Path('data/historical_code/raw')
     
@@ -269,7 +277,8 @@ def main():
     
     # Generate all download tasks
     print("Generating download tasks...")
-    tasks = generate_download_tasks(start_year, end_year)
+    print(f"Cutoff date: {cutoff_date.strftime('%Y-%m-%d')} (end of June 2025)")
+    tasks = generate_download_tasks(start_year, end_year, cutoff_date)
     progress_stats['total_files'] = len(tasks)
     
     print(f"Total files to process: {len(tasks):,}")

@@ -1,0 +1,32 @@
+{
+  "analysis_type": "extended_original_methodology",
+  "date_range": [
+    "2020-01-01",
+    "2025-06-30"
+  ],
+  "total_days": 1977,
+  "correlations": {
+    "stacked_planetary_vs_coherence_std": {
+      "pearson_r": 0.045614617981237275,
+      "pearson_p": 0.04256464162085485,
+      "methodology": "original_focus"
+    },
+    "stacked_planetary_vs_coherence_mean": {
+      "pearson_r": 0.08891508832436282,
+      "pearson_p": 7.532231549613167e-05,
+      "methodology": "comparison"
+    }
+  },
+  "smoothed_patterns": {
+    "coherence_std_correlation": {
+      "pearson_r": 0.04494085036416251,
+      "pearson_p": 0.04571972465660626,
+      "methodology": "original_focus"
+    },
+    "coherence_mean_correlation": {
+      "pearson_r": 0.16075547086615252,
+      "pearson_p": 6.477521348460753e-13,
+      "methodology": "comparison"
+    }
+  }
+}
