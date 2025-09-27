@@ -12,171 +12,171 @@
   "correlations": {
     "sun_influence": {
       "coherence_mean": {
-        "pearson_r": -0.07905258932366618,
-        "pearson_p": 0.016949592681447054,
-        "spearman_rho": -0.08562179537112835,
-        "spearman_p": 0.009683607253825766,
+        "pearson_r": -0.09790265227649063,
+        "pearson_p": 0.003079857781101703,
+        "spearman_rho": -0.09911826255541863,
+        "spearman_p": 0.0027302440715930368,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": -0.05523562288412744,
-        "pearson_p": 0.09550162242354343,
-        "spearman_rho": -0.06284573480029287,
-        "spearman_p": 0.0578052097845595,
+        "pearson_r": -0.07564434912780686,
+        "pearson_p": 0.022339222538528138,
+        "spearman_rho": -0.07542553155810969,
+        "spearman_p": 0.022731188544380068,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.22736792479784937,
-        "pearson_p": 3.701259522724678e-12,
-        "spearman_rho": -0.1983588743916785,
-        "spearman_p": 1.520003312904673e-09,
+        "pearson_r": -0.22973798080792213,
+        "pearson_p": 2.1784202609086577e-12,
+        "spearman_rho": -0.20071704841519553,
+        "spearman_p": 9.622511471316106e-10,
         "n_points": 912
       }
     },
     "jupiter_influence": {
       "coherence_mean": {
-        "pearson_r": -0.09066153495608423,
-        "pearson_p": 0.006147520437155666,
-        "spearman_rho": -0.08764614284637644,
-        "spearman_p": 0.008089213061879487,
+        "pearson_r": -0.0897105676812369,
+        "pearson_p": 0.006709035652137913,
+        "spearman_rho": -0.08939624062771918,
+        "spearman_p": 0.006904512266738654,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": -0.08691778026049676,
-        "pearson_p": 0.008633620660588703,
-        "spearman_rho": -0.0772165706297055,
-        "spearman_p": 0.01969154570460936,
+        "pearson_r": -0.08657908730130945,
+        "pearson_p": 0.00889773285342192,
+        "spearman_rho": -0.07912144800294776,
+        "spearman_p": 0.01685361305031114,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.25656140310185394,
-        "pearson_p": 3.562113694462784e-15,
-        "spearman_rho": -0.27171255202375577,
-        "spearman_p": 6.716914977046828e-17,
+        "pearson_r": -0.25647779122742786,
+        "pearson_p": 3.638467148811346e-15,
+        "spearman_rho": -0.2717650574883423,
+        "spearman_p": 6.62216446926282e-17,
         "n_points": 912
       }
     },
     "saturn_influence": {
       "coherence_mean": {
-        "pearson_r": -0.03826286231422259,
-        "pearson_p": 0.24835626878125586,
-        "spearman_rho": -0.024215555070559808,
-        "spearman_p": 0.4651470167549764,
+        "pearson_r": -0.02544598557305624,
+        "pearson_p": 0.4427710552636893,
+        "spearman_rho": -0.013884602638833843,
+        "spearman_p": 0.6753981772811175,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": -0.0524408214366792,
-        "pearson_p": 0.11351377646588647,
-        "spearman_rho": -0.03702177867821898,
-        "spearman_p": 0.2640444695613809,
+        "pearson_r": -0.03922569193706184,
+        "pearson_p": 0.23664244016745672,
+        "spearman_rho": -0.027774536504412386,
+        "spearman_p": 0.4021520980996798,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.03161798840908681,
-        "pearson_p": 0.3401994572533527,
-        "spearman_rho": -0.03974908873989859,
-        "spearman_p": 0.23044093926541537,
+        "pearson_r": -0.029971528308707144,
+        "pearson_p": 0.3659518921008287,
+        "spearman_rho": -0.03790747420271583,
+        "spearman_p": 0.2527805902874616,
         "n_points": 912
       }
     },
     "venus_influence": {
       "coherence_mean": {
-        "pearson_r": 0.141960545150425,
-        "pearson_p": 1.6846647940434973e-05,
-        "spearman_rho": 0.046780945176828084,
-        "spearman_p": 0.15807105268745836,
+        "pearson_r": 0.15202380448403122,
+        "pearson_p": 3.996761256964984e-06,
+        "spearman_rho": 0.05602516579482388,
+        "spearman_p": 0.09085004160169657,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": 0.12965459991102948,
-        "pearson_p": 8.61198315850344e-05,
-        "spearman_rho": 0.046218919976356555,
-        "spearman_p": 0.1631329313426222,
+        "pearson_r": 0.1412193552417066,
+        "pearson_p": 1.8659952795667426e-05,
+        "spearman_rho": 0.05483979837648483,
+        "spearman_p": 0.09790424598163684,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.040745769047265123,
-        "pearson_p": 0.21895253722607172,
-        "spearman_rho": -0.019138882538172686,
-        "spearman_p": 0.5637761511430917,
+        "pearson_r": -0.039731812390189206,
+        "pearson_p": 0.23064378062537044,
+        "spearman_rho": -0.017136888248058906,
+        "spearman_p": 0.6052602747653398,
         "n_points": 912
       }
     },
     "mars_influence": {
       "coherence_mean": {
-        "pearson_r": -0.04011705231283641,
-        "pearson_p": 0.22615071858049288,
-        "spearman_rho": -0.06401789279924966,
-        "spearman_p": 0.053281897453866744,
+        "pearson_r": -0.07038230345635203,
+        "pearson_p": 0.03356827342569143,
+        "spearman_rho": -0.07736973661588406,
+        "spearman_p": 0.019448864932477952,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": -0.020488219304641817,
-        "pearson_p": 0.5366103150491468,
-        "spearman_rho": -0.03859768614001908,
-        "spearman_p": 0.24423770281924248,
+        "pearson_r": -0.05368897117178649,
+        "pearson_p": 0.10516432144992997,
+        "spearman_rho": -0.050886938950081805,
+        "spearman_p": 0.12462689372945027,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.10642525093053196,
-        "pearson_p": 0.001287689232597023,
-        "spearman_rho": -0.017246407781452228,
-        "spearman_p": 0.6029559153090494,
+        "pearson_r": -0.11058842805351801,
+        "pearson_p": 0.000821690269635945,
+        "spearman_rho": -0.01986124003258344,
+        "spearman_p": 0.5491510289900301,
         "n_points": 912
       }
     },
     "stacked_planetary_influence": {
       "coherence_mean": {
-        "pearson_r": 0.006401066755381615,
-        "pearson_p": 0.8469238539014183,
-        "spearman_rho": -0.01663417096766416,
-        "spearman_p": 0.6158879168863,
+        "pearson_r": 0.012671673045980533,
+        "pearson_p": 0.7023377608517312,
+        "spearman_rho": -0.015219402602663766,
+        "spearman_p": 0.6462254695588232,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": 0.0023386714772929557,
-        "pearson_p": 0.9437721706912192,
-        "spearman_rho": -0.011128247674177187,
-        "spearman_p": 0.7371610643056246,
+        "pearson_r": 0.008935658507581497,
+        "pearson_p": 0.7875555186564314,
+        "spearman_rho": -0.010027705293835386,
+        "spearman_p": 0.7623301288037998,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.22360956074020746,
-        "pearson_p": 8.475657901274293e-12,
-        "spearman_rho": -0.20813506284867722,
-        "spearman_p": 2.2019758863216857e-10,
+        "pearson_r": -0.22299154975285934,
+        "pearson_p": 9.699048372912555e-12,
+        "spearman_rho": -0.20765174047626167,
+        "spearman_p": 2.4281773482268586e-10,
         "n_points": 912
       }
     },
     "total_gravitational_influence": {
       "coherence_mean": {
-        "pearson_r": -0.0790331857141373,
-        "pearson_p": 0.01697672501640947,
-        "spearman_rho": -0.08554211172390862,
-        "spearman_p": 0.009751726913603728,
+        "pearson_r": -0.0978757589800563,
+        "pearson_p": 0.0030880337031122668,
+        "spearman_rho": -0.09900113376367457,
+        "spearman_p": 0.00276228167391111,
         "n_points": 912
       },
       "coherence_median": {
-        "pearson_r": -0.055223352872346254,
-        "pearson_p": 0.0955753858869951,
-        "spearman_rho": -0.06280374941222037,
-        "spearman_p": 0.0579729670235354,
+        "pearson_r": -0.07562408605952303,
+        "pearson_p": 0.022375271442893883,
+        "spearman_rho": -0.07534855307342214,
+        "spearman_p": 0.02287049104093035,
         "n_points": 912
       },
       "coherence_std": {
-        "pearson_r": -0.22745816240882297,
-        "pearson_p": 3.627700505325333e-12,
-        "spearman_rho": -0.19855160535734812,
-        "spearman_p": 1.4645620167438003e-09,
+        "pearson_r": -0.2298273795553738,
+        "pearson_p": 2.1350501987116315e-12,
+        "spearman_rho": -0.20088843865422243,
+        "spearman_p": 9.305996743991214e-10,
         "n_points": 912
       }
     }
   },
   "advanced_pattern_analysis": {
-    "smoothed_correlation": -0.4397164325003494,
-    "smoothed_p_value": 2.0833784350737216e-44,
+    "smoothed_correlation": -0.43903836646294503,
+    "smoothed_p_value": 2.919729869352347e-44,
     "optimal_lag_days": 0,
-    "max_cross_correlation": -401.0213864403186,
+    "max_cross_correlation": -400.40299021420583,
     "smoothing_window": 31,
     "pattern_relationship": "anti_phase"
   },
@@ -190,5 +190,5 @@
     "coherence_mean_difference": 0.0002299942588595144,
     "coherence_std_difference": -0.0018767027692673244
   },
-  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_comprehensive_gravitational_temporal_analysis.png"
+  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_14_comprehensive_gravitational_temporal_analysis.png"
 }

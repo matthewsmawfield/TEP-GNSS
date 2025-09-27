@@ -20,6 +20,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
+from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from scipy import stats
@@ -341,8 +342,8 @@ def create_comprehensive_visualization(combined_df: pd.DataFrame, analysis_resul
     })
     
     # Set up the figure with optimal layout
-    fig = plt.figure(figsize=(18, 15))
-    gs = fig.add_gridspec(3, 1, height_ratios=[1, 1, 1], hspace=0.4, left=0.08, right=0.95)
+    fig = plt.figure(figsize=(18, 20))
+    gs = fig.add_gridspec(4, 1, height_ratios=[1, 1, 1, 1], hspace=0.4, left=0.08, right=0.95)
     
     # Site-themed color scheme
     colors = {
@@ -442,8 +443,59 @@ def create_comprehensive_visualization(combined_df: pd.DataFrame, analysis_resul
     ax3.grid(True, alpha=0.3)
     ax3.axhline(y=0, color='#220126', linestyle='-', alpha=0.8, linewidth=1.5)
     
+    # Panel 4: Multi-Window Smoothing Comparison
+    ax4 = fig.add_subplot(gs[3, 0])
+    
+    # Test different smoothing windows
+    smoothing_windows = [60, 90, 120, 180, 240]
+    window_colors = ['#E74C3C', '#F39C12', '#3498DB', '#2D0140', '#9B59B6']  # Different colors for each window
+    
+    correlations_by_window = {}
+    
+    for i, window in enumerate(smoothing_windows):
+        if window < len(combined_df) and window > 3:  # Ensure valid window size
+            poly_order = min(3, window - 1)
+            
+            if window > poly_order:
+                # Apply smoothing
+                smoothed_stacked = savgol_filter(combined_df['total_planetary_influence'], window, poly_order)
+                smoothed_coherence_std = savgol_filter(combined_df['coherence_std'], window, poly_order)
+                
+                # Normalize for comparison
+                norm_stacked = (smoothed_stacked - np.mean(smoothed_stacked)) / np.std(smoothed_stacked)
+                norm_coherence = (smoothed_coherence_std - np.mean(smoothed_coherence_std)) / np.std(smoothed_coherence_std)
+                
+                # Calculate correlation
+                r, p = stats.pearsonr(smoothed_stacked, smoothed_coherence_std)
+                correlations_by_window[window] = {'r': r, 'p': p}
+                
+                # Plot normalized patterns (offset for visibility)
+                offset = i * 0.3
+                ax4.plot(dates, norm_stacked + offset, color=window_colors[i], linewidth=2, 
+                        alpha=0.8, label=f'Gravitational (w={window}, r={r:.3f})')
+                ax4.plot(dates, norm_coherence + offset, color=window_colors[i], linewidth=2, 
+                        linestyle='--', alpha=0.6, label=f'Temporal (w={window})')
+    
+    ax4.set_ylabel('Normalized Pattern Amplitude (Offset)', fontsize=12, fontweight='bold')
+    ax4.set_title('Multi-Window Smoothing Comparison\n' +
+                  'Different Smoothing Windows Reveal Pattern Stability', fontsize=14, fontweight='bold')
+    ax4.legend(loc='upper right', fontsize=9, ncol=2)
+    ax4.grid(True, alpha=0.3)
+    ax4.axhline(y=0, color='#220126', linestyle='-', alpha=0.8, linewidth=1.5)
+    
+    # Add correlation summary text
+    corr_text = "Window Correlations:\n"
+    for window, corr_data in correlations_by_window.items():
+        corr_text += f"w={window}: r={corr_data['r']:.3f}, p={corr_data['p']:.2e}\n"
+    
+    ax4.text(0.02, 0.95, corr_text, transform=ax4.transAxes, fontsize=10, 
+             fontweight='bold', color='#220126',
+             bbox=dict(boxstyle='round,pad=0.4', facecolor='#F8F8FF', 
+                      edgecolor='#2D0140', alpha=0.95, linewidth=1),
+             verticalalignment='top')
+    
     # Format x-axis for all time series plots
-    for ax in [ax1, ax2, ax3]:
+    for ax in [ax1, ax2, ax3, ax4]:
         ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
         ax.tick_params(axis='x', rotation=45)
@@ -451,7 +503,7 @@ def create_comprehensive_visualization(combined_df: pd.DataFrame, analysis_resul
     plt.tight_layout()
     
     # Save the figure
-    output_path = '/Users/matthewsmawfield/www/TEP-GNSS/figures/step_14_comprehensive_gravitational_temporal_analysis.png'
+    output_path = '/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_14_comprehensive_gravitational_temporal_analysis.png'
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
     
@@ -525,6 +577,28 @@ def main():
     
     data_path = '/Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_14_comprehensive_gravitational_temporal_data.csv'
     combined_df.to_csv(data_path, index=False)
+
+    # Export WebGL-ready dataset for Step 17 visualization (no fallbacks)
+    export_dir = Path('/Users/matthewsmawfield/www/TEP-GNSS/site/data/step_14')
+    export_dir.mkdir(parents=True, exist_ok=True)
+
+    export_payload = {
+        'dates': [d.strftime('%Y-%m-%d') for d in combined_df['date']],
+        'total_planetary_influence': combined_df['total_planetary_influence'].tolist(),
+        'total_influence': combined_df['total_influence'].tolist(),
+        'coherence_mean': combined_df['coherence_mean'].tolist(),
+        'coherence_std': combined_df['coherence_std'].tolist(),
+        'individual_influences': {
+            body: combined_df[f'{body}_influence'].tolist()
+            for body in ['sun', 'jupiter', 'saturn', 'venus', 'mars']
+        },
+        'coherence_count': combined_df['coherence_count'].tolist(),
+        'advanced_pattern_analysis': analysis_results.get('advanced_pattern_analysis'),
+    }
+
+    export_path = export_dir / 'gravitational_temporal_daily.json'
+    with export_path.open('w') as f:
+        json.dump(export_payload, f)
     
     # Print summary
     print("\n" + "=" * 80)

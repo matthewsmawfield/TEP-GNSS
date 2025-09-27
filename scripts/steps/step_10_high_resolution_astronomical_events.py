@@ -7,7 +7,7 @@ Analyzes rapid transient astronomical events at sub-daily temporal resolution
 by processing original GPS CLK files directly, bypassing the daily aggregation
 used in previous steps.
 
-METHODOLOGICAL CORRECTION (v0.9.0):
+METHODOLOGICAL CORRECTION (v0.12.0):
 ===================================
 This version implements proper TEP cos(phase(CSD)) methodology for eclipse analysis,
 replacing the previously flawed approach that used simple bias differences.
@@ -47,7 +47,7 @@ Algorithm Overview:
 
 Author: Matthew Lukin Smawfield
 Date: September 2025
-Methodological Fix: September 2025 (v0.9.0)
+Methodological Fix: September 2025 (v0.12.0)
 """
 
 import os
@@ -3044,7 +3044,7 @@ def main():
     args = parser.parse_args()
     
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("STEP 10: High-Resolution Astronomical Event Analysis")
     print("=" * 80)
     print(f"Event: {args.event.upper()}")

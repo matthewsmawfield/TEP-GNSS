@@ -1,0 +1,349 @@
+{
+  "code": {
+    "center": "code",
+    "date_range": {
+      "start": "2024-01-01",
+      "end": "2024-01-07"
+    },
+    "coverage": {
+      "clk_files_processed": 7,
+      "pair_hours": 30590,
+      "station_hour_samples": 61180,
+      "unique_stations": 32
+    },
+    "annual_patterns": {
+      "coherence_cv": 15.205407469583966,
+      "day_mean": 0.003150510322833426,
+      "night_mean": 0.0005842223017085011,
+      "day_night_ratio": 5.392656722655171,
+      "hours": [
+        {
+          "local_hour_bin": 0,
+          "coherence_mean": 0.03581927836607163,
+          "coherence_std": 0.7207133590027328,
+          "sample_count": 1290
+        },
+        {
+          "local_hour_bin": 1,
+          "coherence_mean": 0.0192933089831169,
+          "coherence_std": 0.7219232021238933,
+          "sample_count": 1149
+        },
+        {
+          "local_hour_bin": 2,
+          "coherence_mean": -0.008113470457641854,
+          "coherence_std": 0.7114866965946225,
+          "sample_count": 1311
+        },
+        {
+          "local_hour_bin": 3,
+          "coherence_mean": -0.027789622694751655,
+          "coherence_std": 0.712891580622684,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 4,
+          "coherence_mean": -0.01503140844158048,
+          "coherence_std": 0.7235790270490894,
+          "sample_count": 1314
+        },
+        {
+          "local_hour_bin": 5,
+          "coherence_mean": -0.04808715779100789,
+          "coherence_std": 0.7224533142975345,
+          "sample_count": 1247
+        },
+        {
+          "local_hour_bin": 6,
+          "coherence_mean": -0.05768132010650269,
+          "coherence_std": 0.7148353240011275,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 7,
+          "coherence_mean": -0.004288864267437355,
+          "coherence_std": 0.7208731318625544,
+          "sample_count": 1312
+        },
+        {
+          "local_hour_bin": 8,
+          "coherence_mean": 0.0074858132796456955,
+          "coherence_std": 0.7365720960683786,
+          "sample_count": 1136
+        },
+        {
+          "local_hour_bin": 9,
+          "coherence_mean": 0.03826576830986849,
+          "coherence_std": 0.7095322491334247,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 10,
+          "coherence_mean": -0.016355006899108585,
+          "coherence_std": 0.7151912557347913,
+          "sample_count": 1311
+        },
+        {
+          "local_hour_bin": 11,
+          "coherence_mean": 0.022696904827901373,
+          "coherence_std": 0.7266270307192658,
+          "sample_count": 1165
+        },
+        {
+          "local_hour_bin": 12,
+          "coherence_mean": -0.03583791103314179,
+          "coherence_std": 0.7126258818718629,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 13,
+          "coherence_mean": -0.009270082606754848,
+          "coherence_std": 0.7158893172048018,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 14,
+          "coherence_mean": 0.03030137628932604,
+          "coherence_std": 0.7086650789949904,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 15,
+          "coherence_mean": 0.050672305376212645,
+          "coherence_std": 0.7168972548209752,
+          "sample_count": 1330
+        },
+        {
+          "local_hour_bin": 16,
+          "coherence_mean": 0.03280241170889869,
+          "coherence_std": 0.7170276510086167,
+          "sample_count": 1175
+        },
+        {
+          "local_hour_bin": 17,
+          "coherence_mean": -0.020985271004906568,
+          "coherence_std": 0.7306956693490133,
+          "sample_count": 1213
+        },
+        {
+          "local_hour_bin": 18,
+          "coherence_mean": 0.011224542698646598,
+          "coherence_std": 0.7172991350158024,
+          "sample_count": 1325
+        },
+        {
+          "local_hour_bin": 19,
+          "coherence_mean": 0.03067087284827634,
+          "coherence_std": 0.7339949665432084,
+          "sample_count": 1294
+        },
+        {
+          "local_hour_bin": 20,
+          "coherence_mean": 0.016975986287348865,
+          "coherence_std": 0.7103968961079862,
+          "sample_count": 1150
+        },
+        {
+          "local_hour_bin": 21,
+          "coherence_mean": 0.005395151653495743,
+          "coherence_std": 0.7206992677261342,
+          "sample_count": 1276
+        },
+        {
+          "local_hour_bin": 22,
+          "coherence_mean": -0.0137834361153182,
+          "coherence_std": 0.7162676977264667,
+          "sample_count": 1291
+        },
+        {
+          "local_hour_bin": 23,
+          "coherence_mean": 0.00043662228384601636,
+          "coherence_std": 0.7255300264398238,
+          "sample_count": 1321
+        }
+      ]
+    },
+    "seasonal_patterns": {
+      "DJF": {
+        "peak_hour": "15",
+        "peak_value": 0.050672305376212645,
+        "day_mean": 0.003150510322833426,
+        "night_mean": 0.0005842223017085011,
+        "day_night_ratio": 5.392656722655171,
+        "cv": 15.205407469583966,
+        "sample_count": "30590",
+        "hours": [
+          {
+            "season": "DJF",
+            "local_hour_bin": 0,
+            "coherence_mean": 0.03581927836607163,
+            "coherence_std": 0.7207133590027328,
+            "sample_count": 1290
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 1,
+            "coherence_mean": 0.0192933089831169,
+            "coherence_std": 0.7219232021238933,
+            "sample_count": 1149
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 2,
+            "coherence_mean": -0.008113470457641854,
+            "coherence_std": 0.7114866965946225,
+            "sample_count": 1311
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 3,
+            "coherence_mean": -0.027789622694751655,
+            "coherence_std": 0.712891580622684,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 4,
+            "coherence_mean": -0.01503140844158048,
+            "coherence_std": 0.7235790270490894,
+            "sample_count": 1314
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 5,
+            "coherence_mean": -0.04808715779100789,
+            "coherence_std": 0.7224533142975345,
+            "sample_count": 1247
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 6,
+            "coherence_mean": -0.05768132010650269,
+            "coherence_std": 0.7148353240011275,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 7,
+            "coherence_mean": -0.004288864267437355,
+            "coherence_std": 0.7208731318625544,
+            "sample_count": 1312
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 8,
+            "coherence_mean": 0.0074858132796456955,
+            "coherence_std": 0.7365720960683786,
+            "sample_count": 1136
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 9,
+            "coherence_mean": 0.03826576830986849,
+            "coherence_std": 0.7095322491334247,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 10,
+            "coherence_mean": -0.016355006899108585,
+            "coherence_std": 0.7151912557347913,
+            "sample_count": 1311
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 11,
+            "coherence_mean": 0.022696904827901373,
+            "coherence_std": 0.7266270307192658,
+            "sample_count": 1165
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 12,
+            "coherence_mean": -0.03583791103314179,
+            "coherence_std": 0.7126258818718629,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 13,
+            "coherence_mean": -0.009270082606754848,
+            "coherence_std": 0.7158893172048018,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 14,
+            "coherence_mean": 0.03030137628932604,
+            "coherence_std": 0.7086650789949904,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 15,
+            "coherence_mean": 0.050672305376212645,
+            "coherence_std": 0.7168972548209752,
+            "sample_count": 1330
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 16,
+            "coherence_mean": 0.03280241170889869,
+            "coherence_std": 0.7170276510086167,
+            "sample_count": 1175
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 17,
+            "coherence_mean": -0.020985271004906568,
+            "coherence_std": 0.7306956693490133,
+            "sample_count": 1213
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 18,
+            "coherence_mean": 0.011224542698646598,
+            "coherence_std": 0.7172991350158024,
+            "sample_count": 1325
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 19,
+            "coherence_mean": 0.03067087284827634,
+            "coherence_std": 0.7339949665432084,
+            "sample_count": 1294
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 20,
+            "coherence_mean": 0.016975986287348865,
+            "coherence_std": 0.7103968961079862,
+            "sample_count": 1150
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 21,
+            "coherence_mean": 0.005395151653495743,
+            "coherence_std": 0.7206992677261342,
+            "sample_count": 1276
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 22,
+            "coherence_mean": -0.0137834361153182,
+            "coherence_std": 0.7162676977264667,
+            "sample_count": 1291
+          },
+          {
+            "season": "DJF",
+            "local_hour_bin": 23,
+            "coherence_mean": 0.00043662228384601636,
+            "coherence_std": 0.7255300264398238,
+            "sample_count": 1321
+          }
+        ]
+      }
+    },
+    "timestamp": "2025-09-27T15:22:10.828780Z"
+  }
+}

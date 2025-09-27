@@ -66,5 +66,16 @@ logs/*.log
 # Data directories (keep structure but ignore large files)
 data/raw/*/
 data/processed/*.csv
-data/historical_code/raw/
+data/exploratory/historical_code/raw/
 results/tmp/
+
+# Specific raw data files
+*.CLK
+*.CLK.Z
+COD*.CLK
+COD*.CLK.Z
+
+# Exploratory directories (consolidated experimental + exploratory + historical_code)
+data/exploratory/
+results/exploratory/
+scripts/exploratory/results/outputs/step_18_diurnal_hourly_raw*.csv

@@ -2,11 +2,11 @@
 
 **Author:** Matthew Lukin Smawfield
 **Date:** September 23, 2025
-**Version:** v0.9 (Jaipur)
+**Version:** v0.12 (Jaipur)
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 **Theory DOI:** [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)
 
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.9 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.12 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
 
 ## Abstract
 
@@ -978,14 +978,14 @@ Importantly, standard GNSS processing aimed at removing systematic errors may in
 
 ## How to cite
 
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.9 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks. v0.12 (Jaipur). Zenodo. https://doi.org/10.5281/zenodo.17127229
 
 **BibTeX:**
 ```bibtex
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS 
-                   Clocks Across Independent Networks (Jaipur v0.9)},
+                   Clocks Across Independent Networks (Jaipur v0.12)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},
@@ -1003,21 +1003,21 @@ matthewsmawfield@gmail.com
 
 ## Version 0.8 Updates
 
-**Version 0.8 (Jaipur)** builds upon the helical motion breakthrough with enhanced theoretical foundation and methodological refinements:
+**Version 0.12 (Jaipur)** builds upon the helical motion breakthrough with enhanced theoretical foundation and methodological refinements:
 
-1. **Rigorous Theoretical Foundation (NEW in v0.8, ENHANCED in v0.9)**: Added comprehensive mathematical derivation for cos(phase(CSD)) method from Wiener-Khinchin theorem, quantified propagation delay bounds (≈1.6×10⁻⁴ rad max), and connected exponential distance decay to von Mises circular statistics with amplitude-invariant validation (Section 2.2)
+1. **Rigorous Theoretical Foundation (NEW in v0.8, ENHANCED in v0.12)**: Added comprehensive mathematical derivation for cos(phase(CSD)) method from Wiener-Khinchin theorem, quantified propagation delay bounds (≈1.6×10⁻⁴ rad max), and connected exponential distance decay to von Mises circular statistics with amplitude-invariant validation (Section 2.2)
 
-2. **Methodological Transparency (ENHANCED in v0.8, REFINED in v0.9)**: Corrected circular statistics validation to eliminate circular reasoning, reframed as phase distribution analysis demonstrating genuine structure and method consistency rather than self-validation (Section 3.4)
+2. **Methodological Transparency (ENHANCED in v0.8, REFINED in v0.12)**: Corrected circular statistics validation to eliminate circular reasoning, reframed as phase distribution analysis demonstrating genuine structure and method consistency rather than self-validation (Section 3.4)
 
-3. **Dataset Transparency (NEW in v0.8, EXPANDED in v0.9)**: Added clear explanation for station pair count differences (CODE: 345 stations/39.1M pairs, ESA: 289 stations/10.8M pairs, IGS: 316 stations/12.8M pairs) due to different network sizes and quality criteria, strengthening multi-center validation approach
+3. **Dataset Transparency (NEW in v0.8, EXPANDED in v0.12)**: Added clear explanation for station pair count differences (CODE: 345 stations/39.1M pairs, ESA: 289 stations/10.8M pairs, IGS: 316 stations/12.8M pairs) due to different network sizes and quality criteria, strengthening multi-center validation approach
 
-4. **Eclipse Analysis Integration (NEW in v0.8, EXTENDED in v0.9)**: Added comprehensive high-resolution analysis of solar eclipse events (Section 3.8) with multi-eclipse validation, eclipse type hierarchy discovery, and scale consistency analysis demonstrating complementary evidence for dynamic TEP field responses to astronomical perturbations
+4. **Eclipse Analysis Integration (NEW in v0.8, EXTENDED in v0.12)**: Added comprehensive high-resolution analysis of solar eclipse events (Section 3.8) with multi-eclipse validation, eclipse type hierarchy discovery, and scale consistency analysis demonstrating complementary evidence for dynamic TEP field responses to astronomical perturbations
 
-5. **Helical Motion Analysis (NEW in v0.8, OPTIMIZED in v0.9)**: Revolutionary discovery of Earth's orbital dance signatures in GPS networks including Chandler wobble detection (r = 0.635-0.844), 3D spherical harmonic decomposition (CV ≈ 1.0), multi-frequency beat analysis, and coherent network "mesh dance" signature (Section 3.7)
+5. **Helical Motion Analysis (NEW in v0.8, OPTIMIZED in v0.12)**: Revolutionary discovery of Earth's orbital dance signatures in GPS networks including Chandler wobble detection (r = 0.635-0.844), 3D spherical harmonic decomposition (CV ≈ 1.0), multi-frequency beat analysis, and coherent network "mesh dance" signature (Section 3.7)
 
 6. **Previous v0.6 features**: Station scrambling null tests (18-32× signal destruction), comprehensive model comparison with AIC/BIC validation, geomagnetic stratified analysis, and temporal orbital tracking with Earth's orbital speed correlation (r = −0.512 to −0.638, p < 0.002)
 
-7. **Scientific significance**: Version 0.8 provides the most comprehensive evidence for TEP field dynamics, combining persistent baseline correlations with dynamic eclipse responses and helical motion signatures, establishing GPS networks as sensitive detectors of both stable and transient scalar field phenomena coupled to Earth's complex motion through spacetime
+7. **Scientific significance**: Version 0.12 provides the most comprehensive evidence for TEP field dynamics, combining persistent baseline correlations with dynamic eclipse responses and helical motion signatures, establishing GPS networks as sensitive detectors of both stable and transient scalar field phenomena coupled to Earth's complex motion through spacetime
 
 ---
 
@@ -1332,7 +1332,7 @@ Webb, J. K., et al. (2001). Further evidence for cosmological evolution of the f
 
 ---
 
-## Version 0.8 Updates
+## Version 0.12 Updates
 
 This version incorporates streamlined figure presentation and enhanced documentation:
 

@@ -676,7 +676,7 @@ def download_small_real_clk_samples() -> bool:
 
 def main():
     print("="*80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("STEP 1: Data Acquisition")
     print("Acquiring authoritative GNSS data and coordinates")
     print("="*80)

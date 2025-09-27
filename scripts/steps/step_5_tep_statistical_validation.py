@@ -1216,7 +1216,7 @@ def run_helical_motion_only(analysis_center: str = None) -> Dict:
         dict: Results from helical motion analyses only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("HELICAL MOTION ANALYSIS - Advanced Earth Motion Detection")
     print("=" * 80)
     
@@ -1380,7 +1380,7 @@ def run_jupiter_only(analysis_center: str = None) -> Dict:
         dict: Results from Jupiter opposition analysis only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("JUPITER OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection")
     print("=" * 80)
     
@@ -1476,7 +1476,7 @@ def run_saturn_only(analysis_center: str = None) -> Dict:
         dict: Results from Saturn opposition analysis only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("SATURN OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection")
     print("=" * 80)
     
@@ -1547,7 +1547,7 @@ def run_mars_only(analysis_center: str = None) -> Dict:
         dict: Results from Mars opposition analysis only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("MARS OPPOSITION ANALYSIS - Weakest Signal Sensitivity Test")
     print("=" * 80)
     
@@ -1618,7 +1618,7 @@ def run_lunar_only(analysis_center: str = None) -> Dict:
         dict: Results from Lunar Standstill analysis only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("LUNAR STANDSTILL ANALYSIS - Sidereal Day Amplitude Tracking")
     print("=" * 80)
     
@@ -1691,7 +1691,7 @@ def run_eclipse_only(analysis_center: str = None) -> Dict:
         dict: Results from Solar Eclipse analysis only
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("SOLAR ECLIPSE ANALYSIS - Ionospheric Effect Validation")
     print("=" * 80)
     
@@ -1759,7 +1759,7 @@ def run_astronomical_events_only(analysis_center: str = None) -> Dict:
         dict: Results from both astronomical event analyses
     """
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("ASTRONOMICAL EVENTS ANALYSIS - Jupiter vs Saturn vs Mars Opposition Comparison")
     print("=" * 80)
     
@@ -2328,7 +2328,7 @@ def main():
     
     # Original full Step 5 analysis
     print("="*80)
-    print("TEP GNSS Analysis Package v0.9")
+    print("TEP GNSS Analysis Package v0.12")
     print("STEP 5: Statistical Validation (FULL MODE)")
     print("="*80)
     

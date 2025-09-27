@@ -1,0 +1,179 @@
+{
+  "validation_type": "targeted_diurnal_analysis",
+  "center": "esa_final",
+  "date_range": {
+    "start": "2024-01-01",
+    "end": "2024-12-31"
+  },
+  "limits": {
+    "max_days": 365,
+    "max_stations": 20,
+    "max_pairs": 1000,
+    "min_epochs": 24,
+    "min_hour_epochs": 12,
+    "window_hours": 2.0
+  },
+  "coverage": {
+    "clk_files_processed": 365,
+    "pair_hours": 1557449,
+    "station_hour_samples": 3114898,
+    "unique_stations": 87
+  },
+  "local_time_statistics": {
+    "coherence_cv": 0.5021194287787591,
+    "day_mean": 0.005726367270339776,
+    "night_mean": 0.007206345822530529,
+    "hours": [
+      {
+        "local_hour_bin": 0,
+        "coherence_mean": 0.01120911478044094,
+        "coherence_std": 0.7235163027820485,
+        "sample_count": 113342
+      },
+      {
+        "local_hour_bin": 1,
+        "coherence_mean": 0.008318112561543897,
+        "coherence_std": 0.7189575749468999,
+        "sample_count": 134112
+      },
+      {
+        "local_hour_bin": 2,
+        "coherence_mean": 0.0038755699991832636,
+        "coherence_std": 0.7192035437326982,
+        "sample_count": 133128
+      },
+      {
+        "local_hour_bin": 3,
+        "coherence_mean": 0.004914486093981284,
+        "coherence_std": 0.720324926895539,
+        "sample_count": 128973
+      },
+      {
+        "local_hour_bin": 4,
+        "coherence_mean": 0.009909298889011058,
+        "coherence_std": 0.7213194070084983,
+        "sample_count": 128806
+      },
+      {
+        "local_hour_bin": 5,
+        "coherence_mean": 0.006249356422755468,
+        "coherence_std": 0.7288964857516294,
+        "sample_count": 134413
+      },
+      {
+        "local_hour_bin": 6,
+        "coherence_mean": 0.012078239033428794,
+        "coherence_std": 0.7257615222537612,
+        "sample_count": 132976
+      },
+      {
+        "local_hour_bin": 7,
+        "coherence_mean": 0.011591435623260107,
+        "coherence_std": 0.7197477228746187,
+        "sample_count": 134209
+      },
+      {
+        "local_hour_bin": 8,
+        "coherence_mean": 0.0019177125948300498,
+        "coherence_std": 0.7212792303472992,
+        "sample_count": 126094
+      },
+      {
+        "local_hour_bin": 9,
+        "coherence_mean": 0.004709102112186981,
+        "coherence_std": 0.7205413398609088,
+        "sample_count": 135316
+      },
+      {
+        "local_hour_bin": 10,
+        "coherence_mean": 0.010346649588435985,
+        "coherence_std": 0.7201210104114332,
+        "sample_count": 129070
+      },
+      {
+        "local_hour_bin": 11,
+        "coherence_mean": 0.007654477768784986,
+        "coherence_std": 0.7215616350982248,
+        "sample_count": 121280
+      },
+      {
+        "local_hour_bin": 12,
+        "coherence_mean": 0.004901110824946095,
+        "coherence_std": 0.7216044529342655,
+        "sample_count": 131708
+      },
+      {
+        "local_hour_bin": 13,
+        "coherence_mean": 0.0038276476449377777,
+        "coherence_std": 0.7204610888953441,
+        "sample_count": 135319
+      },
+      {
+        "local_hour_bin": 14,
+        "coherence_mean": 3.7319766482396214e-06,
+        "coherence_std": 0.7200437995511056,
+        "sample_count": 135429
+      },
+      {
+        "local_hour_bin": 15,
+        "coherence_mean": 0.0052240802435512,
+        "coherence_std": 0.7206257544444451,
+        "sample_count": 131070
+      },
+      {
+        "local_hour_bin": 16,
+        "coherence_mean": 0.0053446671799150455,
+        "coherence_std": 0.7211418062527787,
+        "sample_count": 128971
+      },
+      {
+        "local_hour_bin": 17,
+        "coherence_mean": 0.0011154075879889706,
+        "coherence_std": 0.7237013432335465,
+        "sample_count": 127603
+      },
+      {
+        "local_hour_bin": 18,
+        "coherence_mean": 0.0027809906969532817,
+        "coherence_std": 0.7221043772025043,
+        "sample_count": 135225
+      },
+      {
+        "local_hour_bin": 19,
+        "coherence_mean": 0.008695920001951858,
+        "coherence_std": 0.7242403180151596,
+        "sample_count": 117810
+      },
+      {
+        "local_hour_bin": 20,
+        "coherence_mean": 0.0078059886916608595,
+        "coherence_std": 0.7224550127240743,
+        "sample_count": 120911
+      },
+      {
+        "local_hour_bin": 21,
+        "coherence_mean": 0.008408170297759787,
+        "coherence_std": 0.7205498285657398,
+        "sample_count": 129999
+      },
+      {
+        "local_hour_bin": 22,
+        "coherence_mean": 0.006685473915732934,
+        "coherence_std": 0.7221174636881589,
+        "sample_count": 134624
+      },
+      {
+        "local_hour_bin": 23,
+        "coherence_mean": 0.0085520752509456,
+        "coherence_std": 0.7212716715934725,
+        "sample_count": 134510
+      }
+    ]
+  },
+  "files": {
+    "hourly_raw_csv": "/Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_18_diurnal_hourly_raw_esa_final.csv",
+    "hourly_summary_csv": "/Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_18_diurnal_hourly_summary_esa_final.csv",
+    "validation_json": "/Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_18_diurnal_validation_esa_final.json"
+  },
+  "timestamp": "2025-09-27T14:38:30.085117Z"
+}

@@ -1,0 +1,267 @@
+TEP-GNSS Repository Structure
+Scientific Computing Best Practices
+
+================================================================================
+CORE PHILOSOPHY
+================================================================================
+OFFICIAL PIPELINE    ->  PUBLICATION READY
+EXPLORATORY WORK     ->  RESEARCH & DEVELOPMENT
+
+================================================================================
+FOLDER STRUCTURE
+================================================================================
+
+SCRIPTS (Code Organization)
+---------------------------
+scripts/
+├── steps/           ->  OFFICIAL PIPELINE (19 files)
+│   ├── step_0_provenance_snapshot.py
+│   ├── step_1_tep_data_acquisition.py
+│   ├── step_2_tep_coordinate_validation.py
+│   ├── step_3_tep_correlation_analysis.py
+│   ├── step_4_aggregate_geospatial_data.py
+│   ├── step_5_tep_statistical_validation.py
+│   ├── step_5_5_block_wise_cross_validation.py
+│   ├── step_6_tep_null_tests.py
+│   ├── step_7_tep_advanced_analysis.py
+│   ├── step_8_tep_visualization.py
+│   ├── step_9_tep_synthesis_figure.py
+│   ├── step_10_high_resolution_astronomical_events.py
+│   ├── step_11_tid_exclusion_analysis.py
+│   ├── step_12_additional_visualizations.py
+│   ├── step_13_methodology_validation.py
+│   ├── step_14_gravitational_temporal_field_analysis.py
+│   ├── step_15_geographic_bias_validation.py
+│   ├── step_16_realistic_ionospheric_validation.py
+│   └── step_18_targeted_diurnal_analysis.py
+│
+├── exploratory/     ->  ALL EXPERIMENTAL WORK (22 files)
+│   ├── Step 14 Variants (13 files):
+│   │   ├── step_14_2022_alternative_archive_download.py
+│   │   ├── step_14_2022_cleanup_duplicates.py
+│   │   ├── step_14_2022_completeness_assessment.py
+│   │   ├── step_14_2022_comprehensive_redownload.py
+│   │   ├── step_14_2022_final_assessment.py
+│   │   ├── step_14_2022_final_cleanup.py
+│   │   ├── step_14_2022_missing_dates.py
+│   │   ├── step_14_2022_recovery_analysis.py
+│   │   ├── step_14_2022_selective_redownload.py
+│   │   ├── step_14_aligned_methodology.py
+│   │   ├── step_14_extended_code_analysis.py
+│   │   ├── step_14_original_style_with_gap.py
+│   │   └── step_14_original_style_with_gap_low_smoothing.py
+│   ├── Analysis & Investigation (6 files):
+│   │   ├── step_14_outlier_analysis.py
+│   │   ├── step_14_outlier_investigation.py
+│   │   ├── step_14_smoothing_comparison.py
+│   │   ├── step_18_seasonal_analysis.py
+│   │   ├── analyze_2020_2022_subset.py
+│   │   └── analyze_clean_periods_only.py
+│   ├── Utilities & Research (3 files):
+│   │   ├── csd_projection_bias_test.py
+│   │   ├── manage_checkpoints.py
+│   │   └── historical_code/aggressive_acquire.py
+│
+└── utils/           ->  SHARED INFRASTRUCTURE (5 files)
+    ├── __init__.py
+    ├── config.py           ->  Configuration management
+    ├── exceptions.py       ->  Custom exception classes
+    ├── logger.py           ->  Logging utilities
+    └── space_weather_data.py ->  Space weather data handling
+
+DATA (Input Organization)
+-------------------------
+data/
+├── raw/             ->  ORIGINAL GNSS DATA (3,869 files)
+│   ├── code/        ->  CODE analysis center (1,907 files)
+│   ├── esa_final/   ->  ESA analysis center (997 files)
+│   └── igs_combined/ ->  IGS combined data (965 files)
+│
+├── processed/       ->  PIPELINE OUTPUTS (5 files)
+│   ├── step_14_comprehensive_gravitational_temporal_data.csv
+│   ├── step_4_geospatial_code.csv
+│   ├── step_4_geospatial_esa_final.csv
+│   ├── step_4_geospatial_igs_combined.csv
+│   └── step_8_station_distances.csv
+│
+├── coordinates/     ->  STATION METADATA (2 files)
+│   ├── station_coords_global.csv
+│   └── station_eclipse_distances.csv
+│
+├── exploratory/     ->  EXPERIMENTAL DATA (gitignored)
+│   ├── checkpoints/ ->  Analysis state snapshots
+│   ├── historical_code/raw/ ->  Legacy data archives (2010-2025)
+│   └── step_14_complete_2010_2025_gravitational_temporal_data.csv
+│
+├── station_logs/    ->  Station operational information
+│
+├── world_coastlines.json ->  Geographic boundaries
+├── world_land_polygons.json ->  Land mass data
+└── de432s.bsp       ->  JPL planetary ephemeris
+
+RESULTS (Output Organization)
+-----------------------------
+results/
+├── outputs/         ->  OFFICIAL RESULTS (66 files)
+│   ├── step_1_station_metadata.json
+│   ├── step_3_correlation_*.json
+│   ├── step_5_*_validation_*.json
+│   ├── step_6_null_tests_*.json
+│   ├── step_10_*_high_res_*.json
+│   ├── step_11_tid_exclusion_comprehensive.json
+│   ├── step_13_*_validation.json
+│   ├── step_14_comprehensive_analysis_results.json
+│   ├── step_15_geographic_bias_validation.json
+│   ├── step_16_*_ionospheric_validation.json
+│   ├── step_18_diurnal_validation_*.json
+│   └── step_18_diurnal_hourly_*.csv
+│
+├── figures/         ->  PUBLICATION FIGURES (30 files)
+│   ├── figure_1_TEP_site_themed.png
+│   ├── figure_10_orbital_dance_visualization.png
+│   ├── figure_16_supermoon_perigee_curves.png
+│   ├── anisotropy_heatmap_*.png
+│   ├── correlation_vs_distance_all_centers.png
+│   ├── gnss_stations_*.png
+│   ├── gnss_three_globes_*.png
+│   ├── residuals_*.png
+│   ├── step_10_hilbert_if_*.png
+│   ├── step_10_wavelet_restored_*.png
+│   ├── step_11_tid_exclusion_analysis.png
+│   ├── step_14_comprehensive_gravitational_temporal_analysis.png
+│   ├── step_18_seasonal_analysis_*.png
+│   └── tep_correlation_publication.png
+│
+├── exploratory/     ->  EXPERIMENTAL RESULTS (gitignored)
+│   ├── figures/     ->  Research visualizations (12 files)
+│   ├── step_14_2022_*_results.json
+│   ├── step_14_extended_code_analysis_results.json
+│   ├── step_14_outlier_*_results.json
+│   ├── step_14_smoothing_comparison_results.json
+│   ├── csd_projection_bias_report.txt
+│   ├── projection_bias_rebuttal.md
+│   ├── eclipse_methodology_validation.png
+│   ├── phase_distributions.png
+│   └── phase_metrics_code.csv
+│
+├── validation/      ->  QUALITY CONTROL (2 files)
+│   ├── bias_characterization.json
+│   └── validation_report.json
+│
+└── tmp/             ->  Temporary files (gitignored)
+
+SITE (Web Documentation)
+------------------------
+site/
+├── index.html       ->  Interactive research website
+├── figures/         ->  Website figures (44 files)
+├── data/            ->  Interactive data
+│   ├── step_14/gravitational_temporal_daily.json
+│   └── step_17/
+├── public/          ->  Static web assets (28 files)
+├── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.12_Jaipur.pdf
+├── package.json     ->  Node.js dependencies
+├── netlify.toml     ->  Deployment configuration
+└── visualizations/  ->  Interactive visualizations
+
+THEORY (Theoretical Documentation)
+----------------------------------
+theory/
+├── Smawfield_2025_TemporalEquivalencePrinciple_Preprint_v0.3_Florence.pdf
+└── TEP_manuscript_v0.4_Marseille.md
+
+DOCUMENTATION & CONFIGURATION
+-----------------------------
+logs/                ->  EXECUTION LOGS (7 files)
+├── step_1_data_acquisition.json
+├── step_1_downloads.json
+├── step_2_coordinate_validation.json
+├── step_3_correlation_analysis.json
+├── step_3_correlation.log
+├── step_7_advanced_analysis.json
+└── step_8_visualization.json
+
+docs/                ->  Project documentation (currently empty)
+
+requirements/        ->  Dependencies
+└── requirements.txt ->  Python package dependencies
+
+figures/             ->  Root figures (currently empty)
+
+ROOT FILES
+----------
+README.md                                    ->  Project overview
+TEP-GNSS_manuscript_v0.12_Jaipur.md          ->  Main manuscript
+TID_EXCLUSION_SUMMARY.md                     ->  Analysis summary
+description text                             ->  Project description
+TEP-GNSS.code-workspace                      ->  VS Code workspace
+sync_figures.sh                              ->  Figure synchronization script
+
+================================================================================
+KEY DISTINCTIONS
+================================================================================
+
+OFFICIAL PIPELINE vs EXPERIMENTAL WORK
+--------------------------------------
+OFFICIAL PIPELINE:           EXPERIMENTAL WORK:
+/scripts/steps/              /scripts/exploratory/
+Publication ready            Research & development
+Peer-reviewed               Testing new approaches
+Stable interfaces           Alternative methods
+Well-documented             Future candidates
+Sequential (step_0-18)      Multiple variants
+
+================================================================================
+VERSION CONTROL
+================================================================================
+
+TRACKED (In Git)
+----------------
+✅ scripts/steps/        ->  Official pipeline
+✅ scripts/utils/        ->  Shared infrastructure  
+✅ data/processed/       ->  Pipeline outputs
+✅ results/outputs/      ->  Official results
+✅ results/figures/      ->  Publication figures
+✅ site/                 ->  Web documentation
+✅ theory/               ->  Theoretical documentation
+✅ logs/                 ->  Execution logs
+✅ requirements/         ->  Dependencies
+
+GITIGNORED (Not Tracked)
+------------------------
+🚫 scripts/exploratory/  ->  Experimental scripts
+🚫 data/exploratory/     ->  Experimental data
+🚫 results/exploratory/  ->  Experimental results
+🚫 data/raw/*/          ->  Large raw files
+🚫 results/tmp/         ->  Temporary files
+
+================================================================================
+BENEFITS
+================================================================================
+
+Clear Separation
+- Production vs Research code clearly separated
+- Official pipeline ready for publication
+- Experimental work isolated for development
+
+Scalable Architecture
+- Sequential pipeline (step_0 -> step_18)
+- Modular design - easy to extend
+- Research-friendly - supports experimentation
+
+Workflow
+EXPLORATORY -> OFFICIAL PIPELINE -> PUBLICATION
+(Research)   (Validation)        (Manuscript)
+
+================================================================================
+SUMMARY
+================================================================================
+
+TEP-GNSS Repository Structure:
+✅ One official pipeline for publication
+✅ One exploratory folder for all research
+✅ Clear separation of concerns
+✅ Proper gitignore configuration
+✅ Scientific computing best practices
+
+Perfect for: Publication-ready research with experimental development space

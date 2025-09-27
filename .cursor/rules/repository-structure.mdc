@@ -1,0 +1,135 @@
+---
+description: TEP-GNSS Repository Structure and Organization Rules
+globs:
+alwaysApply: true
+---
+
+# TEP-GNSS Repository Structure
+## Scientific Computing Best Practices
+
+## CORE PHILOSOPHY
+- **`/scripts/steps/`** = **Official Pipeline** (for publication)
+- **`/scripts/exploratory/`** = **All Experimental Work** (research & development)
+- **Exploratory folders** = **Gitignored** (not tracked in version control)
+
+## FOLDER STRUCTURE
+
+### SCRIPTS (Code Organization)
+```
+scripts/
+├── steps/           ->  OFFICIAL PIPELINE
+│   ├── step_0_provenance_snapshot.py
+│   ├── step_1_tep_data_acquisition.py
+│   ├── step_2_tep_coordinate_validation.py
+│   ├── step_3_tep_correlation_analysis.py
+│   ├── step_4_aggregate_geospatial_data.py
+│   ├── step_5_tep_statistical_validation.py
+│   ├── step_5_5_block_wise_cross_validation.py
+│   ├── step_6_tep_null_tests.py
+│   ├── step_7_tep_advanced_analysis.py
+│   ├── step_8_tep_visualization.py
+│   ├── step_9_tep_synthesis_figure.py
+│   ├── step_10_high_resolution_astronomical_events.py
+│   ├── step_11_tid_exclusion_analysis.py
+│   ├── step_12_additional_visualizations.py
+│   ├── step_13_methodology_validation.py
+│   ├── step_14_gravitational_temporal_field_analysis.py
+│   ├── step_15_geographic_bias_validation.py
+│   ├── step_16_realistic_ionospheric_validation.py
+│   └── step_18_targeted_diurnal_analysis.py
+│
+├── exploratory/     ->  ALL EXPERIMENTAL WORK 
+│   ├── Step 14 Variants
+│   ├── Analysis & Investigation
+│   ├── Utilities & Research
+│   └── historical_code/aggressive_acquire.py
+│
+└── utils/           ->  SHARED INFRASTRUCTURE 
+    ├── config.py           ->  Configuration management
+    ├── exceptions.py       ->  Custom exception classes
+    ├── logger.py           ->  Logging utilities
+    └── space_weather_data.py ->  Space weather data handling
+```
+
+### DATA (Input Organization)
+```
+data/
+├── raw/             ->  ORIGINAL GNSS DATA
+│   ├── code/        ->  CODE analysis center
+│   ├── esa_final/   ->  ESA analysis center
+│   └── igs_combined/ ->  IGS combined data
+│
+├── processed/       ->  PIPELINE OUTPUTS
+├── coordinates/     ->  STATION METADATA
+├── exploratory/     ->  EXPERIMENTAL DATA (gitignored)
+├── station_logs/    ->  Station operational information
+├── world_coastlines.json ->  Geographic boundaries
+├── world_land_polygons.json ->  Land mass data
+└── de432s.bsp       ->  JPL planetary ephemeris
+```
+
+### RESULTS (Output Organization)
+```
+results/
+├── outputs/         ->  OFFICIAL RESULTS
+├── figures/         ->  PUBLICATION FIGURES
+├── exploratory/     ->  EXPERIMENTAL RESULTS (gitignored)
+├── validation/      ->  QUALITY CONTROL
+└── tmp/             ->  Temporary files (gitignored)
+```
+
+### SITE (Web Documentation)
+```
+site/
+├── index.html       ->  Interactive research website
+├── figures/         ->  Website figures
+├── data/            ->  Interactive data
+├── public/          ->  Static web assets
+└── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.11_Jaipur.pdf
+```
+
+### THEORY (Theoretical Documentation)
+```
+theory/
+├── Smawfield_2025_TemporalEquivalencePrinciple_Preprint_v0.3_Florence.pdf
+└── TEP_manuscript_v0.4_Marseille.md
+```
+
+## KEY DISTINCTIONS
+
+### OFFICIAL PIPELINE vs EXPERIMENTAL WORK
+- **OFFICIAL PIPELINE:** `/scripts/steps/` - Publication ready, peer-reviewed, stable interfaces
+- **EXPERIMENTAL WORK:** `/scripts/exploratory/` - Research & development, testing new approaches
+
+## VERSION CONTROL
+
+### TRACKED (In Git)
+- ✅ `scripts/steps/` - Official pipeline
+- ✅ `scripts/utils/` - Shared infrastructure  
+- ✅ `data/processed/` - Pipeline outputs
+- ✅ `results/outputs/` - Official results
+- ✅ `results/figures/` - Publication figures
+- ✅ `site/` - Web documentation
+- ✅ `theory/` - Theoretical documentation
+
+### GITIGNORED (Not Tracked)
+- 🚫 `scripts/exploratory/` - Experimental scripts
+- 🚫 `data/exploratory/` - Experimental data
+- 🚫 `results/exploratory/` - Experimental results
+- 🚫 `data/raw/*/` - Large raw files
+- 🚫 `results/tmp/` - Temporary files
+
+## WORKFLOW
+```
+EXPLORATORY -> OFFICIAL PIPELINE -> PUBLICATION
+(Research)   (Validation)        (Manuscript)
+```
+
+## RULES FOR DEVELOPMENT
+
+1. **Official Pipeline:** Only add to `/scripts/steps/` when code is publication-ready
+2. **Experimental Work:** All research and development goes in `/scripts/exploratory/`
+3. **Data Organization:** Keep raw data separate from processed data
+4. **Results Organization:** Separate official results from experimental results
+5. **Version Control:** Experimental work is gitignored to keep repository clean
+6. **Documentation:** Maintain clear separation between production and research code
