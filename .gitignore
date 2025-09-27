@@ -81,3 +81,6 @@ results/exploratory/
 scripts/exploratory/# Large raw data files from Step 18 analysis
 data/processed/step_18/step_18_diurnal_hourly_raw*.csv
 results/outputs/step_18_diurnal_hourly_raw*.csv
+
+# Manuscript markdown files
+TEP-GNSS_manuscript_*.md
