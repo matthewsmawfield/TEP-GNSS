@@ -945,68 +945,79 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
     records = []
     
     try:
-        # Open .CLK or .CLK.gz file
-        if file_path.suffix == '.gz':
-            f = gzip.open(file_path, 'rt', errors='ignore')
-        else:
-            f = open(file_path, 'r', errors='ignore')
-        
-        with f:
-            # RINEX CLK Format Parser
-            # ======================
-            # Parse the standardized RINEX clock format used by all analysis centers.
-            # Format: AR STATION YYYY MM DD HH MM SS.SSS N_DATA CLOCK_OFFSET
-            # Example: AR ALGO 2023  1  1  0  0  0.000000    1  -0.123456789E-06
-            clk_pattern = re.compile(
-                r'^AR\s+'          # Record type (AR = Atomic Receiver clock)
-                r'(\S+)\s+'        # Station ID (4-char code, e.g., ALGO)
-                r'(\d{4})\s+'      # Year (4 digits)
-                r'(\d{1,2})\s+'    # Month (1-2 digits)
-                r'(\d{1,2})\s+'    # Day (1-2 digits)
-                r'(\d{1,2})\s+'    # Hour (1-2 digits)
-                r'(\d{1,2})\s+'    # Minute (1-2 digits)
-                r'([\d.]+)\s+'     # Second (float, includes microseconds)
-                r'(\d+)\s+'        # Number of data points (usually 1)
-                r'([-.\d]+)'       # Clock offset in seconds (scientific notation)
-            )
-
-            for line in f:
-                match = clk_pattern.match(line)
-                if not match:
-                    continue
-                
+        # Open .CLK or .CLK.gz file with robust handling (same as Step 18)
+        try:
+            with gzip.open(file_path, "rt", encoding="utf-8", errors="ignore") as fh:
+                lines = fh.readlines()
+        except Exception:
+            try:
+                with open(file_path, "r", encoding="utf-8", errors="ignore") as fh:
+                    lines = fh.readlines()
+            except Exception:
+                # Try with latin-1 encoding as fallback
                 try:
-                    # Extract captured groups
-                    (station, year_str, month_str, day_str, hour_str, 
-                     minute_str, second_str, _, clock_offset_str) = match.groups()
+                    with gzip.open(file_path, "rt", encoding="latin-1") as fh:
+                        lines = fh.readlines()
+                except Exception:
+                    with open(file_path, "r", encoding="latin-1") as fh:
+                        lines = fh.readlines()
+        
+        # Process lines instead of using file handle
+        # RINEX CLK Format Parser
+        # ======================
+        # Parse the standardized RINEX clock format used by all analysis centers.
+        # Format: AR STATION YYYY MM DD HH MM SS.SSS N_DATA CLOCK_OFFSET
+        # Example: AR ALGO 2023  1  1  0  0  0.000000    1  -0.123456789E-06
+        clk_pattern = re.compile(
+            r'^AR\s+'          # Record type (AR = Atomic Receiver clock)
+            r'(\S+)\s+'        # Station ID (4-char code, e.g., ALGO)
+            r'(\d{4})\s+'      # Year (4 digits)
+            r'(\d{1,2})\s+'    # Month (1-2 digits)
+            r'(\d{1,2})\s+'    # Day (1-2 digits)
+            r'(\d{1,2})\s+'    # Hour (1-2 digits)
+            r'(\d{1,2})\s+'    # Minute (1-2 digits)
+            r'([\d.]+)\s+'     # Second (float, includes microseconds)
+            r'(\d+)\s+'        # Number of data points (usually 1)
+            r'([-.\d]+)'       # Clock offset in seconds (scientific notation)
+        )
 
-                    # Parse timestamp with microsecond precision
-                    # ==========================================
-                    # GNSS timing requires nanosecond precision, so we preserve
-                    # all available time resolution from the RINEX format
-                    year = int(year_str)
-                    month = int(month_str) 
-                    day = int(day_str)
-                    hour = int(hour_str)
-                    minute = int(minute_str)
-                    second_float = float(second_str)
-                    second = int(second_float)
-                    microsecond = int((second_float - second) * 1_000_000)
-                    
-                    timestamp = pd.Timestamp(year, month, day, hour, minute, second, microsecond)
-                    
-                    # Clock offset: difference from GPS system time (seconds)
-                    # This is the fundamental observable that carries TEP signatures
-                    clock_offset = float(clock_offset_str)
-                    
-                    records.append({
-                        'timestamp': timestamp,
-                        'station': station, 
-                        'clock_offset': clock_offset
-                    })
-                    
-                except (ValueError, IndexError):
-                    continue  # Skip malformed lines
+        for line in lines:
+            match = clk_pattern.match(line)
+            if not match:
+                continue
+            
+            try:
+                # Extract captured groups
+                (station, year_str, month_str, day_str, hour_str, 
+                 minute_str, second_str, _, clock_offset_str) = match.groups()
+
+                # Parse timestamp with microsecond precision
+                # ==========================================
+                # GNSS timing requires nanosecond precision, so we preserve
+                # all available time resolution from the RINEX format
+                year = int(year_str)
+                month = int(month_str) 
+                day = int(day_str)
+                hour = int(hour_str)
+                minute = int(minute_str)
+                second_float = float(second_str)
+                second = int(second_float)
+                microsecond = int((second_float - second) * 1_000_000)
+                
+                timestamp = pd.Timestamp(year, month, day, hour, minute, second, microsecond)
+                
+                # Clock offset: difference from GPS system time (seconds)
+                # This is the fundamental observable that carries TEP signatures
+                clock_offset = float(clock_offset_str)
+                
+                records.append({
+                    'timestamp': timestamp,
+                    'station': station, 
+                    'clock_offset': clock_offset
+                })
+                
+            except (ValueError, IndexError):
+                continue  # Skip malformed lines
         
         if not records:
             return []
@@ -1700,14 +1711,20 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         start_date = datetime.fromisoformat(start_date_str)
         end_date = datetime.fromisoformat(end_date_str)
         
+        # Track unique dates to avoid processing multiple files for the same date
+        processed_dates = set()
+        
         for f in all_clk_files:
             match = re.search(r'(\d{4})(\d{3})', f.name)
             if match:
                 year = int(match.group(1))
                 day_of_year = int(match.group(2))
                 file_date = datetime(year, 1, 1) + timedelta(days=day_of_year - 1)
-                if start_date <= file_date <= end_date:
+                date_key = file_date.strftime('%Y-%m-%d')
+                
+                if start_date <= file_date <= end_date and date_key not in processed_dates:
                     clk_files.append(f)
+                    processed_dates.add(date_key)
     else:
         clk_files = all_clk_files # No date range specified
 
