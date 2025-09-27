@@ -2,7 +2,7 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.12 (Jaipur)  
-**Date:** September 25, 2025  
+**Date:** September 27, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Framework
@@ -27,6 +27,8 @@ Through analysis of 62.7 million station pair measurements from 529 global groun
 - **Multi-center validation**: Comprehensive null tests confirm signal authenticity (8.5–44× destruction under scrambling)
 - **Advanced validation**: Circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5) and comprehensive bias testing
 - **Gravitational coupling**: Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
+- **Diurnal analysis**: Step 18 reveals seasonal correlation patterns with optimal 240-day coupling windows
+- **Complementary metrics**: Enhanced validation framework with exploratory analysis capabilities
 
 ## Installation
 
@@ -110,6 +112,9 @@ python scripts/steps/step_15_geographic_bias_validation.py
 
 # Step 16: Realistic ionospheric validation
 python scripts/steps/step_16_realistic_ionospheric_validation.py
+
+# Step 18: Targeted diurnal analysis
+python scripts/steps/step_18_targeted_diurnal_analysis.py
 ```
 
 ### Configuration
@@ -163,6 +168,8 @@ Main outputs are located in:
 - **Null Tests**: `step_6_null_tests_{center}.json` - Signal authenticity validation
 - **Methodology Validation**: `step_13_validation_report.json` - Bias characterization and validation
 - **Advanced Findings**: `step_14_comprehensive_analysis_results.json` - Gravitational-temporal correlations
+- **Diurnal Analysis**: `step_18_comprehensive_analysis.json` - Seasonal correlation patterns and optimal coupling windows
+- **Complementary Metrics**: `scripts/exploratory/` - Enhanced validation framework and exploratory analysis tools
 
 ## Scientific Background
 
