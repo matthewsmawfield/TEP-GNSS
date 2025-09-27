@@ -353,33 +353,10 @@ def analyze_real_data_correlations(tep_coherence: pd.DataFrame, kp_data: pd.Data
         
         print_status(f"F10.7-TEP correlation: r = {max(abs(f107_mean_r), abs(f107_std_r)):.3f}", "SUCCESS")
     
-    # Local-time analysis using real TEP data
-    tep_coherence_dt = tep_coherence.copy()
-    tep_coherence_dt['date'] = pd.to_datetime(tep_coherence_dt['date'])
-    tep_coherence_dt['hour'] = tep_coherence_dt['date'].dt.hour
-    
-    # Group by hour for local-time analysis
-    hourly_stats = tep_coherence_dt.groupby('hour').agg({
-        'coherence_mean': ['mean', 'std'],
-        'coherence_std': ['mean', 'std']
-    }).reset_index()
-    
-    # Calculate local-time variability
-    coherence_by_hour = hourly_stats[('coherence_mean', 'mean')].values
-    hour_cv = np.std(coherence_by_hour) / np.mean(coherence_by_hour) if np.mean(coherence_by_hour) > 0 else 0
-    
-    local_time_analysis = {
-        'hourly_statistics': {
-            'coherence_cv': float(hour_cv),
-            'n_hours': len(hourly_stats)
-        },
-        'assessment': 'LOW' if hour_cv < 0.05 else 'MODERATE' if hour_cv < 0.15 else 'HIGH'
-    }
-    
-    results['local_time_analysis'] = local_time_analysis
-    results['available_analyses'].append('Real local-time dependence analysis')
-    
-    print_status(f"Local-time CV: {hour_cv:.3f} ({local_time_analysis['assessment']})", "SUCCESS")
+    # Note: Local-time analysis removed due to insufficient temporal resolution
+    # Daily-aggregated data cannot detect diurnal patterns (only 1 effective hour sample)
+    # Comprehensive diurnal analysis provided by Step 18 with hourly windowing methodology
+    print_status("Local-time analysis skipped: insufficient temporal resolution in daily data", "WARNING")
     
     return results
 
@@ -402,11 +379,9 @@ def generate_realistic_validation_assessment(analysis_results: Dict) -> Dict:
         f107_score = max(0, 1 - f107_max_corr / 0.3)
         validation_scores.append(('f107_independence', f107_score))
     
-    # Local-time independence
-    if 'local_time_analysis' in analysis_results:
-        lt_cv = analysis_results['local_time_analysis']['hourly_statistics']['coherence_cv']
-        lt_score = max(0, 1 - lt_cv / 0.15)
-        validation_scores.append(('local_time_independence', lt_score))
+    # Local-time independence - removed due to insufficient temporal resolution
+    # Daily-aggregated data cannot provide meaningful diurnal analysis
+    # Comprehensive diurnal analysis available through Step 18
     
     # Overall assessment
     if validation_scores:
@@ -433,7 +408,8 @@ def generate_realistic_validation_assessment(analysis_results: Dict) -> Dict:
             'tec_data': 'Not accessible (requires institutional access)',
             'kp_data': 'Partial coverage (sample months only)',
             'f107_data': 'Monthly resolution only',
-            'temporal_overlap': 'Limited by data availability'
+            'temporal_overlap': 'Limited by data availability',
+            'diurnal_analysis': 'Insufficient temporal resolution in daily-aggregated data (Step 18 provides comprehensive diurnal analysis)'
         },
         'completed_analyses': analysis_results['available_analyses'],
         'overall_validation_score': float(overall_score),
@@ -498,6 +474,10 @@ def main():
         print_status("ACKNOWLEDGED LIMITATIONS:", "INFO")
         for limitation in realistic_assessment['data_limitations'].values():
             print_status(f"⚠️  {limitation}", "WARNING")
+        
+        print_status("DIURNAL ANALYSIS:", "INFO")
+        print_status("⚠️  Step 16: Insufficient temporal resolution for diurnal analysis", "WARNING")
+        print_status("✅ Step 18: Comprehensive diurnal analysis with hourly windowing", "SUCCESS")
         
         print_status("="*80, "INFO")
         print_status(f"OVERALL ASSESSMENT: {realistic_assessment['confidence_level']}", "INFO")

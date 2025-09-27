@@ -1,0 +1,88 @@
+{
+  "timestamp": "2025-09-27T22:44:48.613235",
+  "total_tests_analyzed": 120,
+  "correction_methods_applied": [
+    "bonferroni",
+    "fdr_bh",
+    "family_wise"
+  ],
+  "family_alpha": 0.05,
+  "method_comparison": {
+    "bonferroni": {
+      "n_significant_tests": 39,
+      "significance_rate": 0.325,
+      "method_details": {
+        "corrected_alpha": 0.0004166666666666667,
+        "n_rejected": null
+      }
+    },
+    "fdr_bh": {
+      "n_significant_tests": 67,
+      "significance_rate": 0.5583333333333333,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": 67
+      }
+    },
+    "family_wise": {
+      "n_significant_tests": 43,
+      "significance_rate": 0.35833333333333334,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": null
+      }
+    }
+  },
+  "primary_findings_status": {
+    "primary_tep": {
+      "bonferroni": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      }
+    },
+    "null_validation": {
+      "bonferroni": {
+        "n_tests": 9,
+        "n_significant": 9,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 9,
+        "n_significant": 9,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 9,
+        "n_significant": 9,
+        "all_significant": true
+      }
+    }
+  },
+  "impact_analysis": {
+    "uncorrected_significant": 69,
+    "uncorrected_rate": 0.575,
+    "bonferroni_reduction": {
+      "absolute": 30,
+      "relative": 0.43478260869565216
+    },
+    "fdr_bh_reduction": {
+      "absolute": 2,
+      "relative": 0.028985507246376812
+    },
+    "family_wise_reduction": {
+      "absolute": 26,
+      "relative": 0.37681159420289856
+    }
+  }
+}

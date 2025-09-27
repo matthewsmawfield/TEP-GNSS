@@ -1,0 +1,4 @@
+correction_method,n_significant_tests,significance_rate,reduction_from_uncorrected
+bonferroni,39,0.325,0.43478260869565216
+fdr_bh,67,0.5583333333333333,0.028985507246376812
+family_wise,43,0.35833333333333334,0.37681159420289856

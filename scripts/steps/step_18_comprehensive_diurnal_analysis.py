@@ -230,7 +230,14 @@ def load_station_coordinates() -> pd.DataFrame:
     if not coords_path.exists():
         raise FileNotFoundError(f"Station coordinates not found: {coords_path}")
     
-    return pd.read_csv(coords_path)
+    coords_df = pd.read_csv(coords_path)
+    
+    # Create a mapping for 4-character station codes to 8-character codes
+    # The coordinates file uses 8-character codes (e.g., ALGO00CAN)
+    # but CLK files use 4-character codes (e.g., ALGO)
+    coords_df['code_4char'] = coords_df['code'].str[:4]
+    
+    return coords_df
 
 def process_pair_hourly(
     pivot: pd.DataFrame,
@@ -247,8 +254,14 @@ def process_pair_hourly(
         return []
     
     # Get station coordinates
+    # Try exact match first, then 4-character match
     coords_i = coords_df[coords_df["code"] == station_i]
+    if coords_i.empty:
+        coords_i = coords_df[coords_df["code_4char"] == station_i]
+    
     coords_j = coords_df[coords_df["code"] == station_j]
+    if coords_j.empty:
+        coords_j = coords_df[coords_df["code_4char"] == station_j]
     
     if coords_i.empty or coords_j.empty:
         return []
@@ -337,6 +350,35 @@ def process_pair_hourly(
     
     return results
 
+def get_step3_processed_files(center: str) -> List[str]:
+    """Get the exact list of files that Step 3 processed for this center."""
+    
+    tmp_dir = PROJECT_ROOT / "results" / "tmp"
+    if not tmp_dir.exists():
+        return []
+    
+    # Look for Step 3 pair files for this center
+    pattern = f"step_3_pairs_{center}_*.csv"
+    pair_files = list(tmp_dir.glob(pattern))
+    
+    if not pair_files:
+        if center == 'code':
+            # Fallback: try to extract from existing pair files
+            pair_files = list(tmp_dir.glob("step_3_pairs_code_*.csv"))
+        else:
+            return []
+    
+    # Extract filenames from pair file names
+    processed_files = []
+    for pair_file in pair_files:
+        # Extract filename from: step_3_pairs_code_COD0OPSFIN_20230010000_01D_30S_CLK.CLK.csv
+        filename = pair_file.name
+        if f"step_3_pairs_{center}_" in filename:
+            clk_filename = filename.replace(f"step_3_pairs_{center}_", "").replace(".csv", "")
+            processed_files.append(clk_filename)
+    
+    return sorted(processed_files)
+
 def discover_clk_files(cfg: Step18Config, center: str) -> List[Path]:
     """Discover CLK files for the specified center and date range."""
     
@@ -344,21 +386,94 @@ def discover_clk_files(cfg: Step18Config, center: str) -> List[Path]:
     if not data_dir.exists():
         raise FileNotFoundError(f"Data directory not found: {data_dir}")
     
+    # First, try to get the exact files that Step 3 processed
+    step3_files = get_step3_processed_files(center)
+    
+    if step3_files:
+        # Filter Step 3 files by the specified date range
+        filtered_files = []
+        start_year = cfg.start_date.year
+        end_year = cfg.end_date.year
+        start_doy = cfg.start_date.timetuple().tm_yday
+        end_doy = cfg.end_date.timetuple().tm_yday
+        
+        for filename in step3_files:
+            # Extract date from filename (format: COD0OPSFIN_YYYYDDD...)
+            import re
+            date_match = re.search(r'(\d{7})', filename)
+            if date_match:
+                date_str = date_match.group(1)
+                year = int(date_str[:4])
+                doy = int(date_str[4:7])
+                
+                # Check if file is in the specified date range
+                if start_year <= year <= end_year:
+                    if year == start_year and doy < start_doy:
+                        continue
+                    if year == end_year and doy > end_doy:
+                        continue
+                    filtered_files.append(filename)
+        
+        # Use the filtered Step 3 files
+        clk_files = []
+        for filename in filtered_files:
+            # Add .gz extension if not present
+            if not filename.endswith('.gz'):
+                filename += '.gz'
+            
+            clk_file = data_dir / filename
+            if clk_file.exists():
+                clk_files.append(clk_file)
+            else:
+                if cfg.verbose:
+                    print(f"[WARNING] Step 3 file not found: {filename}")
+        
+        if cfg.verbose:
+            if len(clk_files) == len(step3_files):
+                print(f"[INFO] Using {len(clk_files)} files from Step 3 processing for {center.upper()}")
+            else:
+                print(f"[INFO] Using {len(clk_files)} files from Step 3 processing (filtered by date range) for {center.upper()}")
+        
+        return clk_files
+    
+    # Fallback: Use date range filtering if Step 3 files not available
+    if cfg.verbose:
+        print(f"[WARNING] Step 3 files not found for {center.upper()}, using date range filtering")
+    
+    # Get all CLK files in the directory
+    all_clk_files = list(data_dir.glob("*CLK.CLK.gz"))
+    
+    # Filter by date range
     clk_files = []
-    current_date = cfg.start_date
+    start_year = cfg.start_date.year
+    end_year = cfg.end_date.year
+    start_doy = cfg.start_date.timetuple().tm_yday
+    end_doy = cfg.end_date.timetuple().tm_yday
     
-    while current_date <= cfg.end_date:
-        # Look for CLK files for this date
-        date_str = current_date.strftime("%Y%j")
-        pattern = f"*{date_str}*CLK.CLK.gz"
+    for clk_file in all_clk_files:
+        filename = clk_file.name
         
-        matching_files = list(data_dir.glob(pattern))
-        if matching_files:
-            clk_files.extend(matching_files)
-        
-        current_date += timedelta(days=1)
+        # Extract date from filename (format: COD0OPSFIN_YYYYDDD...)
+        # Look for YYYYDDD pattern in filename
+        import re
+        date_match = re.search(r'(\d{7})', filename)
+        if date_match:
+            date_str = date_match.group(1)
+            year = int(date_str[:4])
+            doy = int(date_str[4:7])
+            
+            # Check if file is in date range
+            if start_year <= year <= end_year:
+                if year == start_year and doy < start_doy:
+                    continue
+                if year == end_year and doy > end_doy:
+                    continue
+                clk_files.append(clk_file)
     
-    return sorted(clk_files)
+    # Sort files to ensure consistent ordering
+    clk_files = sorted(clk_files)
+    
+    return clk_files
 
 def select_stations(pivot: pd.DataFrame, max_stations: int) -> List[str]:
     """Select stations with sufficient data."""
@@ -593,6 +708,10 @@ def run_center_analysis(cfg: Step18Config, center: str, logger: TEPLogger) -> Di
 
 def save_results(results: Dict[str, object], center: str, cfg: Step18Config):
     """Save analysis results to files."""
+    
+    # Use data/processed for large raw data files, results/outputs for summaries
+    processed_dir = PROJECT_ROOT / "data" / "processed"
+    processed_dir.mkdir(parents=True, exist_ok=True)
     
     output_dir = PROJECT_ROOT / "results" / "outputs"
     output_dir.mkdir(parents=True, exist_ok=True)

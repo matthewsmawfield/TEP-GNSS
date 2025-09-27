@@ -78,4 +78,6 @@ COD*.CLK.Z
 # Exploratory directories (consolidated experimental + exploratory + historical_code)
 data/exploratory/
 results/exploratory/
-scripts/exploratory/results/outputs/step_18_diurnal_hourly_raw*.csv
+scripts/exploratory/# Large raw data files from Step 18 analysis
+data/processed/step_18/step_18_diurnal_hourly_raw*.csv
+results/outputs/step_18_diurnal_hourly_raw*.csv

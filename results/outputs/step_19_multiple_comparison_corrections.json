@@ -1,0 +1,1853 @@
+{
+  "bonferroni": {
+    "method": "bonferroni",
+    "n_total_tests": 120,
+    "corrected_alpha": 0.0004166666666666667,
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_p_value": 1.7985612998927536e-14,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "model_Gaussian_esa_final",
+        "p_value": 0.00024552317807746975,
+        "test_statistic": 16.6242384069307,
+        "description": "Model comparison Gaussian vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.00024552317807746975,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "model_Squared_Exponential_esa_final",
+        "p_value": 0.000245523175845716,
+        "test_statistic": 16.624238425110278,
+        "description": "Model comparison Squared Exponential vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.000245523175845716,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "model_Power_Law_igs_combined",
+        "p_value": 2.872883394260051e-06,
+        "test_statistic": 25.520388731086584,
+        "description": "Model comparison Power Law vs exponential for IGS_COMBINED",
+        "corrected_p_value": 2.872883394260051e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_distance_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test distance for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_phase_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test phase for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_station_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test station for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_distance_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test distance for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_phase_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test phase for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_station_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test station for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_distance_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test distance for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_phase_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test phase for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "null_station_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test station for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 0.00014265518443112857,
+        "test_statistic": 11.720027033404516,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_p_value": 0.00014265518443112857,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 6.997513679607437e-12,
+        "test_statistic": 68.13076465042576,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 6.997513679607437e-12,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.650968416479827e-12,
+        "test_statistic": 66.97928669431337,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 3.650968416479827e-12,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 5.522022727966203e-09,
+        "test_statistic": 39.31191804274803,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 5.522022727966203e-09,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 8.089205660866128e-08,
+        "test_statistic": 28.951473084768836,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 8.089205660866128e-08,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 2.6270630115732274e-10,
+        "test_statistic": 46.32349590541208,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 2.6270630115732274e-10,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 2.395034170987742e-10,
+        "test_statistic": 58.449024597356015,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.395034170987742e-10,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 1.3075429627917856e-11,
+        "test_statistic": 67.15022213697134,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.3075429627917856e-11,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 1.156340356800456e-08,
+        "test_statistic": 38.77010197995657,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.156340356800456e-08,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 5.503750899471527e-09,
+        "test_statistic": 43.14063141999552,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_p_value": 5.503750899471527e-09,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 7.609579633083285e-11,
+        "test_statistic": 57.81114160811099,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_p_value": 7.609579633083285e-11,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "sun_influence_coherence_std_pearson",
+        "p_value": 2.1784202609086577e-12,
+        "test_statistic": -0.22973798080792213,
+        "description": "Pearson correlation sun_influence coherence_std",
+        "corrected_p_value": 2.1784202609086577e-12,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "sun_influence_coherence_std_spearman",
+        "p_value": 9.622511471316106e-10,
+        "test_statistic": -0.20071704841519553,
+        "description": "Spearman correlation sun_influence coherence_std",
+        "corrected_p_value": 9.622511471316106e-10,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_pearson",
+        "p_value": 3.638467148811346e-15,
+        "test_statistic": -0.25647779122742786,
+        "description": "Pearson correlation jupiter_influence coherence_std",
+        "corrected_p_value": 3.638467148811346e-15,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_spearman",
+        "p_value": 6.62216446926282e-17,
+        "test_statistic": -0.2717650574883423,
+        "description": "Spearman correlation jupiter_influence coherence_std",
+        "corrected_p_value": 6.62216446926282e-17,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "venus_influence_coherence_mean_pearson",
+        "p_value": 3.996761256964984e-06,
+        "test_statistic": 0.15202380448403122,
+        "description": "Pearson correlation venus_influence coherence_mean",
+        "corrected_p_value": 3.996761256964984e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "venus_influence_coherence_median_pearson",
+        "p_value": 1.8659952795667426e-05,
+        "test_statistic": 0.1412193552417066,
+        "description": "Pearson correlation venus_influence coherence_median",
+        "corrected_p_value": 1.8659952795667426e-05,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_pearson",
+        "p_value": 9.699048372912555e-12,
+        "test_statistic": -0.22299154975285934,
+        "description": "Pearson correlation stacked_planetary_influence coherence_std",
+        "corrected_p_value": 9.699048372912555e-12,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_spearman",
+        "p_value": 2.4281773482268586e-10,
+        "test_statistic": -0.20765174047626167,
+        "description": "Spearman correlation stacked_planetary_influence coherence_std",
+        "corrected_p_value": 2.4281773482268586e-10,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_pearson",
+        "p_value": 2.1350501987116315e-12,
+        "test_statistic": -0.2298273795553738,
+        "description": "Pearson correlation total_gravitational_influence coherence_std",
+        "corrected_p_value": 2.1350501987116315e-12,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_spearman",
+        "p_value": 9.305996743991214e-10,
+        "test_statistic": -0.20088843865422243,
+        "description": "Spearman correlation total_gravitational_influence coherence_std",
+        "corrected_p_value": 9.305996743991214e-10,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_p_value": 1.7985612998927536e-14,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      }
+    ]
+  },
+  "fdr_bh": {
+    "method": "fdr_bh",
+    "n_total_tests": 120,
+    "n_rejected": 67,
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_p_value": 1.2695726822772378e-13,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_p_value": 9.516197353929913e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_p_value": 9.516197353929913e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Power_Law_code",
+        "p_value": 0.004670358919991392,
+        "test_statistic": 10.733038707450874,
+        "description": "Model comparison Power Law vs exponential for CODE",
+        "corrected_p_value": 0.01167589729997848,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Gaussian_esa_final",
+        "p_value": 0.00024552317807746975,
+        "test_statistic": 16.6242384069307,
+        "description": "Model comparison Gaussian vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.0007554559325460608,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Squared_Exponential_esa_final",
+        "p_value": 0.000245523175845716,
+        "test_statistic": 16.624238425110278,
+        "description": "Model comparison Squared Exponential vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.0007554559325460608,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Power_Law_esa_final",
+        "p_value": 0.0007874147360567033,
+        "test_statistic": 14.293510929600629,
+        "description": "Model comparison Power Law vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.00236224420817011,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Mat\u00e9rn_(\u03bd=2.5)_esa_final",
+        "p_value": 0.019823604337360756,
+        "test_statistic": 7.84176382612732,
+        "description": "Model comparison Mat\u00e9rn (\u03bd=2.5) vs exponential for ESA_FINAL",
+        "corrected_p_value": 0.03836826645940791,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Gaussian_igs_combined",
+        "p_value": 0.00751053511413453,
+        "test_statistic": 9.78289712439593,
+        "description": "Model comparison Gaussian vs exponential for IGS_COMBINED",
+        "corrected_p_value": 0.016690078047988614,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Squared_Exponential_igs_combined",
+        "p_value": 0.007510535121594875,
+        "test_statistic": 9.782897122409295,
+        "description": "Model comparison Squared Exponential vs exponential for IGS_COMBINED",
+        "corrected_p_value": 0.016690078047988614,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Power_Law_igs_combined",
+        "p_value": 2.872883394260051e-06,
+        "test_statistic": 25.520388731086584,
+        "description": "Model comparison Power Law vs exponential for IGS_COMBINED",
+        "corrected_p_value": 1.0139588450329592e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "model_Power_Law_w/_Cutoff_igs_combined",
+        "p_value": 0.0054762730406892396,
+        "test_statistic": 10.41466102292108,
+        "description": "Model comparison Power Law w/ Cutoff vs exponential for IGS_COMBINED",
+        "corrected_p_value": 0.013143055297654175,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "lodo_stability_code",
+        "p_value": 0.011430420244359075,
+        "test_statistic": 0.0011430420244359074,
+        "description": "LODO stability test for CODE",
+        "corrected_p_value": 0.023248312361408285,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "lodo_stability_esa_final",
+        "p_value": 0.008453341415670066,
+        "test_statistic": 0.0008453341415670066,
+        "description": "LODO stability test for ESA_FINAL",
+        "corrected_p_value": 0.018214285714285714,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "lodo_stability_igs_combined",
+        "p_value": 0.009619443017827215,
+        "test_statistic": 0.0009619443017827216,
+        "description": "LODO stability test for IGS_COMBINED",
+        "corrected_p_value": 0.01990229589895286,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_distance_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test distance for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_phase_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test phase for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_station_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test station for CODE",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_distance_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test distance for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_phase_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test phase for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_station_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test station for ESA_FINAL",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_distance_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test distance for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_phase_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test phase for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "null_station_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test station for IGS_COMBINED",
+        "corrected_p_value": 0.0,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_code",
+        "p_value": 0.001157071915036445,
+        "test_statistic": 8.476860725773827,
+        "description": "Elevation quintile_1 exponential fit for CODE",
+        "corrected_p_value": 0.0032290379024272884,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 0.00014265518443112857,
+        "test_statistic": 11.720027033404516,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_p_value": 0.00046266546301987647,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_code",
+        "p_value": 0.0011160875778476465,
+        "test_statistic": 8.67261348780272,
+        "description": "Elevation quintile_3 exponential fit for CODE",
+        "corrected_p_value": 0.0031888216509932754,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_code",
+        "p_value": 0.0262330407880369,
+        "test_statistic": 4.08824252652981,
+        "description": "Elevation quintile_4 exponential fit for CODE",
+        "corrected_p_value": 0.04698455066514071,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_code",
+        "p_value": 0.005166705885196743,
+        "test_statistic": 6.172119536535032,
+        "description": "Elevation quintile_5 exponential fit for CODE",
+        "corrected_p_value": 0.012653157269869575,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 6.997513679607437e-12,
+        "test_statistic": 68.13076465042576,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 3.998579245489964e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.650968416479827e-12,
+        "test_statistic": 66.97928669431337,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 2.1905810498878964e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 5.522022727966203e-09,
+        "test_statistic": 39.31191804274803,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 2.1375571850191753e-08,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 8.089205660866128e-08,
+        "test_statistic": 28.951473084768836,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 2.9415293312240465e-07,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 2.6270630115732274e-10,
+        "test_statistic": 46.32349590541208,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 1.1675835606992122e-09,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 2.395034170987742e-10,
+        "test_statistic": 58.449024597356015,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.1206972376431653e-09,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 1.3075429627917856e-11,
+        "test_statistic": 67.15022213697134,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_p_value": 6.821963284131056e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 1.156340356800456e-08,
+        "test_statistic": 38.77010197995657,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_p_value": 4.33627633800171e-08,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 5.503750899471527e-09,
+        "test_statistic": 43.14063141999552,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.1375571850191753e-08,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 7.609579633083285e-11,
+        "test_statistic": 57.81114160811099,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_p_value": 3.8047898165416427e-10,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "step_10_comprehensive_high_res_all-centers_permutation",
+        "p_value": 0.0085,
+        "test_statistic": 0,
+        "description": "Permutation test from step_10_comprehensive_high_res_all-centers",
+        "corrected_p_value": 0.018214285714285714,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_mean_pearson",
+        "p_value": 0.003079857781101703,
+        "test_statistic": -0.09790265227649063,
+        "description": "Pearson correlation sun_influence coherence_mean",
+        "corrected_p_value": 0.007884341369648341,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_mean_spearman",
+        "p_value": 0.0027302440715930368,
+        "test_statistic": -0.09911826255541863,
+        "description": "Spearman correlation sun_influence coherence_mean",
+        "corrected_p_value": 0.0073660844637629605,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_median_pearson",
+        "p_value": 0.022339222538528138,
+        "test_statistic": -0.07564434912780686,
+        "description": "Pearson correlation sun_influence coherence_median",
+        "corrected_p_value": 0.04158271098350973,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_median_spearman",
+        "p_value": 0.022731188544380068,
+        "test_statistic": -0.07542553155810969,
+        "description": "Spearman correlation sun_influence coherence_median",
+        "corrected_p_value": 0.04158271098350973,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_std_pearson",
+        "p_value": 2.1784202609086577e-12,
+        "test_statistic": -0.22973798080792213,
+        "description": "Pearson correlation sun_influence coherence_std",
+        "corrected_p_value": 1.3758443753107311e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "sun_influence_coherence_std_spearman",
+        "p_value": 9.622511471316106e-10,
+        "test_statistic": -0.20071704841519553,
+        "description": "Spearman correlation sun_influence coherence_std",
+        "corrected_p_value": 3.981728884682527e-09,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_mean_pearson",
+        "p_value": 0.006709035652137913,
+        "test_statistic": -0.0897105676812369,
+        "description": "Pearson correlation jupiter_influence coherence_mean",
+        "corrected_p_value": 0.015785966240324502,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_mean_spearman",
+        "p_value": 0.006904512266738654,
+        "test_statistic": -0.08939624062771918,
+        "description": "Spearman correlation jupiter_influence coherence_mean",
+        "corrected_p_value": 0.01593348984631997,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_median_pearson",
+        "p_value": 0.00889773285342192,
+        "test_statistic": -0.08657908730130945,
+        "description": "Pearson correlation jupiter_influence coherence_median",
+        "corrected_p_value": 0.01873206916509878,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_median_spearman",
+        "p_value": 0.01685361305031114,
+        "test_statistic": -0.07912144800294776,
+        "description": "Spearman correlation jupiter_influence coherence_median",
+        "corrected_p_value": 0.03370722610062228,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_pearson",
+        "p_value": 3.638467148811346e-15,
+        "test_statistic": -0.25647779122742786,
+        "description": "Pearson correlation jupiter_influence coherence_std",
+        "corrected_p_value": 2.9107737190490767e-14,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_spearman",
+        "p_value": 6.62216446926282e-17,
+        "test_statistic": -0.2717650574883423,
+        "description": "Spearman correlation jupiter_influence coherence_std",
+        "corrected_p_value": 7.946597363115383e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "venus_influence_coherence_mean_pearson",
+        "p_value": 3.996761256964984e-06,
+        "test_statistic": 0.15202380448403122,
+        "description": "Pearson correlation venus_influence coherence_mean",
+        "corrected_p_value": 1.3703181452451372e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "venus_influence_coherence_median_pearson",
+        "p_value": 1.8659952795667426e-05,
+        "test_statistic": 0.1412193552417066,
+        "description": "Pearson correlation venus_influence coherence_median",
+        "corrected_p_value": 6.219984265222475e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "mars_influence_coherence_mean_spearman",
+        "p_value": 0.019448864932477952,
+        "test_statistic": -0.07736973661588406,
+        "description": "Spearman correlation mars_influence coherence_mean",
+        "corrected_p_value": 0.03826006216225171,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "mars_influence_coherence_std_pearson",
+        "p_value": 0.000821690269635945,
+        "test_statistic": -0.11058842805351801,
+        "description": "Pearson correlation mars_influence coherence_std",
+        "corrected_p_value": 0.00240494713064179,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_pearson",
+        "p_value": 9.699048372912555e-12,
+        "test_statistic": -0.22299154975285934,
+        "description": "Pearson correlation stacked_planetary_influence coherence_std",
+        "corrected_p_value": 5.290390021588666e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_spearman",
+        "p_value": 2.4281773482268586e-10,
+        "test_statistic": -0.20765174047626167,
+        "description": "Spearman correlation stacked_planetary_influence coherence_std",
+        "corrected_p_value": 1.1206972376431653e-09,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_mean_pearson",
+        "p_value": 0.0030880337031122668,
+        "test_statistic": -0.0978757589800563,
+        "description": "Pearson correlation total_gravitational_influence coherence_mean",
+        "corrected_p_value": 0.007884341369648341,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_mean_spearman",
+        "p_value": 0.00276228167391111,
+        "test_statistic": -0.09900113376367457,
+        "description": "Spearman correlation total_gravitational_influence coherence_mean",
+        "corrected_p_value": 0.0073660844637629605,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_median_pearson",
+        "p_value": 0.022375271442893883,
+        "test_statistic": -0.07562408605952303,
+        "description": "Pearson correlation total_gravitational_influence coherence_median",
+        "corrected_p_value": 0.04158271098350973,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_median_spearman",
+        "p_value": 0.02287049104093035,
+        "test_statistic": -0.07534855307342214,
+        "description": "Spearman correlation total_gravitational_influence coherence_median",
+        "corrected_p_value": 0.04158271098350973,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_pearson",
+        "p_value": 2.1350501987116315e-12,
+        "test_statistic": -0.2298273795553738,
+        "description": "Pearson correlation total_gravitational_influence coherence_std",
+        "corrected_p_value": 1.3758443753107311e-11,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_spearman",
+        "p_value": 9.305996743991214e-10,
+        "test_statistic": -0.20088843865422243,
+        "description": "Spearman correlation total_gravitational_influence coherence_std",
+        "corrected_p_value": 3.981728884682527e-09,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_p_value": 1.2695726822772378e-13,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_p_value": 9.516197353929913e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_p_value": 9.516197353929913e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      }
+    ]
+  },
+  "family_wise": {
+    "method": "family_wise",
+    "family_alpha": 0.05,
+    "family_results": {
+      "primary_tep": [
+        {
+          "test_name": "exponential_fit_code",
+          "p_value": 1.7985612998927536e-14,
+          "test_statistic": 144.7044528001457,
+          "description": "Primary exponential fit significance for CODE",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "exponential_fit_esa_final",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 357.45975780727844,
+          "description": "Primary exponential fit significance for ESA_FINAL",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "exponential_fit_igs_combined",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 380.35210045041515,
+          "description": "Primary exponential fit significance for IGS_COMBINED",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        }
+      ],
+      "model_comparison": [
+        {
+          "test_name": "model_Gaussian_esa_final",
+          "p_value": 0.00024552317807746975,
+          "test_statistic": 16.6242384069307,
+          "description": "Model comparison Gaussian vs exponential for ESA_FINAL",
+          "corrected_alpha": 0.002777777777777778,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 18
+        },
+        {
+          "test_name": "model_Squared_Exponential_esa_final",
+          "p_value": 0.000245523175845716,
+          "test_statistic": 16.624238425110278,
+          "description": "Model comparison Squared Exponential vs exponential for ESA_FINAL",
+          "corrected_alpha": 0.002777777777777778,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 18
+        },
+        {
+          "test_name": "model_Power_Law_esa_final",
+          "p_value": 0.0007874147360567033,
+          "test_statistic": 14.293510929600629,
+          "description": "Model comparison Power Law vs exponential for ESA_FINAL",
+          "corrected_alpha": 0.002777777777777778,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 18
+        },
+        {
+          "test_name": "model_Power_Law_igs_combined",
+          "p_value": 2.872883394260051e-06,
+          "test_statistic": 25.520388731086584,
+          "description": "Model comparison Power Law vs exponential for IGS_COMBINED",
+          "corrected_alpha": 0.002777777777777778,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 18
+        }
+      ],
+      "cross_validation": [],
+      "null_validation": [
+        {
+          "test_name": "null_distance_code",
+          "p_value": 0.0,
+          "test_statistic": 0.9204857128576932,
+          "description": "Null test distance for CODE",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_phase_code",
+          "p_value": 0.0,
+          "test_statistic": 0.9204857128576932,
+          "description": "Null test phase for CODE",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_station_code",
+          "p_value": 0.0,
+          "test_statistic": 0.9204857128576932,
+          "description": "Null test station for CODE",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_distance_esa_final",
+          "p_value": 0.0,
+          "test_statistic": 0.9701459935123946,
+          "description": "Null test distance for ESA_FINAL",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_phase_esa_final",
+          "p_value": 0.0,
+          "test_statistic": 0.9701459935123946,
+          "description": "Null test phase for ESA_FINAL",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_station_esa_final",
+          "p_value": 0.0,
+          "test_statistic": 0.9701459935123946,
+          "description": "Null test station for ESA_FINAL",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_distance_igs_combined",
+          "p_value": 0.0,
+          "test_statistic": 0.9658709167990942,
+          "description": "Null test distance for IGS_COMBINED",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_phase_igs_combined",
+          "p_value": 0.0,
+          "test_statistic": 0.9658709167990942,
+          "description": "Null test phase for IGS_COMBINED",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        },
+        {
+          "test_name": "null_station_igs_combined",
+          "p_value": 0.0,
+          "test_statistic": 0.9658709167990942,
+          "description": "Null test station for IGS_COMBINED",
+          "corrected_alpha": 0.005555555555555556,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 9
+        }
+      ],
+      "advanced_analysis": [
+        {
+          "test_name": "elevation_quintile_1_code",
+          "p_value": 0.001157071915036445,
+          "test_statistic": 8.476860725773827,
+          "description": "Elevation quintile_1 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_code",
+          "p_value": 0.00014265518443112857,
+          "test_statistic": 11.720027033404516,
+          "description": "Elevation quintile_2 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_code",
+          "p_value": 0.0011160875778476465,
+          "test_statistic": 8.67261348780272,
+          "description": "Elevation quintile_3 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_1_igs_combined",
+          "p_value": 6.997513679607437e-12,
+          "test_statistic": 68.13076465042576,
+          "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_igs_combined",
+          "p_value": 3.650968416479827e-12,
+          "test_statistic": 66.97928669431337,
+          "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_igs_combined",
+          "p_value": 5.522022727966203e-09,
+          "test_statistic": 39.31191804274803,
+          "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_4_igs_combined",
+          "p_value": 8.089205660866128e-08,
+          "test_statistic": 28.951473084768836,
+          "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_5_igs_combined",
+          "p_value": 2.6270630115732274e-10,
+          "test_statistic": 46.32349590541208,
+          "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_1_esa_final",
+          "p_value": 2.395034170987742e-10,
+          "test_statistic": 58.449024597356015,
+          "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_esa_final",
+          "p_value": 1.3075429627917856e-11,
+          "test_statistic": 67.15022213697134,
+          "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_esa_final",
+          "p_value": 1.156340356800456e-08,
+          "test_statistic": 38.77010197995657,
+          "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_4_esa_final",
+          "p_value": 5.503750899471527e-09,
+          "test_statistic": 43.14063141999552,
+          "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_5_esa_final",
+          "p_value": 7.609579633083285e-11,
+          "test_statistic": 57.81114160811099,
+          "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        }
+      ],
+      "astronomical_events": [],
+      "gravitational_coupling": [
+        {
+          "test_name": "sun_influence_coherence_std_pearson",
+          "p_value": 2.1784202609086577e-12,
+          "test_statistic": -0.22973798080792213,
+          "description": "Pearson correlation sun_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "sun_influence_coherence_std_spearman",
+          "p_value": 9.622511471316106e-10,
+          "test_statistic": -0.20071704841519553,
+          "description": "Spearman correlation sun_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "jupiter_influence_coherence_std_pearson",
+          "p_value": 3.638467148811346e-15,
+          "test_statistic": -0.25647779122742786,
+          "description": "Pearson correlation jupiter_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "jupiter_influence_coherence_std_spearman",
+          "p_value": 6.62216446926282e-17,
+          "test_statistic": -0.2717650574883423,
+          "description": "Spearman correlation jupiter_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "venus_influence_coherence_mean_pearson",
+          "p_value": 3.996761256964984e-06,
+          "test_statistic": 0.15202380448403122,
+          "description": "Pearson correlation venus_influence coherence_mean",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "venus_influence_coherence_median_pearson",
+          "p_value": 1.8659952795667426e-05,
+          "test_statistic": 0.1412193552417066,
+          "description": "Pearson correlation venus_influence coherence_median",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "mars_influence_coherence_std_pearson",
+          "p_value": 0.000821690269635945,
+          "test_statistic": -0.11058842805351801,
+          "description": "Pearson correlation mars_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "stacked_planetary_influence_coherence_std_pearson",
+          "p_value": 9.699048372912555e-12,
+          "test_statistic": -0.22299154975285934,
+          "description": "Pearson correlation stacked_planetary_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "stacked_planetary_influence_coherence_std_spearman",
+          "p_value": 2.4281773482268586e-10,
+          "test_statistic": -0.20765174047626167,
+          "description": "Spearman correlation stacked_planetary_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "total_gravitational_influence_coherence_std_pearson",
+          "p_value": 2.1350501987116315e-12,
+          "test_statistic": -0.2298273795553738,
+          "description": "Pearson correlation total_gravitational_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        },
+        {
+          "test_name": "total_gravitational_influence_coherence_std_spearman",
+          "p_value": 9.305996743991214e-10,
+          "test_statistic": -0.20088843865422243,
+          "description": "Spearman correlation total_gravitational_influence coherence_std",
+          "corrected_alpha": 0.0011904761904761906,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 42
+        }
+      ],
+      "geographic_validation": [
+        {
+          "test_name": "baseline_fit_code",
+          "p_value": 1.7985612998927536e-14,
+          "test_statistic": 144.7044528001457,
+          "description": "Baseline exponential fit for CODE",
+          "corrected_alpha": 0.008333333333333333,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 6
+        },
+        {
+          "test_name": "baseline_fit_esa_final",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 357.45975780727844,
+          "description": "Baseline exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.008333333333333333,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 6
+        },
+        {
+          "test_name": "baseline_fit_igs_combined",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 380.35210045041515,
+          "description": "Baseline exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.008333333333333333,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 6
+        }
+      ],
+      "ionospheric_validation": []
+    },
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "model_Gaussian_esa_final",
+        "p_value": 0.00024552317807746975,
+        "test_statistic": 16.6242384069307,
+        "description": "Model comparison Gaussian vs exponential for ESA_FINAL",
+        "corrected_alpha": 0.002777777777777778,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 18
+      },
+      {
+        "test_name": "model_Squared_Exponential_esa_final",
+        "p_value": 0.000245523175845716,
+        "test_statistic": 16.624238425110278,
+        "description": "Model comparison Squared Exponential vs exponential for ESA_FINAL",
+        "corrected_alpha": 0.002777777777777778,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 18
+      },
+      {
+        "test_name": "model_Power_Law_esa_final",
+        "p_value": 0.0007874147360567033,
+        "test_statistic": 14.293510929600629,
+        "description": "Model comparison Power Law vs exponential for ESA_FINAL",
+        "corrected_alpha": 0.002777777777777778,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 18
+      },
+      {
+        "test_name": "model_Power_Law_igs_combined",
+        "p_value": 2.872883394260051e-06,
+        "test_statistic": 25.520388731086584,
+        "description": "Model comparison Power Law vs exponential for IGS_COMBINED",
+        "corrected_alpha": 0.002777777777777778,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 18
+      },
+      {
+        "test_name": "null_distance_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test distance for CODE",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_phase_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test phase for CODE",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_station_code",
+        "p_value": 0.0,
+        "test_statistic": 0.9204857128576932,
+        "description": "Null test station for CODE",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_distance_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test distance for ESA_FINAL",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_phase_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test phase for ESA_FINAL",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_station_esa_final",
+        "p_value": 0.0,
+        "test_statistic": 0.9701459935123946,
+        "description": "Null test station for ESA_FINAL",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_distance_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test distance for IGS_COMBINED",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_phase_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test phase for IGS_COMBINED",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "null_station_igs_combined",
+        "p_value": 0.0,
+        "test_statistic": 0.9658709167990942,
+        "description": "Null test station for IGS_COMBINED",
+        "corrected_alpha": 0.005555555555555556,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 9
+      },
+      {
+        "test_name": "elevation_quintile_1_code",
+        "p_value": 0.001157071915036445,
+        "test_statistic": 8.476860725773827,
+        "description": "Elevation quintile_1 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 0.00014265518443112857,
+        "test_statistic": 11.720027033404516,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_code",
+        "p_value": 0.0011160875778476465,
+        "test_statistic": 8.67261348780272,
+        "description": "Elevation quintile_3 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 6.997513679607437e-12,
+        "test_statistic": 68.13076465042576,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.650968416479827e-12,
+        "test_statistic": 66.97928669431337,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 5.522022727966203e-09,
+        "test_statistic": 39.31191804274803,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 8.089205660866128e-08,
+        "test_statistic": 28.951473084768836,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 2.6270630115732274e-10,
+        "test_statistic": 46.32349590541208,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 2.395034170987742e-10,
+        "test_statistic": 58.449024597356015,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 1.3075429627917856e-11,
+        "test_statistic": 67.15022213697134,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 1.156340356800456e-08,
+        "test_statistic": 38.77010197995657,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 5.503750899471527e-09,
+        "test_statistic": 43.14063141999552,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 7.609579633083285e-11,
+        "test_statistic": 57.81114160811099,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "sun_influence_coherence_std_pearson",
+        "p_value": 2.1784202609086577e-12,
+        "test_statistic": -0.22973798080792213,
+        "description": "Pearson correlation sun_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "sun_influence_coherence_std_spearman",
+        "p_value": 9.622511471316106e-10,
+        "test_statistic": -0.20071704841519553,
+        "description": "Spearman correlation sun_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_pearson",
+        "p_value": 3.638467148811346e-15,
+        "test_statistic": -0.25647779122742786,
+        "description": "Pearson correlation jupiter_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "jupiter_influence_coherence_std_spearman",
+        "p_value": 6.62216446926282e-17,
+        "test_statistic": -0.2717650574883423,
+        "description": "Spearman correlation jupiter_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "venus_influence_coherence_mean_pearson",
+        "p_value": 3.996761256964984e-06,
+        "test_statistic": 0.15202380448403122,
+        "description": "Pearson correlation venus_influence coherence_mean",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "venus_influence_coherence_median_pearson",
+        "p_value": 1.8659952795667426e-05,
+        "test_statistic": 0.1412193552417066,
+        "description": "Pearson correlation venus_influence coherence_median",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "mars_influence_coherence_std_pearson",
+        "p_value": 0.000821690269635945,
+        "test_statistic": -0.11058842805351801,
+        "description": "Pearson correlation mars_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_pearson",
+        "p_value": 9.699048372912555e-12,
+        "test_statistic": -0.22299154975285934,
+        "description": "Pearson correlation stacked_planetary_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "stacked_planetary_influence_coherence_std_spearman",
+        "p_value": 2.4281773482268586e-10,
+        "test_statistic": -0.20765174047626167,
+        "description": "Spearman correlation stacked_planetary_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_pearson",
+        "p_value": 2.1350501987116315e-12,
+        "test_statistic": -0.2298273795553738,
+        "description": "Pearson correlation total_gravitational_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "total_gravitational_influence_coherence_std_spearman",
+        "p_value": 9.305996743991214e-10,
+        "test_statistic": -0.20088843865422243,
+        "description": "Spearman correlation total_gravitational_influence coherence_std",
+        "corrected_alpha": 0.0011904761904761906,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 42
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.7044528001457,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_alpha": 0.008333333333333333,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 6
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45975780727844,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.008333333333333333,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 6
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 380.35210045041515,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.008333333333333333,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 6
+      }
+    ]
+  }
+}
