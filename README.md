@@ -80,6 +80,9 @@ python scripts/steps/step_4_aggregate_geospatial_data.py
 # Step 5: Statistical validation
 python scripts/steps/step_5_tep_statistical_validation.py
 
+# Step 5.5: Block-wise cross validation
+python scripts/steps/step_5_5_block_wise_cross_validation.py
+
 # Step 6: Null hypothesis testing
 python scripts/steps/step_6_tep_null_tests.py
 
@@ -101,6 +104,8 @@ python scripts/steps/step_10_high_resolution_astronomical_events.py
 # Step 11: TID exclusion analysis
 python scripts/steps/step_11_tid_exclusion_analysis.py
 
+# Step 12: [REMOVED in v0.12] Additional visualizations (deprecated)
+
 # Step 13: Methodology validation
 python scripts/steps/step_13_methodology_validation.py
 
@@ -113,8 +118,11 @@ python scripts/steps/step_15_geographic_bias_validation.py
 # Step 16: Realistic ionospheric validation
 python scripts/steps/step_16_realistic_ionospheric_validation.py
 
-# Step 18: Targeted diurnal analysis
-python scripts/steps/step_18_targeted_diurnal_analysis.py
+# Step 18: Comprehensive diurnal analysis
+python scripts/steps/step_18_comprehensive_diurnal_analysis.py
+
+# Step 19: Multiple comparison corrections
+python scripts/steps/step_19_multiple_comparison_corrections.py
 ```
 
 ### Configuration
