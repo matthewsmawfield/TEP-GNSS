@@ -187,7 +187,7 @@ This analysis implements **Clock Network Correlation Analysis**, a key experimen
 
 **Major Finding**: Direct experimental evidence of gravitational-temporal field coupling has been discovered through comprehensive analysis of planetary gravitational influences on Earth's temporal field structure.
 
-![Gravitational-Temporal Field Coupling](figures/step_14_comprehensive_gravitational_temporal_analysis.png)
+![Gravitational-Temporal Field Coupling](site/figures/step_14_comprehensive_gravitational_temporal_analysis.png)
 
 - **Stacked gravitational correlation**: r = -0.458, p < 10⁻⁴⁸ with Earth's temporal field
 - **Individual planetary signatures**: Venus (stabilizer), Jupiter (moderate stabilizer), Mars (destabilizer), Saturn (disruptor)
