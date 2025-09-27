@@ -21,6 +21,8 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 Through analysis of 62.7 million station pair measurements from 529 global ground stations, we observe:
 
+![Distance-structured correlations in GNSS clock networks](site/figures/figure_1_TEP_site_themed.png)
+
 - **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (12.3% variation)
 - **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
 - **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
@@ -182,8 +184,6 @@ Main outputs are located in:
 ## Scientific Background
 
 This analysis implements **Clock Network Correlation Analysis**, a key experimental test from the Temporal Equivalence Principle (TEP) framework ([Smawfield, 2025](https://matthewsmawfield.github.io/TEP/); [DOI: 10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)).
-
-### Breakthrough Discovery (Step 14)
 
 **Major Finding**: Direct experimental evidence of gravitational-temporal field coupling has been discovered through comprehensive analysis of planetary gravitational influences on Earth's temporal field structure.
 
