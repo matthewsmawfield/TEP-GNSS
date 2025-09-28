@@ -81,6 +81,32 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.utils.logger import TEPLogger
 
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
+
 # ---------------------------------------------------------------------------
 # Configuration and Constants
 # ---------------------------------------------------------------------------
@@ -741,7 +767,7 @@ def run_comprehensive_analysis(cfg: Step18Config) -> Dict[str, object]:
     # Setup logging
     logger = TEPLogger("step_18", level="DEBUG" if cfg.verbose else "INFO")
     
-    logger.info("=== STEP 18: COMPREHENSIVE DIURNAL ANALYSIS ===")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 18: Comprehensive Diurnal Analysis", "TITLE")
     logger.info(f"Date range: {cfg.start_date} to {cfg.end_date}")
     logger.info(f"Centers: {', '.join(cfg.centers)}")
     logger.info(f"Max workers: {cfg.max_workers}")
@@ -750,7 +776,7 @@ def run_comprehensive_analysis(cfg: Step18Config) -> Dict[str, object]:
     
     for center in cfg.centers:
         try:
-            logger.info(f"\n--- Processing {center.upper()} ---")
+            logger.process(f"\n--- Processing {center.upper()} ---")
             
             # Run analysis for this center
             center_results = run_center_analysis(cfg, center, logger)

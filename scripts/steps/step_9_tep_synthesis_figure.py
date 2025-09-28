@@ -26,6 +26,32 @@ warnings.filterwarnings('ignore')
 
 ROOT = Path(__file__).resolve().parents[2]
 
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
+
 def set_site_themed_style():
     """Styling consistent with site theme."""
     plt.rcParams.update({
@@ -318,10 +344,7 @@ def create_panel_c(ax):
 
 def main():
     """Generate site-themed figure."""
-    print("="*80)
-    print("TEP GNSS Analysis Package v0.13")
-    print("STEP 9: Synthesis Figure Generation")
-    print("="*80)
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 9: Synthesis Figure Generation", "TITLE")
     
     set_site_themed_style()
     

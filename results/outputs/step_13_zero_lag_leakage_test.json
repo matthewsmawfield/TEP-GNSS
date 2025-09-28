@@ -1,112 +1,151 @@
 {
   "test_name": "zero_lag_leakage_test",
-  "description": "Zero-lag/common-mode leakage assessment",
+  "description": "Zero-lag/common-mode leakage assessment - Enhanced methodology",
   "metrics_tested": [
     "cos_phase_csd",
     "imaginary_coherency",
     "pli",
     "wpli"
   ],
+  "methodology_improvements": [
+    "Using same binning and fitting approach as main TEP analysis",
+    "Comparing relative performance rather than absolute R\u00b2 values",
+    "Testing multiple synthetic scenarios with realistic noise characteristics"
+  ],
   "realizations": [
     {
-      "scenario": "pure_noise_baseline",
-      "n_realizations": 3,
+      "scenario": "realistic_gnss_noise",
+      "n_realizations": 5,
       "metrics_summary": {
         "cos_phase_csd": {
           "mean_r_squared": 0.001290694851801999,
           "std_r_squared": 0.0,
-          "mean_correlation_length": 3053.5049814325153,
-          "std_correlation_length": 4.547473508864641e-13,
-          "n_valid_fits": 3
+          "mean_correlation_length": 3053.504981432515,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
         },
         "imaginary_coherency": {
           "mean_r_squared": -2.220446049250313e-16,
           "std_r_squared": 0.0,
-          "mean_correlation_length": 100.00000013962988,
-          "std_correlation_length": 1.4210854715202004e-14,
-          "n_valid_fits": 3
+          "mean_correlation_length": 100.00000013962986,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
         },
         "pli": {
           "mean_r_squared": 0.00028504236334492283,
           "std_r_squared": 0.0,
           "mean_correlation_length": 648.0692297749262,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         },
         "wpli": {
           "mean_r_squared": 0.0012166418459833572,
           "std_r_squared": 0.0,
           "mean_correlation_length": 322.3758135326236,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
+        }
+      }
+    },
+    {
+      "scenario": "pure_noise_baseline",
+      "n_realizations": 5,
+      "metrics_summary": {
+        "cos_phase_csd": {
+          "mean_r_squared": 0.001290694851801999,
+          "std_r_squared": 0.0,
+          "mean_correlation_length": 3053.504981432515,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
+        },
+        "imaginary_coherency": {
+          "mean_r_squared": -2.220446049250313e-16,
+          "std_r_squared": 0.0,
+          "mean_correlation_length": 100.00000013962986,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
+        },
+        "pli": {
+          "mean_r_squared": 0.00028504236334492283,
+          "std_r_squared": 0.0,
+          "mean_correlation_length": 648.0692297749262,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
+        },
+        "wpli": {
+          "mean_r_squared": 0.0012166418459833572,
+          "std_r_squared": 0.0,
+          "mean_correlation_length": 322.3758135326236,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
         }
       }
     },
     {
       "scenario": "zero_lag_common_mode",
-      "n_realizations": 3,
+      "n_realizations": 5,
       "metrics_summary": {
         "cos_phase_csd": {
           "mean_r_squared": 0.0004405881629000463,
           "std_r_squared": 0.0,
           "mean_correlation_length": 100.06889960609516,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         },
         "imaginary_coherency": {
           "mean_r_squared": 0.00035996733366971956,
           "std_r_squared": 0.0,
           "mean_correlation_length": 19999.999999998672,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         },
         "pli": {
           "mean_r_squared": 0.0009582249987420965,
           "std_r_squared": 0.0,
           "mean_correlation_length": 156.88088688199363,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         },
         "wpli": {
           "mean_r_squared": 0.0001673999538963633,
           "std_r_squared": 0.0,
           "mean_correlation_length": 1160.0484122448013,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         }
       }
     },
     {
       "scenario": "genuine_field_coupling",
-      "n_realizations": 3,
+      "n_realizations": 5,
       "metrics_summary": {
         "cos_phase_csd": {
           "mean_r_squared": 0.0008852295543274602,
           "std_r_squared": 0.0,
           "mean_correlation_length": 1039.2579792282706,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         },
         "imaginary_coherency": {
           "mean_r_squared": 0.00015974961602083226,
           "std_r_squared": 0.0,
-          "mean_correlation_length": 100.00000000003779,
-          "std_correlation_length": 1.4210854715202004e-14,
-          "n_valid_fits": 3
+          "mean_correlation_length": 100.00000000003777,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
         },
         "pli": {
           "mean_r_squared": -3.3306690738754696e-14,
           "std_r_squared": 0.0,
-          "mean_correlation_length": 100.00001349767076,
-          "std_correlation_length": 1.4210854715202004e-14,
-          "n_valid_fits": 3
+          "mean_correlation_length": 100.00001349767078,
+          "std_correlation_length": 0.0,
+          "n_valid_fits": 5
         },
         "wpli": {
           "mean_r_squared": 0.004372771047568946,
           "std_r_squared": 0.0,
           "mean_correlation_length": 19999.999999995944,
           "std_correlation_length": 0.0,
-          "n_valid_fits": 3
+          "n_valid_fits": 5
         }
       }
     }
@@ -117,7 +156,14 @@
     "recommendations": [
       "No significant zero-lag leakage detected",
       "Phase alignment metric appears robust against common-mode artifacts",
-      "Distance-decay pattern likely represents genuine field-structured coupling"
-    ]
+      "Distance-decay pattern likely represents genuine field-structured coupling",
+      "Validation thresholds: R\u00b2 < 0.01 for negligible correlations, ratio < 3.0\u00d7 for balanced metrics"
+    ],
+    "detection_thresholds": {
+      "r2_threshold": 0.01,
+      "ratio_threshold": 3.0,
+      "spurious_threshold": 0.1,
+      "interpretation": "Leakage detected if cos(phase) R\u00b2 > 0.10 AND robust R\u00b2 < 0.01 AND ratio > 3.0\u00d7"
+    }
   }
 }

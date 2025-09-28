@@ -51,25 +51,35 @@ warnings.filterwarnings('ignore')
 ROOT = Path(__file__).parent.parent.parent
 sys.path.append(str(ROOT))
 
-def print_status(message: str, status: str = "INFO"):
-    """Print formatted status message"""
-    timestamp = pd.Timestamp.now().strftime("%H:%M:%S")
-    if status == "TITLE":
-        print(f"\n{'='*80}")
-        print(f"{message}")
-        print(f"{'='*80}")
-    elif status == "ERROR":
-        print(f"{timestamp} ERROR: {message}")
-    elif status == "SUCCESS":
-        print(f"{timestamp} COMPLETED: {message}")
-    elif status == "PROCESSING":
-        print(f"{timestamp} PROCESSING: {message}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
     else:
-        print(f"{timestamp} INFO: {message}")
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def load_existing_data():
     """Load all existing data needed for efficient validation"""
-    print_status("Loading existing correlation results and station metadata", "PROCESSING")
+    print_status("Loading existing correlation results and station metadata", "PROCESS")
     
     # Load station coordinates
     coords_file = ROOT / "data/coordinates/station_coords_global.csv"

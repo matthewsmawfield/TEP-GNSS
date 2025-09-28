@@ -30,6 +30,8 @@ Parallel Processing:
 - Each worker processes one .CLK file independently
 - Results aggregated in distance bins to minimize memory overhead
 - Batch processing with optional checkpointing (TEP_RESUME=1 to enable)
+- Memory-efficient data collection with periodic cleanup
+- Chunked bootstrap processing for optimal memory usage
 
 Inputs:
   - data/raw/{igs,esa,code}/*.CLK.gz files
@@ -57,6 +59,10 @@ Environment Variables (v0.13 defaults for published methodology):
   - TEP_WORKERS: Number of parallel workers (default: CPU count)
   - TEP_BOOTSTRAP_ITER: Bootstrap iterations for CI (default: 1000)
   - TEP_RESUME: Resume from checkpoint (default: 0, set to 1 to enable)
+
+  PERFORMANCE:
+  - TEP_WRITE_PAIR_LEVEL: Write consolidated pair-level CSV (default: 0, set to 1 to enable)
+  - TEP_ANISOTROPY_SAMPLES: Max anisotropy samples to collect (default: 10000)
   
   LEGACY/TESTING:
   - TEP_USE_REAL_COHERENCY: Use real coherency method (default: 0)
@@ -74,6 +80,8 @@ import time
 import json
 import gzip
 import itertools
+import tempfile
+import shutil
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Optional
@@ -87,6 +95,13 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 import gc
 import re
+
+# Platform compatibility for file locking
+try:
+    import fcntl
+    HAS_FCNTL = True
+except ImportError:
+    HAS_FCNTL = False
 
 # Ensure macOS uses fork start method to avoid <stdin> spawn errors when invoked via python -c
 try:
@@ -138,12 +153,189 @@ ANISOTROPY_CV_ISOTROPIC_THRESHOLD = TEPConfig.get_float('TEP_ANISOTROPY_CV_ISOTR
 ANISOTROPY_CV_CHAOTIC_THRESHOLD = TEPConfig.get_float('TEP_ANISOTROPY_CV_CHAOTIC_THRESHOLD')
 DIPOLE_STRENGTH_THRESHOLD = TEPConfig.get_float('TEP_DIPOLE_STRENGTH_THRESHOLD')
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    from datetime import datetime
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
+
+def atomic_save_checkpoint(checkpoint_file: Path, data: dict, max_retries: int = 3) -> bool:
+    """
+    Atomically save checkpoint data with proper locking and corruption protection.
+
+    Args:
+        checkpoint_file: Path to checkpoint file
+        data: Dictionary of data to save
+        max_retries: Maximum number of retry attempts
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    for attempt in range(max_retries):
+        try:
+            # Create temporary file in same directory to ensure atomic move
+            checkpoint_file.parent.mkdir(parents=True, exist_ok=True)
+
+            with tempfile.NamedTemporaryFile(
+                mode='wb',
+                dir=checkpoint_file.parent,
+                delete=False,
+                prefix=f"{checkpoint_file.stem}_tmp_",
+                suffix=checkpoint_file.suffix
+            ) as tmp_file:
+                tmp_path = Path(tmp_file.name)
+
+                # Use file locking if available (Unix/Linux/macOS)
+                with open(tmp_path, 'wb') as f:
+                    if HAS_FCNTL:
+                        try:
+                            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                            # Write data atomically
+                            np.savez_compressed(f, **data)
+                            f.flush()
+                            if hasattr(os, 'fsync'):
+                                os.fsync(f.fileno())
+                            fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+                        except BlockingIOError:
+                            # Another process has the lock, try again
+                            tmp_path.unlink(missing_ok=True)
+                            continue
+                    else:
+                        # No file locking available, just write (best effort)
+                        np.savez_compressed(f, **data)
+                        f.flush()
+                        if hasattr(os, 'fsync'):
+                            os.fsync(f.fileno())
+
+                # Atomic rename - this is the critical atomic operation
+                tmp_path.replace(checkpoint_file)
+                return True
+
+        except (OSError, IOError, RuntimeError) as e:
+            print_status(f"Checkpoint save attempt {attempt + 1} failed: {e}", "WARNING")
+            if attempt < max_retries - 1:
+                time.sleep(0.1 * (attempt + 1))  # Exponential backoff
+            continue
+        except Exception as e:
+            print_status(f"Unexpected error during checkpoint save: {e}", "ERROR")
+            break
+
+    print_status(f"Failed to save checkpoint after {max_retries} attempts", "ERROR")
+    return False
+
+def load_checkpoint_safely(checkpoint_file: Path) -> Optional[dict]:
+    """
+    Safely load checkpoint data with corruption detection and retry logic.
+
+    Args:
+        checkpoint_file: Path to checkpoint file
+
+    Returns:
+        dict: Loaded checkpoint data or None if failed
+    """
+    if not checkpoint_file.exists():
+        return None
+
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            with open(checkpoint_file, 'rb') as f:
+                if HAS_FCNTL:
+                    try:
+                        fcntl.flock(f.fileno(), fcntl.LOCK_SH | fcntl.LOCK_NB)
+                        data = np.load(f, allow_pickle=True)
+                        # Validate data integrity
+                        required_keys = ['agg_sum_coh', 'agg_sum_coh_sq', 'agg_sum_dist', 'agg_count']
+                        if all(key in data for key in required_keys):
+                            result = {key: data[key] for key in data.keys()}
+                            fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+                            return result
+                        else:
+                            print_status("Checkpoint data missing required keys", "WARNING")
+                            fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+                            break
+                    except BlockingIOError:
+                        # File locked by another process, wait and retry
+                        time.sleep(0.1)
+                        continue
+                else:
+                    # No file locking available, just load (best effort)
+                    data = np.load(f, allow_pickle=True)
+                    # Validate data integrity
+                    required_keys = ['agg_sum_coh', 'agg_sum_coh_sq', 'agg_sum_dist', 'agg_count']
+                    if all(key in data for key in required_keys):
+                        result = {key: data[key] for key in data.keys()}
+                        return result
+                    else:
+                        print_status("Checkpoint data missing required keys", "WARNING")
+                        break
+
+        except (OSError, IOError, ValueError, KeyError) as e:
+            print_status(f"Checkpoint load attempt {attempt + 1} failed: {e}", "WARNING")
+            if attempt < max_retries - 1:
+                time.sleep(0.1 * (attempt + 1))
+                continue
+            break
+        except Exception as e:
+            print_status(f"Unexpected error loading checkpoint: {e}", "ERROR")
+            break
+
+    # If all attempts failed, try to clean up corrupted checkpoint
+    try:
+        checkpoint_file.unlink()
+        print_status("Removed corrupted checkpoint file", "WARNING")
+    except Exception:
+        pass
+
+    return None
+
+def safe_remove_file(file_path: Path) -> bool:
+    """
+    Safely remove a file with retry logic.
+
+    Args:
+        file_path: Path to file to remove
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    if not file_path.exists():
+        return True
+
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            file_path.unlink()
+            return True
+        except (OSError, IOError) as e:
+            print_status(f"File removal attempt {attempt + 1} failed: {e}", "WARNING")
+            if attempt < max_retries - 1:
+                time.sleep(0.1)
+                continue
+            break
+
+    print_status(f"Failed to remove file {file_path} after {max_retries} attempts", "ERROR")
+    return False
 
 # ----------------------------
 # Top-level bootstrap task (picklable)
@@ -1607,27 +1799,28 @@ def process_file_worker(clk_file: Path):
         
         # Always write pair-level outputs for downstream steps (Steps 4-7)
         # This is required for complete pipeline functionality
-        write_pair_level = True  # Always enabled - no reason to disable
+        # PERFORMANCE OPTIMIZATION: Eliminate per-file CSV generation
+        # Only write consolidated CSV if explicitly requested
+        write_pair_level = os.getenv('TEP_WRITE_PAIR_LEVEL', '0') == '1'
         enable_anisotropy = os.getenv('TEP_ENABLE_ANISOTROPY', '1') == '1'
-        
+
+        # Store pair-level data for potential consolidation (memory efficient)
+        pair_data_buffer = []
         if write_pair_level:
-            pair_dir = ROOT / 'results' / 'tmp'
-            pair_dir.mkdir(parents=True, exist_ok=True)
-            ac_tag = ac if ac else 'unknown'
-            out_path = pair_dir / f"step_3_pairs_{ac_tag}_{clk_file.stem}.csv"
-            
-            # Include coordinates if available and anisotropy testing enabled
-            cols_to_save = ['date', 'station_i', 'station_j', 'dist_km', 'plateau_phase']
+            # Only collect data for final consolidated output
+            # Match exactly what existing pair files contain and what Step 4 expects
+            cols_to_collect = ['date', 'station_i', 'station_j', 'dist_km', 'plateau_phase']
+
             if enable_anisotropy:
                 coord_cols = ['station1_lat', 'station1_lon', 'station2_lat', 'station2_lon']
                 available_coord_cols = [col for col in coord_cols if col in df_file.columns]
                 if available_coord_cols:
-                    cols_to_save.extend(available_coord_cols)
-            
-            try:
-                df_file[cols_to_save].to_csv(out_path, index=False)
-            except Exception as e:
-                raise RuntimeError(f"Failed to write pair-level CSV '{out_path}': {e}")
+                    cols_to_collect.extend(available_coord_cols)
+
+            # Extract only the columns we need (memory efficient)
+            available_cols = [col for col in cols_to_collect if col in df_file.columns]
+            if available_cols:
+                pair_data_buffer = df_file[available_cols].to_dict('records')
 
         # Initialize worker's aggregation arrays
         worker_sum_coh = np.zeros(num_bins)
@@ -1658,7 +1851,8 @@ def process_file_worker(clk_file: Path):
             'sum_coh': worker_sum_coh,
             'sum_coh_sq': worker_sum_coh_sq,
             'sum_dist': worker_sum_dist,
-            'count': worker_count
+            'count': worker_count,
+            'pair_data_buffer': pair_data_buffer  # Memory-efficient data collection
         }
         
     except Exception as e:
@@ -1690,8 +1884,8 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     4. Aggregates results and fits exponential correlation model
     5. Assesses TEP consistency and saves results
     """
-    print_status(f"Starting phase-coherent TEP analysis for {ac.upper()}", "INFO")
-    
+    print_status(f"TEP-GNSS Phase-Coherent Correlation Analysis - {ac.upper()}", "TITLE")
+
     # Find CLK files - use TEP_DATA_DIR if set, otherwise default
     data_root = os.getenv('TEP_DATA_DIR', str(ROOT / "data/raw"))
     clk_dir = Path(data_root) / ac
@@ -1741,7 +1935,7 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     if max_files:
         clk_files = clk_files[:max_files]
     
-    print_status(f"Found {len(clk_files)} {ac.upper()} files to process", "INFO")
+    print_status(f"Found {len(clk_files)} {ac.upper()} files to process", "SUCCESS")
     print_status(f"Data directory: {clk_dir}", "INFO")
     print_status(f"File size range: {min(f.stat().st_size for f in clk_files)/1024/1024:.1f} - {max(f.stat().st_size for f in clk_files)/1024/1024:.1f} MB", "INFO")
     
@@ -1751,13 +1945,13 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
     edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
     
-    print_status(f"Binning configuration: {num_bins} bins from 50 to {max_distance} km", "INFO")
+    print_status(f"Binning configuration: {num_bins} bins from 50 to {max_distance} km", "SUCCESS")
     print_status(f"Minimum {min_bin_count} pairs required per bin for fitting", "INFO")
     print_status(f"Distance bin edges: {edges[0]:.1f}, {edges[1]:.1f}, ..., {edges[-2]:.1f}, {edges[-1]:.1f} km", "INFO")
     
     # Get number of workers using centralized configuration
     num_workers = TEPConfig.get_worker_count()
-    print_status(f"Using {num_workers} parallel workers ({mp.cpu_count()} CPU cores available)", "INFO")
+    print_status(f"Using {num_workers} parallel workers ({mp.cpu_count()} CPU cores available)", "SUCCESS")
     
     # Initialize aggregation arrays
     agg_sum_coh = np.zeros(num_bins)
@@ -1768,6 +1962,10 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     # Collect sample pairs with coordinates for anisotropy testing
     anisotropy_sample_pairs = []
     max_anisotropy_samples = int(os.getenv('TEP_ANISOTROPY_SAMPLES', '10000'))  # Limit for memory
+
+    # PERFORMANCE OPTIMIZATION: Consolidated pair data collection
+    consolidated_pair_data = []
+    write_pair_level = os.getenv('TEP_WRITE_PAIR_LEVEL', '0') == '1'
     
     # Checkpoint/resume support
     checkpoint_dir = ROOT / "results/tmp"
@@ -1779,9 +1977,9 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     
     # Try to resume from checkpoint (disabled by default for clean runs)
     resume_enabled = os.getenv('TEP_RESUME', '0') == '1'
-    if resume_enabled and checkpoint_file.exists():
-        try:
-            state = np.load(checkpoint_file, allow_pickle=True)
+    if resume_enabled:
+        state = load_checkpoint_safely(checkpoint_file)
+        if state:
             agg_sum_coh = state['agg_sum_coh']
             agg_sum_coh_sq = state['agg_sum_coh_sq']
             agg_sum_dist = state['agg_sum_dist']
@@ -1790,16 +1988,14 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             successful_files = int(state['successful_files'])
             total_pairs_kept = int(state['total_pairs_kept'])
             print_status(f"Resumed from checkpoint: {len(processed_files)} files already processed", "INFO")
-        except Exception as e:
-            print_status(f"Failed to resume checkpoint: {e}", "WARNING")
+        else:
             processed_files = set()
+            print_status("No valid checkpoint found, starting fresh", "INFO")
     else:
         # Clean start - remove any existing checkpoint
-        if checkpoint_file.exists():
-            checkpoint_file.unlink()
-            print_status(f"Starting fresh analysis - removed existing checkpoint", "INFO")
-        else:
-            print_status(f"Starting fresh analysis", "INFO")
+        safe_remove_file(checkpoint_file)
+        processed_files = set()
+        print_status(f"Starting fresh analysis", "INFO")
     
     # Filter out already processed files
     remaining_files = [f for f in clk_files if f.name not in processed_files]
@@ -1836,6 +2032,11 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                             total_pairs_kept += result['pairs_processed']
                             successful_files += 1
                             processed_files.add(clk_file.name)
+
+                            # PERFORMANCE OPTIMIZATION: Collect pair data for consolidated output
+                            if write_pair_level and 'pair_data_buffer' in result:
+                                consolidated_pair_data.extend(result['pair_data_buffer'])
+
                             print_status(f"{result['file']}: {result['pairs_processed']:,} pairs", "SUCCESS")
                         elif result and 'error' in result:
                             processed_files.add(clk_file.name)  # Mark as processed even if failed
@@ -1844,16 +2045,33 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                         processed_files.add(clk_file.name)  # Mark as processed even if failed
                         print_status(f"{clk_file.name}: Worker failed: {e}", "ERROR")
             
-            # Save checkpoint after each batch
-            np.savez_compressed(checkpoint_file,
-                agg_sum_coh=agg_sum_coh, agg_sum_coh_sq=agg_sum_coh_sq,
-                agg_sum_dist=agg_sum_dist, agg_count=agg_count,
-                processed_files=list(processed_files), successful_files=successful_files,
-                total_pairs_kept=total_pairs_kept)
-            print_status(f"Checkpoint saved: {len(processed_files)}/{len(clk_files)} files processed", "INFO")
+            # Save checkpoint after each batch with atomic operations
+            checkpoint_data = {
+                'agg_sum_coh': agg_sum_coh,
+                'agg_sum_coh_sq': agg_sum_coh_sq,
+                'agg_sum_dist': agg_sum_dist,
+                'agg_count': agg_count,
+                'processed_files': list(processed_files),
+                'successful_files': successful_files,
+                'total_pairs_kept': total_pairs_kept
+            }
+
+            if atomic_save_checkpoint(checkpoint_file, checkpoint_data):
+                print_status(f"Checkpoint saved: {len(processed_files)}/{len(clk_files)} files processed", "INFO")
+            else:
+                print_status("Failed to save checkpoint - continuing without checkpoint", "WARNING")
             
-            # Force garbage collection between batches
+            # PERFORMANCE OPTIMIZATION: Memory management between batches
             gc.collect()
+
+            # Clear consolidated data buffer periodically to prevent memory bloat
+            if len(consolidated_pair_data) > 1000000:  # 1M pairs threshold
+                print_status(f"Clearing pair data buffer ({len(consolidated_pair_data):,} pairs)", "INFO")
+                consolidated_pair_data.clear()
+
+            # Force memory cleanup
+            if hasattr(gc, 'set_threshold'):
+                gc.set_threshold(700, 10, 10)  # More aggressive collection
     
     if total_pairs_kept == 0:
         print_status(f"No valid pairs extracted from {ac.upper()}", "ERROR")
@@ -1876,9 +2094,10 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                 std_coherence[i] = np.sqrt(max(0, variance))
     
     # Clean up checkpoint file on successful completion
-    if checkpoint_file.exists():
-        checkpoint_file.unlink()
+    if safe_remove_file(checkpoint_file):
         print_status(f"Cleaned up checkpoint file", "INFO")
+    else:
+        print_status("Failed to clean up checkpoint file", "WARNING")
     
     # Extract data for fitting
     distances = []
@@ -2166,6 +2385,20 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         output_csv = output_dir / f"step_3_correlation_data_{ac}.csv"
         binned_data.to_csv(output_csv, index=False)
         print_status(f"Binned data saved: {output_csv}", "SUCCESS")
+
+        # PERFORMANCE OPTIMIZATION: Write consolidated pair-level data
+        if write_pair_level and consolidated_pair_data:
+            consolidated_df = pd.DataFrame(consolidated_pair_data)
+            consolidated_csv = output_dir / f"step_3_pairs_consolidated_{ac}.csv"
+            # Use efficient CSV writing with chunking for large datasets
+            chunk_size = 100000  # Write in chunks to manage memory
+            for i in range(0, len(consolidated_df), chunk_size):
+                chunk = consolidated_df.iloc[i:i+chunk_size]
+                if i == 0:
+                    chunk.to_csv(consolidated_csv, index=False, mode='w')
+                else:
+                    chunk.to_csv(consolidated_csv, index=False, mode='a', header=False)
+            print_status(f"Consolidated pair data saved: {consolidated_csv} ({len(consolidated_pair_data):,} pairs)", "SUCCESS")
         
         # ----------------------------
         # Bootstrap confidence intervals
@@ -2177,26 +2410,38 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
             bs_amp, bs_lambda, bs_offset = [], [], []
             p0_bootstrap = [amplitude, lambda_km, offset]
 
-            # Use ProcessPoolExecutor for parallel bootstrap
-            with ProcessPoolExecutor(max_workers=num_workers) as executor:
-                # Prepare arguments for each task
-                tasks = [(distances, coherences, weights, p0_bootstrap, i) for i in range(bootstrap_iter)]
-                
-                # Submit tasks and get futures
-                future_to_iter = {executor.submit(fit_bootstrap_task, task): i for i, task in enumerate(tasks)}
+            # PERFORMANCE OPTIMIZATION: Process bootstrap in smaller chunks to manage memory
+            chunk_size = min(100, bootstrap_iter // num_workers) if num_workers > 1 else bootstrap_iter
+            total_chunks = (bootstrap_iter + chunk_size - 1) // chunk_size
 
-                completed_count = 0
-                for future in as_completed(future_to_iter):
-                    result = future.result()
-                    if result is not None:
-                        a_bs, l_bs, o_bs = result
-                        bs_amp.append(a_bs)
-                        bs_lambda.append(l_bs)
-                        bs_offset.append(o_bs)
-                    
-                    completed_count += 1
-                    if completed_count % 100 == 0:
-                         print_status(f"Bootstrap progress: {completed_count}/{bootstrap_iter}", "INFO")
+            for chunk_idx in range(total_chunks):
+                start_idx = chunk_idx * chunk_size
+                end_idx = min(start_idx + chunk_size, bootstrap_iter)
+
+                # Process chunk
+                with ProcessPoolExecutor(max_workers=min(num_workers, end_idx - start_idx)) as executor:
+                    # Prepare arguments for this chunk
+                    chunk_tasks = [(distances, coherences, weights, p0_bootstrap, i)
+                                 for i in range(start_idx, end_idx)]
+
+                    # Submit tasks and get futures
+                    future_to_iter = {executor.submit(fit_bootstrap_task, task): i for i, task in enumerate(chunk_tasks)}
+
+                    # Process results for this chunk
+                    chunk_results = 0
+                    for future in as_completed(future_to_iter):
+                        result = future.result()
+                        if result is not None:
+                            a_bs, l_bs, o_bs = result
+                            bs_amp.append(a_bs)
+                            bs_lambda.append(l_bs)
+                            bs_offset.append(o_bs)
+                            chunk_results += 1
+
+                    print_status(f"Bootstrap chunk {chunk_idx + 1}/{total_chunks}: {chunk_results} successful fits", "INFO")
+
+                # Memory cleanup between chunks
+                gc.collect()
 
             if bs_amp:
                 ci_low = 2.5

@@ -36,11 +36,37 @@ solar_system_ephemeris.set('jpl')
 # Planetary masses in Earth masses (M⊕)
 PLANETARY_MASSES = {
     'sun': 332946.0,      # Solar mass in Earth masses
-    'jupiter': 317.8,     # Jupiter mass in Earth masses  
+    'jupiter': 317.8,     # Jupiter mass in Earth masses
     'saturn': 95.2,       # Saturn mass in Earth masses
     'venus': 0.815,       # Venus mass in Earth masses
     'mars': 0.107,        # Mars mass in Earth masses
 }
+
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def calculate_high_precision_gravitational_influence(date: datetime) -> Dict:
     """
@@ -520,9 +546,7 @@ def main():
     """
     Main execution function that recreates the correct working analysis.
     """
-    print("=" * 80)
-    print("STEP 14: COMPREHENSIVE GRAVITATIONAL-TEMPORAL FIELD CORRELATION ANALYSIS")
-    print("=" * 80)
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 14: Comprehensive Gravitational-Temporal Field Correlation Analysis", "TITLE")
     print()
     
     # Configuration

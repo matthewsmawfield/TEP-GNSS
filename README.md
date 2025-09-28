@@ -2,7 +2,7 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.13 (Jaipur)  
-**Date:** September 27, 2025  
+**Date:** September 29, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Framework
@@ -19,7 +19,9 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 ## Key Findings
 
-Through analysis of 62.7 million station pair measurements from 529 global ground stations, we observe:
+Through analysis of 62.7 million station pair measurements from 529 analyzed ground stations (of 766 cataloged), we observe:
+
+*Note: Station selection is based on data quality criteria requiring ≥20 observation epochs per file (TEP_MIN_EPOCHS = 20) for reliable spectral analysis.*
 
 ![Distance-structured correlations in GNSS clock networks](site/figures/figure_1_TEP_site_themed.png)
 
@@ -70,11 +72,15 @@ python scripts/steps/step_0_provenance_snapshot.py
 # Step 1: Download GNSS clock data
 python scripts/steps/step_1_tep_data_acquisition.py
 
-# Step 2: Validate station coordinates  
+# Step 2: Coordinate validation and comprehensive audit
 python scripts/steps/step_2_tep_coordinate_validation.py
 
-# Step 3: Correlation analysis (CORE ANALYSIS)
+Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates definitive station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.
+
+# Step 3: TEP Correlation Analysis (CORE ANALYSIS) ~3-4 hours*
 python scripts/steps/step_3_tep_correlation_analysis.py
+
+Core TEP signal detection using phase-coherent cross-spectral density analysis. Computes complex CSD between all station pairs in the 10-500 µHz frequency band, extracts phase-coherent correlations as cos(phase(CSD)), and fits exponential decay models to correlation vs. distance relationships. Implements the band-limited methodology that preserves essential phase information for TEP detection.
 
 # Step 4: Geospatial processing
 python scripts/steps/step_4_aggregate_geospatial_data.py
@@ -229,7 +235,7 @@ The TEP proposes that gravitational fields couple directly to clock transition f
 - **Comprehensive null testing**: Distance/phase/station scrambling (8.5–44× signal destruction)
 - **Statistical robustness**: Bootstrap confidence intervals and circular statistics
 - **Bias characterization**: Geometric artifact detection and mitigation (Step 13)
-- **Coordinate validation**: ECEF validation against ITRF2014
+- **Coordinate validation**: ECEF validation against ITRF2014 with comprehensive audit and spatial analysis
 - **Ionospheric controls**: Realistic ionospheric validation and TID exclusion
 - **Complete reproducibility**: Version control with execution logs and checkpointing
 
@@ -281,3 +287,7 @@ This work is licensed under CC BY 4.0. See LICENSE file for details.
 For questions or collaboration opportunities:  
 **Matthew Lukin Smawfield**  
 matthewsmawfield@gmail.com
+
+---
+
+*Time estimates based on Apple MacBook Pro M4 performance

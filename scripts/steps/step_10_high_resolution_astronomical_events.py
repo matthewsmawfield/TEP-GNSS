@@ -74,12 +74,31 @@ from scripts.utils.exceptions import (
     safe_json_write, validate_directory_exists
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"ERROR": "[ERROR]", "WARNING": "[WARNING]", "SUCCESS": "[SUCCESS]", 
-                "PROCESS": "[PROCESSING]", "INFO": "[INFO]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def parse_clk_file_high_resolution(clk_file_path: Path) -> pd.DataFrame:
     """
@@ -3045,7 +3064,7 @@ def main():
     
     print("=" * 80)
     print("TEP GNSS Analysis Package v0.13")
-    print("STEP 10: High-Resolution Astronomical Event Analysis")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 10: High-Resolution Astronomical Event Analysis", "TITLE")
     print("=" * 80)
     print(f"Event: {args.event.upper()}")
     print(f"Center: {args.center.upper()}")

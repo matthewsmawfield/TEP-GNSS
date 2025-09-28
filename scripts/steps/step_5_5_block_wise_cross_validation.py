@@ -30,10 +30,10 @@ Outputs:
   - results/outputs/step_5_5_block_wise_cv_{ac}.json
 
 Environment Variables:
-  - TEP_ENABLE_MONTHLY_CV: Enable monthly temporal cross-validation (default: 1)
-  - TEP_ENABLE_STATION_BLOCKS_CV: Enable station block spatial cross-validation (default: 1)
-  - TEP_MONTHLY_CV_FOLDS: Number of monthly folds to use (default: 30)
-  - TEP_STATION_BLOCK_SIZE: Number of stations per block (default: 5)
+  - TEP_ENABLE_MONTHLY_CV: Enable monthly temporal cross-validation (default: True)
+  - TEP_ENABLE_STATION_BLOCKS_CV: Enable station block spatial cross-validation (default: True)
+  - TEP_MONTHLY_CV_FOLDS: Number of monthly folds to use (default: 10, memory-optimized)
+  - TEP_STATION_BLOCK_SIZE: Number of stations per block (default: 10, memory-optimized)
   - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8)
 
 Author: Matthew Lukin Smawfield
@@ -71,12 +71,31 @@ from scripts.utils.exceptions import (
     validate_file_exists, validate_directory_exists
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", 
-                "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]", "MEMORY": "[MEMORY]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def check_memory_usage():
     """Monitor memory usage and warn if approaching limits"""
@@ -176,7 +195,7 @@ def create_monthly_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.DataFr
     complete_df['year_month'] = complete_df['date'].dt.to_period('M')
     unique_months = sorted(complete_df['year_month'].unique())
     
-    max_folds = TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS', 10)  # Reduced for memory efficiency
+    max_folds = TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS')
     if len(unique_months) > max_folds:
         # Sample months for efficiency
         np.random.seed(42)  # Reproducible
@@ -194,8 +213,8 @@ def create_monthly_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.DataFr
         # Training set: all other months
         train_data = complete_df[complete_df['year_month'] != month].copy()
         
-        if len(val_data) < 1000 or len(train_data) < 10000:  # Increased thresholds for stability
-            print_status(f"Skipping month {month}: insufficient data (val: {len(val_data)}, train: {len(train_data)})", "WARNING")
+        # Use helper function for validation
+        if not _validate_fold_data(train_data, val_data, str(month)):
             continue
         
         month_id = str(month)
@@ -213,7 +232,7 @@ def create_station_block_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.
     
     # Get all unique stations
     unique_stations = pd.unique(complete_df[['station_i', 'station_j']].values.ravel())
-    block_size = TEPConfig.get_int('TEP_STATION_BLOCK_SIZE', 10)  # Larger blocks for efficiency
+    block_size = TEPConfig.get_int('TEP_STATION_BLOCK_SIZE')
     
     # Create station blocks
     np.random.seed(42)  # Reproducible
@@ -237,8 +256,8 @@ def create_station_block_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.
         # Training set: pairs not involving any station in the block
         train_data = complete_df[~val_mask].copy()
         
-        if len(val_data) < 100 or len(train_data) < 1000:
-            print_status(f"Skipping station block {i+1}: insufficient data", "WARNING")
+        # Use helper function for validation with appropriate thresholds for station blocks
+        if not _validate_fold_data(train_data, val_data, f"stations_{i+1:02d}", min_train=1000, min_val=100):
             continue
         
         block_id = f"stations_{i+1:02d}"
@@ -326,6 +345,230 @@ def predict_validation_coherences(val_data: pd.DataFrame, fitted_params: np.ndar
     
     return predicted_coherences, actual_coherences, True
 
+def _validate_fold_data(train_data: pd.DataFrame, val_data: pd.DataFrame, fold_id: str, 
+                       min_train: int = 10000, min_val: int = 1000) -> bool:
+    """
+    Validate that fold has sufficient data for reliable analysis.
+    
+    Args:
+        train_data: Training dataset
+        val_data: Validation dataset  
+        fold_id: Identifier for the fold
+        min_train: Minimum training samples required
+        min_val: Minimum validation samples required
+        
+    Returns:
+        bool: True if fold has sufficient data
+    """
+    if len(train_data) < min_train:
+        print_status(f"Skipping fold {fold_id}: insufficient training data ({len(train_data)} < {min_train})", "WARNING")
+        return False
+    
+    if len(val_data) < min_val:
+        print_status(f"Skipping fold {fold_id}: insufficient validation data ({len(val_data)} < {min_val})", "WARNING")
+        return False
+    
+    return True
+
+def _aggregate_fold_results(fold_results: List[Dict], method_name: str) -> Dict:
+    """
+    Aggregate results across cross-validation folds.
+    
+    Args:
+        fold_results: List of individual fold results
+        method_name: Name of the CV method for reporting
+        
+    Returns:
+        Dict: Aggregated results with stability metrics
+    """
+    if not fold_results:
+        return {'success': False, 'error': f'No successful {method_name} cross-validation folds'}
+    
+    # Extract lambda estimates and metrics
+    lambda_estimates = [r['fitted_params']['lambda_km'] for r in fold_results]
+    cv_rmse_values = [r['cv_metrics']['cv_rmse'] for r in fold_results]
+    cv_nrmse_values = [r['cv_metrics']['cv_nrmse'] for r in fold_results]
+    log_likelihood_values = [r['cv_metrics']['log_likelihood'] for r in fold_results]
+    
+    # Calculate stability metrics
+    lambda_mean = np.mean(lambda_estimates)
+    lambda_std = np.std(lambda_estimates)
+    lambda_cv = lambda_std / lambda_mean if lambda_mean > 0 else 0
+    
+    return {
+        'success': True,
+        'method': method_name,
+        'n_folds': len(fold_results),
+        'lambda_stability': {
+            'mean_lambda_km': float(lambda_mean),
+            'std_lambda_km': float(lambda_std),
+            'cv_lambda': float(lambda_cv),
+            'lambda_estimates': [float(x) for x in lambda_estimates]
+        },
+        'cv_performance': {
+            'mean_cv_rmse': float(np.mean(cv_rmse_values)),
+            'std_cv_rmse': float(np.std(cv_rmse_values)),
+            'mean_cv_nrmse': float(np.mean(cv_nrmse_values)),
+            'std_cv_nrmse': float(np.std(cv_nrmse_values)),
+            'mean_log_likelihood': float(np.mean(log_likelihood_values)),
+            'std_log_likelihood': float(np.std(log_likelihood_values))
+        },
+        'fold_details': fold_results
+    }
+
+def _detect_outlier_folds(fold_results: List[Dict], method_name: str) -> Dict:
+    """
+    Detect outlier folds that may indicate data quality issues.
+    
+    Args:
+        fold_results: List of fold results
+        method_name: Name of the CV method
+        
+    Returns:
+        Dict: Outlier detection results
+    """
+    if len(fold_results) < 3:
+        return {'outliers_detected': False, 'reason': 'insufficient_folds'}
+    
+    lambda_estimates = np.array([r['fitted_params']['lambda_km'] for r in fold_results])
+    
+    # Use IQR method for outlier detection
+    q1, q3 = np.percentile(lambda_estimates, [25, 75])
+    iqr = q3 - q1
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+    
+    outlier_mask = (lambda_estimates < lower_bound) | (lambda_estimates > upper_bound)
+    outlier_indices = np.where(outlier_mask)[0]
+    
+    if len(outlier_indices) > 0:
+        outlier_folds = [fold_results[i]['fold_id'] for i in outlier_indices]
+        outlier_lambdas = lambda_estimates[outlier_indices]
+        
+        print_status(f"{method_name}: Detected {len(outlier_indices)} outlier folds: {outlier_folds}", "WARNING")
+        
+        return {
+            'outliers_detected': True,
+            'n_outliers': len(outlier_indices),
+            'outlier_folds': outlier_folds,
+            'outlier_lambdas': outlier_lambdas.tolist(),
+            'bounds': {'lower': float(lower_bound), 'upper': float(upper_bound)},
+            'outlier_fraction': float(len(outlier_indices) / len(fold_results))
+        }
+    
+    return {'outliers_detected': False, 'all_folds_consistent': True}
+
+def _assess_convergence_diagnostics(fold_results: List[Dict], method_name: str) -> Dict:
+    """
+    Assess convergence and stability of cross-validation results.
+    
+    Args:
+        fold_results: List of fold results
+        method_name: Name of the CV method
+        
+    Returns:
+        Dict: Convergence diagnostics
+    """
+    if len(fold_results) < 5:
+        return {'convergence_assessment': 'insufficient_folds', 'n_folds': len(fold_results)}
+    
+    lambda_estimates = np.array([r['fitted_params']['lambda_km'] for r in fold_results])
+    cv_rmse_values = np.array([r['cv_metrics']['cv_rmse'] for r in fold_results])
+    
+    # Calculate running statistics to assess convergence
+    n_folds = len(lambda_estimates)
+    running_means = []
+    running_stds = []
+    
+    for i in range(3, n_folds + 1):  # Start from 3 folds minimum
+        running_means.append(np.mean(lambda_estimates[:i]))
+        running_stds.append(np.std(lambda_estimates[:i]))
+    
+    # Assess convergence: check if running mean stabilizes
+    if len(running_means) >= 3:
+        recent_means = running_means[-3:]
+        mean_stability = np.std(recent_means) / np.mean(recent_means) if np.mean(recent_means) > 0 else np.inf
+        
+        # Check if CV-RMSE is consistent across folds
+        rmse_cv = np.std(cv_rmse_values) / np.mean(cv_rmse_values) if np.mean(cv_rmse_values) > 0 else np.inf
+        
+        # Convergence criteria
+        converged = mean_stability < 0.05 and rmse_cv < 0.3  # 5% stability, 30% CV for RMSE
+        
+        return {
+            'convergence_assessment': 'converged' if converged else 'needs_more_folds',
+            'mean_stability_cv': float(mean_stability),
+            'rmse_consistency_cv': float(rmse_cv),
+            'running_lambda_means': [float(x) for x in running_means],
+            'running_lambda_stds': [float(x) for x in running_stds],
+            'convergence_criteria': {
+                'mean_stability_threshold': 0.05,
+                'rmse_cv_threshold': 0.3,
+                'mean_stability_met': mean_stability < 0.05,
+                'rmse_consistency_met': rmse_cv < 0.3
+            }
+        }
+    
+    return {'convergence_assessment': 'insufficient_data', 'n_folds': n_folds}
+
+def _cross_method_consistency_check(monthly_results: Dict, station_results: Dict) -> Dict:
+    """
+    Check consistency between monthly and station block cross-validation methods.
+    
+    Args:
+        monthly_results: Results from monthly CV
+        station_results: Results from station block CV
+        
+    Returns:
+        Dict: Consistency analysis
+    """
+    if not (monthly_results.get('success', False) and station_results.get('success', False)):
+        return {
+            'consistency_check': 'incomplete',
+            'reason': 'One or both methods failed',
+            'monthly_success': monthly_results.get('success', False),
+            'station_success': station_results.get('success', False)
+        }
+    
+    # Extract lambda estimates
+    monthly_lambda = monthly_results['lambda_stability']['mean_lambda_km']
+    monthly_lambda_std = monthly_results['lambda_stability']['std_lambda_km']
+    station_lambda = station_results['lambda_stability']['mean_lambda_km']
+    station_lambda_std = station_results['lambda_stability']['std_lambda_km']
+    
+    # Calculate relative difference
+    lambda_diff = abs(monthly_lambda - station_lambda)
+    lambda_mean = (monthly_lambda + station_lambda) / 2
+    relative_diff = lambda_diff / lambda_mean if lambda_mean > 0 else np.inf
+    
+    # Calculate combined uncertainty
+    combined_uncertainty = np.sqrt(monthly_lambda_std**2 + station_lambda_std**2)
+    
+    # Consistency criteria: methods should agree within combined uncertainty
+    # and relative difference should be < 20%
+    within_uncertainty = lambda_diff <= 2 * combined_uncertainty  # 2-sigma criterion
+    relative_agreement = relative_diff < 0.20  # 20% relative difference threshold
+    
+    consistent = within_uncertainty and relative_agreement
+    
+    return {
+        'consistency_check': 'consistent' if consistent else 'inconsistent',
+        'lambda_comparison': {
+            'monthly_lambda_km': float(monthly_lambda),
+            'station_lambda_km': float(station_lambda),
+            'absolute_difference_km': float(lambda_diff),
+            'relative_difference': float(relative_diff),
+            'combined_uncertainty_km': float(combined_uncertainty)
+        },
+        'consistency_criteria': {
+            'within_uncertainty': within_uncertainty,
+            'relative_agreement': relative_agreement,
+            'uncertainty_threshold_sigma': 2.0,
+            'relative_threshold': 0.20
+        },
+        'consistency_score': float(1.0 - min(relative_diff / 0.20, 1.0)) if relative_diff < np.inf else 0.0
+    }
+
 def calculate_cv_metrics(predicted: np.ndarray, actual: np.ndarray, weights: Optional[np.ndarray] = None) -> Dict[str, float]:
     """
     Calculate cross-validation metrics: CV-RMSE, NRMSE, log-likelihood.
@@ -373,7 +616,8 @@ def run_monthly_cross_validation(complete_df: pd.DataFrame) -> Dict:
     lambda_estimates = []
     
     for i, (month_id, train_data, val_data) in enumerate(folds):
-        print_status(f"Processing monthly fold {i+1}/{len(folds)}: {month_id}", "PROCESS")
+        progress_pct = (i + 1) / len(folds) * 100
+        print_status(f"Processing monthly fold {i+1}/{len(folds)} ({progress_pct:.1f}%): {month_id}", "PROCESS")
         
         # Fit model on training data
         fitted_params, fit_success = fit_correlation_model_on_training(train_data)
@@ -408,40 +652,24 @@ def run_monthly_cross_validation(complete_df: pd.DataFrame) -> Dict:
         fold_results.append(fold_result)
         lambda_estimates.append(fitted_params[1])
     
-    if not fold_results:
-        return {'success': False, 'error': 'No successful monthly cross-validation folds'}
+    # Use helper function for aggregation and add outlier detection
+    results = _aggregate_fold_results(fold_results, 'monthly_cross_validation')
     
-    # Aggregate results
-    lambda_mean = np.mean(lambda_estimates)
-    lambda_std = np.std(lambda_estimates)
-    lambda_cv = lambda_std / lambda_mean if lambda_mean > 0 else 0
+    if results['success']:
+        # Add outlier detection
+        outlier_analysis = _detect_outlier_folds(fold_results, 'Monthly CV')
+        results['outlier_analysis'] = outlier_analysis
+        
+        # Add convergence diagnostics
+        convergence_analysis = _assess_convergence_diagnostics(fold_results, 'Monthly CV')
+        results['convergence_analysis'] = convergence_analysis
+        
+        lambda_mean = results['lambda_stability']['mean_lambda_km']
+        cv_rmse_mean = results['cv_performance']['mean_cv_rmse']
     
-    cv_rmse_values = [r['cv_metrics']['cv_rmse'] for r in fold_results]
-    cv_nrmse_values = [r['cv_metrics']['cv_nrmse'] for r in fold_results]
-    log_likelihood_values = [r['cv_metrics']['log_likelihood'] for r in fold_results]
-    
-    results = {
-        'success': True,
-        'method': 'monthly_cross_validation',
-        'n_folds': len(fold_results),
-        'lambda_stability': {
-            'mean_lambda_km': float(lambda_mean),
-            'std_lambda_km': float(lambda_std),
-            'cv_lambda': float(lambda_cv),
-            'lambda_estimates': [float(x) for x in lambda_estimates]
-        },
-        'cv_performance': {
-            'mean_cv_rmse': float(np.mean(cv_rmse_values)),
-            'std_cv_rmse': float(np.std(cv_rmse_values)),
-            'mean_cv_nrmse': float(np.mean(cv_nrmse_values)),
-            'std_cv_nrmse': float(np.std(cv_nrmse_values)),
-            'mean_log_likelihood': float(np.mean(log_likelihood_values)),
-            'std_log_likelihood': float(np.std(log_likelihood_values))
-        },
-        'fold_details': fold_results
-    }
-    
-    print_status(f"Monthly CV completed: λ = {lambda_mean:.0f} ± {lambda_std:.0f} km, CV-RMSE = {np.mean(cv_rmse_values):.4f}", "SUCCESS")
+        print_status(f"Monthly CV completed: λ = {lambda_mean:.0f} ± {results['lambda_stability']['std_lambda_km']:.0f} km, CV-RMSE = {cv_rmse_mean:.4f}", "SUCCESS")
+    else:
+        print_status("Monthly CV failed: no successful folds", "ERROR")
     return results
 
 def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
@@ -459,7 +687,8 @@ def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
     lambda_estimates = []
     
     for i, (block_id, train_data, val_data) in enumerate(folds):
-        print_status(f"Processing station block fold {i+1}/{len(folds)}: {block_id}", "PROCESS")
+        progress_pct = (i + 1) / len(folds) * 100
+        print_status(f"Processing station block fold {i+1}/{len(folds)} ({progress_pct:.1f}%): {block_id}", "PROCESS")
         
         # Fit model on training data
         fitted_params, fit_success = fit_correlation_model_on_training(train_data)
@@ -494,40 +723,24 @@ def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
         fold_results.append(fold_result)
         lambda_estimates.append(fitted_params[1])
     
-    if not fold_results:
-        return {'success': False, 'error': 'No successful station block cross-validation folds'}
+    # Use helper function for aggregation and add outlier detection
+    results = _aggregate_fold_results(fold_results, 'station_block_cross_validation')
     
-    # Aggregate results
-    lambda_mean = np.mean(lambda_estimates)
-    lambda_std = np.std(lambda_estimates)
-    lambda_cv = lambda_std / lambda_mean if lambda_mean > 0 else 0
+    if results['success']:
+        # Add outlier detection
+        outlier_analysis = _detect_outlier_folds(fold_results, 'Station Block CV')
+        results['outlier_analysis'] = outlier_analysis
+        
+        # Add convergence diagnostics
+        convergence_analysis = _assess_convergence_diagnostics(fold_results, 'Station Block CV')
+        results['convergence_analysis'] = convergence_analysis
+        
+        lambda_mean = results['lambda_stability']['mean_lambda_km']
+        cv_rmse_mean = results['cv_performance']['mean_cv_rmse']
     
-    cv_rmse_values = [r['cv_metrics']['cv_rmse'] for r in fold_results]
-    cv_nrmse_values = [r['cv_metrics']['cv_nrmse'] for r in fold_results]
-    log_likelihood_values = [r['cv_metrics']['log_likelihood'] for r in fold_results]
-    
-    results = {
-        'success': True,
-        'method': 'station_block_cross_validation',
-        'n_folds': len(fold_results),
-        'lambda_stability': {
-            'mean_lambda_km': float(lambda_mean),
-            'std_lambda_km': float(lambda_std),
-            'cv_lambda': float(lambda_cv),
-            'lambda_estimates': [float(x) for x in lambda_estimates]
-        },
-        'cv_performance': {
-            'mean_cv_rmse': float(np.mean(cv_rmse_values)),
-            'std_cv_rmse': float(np.std(cv_rmse_values)),
-            'mean_cv_nrmse': float(np.mean(cv_nrmse_values)),
-            'std_cv_nrmse': float(np.std(cv_nrmse_values)),
-            'mean_log_likelihood': float(np.mean(log_likelihood_values)),
-            'std_log_likelihood': float(np.std(log_likelihood_values))
-        },
-        'fold_details': fold_results
-    }
-    
-    print_status(f"Station block CV completed: λ = {lambda_mean:.0f} ± {lambda_std:.0f} km, CV-RMSE = {np.mean(cv_rmse_values):.4f}", "SUCCESS")
+        print_status(f"Station block CV completed: λ = {lambda_mean:.0f} ± {results['lambda_stability']['std_lambda_km']:.0f} km, CV-RMSE = {cv_rmse_mean:.4f}", "SUCCESS")
+    else:
+        print_status("Station block CV failed: no successful folds", "ERROR")
     return results
 
 def run_block_wise_cross_validation_analysis(ac: str) -> Dict:
@@ -555,7 +768,7 @@ def run_block_wise_cross_validation_analysis(ac: str) -> Dict:
         }
         
         # Monthly cross-validation
-        if TEPConfig.get_bool('TEP_ENABLE_MONTHLY_CV', True):
+        if TEPConfig.get_bool('TEP_ENABLE_MONTHLY_CV'):
             monthly_results = run_monthly_cross_validation(complete_df)
             results['monthly_cv'] = monthly_results
         else:
@@ -563,7 +776,7 @@ def run_block_wise_cross_validation_analysis(ac: str) -> Dict:
             results['monthly_cv'] = {'success': False, 'error': 'Disabled by configuration'}
         
         # Station block cross-validation  
-        if TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV', True):
+        if TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV'):
             station_results = run_station_block_cross_validation(complete_df)
             results['station_block_cv'] = station_results
         else:
@@ -585,6 +798,11 @@ def run_block_wise_cross_validation_analysis(ac: str) -> Dict:
             if results['station_block_cv']['success']:
                 all_lambdas.extend(results['station_block_cv']['lambda_stability']['lambda_estimates'])
             
+            # Cross-method consistency check
+            cross_method_consistency = _cross_method_consistency_check(
+                results['monthly_cv'], results['station_block_cv']
+            )
+            
             results['summary'] = {
                 'successful_methods': successful_methods,
                 'overall_lambda': {
@@ -592,8 +810,18 @@ def run_block_wise_cross_validation_analysis(ac: str) -> Dict:
                     'std_km': float(np.std(all_lambdas)),
                     'cv': float(np.std(all_lambdas) / np.mean(all_lambdas)),
                     'n_estimates': len(all_lambdas)
-                }
+                },
+                'cross_method_consistency': cross_method_consistency
             }
+            
+            # Report consistency results
+            if cross_method_consistency['consistency_check'] == 'consistent':
+                print_status("Cross-method validation: PASSED - Monthly and station block CV are consistent", "SUCCESS")
+            elif cross_method_consistency['consistency_check'] == 'inconsistent':
+                rel_diff = cross_method_consistency['lambda_comparison']['relative_difference']
+                print_status(f"Cross-method validation: WARNING - Methods differ by {rel_diff:.1%}", "WARNING")
+            else:
+                print_status("Cross-method validation: INCOMPLETE - One method failed", "INFO")
         else:
             results['summary'] = {
                 'successful_methods': [],
@@ -620,7 +848,7 @@ def main():
     """Main execution function"""
     start_time = time.time()
     
-    print_status("TEP GNSS Analysis - Step 5.5: Block-wise Cross-Validation", "PROCESS")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 5.5: Block-wise Cross-Validation (Enhanced)", "TITLE")
     print_status("=" * 70, "INFO")
     
     # Validate inputs
@@ -629,10 +857,10 @@ def main():
     
     # Configuration summary
     print_status("Configuration:", "INFO")
-    print_status(f"  Monthly CV enabled: {TEPConfig.get_bool('TEP_ENABLE_MONTHLY_CV', True)}", "INFO")
-    print_status(f"  Station block CV enabled: {TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV', True)}", "INFO")
-    print_status(f"  Monthly folds limit: {TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS', 30)}", "INFO")
-    print_status(f"  Station block size: {TEPConfig.get_int('TEP_STATION_BLOCK_SIZE', 5)}", "INFO")
+    print_status(f"  Monthly CV enabled: {TEPConfig.get_bool('TEP_ENABLE_MONTHLY_CV')}", "INFO")
+    print_status(f"  Station block CV enabled: {TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV')}", "INFO")
+    print_status(f"  Monthly folds limit: {TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS')}", "INFO")
+    print_status(f"  Station block size: {TEPConfig.get_int('TEP_STATION_BLOCK_SIZE')}", "INFO")
     print_status(f"  Memory limit: {TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')} GB", "INFO")
     
     # Determine analysis centers to process

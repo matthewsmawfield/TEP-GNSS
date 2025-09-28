@@ -30,19 +30,31 @@ warnings.filterwarnings('ignore')
 ROOT = Path(__file__).parent.parent.parent
 sys.path.append(str(ROOT))
 
-def print_status(message: str, status: str = "INFO"):
-    """Print status messages with timestamp"""
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    status_colors = {
-        "INFO": "\033[94m",
-        "SUCCESS": "\033[92m", 
-        "WARNING": "\033[93m",
-        "ERROR": "\033[91m",
-        "PROCESS": "\033[96m",
-        "TITLE": "\033[95m\033[1m"
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
     }
-    color = status_colors.get(status, "\033[0m")
-    print(f"{color}[{timestamp}] [{status}] {message}\033[0m")
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def extract_real_tep_coherence_time_series() -> pd.DataFrame:
     """Extract REAL daily TEP coherence from Step 3 pair files"""

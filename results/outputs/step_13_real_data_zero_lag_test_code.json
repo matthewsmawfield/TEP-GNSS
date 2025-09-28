@@ -1,36 +1,36 @@
 {
   "test_name": "real_data_zero_lag_leakage_test",
   "analysis_center": "code",
-  "files_processed": 25,
-  "total_pairs": 2388,
+  "files_processed": 3,
+  "total_pairs": 297,
   "fit_results": {
     "cos_phase_csd": {
-      "amplitude": 1.0490253513830183,
-      "correlation_length": 1546.5792432170606,
-      "offset": -0.03415053080215703,
-      "r_squared": 0.0256897356953254,
-      "n_points": 2388
+      "amplitude": 1.515953409304966,
+      "correlation_length": 1069.4171484807941,
+      "offset": -0.07212868244452897,
+      "r_squared": 0.027561703959605888,
+      "n_points": 297
     },
     "imaginary_coherency": {
-      "amplitude": 5.460953339618052e-14,
-      "correlation_length": 19999.99974456477,
-      "offset": 0.6278063459230501,
-      "r_squared": -5.329070518200751e-15,
-      "n_points": 2388
+      "amplitude": 9.345010952503103e-15,
+      "correlation_length": 13483.90742646893,
+      "offset": 0.6259574765326704,
+      "r_squared": -8.881784197001252e-16,
+      "n_points": 297
     },
     "pli": {
-      "amplitude": 0.20220426722921214,
-      "correlation_length": 2201.438066997094,
-      "offset": 0.4674003628088579,
-      "r_squared": 0.0050530765826399815,
-      "n_points": 2388
+      "amplitude": 0.2182388112959824,
+      "correlation_length": 19999.999999969918,
+      "offset": 0.3230386624719335,
+      "r_squared": 0.0036939321845246287,
+      "n_points": 297
     },
     "wpli": {
-      "amplitude": 0.16123006424557823,
-      "correlation_length": 19999.999999999996,
-      "offset": 0.6356230906066834,
-      "r_squared": 0.0035349253798190317,
-      "n_points": 2388
+      "amplitude": 0.2837431849280462,
+      "correlation_length": 19999.999968009943,
+      "offset": 0.5557114681439709,
+      "r_squared": 0.011300702604820967,
+      "n_points": 297
     }
   },
   "zero_lag_analysis": {
@@ -38,34 +38,34 @@
     "evidence_summary": [],
     "recommendations": [
       "No significant zero-lag leakage detected in real TEP data",
-      "cos(phase(CSD)) R\u00b2=0.026 validated against common-mode artifacts",
+      "cos(phase(CSD)) R\u00b2=0.028 validated against common-mode artifacts",
       "Distance-decay pattern likely represents genuine field-structured coupling",
       "TEP signal authentication confirmed through zero-lag robust validation"
     ],
     "metric_comparison": {
       "imaginary_coherency": {
-        "r_squared": -5.329070518200751e-15,
-        "correlation_length": 19999.99974456477,
+        "r_squared": -8.881784197001252e-16,
+        "correlation_length": 13483.90742646893,
         "valid_fit": false
       },
       "pli": {
-        "r_squared": 0.0050530765826399815,
-        "correlation_length": 2201.438066997094,
+        "r_squared": 0.0036939321845246287,
+        "correlation_length": 19999.999999969918,
         "valid_fit": true
       },
       "wpli": {
-        "r_squared": 0.0035349253798190317,
-        "correlation_length": 19999.999999999996,
+        "r_squared": 0.011300702604820967,
+        "correlation_length": 19999.999968009943,
         "valid_fit": true
       }
     },
     "summary_statistics": {
-      "cos_phase_r2": 0.0256897356953254,
-      "cos_phase_lambda": 1546.5792432170606,
-      "max_robust_r2": 0.0050530765826399815,
+      "cos_phase_r2": 0.027561703959605888,
+      "cos_phase_lambda": 1069.4171484807941,
+      "max_robust_r2": 0.011300702604820967,
       "robust_metrics_count": 2,
-      "leakage_ratio": 5.083979091784077
+      "leakage_ratio": 2.438937199165639
     }
   },
-  "timestamp": "2025-09-25T23:34:16.987295"
+  "timestamp": "2025-09-29T02:16:14.349027"
 }

@@ -48,12 +48,31 @@ from scripts.utils.exceptions import (
     validate_file_exists, validate_directory_exists
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", 
-                "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]", "HEADER": "[HEADER]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def print_error(text: str):
     """Print error message"""
@@ -878,7 +897,7 @@ def create_tid_exclusion_visualization(report_data: Dict, output_dir: Path):
 def main():
     """Main execution function."""
     try:
-        print_status("=== TEP GNSS Analysis: TID Exclusion Analysis ===", "HEADER")
+        print_status("TEP GNSS Analysis Package v0.13 - STEP 11: TID Exclusion Analysis", "TITLE")
         
         # Set up output directories
         output_dir = Path("results/outputs")

@@ -44,19 +44,31 @@ from scripts.utils.exceptions import (
     safe_csv_read, safe_json_read, safe_json_write
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print status with icons, respecting global VERBOSE flag."""
-    prefixes = {
-        "INFO": "[INFO]",
-        "SUCCESS": "[OK]",
-        "WARNING": "[WARN]",
-        "ERROR": "[ERROR]",
-        "PROCESSING": "[PROC]"
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
     }
-    if status == "INFO" and not VERBOSE:
-        return
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def assert_condition(condition: bool, message: str):
     """Assert condition or raise RuntimeError in STRICT_MODE."""
@@ -822,7 +834,7 @@ def main():
     
     print("\n" + "="*80)
     print("TEP GNSS Analysis Package v0.13")
-    print("STEP 7: Advanced TEP Analysis")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 7: Advanced Analysis", "TITLE")
     print("Focused validation: Elevation, Circular Statistics, Model Comparison")
     print("="*80)
     

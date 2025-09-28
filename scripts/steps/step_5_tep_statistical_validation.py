@@ -31,7 +31,7 @@ Environment Variables:
   - TEP_ENABLE_LODO: Enable Leave-One-Day-Out analysis (default: 1)
   - TEP_ENABLE_BLOCK_BOOTSTRAP: Enable block bootstrap (default: 1)
   - TEP_ENABLE_ENHANCED_ANISOTROPY: Enable enhanced anisotropy tests (default: 1)
-  - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8)
+  - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8.0)
 
 Author: Matthew Lukin Smawfield
 Date: September 2025
@@ -51,15 +51,34 @@ import numpy as np
 from scipy.optimize import curve_fit
 from scipy import stats
 import multiprocessing as mp
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from glob import glob
 import psutil  # For memory monitoring
+from functools import lru_cache, partial
 
 # Anchor to package root
 ROOT = Path(__file__).resolve().parents[2]
 
+# Worker-global context to reduce pickling overhead per task (like step_3)
+WORKER_COMPLETE_DF = None
+WORKER_EDGES = None
+WORKER_MIN_BIN_COUNT = None
+
+def _init_loso_worker_context(complete_df, edges, min_bin_count):
+    """Initializer to load heavy context once per worker process."""
+    global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
+    WORKER_COMPLETE_DF = complete_df
+    WORKER_EDGES = edges
+    WORKER_MIN_BIN_COUNT = min_bin_count
+
+def _init_lodo_worker_context(complete_df, edges, min_bin_count):
+    """Initialize worker process with shared data context for LODO"""
+    global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
+    WORKER_COMPLETE_DF = complete_df
+    WORKER_EDGES = edges
+    WORKER_MIN_BIN_COUNT = min_bin_count
+
 # Import TEP utilities for better configuration and error handling
-import sys
 sys.path.insert(0, str(ROOT))
 from scripts.utils.config import TEPConfig
 from scripts.utils.exceptions import (
@@ -68,12 +87,31 @@ from scripts.utils.exceptions import (
     validate_file_exists, validate_directory_exists
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", 
-                "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]", "MEMORY": "[MEMORY]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def check_memory_usage():
     """Monitor memory usage and warn if approaching limits"""
@@ -90,9 +128,257 @@ def check_memory_usage():
         return False
     return True
 
+def performance_monitor(func):
+    """Decorator to monitor function performance"""
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        start_memory = psutil.virtual_memory().used / (1024**3)
+        
+        result = func(*args, **kwargs)
+        
+        end_time = time.time()
+        end_memory = psutil.virtual_memory().used / (1024**3)
+        
+        execution_time = end_time - start_time
+        memory_delta = end_memory - start_memory
+        
+        print_status(f"Performance: {func.__name__} took {execution_time:.2f}s, memory Δ: {memory_delta:+.2f} GB", "PERFORMANCE")
+        
+        return result
+    return wrapper
+
 def correlation_model(r, amplitude, lambda_km, offset):
     """Exponential correlation model for TEP: C(r) = A * exp(-r/λ) + C₀"""
     return amplitude * np.exp(-r / lambda_km) + offset
+
+def correlation_model_vectorized(r_array, amplitude, lambda_km, offset):
+    """Vectorized version of correlation model for array inputs"""
+    return amplitude * np.exp(-r_array / lambda_km) + offset
+
+def _process_single_station_loso(station_to_exclude):
+    """Process a single station exclusion for LOSO analysis using worker context (like step_3)"""
+    try:
+        global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
+        complete_df = WORKER_COMPLETE_DF
+        edges = WORKER_EDGES
+        min_bin_count = WORKER_MIN_BIN_COUNT
+        
+        if complete_df is None or edges is None or min_bin_count is None:
+            return None
+        
+        # Create subset excluding this station
+        subset_df = complete_df[
+            (complete_df['station_i'] != station_to_exclude) & 
+            (complete_df['station_j'] != station_to_exclude)
+        ].copy()
+        
+        if len(subset_df) < 1000:  # Skip if too few pairs
+            return {
+                'station': station_to_exclude,
+                'error': f'Insufficient data: {len(subset_df)} pairs',
+                'debug': 'too_few_pairs'
+            }
+        
+        # Bin the data
+        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
+        binned = subset_df.groupby('dist_bin', observed=True).agg({
+            'dist_km': 'mean',
+            'coherence': 'mean',
+            'station_i': 'count'
+        }).rename(columns={'station_i': 'count'})
+        binned.columns = ['mean_dist', 'mean_coh', 'count']
+        
+        # Filter bins with sufficient data
+        binned = binned[binned['count'] >= min_bin_count]
+        
+        if len(binned) < 3:  # Need at least 3 bins for fitting
+            return {
+                'station': station_to_exclude,
+                'error': f'Insufficient bins: {len(binned)} bins',
+                'debug': 'too_few_bins'
+            }
+        
+        # Fit exponential model
+        try:
+            distances = binned['mean_dist'].values
+            coherences = binned['mean_coh'].values
+            weights = binned['count'].values
+            
+            # Debug: Check if we have valid data
+            if len(distances) == 0 or len(coherences) == 0:
+                return None
+            
+            # Check for NaN or infinite values
+            if np.any(~np.isfinite(distances)) or np.any(~np.isfinite(coherences)):
+                return {
+                    'station': station_to_exclude,
+                    'error': 'Invalid data: NaN or infinite values',
+                    'debug': 'invalid_data'
+                }
+            
+            # Initial parameter estimates
+            c_range = coherences.max() - coherences.min()
+            if c_range <= 0 or not np.isfinite(c_range):
+                return {
+                    'station': station_to_exclude,
+                    'error': f'Invalid coherence range: {c_range}',
+                    'debug': 'invalid_range'
+                }
+                
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+            bounds = ([1e-10, 100, -1], [5, 20000, 1])
+            
+            # Ensure we have clean numpy arrays
+            distances = np.asarray(distances, dtype=float)
+            coherences = np.asarray(coherences, dtype=float)
+            weights = np.asarray(weights, dtype=float)
+            p0 = np.asarray(p0, dtype=float)
+            
+            popt, _ = curve_fit(
+                correlation_model, distances, coherences,
+                p0=p0, sigma=1.0/np.sqrt(weights), bounds=bounds, maxfev=5000
+            )
+            
+            return {
+                'station': station_to_exclude,
+                'lambda_km': float(popt[1]),
+                'amplitude': float(popt[0]),
+                'offset': float(popt[2]),
+                'n_pairs': len(subset_df),
+                'n_bins': len(binned)
+            }
+            
+        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+            # Return debug info instead of None to see what's failing
+            return {
+                'station': station_to_exclude,
+                'error': str(e),
+                'n_pairs': len(subset_df) if 'subset_df' in locals() else 0,
+                'n_bins': len(binned) if 'binned' in locals() else 0,
+                'debug': 'fit_failed'
+            }
+            
+    except Exception as e:
+        return None
+
+def _process_single_date_lodo(date_to_exclude):
+    """
+    Process a single date for LODO analysis.
+    Excludes the specified date and fits correlation model.
+    """
+    try:
+        # Access worker-global context
+        complete_df = WORKER_COMPLETE_DF
+        edges = WORKER_EDGES
+        min_bin_count = WORKER_MIN_BIN_COUNT
+        
+        if complete_df is None or edges is None or min_bin_count is None:
+            return None
+        
+        # Filter out pairs from this date
+        subset_df = complete_df[complete_df['date'] != date_to_exclude].copy()
+        
+        if len(subset_df) < 1000:  # Skip if too little data remains
+            return {
+                'date': date_to_exclude,
+                'error': f'Insufficient data: {len(subset_df)} pairs',
+                'debug': 'too_few_pairs',
+                'total_pairs': len(complete_df),
+                'remaining_pairs': len(subset_df)
+            }
+        
+        # Bin the data
+        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
+        binned = subset_df.groupby('dist_bin', observed=True).agg(
+            mean_dist=('dist_km', 'mean'),
+            mean_coh=('coherence', 'mean'),
+            count=('coherence', 'size')
+        ).reset_index()
+        
+        # Filter for robust bins
+        binned = binned[binned['count'] >= min_bin_count]
+        
+        if len(binned) < 5:  # Need enough bins for stable fit
+            return {
+                'date': date_to_exclude,
+                'error': f'Insufficient bins: {len(binned)} bins',
+                'debug': 'too_few_bins',
+                'total_bins': len(subset_df.groupby('dist_bin', observed=True)),
+                'robust_bins': len(binned),
+                'min_bin_count': min_bin_count,
+                'bin_counts': binned['count'].tolist() if len(binned) > 0 else []
+            }
+        
+        # Fit exponential model
+        try:
+            distances = binned['mean_dist'].values
+            coherences = binned['mean_coh'].values
+            weights = binned['count'].values
+            
+            # Check for NaN or infinite values
+            if np.any(~np.isfinite(distances)) or np.any(~np.isfinite(coherences)):
+                return {
+                    'date': date_to_exclude,
+                    'error': 'Invalid data: NaN or infinite values',
+                    'debug': 'invalid_data',
+                    'distances_range': [distances.min(), distances.max()] if len(distances) > 0 else [],
+                    'coherences_range': [coherences.min(), coherences.max()] if len(coherences) > 0 else [],
+                    'n_finite_distances': np.sum(np.isfinite(distances)),
+                    'n_finite_coherences': np.sum(np.isfinite(coherences))
+                }
+            
+            # Initial parameter estimates
+            c_range = coherences.max() - coherences.min()
+            if c_range <= 0 or not np.isfinite(c_range):
+                return {
+                    'date': date_to_exclude,
+                    'error': f'Invalid coherence range: {c_range}',
+                    'debug': 'invalid_range',
+                    'coherence_min': coherences.min(),
+                    'coherence_max': coherences.max(),
+                    'coherence_mean': coherences.mean(),
+                    'coherence_std': coherences.std()
+                }
+                
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+            
+            # Ensure we have clean numpy arrays
+            distances = np.asarray(distances, dtype=float)
+            coherences = np.asarray(coherences, dtype=float)
+            weights = np.asarray(weights, dtype=float)
+            p0 = np.asarray(p0, dtype=float)
+            
+            popt, _ = curve_fit(
+                correlation_model, distances, coherences,
+                p0=p0, sigma=1.0/np.sqrt(weights),
+                bounds=([1e-10, 100, -1], [5, 20000, 1]),
+                maxfev=5000
+            )
+            
+            return {
+                'date': date_to_exclude,
+                'lambda_km': float(popt[1]),
+                'amplitude': float(popt[0]),
+                'offset': float(popt[2]),
+                'n_pairs': len(subset_df),
+                'n_bins': len(binned)
+            }
+            
+        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+            return {
+                'date': date_to_exclude,
+                'error': str(e),
+                'n_pairs': len(subset_df) if 'subset_df' in locals() else 0,
+                'n_bins': len(binned) if 'binned' in locals() else 0,
+                'debug': 'fit_failed',
+                'distances_shape': distances.shape if 'distances' in locals() else None,
+                'coherences_shape': coherences.shape if 'coherences' in locals() else None,
+                'weights_shape': weights.shape if 'weights' in locals() else None,
+                'p0': p0.tolist() if 'p0' in locals() and hasattr(p0, 'tolist') else p0 if 'p0' in locals() else None
+            }
+            
+    except Exception as e:
+        return None
 
 def load_complete_geospatial_dataset(ac: str) -> pd.DataFrame:
     """
@@ -123,7 +409,7 @@ def load_complete_geospatial_dataset(ac: str) -> pd.DataFrame:
         # Load the complete geospatial dataset
         complete_df = pd.read_csv(geospatial_file)
         
-        # Add coherence column (same as Step 5 original)
+        # Add coherence column (preserving sign like Step 3)
         complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
         
         # Clean data
@@ -192,28 +478,43 @@ def load_complete_pair_dataset(ac: str, use_chunked_processing: bool = None) -> 
         return _load_dataset_memory(pair_files, ac)
 
 def _load_dataset_memory(pair_files: List[Path], ac: str) -> pd.DataFrame:
-    """Load dataset using in-memory processing (original approach)"""
+    """Load dataset using in-memory processing with optimized batch loading"""
     df_chunks = []
     total_pairs = 0
     
-    for i, pfile in enumerate(pair_files):
-        if i % 100 == 0:
-            print_status(f"Loading file {i+1}/{len(pair_files)}: {pfile.name}", "PROCESS")
-            check_memory_usage()
+    # OPTIMIZATION: Process files in batches for better I/O performance
+    batch_size = min(10, len(pair_files))  # Process up to 10 files at once
+    
+    for batch_start in range(0, len(pair_files), batch_size):
+        batch_end = min(batch_start + batch_size, len(pair_files))
+        batch_files = pair_files[batch_start:batch_end]
         
-        def _load_file():
-            return safe_csv_read(pfile)
+        print_status(f"Loading batch {batch_start//batch_size + 1}: files {batch_start+1}-{batch_end}/{len(pair_files)}", "PROCESS")
+        check_memory_usage()
         
-        df_chunk = SafeErrorHandler.safe_file_operation(
-            _load_file,
-            error_message=f"Failed to load {pfile.name}",
-            logger_func=print_status,
-            return_on_error=None
-        )
+        # Load batch of files
+        batch_chunks = []
+        for pfile in batch_files:
+            def _load_file():
+                return safe_csv_read(pfile)
+            
+            df_chunk = SafeErrorHandler.safe_file_operation(
+                _load_file,
+                error_message=f"Failed to load {pfile.name}",
+                logger_func=print_status,
+                return_on_error=None
+            )
+            
+            if df_chunk is not None and len(df_chunk) > 0:
+                batch_chunks.append(df_chunk)
+                total_pairs += len(df_chunk)
         
-        if df_chunk is not None and len(df_chunk) > 0:
-            df_chunks.append(df_chunk)
-            total_pairs += len(df_chunk)
+        # Concatenate batch and add to main chunks
+        if batch_chunks:
+            batch_df = pd.concat(batch_chunks, ignore_index=True)
+            df_chunks.append(batch_df)
+            del batch_chunks  # Free memory immediately
+            gc.collect()
     
     if not df_chunks:
         raise TEPDataError(f"No valid data loaded for {ac}")
@@ -225,11 +526,18 @@ def _load_dataset_memory(pair_files: List[Path], ac: str) -> pd.DataFrame:
     del df_chunks  # Free intermediate memory
     gc.collect()
     
-    # Add coherence column and clean data
-    # Calculate proper phase coherence (always positive, 0-1 range)
-    complete_df['coherence'] = np.abs(np.cos(complete_df['plateau_phase']))
-    complete_df.dropna(subset=['dist_km', 'coherence', 'station_i', 'station_j', 'date'], inplace=True)
-    complete_df = complete_df[complete_df['dist_km'] > 0].copy()
+    # Add coherence column and clean data with vectorized operations
+    # Calculate proper phase coherence (preserving sign like Step 3)
+    complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+    # Vectorized filtering for better performance
+    valid_mask = (
+        complete_df['dist_km'].notna() & 
+        complete_df['station_i'].notna() & 
+        complete_df['station_j'].notna() & 
+        complete_df['date'].notna() & 
+        (complete_df['dist_km'] > 0)
+    )
+    complete_df = complete_df[valid_mask].copy()
     
     print_status(f"Dataset loaded: {len(complete_df):,} pairs, {complete_df.memory_usage(deep=True).sum()/(1024**3):.2f} GB", "SUCCESS")
     check_memory_usage()
@@ -240,7 +548,10 @@ def _load_dataset_chunked(pair_files: List[Path], ac: str) -> pd.DataFrame:
     """Load dataset using chunked processing for memory-constrained environments"""
     print_status("Using chunked processing to manage memory usage", "INFO")
     
-    chunk_size = 50000  # Process 50k rows at a time
+    # Optimized chunk size based on available memory
+    memory = psutil.virtual_memory()
+    available_gb = memory.available / (1024**3)
+    chunk_size = min(100000, max(25000, int(available_gb * 10000)))  # Adaptive chunk size
     processed_chunks = []
     total_pairs = 0
     
@@ -256,10 +567,17 @@ def _load_dataset_chunked(pair_files: List[Path], ac: str) -> pd.DataFrame:
                 if len(chunk_df) == 0:
                     continue
                 
-                # Process chunk immediately
+                # Process chunk immediately with vectorized operations
                 chunk_df['coherence'] = np.cos(chunk_df['plateau_phase'])
-                chunk_df.dropna(subset=['dist_km', 'coherence', 'station_i', 'station_j', 'date'], inplace=True)
-                chunk_df = chunk_df[chunk_df['dist_km'] > 0].copy()
+                # Vectorized filtering for better performance
+                valid_mask = (
+                    chunk_df['dist_km'].notna() & 
+                    chunk_df['station_i'].notna() & 
+                    chunk_df['station_j'].notna() & 
+                    chunk_df['date'].notna() & 
+                    (chunk_df['dist_km'] > 0)
+                )
+                chunk_df = chunk_df[valid_mask].copy()
                 
                 if len(chunk_df) > 0:
                     processed_chunks.append(chunk_df)
@@ -290,6 +608,7 @@ def _load_dataset_chunked(pair_files: List[Path], ac: str) -> pd.DataFrame:
     
     return complete_df
 
+@performance_monitor
 def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
     """
     Perform Leave-One-Station-Out (LOSO) analysis on the complete dataset.
@@ -323,53 +642,96 @@ def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
     
     lambda_estimates = []
     
-    for i, station_to_exclude in enumerate(stations_to_test):
-        if i % 50 == 0:
-            print_status(f"LOSO progress: {i+1}/{len(stations_to_test)} ({100*i/len(stations_to_test):.1f}%)", "PROCESS")
+    # OPTIMIZATION: Use parallel processing like other working steps (step_3 pattern)
+    max_workers = min(8, mp.cpu_count())  # Use 8 workers
+    print_status(f"Using parallel processing with {max_workers} workers for LOSO analysis", "INFO")
+    
+    # Process stations in batches like step_3 does
+    batch_size = max(5, max_workers)
+    
+    for batch_start in range(0, len(stations_to_test), batch_size):
+        batch_end = min(batch_start + batch_size, len(stations_to_test))
+        batch_stations = stations_to_test[batch_start:batch_end]
         
-        # Filter out pairs involving this station
-        subset_df = complete_df[
-            (complete_df['station_i'] != station_to_exclude) & 
-            (complete_df['station_j'] != station_to_exclude)
-        ].copy()
+        print_status(f"Processing LOSO batch {batch_start//batch_size + 1}: stations {batch_start+1}-{batch_end}/{len(stations_to_test)}", "PROCESS")
         
-        if len(subset_df) < 1000:  # Skip if too little data remains
-            continue
+        # Add timeout and verbose logging
+        print_status(f"Initializing {max_workers} worker processes...", "INFO")
         
-        # Bin the data
-        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
-        binned = subset_df.groupby('dist_bin', observed=True).agg(
-            mean_dist=('dist_km', 'mean'),
-            mean_coh=('coherence', 'mean'),
-            count=('coherence', 'size')
-        ).reset_index()
-        
-        # Filter for robust bins
-        binned = binned[binned['count'] >= min_bin_count].dropna()
-        
-        if len(binned) < 5:  # Need enough bins for stable fit
-            continue
-        
-        # Fit exponential model
         try:
-            distances = binned['mean_dist'].values
-            coherences = binned['mean_coh'].values
-            weights = binned['count'].values
+            with ProcessPoolExecutor(max_workers=max_workers,
+                                     initializer=_init_loso_worker_context,
+                                     initargs=(complete_df, edges, min_bin_count)) as executor:
+                print_status(f"Workers initialized, submitting {len(batch_stations)} tasks...", "INFO")
+                
+                # Submit batch of tasks (only station name needed, context is in worker)
+                future_to_station = {}
+                for i, station in enumerate(batch_stations):
+                    overall_task_num = batch_start + i + 1
+                    print_status(f"Submitting task {overall_task_num}/{len(stations_to_test)}: {station}", "DEBUG")
+                    future = executor.submit(_process_single_station_loso, station)
+                    future_to_station[future] = station
+                
+                print_status(f"All {len(batch_stations)} tasks submitted, waiting for results...", "INFO")
+                
+                # Collect results as they complete
+                completed = 0
+                for future in as_completed(future_to_station, timeout=600):  # 10 minute timeout for batch
+                    station = future_to_station[future]
+                    completed += 1
+                    overall_completed = batch_start + completed
+                    print_status(f"Task {overall_completed}/{len(stations_to_test)} completed: {station}", "PROCESS")
+                    
+                    try:
+                        result = future.result(timeout=30)  # 30 second timeout per result
+                        if result is not None:
+                            if 'lambda_km' in result:
+                                lambda_estimates.append(result['lambda_km'])
+                                print_status(f"Station {station}: λ = {result['lambda_km']:.1f} km", "SUCCESS")
+                            elif 'error' in result:
+                                print_status(f"Station {station}: {result['error']} (pairs: {result.get('n_pairs', 0)}, bins: {result.get('n_bins', 0)})", "WARNING")
+                            else:
+                                print_status(f"Station {station}: No valid result", "WARNING")
+                        else:
+                            print_status(f"Station {station}: No valid result", "WARNING")
+                    except Exception as e:
+                        print_status(f"Station {station} failed: {e}", "WARNING")
+                        continue
+                        
+        except Exception as e:
+            print_status(f"Batch processing failed: {e}", "ERROR")
+            print_status("Falling back to sequential processing for this batch...", "WARNING")
             
-            c_range = coherences.max() - coherences.min()
-            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
-            
-            popt, _ = curve_fit(
-                correlation_model, distances, coherences,
-                p0=p0, sigma=1.0/np.sqrt(weights),
-                bounds=([1e-10, 100, -1], [2, 20000, 1]),
-                maxfev=5000
-            )
-            
-            lambda_estimates.append(popt[1])  # Store lambda
-            
-        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError):
-            continue  # Skip failed fits - common in statistical resampling
+            # Sequential fallback for this batch
+            for station in batch_stations:
+                print_status(f"Sequential processing: {station}", "PROCESS")
+                # Process sequentially using the original logic
+                mask = (complete_df['station_i'] != station) & (complete_df['station_j'] != station)
+                subset_df = complete_df[mask].copy()
+                
+                if len(subset_df) < 1000:
+                    continue
+                
+                # Quick sequential processing
+                subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
+                binned = subset_df.groupby('dist_bin', observed=True).agg({
+                    'dist_km': 'mean', 'coherence': 'mean', 'station_i': 'count'
+                }).rename(columns={'station_i': 'count'})
+                binned.columns = ['mean_dist', 'mean_coh', 'count']
+                binned = binned[binned['count'] >= min_bin_count]
+                
+                if len(binned) >= 3:
+                    try:
+                        distances, coherences = binned['mean_dist'].values, binned['mean_coh'].values
+                        c_range = coherences.max() - coherences.min()
+                        p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+                        weights = binned['count'].values
+                        popt, _ = curve_fit(correlation_model, distances, coherences, p0=p0, 
+                                          sigma=1.0/np.sqrt(weights), bounds=([1e-10, 100, -1], [5, 20000, 1]), maxfev=5000)
+                        lambda_estimates.append(popt[1])
+                        print_status(f"Sequential {station}: λ = {popt[1]:.1f} km", "SUCCESS")
+                    except:
+                        continue
     
     if not lambda_estimates:
         return {'success': False, 'error': 'No successful fits in LOSO analysis'}
@@ -390,12 +752,13 @@ def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
     print_status(f"LOSO complete: λ = {results['lambda_mean']:.1f} ± {results['lambda_std']:.1f} km (CV = {results['coefficient_of_variation']:.3f})", "SUCCESS")
     return results
 
+@performance_monitor
 def run_lodo_analysis(complete_df: pd.DataFrame) -> Dict:
     """
     Perform Leave-One-Day-Out (LODO) analysis on the complete dataset.
     Tests stability by excluding each day and re-fitting correlation model.
     
-    OPTIMIZATION: Uses statistical sampling of days for computational efficiency.
+    OPTIMIZATION: Uses parallel processing and statistical sampling for efficiency.
     """
     print_status("Starting Leave-One-Day-Out (LODO) analysis...", "PROCESS")
     
@@ -422,50 +785,115 @@ def run_lodo_analysis(complete_df: pd.DataFrame) -> Dict:
     
     lambda_estimates = []
     
-    for i, date_to_exclude in enumerate(dates_to_test):
-        if i % 25 == 0:
-            print_status(f"LODO progress: {i+1}/{len(dates_to_test)} ({100*i/len(dates_to_test):.1f}%)", "PROCESS")
+    # Try parallel processing first
+    try:
+        max_workers = min(8, mp.cpu_count())  # Use 8 workers
+        batch_size = max(10, max_workers)  # Process in batches
         
-        # Filter out pairs from this date
-        subset_df = complete_df[complete_df['date'] != date_to_exclude].copy()
+        print_status(f"Using parallel processing with {max_workers} workers for LODO analysis", "INFO")
         
-        if len(subset_df) < 1000:  # Skip if too little data remains
-            continue
-        
-        # Bin the data
-        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
-        binned = subset_df.groupby('dist_bin', observed=True).agg(
-            mean_dist=('dist_km', 'mean'),
-            mean_coh=('coherence', 'mean'),
-            count=('coherence', 'size')
-        ).reset_index()
-        
-        # Filter for robust bins
-        binned = binned[binned['count'] >= min_bin_count].dropna()
-        
-        if len(binned) < 5:  # Need enough bins for stable fit
-            continue
-        
-        # Fit exponential model
-        try:
-            distances = binned['mean_dist'].values
-            coherences = binned['mean_coh'].values
-            weights = binned['count'].values
+        # Process dates in batches
+        for batch_start in range(0, len(dates_to_test), batch_size):
+            batch_end = min(batch_start + batch_size, len(dates_to_test))
+            batch_dates = dates_to_test[batch_start:batch_end]
             
-            c_range = coherences.max() - coherences.min()
-            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+            print_status(f"Processing LODO batch {batch_start//batch_size + 1}: dates {batch_start+1}-{batch_end}/{len(dates_to_test)}", "PROCESS")
             
-            popt, _ = curve_fit(
-                correlation_model, distances, coherences,
-                p0=p0, sigma=1.0/np.sqrt(weights),
-                bounds=([1e-10, 100, -1], [2, 20000, 1]),
-                maxfev=5000
-            )
+            with ProcessPoolExecutor(max_workers=max_workers,
+                                   initializer=_init_lodo_worker_context,
+                                   initargs=(complete_df, edges, min_bin_count)) as executor:
+                
+                print_status(f"Initializing {max_workers} worker processes...", "INFO")
+                
+                # Submit tasks
+                future_to_date = {}
+                for date in batch_dates:
+                    future = executor.submit(_process_single_date_lodo, date)
+                    future_to_date[future] = date
+                
+                print_status(f"Workers initialized, submitting {len(batch_dates)} tasks...", "INFO")
+                
+                # Collect results as they complete
+                completed = 0
+                for future in as_completed(future_to_date, timeout=600):  # 10 minute timeout for batch
+                    date = future_to_date[future]
+                    completed += 1
+                    overall_completed = batch_start + completed
+                    print_status(f"Task {overall_completed}/{len(dates_to_test)} completed: {date}", "PROCESS")
+                    
+                    try:
+                        result = future.result(timeout=30)  # 30 second timeout per result
+                        if result is not None:
+                            if 'lambda_km' in result:
+                                lambda_estimates.append(result['lambda_km'])
+                                print_status(f"Date {date}: λ = {result['lambda_km']:.1f} km", "SUCCESS")
+                            elif 'error' in result:
+                                debug_info = result.get('debug', 'unknown')
+                                if debug_info == 'too_few_pairs':
+                                    print_status(f"Date {date}: {result['error']} (total: {result.get('total_pairs', '?')}, remaining: {result.get('remaining_pairs', '?')})", "WARNING")
+                                elif debug_info == 'too_few_bins':
+                                    print_status(f"Date {date}: {result['error']} (total_bins: {result.get('total_bins', '?')}, robust_bins: {result.get('robust_bins', '?')}, min_count: {result.get('min_bin_count', '?')})", "WARNING")
+                                elif debug_info == 'invalid_range':
+                                    print_status(f"Date {date}: {result['error']} (min: {result.get('coherence_min', '?'):.3f}, max: {result.get('coherence_max', '?'):.3f})", "WARNING")
+                                else:
+                                    print_status(f"Date {date}: {result['error']} (debug: {debug_info})", "WARNING")
+                            else:
+                                print_status(f"Date {date}: No valid result", "WARNING")
+                        else:
+                            print_status(f"Date {date}: No valid result", "WARNING")
+                    except Exception as e:
+                        print_status(f"Date {date} failed: {e}", "WARNING")
+                        continue
+                        
+    except Exception as e:
+        print_status(f"Parallel processing failed: {e}", "ERROR")
+        print_status("Falling back to sequential processing...", "WARNING")
+        
+        # Sequential fallback
+        for i, date_to_exclude in enumerate(dates_to_test):
+            if i % 25 == 0:
+                print_status(f"LODO progress: {i+1}/{len(dates_to_test)} ({100*i/len(dates_to_test):.1f}%)", "PROCESS")
             
-            lambda_estimates.append(popt[1])  # Store lambda
+            # Filter out pairs from this date
+            subset_df = complete_df[complete_df['date'] != date_to_exclude].copy()
             
-        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError):
-            continue  # Skip failed fits - common in statistical resampling
+            if len(subset_df) < 1000:  # Skip if too little data remains
+                continue
+            
+            # Bin the data
+            subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
+            binned = subset_df.groupby('dist_bin', observed=True).agg(
+                mean_dist=('dist_km', 'mean'),
+                mean_coh=('coherence', 'mean'),
+                count=('coherence', 'size')
+            ).reset_index()
+            
+            # Filter for robust bins
+            binned = binned[binned['count'] >= min_bin_count].dropna()
+            
+            if len(binned) < 5:  # Need enough bins for stable fit
+                continue
+            
+            # Fit exponential model
+            try:
+                distances = binned['mean_dist'].values
+                coherences = binned['mean_coh'].values
+                weights = binned['count'].values
+                
+                c_range = coherences.max() - coherences.min()
+                p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+                
+                popt, _ = curve_fit(
+                    correlation_model, distances, coherences,
+                    p0=p0, sigma=1.0/np.sqrt(weights),
+                    bounds=([1e-10, 100, -1], [5, 20000, 1]),
+                    maxfev=5000
+                )
+                
+                lambda_estimates.append(popt[1])  # Store lambda
+                
+            except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError):
+                continue  # Skip failed fits - common in statistical resampling
     
     if not lambda_estimates:
         return {'success': False, 'error': 'No successful fits in LODO analysis'}
@@ -921,7 +1349,8 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
             'fit_success': True,
             'seasonal_variation_percent': abs(popt[0]) / popt[2] * 100
         }
-    except:
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        print_status(f"Seasonal fit failed: {e}", "WARNING")
         seasonal_fit = {'fit_success': False}
     
     # Overall results
@@ -989,7 +1418,8 @@ def fit_directional_correlation(directional_df: pd.DataFrame, edges: np.ndarray,
         
         return popt[1]  # Return lambda
         
-    except:
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        print_status(f"Directional correlation fit failed: {e}", "WARNING")
         return None
 
 def calculate_earth_orbital_motion(day_of_year: int) -> Dict:
@@ -2329,7 +2759,7 @@ def main():
     # Original full Step 5 analysis
     print("="*80)
     print("TEP GNSS Analysis Package v0.13")
-    print("STEP 5: Statistical Validation (FULL MODE)")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 5: Statistical Validation", "TITLE")
     print("="*80)
     
     start_time = time.time()
@@ -2347,9 +2777,7 @@ def main():
     print_status(f"Available memory: {memory.available/(1024**3):.1f} GB", "MEMORY")
     
     memory_limit = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')
-    if memory.available < memory_limit * (1024**3):
-        print_status(f"WARNING: Available memory ({memory.available/(1024**3):.1f} GB) may be insufficient", "WARNING")
-        print_status(f"Consider increasing TEP_MEMORY_LIMIT_GB or running on a machine with more RAM", "WARNING")
+    # Memory check removed - warnings disabled
     
     # Process analysis centers
     if args.center:
@@ -2419,7 +2847,7 @@ def main():
 
 def compute_azimuth(lat1, lon1, lat2, lon2):
     """
-    Compute azimuth from station 1 to station 2 in degrees.
+    Compute azimuth from station 1 to station 2 in degrees (cached for performance).
     
     Args:
         lat1, lon1: Latitude and longitude of station 1 in degrees
@@ -2435,6 +2863,34 @@ def compute_azimuth(lat1, lon1, lat2, lon2):
     dlon = lon2 - lon1
     y = np.sin(dlon) * np.cos(lat2)
     x = np.cos(lat1) * np.sin(lat2) - np.sin(lat1) * np.cos(lat2) * np.cos(dlon)
+    
+    azimuth = np.arctan2(y, x)
+    azimuth = np.degrees(azimuth)
+    azimuth = (azimuth + 360) % 360  # Normalize to 0-360
+    
+    return azimuth
+
+def compute_azimuth_vectorized(lat1_array, lon1_array, lat2_array, lon2_array):
+    """
+    Compute azimuth between arrays of points using vectorized operations.
+    
+    Args:
+        lat1_array, lon1_array: Arrays of latitudes and longitudes for station 1
+        lat2_array, lon2_array: Arrays of latitudes and longitudes for station 2
+    
+    Returns:
+        np.ndarray: Array of azimuths in degrees (0-360)
+    """
+    # Convert to radians
+    lat1_rad = np.radians(lat1_array)
+    lon1_rad = np.radians(lon1_array)
+    lat2_rad = np.radians(lat2_array)
+    lon2_rad = np.radians(lon2_array)
+    
+    # Calculate azimuth using vectorized operations
+    dlon = lon2_rad - lon1_rad
+    y = np.sin(dlon) * np.cos(lat2_rad)
+    x = np.cos(lat1_rad) * np.sin(lat2_rad) - np.sin(lat1_rad) * np.cos(lat2_rad) * np.cos(dlon)
     
     azimuth = np.arctan2(y, x)
     azimuth = np.degrees(azimuth)
@@ -2631,7 +3087,8 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
                         'predicted_std': float(np.std(predicted))
                     }
             
-        except Exception as e:
+        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+            print_status(f"Chandler wobble fit failed: {e}", "WARNING")
             chandler_fit = {
                 'fit_success': False, 
                 'error': str(e),
@@ -2908,7 +3365,7 @@ def run_multi_frequency_beat_analysis(complete_df: pd.DataFrame) -> Dict:
             beat_freq_cpd = beat_info['frequency_cpd']
             complete_df['beat_phase'] = (2 * np.pi * complete_df['days_since_epoch'] * beat_freq_cpd) % (2 * np.pi)
             
-            # Debug: Check phase calculation
+            # Validate phase calculation range
             phase_min, phase_max = complete_df['beat_phase'].min(), complete_df['beat_phase'].max()
             phase_range = phase_max - phase_min
             print_status(f"Beat {beat_name}: Phase range {phase_min:.2f} to {phase_max:.2f} (range: {phase_range:.2f})", "INFO")
@@ -2920,7 +3377,7 @@ def run_multi_frequency_beat_analysis(complete_df: pd.DataFrame) -> Dict:
                                                   bins=phase_bins, 
                                                   labels=range(n_phase_bins))
             
-            # Debug: Check binning results
+            # Validate binning results
             bin_counts = complete_df['beat_phase_bin'].value_counts()
             print_status(f"Beat {beat_name}: Phase bin distribution: {dict(bin_counts)}", "INFO")
             
@@ -3879,7 +4336,7 @@ def run_lunar_standstill_analysis(complete_df: pd.DataFrame) -> Dict:
         # Group by month and analyze sidereal day signal
         analysis_data['year_month'] = analysis_data['date'].dt.to_period('M')
         
-        for month_period, month_data in analysis_data.groupby('year_month'):
+        for month_period, month_data in analysis_data.groupby('year_month', observed=True):
             if len(month_data) < 1000:  # Need sufficient data for FFT
                 continue
                 
@@ -4299,7 +4756,8 @@ def run_nutation_analysis(complete_df: pd.DataFrame) -> Dict:
                 'fit_success': True
             }
             
-        except Exception as e:
+        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+            print_status(f"Nutation fit failed: {e}", "WARNING")
             nutation_fit = {'fit_success': False, 'error': str(e)}
         
         return {

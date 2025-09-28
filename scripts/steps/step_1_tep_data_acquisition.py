@@ -25,6 +25,7 @@ from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Optional, Tuple
 import pandas as pd
+import numpy as np
 
 # Ensure package root on sys.path for intra-package imports
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
@@ -41,6 +42,32 @@ from scripts.utils.logger import TEPLogger
 
 # Instantiate the logger
 logger = TEPLogger()
+
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def geodetic_to_ecef(lat_deg: float, lon_deg: float, h_m: float):
     """Convert geodetic coordinates to ECEF"""
@@ -84,7 +111,7 @@ def fetch_igs_coordinates():
     """Fetch coordinates from IGS network JSON"""
     def _fetch_operation():
         url = "https://files.igs.org/pub/station/general/IGSNetworkWithFormer.json"
-        logger.info("Fetching IGS network coordinates...")
+        logger.process("Fetching IGS network coordinates...")
         
         ssl_context = ssl.create_default_context()
         timeout = TEPConfig.get_int('TEP_NETWORK_TIMEOUT')
@@ -121,7 +148,7 @@ def fetch_igs_coordinates():
             except (KeyError, ValueError, TypeError):
                 continue
         
-        logger.success(f"Retrieved {len(rows)} stations from IGS")
+        logger.success(f"Retrieved {len(rows)} stations from IGS network")
         return pd.DataFrame(rows)
     
     result = SafeErrorHandler.safe_network_operation(
@@ -188,26 +215,35 @@ def build_station_catalogue():
     # Add geomagnetic coordinates
     dedup_with_geomag = add_geomagnetic_coordinates(dedup)
     
+    # Add coordinate validation flag
+    dedup_with_geomag['has_coordinates'] = (
+        dedup_with_geomag['X'].apply(lambda x: pd.notna(x) and np.isfinite(x) and x != 0) &
+        dedup_with_geomag['Y'].apply(lambda x: pd.notna(x) and np.isfinite(x) and x != 0) &
+        dedup_with_geomag['Z'].apply(lambda x: pd.notna(x) and np.isfinite(x) and x != 0)
+    )
+
     # Reorder columns
     columns = [
         'code', 'coord_source_code', 'lat_deg', 'lon_deg', 'height_m', 'X', 'Y', 'Z',
-        'geomag_lat', 'geomag_lon'
+        'has_coordinates', 'geomag_lat', 'geomag_lon'
     ]
-    
+
     for col in columns:
         if col not in dedup_with_geomag.columns:
             if col == 'coord_source_code':
                 dedup_with_geomag[col] = dedup_with_geomag['code'].str[:4]
             else:
                 dedup_with_geomag[col] = None
-    
+
     result_df = dedup_with_geomag[columns].copy()
     
     # Report statistics
     valid_geomag = result_df['geomag_lat'].notna().sum()
+    stations_with_coords = result_df['has_coordinates'].sum()
     logger.success(f"Built coordinate catalogue: {len(result_df)} unique stations")
+    logger.success(f"Stations with valid coordinates: {stations_with_coords}/{len(result_df)} ({100*stations_with_coords/len(result_df):.1f}%)")
     logger.success(f"Geomagnetic coordinates: {valid_geomag}/{len(result_df)} stations ({100*valid_geomag/len(result_df):.1f}%)")
-    
+
     return result_df
 
 def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) -> Dict:
@@ -384,7 +420,7 @@ def download_clock_files():
     logger.info(f"Existing clock files: IGS:{existing_igs} CODE:{existing_code} ESA:{existing_esa}")
     
     # Generate all download tasks
-    logger.info("Generating download tasks...")
+    logger.process("Generating download tasks...")
     all_tasks = generate_download_tasks()
     
     # Group tasks by center
@@ -392,7 +428,7 @@ def download_clock_files():
     code_tasks = [t for t in all_tasks if t['center'] == 'CODE']
     esa_tasks = [t for t in all_tasks if t['center'] == 'ESA']
     
-    logger.info(f"Tasks generated: IGS:{len(igs_tasks)} CODE:{len(code_tasks)} ESA:{len(esa_tasks)}")
+    logger.success(f"Tasks generated: IGS:{len(igs_tasks)} CODE:{len(code_tasks)} ESA:{len(esa_tasks)}")
     
     # Global progress tracking
     progress_lock = threading.Lock()
@@ -409,15 +445,13 @@ def download_clock_files():
     results = {'IGS': [], 'CODE': [], 'ESA': []}
     
     # Print header
-    logger.info("=" * 80)
     logger.info("PARALLEL CLOCK FILE ACQUISITION")
-    logger.info("=" * 80)
     
     for center, tasks in [('IGS', igs_tasks), ('CODE', code_tasks), ('ESA', esa_tasks)]:
         if not tasks:
             continue
             
-        logger.info(f"Processing {center}: {len(tasks)} files with {max_workers} workers")
+        logger.process(f"Processing {center}: {len(tasks)} files with {max_workers} workers")
         
         # Filter to only missing files
         missing_tasks = []
@@ -438,7 +472,7 @@ def download_clock_files():
             logger.success(f"{center}: {existing_count} files already exist")
         
         if missing_tasks:
-            logger.info(f"{center}: Downloading {len(missing_tasks)} missing files...")
+            logger.process(f"{center}: Downloading {len(missing_tasks)} missing files...")
             
             # Parallel download of missing files
             with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -499,9 +533,7 @@ def download_clock_files():
     
     total_time = time.time() - global_progress['start_time']
     
-    logger.info("=" * 80)
     logger.info("ACQUISITION COMPLETE")
-    logger.info("=" * 80)
     logger.success(f"Final clock files: IGS:{final_igs} CODE:{final_code} ESA:{final_esa}")
     logger.success(f"Total time: {total_time/60:.1f} minutes")
     logger.success(f"Downloaded: {global_progress['downloaded']} files")
@@ -522,18 +554,14 @@ def download_clock_files():
 
 def main():
     """Main data acquisition function"""
-    print("="*80)
-    print("TEP GNSS Analysis Package v0.13")
-    print("STEP 1: Data Acquisition")
-    print("Acquiring authoritative GNSS data and coordinates")
-    print("="*80)
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 1: Data Acquisition", "TITLE")
 
     # Create logs directory
     (PACKAGE_ROOT / "logs").mkdir(exist_ok=True)
 
     # Build station catalogue
-    logger.info("Building comprehensive station catalogue from authoritative sources")
-    logger.info("Fetching coordinates from authoritative sources...")
+    logger.process("Building comprehensive station catalogue from authoritative sources")
+    logger.process("Fetching coordinates from authoritative sources...")
     
     coords_df = build_station_catalogue()
     if coords_df is None or len(coords_df) == 0:
@@ -545,11 +573,13 @@ def main():
     coord_path.parent.mkdir(parents=True, exist_ok=True)
     coords_df.to_csv(coord_path, index=False)
     
-    logger.success(f"Station catalogue built: {len(coords_df)} stations saved to {coord_path}")
+    stations_with_coords = coords_df['has_coordinates'].sum()
+    logger.success(f"Station catalogue built: {len(coords_df)} stations saved to {Path(coord_path).name}")
     logger.info(f"Coordinate verification summary:")
     logger.info(f"  Total stations in catalogue: {len(coords_df)}")
-    logger.success(f"  Verified stations for analysis: {len(coords_df)}")
-    logger.success(f"Final station catalogue: {len(coords_df)} stations")
+    logger.success(f"  Stations with valid coordinates: {stations_with_coords}")
+    logger.success(f"  Verified stations for analysis: {stations_with_coords}")
+    logger.success(f"Final station catalogue: {len(coords_df)} stations ({stations_with_coords} with valid coordinates)")
     
     # Download clock files
     success = download_clock_files()

@@ -2,41 +2,53 @@
   "pure_noise": {
     "description": "Pure uncorrelated noise (geometric imprint baseline)",
     "category": "baseline",
-    "n_realizations": 5,
-    "r_squared_mean": 0.01238829086371318,
-    "r_squared_std": 0.016371489486860947,
-    "r_squared_max": 0.0406945435665923,
-    "lambda_mean": 362.9741530532825,
-    "lambda_std": 322.8369786659565,
+    "n_realizations": 7,
+    "r_squared_mean": 0.016028274664671098,
+    "r_squared_std": 0.018209214584991786,
+    "r_squared_max": 0.04458869723607317,
+    "lambda_mean": 462.8653231536942,
+    "lambda_std": 359.9562525231363,
     "individual_results": [
       {
-        "realization": 0,
-        "lambda": 101.1457677122707,
-        "r_squared": -2.7189361873070084e-12,
-        "n_pairs": 315
-      },
-      {
-        "realization": 1,
-        "lambda": 100.25489398180726,
-        "r_squared": -1.509903313490213e-14,
-        "n_pairs": 315
-      },
-      {
         "realization": 2,
-        "lambda": 803.0629089270541,
-        "r_squared": 0.0406945435665923,
+        "lambda": 803.0633736857735,
+        "r_squared": 0.04069454355710178,
         "n_pairs": 315
       },
       {
         "realization": 3,
-        "lambda": 710.4070512188474,
-        "r_squared": 0.021246910754707637,
+        "lambda": 710.4072038729628,
+        "r_squared": 0.021246910755368664,
         "n_pairs": 315
       },
       {
         "realization": 4,
-        "lambda": 100.00014342643325,
+        "lambda": 100.00014345821378,
         "r_squared": 0.0,
+        "n_pairs": 315
+      },
+      {
+        "realization": 5,
+        "lambda": 100.00000000000001,
+        "r_squared": 0.0005368981261707484,
+        "n_pairs": 315
+      },
+      {
+        "realization": 6,
+        "lambda": 1052.28386741423,
+        "r_squared": 0.004833408067877243,
+        "n_pairs": 315
+      },
+      {
+        "realization": 8,
+        "lambda": 330.20406613583145,
+        "r_squared": 0.04458869723607317,
+        "n_pairs": 315
+      },
+      {
+        "realization": 9,
+        "lambda": 144.09860750884758,
+        "r_squared": 0.0002974649101060711,
         "n_pairs": 315
       }
     ]
@@ -45,40 +57,40 @@
     "description": "Realistic GNSS noise (white + flicker + random walk)",
     "category": "realistic",
     "n_realizations": 5,
-    "r_squared_mean": 0.015840585108791872,
-    "r_squared_std": 0.02220434371324848,
-    "r_squared_max": 0.056678250734867985,
-    "lambda_mean": 105.04687717755743,
-    "lambda_std": 9.952707270949848,
+    "r_squared_mean": 0.09742167779200514,
+    "r_squared_std": 0.08659593813160636,
+    "r_squared_max": 0.22483310802234313,
+    "lambda_mean": 2462.1865588122946,
+    "lambda_std": 4599.255322353723,
     "individual_results": [
       {
-        "realization": 0,
-        "lambda": 100.10071499302066,
-        "r_squared": -1.2878587085651816e-14,
-        "n_pairs": 315
-      },
-      {
-        "realization": 1,
-        "lambda": 124.95182447644189,
+        "realization": 2,
+        "lambda": 118.46454549483502,
         "r_squared": 0.0,
         "n_pairs": 315
       },
       {
-        "realization": 2,
-        "lambda": 100.18184641832129,
-        "r_squared": -9.592326932761353e-14,
-        "n_pairs": 315
-      },
-      {
-        "realization": 3,
-        "lambda": 100.00000000000294,
-        "r_squared": 0.022524674809200174,
-        "n_pairs": 315
-      },
-      {
         "realization": 4,
-        "lambda": 100.00000000000036,
-        "r_squared": 0.056678250734867985,
+        "lambda": 104.36179277577074,
+        "r_squared": 0.12953903716367954,
+        "n_pairs": 315
+      },
+      {
+        "realization": 7,
+        "lambda": 273.9230127103869,
+        "r_squared": 0.22483310802234313,
+        "n_pairs": 315
+      },
+      {
+        "realization": 8,
+        "lambda": 154.26039295196753,
+        "r_squared": 0.0,
+        "n_pairs": 315
+      },
+      {
+        "realization": 9,
+        "lambda": 11659.923050128513,
+        "r_squared": 0.13273624377400306,
         "n_pairs": 315
       }
     ]
@@ -86,19 +98,13 @@
   "snr_gradient": {
     "description": "SNR gradient (latitude-dependent)",
     "category": "realistic",
-    "n_realizations": 5,
-    "r_squared_mean": 0.012388290865796181,
-    "r_squared_std": 0.016371489489125264,
-    "r_squared_max": 0.04069454357436253,
-    "lambda_mean": 370.03930098338,
-    "lambda_std": 317.1634321745137,
+    "n_realizations": 8,
+    "r_squared_mean": 0.014024740333341473,
+    "r_squared_std": 0.017838935161968,
+    "r_squared_max": 0.044588697235985464,
+    "lambda_mean": 419.90109185223,
+    "lambda_std": 355.37843871235066,
     "individual_results": [
-      {
-        "realization": 0,
-        "lambda": 117.5747990114559,
-        "r_squared": -3.1086244689504383e-15,
-        "n_pairs": 315
-      },
       {
         "realization": 1,
         "lambda": 119.15200400599954,
@@ -122,18 +128,42 @@
         "lambda": 100.00014344187083,
         "r_squared": 0.0,
         "n_pairs": 315
+      },
+      {
+        "realization": 5,
+        "lambda": 100.00000000000001,
+        "r_squared": 0.0005368981261706374,
+        "n_pairs": 315
+      },
+      {
+        "realization": 6,
+        "lambda": 1052.2841767803566,
+        "r_squared": 0.004833408065857969,
+        "n_pairs": 315
+      },
+      {
+        "realization": 8,
+        "lambda": 330.204381708579,
+        "r_squared": 0.044588697235985464,
+        "n_pairs": 315
+      },
+      {
+        "realization": 9,
+        "lambda": 144.09847042346098,
+        "r_squared": 0.0002974649097337023,
+        "n_pairs": 315
       }
     ]
   },
   "power_law": {
     "description": "Power-law correlations (\u03b1=1.5)",
     "category": "control",
-    "n_realizations": 5,
-    "r_squared_mean": 0.017508885747229752,
-    "r_squared_std": 0.028323998169678313,
-    "r_squared_max": 0.07303060609015988,
-    "lambda_mean": 706.0125485146294,
-    "lambda_std": 954.9353345144543,
+    "n_realizations": 6,
+    "r_squared_mean": 0.04892464022440821,
+    "r_squared_std": 0.07306005385157938,
+    "r_squared_max": 0.20206132009968503,
+    "lambda_mean": 2524.9166659644666,
+    "lambda_std": 4016.8329441579194,
     "individual_results": [
       {
         "realization": 0,
@@ -148,21 +178,27 @@
         "n_pairs": 315
       },
       {
-        "realization": 2,
-        "lambda": 100.16632743552341,
-        "r_squared": -7.37188088351104e-14,
-        "n_pairs": 315
-      },
-      {
         "realization": 3,
         "lambda": 520.0024316050208,
         "r_squared": 0.014511386229275391,
         "n_pairs": 315
       },
       {
-        "realization": 4,
-        "lambda": 118.0551110286293,
-        "r_squared": -7.327471962526033e-15,
+        "realization": 5,
+        "lambda": 11308.227364720127,
+        "r_squared": 0.0039401133015048995,
+        "n_pairs": 315
+      },
+      {
+        "realization": 7,
+        "lambda": 172.6673761294408,
+        "r_squared": 1.9792090295567277e-06,
+        "n_pairs": 315
+      },
+      {
+        "realization": 9,
+        "lambda": 356.76395082823626,
+        "r_squared": 0.20206132009968503,
         "n_pairs": 315
       }
     ]

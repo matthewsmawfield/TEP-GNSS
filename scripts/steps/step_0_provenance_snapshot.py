@@ -20,6 +20,32 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
+
 def sha256sum(p: Path, max_bytes: int | None = None) -> str:
     h = hashlib.sha256()
     try:
@@ -54,10 +80,7 @@ def csv_count(p: Path) -> int:
         return -1
 
 def main():
-    print("="*80)
-    print("TEP GNSS Analysis Package v0.13")
-    print("STEP 0: Provenance Documentation")
-    print("="*80)
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 0: Provenance Documentation", "TITLE")
     
     out_dir = ROOT / 'results' / 'outputs'
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -83,7 +106,7 @@ def main():
 
     with open(out_dir / 'provenance_snapshot.json', 'w') as f:
         json.dump(snapshot, f, indent=2)
-    print(f"wrote {out_dir / 'provenance_snapshot.json'}")
+    print_status(f"Successfully wrote provenance snapshot to {out_dir / 'provenance_snapshot.json'}", "SUCCESS")
 
 if __name__ == '__main__':
     main()

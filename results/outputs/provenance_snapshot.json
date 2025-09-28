@@ -2,36 +2,6 @@
   "env": {},
   "raw_files": [
     {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2517713,
-      "sha256_1mb": "94d540ddbbed250f98671d12ebb8b8efc42ab1442535b1a66ab8fd3b05cd5cc1"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2443082,
-      "sha256_1mb": "7f2bcc86d802feb4bf3f131e8271fa1debaf87d80628a137cbc61bb004491ad2"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2514690,
-      "sha256_1mb": "10d8f33786b5c7769c493c9e73e7fdde8ed5b8fbb463cb0ec1c3d1f3b53164bf"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2534897,
-      "sha256_1mb": "63f6993f031b3a57445deb3f3a73b5a9ac2e6c06e3bab7cb1fcc527485fc1c84"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223640000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2529251,
-      "sha256_1mb": "1812f6a63ba6e6e65ee0abd0b121cfa762c1f7edd33710fa47e38016fde52d58"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20223650000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2539457,
-      "sha256_1mb": "6ceda39f7f68a8b99aa479a205b02730ae3d7a0cbc1ec522e29e1be75b73561a"
-    },
-    {
       "path": "data/raw/igs_combined/IGS0OPSFIN_20230010000_01D_30S_CLK.CLK.gz",
       "size_bytes": 2498393,
       "sha256_1mb": "aecea07d2809665e78bf8e5b2039971a3b375aca4cc4d4d0cb127e28e007b4ea"
@@ -2637,6 +2607,16 @@
       "sha256_1mb": "290536159bf7b7d94c7d0f3193d5acb8563903276322c89ed2a3edcb2a2584f3"
     },
     {
+      "path": "data/raw/igs_combined/IGS0OPSFIN_20241570000_01D_30S_CLK.CLK.gz",
+      "size_bytes": 3061556,
+      "sha256_1mb": "ab7b30ae322f64be60bb97845fe322d9237cb2f942cf28c0009923cc5988e00c"
+    },
+    {
+      "path": "data/raw/igs_combined/IGS0OPSFIN_20241580000_01D_30S_CLK.CLK.gz",
+      "size_bytes": 3110816,
+      "sha256_1mb": "1c15071f460f4f1d09be3720f87772959a69af777c5d8e62d0a07ab3016d2c48"
+    },
+    {
       "path": "data/raw/igs_combined/IGS0OPSFIN_20241590000_01D_30S_CLK.CLK.gz",
       "size_bytes": 3121852,
       "sha256_1mb": "b7a7ecab11078e646b823d3dd128272bb2c081d3e240ec20025f97137cc450f0"
@@ -4580,311 +4560,6 @@
       "path": "data/raw/igs_combined/IGS0OPSFIN_20251810000_01D_30S_CLK.CLK.gz",
       "size_bytes": 3151270,
       "sha256_1mb": "46d039d89f7f782ec40a91f7c35173ba90d80709cd759057379d73eec4771c3a"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251820000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3163031,
-      "sha256_1mb": "007221a028e90f8ae5362c3b841b44e8837a126b6ca9a09f76f043eb4c6835e9"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251830000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3138087,
-      "sha256_1mb": "703bff514da6a309cb05e5462458492434f3f631ae3b543a77b8d99cd21bba59"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251840000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3173297,
-      "sha256_1mb": "e103c74c74023b6b63725b46e433bedef5a666a9ce150391640b674c24beb4c7"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251850000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2894607,
-      "sha256_1mb": "d5e3836f8329d454d730d5fa04ed0a830b0c68e049f78c220e5c85758ffb320e"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251860000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3166245,
-      "sha256_1mb": "bce2afa9f7e7051acff953411d2d4d21a5ad41fde7ec99e28d8f69718dcdc0e6"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251870000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3125239,
-      "sha256_1mb": "9e478e5fc096621041650d8e7c3ef57ac6619bc67db8e1af7f9fdb4ff74d7ebd"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251880000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3150507,
-      "sha256_1mb": "24436f3e878509b5240599b97914d5f6ece786ef0e0f042520b8d32f0092582e"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251890000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3172246,
-      "sha256_1mb": "761c546fc3d5d62fb79ad9dba69eb4aad0e5919f13750cc39197113b01198ae3"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251900000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3186567,
-      "sha256_1mb": "d4a63256004943e11d17ed0cbd80ce470971fd1f785e7b81afc27399cca14548"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251910000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3168111,
-      "sha256_1mb": "026b433f7bb0d568a0e25e03dbf2b09001cfa0d6289f8196f651ad7a2938758f"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251920000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3165955,
-      "sha256_1mb": "74743d7c46356e89ce98ce095c8582efdbb7240cf111cb9bc939d692145c038b"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251930000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3141759,
-      "sha256_1mb": "e2d8781254eb81a40208a25de024958534ce7902a64d212b56e039f7e6548232"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251940000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3199074,
-      "sha256_1mb": "36c13b634afbbb3adeaa92d42c6c875ba53bab67b383121c0b088bf15b77e875"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251950000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3216085,
-      "sha256_1mb": "710552e439a890f71f86e292e65efe417998884f058cba126bf78dd75aa100a1"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251960000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3189867,
-      "sha256_1mb": "b9602a203c6da031cf2b075a1aad12e1eb92166a233b84d7d1f1b1ed0e6d7490"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251970000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3254443,
-      "sha256_1mb": "933c615d840f45bffdf506c287fa0095d2e76509708b586a235e094bb1d52a83"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251980000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3219822,
-      "sha256_1mb": "afb417d1ea038f564da2cb8d1cd1953528023d640dd6c9aeac87d0736db57723"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20251990000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3142026,
-      "sha256_1mb": "f889b584adcba183d41dbbd3417862bef0a8466445f02b2cbadab3242db7d731"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252000000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3177146,
-      "sha256_1mb": "9daba3804408ff68620b2e731ad0002a9af75c809de9ec398a6970ba94aa75c4"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252010000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3135178,
-      "sha256_1mb": "a8e315485f7323c18f046b902c33b920aa4e078f39bb7caf9f5878793f4e918a"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252020000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3153734,
-      "sha256_1mb": "55597d96d9c7fafdb0e601b15c72ca062ba642932f50d2527987b0fb2c8b3bc2"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252030000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3186375,
-      "sha256_1mb": "b89dfccc2784f0768544bc1b97fb34f4f11c1b4c1c94a744e134599def2587c9"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252040000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3200030,
-      "sha256_1mb": "109c68efe678a48c51ff577408860a5a1c90efbefdaf82ff7ba954353560be56"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252050000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3151961,
-      "sha256_1mb": "652c55b2cec99aa72ddf308468b457f1b73ef0439bd2e6a4404598fa7c6d7629"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252060000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3201898,
-      "sha256_1mb": "10833c0d1a28378c907561bfe869e28988a5a967614ba3effd4e8cbd136819fd"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252070000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3193432,
-      "sha256_1mb": "12411024aa7898fca4d51f7bf54c60df8856fb72567f6436296a18baafe4beca"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252080000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3155330,
-      "sha256_1mb": "42f011a094acc7d3b0f28ae62bd945650fcf0ae7263ddb93b87525ef31dcf897"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252090000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3176212,
-      "sha256_1mb": "f20e8338552b78b49d4672f63dbcda73e781d72fb4283461fe178de5ec0b1787"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252100000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3185348,
-      "sha256_1mb": "7d58086df3d50b35ba53b7bce5fca8806a86880b919cc9c5bd151640b15908dd"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252110000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3199639,
-      "sha256_1mb": "1b29c42fe730138a2c348a292b8c14d7e1278bac366c7d6a1c7ebbc7d015911b"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252120000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3174339,
-      "sha256_1mb": "bb5ddc8d6362a8c451b3795f9ad6867b4a6696234d402676f486eec3b444d9ab"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252130000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3099785,
-      "sha256_1mb": "55534a05158c539dffec6b8f748572f570822a82dada4c7c0028db01a14d774c"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252140000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3170730,
-      "sha256_1mb": "e72c82ee12b64d2a5bdc0140189eb3bafefff0974031d62ee43e626b2dbcde6d"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252150000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3131707,
-      "sha256_1mb": "d64708a9ed0c0b6408b371e8f958c980200206f44497a0859ce8507e311a3769"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252160000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3178558,
-      "sha256_1mb": "590104782c5a5fdc93dbf56629aae13209b636720d415bf0a34196f61c9e69d8"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252170000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3164812,
-      "sha256_1mb": "26ef8fe9156a80d4cbd601ba17d700f3a8fed95fe020e5b2daf402ca71b5434f"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252180000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3187139,
-      "sha256_1mb": "d805f9f16e5990ef60aaeb9f6007dceffb8938058385ab558f7c85144f5879a2"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252190000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3121298,
-      "sha256_1mb": "d75d0143c84c8d82e0feecf7506c0c4f172928bf7a1f9ea8149a94131a5c4fc1"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252200000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3117316,
-      "sha256_1mb": "6496f7469e7cd2611511a6dd8a3df24380d6ce2175244233960e67f70d35a534"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252210000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3155244,
-      "sha256_1mb": "570a927bdcd6d93bb5e4cc5e52b3b0fa37445a338fa173798be569352cb95717"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252220000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3117750,
-      "sha256_1mb": "fe461770d869f3f79dae0593f6997d47bc367b9353ca1a635bd8847c7209dcb5"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252230000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3122798,
-      "sha256_1mb": "1b2ffe7b7fd1e53f967ad675c4c6f62eb486679c342e058483b402c7e681b6a2"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252240000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3046205,
-      "sha256_1mb": "f8b281d771f1d26ec12ce19c77438a1720c8ed418de9a8958fcb657624aef29e"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252250000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3104241,
-      "sha256_1mb": "de344fdb1ec1321ee1727cc1a14a5faa27db7a326bb089498a7751e67f0cb2b5"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252260000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3122099,
-      "sha256_1mb": "934b42f8629d4cfb8b9e9cc906262375c777f65632c79b296dd56eb64a263a31"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252270000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3149979,
-      "sha256_1mb": "683674f7caec0db48daccba0347316907877c3684c2bf0512714e77ae4ac3b5f"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252280000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3116862,
-      "sha256_1mb": "a363c7c810c35114c39e446c8fd6575f97858dba9c9eea4bbf44bfec439b67d7"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252290000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3074364,
-      "sha256_1mb": "ffdb105038dcf2b6dcaad652587de20e1470f90297f8288d852218d43d7254c5"
-    },
-    {
-      "path": "data/raw/igs_combined/IGS0OPSFIN_20252300000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 3079701,
-      "sha256_1mb": "2b2af38d03b2aba2794c4008d6d79370a477f83e061e1fe96d18e465c0a92d1d"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223310000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4912588,
-      "sha256_1mb": "f0c5d37306ebb25b79650d8c37cdf21bdced77758ab92632bac63a624f436f20"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223320000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4938027,
-      "sha256_1mb": "d84aad9c588fc3bfb0c1b5efdf3de1e63ad5aaaaaf8a434ffde77dd8f04e38b8"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223330000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4920372,
-      "sha256_1mb": "d43877db0e39108eacb157f99724c2985af5713d3cab4f77e15a0d1918d287fe"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223340000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4913354,
-      "sha256_1mb": "d201a6ced64c6f0a8d74c051177426495363aec95f4604aeb44511dff843f58c"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223350000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4882463,
-      "sha256_1mb": "56f26e7b5fe6810228e8e588ef93b70f32b09784e06d99e0bad428e65ea4fad2"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223360000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4869664,
-      "sha256_1mb": "ce08133647efeecd05c47e24ecba08d04c845ccbd64066b4cdaec28fa5029e9d"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4887335,
-      "sha256_1mb": "706547f80c678e058f9b0a13e8efb3b6f88803859c0fd588befb32ab0703a5fe"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4903542,
-      "sha256_1mb": "3b3cb7b381b30122acbeb19cd0b67d12d5c91a92a537d92a223de42d73cef4d1"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4897379,
-      "sha256_1mb": "04229602470125c2d030974ef9403614cf59f268cd712e37804676d1311d172c"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4895684,
-      "sha256_1mb": "8bd295e7611a791351a57db616b9ac77bf1475ec76d758a64f5fb91afa8b7ec0"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223640000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4862958,
-      "sha256_1mb": "70f27a0a2b45a7a8d4743efaadb27f8746d8897c6ec639c06546986e7d8db8ce"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20223650000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4901067,
-      "sha256_1mb": "5dd41a36a2620dac7cc31429ddff348a9256ada2f3068f91ed8064d07f7bbf9e"
     },
     {
       "path": "data/raw/code/COD0OPSFIN_20230010000_01D_30S_CLK.CLK.gz",
@@ -9447,431 +9122,6 @@
       "sha256_1mb": "5863b9516cb0587f51c760aaf324e1ee54b2b16e65884a247ae9a5b7d3c615f5"
     },
     {
-      "path": "data/raw/code/COD0OPSFIN_20251820000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5043216,
-      "sha256_1mb": "95737bb6aad0227c1d3bac6c3b3c1f6b6ccea8f4bab577e13d47a495b269703f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251830000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5033196,
-      "sha256_1mb": "98ded063878fbc6860577f042cdc1a59ecc345b565118234f23ece1a7b739b9e"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251840000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5020836,
-      "sha256_1mb": "b475d16c34e1971bb9b4297a32274b88157d125cd1f5805f00b7bc70fb8541e5"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251850000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5055004,
-      "sha256_1mb": "154792506145d724a5313511e789ef7e606ac5b29996e594c91b35a6d373f99f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251860000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4996655,
-      "sha256_1mb": "b74f8fa47e26e88ff1c55b659ecb5c1bd82cf0d6e3f6a4798b776a45773cff0b"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251870000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5038227,
-      "sha256_1mb": "81fc3d446ab41b760dae09416c6c5474074293596bfa3543d5bcbcaf9ff500d0"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251880000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5008455,
-      "sha256_1mb": "044de88b6f9f45024ffd5f2634d22e0ae54b09b781f8469d902e14e7aaaa1d63"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251890000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4975162,
-      "sha256_1mb": "37d2391afb4aedb89e6ea3c39f72bafa1559cd7a259c20c51211b84c21c3d49f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251900000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 4945364,
-      "sha256_1mb": "711373c9fc7de54485967f9d32c5bcdb1b00e11b20c0b2f163a403b0189fa489"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251910000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5041427,
-      "sha256_1mb": "a08cf654f54be7b03a958c14a0455e07e0217439fee54b39684c9b6d6514d559"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251920000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5044495,
-      "sha256_1mb": "c7b0a1c8bc55c45a8a805a972e84d156b06019db77ca9d855a1884095a6668a9"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251930000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5051834,
-      "sha256_1mb": "243b69967881e2d68076d5094b0d1f1299e2ab06c3ad820e21d6e939709ee063"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251940000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5072124,
-      "sha256_1mb": "7c5df843dcb39f8d7ab6fb1f1b214ce78b08b7bd8847f83e0f9dabf12a98f4ac"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251950000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5124438,
-      "sha256_1mb": "c9167748d231c8cbe69762c2bd8983e31a2910bd15c3626e9c5d0b00602c4f11"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251960000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5111095,
-      "sha256_1mb": "d58c6a3c69857777b02567abddaa40e5ea9f73b31da8bf37d26a9dc6a05b6d18"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251970000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5101029,
-      "sha256_1mb": "126022cb0ec68d8dc370f8b0f24fe8dc5dc52c9a12ab0989ad4a8e7cbb81ebea"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251980000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5061543,
-      "sha256_1mb": "4189a9c4d23b414c458f8a409d2ec244128d37ddb67adf1237d56c37a6304556"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20251990000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5080605,
-      "sha256_1mb": "dae3b59baa3fda305414d7c950e8da12ec6304ea37289e9499fc8adf8afa1619"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252000000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5066244,
-      "sha256_1mb": "08a91a6dd5618fbb46aaf4fa0b055c7c044125d5be5d065ffdac418dada414ea"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252010000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5103658,
-      "sha256_1mb": "ad5ca83e64e069a6eadd40e377cfe772ed3c85fb09563926967629209f086135"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252020000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5097169,
-      "sha256_1mb": "3941ac50987349a61af505b401de1d28090a5e0fd6dabe2351ff216f89a185b0"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252030000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5094344,
-      "sha256_1mb": "a7ce5b52312e2c30c564f4b93ceb3b01b9ecdc11d5e8638bbc3f5dd23d545847"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252040000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5123908,
-      "sha256_1mb": "7d940846c28ae4641e67134670b2b72d50948496dff8fe2b4f9132ac1278afe6"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252050000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5120098,
-      "sha256_1mb": "95b99ac5df95a09b5fbced0d802383c02f751e6c7bd40245c27dc64c5951276f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252060000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5085969,
-      "sha256_1mb": "6b48d348bd754c848a1a3135242fe9923201fc610e6289a29f477d00dac18c7c"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252070000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5109770,
-      "sha256_1mb": "d1eec8e2c81b637a2b94b214846b2b90c6505185a75d4e61e911be70299557f6"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252080000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5117251,
-      "sha256_1mb": "734949350cf04296fcc027e3f22982deef872df5efdbc4f6641e826fbefb8ea9"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252090000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5127670,
-      "sha256_1mb": "21fd66bc06e63345f317706823296e7ad7a6d078b7d8967edcb6aae4d61bd31f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252100000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5113380,
-      "sha256_1mb": "0346e041346d3005f05b8c0cc369e1301fa4bb58e35831a4d90edb9cd9300163"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252110000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5138094,
-      "sha256_1mb": "4a78cec50f279a556ca9877c792502eaa6ff106815f74da5e37c44cef7a6b007"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252120000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5083680,
-      "sha256_1mb": "1a87cee87b844b128b2b4e2d15eb23085dea55562eeb8003be2653641a829218"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252130000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5105931,
-      "sha256_1mb": "ef3243ff40d1ee00b56367a9326ae4180fcf8fdaeebd498176570d4be0a9ea5b"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252140000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5119257,
-      "sha256_1mb": "1a491ae9f6114b1d51d6f9cfe5d420524b09c04b8e623ae10aaf3f9b77a67262"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252150000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5105562,
-      "sha256_1mb": "ec48d9f67df9d21b9523b4ff2bb982beaf17d234bc65439ea52151f1e8a0f12f"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252160000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5060116,
-      "sha256_1mb": "71304d132957ef8a45d183af235f1f68690843034a9b8890b18e5b513cfccae5"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252170000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5089222,
-      "sha256_1mb": "cd3a57628d07485b518fd561f15109f8112b7156a520c27732c227d32b675eb0"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252180000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5077196,
-      "sha256_1mb": "f8751689ff71a97a5cbe2d70fe0790e2c7cf7194f98f839ffcf1ece89d10563e"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252190000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5059461,
-      "sha256_1mb": "b31d0658dcbae467f4d361d5265189b3f9d921e50e4a58db3dd8366d0022f2e1"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252200000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5040851,
-      "sha256_1mb": "ac7aafefeed03e47e627c87d906b9a9a1178e3fa9fd176fdd2aa1342a05c4bbe"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252210000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5001225,
-      "sha256_1mb": "c4dab281bd02d4cf9d64f9f5b9e37144e27653f752b7a3b4b30435806618290a"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252220000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5044979,
-      "sha256_1mb": "7ac6abd9d7fe07390b252f91c9ca9c916198772b45fa86e3e5562395b74c82f6"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252230000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5033524,
-      "sha256_1mb": "45fcc6dfa1393f117bb7aa07ae19c17a96e7c81bb17ef56a344a0dcfd4b03e33"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252240000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5017703,
-      "sha256_1mb": "3718a982c70f98fa5442711374c4a223449665ad923385af4a54ea1e60027885"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252250000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5029786,
-      "sha256_1mb": "dc270e6df4a9989294cbb86bc24ea0c31d54ca1d7e4f97529d230f8181c97dc3"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252260000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5041099,
-      "sha256_1mb": "bf05f935bb8cae686eb130121872e8931582ae7c8232f09011bfd207403320cc"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252270000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5082835,
-      "sha256_1mb": "c0eb3d520cbac8e5dad1f58dc6b979f56d6edcdb128c41dfa75bb78c0e02d3ae"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252280000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5043981,
-      "sha256_1mb": "35ad244f439546ff06728cf7700f9d3eec6052dff934c93b7a195987e8f62bda"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252290000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5063182,
-      "sha256_1mb": "75423e05bb267fd58882b90fb57b655afce3b8ef347f62770997b7071a6228b7"
-    },
-    {
-      "path": "data/raw/code/COD0OPSFIN_20252300000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 5040307,
-      "sha256_1mb": "4423486e8b52eddc580b02a69f965ea34603991d72e31a41bad0394315fed324"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223300000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2424635,
-      "sha256_1mb": "bb3844dce1743b476844d5ae32bd293b865949928f4c45bf199c3800af8f80e8"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223310000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2442858,
-      "sha256_1mb": "b300b7dab0b5922b8b7c3089bccc6a04427e1d4644ed38e3f342590c37a03e9a"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223320000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2450291,
-      "sha256_1mb": "d3314d35218370519c72c8fb0ca1a50d48dd0437744f44f27b854bd0de0f8abd"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223330000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2421312,
-      "sha256_1mb": "61585ee3a466e66518fadeed8a3f09d1a8c34af787bce71c77d6627c0410735c"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223340000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2421506,
-      "sha256_1mb": "292904f6dfe48fbcc8c14e8233cbaa418f2632da5512260b01b0ac836212c3bc"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223350000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2424067,
-      "sha256_1mb": "fd9896868a443883c9cbed70f317dff71f31350dda48656412660ae466e2a113"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223360000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2424087,
-      "sha256_1mb": "58eed5ea07e33aece614b695117e1aa010cf3559aa9c0766236f2ac85308332f"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223370000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2446067,
-      "sha256_1mb": "906ed7f0b1e774ad05f8fe4dd4bc74a4c5a516e3b0b2f5398292441b16851d24"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223380000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2448961,
-      "sha256_1mb": "d35da6b484e26f2493ff62495864451dcac2584e0079328f8ac2a1e39d5ea799"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223390000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2448197,
-      "sha256_1mb": "5271910c9789c3f28e3d29a5804c3cfcd84709cb90e0135e21a14a64e89a7bf6"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223400000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2412869,
-      "sha256_1mb": "90449cb305282ccd3b272a9ca562b024507564e88d0dcfbc1260acc51d1ff5bd"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223410000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2419669,
-      "sha256_1mb": "ac75282e832b43e49ee4949e76fe331cbc290e644b95d489645b82e4cb47f7fd"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223420000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2422238,
-      "sha256_1mb": "ca3d5ed78b308f1bd9a32b78a72b4845ed0a959c183fe143abb626cb7ed22f58"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223430000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2420743,
-      "sha256_1mb": "8c62d1aa5f48b9f90e10e997a8468f4699a0a74df6a00fa5bbcbd8ca8ce99868"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223440000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2420801,
-      "sha256_1mb": "e3b4e567e95a48336776e4d6a037d97b9c936b910c2686c1fdddbbb8104ac3ed"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223450000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2422616,
-      "sha256_1mb": "bb92d04c38d3c213670be8d1a8c53cd050364d8dc38ffdecbbf8d9f743debdb1"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223460000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2421286,
-      "sha256_1mb": "717961957869a7d3ed45139b04180e806f085d70d5e4850c837ff3d4482976d5"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223470000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2411202,
-      "sha256_1mb": "636cd78f3d16e4c69677f04a048b8255919b7bf7ebd70c718938096fee7fbdad"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223480000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2416495,
-      "sha256_1mb": "0bb46794ea3ec0bc65b312ff1e64cb1ea9a334eafa75c2911340c770021f219e"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223490000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2423382,
-      "sha256_1mb": "74aa37e86c38c68011df496ab0946d3de3204b4faf248a80a55dd4b18dab1e9e"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223500000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2439675,
-      "sha256_1mb": "1a1f3c1296bcaa959f78e12560ddaabfbd7ec6d04cde467c3b18d4a10b260b9a"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223510000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2450701,
-      "sha256_1mb": "f24799906d601533c9d13553a83ba3c7e8206cc3597082aee55822b49f0e8b9d"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223520000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2439631,
-      "sha256_1mb": "a4c51da9734a4cb1e877c13fe21155ac453cf56cdcd5fa8d770028b8053d67c6"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223530000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2437802,
-      "sha256_1mb": "d74c65eade77ece27fecdd6f3ac9eeca7abf90711be57b81ca8cb2f591621dd3"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223540000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2398725,
-      "sha256_1mb": "b6ff4c8f5585cabb38357e8efffb8e212db1f0abdff0e6257550e61ca105fcce"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223550000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2452509,
-      "sha256_1mb": "54d98c81ff91e33e952970cbe4918f17b9986be335a038b9dd92a31cd89b2b09"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223560000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2455331,
-      "sha256_1mb": "35a619e57ea4b5d5c8786ff2373651de409bd38901411e4999dcc4e446940e8f"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223570000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2443407,
-      "sha256_1mb": "1f226178ddb071777a0df785b0c5bba063ae99b1218f4be3037c6f89fabb3121"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223580000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2451777,
-      "sha256_1mb": "cafacc6d64db5be87ffc45eae69e7ee2a05b866626a6b89316d272bb254ee630"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223590000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2450951,
-      "sha256_1mb": "20c9e5b44d1507599f716eea2f4eb5531af66768aa69b093bf60db4569902733"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223600000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2455766,
-      "sha256_1mb": "798d37ace787ed6a004d7c0da2e77bcb0bb5117934cdf8050e2c25a3b21dda1c"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223610000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2459500,
-      "sha256_1mb": "83e71c7553456114aa59b20e0c88b8cd729e309c92e5bf23e78f2e3bae15a402"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223620000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2457343,
-      "sha256_1mb": "35f6d93c9744c17aa2538bfad6b4539f5319b281ccfb8b61c0f48fcde1da7743"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223630000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2475961,
-      "sha256_1mb": "b6afd055c54806d5ff7d340f923460fe8ff9bbaeb981300c4bea761702b6d797"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223640000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2474984,
-      "sha256_1mb": "c35b162839b15ec0c24066d21117ac3ae710e96bd8344c56d8cb1bb59faf7bc9"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20223650000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 2474254,
-      "sha256_1mb": "b053e9f7475c2d5782699a0b5faf19f921799cef0721374ed400b4801a6c5a50"
-    },
-    {
       "path": "data/raw/esa_final/ESA0OPSFIN_20230010000_01D_30S_CLK.CLK.gz",
       "size_bytes": 2484406,
       "sha256_1mb": "7485de286ba2197e7fd5e19a8c789df9d4f0f573c73c4305cced3c1e8f5dbcd9"
@@ -14430,251 +13680,6 @@
       "path": "data/raw/esa_final/ESA0OPSFIN_20251810000_01D_30S_CLK.CLK.gz",
       "size_bytes": 7986890,
       "sha256_1mb": "148231c62da2e94bb1e118f81044ca7593b8dcb66d0176d3500ffd4c8c9f24cd"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251820000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8035672,
-      "sha256_1mb": "404f52983f76fa889de192e4c08a35871804a0cf0ea2ed284e7217c3cdadc30e"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251830000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8074576,
-      "sha256_1mb": "4c967e840571b34906eaf5bd6fe9135fe1043bae93b477dcc34d0ac759b99b1f"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251840000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8013733,
-      "sha256_1mb": "def07c085ccc036521686586b780f4bc8ba8d8118a23e3e922d0a99e9fede482"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251850000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8039750,
-      "sha256_1mb": "6e9fbc6a6a08969345092fce2ae31860ce7aa50576f24ee88bdb4ec56495c16d"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251860000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8033988,
-      "sha256_1mb": "71daf8e7a76b6dabb6082cbe5d39040a780bbb096bbdb516532deceeaebcd89e"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251870000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8046557,
-      "sha256_1mb": "a1f577a1224cf29ec0a1d59c5ebdb91bd8ab2a2754ae7f773633645d333b36e3"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251880000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8086869,
-      "sha256_1mb": "0ab1ecca687d2c8fea8431429df7316607f51f947203360823dd50a5587c04e9"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251890000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8087888,
-      "sha256_1mb": "188f2697b164938dab8b9f6fcd097662eb0da1e7f6705d596bb01f21fbf1eba7"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251900000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8039482,
-      "sha256_1mb": "ce978f3fcead2f5db938b25fc860a978b49ce157789714d28163c2541557a7e7"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251910000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8004481,
-      "sha256_1mb": "2d5ecf10355a12888e2e25887c29cff65be04492cbce87c0bf6efa2f72f08a28"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251920000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8037395,
-      "sha256_1mb": "0bbfe7a3253d8aa1bd07a46208389f10eef811e471f4feaa01e0c34acba74ec6"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251930000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8013486,
-      "sha256_1mb": "6a7b0db39b22ca96587679caad8289206c61facd146b2d3475c73e31b46831d3"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251940000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8046733,
-      "sha256_1mb": "658128d7a8299417e2b87b18459e1b6017e3328dc4c7cc0b9151e8ca59cdf9e1"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251950000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8042223,
-      "sha256_1mb": "e7cefe81e4d919c62bc45bac961ee5e7a6c278faa17c24ac1c67a0d807656a56"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251960000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8078585,
-      "sha256_1mb": "d7c1156be9712e4e499b3fcb413eb8c6c155e607a09e10a7186bdb10e455c322"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251970000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8058662,
-      "sha256_1mb": "1999b66be3a93a69b6f3f0e9f155844a3f1f1cca5d1646c11219b73843648a53"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251980000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8081910,
-      "sha256_1mb": "d19db10f579ab958de9d95488fb94fca862d7ea011b948cd2a9786fcfaff3b2f"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20251990000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8034451,
-      "sha256_1mb": "288033f751322d9f6e782fa0d54b89d7b1a59fb058027f2c092d68356f4520c9"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252000000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8087476,
-      "sha256_1mb": "41b452ea64ea62b6e9b6f7a2a93c81111518f964d41f4e12ad4a0a46c6db4598"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252010000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8030855,
-      "sha256_1mb": "685736797365b862895838d2c9228583110c4b9715cbcd51564e34ca7caa4f75"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252020000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8037710,
-      "sha256_1mb": "11d29d736c93d2af941c09094461615a726822475acbe8032dbbfc20ed8df12e"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252030000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8026128,
-      "sha256_1mb": "ddf6154d46fe60f7c6ce430bee9e802ab6f13f8a7cea149b41fbc8bfe022aaab"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252040000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7998445,
-      "sha256_1mb": "894a293b31aa0af91a4c9029dc950529f973580175663eac31e40192f4e25beb"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252050000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8061879,
-      "sha256_1mb": "f7fc8faae66fc24994c60f578a8df1ca69503b23d2cf6751d1a7873580d9c33b"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252060000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7995149,
-      "sha256_1mb": "8b06fb60e957e2a6ac2659e8f9f58a78345ded11c7316776418e8eb091178e23"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252070000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7990319,
-      "sha256_1mb": "a11b9051c6ba1d9c212ccf41bf5f3e607447e15219a5070c5c0d8ebe40465290"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252080000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7995418,
-      "sha256_1mb": "19986f41e9fe7a509fdae24be739d825bc98f41bf35a63ed843c1733743cc75f"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252090000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7968997,
-      "sha256_1mb": "bd0a4d4e90ff7f908cbc33bbeeb8264ed796f101366a4274c019076399f8f8d4"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252100000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8006706,
-      "sha256_1mb": "1e88057bc664b15c185d06fdf763fcc4e3b7b9e2390f3cf04ae3b7627b070e54"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252110000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8012820,
-      "sha256_1mb": "076fd914679e2e9105469dddb8fa2f8cac245ce69af66796cad0fb52a7856997"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252120000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7980208,
-      "sha256_1mb": "8560e0c8ca2dcbc568eff8bced8723a52e6e68a89bafbf031596e44ff8e85560"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252130000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8038569,
-      "sha256_1mb": "fff68ea0733f17e98ebe0cb0fa1a625c1db691c8e57925104b1c288903407c02"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252140000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8031828,
-      "sha256_1mb": "23ca4a31eca9c5ca31e78e6959c72adbed3dfd2a9e2995e31923927b9b143d4d"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252150000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 8014204,
-      "sha256_1mb": "8afff3e2317a9d7a607ef537dd5b8060acc2f328f830414e33c09f5e165f985c"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252160000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7977335,
-      "sha256_1mb": "62abb4ce307eaa91811f5938edea28ee36d2aaec2492a87e402ac4eeff55ff0b"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252170000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7972551,
-      "sha256_1mb": "f33b27bca0737d83c0f3eea2abf4295f2373964b68109a0890924067333bea66"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252180000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7983794,
-      "sha256_1mb": "bd8afe19071de0c200c63aa24c58bc18645acdccd11dbeeadece8cc1e2604f83"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252190000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7962712,
-      "sha256_1mb": "5fd78f622a85e183f3c7d06b812ba5d05d9f4e03ed6e37d1ee27d4ee12450cc1"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252200000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7980329,
-      "sha256_1mb": "6bf8a9a4408659021dbaaa6e4895c017050667df387ed662f20faf1142018ed5"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252210000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7989578,
-      "sha256_1mb": "401e85e70c0a3c41802f99e9ac9370f121407ba2dc088f48071bef9637ebc047"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252220000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7977631,
-      "sha256_1mb": "5927c50a1752b30364239b4d6b00b06444d3ef95a1016ab83b9dd1f209df3fc7"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252230000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7996934,
-      "sha256_1mb": "d0bbebab1599345f2c80baf38c3629c22aefa44c3ac7f5325066fef0a5c86863"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252240000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7982423,
-      "sha256_1mb": "fd790ee7006d4479d3b095c4948d76301339c90c41b73e9d8e9e53e6604d4c5a"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252250000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7978761,
-      "sha256_1mb": "7f3be8c62be8de318dd93abf29870dba4ef221fe48cd2bdcfbb0b349405454e4"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252260000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7944514,
-      "sha256_1mb": "78a7fcafd7bf445de6f60a8b5506200992ee3beb36772f944ab550d97b296e14"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252270000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7962460,
-      "sha256_1mb": "7f166682d58528a37593497b50287f07afc422feb32d4ea0b22869923b4bb252"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252280000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7969466,
-      "sha256_1mb": "fd896692c1e8b51e62536e812a7eae59a058eba129501e271f3ec307d95bc0c6"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252290000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7923681,
-      "sha256_1mb": "d10cf23a994d057dd16600afe559c4debac59fbc072a43d6483077ff01c8db81"
-    },
-    {
-      "path": "data/raw/esa_final/ESA0OPSFIN_20252300000_01D_30S_CLK.CLK.gz",
-      "size_bytes": 7925445,
-      "sha256_1mb": "83540f217551ca16becff6cdc5e519be3a88d3b79234582e0c6d75e686b3e127"
     }
   ],
   "processed_files": [],
@@ -14683,6 +13688,11 @@
       "path": "results/outputs/planetary_distance_chart.json",
       "size_bytes": 44179,
       "sha256_1mb": "143d6e3ee87722b527fcc1a847f311c389a3abada8f212edd786ca7fdf6ca581"
+    },
+    {
+      "path": "results/outputs/provenance_snapshot.json",
+      "size_bytes": 578253,
+      "sha256_1mb": "503ff2dc7a7e0afdf2a37c1c10595fe03cba086913247c01e9351248331db7cd"
     },
     {
       "path": "results/outputs/step_10_comprehensive_eclipses_all-centers.json",
@@ -14751,13 +13761,13 @@
     },
     {
       "path": "results/outputs/step_13_methodology_validation.json",
-      "size_bytes": 4396,
-      "sha256_1mb": "6f52df698afa78b82362a2022593db91f39b49e5af80b6aedd0bd3a1adf8bfb8"
+      "size_bytes": 4454,
+      "sha256_1mb": "90c8bd88e06e6276be56cea97e5a4629ec4ee92c0c74191b0f3e6f75ff7dc8c1"
     },
     {
       "path": "results/outputs/step_13_multi_center_consistency.json",
-      "size_bytes": 881,
-      "sha256_1mb": "51bf7e175abe519f5b22afbda3a251d2fe492b1d7b62b75b39aa5b7446944390"
+      "size_bytes": 1085,
+      "sha256_1mb": "5346fb6fa99be72479dc8cb54b19ef08ee48843211da8753eb542ddec81f2048"
     },
     {
       "path": "results/outputs/step_13_real_data_zero_lag_test_code.json",
@@ -14766,18 +13776,18 @@
     },
     {
       "path": "results/outputs/step_13_validation_report.json",
-      "size_bytes": 22409,
-      "sha256_1mb": "3f73369c9b7e4578f841d9c652f1c7f6ca0f858e9dcde116043283f9b0b5da96"
+      "size_bytes": 20711,
+      "sha256_1mb": "da93b0159cb64da18293110dd97df3944117bc58740faa12b61a85c8d4b60cdf"
     },
     {
       "path": "results/outputs/step_13_zero_lag_leakage_test.json",
-      "size_bytes": 3916,
-      "sha256_1mb": "9397025d8724b1c9e42088b62b864d37cb778e69fbf584bcd678047c4f65a545"
+      "size_bytes": 4934,
+      "sha256_1mb": "a13ad532f6268f4379e43c23c33592252c7e29154960ab76485f2bc5cd71a1da"
     },
     {
       "path": "results/outputs/step_14_comprehensive_analysis_results.json",
-      "size_bytes": 6251,
-      "sha256_1mb": "69d5971d7778cc43b1611a160f747a3dc4ea19ad1dca5305235a98f855b6f1b6"
+      "size_bytes": 6270,
+      "sha256_1mb": "2a33548d251e2a7b3d1b1b9da728b0922ec741c86b380b2e1deb66be5322faba"
     },
     {
       "path": "results/outputs/step_15_geographic_bias_validation.json",
@@ -14800,9 +13810,59 @@
       "sha256_1mb": "9c520164d2af2e8e8b09fc0f54885846703c80eb5053e774b8fe8ef13fd0074c"
     },
     {
-      "path": "results/outputs/step_17_animation_summary.json",
-      "size_bytes": 619,
-      "sha256_1mb": "bb820d8a49bdd90645175028689e949a98532fc1c78f46739f23a13843d1299a"
+      "path": "results/outputs/step_18_comprehensive_analysis.json",
+      "size_bytes": 83206,
+      "sha256_1mb": "ee3e3f00c4344dfbeeb7c5117e2983e152f3714b8fe6cec30ec08d2e8539f636"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_validation_code.json",
+      "size_bytes": 25965,
+      "sha256_1mb": "29564dfc1d227afac09931a1b132d9414d4ad35390f4865ae8b8d95b2cecfd7f"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_validation_esa_final.json",
+      "size_bytes": 25935,
+      "sha256_1mb": "f88846e339f8fe0e1025351c223e87013d2771390c5f8b86d070812d641a8c97"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_validation_igs_combined.json",
+      "size_bytes": 25957,
+      "sha256_1mb": "2e7eee054214a2aa87e655781841935a8a487eb9600a13bd719f896922fc7b39"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_validation.json",
+      "size_bytes": 4922,
+      "sha256_1mb": "7710b4a2e2aa22047d060bf7e7ea93ec455d96c7c5bfef18766b9321b52f74f4"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_validation_code.json",
+      "size_bytes": 5126,
+      "sha256_1mb": "ea31f614feeb7bab38ae15db7ac746f529da49f07d92e638afabfae5d740c0c3"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_validation_esa_final.json",
+      "size_bytes": 5153,
+      "sha256_1mb": "5926a2512760952c9627087fffb7e8908e86d52a095e62de87d6b4e321cf04a2"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_validation_igs_combined.json",
+      "size_bytes": 5162,
+      "sha256_1mb": "b11a7118234c756aa623394e8b73deaacf334ea6f88bc9a4ced312e9e4c3bbbf"
+    },
+    {
+      "path": "results/outputs/step_18_seasonal_analysis.json",
+      "size_bytes": 3493,
+      "sha256_1mb": "5ff76cf25413a274cc91b04267c9100b85cb3173a1593ac6eb1fd5f959389e42"
+    },
+    {
+      "path": "results/outputs/step_19_corrected_significance_summary.json",
+      "size_bytes": 1969,
+      "sha256_1mb": "aba96bee13b3888092c8c0e57ac0ee6975f12f627755cda4dbd2d9dc18b8f850"
+    },
+    {
+      "path": "results/outputs/step_19_multiple_comparison_corrections.json",
+      "size_bytes": 71976,
+      "sha256_1mb": "b34953989a1cd7df3cd84f8e73f9e8737d68bdeb1baa439789aab58acd3b275b"
     },
     {
       "path": "results/outputs/step_1_station_metadata.json",
@@ -14908,6 +13968,46 @@
       "path": "results/outputs/null_tests_complete.csv",
       "size_bytes": 1092,
       "sha256_1mb": "174dc6b385724f5433e99435ea7d3d4d4497e69173c9ac1178688725971845a0"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_hourly_summary_code.csv",
+      "size_bytes": 1261,
+      "sha256_1mb": "1ed6cd73e27153ef12559079ce57aa3f5b306f670395b6be1f7f38b6a2967ade"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_hourly_summary_esa_final.csv",
+      "size_bytes": 1264,
+      "sha256_1mb": "ca97abbee469d07c70b2b9bd1f59bc2261108002a6feaca19fa8db6ec55843b8"
+    },
+    {
+      "path": "results/outputs/step_18_comprehensive_hourly_summary_igs_combined.csv",
+      "size_bytes": 1259,
+      "sha256_1mb": "fc4b647b31777cd7a8f0b7184f1c760e52282d4b5662fe7ec766f45a68e9ea8e"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_hourly_summary.csv",
+      "size_bytes": 1177,
+      "sha256_1mb": "e9b3e3a90fa075c3ca5defc9fb1c51d854254f7e7ea48f9158af8e04c0d57f68"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_hourly_summary_code.csv",
+      "size_bytes": 1241,
+      "sha256_1mb": "53902b1586760aab4c9df13ecffca9f6a1fcf55e0039c885b442b6be77fc8744"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_hourly_summary_esa_final.csv",
+      "size_bytes": 1250,
+      "sha256_1mb": "88876a2a7319ae7fec43f7d385b3d90f0c5c89c971ea36b49badbde46b267ada"
+    },
+    {
+      "path": "results/outputs/step_18_diurnal_hourly_summary_igs_combined.csv",
+      "size_bytes": 1246,
+      "sha256_1mb": "e1a791b76c7d4b27acb4ad9fb2604359ace807f6458a9ed96a78e29a80e2b605"
+    },
+    {
+      "path": "results/outputs/step_19_correction_impact_analysis.csv",
+      "size_bytes": 228,
+      "sha256_1mb": "dc1802d27f8e068b7a3bc808bc7ceca19a8ebb7fe8240984f04e11fdf30854ea"
     },
     {
       "path": "results/outputs/step_3_correlation_data_code.csv",

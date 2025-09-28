@@ -36,15 +36,37 @@ from scripts.utils.exceptions import (
 from scripts.utils.logger import TEPLogger
 
 # Instantiate the logger
-logger = TEPLogger().logger
+logger = TEPLogger()
+
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def print_step_header():
     """Print formatted step header"""
-    print(f"\n{'='*80}")
-    print("TEP GNSS Analysis Package v0.13")
-    print("STEP 2: Coordinate Validation")
-    print("Validating station coordinates for precision distance calculations")
-    print(f"{'='*80}")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 2: Coordinate Validation", "TITLE")
 
 def check_step_1_completion():
     """Check that Step 1 completed successfully"""
@@ -117,7 +139,7 @@ def validate_coordinate_data():
         )
         valid_coords = int(valid_mask.sum())
 
-        logger.info(f"ECEF coordinate validation (verified stations only):")
+        logger.process(f"Running ECEF coordinate validation for {n_verified} verified stations...")
         logger.info(f"  Verified stations: {n_verified}/{n_total}")
         logger.info(f"  Valid ECEF coords: {valid_coords}/{n_verified}")
         logger.info(f"  ECEF ranges:")
@@ -179,6 +201,16 @@ def create_step_2_summary():
         except (TEPDataError, TEPFileError) as e:
             logger.warning(f"Could not load audit results: {e}")
     
+    # Calculate data-driven validation metadata
+    total_stations = len(df)
+    verified_stations_count = len(verified_df)
+    excluded_stations = total_stations - verified_stations_count
+
+    # Get unique coordinate sources
+    sources_checked = df['coord_source_code'].dropna().unique().tolist()
+    if sources_checked:
+        sources_checked = sorted(sources_checked)
+
     summary = {
         'step': 2,
         'name': 'Coordinate Validation',
@@ -187,22 +219,29 @@ def create_step_2_summary():
         'outputs': {
             'coordinate_file': str(coord_file),
             'station_audit': 'results/tmp/step_2_station_audit.json',
-            'n_stations_total': n_total,
-            'n_stations_verified': verified_stations,
+            'n_stations_total': total_stations,
+            'n_stations_verified': verified_stations_count,
+            'n_stations_excluded': excluded_stations,
             'coordinate_quality': coord_quality,
             'by_analysis_center': center_breakdown
         },
         'validation': {
-            'method': 'comprehensive_audit_with_authoritative_sources',
-            'excluded_stations': 31,
-            'exclusion_reason': 'missing_coordinates_in_authoritative_databases',
-            'sources_checked': ['IGS', 'BKG', 'EPN', 'EarthScope'],
-            'spatial_verification': 'all_variants_co_located_0m_separation'
+            'method': 'comprehensive_coordinate_validation',
+            'excluded_stations': excluded_stations,
+            'exclusion_reason': 'missing_or_invalid_coordinates_in_catalogue',
+            'sources_checked': sources_checked or ['IGS'],
+            'spatial_verification': 'ecef_coordinates_validated',
+            'validation_criteria': {
+                'finite_coordinates': 'X, Y, Z must be finite numbers',
+                'non_zero_coordinates': 'X, Y, Z must not be zero',
+                'coordinate_precision': 'meter-level precision maintained'
+            }
         },
         'pipeline_consistency': {
-            'definitive_station_count': verified_stations,
+            'definitive_station_count': verified_stations_count,
             'use_4char_sites': True,
-            'reason': 'multiple_9char_variants_perfectly_co_located'
+            'reason': 'stations_with_valid_ecef_coordinates',
+            'data_driven': True
         },
         'next_step': 'python scripts/steps/step_3_tep_correlation_analysis.py'
     }
@@ -220,7 +259,7 @@ def create_step_2_summary():
 
 def validate_step_2_completion():
     """Validate Step 2 completion"""
-    logger.test("Validating Step 2 completion...")
+    logger.process("Validating Step 2 completion...")
     
     validation_checks = [
         ("Step 2 summary exists", Path("logs/step_2_coordinate_validation.json").exists()),
@@ -290,9 +329,7 @@ def main():
     # Final report
     elapsed_time = time.time() - start_time
     
-    print(f"\n{'='*80}")
-    logger.success("COORDINATE VALIDATION COMPLETE")
-    print(f"{'='*80}")
+    logger.info("COORDINATE VALIDATION COMPLETE")
     
     logger.info(f"Execution time: {elapsed_time:.1f} seconds")
     
@@ -307,44 +344,170 @@ def main():
 
 def audit_station_ids():
     """
-    Integrated station ID audit - validates 9-char → 4-char mappings and spatial co-location.
-    This replaces the separate audit script and provides definitive station counts.
+    Comprehensive station ID audit - validates coordinate quality and provides definitive station counts.
+    Performs detailed analysis of coordinate sources, spatial distribution, and validation metrics.
     """
-    logger.process("Running integrated station ID audit...")
-    
-    # Create a basic audit summary based on coordinate catalogue
+    logger.process("Running comprehensive station ID audit...")
+
     coord_file = Path("data/coordinates/station_coords_global.csv")
-    if coord_file.exists():
-        df = safe_csv_read(coord_file)
-        verified_stations_df = df[df['has_coordinates'] == True] if 'has_coordinates' in df.columns else df
-        verified_stations = len(verified_stations_df)
-        
-        summary = {
-            'audit_timestamp': datetime.now().isoformat(),
-            'status': 'preliminary_coordinate_based',
-            'coordinate_catalogue': {
-                'total_stations': len(df),
-                'verified_stations': verified_stations,
-                'coordinate_sources': 'IGS_BKG_integrated'
-            },
-            'by_analysis_center': {},  # Keep structure consistent
-            'overall_statistics': {
-                'sites_with_coordinates': verified_stations
-            },
-            'note': 'This is a preliminary audit based on the coordinate catalogue.'
-        }
-        
-        # Save preliminary summary
-        outdir = Path('results/tmp')
-        outdir.mkdir(parents=True, exist_ok=True)
-        try:
-            safe_json_write(summary, outdir / 'step_2_station_audit.json', indent=2)
-        except (TEPFileError, TEPDataError) as e:
-            logger.warning(f"Failed to save preliminary audit: {e}")
-        
-        logger.success(f"Preliminary audit complete: {verified_stations} verified stations")
-    else:
+    if not coord_file.exists():
         logger.error("Coordinate file not found, cannot run audit.")
+        return
+
+    df = safe_csv_read(coord_file)
+
+    # Perform comprehensive audit
+    audit_results = perform_comprehensive_audit(df)
+
+    # Save comprehensive audit results
+    outdir = Path('results/tmp')
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    try:
+        safe_json_write(audit_results, outdir / 'step_2_station_audit.json', indent=2)
+        logger.success(f"Comprehensive audit complete: {audit_results['overall_statistics']['sites_with_coordinates']} verified stations")
+    except (TEPFileError, TEPDataError) as e:
+        logger.warning(f"Failed to save audit results: {e}")
+
+def perform_comprehensive_audit(df: pd.DataFrame) -> dict:
+    """Perform comprehensive audit of station coordinate data"""
+
+    total_stations = len(df)
+    verified_stations_df = df[df['has_coordinates'] == True] if 'has_coordinates' in df.columns else df
+    verified_stations = len(verified_stations_df)
+
+    # Analyze coordinate sources
+    source_analysis = analyze_coordinate_sources(df)
+
+    # Analyze spatial distribution
+    spatial_analysis = analyze_spatial_distribution(verified_stations_df)
+
+    # Analyze coordinate quality metrics
+    quality_metrics = analyze_coordinate_quality(verified_stations_df)
+
+    # Compile comprehensive audit results
+    audit_results = {
+        'audit_timestamp': datetime.now().isoformat(),
+        'status': 'comprehensive_audit_completed',
+        'audit_method': 'coordinate_validation_and_spatial_analysis',
+        'coordinate_catalogue': {
+            'total_stations': total_stations,
+            'verified_stations': verified_stations,
+            'excluded_stations': total_stations - verified_stations,
+            'exclusion_rate': (total_stations - verified_stations) / total_stations * 100,
+            'coordinate_sources': source_analysis['sources_used'],
+            'source_distribution': source_analysis['source_distribution']
+        },
+        'spatial_analysis': spatial_analysis,
+        'coordinate_quality': quality_metrics,
+        'by_analysis_center': source_analysis['by_center'],
+        'overall_statistics': {
+            'sites_with_coordinates': verified_stations,
+            'global_coverage': spatial_analysis['global_coverage'],
+            'coordinate_precision': quality_metrics['precision_assessment']
+        },
+        'validation_criteria': {
+            'finite_coordinates': 'X, Y, Z must be finite numbers',
+            'non_zero_coordinates': 'X, Y, Z must not be zero',
+            'spatial_consistency': 'coordinates must be within Earth radius bounds',
+            'precision_maintained': 'meter-level precision preserved'
+        }
+    }
+
+    return audit_results
+
+def analyze_coordinate_sources(df: pd.DataFrame) -> dict:
+    """Analyze distribution of coordinate sources"""
+
+    sources = df['coord_source_code'].dropna().unique().tolist()
+    source_counts = df['coord_source_code'].value_counts().to_dict()
+
+    # Convert to native Python types for JSON serialization
+    source_counts = {str(k): int(v) for k, v in source_counts.items()}
+
+    # Group by 4-character codes for analysis centers
+    center_mapping = {}
+    for source in sources:
+        center_4char = source[:4] if len(source) >= 4 else source
+        if center_4char not in center_mapping:
+            center_mapping[center_4char] = []
+        center_mapping[center_4char].append(source)
+
+    return {
+        'sources_used': sorted(sources),
+        'source_distribution': source_counts,
+        'by_center': {center: len(stations) for center, stations in center_mapping.items()},
+        'primary_centers': sorted(center_mapping.keys())
+    }
+
+def analyze_spatial_distribution(df: pd.DataFrame) -> dict:
+    """Analyze spatial distribution of stations"""
+
+    # Calculate geographic bounds
+    lat_range = (float(df['lat_deg'].min()), float(df['lat_deg'].max()))
+    lon_range = (float(df['lon_deg'].min()), float(df['lon_deg'].max()))
+
+    # Calculate ECEF bounds
+    x_range = (float(df['X'].min()), float(df['X'].max()))
+    y_range = (float(df['Y'].min()), float(df['Y'].max()))
+    z_range = (float(df['Z'].min()), float(df['Z'].max()))
+
+    # Estimate global coverage (rough approximation)
+    lat_coverage = lat_range[1] - lat_range[0]
+    lon_coverage = lon_range[1] - lon_range[0]
+
+    return {
+        'geographic_bounds': {
+            'latitude_range_deg': lat_range,
+            'longitude_range_deg': lon_range,
+            'latitude_coverage_deg': float(lat_coverage),
+            'longitude_coverage_deg': float(lon_coverage)
+        },
+        'ecef_bounds': {
+            'x_range_m': x_range,
+            'y_range_m': y_range,
+            'z_range_m': z_range
+        },
+        'global_coverage': {
+            'latitude_percent': float(min(100, (lat_coverage / 180) * 100)),
+            'longitude_percent': float(min(100, (lon_coverage / 360) * 100)),
+            'hemispheric_balance': 'north_south_balanced' if abs(lat_range[0]) + abs(lat_range[1]) < 180 else 'polar_focused'
+        },
+        'station_density': float(len(df) / (4 * 3.14159 * 6371000**2) * 1000000)  # stations per million km²
+    }
+
+def analyze_coordinate_quality(df: pd.DataFrame) -> dict:
+    """Analyze coordinate quality metrics"""
+
+    # Coordinate precision analysis
+    x_precision = len(str(df['X'].iloc[0]).split('.')[-1]) if '.' in str(df['X'].iloc[0]) else 0
+    y_precision = len(str(df['Y'].iloc[0]).split('.')[-1]) if '.' in str(df['Y'].iloc[0]) else 0
+    z_precision = len(str(df['Z'].iloc[0]).split('.')[-1]) if '.' in str(df['Z'].iloc[0]) else 0
+
+    # Check for suspicious coordinates (e.g., too close to center of Earth)
+    earth_radius = 6371000  # meters
+    distances_from_center = np.sqrt(df['X']**2 + df['Y']**2 + df['Z']**2)
+    suspicious_coords = int(((distances_from_center < earth_radius * 0.9) |
+                           (distances_from_center > earth_radius * 1.1)).sum())
+
+    return {
+        'precision_assessment': {
+            'x_precision_digits': int(x_precision),
+            'y_precision_digits': int(y_precision),
+            'z_precision_digits': int(z_precision),
+            'precision_level': 'meter' if x_precision >= 1 else 'unknown'
+        },
+        'spatial_consistency': {
+            'distances_from_center_range': (float(distances_from_center.min()), float(distances_from_center.max())),
+            'suspicious_coordinates': suspicious_coords,
+            'suspicious_rate': float(suspicious_coords / len(df) * 100)
+        },
+        'coordinate_ranges': {
+            'x_range_m': (float(df['X'].min()), float(df['X'].max())),
+            'y_range_m': (float(df['Y'].min()), float(df['Y'].max())),
+            'z_range_m': (float(df['Z'].min()), float(df['Z'].max()))
+        }
+    }
 
 
 if __name__ == "__main__":
@@ -352,13 +515,13 @@ if __name__ == "__main__":
         success = main()
         sys.exit(0 if success else 1)
     except KeyboardInterrupt:
-        print("\n  Step 2 interrupted by user")
+        logger.warning("Step 2 interrupted by user")
         sys.exit(1)
     except (TEPDataError, TEPFileError) as e:
-        print(f"\n Step 2 failed - data/file error: {e}")
+        logger.error(f"Step 2 failed - data/file error: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"\n Step 2 failed - unexpected error: {e}")
+        logger.error(f"Step 2 failed - unexpected error: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

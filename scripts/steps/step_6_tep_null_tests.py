@@ -58,12 +58,31 @@ from scripts.utils.exceptions import (
     validate_file_exists, validate_directory_exists
 )
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    from datetime import datetime
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", "ERROR": "[ERROR]", "PROCESS": "[PROCESSING]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
+    }
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def ecef_to_geodetic(x, y, z):
     """Convert ECEF coordinates to geodetic (lat, lon, height)."""
@@ -514,9 +533,7 @@ def main():
     Validates the TEP signals detected in Step 3 by running scrambling tests
     to prove the correlations are real and not statistical artifacts.
     """
-    print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.13")
-    print("STEP 6: Null Tests")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 6: Null Tests", "TITLE")
     print("Validating TEP signatures through rigorous null hypothesis tests")
     print("="*80)
     

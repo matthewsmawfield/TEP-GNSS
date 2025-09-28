@@ -83,17 +83,31 @@ def ecef_to_geodetic(x, y, z):
             
     return np.degrees(lat), np.degrees(lon), h
 
-def print_status(text: str, status: str = "INFO"):
-    """Print status with icons"""
-    prefixes = {
-        "INFO": "ℹ️ ",
-        "SUCCESS": "✅",
-        "WARNING": "⚠️",
-        "ERROR": "❌",
-        "PROCESSING": "🔄"
+def print_status(message, level="INFO"):
+    """Enhanced status printing with timestamp and color coding."""
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+
+    # Color coding for different levels
+    colors = {
+        "TITLE": "\033[1;36m",    # Cyan bold
+        "SUCCESS": "\033[1;32m",  # Green bold
+        "WARNING": "\033[1;33m",  # Yellow bold
+        "ERROR": "\033[1;31m",    # Red bold
+        "INFO": "\033[0;37m",     # White
+        "DEBUG": "\033[0;90m",    # Dark gray
+        "PROCESS": "\033[0;34m"   # Blue
     }
-    timestamp = datetime.now().strftime("%H:%M:%S")
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+    reset = "\033[0m"
+
+    color = colors.get(level, colors["INFO"])
+
+    if level == "TITLE":
+        print(f"\n{color}{'='*80}")
+        print(f"[{timestamp}] {message}")
+        print(f"{'='*80}{reset}\n")
+    else:
+        print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 def exponential_model(r, A, lambda_km, C0):
     """Exponential decay model: C(r) = A * exp(-r/λ) + C0"""
@@ -711,7 +725,9 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     # Analysis centers and their views
     analysis_centers = ['code', 'igs_combined', 'esa_final']
     center_names = ['CODE', 'IGS', 'ESA']
-    center_colors = ['#8B0000', '#2D4A87', '#1B5E20']  # Dark red, navy blue, dark green
+    # Use centralized colors for consistency
+    ac_colors = TEPConfig.get_ac_colors()
+    center_colors = [ac_colors['code'], ac_colors['igs_combined'], ac_colors['esa_final']]
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
     # Create figure with three globes
@@ -1375,38 +1391,101 @@ def create_correlation_vs_distance_all_centers(root_dir):
     
     return results
 
+def get_stations_by_analysis_center(root_dir):
+    """
+    Determine which stations each analysis center processed based on available data.
+    Returns a dictionary mapping each center to its set of stations.
+    """
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_stations = {}
+    
+    # Load the general station metadata (all stations that were analyzed)
+    metadata_file = root_dir / 'results/outputs/step_1_station_metadata.json'
+    if not metadata_file.exists():
+        print_status("Station metadata file not found", "WARNING")
+        return {center: set() for center in centers}
+    
+    with open(metadata_file, 'r') as f:
+        station_metadata = json.load(f)
+    
+    all_analyzed_stations = set(s[:4].upper() for s in station_metadata.keys())
+    print_status(f"Found {len(all_analyzed_stations)} total analyzed stations", "INFO")
+    
+    for center in centers:
+        # Check if this center has correlation results
+        results_file = root_dir / f'results/outputs/step_3_correlation_{center}.json'
+        if results_file.exists():
+            # For now, assume all centers processed the same stations
+            # (This is a reasonable approximation since they all use the same global network)
+            center_stations[center] = all_analyzed_stations.copy()
+            print_status(f"{center.upper()}: Using all {len(all_analyzed_stations)} analyzed stations", "INFO")
+        else:
+            print_status(f"No correlation results found for {center.upper()}", "WARNING")
+            center_stations[center] = set()
+    
+    return center_stations
+
+def load_all_distances_by_analysis_center(root_dir):
+    """
+    Load ALL distance data for each analysis center by processing all pair files.
+    This gives us the complete picture without sampling.
+    """
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_distances = {}
+    
+    for center in centers:
+        print_status(f"Loading ALL distance pairs for {center.upper()}", "INFO")
+        
+        # Find all pair files for this center
+        pair_dir = root_dir / 'results/tmp'
+        pair_files = sorted(pair_dir.glob(f"step_3_pairs_{center}_*.csv"))
+        
+        if not pair_files:
+            print_status(f"No pair files found for {center}", "WARNING")
+            center_distances[center] = np.array([])
+            continue
+        
+        print_status(f"Processing {len(pair_files)} files for {center.upper()}", "INFO")
+        
+        all_distances = []
+        processed_files = 0
+        
+        for pfile in pair_files:
+            try:
+                df = pd.read_csv(pfile)
+                # Extract distances from this file
+                distances = df['dist_km'].values
+                all_distances.extend(distances)
+                
+                processed_files += 1
+                if processed_files % 100 == 0:
+                    print_status(f"Processed {processed_files}/{len(pair_files)} files for {center.upper()}, {len(all_distances):,} pairs so far", "INFO")
+                    
+            except Exception as e:
+                print_status(f"Failed to load {pfile}: {e}", "WARNING")
+                continue
+        
+        center_distances[center] = np.array(all_distances)
+        print_status(f"Loaded {len(all_distances):,} distance pairs for {center.upper()}", "SUCCESS")
+    
+    return center_distances
+
 def create_distance_distribution_plot(root_dir):
     """
-    Create a plot showing the distribution of pairwise distances between GNSS stations.
+    Create a plot showing the distribution of pairwise distances between GNSS stations,
+    with stacked bars colored by analysis center.
     """
-    print_status("Creating distance distribution plot", "INFO")
+    print_status("Creating distance distribution plot with analysis center breakdown", "INFO")
     set_publication_style()
-    
-    # Site theme colors
-    THEME_COLORS = {
-        'primary': '#2D0140',      # Links/accents
-        'secondary': '#495773',    # Secondary text  
-        'text': '#1e4a5f',         # Primary text
-        'background': '#495773',   # Background
-        'border': '#495773',       # Borders
-        'highlight': '#1e4a5f'     # Hover color
-    }
     
     figures_dir = root_dir / 'results/figures'
     figures_dir.mkdir(parents=True, exist_ok=True)
     
-    # Load station distance data
-    distance_file = root_dir / 'data/processed/step_8_station_distances.csv'
+    # Load ALL distance data by analysis center (complete dataset)
+    center_distances = load_all_distances_by_analysis_center(root_dir)
     
-    if not distance_file.exists():
-        print_status(f"Distance file not found: {distance_file}", "WARNING")
-        return None
-    
-    try:
-        df = pd.read_csv(distance_file)
-        distances = df['distance_km'].values
-    except Exception as e:
-        print_status(f"Failed to load distance data: {e}", "WARNING")
+    if not center_distances:
+        print_status("No distance data available from any analysis center", "WARNING")
         return None
 
     # Load correlation results from all centers to get the full range for highlighting
@@ -1442,20 +1521,46 @@ def create_distance_distribution_plot(root_dir):
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
     
-    # Proper site theme colors - clean and professional
-    THEME_COLORS = {
-        'primary': '#2D0140',      # Deep purple for main data
-        'secondary': '#495773',    # Blue-gray secondary  
-        'text': '#1e4a5f',         # Dark text for readability
-        'background': 'white',     # Clean white background
-        'border': '#495773',       # Borders
-        'highlight': '#1e4a5f',    # Dark highlight lines
-        'range_highlight': '#2D0140'  # Purple for range highlight
-    }
+    # Use centralized color configuration for consistency
+    AC_COLORS = TEPConfig.get_ac_colors()
+    THEME_COLORS = TEPConfig.get_site_theme_colors()
     
-    # Full distribution with proper site theme and visible bar spacing
-    ax.hist(distances, bins=100, alpha=0.8, color=THEME_COLORS['primary'], 
-             edgecolor='white', linewidth=1.0, rwidth=0.85)
+    # Override specific colors for visualization
+    THEME_COLORS.update({
+        'range_highlight': THEME_COLORS['primary']  # Use primary color for range highlight
+    })
+    
+    # Determine common bin edges for all centers
+    all_distances = []
+    for distances in center_distances.values():
+        all_distances.extend(distances)
+    
+    if not all_distances:
+        print_status("No distance data to plot", "WARNING")
+        return None
+    
+    # Create bins from 0 to max distance
+    bins = np.linspace(0, max(all_distances), 101)  # 100 bins
+    
+    # Create stacked histogram
+    distances_list = []
+    labels = []
+    colors = []
+    
+    center_names = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
+    
+    for center in ['code', 'igs_combined', 'esa_final']:
+        if center in center_distances:
+            distances_list.append(center_distances[center])
+            # Add pair count to label
+            pair_count = len(center_distances[center])
+            label = f"{center_names[center]} ({pair_count:,} pairs)"
+            labels.append(label)
+            colors.append(AC_COLORS[center])
+    
+    # Create stacked histogram with better edge separation
+    ax.hist(distances_list, bins=bins, alpha=0.8, color=colors, 
+            label=labels, edgecolor='white', linewidth=0.8, rwidth=0.85, stacked=True)
     
     # Add highlighted range based on correlation results from all centers
     if correlation_range:
@@ -1487,12 +1592,14 @@ def create_distance_distribution_plot(root_dir):
                     label='TEP correlation range (3,330–4,549 km)', zorder=1)
         ax.axvline(3882, color=THEME_COLORS['highlight'], linestyle='-', linewidth=2.5, label='Mean λ = 3,882 km')
 
-    ax.axvline(distances.mean(), color=THEME_COLORS['secondary'], linestyle='--', linewidth=2, 
-               label=f'Mean station distance: {distances.mean():.0f} km')
+    # Calculate overall mean distance from all centers
+    overall_mean = np.mean(all_distances)
+    ax.axvline(overall_mean, color=THEME_COLORS['secondary'], linestyle='--', linewidth=2, 
+               label=f'Mean station distance: {overall_mean:.0f} km')
     
     ax.set_xlabel('Distance (km)', color=THEME_COLORS['text'])
     ax.set_ylabel('Number of station pairs', color=THEME_COLORS['text'])
-    ax.set_title('Distribution of Pairwise Distances Between GNSS Stations\nwith TEP Correlation Length Range', 
+    ax.set_title('Distribution of Pairwise Distances Between GNSS Stations\nby Analysis Center with TEP Correlation Length Range', 
                  fontsize=16, fontweight='bold', color=THEME_COLORS['text'])
     
     # Clean professional legend
@@ -1509,19 +1616,450 @@ def create_distance_distribution_plot(root_dir):
     
     print_status(f"Saved distance distribution plot to {output_file}", "SUCCESS")
     
-    # Calculate statistics
+    # Calculate statistics by analysis center and overall
     stats = {
-        'total_pairs': len(distances),
-        'mean_distance_km': float(distances.mean()),
-        'median_distance_km': float(np.median(distances)),
-        'std_distance_km': float(distances.std()),
-        'min_distance_km': float(distances.min()),
-        'max_distance_km': float(distances.max()),
-        'pairs_under_3000km': int(np.sum(distances < 3000)),
-        'pairs_3000_5000km': int(np.sum((distances >= 3000) & (distances <= 5000))),
-        'pairs_over_5000km': int(np.sum(distances > 5000)),
+        'total_pairs': len(all_distances),
+        'mean_distance_km': float(overall_mean),
+        'median_distance_km': float(np.median(all_distances)),
+        'std_distance_km': float(np.std(all_distances)),
+        'min_distance_km': float(min(all_distances)),
+        'max_distance_km': float(max(all_distances)),
+        'pairs_under_3000km': int(np.sum(np.array(all_distances) < 3000)),
+        'pairs_3000_5000km': int(np.sum((np.array(all_distances) >= 3000) & (np.array(all_distances) <= 5000))),
+        'pairs_over_5000km': int(np.sum(np.array(all_distances) > 5000)),
         'output_file': str(output_file)
     }
+    
+    # Add per-center statistics
+    stats['by_center'] = {}
+    for center, distances in center_distances.items():
+        center_name = center_names[center]
+        stats['by_center'][center_name] = {
+            'total_pairs': len(distances),
+            'mean_distance_km': float(np.mean(distances)),
+            'median_distance_km': float(np.median(distances)),
+            'min_distance_km': float(np.min(distances)),
+            'max_distance_km': float(np.max(distances))
+        }
+    
+    return stats
+
+def create_analyzed_pairs_distribution_plot(root_dir):
+    """
+    Create a plot showing the distribution of actually analyzed station pairs
+    (after filtering) with smooth, continuous distribution like the raw pairs chart.
+    """
+    print_status("Creating analyzed pairs distribution plot (smooth distribution)", "INFO")
+    set_publication_style()
+    
+    figures_dir = root_dir / 'results/figures'
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Use centralized color configuration for consistency
+    AC_COLORS = TEPConfig.get_ac_colors()
+    THEME_COLORS = TEPConfig.get_site_theme_colors()
+    
+    # Override specific colors for visualization
+    THEME_COLORS.update({
+        'range_highlight': THEME_COLORS['primary']
+    })
+    
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_names = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
+    
+    # Load ALL individual analyzed pairs from pair files (complete data)
+    analyzed_distances = {}
+    analyzed_counts = {}
+    
+    for center in centers:
+        print_status(f"Loading ALL analyzed pairs for {center.upper()}", "INFO")
+        
+        # Find pair files for this center
+        pair_dir = root_dir / 'results/tmp'
+        pair_files = sorted(pair_dir.glob(f"step_3_pairs_{center}_*.csv"))
+        
+        if not pair_files:
+            print_status(f"No pair files found for {center}", "WARNING")
+            analyzed_distances[center] = np.array([])
+            analyzed_counts[center] = 0
+            continue
+        
+        print_status(f"Processing {len(pair_files)} files for {center.upper()}", "INFO")
+        
+        all_distances = []
+        processed_files = 0
+        
+        for pfile in pair_files:
+            try:
+                df = pd.read_csv(pfile)
+                # Extract distances from analyzed pairs
+                distances = df['dist_km'].values
+                all_distances.extend(distances)
+                
+                processed_files += 1
+                if processed_files % 100 == 0:
+                    print_status(f"Processed {processed_files}/{len(pair_files)} files for {center.upper()}, {len(all_distances):,} pairs so far", "INFO")
+                
+            except Exception as e:
+                print_status(f"Failed to load {pfile}: {e}", "WARNING")
+                continue
+        
+        analyzed_distances[center] = np.array(all_distances)
+        analyzed_counts[center] = len(all_distances)
+        print_status(f"Loaded {len(all_distances):,} analyzed pairs for {center.upper()}", "SUCCESS")
+    
+    if not any(len(distances) > 0 for distances in analyzed_distances.values()):
+        print_status("No analyzed pairs data available", "WARNING")
+        return None
+    
+    # Load correlation results for range highlighting
+    lambda_values = []
+    for center in centers:
+        try:
+            results_file = root_dir / f'results/outputs/step_3_correlation_{center}.json'
+            if results_file.exists():
+                fit_results = safe_json_read(results_file)
+                lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
+                if lambda_km:
+                    lambda_values.append(lambda_km)
+        except Exception as e:
+            print_status(f"Could not load lambda_km from {center} results: {e}", "WARNING")
+    
+    # Calculate correlation range
+    correlation_range = None
+    if lambda_values:
+        lambda_min = min(lambda_values)
+        lambda_max = max(lambda_values)
+        lambda_mean = sum(lambda_values) / len(lambda_values)
+        correlation_range = (lambda_min, lambda_max, lambda_mean)
+        print_status(f"Loaded correlation range: {lambda_min:.0f}-{lambda_max:.0f} km from {len(lambda_values)} centers", "INFO")
+    
+    # Create figure
+    fig, ax = plt.subplots(1, 1, figsize=(12, 3.6))
+    fig.patch.set_facecolor('white')
+    ax.set_facecolor('white')
+    
+    # Determine common bin edges for all centers
+    all_distances = []
+    for distances in analyzed_distances.values():
+        if len(distances) > 0:
+            all_distances.extend(distances)
+    
+    if not all_distances:
+        print_status("No analyzed distance data to plot", "WARNING")
+        return None
+    
+    # Create smooth bins like the raw distribution (0 to max distance)
+    bins = np.linspace(0, max(all_distances), 101)  # 100 bins for smooth distribution
+    
+    # Create stacked histogram for analyzed pairs
+    distances_list = []
+    labels = []
+    colors = []
+    
+    for center in ['code', 'igs_combined', 'esa_final']:
+        if center in analyzed_distances and len(analyzed_distances[center]) > 0:
+            distances_list.append(analyzed_distances[center])
+            # Add exact analyzed pair count to label
+            pair_count = analyzed_counts[center]
+            label = f"{center_names[center]} ({pair_count:,} analyzed)"
+            labels.append(label)
+            colors.append(AC_COLORS[center])
+    
+    # Create stacked histogram with better edge separation
+    ax.hist(distances_list, bins=bins, alpha=0.8, color=colors, 
+            label=labels, edgecolor='white', linewidth=0.8, rwidth=0.85, stacked=True)
+    
+    # Add highlighted range based on correlation results
+    if correlation_range:
+        lambda_min, lambda_max, lambda_mean = correlation_range
+        ax.axvspan(lambda_min, lambda_max, alpha=0.2, color=THEME_COLORS['range_highlight'], 
+                   label=f'TEP correlation range ({lambda_min:.0f}-{lambda_max:.0f} km)', 
+                   zorder=1)
+        ax.axvline(lambda_mean, color=THEME_COLORS['highlight'], linestyle='-', linewidth=2.5, 
+                   label=f'Mean λ = {lambda_mean:.0f} km')
+    else:
+        # Fallback using manuscript values
+        ax.axvspan(3330, 4549, alpha=0.2, color=THEME_COLORS['range_highlight'], 
+                   label='TEP correlation range (3,330-4,549 km)', zorder=1)
+        ax.axvline(3882, color=THEME_COLORS['highlight'], linestyle='-', linewidth=2.5, 
+                   label='Mean λ = 3,882 km')
+    
+    # Calculate overall mean distance from analyzed pairs
+    overall_mean = np.mean(all_distances)
+    ax.axvline(overall_mean, color=THEME_COLORS['secondary'], linestyle='--', linewidth=2, 
+               label=f'Mean analyzed distance: {overall_mean:.0f} km')
+    
+    ax.set_xlabel('Distance (km)', color=THEME_COLORS['text'])
+    ax.set_ylabel('Number of analyzed pairs', color=THEME_COLORS['text'])
+    ax.set_title('Distribution of Actually Analyzed Station Pairs\nby Analysis Center (After Quality Filtering)', 
+                 fontsize=16, fontweight='bold', color=THEME_COLORS['text'])
+    
+    # Clean professional legend
+    legend = ax.legend(frameon=True, facecolor='white', edgecolor=THEME_COLORS['border'], 
+                      loc='upper right')
+    
+    ax.grid(True, alpha=0.3, color=THEME_COLORS['border'])
+    ax.tick_params(colors=THEME_COLORS['text'])
+    
+    plt.tight_layout()
+    
+    output_file = figures_dir / 'analyzed_pairs_distribution.png'
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print_status(f"Saved analyzed pairs distribution plot to {output_file}", "SUCCESS")
+    
+    # Calculate statistics for analyzed pairs
+    total_analyzed = sum(analyzed_counts.values())
+    stats = {
+        'total_analyzed_pairs': total_analyzed,
+        'mean_distance_km': float(overall_mean),
+        'median_distance_km': float(np.median(all_distances)),
+        'std_distance_km': float(np.std(all_distances)),
+        'min_distance_km': float(min(all_distances)),
+        'max_distance_km': float(max(all_distances)),
+        'pairs_under_3000km': int(np.sum(np.array(all_distances) < 3000)),
+        'pairs_3000_5000km': int(np.sum((np.array(all_distances) >= 3000) & (np.array(all_distances) <= 5000))),
+        'pairs_over_5000km': int(np.sum(np.array(all_distances) > 5000)),
+        'output_file': str(output_file)
+    }
+    
+    # Add per-center statistics for analyzed pairs
+    stats['by_center'] = {}
+    for center in centers:
+        if center in analyzed_distances and len(analyzed_distances[center]) > 0:
+            center_name = center_names[center]
+            distances = analyzed_distances[center]
+            stats['by_center'][center_name] = {
+                'total_analyzed_pairs': analyzed_counts[center],
+                'mean_distance_km': float(np.mean(distances)),
+                'median_distance_km': float(np.median(distances)),
+                'min_distance_km': float(np.min(distances)),
+                'max_distance_km': float(np.max(distances))
+            }
+    
+    return stats
+
+def create_binned_correlation_data_plot(root_dir):
+    """
+    Create a plot showing the logarithmic binning strategy as a binning diagram.
+    Shows bin edges, ranges, and pair counts in a clear, informative way.
+    """
+    print_status("Creating binning strategy diagram", "INFO")
+    set_publication_style()
+    
+    figures_dir = root_dir / 'results/figures'
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Use centralized color configuration for consistency
+    AC_COLORS = TEPConfig.get_ac_colors()
+    THEME_COLORS = TEPConfig.get_site_theme_colors()
+    
+    # Override specific colors for visualization
+    THEME_COLORS.update({
+        'range_highlight': THEME_COLORS['primary']
+    })
+    
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_names = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
+    
+    # Load binned correlation data
+    binned_data = {}
+    
+    for center in centers:
+        try:
+            data_file = root_dir / f'results/outputs/step_3_correlation_data_{center}.csv'
+            if data_file.exists():
+                df = pd.read_csv(data_file)
+                binned_data[center] = df
+                print_status(f"Loaded {len(df)} distance bins for {center.upper()}", "INFO")
+            else:
+                print_status(f"No correlation data found for {center}", "WARNING")
+                binned_data[center] = pd.DataFrame()
+        except Exception as e:
+            print_status(f"Failed to load binned data for {center}: {e}", "WARNING")
+            binned_data[center] = pd.DataFrame()
+    
+    if not binned_data or all(df.empty for df in binned_data.values()):
+        print_status("No binned correlation data available", "WARNING")
+        return None
+    
+    # Create separate subplots for each analysis center
+    fig, axes = plt.subplots(3, 1, figsize=(12, 10), sharex=True)
+    fig.patch.set_facecolor('white')
+    
+    # Load correlation range for highlighting
+    lambda_values = []
+    for center in centers:
+        try:
+            results_file = root_dir / f'results/outputs/step_3_correlation_{center}.json'
+            if results_file.exists():
+                fit_results = safe_json_read(results_file)
+                lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
+                if lambda_km:
+                    lambda_values.append(lambda_km)
+        except Exception as e:
+            continue
+    
+    correlation_range = None
+    if lambda_values:
+        lambda_min = min(lambda_values)
+        lambda_max = max(lambda_values)
+        lambda_mean = sum(lambda_values) / len(lambda_values)
+        correlation_range = (lambda_min, lambda_max, lambda_mean)
+    
+    # Create separate subplot for each analysis center
+    for i, center in enumerate(['code', 'igs_combined', 'esa_final']):
+        ax = axes[i]
+        ax.set_facecolor('white')
+        
+        if center in binned_data and not binned_data[center].empty:
+            df = binned_data[center]
+            distances = df['distance_km'].values
+            counts = df['count'].values
+            
+            # Calculate perfectly continuous bin edges (no gaps, no overlaps)
+            # Create edge array that guarantees perfect continuity
+            edges = []
+            
+            # First edge: extend left from first bin center
+            if len(distances) > 1:
+                first_spacing = distances[1] - distances[0]
+                first_edge = max(distances[0] - first_spacing / 2, distances[0] * 0.5)
+            else:
+                first_edge = distances[0] * 0.7
+            edges.append(first_edge)
+            
+            # Middle edges: exact midpoints between adjacent bin centers
+            for j in range(len(distances) - 1):
+                midpoint = (distances[j] + distances[j+1]) / 2
+                edges.append(midpoint)
+            
+            # Last edge: extend right from last bin center
+            if len(distances) > 1:
+                last_spacing = distances[-1] - distances[-2]
+                last_edge = distances[-1] + last_spacing / 2
+            else:
+                last_edge = distances[-1] * 1.3
+            edges.append(last_edge)
+            
+            # Convert to (left, right) pairs
+            bin_edges = [(edges[j], edges[j+1]) for j in range(len(distances))]
+            
+            # Create bars with uniform thin edge lines for consistent separation
+            left_edges = []
+            widths = []
+            heights = []
+            
+            for j, (dist, count) in enumerate(zip(distances, counts)):
+                left_edge, right_edge = bin_edges[j]
+                width = right_edge - left_edge
+                
+                left_edges.append(left_edge)
+                widths.append(width)
+                heights.append(count)
+            
+            # Create all bars with consistent edge lines optimized for high-DPI rendering
+            bars = ax.bar(left_edges, heights, width=widths, align='edge', 
+                         alpha=0.8, color=AC_COLORS[center],
+                         edgecolor='white', linewidth=0.5)
+            
+            # Add count labels for very wide bins (>1000 km width)
+            for j, (left_edge, width, count) in enumerate(zip(left_edges, widths, heights)):
+                if width > 1000 and count > 1000:
+                    ax.text(left_edge + width/2, count * 1.2, f'{count:,.0f}', 
+                           ha='center', va='bottom', fontsize=7, 
+                           color=THEME_COLORS['text'], rotation=0)
+            
+            # Add TEP correlation range highlighting
+            if correlation_range:
+                lambda_min, lambda_max, lambda_mean = correlation_range
+                ax.axvspan(lambda_min, lambda_max, alpha=0.2, 
+                          color=THEME_COLORS['range_highlight'], zorder=1)
+                ax.axvline(lambda_mean, color=THEME_COLORS['highlight'], linestyle='-', 
+                          linewidth=2, alpha=0.8)
+            
+            # Styling for this subplot
+            ax.set_ylabel(f'{center_names[center]}\nPairs per bin', 
+                         color=THEME_COLORS['text'], fontweight='bold')
+            ax.set_yscale('log')
+            
+            # Set x-axis to show full range starting from first bin
+            min_dist = min([edge[0] for edge in bin_edges])
+            max_dist = max([edge[1] for edge in bin_edges])
+            ax.set_xlim(0, max_dist * 1.02)
+            
+            # Set y-axis with slightly higher maximum for better visual spacing
+            max_count = max(heights)
+            ax.set_ylim(bottom=1, top=max_count * 2.5)
+            
+            ax.grid(True, alpha=0.3, color=THEME_COLORS['border'])
+            ax.tick_params(colors=THEME_COLORS['text'])
+            
+            # Add statistics text
+            total_pairs = df['count'].sum()
+            total_bins = len(df)
+            min_pairs = df['count'].min()
+            max_pairs = df['count'].max()
+            
+            stats_text = f'{total_bins} bins • {total_pairs:,} pairs\nRange: {min_pairs:,} - {max_pairs:,}'
+            ax.text(0.02, 0.96, stats_text, transform=ax.transAxes, 
+                   ha='left', va='top', fontsize=9,
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8),
+                   color=THEME_COLORS['text'])
+            
+        else:
+            ax.text(0.5, 0.5, f'No data for {center_names[center]}', 
+                   transform=ax.transAxes, ha='center', va='center',
+                   color=THEME_COLORS['text'], fontsize=12)
+            ax.set_ylabel(f'{center_names[center]}', color=THEME_COLORS['text'], fontweight='bold')
+    
+    # Set common x-axis label and title
+    axes[-1].set_xlabel('Distance (km)', color=THEME_COLORS['text'])
+    fig.suptitle('Logarithmic Distance Binning for TEP Correlation Analysis\n(Statistical Power by Analysis Center)', 
+                 fontsize=16, fontweight='bold', color=THEME_COLORS['text'])
+    
+    # Add global note about logarithmic scale
+    fig.text(0.99, 0.02, 'Note: Y-axes use logarithmic scale to show full dynamic range', 
+             ha='right', va='bottom', fontsize=9,
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8),
+             color=THEME_COLORS['text'])
+    
+    plt.tight_layout()
+    
+    output_file = figures_dir / 'binned_correlation_data.png'
+    plt.savefig(output_file, dpi=150, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    print_status(f"Saved binning strategy diagram to {output_file}", "SUCCESS")
+    
+    # Calculate statistics
+    total_pairs_binned = 0
+    total_bins_all = 0
+    stats = {'output_file': str(output_file), 'by_center': {}}
+    
+    for center in centers:
+        if center in binned_data and not binned_data[center].empty:
+            df = binned_data[center]
+            center_name = center_names[center]
+            total_pairs = df['count'].sum()
+            total_pairs_binned += total_pairs
+            total_bins_all += len(df)
+            
+            stats['by_center'][center_name] = {
+                'total_bins': len(df),
+                'total_pairs_in_bins': int(total_pairs),
+                'min_distance_km': float(df['distance_km'].min()),
+                'max_distance_km': float(df['distance_km'].max()),
+                'mean_pairs_per_bin': float(total_pairs / len(df))
+            }
+    
+    stats.update({
+        'total_bins_all_centers': total_bins_all,
+        'total_pairs_in_all_bins': total_pairs_binned,
+        'mean_bins_per_center': total_bins_all / len([c for c in centers if c in binned_data and not binned_data[c].empty])
+    })
     
     return stats
 
@@ -1658,7 +2196,7 @@ def main():
 
     print("="*80)
     print("TEP GNSS Analysis Package v0.13")
-    print("STEP 8: TEP Visualization")
+    print_status("TEP GNSS Analysis Package v0.13 - STEP 8: Visualization and Export", "TITLE")
     print("="*80)
     
     # Setup paths
@@ -1747,6 +2285,18 @@ def main():
     print("8. DISTANCE DISTRIBUTION ANALYSIS")
     print("-"*60)
     all_results['distance_distribution'] = create_distance_distribution_plot(root_dir)
+    
+    # 9. Analyzed Pairs Distribution
+    print("\n" + "-"*60)
+    print("9. ANALYZED PAIRS DISTRIBUTION")
+    print("-"*60)
+    all_results['analyzed_pairs_distribution'] = create_analyzed_pairs_distribution_plot(root_dir)
+    
+    # 10. Binned Correlation Data
+    print("\n" + "-"*60)
+    print("10. BINNED CORRELATION DATA")
+    print("-"*60)
+    all_results['binned_correlation_data'] = create_binned_correlation_data_plot(root_dir)
 
     # Generate summary report
     print("\n" + "="*60)
