@@ -49,6 +49,7 @@ class TEPConfig:
         # Network timeouts
         'TEP_NETWORK_TIMEOUT': 30,
         'TEP_DOWNLOAD_TIMEOUT': 60,
+        'TEP_MAX_PARALLEL_DOWNLOADS': 14,
         
         # File limits
         'TEP_FILES_PER_CENTER': None,  # None means unlimited

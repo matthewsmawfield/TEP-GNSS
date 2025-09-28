@@ -1,7 +1,7 @@
 # TEP-GNSS Analysis Package
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.12 (Jaipur)  
+**Version:** v0.13 (Jaipur)  
 **Date:** September 27, 2025  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
@@ -106,7 +106,7 @@ python scripts/steps/step_10_high_resolution_astronomical_events.py
 # Step 11: TID exclusion analysis
 python scripts/steps/step_11_tid_exclusion_analysis.py
 
-# Step 12: [REMOVED in v0.12] Additional visualizations (deprecated)
+# Step 12: [REMOVED in v0.13] Additional visualizations (deprecated)
 
 # Step 13: Methodology validation
 python scripts/steps/step_13_methodology_validation.py
@@ -129,7 +129,7 @@ python scripts/steps/step_19_multiple_comparison_corrections.py
 
 ### Configuration
 
-### v0.12 Configuration (Jaipur Release - Published Method Defaults)
+### v0.13 Configuration (Jaipur Release - Published Method Defaults)
 
 **Core Analysis Settings:**
 | Variable | Default | Description |
@@ -170,7 +170,7 @@ Main outputs are located in:
 - `results/outputs/`: Analysis results in JSON format (50+ files)
 - `results/figures/`: Generated visualizations (40+ publication-quality figures)
 - `site/`: Complete project website and documentation
-- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.12_Jaipur.pdf`
+- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf`
 
 ### Key Result Files
 - **Core Analysis**: `step_3_correlation_{center}.json` - Main correlation analysis results
@@ -267,7 +267,7 @@ If you use this analysis package, please cite both the analysis and underlying t
 ## Documentation
 
 - **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.12_Jaipur.pdf`
+- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf`
 - **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
 - **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 - **Execution logs**: `logs/` directory

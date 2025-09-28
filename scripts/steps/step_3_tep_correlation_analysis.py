@@ -43,7 +43,7 @@ References:
     Smawfield, M.L. (2025). Global Time Echoes: Distance-Structured Correlations
     in GNSS Clocks Across Independent Networks. Zenodo.
 
-Environment Variables (v0.12 defaults for published methodology):
+Environment Variables (v0.13 defaults for published methodology):
   
   CORE ANALYSIS:
   - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.6 method)
@@ -2238,7 +2238,7 @@ def main():
         bool: True if analysis completed successfully, False otherwise
     """
     print("\n" + "="*80)
-    print("TEP GNSS Analysis Package v0.12")
+    print("TEP GNSS Analysis Package v0.13")
     print("STEP 3: Correlation Analysis")
     print("Detecting TEP signatures through phase-coherent clock correlation analysis")
     print("="*80)

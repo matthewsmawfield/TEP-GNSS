@@ -41,7 +41,7 @@ logger = TEPLogger().logger
 def print_step_header():
     """Print formatted step header"""
     print(f"\n{'='*80}")
-    print("TEP GNSS Analysis Package v0.12")
+    print("TEP GNSS Analysis Package v0.13")
     print("STEP 2: Coordinate Validation")
     print("Validating station coordinates for precision distance calculations")
     print(f"{'='*80}")

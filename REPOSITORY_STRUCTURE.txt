@@ -159,7 +159,7 @@ site/
 │   ├── step_14/gravitational_temporal_daily.json
 │   └── step_17/
 ├── public/          ->  Static web assets (28 files)
-├── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.12_Jaipur.pdf
+├── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf
 ├── package.json     ->  Node.js dependencies
 ├── netlify.toml     ->  Deployment configuration
 └── visualizations/  ->  Interactive visualizations
@@ -191,7 +191,7 @@ figures/             ->  Root figures (currently empty)
 ROOT FILES
 ----------
 README.md                                    ->  Project overview
-TEP-GNSS_manuscript_v0.12_Jaipur.md          ->  Main manuscript
+TEP-GNSS_manuscript_v0.13_Jaipur.md          ->  Main manuscript
 TID_EXCLUSION_SUMMARY.md                     ->  Analysis summary
 description text                             ->  Project description
 TEP-GNSS.code-workspace                      ->  VS Code workspace
