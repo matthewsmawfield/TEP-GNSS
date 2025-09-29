@@ -19,7 +19,7 @@ This repository contains a complete analysis package for testing Temporal Equiva
 
 ## Key Findings
 
-Through analysis of 62.7 million station pair measurements from 529 analyzed ground stations (of 766 cataloged), we observe:
+Through analysis of 47.5 million station pair measurements from 529 analyzed ground stations (of 766 cataloged), we observe:
 
 *Note: Station selection is based on data quality criteria requiring ≥20 observation epochs per file (TEP_MIN_EPOCHS = 20) for reliable spectral analysis.*
 
@@ -51,7 +51,7 @@ cd TEP-GNSS
 pip install -r requirements/requirements.txt
 
 # Verify installation
-python scripts/steps/step_0_provenance_snapshot.py
+python scripts/steps/data_acquisition/step_1_0_provenance_snapshot.py
 ```
 
 ### Key Dependencies
@@ -66,71 +66,75 @@ python scripts/steps/step_0_provenance_snapshot.py
 
 #### Core Pipeline (Steps 0-8)
 ```bash
-# Step 0: Provenance snapshot
-python scripts/steps/step_0_provenance_snapshot.py
+# Step 1.0: Provenance snapshot
+python scripts/steps/data_acquisition/step_1_0_provenance_snapshot.py
 
-# Step 1: Download GNSS clock data
-python scripts/steps/step_1_tep_data_acquisition.py
+# Step 1.1: Download GNSS clock data
+python scripts/steps/data_acquisition/step_1_1_tep_data_acquisition.py
 
-# Step 2: Coordinate validation and comprehensive audit
-python scripts/steps/step_2_tep_coordinate_validation.py
+# Step 1.2: Coordinate validation and comprehensive audit
+python scripts/steps/data_acquisition/step_1_2_tep_coordinate_validation.py
 
-Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates definitive station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.
+Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1.1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates definitive station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.
 
-# Step 3: TEP Correlation Analysis (CORE ANALYSIS) ~3-4 hours*
-python scripts/steps/step_3_tep_correlation_analysis.py
+# Step 2.0: TEP Correlation Analysis (CORE ANALYSIS) ~3-4 hours*
+python scripts/steps/core_analysis/step_2_0_tep_correlation_analysis.py
 
 Core TEP signal detection using phase-coherent cross-spectral density analysis. Computes complex CSD between all station pairs in the 10-500 µHz frequency band, extracts phase-coherent correlations as cos(phase(CSD)), and fits exponential decay models to correlation vs. distance relationships. Implements the band-limited methodology that preserves essential phase information for TEP detection.
 
-# Step 4: Geospatial processing
-python scripts/steps/step_4_aggregate_geospatial_data.py
+# Step 2.1: Geospatial processing
+python scripts/steps/core_analysis/step_2_1_aggregate_geospatial_data.py
 
-# Step 5: Statistical validation
-python scripts/steps/step_5_tep_statistical_validation.py
+# Step 2.2: Geospatial temporal analysis
+python scripts/steps/core_analysis/step_2_2_tep_geospatial_temporal_analysis.py
 
-# Step 5.5: Block-wise cross validation
-python scripts/steps/step_5_5_block_wise_cross_validation.py
+Comprehensive geospatial and temporal analysis including astronomical event correlations, orbital tracking, anisotropy analysis, spherical harmonics, and advanced temporal field studies. Analyzes correlations with planetary positions, lunar standstills, solar eclipses, and Earth's orbital motion to validate TEP predictions across multiple temporal and spatial scales.
 
-# Step 6: Null hypothesis testing
-python scripts/steps/step_6_tep_null_tests.py
+# Step 3.0: Cross-validation suite
+python scripts/steps/validation_suite/step_3_0_tep_cross_validation_suite.py
 
-# Step 7: Advanced analysis
-python scripts/steps/step_7_tep_advanced_analysis.py
+Comprehensive cross-validation framework including block-wise (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses. Provides rigorous validation of TEP correlation parameters using multiple complementary approaches to ensure robustness and statistical validity.
 
-# Step 8: Generate visualizations
-python scripts/steps/step_8_tep_visualization.py
+# Step 3.2: Null hypothesis testing
+python scripts/steps/validation_suite/step_3_2_tep_null_tests.py
+
+# Step 4.0: Advanced analysis
+python scripts/steps/advanced_analysis_and_visualization/step_4_0_tep_advanced_analysis.py
+
+# Step 4.1: Generate visualizations
+python scripts/steps/advanced_analysis_and_visualization/step_4_1_tep_visualization.py
 ```
 
 #### Extended Analysis Pipeline (Steps 9-16)
 ```bash
-# Step 9: Synthesis figure generation
-python scripts/steps/step_9_tep_synthesis_figure.py
+# Step 4.2: Synthesis figure generation
+python scripts/steps/advanced_analysis_and_visualization/step_4_2_tep_synthesis_figure.py
 
-# Step 10: High-resolution astronomical events
-python scripts/steps/step_10_high_resolution_astronomical_events.py
+# Step 4.3: High-resolution astronomical events
+python scripts/steps/advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py
 
-# Step 11: TID exclusion analysis
-python scripts/steps/step_11_tid_exclusion_analysis.py
+# Step 3.6: TID exclusion analysis
+python scripts/steps/validation_suite/step_3_6_tid_exclusion_analysis.py
 
 # Step 12: [REMOVED in v0.13] Additional visualizations (deprecated)
 
-# Step 13: Methodology validation
-python scripts/steps/step_13_methodology_validation.py
+# Step 3.3: Methodology validation
+python scripts/steps/validation_suite/step_3_3_methodology_validation.py
 
-# Step 14: Gravitational temporal field analysis
-python scripts/steps/step_14_gravitational_temporal_field_analysis.py
+# Step 4.4: Gravitational temporal field analysis
+python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
 
-# Step 15: Geographic bias validation
-python scripts/steps/step_15_geographic_bias_validation.py
+# Step 3.4: Geographic bias validation
+python scripts/steps/validation_suite/step_3_4_geographic_bias_validation.py
 
-# Step 16: Realistic ionospheric validation
-python scripts/steps/step_16_realistic_ionospheric_validation.py
+# Step 3.5: Realistic ionospheric validation
+python scripts/steps/validation_suite/step_3_5_realistic_ionospheric_validation.py
 
-# Step 18: Comprehensive diurnal analysis
-python scripts/steps/step_18_comprehensive_diurnal_analysis.py
+# Step 4.5: Comprehensive diurnal analysis
+python scripts/steps/advanced_analysis_and_visualization/step_4_5_comprehensive_diurnal_analysis.py
 
-# Step 19: Multiple comparison corrections
-python scripts/steps/step_19_multiple_comparison_corrections.py
+# Step 3.7: Multiple comparison corrections
+python scripts/steps/validation_suite/step_3_7_multiple_comparison_corrections.py
 ```
 
 ### Configuration
@@ -155,11 +159,11 @@ python scripts/steps/step_19_multiple_comparison_corrections.py
 **Quick Start (Core Results):**
 ```bash
 # Download data and run core analysis
-python scripts/steps/step_1_tep_data_acquisition.py
-python scripts/steps/step_3_tep_correlation_analysis.py
+python scripts/steps/data_acquisition/step_1_1_tep_data_acquisition.py
+python scripts/steps/core_analysis/step_2_0_tep_correlation_analysis.py
 
 # Generate visualizations
-python scripts/steps/step_8_tep_visualization.py
+python scripts/steps/advanced_analysis_and_visualization/step_4_1_tep_visualization.py
 ```
 
 ## Data Sources
@@ -179,12 +183,13 @@ Main outputs are located in:
 - Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf`
 
 ### Key Result Files
-- **Core Analysis**: `step_3_correlation_{center}.json` - Main correlation analysis results
-- **Statistical Validation**: `step_5_statistical_validation_{center}.json` - Comprehensive validation
-- **Null Tests**: `step_6_null_tests_{center}.json` - Signal authenticity validation
-- **Methodology Validation**: `step_13_validation_report.json` - Bias characterization and validation
-- **Advanced Findings**: `step_14_comprehensive_analysis_results.json` - Gravitational-temporal correlations
-- **Diurnal Analysis**: `step_18_comprehensive_analysis.json` - Seasonal correlation patterns and optimal coupling windows
+- **Core Analysis**: `step_2_0_correlation_{center}.json` - Main correlation analysis results
+- **Geospatial Temporal Analysis**: `step_2_2_tep_geospatial_temporal_analysis_{center}.json` - Astronomical events and temporal field analysis
+- **Cross-Validation Suite**: `step_3_0_cross_validation_suite_{center}.json` - Comprehensive validation framework
+- **Null Tests**: `step_3_2_null_tests_{center}.json` - Signal authenticity validation
+- **Methodology Validation**: `step_3_3_validation_report.json` - Bias characterization and validation
+- **Advanced Findings**: `step_4_4_gravitational_temporal_field_analysis.json` - Gravitational-temporal correlations
+- **Diurnal Analysis**: `step_4_5_comprehensive_diurnal_analysis.json` - Seasonal correlation patterns and optimal coupling windows
 - **Complementary Metrics**: `scripts/exploratory/` - Enhanced validation framework and exploratory analysis tools
 
 ## Scientific Background

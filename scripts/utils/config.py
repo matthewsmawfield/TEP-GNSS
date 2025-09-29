@@ -36,6 +36,7 @@ class TEPConfig:
         'TEP_MIN_BIN_COUNT': 50,  # Lowered for beat frequency analysis
         'TEP_BOOTSTRAP_ITER': 1000,
         'TEP_NULL_ITERATIONS': 100,
+        'TEP_MIN_BINS_FOR_FIT': 5, # Minimum bins required for fitting a model
         
         # Processing parameters
         'TEP_WORKERS': None,  # Will default to CPU count
@@ -50,6 +51,13 @@ class TEPConfig:
         'TEP_NETWORK_TIMEOUT': 30,
         'TEP_DOWNLOAD_TIMEOUT': 60,
         'TEP_MAX_PARALLEL_DOWNLOADS': 14,
+        'TEP_MIN_FILE_SIZE_MB': 1.0, # Minimum file size for successful download validation
+
+        # Data Source URLs
+        'TEP_IGS_COORDS_URL': "https://files.igs.org/pub/station/general/IGSNetworkWithFormer.json",
+        'TEP_IGS_CLK_URL_TEMPLATE': "https://igs.bkg.bund.de/root_ftp/IGS/products/{week:04d}/IGS0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz",
+        'TEP_CODE_CLK_URL_TEMPLATE': "http://ftp.aiub.unibe.ch/CODE/{year}/COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz",
+        'TEP_ESA_CLK_URL_TEMPLATE': "http://navigation-office.esa.int/products/gnss-products/{week}/ESA0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz",
         
         # File limits
         'TEP_FILES_PER_CENTER': None,  # None means unlimited
@@ -63,6 +71,11 @@ class TEPConfig:
         'TEP_ENABLE_LOSO': True,
         'TEP_ENABLE_LODO': True,
         'TEP_ENABLE_ENHANCED_ANISOTROPY': True,
+        
+        # Cross-validation flags
+        'TEP_ENABLE_MONTHLY_CV': True,
+        'TEP_ENABLE_STATION_BLOCKS_CV': True,
+        'TEP_ENABLE_BOOTSTRAP_CV': True,
         
         # Rebuild flags
         'TEP_REBUILD_COORDS': True,  # Default to True for geomagnetic enhancement
@@ -78,6 +91,21 @@ class TEPConfig:
         # Statistical validation limits
         'TEP_LOSO_MAX_STATIONS': 50,
         'TEP_LODO_MAX_DAYS': 100,
+        
+        # Cross-validation parameters
+        'TEP_MONTHLY_CV_FOLDS': 10,
+        'TEP_STATION_BLOCK_SIZE': 10,
+        'TEP_LOSO_SAMPLE_SIZE': 50,
+        'TEP_LODO_SAMPLE_SIZE': 100,
+        'TEP_BOOTSTRAP_SAMPLES': 200,
+        
+        # Robust Block Bootstrap Configuration (Step 5.6)
+        'TEP_STATION_BOOTSTRAP_SAMPLES': 500,
+        'TEP_DAY_BOOTSTRAP_SAMPLES': 300,
+        'TEP_HYBRID_BOOTSTRAP_SAMPLES': 200,
+        'TEP_BOOTSTRAP_MIN_STATIONS': 100,
+        'TEP_BOOTSTRAP_MIN_DAYS': 100,
+        'TEP_BOOTSTRAP_CONFIDENCE_LEVEL': 0.95,
         
         # Optional metadata flags
         'TEP_FETCH_CLOCK_METADATA': False,
@@ -111,6 +139,11 @@ class TEPConfig:
         'TEP_MIN_CORRELATION_THRESHOLD': 0.2,   # Minimum correlation to consider significant
         'TEP_NUTATION_PERIOD_YEARS': 18.6,
         
+        # NEW: Chunked Data Loading Optimization
+        'TEP_MIN_CHUNK_SIZE': 25000,          # Minimum rows for a data chunk
+        'TEP_MAX_CHUNK_SIZE': 100000,         # Maximum rows for a data chunk
+        'TEP_CHUNK_CONSOLIDATION_THRESHOLD': 100, # Number of chunks before consolidation
+
         # NEW: Astronomical Event Analysis Configuration
         'TEP_ENABLE_JUPITER_OPPOSITION': True,   # Jupiter opposition pulse analysis
         'TEP_ENABLE_SATURN_OPPOSITION': True,    # Saturn opposition analysis (smaller signal)
@@ -125,6 +158,10 @@ class TEPConfig:
         'TEP_EVENT_MIN_PAIRS': 1000,             # Minimum pairs needed per event window
         'TEP_STORM_SCRUBBING': False,            # Enable geomagnetic storm removal
         
+        # NEW: Data Loading & Logging Configuration
+        'TEP_LOAD_BATCH_SIZE': 10,               # Number of files to load in a batch
+        'TEP_LOGGING_INTERVAL_FILES': 50,      # Log progress every N files processed
+
         # Major Lunar Standstill Configuration
         'TEP_LUNAR_STANDSTILL_WINDOW_MONTHS': 6, # ±6 months around peak
         'TEP_SIDEREAL_DAY_HOURS': 23.934469591,  # Precise sidereal day length

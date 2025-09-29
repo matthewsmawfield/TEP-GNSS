@@ -1,8 +1,0 @@
-{
-  "analysis_center": "CODE",
-  "timestamp": "2025-09-28T23:43:58.767944",
-  "success": false,
-  "error": "local variable 'TEPConfig' referenced before assignment",
-  "error_type": "UNEXPECTED_ERROR",
-  "execution_time_seconds": 52.64983677864075
-}

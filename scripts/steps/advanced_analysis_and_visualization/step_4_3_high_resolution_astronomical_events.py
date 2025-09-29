@@ -1047,9 +1047,9 @@ def load_geospatial_data(analysis_center: str) -> pd.DataFrame:
     if analysis_center == 'merged':
         # Load and merge all three centers
         center_files = [
-            data_dir / "step_4_geospatial_code.csv",
-            data_dir / "step_4_geospatial_igs_combined.csv", 
-            data_dir / "step_4_geospatial_esa_final.csv"
+            data_dir / "step_2_1_geospatial_code.csv",
+            data_dir / "step_2_1_geospatial_igs_combined.csv", 
+            data_dir / "step_2_1_geospatial_esa_final.csv"
         ]
         
         dfs = []
@@ -1077,7 +1077,7 @@ def load_geospatial_data(analysis_center: str) -> pd.DataFrame:
         # Rename columns for consistency
         df = df.rename(columns={'station_i': 'station1', 'station_j': 'station2', 'dist_km': 'distance_km'})
     else:
-        geospatial_file = data_dir / f"step_4_geospatial_{analysis_center}.csv"
+        geospatial_file = data_dir / f"step_2_1_geospatial_{analysis_center}.csv"
         
         if not geospatial_file.exists():
             raise FileNotFoundError(f'Geospatial file not found: {geospatial_file}')
@@ -1370,7 +1370,7 @@ def analyze_orbital_periodicity_high_resolution(analysis_center: str = 'merged')
     2.5-year dataset to test the hypothesis that planets completing more orbital cycles
     provide stronger, more coherent TEP signals.
     
-    Returns results matching the format in step_10_orbital-periodicity_high_res_*.json files.
+    Returns results matching the format in step_4_3_orbital-periodicity_high_res_*.json files.
     """
     try:
         print_status("Starting Orbital Periodicity High-Resolution Analysis...", "PROCESS")
@@ -2777,7 +2777,7 @@ def analyze_hilbert_instantaneous_frequency(analysis_center: str = 'merged') -> 
                 ax.set_ylim(max(60, period*0.7), period*1.3)
             ax.grid(alpha=0.3)
         axes[-1].set_xlabel('Days index')
-        plot_path = ROOT / 'results' / 'figures' / f'step_10_hilbert_if_{analysis_center}.png'
+        plot_path = ROOT / 'results' / 'figures' / f'step_4_3_hilbert_if_{analysis_center}.png'
         plt.tight_layout()
         plt.savefig(plot_path, dpi=300, bbox_inches='tight')
         plt.close()
@@ -2905,7 +2905,7 @@ def analyze_wavelet_time_frequency(analysis_center: str = 'merged', verbose: boo
         plt.tight_layout()
 
         # Save plot
-        plot_filename = f"step_10_wavelet_restored_{analysis_center}.png"
+        plot_filename = f"step_4_3_wavelet_restored_{analysis_center}.png"
         plot_path = ROOT / "results" / "figures" / plot_filename
         plt.savefig(plot_path, dpi=300, bbox_inches='tight')
         plt.close()
@@ -2933,7 +2933,7 @@ def analyze_wavelet_time_frequency(analysis_center: str = 'merged', verbose: boo
     except Exception as e:
         return {'success': False, 'error': str(e)}
 
-def analyze_comprehensive_step_10(analysis_center: str = 'merged', resolution: str = '1min') -> Dict:
+def analyze_comprehensive_step_4_3(analysis_center: str = 'merged', resolution: str = '1min') -> Dict:
     """
     Run all Step 10 analyses: eclipses, planetary oppositions, wavelet, and Hilbert-IF.
     This is the default comprehensive analysis.
@@ -2945,7 +2945,7 @@ def analyze_comprehensive_step_10(analysis_center: str = 'merged', resolution: s
         comprehensive_results = {
             'success': True,
             'analysis_center': analysis_center,
-            'analysis_type': 'comprehensive_step_10',
+            'analysis_type': 'comprehensive_step_4_3',
             'analyses_completed': {}
         }
         
@@ -3092,7 +3092,7 @@ def main():
             
             # Route to appropriate analysis function
             if args.event == 'comprehensive':
-                center_results = analyze_comprehensive_step_10(center, args.resolution)
+                center_results = analyze_comprehensive_step_4_3(center, args.resolution)
             elif args.event == 'eclipse':
                 center_results = analyze_solar_eclipse_high_resolution(center)
             elif args.event == 'all-eclipses':
@@ -3137,7 +3137,7 @@ def main():
     else:
         # Single center analysis
         if args.event == 'comprehensive':
-            results = analyze_comprehensive_step_10(args.center, args.resolution)
+            results = analyze_comprehensive_step_4_3(args.center, args.resolution)
         elif args.event == 'eclipse':
             results = analyze_solar_eclipse_high_resolution(args.center)
         elif args.event == 'all-eclipses':
@@ -3371,7 +3371,7 @@ def main():
         if args.event == 'comprehensive' and args.center == 'merged' and 'center_results' in results:
             # Save individual center results and combined results
             for center, center_results in results['center_results'].items():
-                center_output_file = output_dir / f"step_10_comprehensive_high_res_{center}.json"
+                center_output_file = output_dir / f"step_4_3_comprehensive_high_res_{center}.json"
                 try:
                     safe_json_write(center_results, center_output_file, indent=2)
                     print_status(f"Results saved for {center.upper()}: {center_output_file}", "SUCCESS")
@@ -3379,7 +3379,7 @@ def main():
                     print_status(f"Failed to save results for {center}: {e}", "ERROR")
             
             # Save combined summary
-            output_file = output_dir / f"step_10_comprehensive_multi_center_summary.json"
+            output_file = output_dir / f"step_4_3_comprehensive_multi_center_summary.json"
             try:
                 safe_json_write(results, output_file, indent=2)
                 print_status(f"Multi-center summary saved: {output_file}", "SUCCESS")
@@ -3389,13 +3389,13 @@ def main():
             # Single file output for other cases
             # Create descriptive filename
             if args.event == 'all-astronomical':
-                output_file = output_dir / f"step_10_comprehensive_astronomical_{args.center}.json"
+                output_file = output_dir / f"step_4_3_comprehensive_astronomical_{args.center}.json"
             elif args.event == 'all-eclipses':
-                output_file = output_dir / f"step_10_comprehensive_eclipses_{args.center}.json"
+                output_file = output_dir / f"step_4_3_comprehensive_eclipses_{args.center}.json"
             elif args.event == 'differential' and args.eclipse_date != 'all':
-                output_file = output_dir / f"step_10_eclipse_{args.eclipse_date}_{args.center}.json"
+                output_file = output_dir / f"step_4_3_eclipse_{args.eclipse_date}_{args.center}.json"
             else:
-                output_file = output_dir / f"step_10_{args.event}_high_res_{args.center}.json"
+                output_file = output_dir / f"step_4_3_{args.event}_high_res_{args.center}.json"
             
             try:
                 safe_json_write(results, output_file, indent=2)

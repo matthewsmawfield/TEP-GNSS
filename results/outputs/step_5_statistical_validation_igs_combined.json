@@ -1,8 +1,0 @@
-{
-  "analysis_center": "IGS_COMBINED",
-  "timestamp": "2025-09-28T23:44:12.936022",
-  "success": false,
-  "error": "local variable 'TEPConfig' referenced before assignment",
-  "error_type": "UNEXPECTED_ERROR",
-  "execution_time_seconds": 13.985416173934937
-}

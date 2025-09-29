@@ -9,6 +9,17 @@ This module implements a bulletproof, peer-review-ready validation framework
 for the cos(phase(CSD)) methodology, addressing all potential criticisms through
 rigorous statistical analysis and comprehensive bias characterization.
 
+Requirements: Step 2.0 complete (Core TEP Correlation Analysis)
+Inputs:
+  - data/coordinates/step_1_1_station_coords_global.csv (from Step 1.1)
+  - results/outputs/step_2_0_correlation_{ac}.json (from Step 2.0)
+  - results/tmp/step_2_0_pairs_{ac}_*.csv (from Step 2.0, if `TEP_WRITE_PAIR_LEVEL=1`)
+Outputs:
+  - results/outputs/step_3_3_validation_report.json (comprehensive validation summary)
+  - results/outputs/step_3_3_bias_characterization.json (detailed bias analysis)
+  - results/figures/step_3_3_bias_comparison_plot.png (figures demonstrating bias control)
+Next: Step 4.0 (Advanced Analysis - TEP Advanced Analysis)
+
 SCIENTIFIC FOUNDATION:
 ===================
 The Temporal Equivalence Principle (TEP) analysis relies on detecting phase

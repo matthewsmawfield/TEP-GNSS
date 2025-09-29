@@ -14,55 +14,38 @@ FOLDER STRUCTURE
 SCRIPTS (Code Organization)
 ---------------------------
 scripts/
-├── steps/           ->  OFFICIAL PIPELINE (19 files)
-│   ├── step_0_provenance_snapshot.py
-│   ├── step_1_tep_data_acquisition.py
-│   ├── step_2_tep_coordinate_validation.py
-│   ├── step_3_tep_correlation_analysis.py
-│   ├── step_4_aggregate_geospatial_data.py
-│   ├── step_5_tep_statistical_validation.py
-│   ├── step_5_5_block_wise_cross_validation.py
-│   ├── step_6_tep_null_tests.py
-│   ├── step_7_tep_advanced_analysis.py
-│   ├── step_8_tep_visualization.py
-│   ├── step_9_tep_synthesis_figure.py
-│   ├── step_10_high_resolution_astronomical_events.py
-│   ├── step_11_tid_exclusion_analysis.py
-│   ├── step_12_additional_visualizations.py
-│   ├── step_13_methodology_validation.py
-│   ├── step_14_gravitational_temporal_field_analysis.py
-│   ├── step_15_geographic_bias_validation.py
-│   ├── step_16_realistic_ionospheric_validation.py
-│   └── step_18_targeted_diurnal_analysis.py
+├── steps/           ->  OFFICIAL PIPELINE
+│   ├── data_acquisition/
+│   │   ├── step_1_0_provenance_snapshot.py
+│   │   ├── step_1_1_tep_data_acquisition.py
+│   │   └── step_1_2_tep_coordinate_validation.py
+│   ├── core_analysis/
+│   │   ├── step_2_0_tep_correlation_analysis.py
+│   │   ├── step_2_1_aggregate_geospatial_data.py
+│   │   └── step_2_2_tep_geospatial_temporal_analysis.py
+│   ├── validation_suite/
+│   │   ├── step_3_0_tep_cross_validation_suite.py
+│   │   ├── step_3_1_robust_block_bootstrap.py
+│   │   ├── step_3_2_tep_null_tests.py
+│   │   ├── step_3_3_methodology_validation.py
+│   │   ├── step_3_4_geographic_bias_validation.py
+│   │   ├── step_3_5_realistic_ionospheric_validation.py
+│   │   ├── step_3_6_tid_exclusion_analysis.py
+│   │   └── step_3_7_multiple_comparison_corrections.py
+│   └── advanced_analysis_and_visualization/
+│       ├── step_4_0_tep_advanced_analysis.py
+│       ├── step_4_1_tep_visualization.py
+│       ├── step_4_2_tep_synthesis_figure.py
+│       ├── step_4_3_high_resolution_astronomical_events.py
+│       ├── step_4_4_gravitational_temporal_field_analysis.py
+│       └── step_4_5_comprehensive_diurnal_analysis.py
 │
-├── exploratory/     ->  ALL EXPERIMENTAL WORK (22 files)
-│   ├── Step 14 Variants (13 files):
-│   │   ├── step_14_2022_alternative_archive_download.py
-│   │   ├── step_14_2022_cleanup_duplicates.py
-│   │   ├── step_14_2022_completeness_assessment.py
-│   │   ├── step_14_2022_comprehensive_redownload.py
-│   │   ├── step_14_2022_final_assessment.py
-│   │   ├── step_14_2022_final_cleanup.py
-│   │   ├── step_14_2022_missing_dates.py
-│   │   ├── step_14_2022_recovery_analysis.py
-│   │   ├── step_14_2022_selective_redownload.py
-│   │   ├── step_14_aligned_methodology.py
-│   │   ├── step_14_extended_code_analysis.py
-│   │   ├── step_14_original_style_with_gap.py
-│   │   └── step_14_original_style_with_gap_low_smoothing.py
-│   ├── Analysis & Investigation (6 files):
-│   │   ├── step_14_outlier_analysis.py
-│   │   ├── step_14_outlier_investigation.py
-│   │   ├── step_14_smoothing_comparison.py
-│   │   ├── step_18_seasonal_analysis.py
-│   │   ├── analyze_2020_2022_subset.py
-│   │   └── analyze_clean_periods_only.py
-│   ├── Utilities & Research (3 files):
-│   │   ├── csd_projection_bias_test.py
-│   │   ├── manage_checkpoints.py
-│   │   └── historical_code/aggressive_acquire.py
+├── exploratory/     ->  ALL EXPERIMENTAL WORK 
+│   ├── Step 14 Variants
+│   ├── Analysis & Investigation
+│   └── Utilities & Research/historical_code/aggressive_acquire.py
 │
-└── utils/           ->  SHARED INFRASTRUCTURE (5 files)
+└── utils/           ->  SHARED INFRASTRUCTURE 
     ├── __init__.py
     ├── config.py           ->  Configuration management
     ├── exceptions.py       ->  Custom exception classes
@@ -78,14 +61,14 @@ data/
 │   └── igs_combined/ ->  IGS combined data (965 files)
 │
 ├── processed/       ->  PIPELINE OUTPUTS (5 files)
-│   ├── step_14_comprehensive_gravitational_temporal_data.csv
-│   ├── step_4_geospatial_code.csv
-│   ├── step_4_geospatial_esa_final.csv
-│   ├── step_4_geospatial_igs_combined.csv
-│   └── step_8_station_distances.csv
+│   ├── step_1_1_station_coords_global.csv
+│   ├── step_2_1_geospatial_code.csv
+│   ├── step_2_1_geospatial_esa_final.csv
+│   ├── step_2_1_geospatial_igs_combined.csv
+│   ├── step_4_1_station_distances.csv
+│   └── step_4_4_comprehensive_gravitational_temporal_data.csv
 │
-├── coordinates/     ->  STATION METADATA (2 files)
-│   ├── station_coords_global.csv
+├── coordinates/     ->  STATION METADATA (1 file)
 │   └── station_eclipse_distances.csv
 │
 ├── exploratory/     ->  EXPERIMENTAL DATA (gitignored)
@@ -102,42 +85,45 @@ data/
 RESULTS (Output Organization)
 -----------------------------
 results/
-├── outputs/         ->  OFFICIAL RESULTS (66 files)
-│   ├── step_1_station_metadata.json
-│   ├── step_3_correlation_*.json
-│   ├── step_5_*_validation_*.json
-│   ├── step_6_null_tests_*.json
-│   ├── step_10_*_high_res_*.json
-│   ├── step_11_tid_exclusion_comprehensive.json
-│   ├── step_13_*_validation.json
-│   ├── step_14_comprehensive_analysis_results.json
-│   ├── step_15_geographic_bias_validation.json
-│   ├── step_16_*_ionospheric_validation.json
-│   ├── step_18_diurnal_validation_*.json
-│   └── step_18_diurnal_hourly_*.csv
+├── outputs/         ->  OFFICIAL RESULTS
+│   ├── step_1_2_station_metadata.json
+│   ├── step_2_0_correlation_*.json
+│   ├── step_2_2_*_validation_*.json
+│   ├── step_3_0_cross_validation_suite_*.json
+│   ├── step_3_1_robust_block_bootstrap_*.json
+│   ├── step_3_2_null_tests_*.json
+│   ├── step_3_3_*_validation.json
+│   ├── step_3_4_geographic_bias_validation.json
+│   ├── step_3_5_*_ionospheric_validation.json
+│   ├── step_3_6_tid_exclusion_comprehensive.json
+│   ├── step_3_7_multiple_comparison_corrections.json
+│   ├── step_4_3_*_high_res_*.json
+│   ├── step_4_4_gravitational_temporal_field_analysis.json
+│   └── step_4_5_diurnal_validation_*.json
 │
-├── figures/         ->  PUBLICATION FIGURES (30 files)
+├── figures/         ->  PUBLICATION FIGURES
 │   ├── figure_1_TEP_site_themed.png
-│   ├── figure_10_orbital_dance_visualization.png
-│   ├── figure_16_supermoon_perigee_curves.png
+│   ├── step_3_3_bias_comparison_plot.png
+│   ├── step_4_3_orbital_dance_visualization.png
+│   ├── step_4_3_supermoon_perigee_curves.png
 │   ├── anisotropy_heatmap_*.png
 │   ├── correlation_vs_distance_all_centers.png
 │   ├── gnss_stations_*.png
 │   ├── gnss_three_globes_*.png
 │   ├── residuals_*.png
-│   ├── step_10_hilbert_if_*.png
-│   ├── step_10_wavelet_restored_*.png
-│   ├── step_11_tid_exclusion_analysis.png
-│   ├── step_14_comprehensive_gravitational_temporal_analysis.png
-│   ├── step_18_seasonal_analysis_*.png
+│   ├── step_4_3_hilbert_if_*.png
+│   ├── step_4_3_wavelet_restored_*.png
+│   ├── step_3_6_tid_exclusion_analysis.png
+│   ├── step_4_4_comprehensive_gravitational_temporal_analysis.png
+│   ├── step_4_5_seasonal_analysis_*.png
 │   └── tep_correlation_publication.png
 │
 ├── exploratory/     ->  EXPERIMENTAL RESULTS (gitignored)
 │   ├── figures/     ->  Research visualizations (12 files)
-│   ├── step_14_2022_*_results.json
-│   ├── step_14_extended_code_analysis_results.json
-│   ├── step_14_outlier_*_results.json
-│   ├── step_14_smoothing_comparison_results.json
+│   ├── step_4_4_2022_*_results.json
+│   ├── step_4_4_extended_code_analysis_results.json
+│   ├── step_4_4_outlier_*_results.json
+│   ├── step_4_4_smoothing_comparison_results.json
 │   ├── csd_projection_bias_report.txt
 │   ├── projection_bias_rebuttal.md
 │   ├── eclipse_methodology_validation.png
@@ -156,7 +142,7 @@ site/
 ├── index.html       ->  Interactive research website
 ├── figures/         ->  Website figures (44 files)
 ├── data/            ->  Interactive data
-│   ├── step_14/gravitational_temporal_daily.json
+│   ├── step_4_4/gravitational_temporal_daily.json
 │   └── step_17/
 ├── public/          ->  Static web assets (28 files)
 ├── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf
@@ -172,14 +158,14 @@ theory/
 
 DOCUMENTATION & CONFIGURATION
 -----------------------------
-logs/                ->  EXECUTION LOGS (7 files)
-├── step_1_data_acquisition.json
+logs/                ->  EXECUTION LOGS
+├── step_1_1_data_acquisition.json
 ├── step_1_downloads.json
-├── step_2_coordinate_validation.json
-├── step_3_correlation_analysis.json
+├── step_1_2_coordinate_validation.json
+├── step_2_0_correlation_analysis.json
 ├── step_3_correlation.log
-├── step_7_advanced_analysis.json
-└── step_8_visualization.json
+├── step_4_0_advanced_analysis.json
+└── step_4_1_visualization.json
 
 docs/                ->  Project documentation (currently empty)
 
@@ -209,7 +195,7 @@ Publication ready            Research & development
 Peer-reviewed               Testing new approaches
 Stable interfaces           Alternative methods
 Well-documented             Future candidates
-Sequential (step_0-18)      Multiple variants
+Grouped (step_1.0-4.5)      Multiple variants
 
 ================================================================================
 VERSION CONTROL
