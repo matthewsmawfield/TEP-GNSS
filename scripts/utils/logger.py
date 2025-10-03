@@ -1,6 +1,8 @@
 import logging
 import sys
 from pathlib import Path
+import os
+from typing import Optional
 
 # Define the root path of the project for relative path calculations
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
@@ -16,13 +18,16 @@ class TEPFormatter(logging.Formatter):
         'INFO': '\033[0;37m',     # White
         'DEBUG': '\033[0;90m',    # Dark gray
         'PROCESS': '\033[0;34m',  # Blue
-        'TEST': '\033[1;35m'      # Magenta bold
+        'TEST': '\033[1;35m',      # Magenta bold
+        'TITLE': '\033[1;36m',     # Cyan bold for titles
+        'CRITICAL': '\033[1;41m'  # White on red background for critical errors
     }
     RESET = '\033[0m'
 
-    def __init__(self, fmt=None, datefmt=None):
+    def __init__(self, fmt=None, datefmt=None, use_colors=True):
         # Use same timestamp format as step 3: %H:%M:%S
         super().__init__(fmt, datefmt='%H:%M:%S')
+        self.use_colors = use_colors
 
     def format(self, record):
         message = record.getMessage()
@@ -35,32 +40,83 @@ class TEPFormatter(logging.Formatter):
             logging.INFO: ('INFO', self.COLORS['INFO']),
             logging.WARNING: ('WARNING', self.COLORS['WARNING']),
             logging.ERROR: ('ERROR', self.COLORS['ERROR']),
-            logging.DEBUG: ('DEBUG', self.COLORS['DEBUG'])
+            logging.DEBUG: ('DEBUG', self.COLORS['DEBUG']),
+            logging.CRITICAL: ('CRITICAL', self.COLORS['CRITICAL']) # CRITICAL level
         }
 
         level_name, color = level_mapping.get(record.levelno, ('INFO', self.COLORS['INFO']))
 
         # Format exactly like step 3: [timestamp] [LEVEL] message
         timestamp = self.formatTime(record, self.datefmt)
-        return f"{color}[{timestamp}] [{level_name}] {message}{self.RESET}"
+        
+        if self.use_colors:
+            return f"{color}[{timestamp}] [{level_name}] {message}{self.RESET}"
+        else:
+            return f"[{timestamp}] [{level_name}] {message}"
+
+class TEPFileFormatter(logging.Formatter):
+    """Clean formatter for file output without ANSI color codes."""
+
+    def __init__(self, fmt=None, datefmt=None):
+        # Use same timestamp format as step 3: %H:%M:%S
+        super().__init__(fmt, datefmt='%H:%M:%S')
+
+    def format(self, record):
+        message = record.getMessage()
+
+        # Map log levels to display names (no colors for file)
+        level_mapping = {
+            25: 'PROCESS',   # Custom PROCESS level
+            26: 'SUCCESS',  # Custom SUCCESS level
+            27: 'TEST',     # Custom TEST level
+            logging.INFO: 'INFO',
+            logging.WARNING: 'WARNING',
+            logging.ERROR: 'ERROR',
+            logging.DEBUG: 'DEBUG',
+            logging.CRITICAL: 'CRITICAL'
+        }
+
+        level_name = level_mapping.get(record.levelno, 'INFO')
+
+        # Format exactly like step 3: [timestamp] [LEVEL] message (no colors)
+        timestamp = self.formatTime(record, self.datefmt)
+        return f"[{timestamp}] [{level_name}] {message}"
 
 class TEPLogger:
-    def __init__(self, name: str = "tep_gnss", level: str = "INFO"):
+    def __init__(self, name: str = "tep_gnss", level: str = "INFO", log_file_path: Optional[Path] = None):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(self._get_log_level(level))
         
-        # Prevent adding multiple handlers if the logger already exists
-        if not self.logger.handlers:
-            # Create a console handler
-            ch = logging.StreamHandler(sys.stdout)
-            ch.setLevel(logging.DEBUG)  # Allow all custom levels
+        # Clear any existing handlers to prevent duplication
+        self.logger.handlers.clear()
+        
+        # Create a console handler with immediate flushing
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(logging.DEBUG)  # Allow all custom levels
+        # Ensure immediate output by setting stream to unbuffered
+        ch.stream.reconfigure(line_buffering=True)
 
-            # Create formatter
-            formatter = TEPFormatter()
-            ch.setFormatter(formatter)
+        # Create formatters
+        console_formatter = TEPFormatter()  # With colors for console
+        file_formatter = TEPFileFormatter()  # Clean format for file
+        
+        ch.setFormatter(console_formatter)
 
-            self.logger.addHandler(ch)
-            self.logger.propagate = False # Prevent messages from being passed to the root logger
+        self.logger.addHandler(ch)
+        self.logger.propagate = False # Prevent messages from being passed to the root logger
+
+        # Add file handler if log_file_path is provided, or use a default one
+        if log_file_path is None:
+            # Use a default log file if none is provided, e.g., a general_log.log in logs directory
+            default_log_dir = PACKAGE_ROOT / "logs"
+            default_log_dir.mkdir(parents=True, exist_ok=True)
+            log_file_path = default_log_dir / "general_tep_gnss.log"
+
+        log_file_path.parent.mkdir(parents=True, exist_ok=True) # Ensure directory exists
+        fh = logging.FileHandler(log_file_path, mode='a', encoding='utf-8')  # Explicit append mode
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(file_formatter)  # Use clean formatter for file
+        self.logger.addHandler(fh)
 
     def _get_log_level(self, level_name: str):
         return getattr(logging, level_name.upper(), logging.INFO)
@@ -80,6 +136,10 @@ class TEPLogger:
     def process(self, message: str):
         # Use a custom logging level for PROCESS messages
         self.logger.log(25, message)  # 25 is between INFO(20) and WARNING(30)
+        # Force flush to ensure real-time output
+        for handler in self.logger.handlers:
+            if hasattr(handler, 'stream') and hasattr(handler.stream, 'flush'):
+                handler.stream.flush()
 
     def success(self, message: str):
         # Use a custom logging level for SUCCESS messages
@@ -92,5 +152,89 @@ class TEPLogger:
     def debug_msg(self, message: str):
         self.logger.debug(message)
 
-# Global logger instance
-logger = TEPLogger().logger
+    def critical(self, message: str):
+        # Use the standard CRITICAL logging level
+        self.logger.critical(message)
+
+# Global variable to track the current step logger (set by each step script)
+# This is used by print_status to know which logger to use
+_current_step_logger = None
+
+def set_step_logger(logger: TEPLogger):
+    """Set the current step logger that print_status will use."""
+    global _current_step_logger
+    _current_step_logger = logger
+
+# Legacy global logger instance - DEPRECATED, use step-specific loggers instead
+# Kept only for backwards compatibility with old scripts
+global_teplogger_instance = None
+
+# Expose print_status and check_memory_usage as global functions
+def print_status(message: str, level: str = "INFO") -> None:
+    """Prints a status message to the console and logs to the current step logger.
+    This function is exposed for consistent use across all scripts.
+    """
+    # Use the current step logger if set, otherwise just print to console
+    if _current_step_logger is not None:
+        if level == "SUCCESS":
+            _current_step_logger.success(message)
+        elif level == "ERROR":
+            _current_step_logger.error(message)
+        elif level == "WARNING":
+            _current_step_logger.warning(message)
+        elif level == "PROCESS":
+            _current_step_logger.process(message)
+        elif level == "DEBUG":
+            _current_step_logger.debug(message)
+        elif level == "TITLE":
+            # For TITLE, log separator and message
+            _current_step_logger.info("")
+            _current_step_logger.info("="*80)
+            _current_step_logger.info(message)
+            _current_step_logger.info("="*80)
+            _current_step_logger.info("")
+        else:
+            _current_step_logger.info(message)
+    else:
+        # No step logger set, just print to console with color
+        import datetime
+        timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+        formatter_instance = TEPFormatter()
+        color = formatter_instance.COLORS.get(level, '')
+        reset = formatter_instance.RESET
+        
+        if level == "TITLE":
+            print(f"\n{color}{'='*80}{reset}")
+            print(f"{color}{message}{reset}")
+            print(f"{color}{'='*80}{reset}\n")
+        else:
+            print(f"{color}[{timestamp}] [{level}] {message}{reset}")
+    
+    # Force flush stdout to ensure real-time output
+    sys.stdout.flush()
+
+def reset_master_log() -> None:
+    """
+    DEPRECATED: Master log is no longer used. Each step has its own log file.
+    This function is kept for backwards compatibility but does nothing.
+    """
+    pass
+
+def check_memory_usage(context: str = "Unknown") -> None:
+    """
+    Logs the current memory usage of the process using the current step logger.
+    This function is exposed for consistent use across all scripts.
+    """
+    import psutil
+    import gc
+
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    rss_mb = mem_info.rss / (1024 * 1024)
+    vms_mb = mem_info.vms / (1024 * 1024)
+    
+    if _current_step_logger is not None:
+        _current_step_logger.debug(f"Memory usage in {context}: RSS={rss_mb:.2f} MB, VMS={vms_mb:.2f} MB")
+    else:
+        print(f"[DEBUG] Memory usage in {context}: RSS={rss_mb:.2f} MB, VMS={vms_mb:.2f} MB")
+    gc.collect()

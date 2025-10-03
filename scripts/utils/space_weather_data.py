@@ -22,11 +22,8 @@ from typing import Optional, Dict, Tuple
 from pathlib import Path
 import time
 
-def print_status(text: str, status: str = "INFO"):
-    """Print verbose status message with timestamp"""
-    timestamp = time.strftime('%H:%M:%S')
-    prefixes = {"INFO": "[INFO]", "SUCCESS": "[SUCCESS]", "WARNING": "[WARNING]", "ERROR": "[ERROR]", "PROCESS": "[PROCESS]"}
-    print(f"{timestamp} {prefixes.get(status, '[INFO]')} {text}")
+# Import the centralized print_status function
+from .logger import print_status
 
 def get_authentic_space_weather_data(start_date: pd.Timestamp, end_date: pd.Timestamp, 
                                    cache_dir: Optional[Path] = None) -> pd.DataFrame:

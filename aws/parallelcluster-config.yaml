@@ -1,0 +1,94 @@
+# AWS ParallelCluster Configuration for TEP-GNSS Analysis
+# Optimized for scientific computing workloads
+
+Region: us-east-1
+Image:
+  Os: ubuntu2004
+
+HeadNode:
+  InstanceType: t3.medium
+  Ssh:
+    KeyName: tep-gnss-keypair
+  Networking:
+    SubnetId: subnet-YOUR_SUBNET_ID
+    SecurityGroups:
+      - sg-YOUR_SECURITY_GROUP_ID
+  LocalStorage:
+    RootVolume:
+      Size: 50
+      VolumeType: gp3
+  Iam:
+    S3Access:
+      - BucketName: tep-gnss-data-bucket
+        EnableWriteAccess: true
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::aws:policy/AmazonS3FullAccess
+      - Policy: arn:aws:iam::aws:policy/AmazonEC2FullAccess
+
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: hpc-queue
+      ComputeResources:
+        - Name: hpc6a-compute
+          InstanceType: hpc6a.48xlarge
+          MinCount: 0
+          MaxCount: 10
+          SpotPrice: 2.0
+          Efa:
+            Enabled: true
+          Networking:
+            SubnetIds:
+              - subnet-YOUR_SUBNET_ID
+            SecurityGroups:
+              - sg-YOUR_SECURITY_GROUP_ID
+          LocalStorage:
+            RootVolume:
+              Size: 100
+              VolumeType: gp3
+          Iam:
+            S3Access:
+              - BucketName: tep-gnss-data-bucket
+                EnableWriteAccess: true
+            AdditionalIamPolicies:
+              - Policy: arn:aws:iam::aws:policy/AmazonS3FullAccess
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Size: 50
+            VolumeType: gp3
+
+SharedStorage:
+  - Name: EfsShared
+    StorageType: Efs
+    MountDir: /shared
+    EfsSettings:
+      PerformanceMode: generalPurpose
+      ThroughputMode: provisioned
+      ProvisionedThroughput: 1000
+      Encrypted: true
+  - Name: EbsShared
+    StorageType: Ebs
+    MountDir: /shared-ebs
+    EbsSettings:
+      VolumeType: gp3
+      Size: 1000
+      Encrypted: true
+      SnapshotId: snap-YOUR_SNAPSHOT_ID
+
+Tags:
+  Project: TEP-GNSS
+  Environment: HPC
+  CostCenter: Research
+  Owner: matthew.smawfield
+
+Iam:
+  AdditionalIamPolicies:
+    - Policy: arn:aws:iam::aws:policy/AmazonS3FullAccess
+    - Policy: arn:aws:iam::aws:policy/CloudWatchFullAccess
+
+Monitoring:
+  Logs:
+    CloudWatch:
+      Enabled: true
+      RetentionInDays: 30

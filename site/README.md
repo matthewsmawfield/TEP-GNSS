@@ -1,8 +1,8 @@
-# Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks
+# Global Time Echoes: Distance-Structured Correlations in GNSS Clocks
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17127229.svg)](https://doi.org/10.5281/zenodo.17127229)
 
-![TEP-GNSS Analysis Overview](./og-image.jpg)
+![TEP-GNSS Analysis Overview](./public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.13 (Jaipur)  
@@ -26,7 +26,7 @@ This repository contains the complete analysis pipeline for testing the Temporal
 
 ## Key Results
 
-- **Multi-center consistency**: λ = 3,330–4,549 km (12.3% variation) across independent analysis centers
+- **Multi-center consistency**: λ = 3,330–4,549 km (13.0% variation) across independent analysis centers
 - **Strong statistical fits**: R² = 0.920–0.970 for exponential correlation models
 - **Theoretical compatibility**: Results within TEP-predicted range [1,000–10,000 km]
 - **Validated methodology**: Null tests confirm signal authenticity (8.5–44× destruction under scrambling)
@@ -41,7 +41,7 @@ BibTeX:
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS
-                  Clocks Across Independent Networks (Jaipur v0.13)},
+                  Clocks (Jaipur v0.13)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},

@@ -15,10 +15,9 @@ import functools
 from typing import Optional, Callable, Any, Union, List
 from pathlib import Path
 import logging
-from scripts.utils.logger import TEPLogger
+from scripts.utils.logger import print_status, check_memory_usage # Import global functions
 
-# Instantiate the logger
-logger = TEPLogger().logger
+# The global logger instance is handled by scripts.utils.logger
 
 # Custom exception hierarchy for TEP-specific errors
 class TEPError(Exception):
@@ -51,6 +50,10 @@ class TEPAnalysisError(TEPError):
     pass
 
 
+class DataQualityError(TEPError):
+    """Errors related to data quality issues, such as insufficient data or invalid values."""
+    pass
+
 class SafeErrorHandler:
     """
     Provides safe error handling patterns to replace bare exception catching.
@@ -77,24 +80,24 @@ class SafeErrorHandler:
             Result of operation or return_on_error value
         """
         if logger_func is None:
-            logger_func = logger.warning # Use the centralized logger by default
+            logger_func = print_status # Use global print_status by default
             
         try:
             return operation()
         except FileNotFoundError as e:
-            logger_func(f"{error_message}: File not found - {e}")
+            logger_func(f"{error_message}: File not found - {e}", "WARNING")
             return return_on_error
         except PermissionError as e:
-            logger_func(f"{error_message}: Permission denied - {e}")
+            logger_func(f"{error_message}: Permission denied - {e}", "WARNING")
             return return_on_error
         except IsADirectoryError as e:
-            logger_func(f"{error_message}: Expected a file but found a directory - {e}")
-            return return_on_on_error
+            logger_func(f"{error_message}: Expected a file but found a directory - {e}", "WARNING")
+            return return_on_error
         except OSError as e:
-            logger_func(f"{error_message}: An OS error occurred - {e}")
+            logger_func(f"{error_message}: An OS error occurred - {e}", "WARNING")
             return return_on_error
         except (UnicodeDecodeError, UnicodeError) as e:
-            logger_func(f"{error_message} - encoding issue: {e}")
+            logger_func(f"{error_message} - encoding issue: {e}", "WARNING")
             return return_on_error
     
     @staticmethod
@@ -123,8 +126,8 @@ class SafeErrorHandler:
         import time
         
         if logger_func is None:
-            logger_func = logger.warning # Use the centralized logger by default for warnings
-        error_logger_func = logger.error # Use error level for network failures
+            logger_func = print_status # Use global print_status by default for warnings
+        # error_logger_func = print_status # Use error level for network failures - print_status handles levels
 
         last_error = None
         for attempt in range(max_retries + 1):
@@ -134,15 +137,15 @@ class SafeErrorHandler:
                    ConnectionError, TimeoutError) as e:
                 last_error = e
                 if attempt == 0:
-                    logger_func(f"{error_message}: {e}")
+                    logger_func(f"{error_message}: {e}", "WARNING")
                 
                 if attempt < max_retries:
-                    logger.info(f"Retrying network operation (attempt {attempt + 2}/{max_retries + 1})")
+                    print_status(f"Retrying network operation (attempt {attempt + 2}/{max_retries + 1})", "INFO")
                     time.sleep(2 ** attempt)  # Exponential backoff
                     continue
                 break
         
-        error_logger_func(f"{error_message} - all retries failed: {last_error}")
+        print_status(f"{error_message} - all retries failed: {last_error}", "ERROR")
         return return_on_error
     
     @staticmethod
@@ -165,18 +168,18 @@ class SafeErrorHandler:
             Result of operation or return_on_error value
         """
         if logger_func is None:
-            logger_func = logger.warning # Use the centralized logger by default
+            logger_func = print_status # Use global print_status by default
             
         try:
             return operation()
         except (ValueError, TypeError, KeyError, IndexError) as e:
-            logger_func(f"{error_message} - data error: {e}")
+            logger_func(f"{error_message} - data error: {e}", "WARNING")
             return return_on_error
         except (MemoryError, OverflowError) as e:
-            logger_func(f"{error_message} - resource error: {e}")
+            logger_func(f"{error_message} - resource error: {e}", "WARNING")
             return return_on_error
         except ImportError as e:
-            logger_func(f"{error_message} - missing dependency: {e}")
+            logger_func(f"{error_message} - missing dependency: {e}", "WARNING")
             return return_on_error
     
     @staticmethod
@@ -199,19 +202,19 @@ class SafeErrorHandler:
             Result of operation or return_on_error value
         """
         if logger_func is None:
-            logger_func = logger.warning # Use the centralized logger by default
+            logger_func = print_status # Use global print_status by default
             
         try:
             return operation()
         except (RuntimeError, ArithmeticError, ZeroDivisionError) as e:
-            logger_func(f"{error_message} - computation error: {e}")
+            logger_func(f"{error_message} - computation error: {e}", "WARNING")
             return return_on_error
         except (ValueError, TypeError) as e:
-            logger_func(f"{error_message} - parameter error: {e}")
+            logger_func(f"{error_message} - parameter error: {e}", "WARNING")
             return return_on_error
         # Let scipy-specific errors be handled by caller
         except ImportError as e:
-            logger_func(f"{error_message} - missing scipy/numpy: {e}")
+            logger_func(f"{error_message} - missing scipy/numpy: {e}", "WARNING")
             return return_on_error
 
 
@@ -236,7 +239,7 @@ def safe_operation(
         Decorated function
     """
     if logger_func is None:
-        logger_func = logger.error # Use the centralized logger for decorator by default
+        logger_func = print_status # Use global print_status for decorator by default
         
     def decorator(func):
         @functools.wraps(func)
@@ -244,7 +247,7 @@ def safe_operation(
             try:
                 return func(*args, **kwargs)
             except error_types as e:
-                logger_func(f"{error_message}: {e}")
+                logger_func(f"{error_message}: {e}", "ERROR")
                 if reraise:
                     raise
                 return return_on_error
@@ -387,7 +390,7 @@ def safe_json_write(data: dict, file_path: Union[str, Path], indent: int = 2):
         # Write to temporary file first, then rename (atomic operation)
         temp_path = path.with_suffix('.tmp')
         with open(temp_path, 'w') as f:
-            json.dump(data, f, indent=indent)
+            json.dump(data, f, indent=indent, default=str)
         temp_path.rename(path)
         
     except (OSError, PermissionError) as e:

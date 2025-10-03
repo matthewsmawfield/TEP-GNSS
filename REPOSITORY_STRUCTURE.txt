@@ -21,7 +21,7 @@ scripts/
 │   │   └── step_1_2_tep_coordinate_validation.py
 │   ├── core_analysis/
 │   │   ├── step_2_0_tep_correlation_analysis.py
-│   │   ├── step_2_1_aggregate_geospatial_data.py
+│   │   ├── step_2_1_data_quality_validation.py
 │   │   └── step_2_2_tep_geospatial_temporal_analysis.py
 │   ├── validation_suite/
 │   │   ├── step_3_0_tep_cross_validation_suite.py
@@ -29,16 +29,16 @@ scripts/
 │   │   ├── step_3_2_tep_null_tests.py
 │   │   ├── step_3_3_methodology_validation.py
 │   │   ├── step_3_4_geographic_bias_validation.py
-│   │   ├── step_3_5_realistic_ionospheric_validation.py
-│   │   ├── step_3_6_tid_exclusion_analysis.py
-│   │   └── step_3_7_multiple_comparison_corrections.py
+│   │   └── step_3_5_realistic_ionospheric_validation.py
 │   └── advanced_analysis_and_visualization/
 │       ├── step_4_0_tep_advanced_analysis.py
 │       ├── step_4_1_tep_visualization.py
 │       ├── step_4_2_tep_synthesis_figure.py
 │       ├── step_4_3_high_resolution_astronomical_events.py
 │       ├── step_4_4_gravitational_temporal_field_analysis.py
-│       └── step_4_5_comprehensive_diurnal_analysis.py
+│       ├── step_4_5_comprehensive_diurnal_analysis.py
+│       ├── step_4_6_tid_exclusion_analysis.py
+│       └── step_4_7_multiple_comparison_corrections.py
 │
 ├── exploratory/     ->  ALL EXPERIMENTAL WORK 
 │   ├── Step 14 Variants
@@ -74,7 +74,7 @@ data/
 ├── exploratory/     ->  EXPERIMENTAL DATA (gitignored)
 │   ├── checkpoints/ ->  Analysis state snapshots
 │   ├── historical_code/raw/ ->  Legacy data archives (2010-2025)
-│   └── step_14_complete_2010_2025_gravitational_temporal_data.csv
+│   └── step_4_4_complete_2010_2025_gravitational_temporal_data.csv
 │
 ├── station_logs/    ->  Station operational information
 │
@@ -95,11 +95,11 @@ results/
 │   ├── step_3_3_*_validation.json
 │   ├── step_3_4_geographic_bias_validation.json
 │   ├── step_3_5_*_ionospheric_validation.json
-│   ├── step_3_6_tid_exclusion_comprehensive.json
-│   ├── step_3_7_multiple_comparison_corrections.json
 │   ├── step_4_3_*_high_res_*.json
 │   ├── step_4_4_gravitational_temporal_field_analysis.json
-│   └── step_4_5_diurnal_validation_*.json
+│   ├── step_4_5_diurnal_validation_*.json
+│   ├── step_4_6_tid_exclusion_comprehensive.json
+│   └── step_4_7_multiple_comparison_corrections.json
 │
 ├── figures/         ->  PUBLICATION FIGURES
 │   ├── figure_1_TEP_site_themed.png
@@ -160,10 +160,10 @@ DOCUMENTATION & CONFIGURATION
 -----------------------------
 logs/                ->  EXECUTION LOGS
 ├── step_1_1_data_acquisition.json
-├── step_1_downloads.json
+├── step_1_1_downloads.json
 ├── step_1_2_coordinate_validation.json
 ├── step_2_0_correlation_analysis.json
-├── step_3_correlation.log
+├── step_2_0_correlation.log
 ├── step_4_0_advanced_analysis.json
 └── step_4_1_visualization.json
 
@@ -231,7 +231,7 @@ Clear Separation
 - Experimental work isolated for development
 
 Scalable Architecture
-- Sequential pipeline (step_0 -> step_18)
+- Sequential pipeline (step_1.0 -> step_4.7)
 - Modular design - easy to extend
 - Research-friendly - supports experimentation
 

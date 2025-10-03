@@ -1,7 +1,7 @@
 {
   "name": "tep-gnss-site",
   "version": "1.0.0",
-  "description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks Across Independent Networks",
+  "description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "main": "index.html",
   "scripts": {
     "dev": "lsof -ti:8347 | xargs kill -9 2>/dev/null || true && python3 -m http.server 8347",

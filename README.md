@@ -25,13 +25,13 @@ Through analysis of 47.5 million station pair measurements from 529 analyzed gro
 
 ![Distance-structured correlations in GNSS clock networks](site/figures/figure_1_TEP_site_themed.png)
 
-- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (12.3% variation)
+- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (13.0% variation)
 - **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
 - **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
 - **Multi-center validation**: Comprehensive null tests confirm signal authenticity (8.5–44× destruction under scrambling)
 - **Advanced validation**: Circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5) and comprehensive bias testing
 - **Gravitational coupling**: Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
-- **Diurnal analysis**: Step 18 reveals seasonal correlation patterns with optimal 240-day coupling windows
+- **Diurnal analysis**: Step 4.5 reveals seasonal correlation patterns with optimal 240-day coupling windows
 - **Complementary metrics**: Enhanced validation framework with exploratory analysis capabilities
 
 ## Installation
@@ -82,8 +82,10 @@ python scripts/steps/core_analysis/step_2_0_tep_correlation_analysis.py
 
 Core TEP signal detection using phase-coherent cross-spectral density analysis. Computes complex CSD between all station pairs in the 10-500 µHz frequency band, extracts phase-coherent correlations as cos(phase(CSD)), and fits exponential decay models to correlation vs. distance relationships. Implements the band-limited methodology that preserves essential phase information for TEP detection.
 
-# Step 2.1: Geospatial processing
-python scripts/steps/core_analysis/step_2_1_aggregate_geospatial_data.py
+# Step 2.1: Data Quality Validation
+python scripts/steps/step_2_core_analysis/step_2_1_data_quality_validation.py
+
+Comprehensive data quality validation and transparency analysis. Analyzes quality-filtered correlation data from Step 2.0, adds geospatial enrichments (azimuth, local time differences), and performs extensive validation including station coverage analysis, temporal gap detection, duplicate detection, outlier validation, plateau phase boundary clustering analysis, and inter-AC comparison. Generates transparency reports with red flags and analyst recommendations to ensure scientific rigor.
 
 # Step 2.2: Geospatial temporal analysis
 python scripts/steps/core_analysis/step_2_2_tep_geospatial_temporal_analysis.py
@@ -113,16 +115,8 @@ python scripts/steps/advanced_analysis_and_visualization/step_4_2_tep_synthesis_
 # Step 4.3: High-resolution astronomical events
 python scripts/steps/advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py
 
-# Step 3.6: TID exclusion analysis
-python scripts/steps/validation_suite/step_3_6_tid_exclusion_analysis.py
-
-# Step 12: [REMOVED in v0.13] Additional visualizations (deprecated)
-
 # Step 3.3: Methodology validation
 python scripts/steps/validation_suite/step_3_3_methodology_validation.py
-
-# Step 4.4: Gravitational temporal field analysis
-python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
 
 # Step 3.4: Geographic bias validation
 python scripts/steps/validation_suite/step_3_4_geographic_bias_validation.py
@@ -130,11 +124,24 @@ python scripts/steps/validation_suite/step_3_4_geographic_bias_validation.py
 # Step 3.5: Realistic ionospheric validation
 python scripts/steps/validation_suite/step_3_5_realistic_ionospheric_validation.py
 
+# Step 3.6: Control band analysis (NEW - Frequency Specificity Validation)
+python scripts/steps/validation_suite/step_3_6_control_band_analysis.py
+
+Validates that TEP correlations are frequency-specific by analyzing a theoretically unmotivated control band (1000-2000 μHz) where no signal is predicted. Runs identical phase-coherent analysis as Step 2.0 but in a higher frequency range dominated by white noise. Expected result: R² ≈ 0.05 in control band vs R² ≈ 0.85 in TEP band, demonstrating the signal is not a broadband statistical artifact. Addresses "look-elsewhere effect" criticism.
+
+# Step 4.4: Gravitational temporal field analysis
+python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
+
 # Step 4.5: Comprehensive diurnal analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_5_comprehensive_diurnal_analysis.py
 
-# Step 3.7: Multiple comparison corrections
-python scripts/steps/validation_suite/step_3_7_multiple_comparison_corrections.py
+# Step 4.6: TID exclusion analysis
+python scripts/steps/advanced_analysis_and_visualization/step_4_6_tid_exclusion_analysis.py
+
+# Step 4.7: Multiple comparison corrections (FINAL VALIDATION STEP)
+python scripts/steps/advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections.py
+
+Systematic application of Bonferroni, FDR, and Family-wise Error Rate corrections to all statistical tests performed across Steps 2.0-4.6. Ensures robust control of Type I error inflation across the entire analysis pipeline. Must run AFTER Step 4.0 (requires model comparison results).
 ```
 
 ### Configuration
@@ -190,6 +197,8 @@ Main outputs are located in:
 - **Methodology Validation**: `step_3_3_validation_report.json` - Bias characterization and validation
 - **Advanced Findings**: `step_4_4_gravitational_temporal_field_analysis.json` - Gravitational-temporal correlations
 - **Diurnal Analysis**: `step_4_5_comprehensive_diurnal_analysis.json` - Seasonal correlation patterns and optimal coupling windows
+- **TID Exclusion**: `step_4_6_tid_exclusion_comprehensive.json` - Traveling Ionospheric Disturbance analysis
+- **Multiple Comparison Corrections**: `step_4_7_multiple_comparison_corrections.json` - Statistical validation with formal corrections
 - **Complementary Metrics**: `scripts/exploratory/` - Enhanced validation framework and exploratory analysis tools
 
 ## Scientific Background
@@ -198,7 +207,7 @@ This analysis implements **Clock Network Correlation Analysis**, a key experimen
 
 **Major Finding**: Direct experimental evidence of gravitational-temporal field coupling has been discovered through comprehensive analysis of planetary gravitational influences on Earth's temporal field structure.
 
-![Gravitational-Temporal Field Coupling](site/figures/step_14_comprehensive_gravitational_temporal_analysis.png)
+![Gravitational-Temporal Field Coupling](site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png)
 
 - **Stacked gravitational correlation**: r = -0.458, p < 10⁻⁴⁸ with Earth's temporal field
 - **Individual planetary signatures**: Venus (stabilizer), Jupiter (moderate stabilizer), Mars (destabilizer), Saturn (disruptor)
@@ -236,10 +245,10 @@ The TEP proposes that gravitational fields couple directly to clock transition f
 
 ## Quality Assurance
 
-- **Multi-center consistency**: 12.3% variation across independent analysis centers
+- **Multi-center consistency**: 13.0% variation across independent analysis centers
 - **Comprehensive null testing**: Distance/phase/station scrambling (8.5–44× signal destruction)
 - **Statistical robustness**: Bootstrap confidence intervals and circular statistics
-- **Bias characterization**: Geometric artifact detection and mitigation (Step 13)
+- **Bias characterization**: Geometric artifact detection and mitigation (Step 3.3)
 - **Coordinate validation**: ECEF validation against ITRF2014 with comprehensive audit and spatial analysis
 - **Ionospheric controls**: Realistic ionospheric validation and TID exclusion
 - **Complete reproducibility**: Version control with execution logs and checkpointing

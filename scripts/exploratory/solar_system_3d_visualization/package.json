@@ -1,0 +1,32 @@
+{
+  "name": "solar-system-3d-visualization",
+  "version": "1.0.0",
+  "description": "3D Solar System Visualization for TEP-GNSS Analysis (2023-2025)",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8348",
+    "serve": "python3 -m http.server 8348",
+    "dev": "python3 -m http.server 8348"
+  },
+  "keywords": [
+    "solar-system",
+    "3d-visualization",
+    "webgl",
+    "threejs",
+    "TEP-GNSS",
+    "planetary-motion"
+  ],
+  "author": "Matthew Lukin Smawfield",
+  "license": "CC-BY-4.0",
+  "dependencies": {
+    "three": "^0.158.0",
+    "dat.gui": "^0.7.9"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "python": ">=3.6"
+  }
+}

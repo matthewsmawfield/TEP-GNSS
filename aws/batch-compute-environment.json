@@ -1,0 +1,29 @@
+{
+  "computeEnvironmentName": "tep-gnss-hpc-environment",
+  "type": "MANAGED",
+  "state": "ENABLED",
+  "computeResources": {
+    "type": "EC2",
+    "minvCpus": 0,
+    "maxvCpus": 1000,
+    "desiredvCpus": 0,
+    "instanceTypes": [
+      "hpc6a.48xlarge"
+    ],
+    "subnets": [
+      "subnet-YOUR_SUBNET_ID"
+    ],
+    "securityGroupIds": [
+      "sg-YOUR_SECURITY_GROUP_ID"
+    ],
+    "instanceRole": "arn:aws:iam::YOUR_ACCOUNT_ID:instance-profile/tep-gnss-batch-instance-role",
+    "tags": {
+      "Project": "TEP-GNSS",
+      "Environment": "HPC",
+      "CostCenter": "Research"
+    },
+    "bidPercentage": 50,
+    "spotIamFleetRole": "arn:aws:iam::YOUR_ACCOUNT_ID:role/tep-gnss-spot-fleet-role"
+  },
+  "serviceRole": "arn:aws:iam::YOUR_ACCOUNT_ID:role/tep-gnss-batch-service-role"
+}

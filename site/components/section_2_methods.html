@@ -1,0 +1,254 @@
+    <h2>2. Methods</h2>
+    
+    <h2>2.1 Analysis Pipeline Overview</h2>
+    <p>The TEP-GNSS analysis follows a systematic four-step pipeline designed to ensure rigorous validation and reproducibility. Each step builds upon previous results while maintaining independent validation criteria. The complete analysis pipeline is available at <a href="https://github.com/matthewsmawfield/TEP-GNSS" target="_blank" rel="noopener noreferrer" style="color: #2D0140; text-decoration: underline;">github.com/matthewsmawfield/TEP-GNSS</a>.</p>
+    
+    <div class="experimental-section">
+        <h3>Four-Step Analysis Pipeline</h3>
+        
+        <h4 style="color: #2D0140; margin-top: 20px;">Step 1: Data Acquisition</h4>
+        <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
+            <li><strong>1.0 Provenance Documentation:</strong> Establishes computational provenance with version tracking and execution logging</li>
+            <li><strong>1.1 TEP Data Acquisition:</strong> Acquires GNSS clock data from three independent analysis centers (CODE, IGS, ESA) covering 2023-01-01 to 2025-06-30</li>
+            <li><strong>1.2 Coordinate Validation:</strong> Validates station coordinates against ITRF2014 with comprehensive ECEF validation and spatial analysis</li>
+        </ol>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Establishes computational provenance and acquires GNSS clock data from three independent analysis centers with rigorous quality controls.</p>
+        
+        <h4 style="color: #2D0140; margin-top: 20px;">Step 2: Core Analysis</h4>
+        <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
+            <li><strong>2.0 TEP Correlation Analysis:</strong> Implements phase-coherent cross-spectral density analysis in the 10-500 µHz band, extracting cos(phase(CSD)) correlations and fitting exponential decay models</li>
+            <li><strong>2.1 Aggregate Geospatial Data:</strong> Consolidates station pair correlations with geographic metadata and distance binning</li>
+            <li><strong>2.2 Geospatial Temporal Analysis:</strong> Analyzes correlations with astronomical events, orbital tracking, anisotropy patterns, and temporal field dynamics</li>
+        </ol>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Detects exponential correlation decay patterns using phase-coherent cross-spectral density analysis.</p>
+        
+        <h4 style="color: #2D0140; margin-top: 20px;">Step 3: Validation Suite</h4>
+        <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
+            <li><strong>3.0 Cross-Validation Suite:</strong> Block-wise validation (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses</li>
+            <li><strong>3.1 Robust Block Bootstrap:</strong> Bootstrap confidence intervals with 1000 iterations</li>
+            <li><strong>3.2 TEP Null Tests:</strong> Distance/phase/station scrambling with 100 iterations per test</li>
+            <li><strong>3.3 Methodology Validation:</strong> Bias characterization and geometric artifact detection</li>
+            <li><strong>3.4 Geographic Bias Validation:</strong> Continental and hemispheric bias analysis</li>
+            <li><strong>3.5 Ionospheric Validation:</strong> Realistic ionospheric control analysis</li>
+            <li><strong>3.6 TID Exclusion Analysis:</strong> Traveling Ionospheric Disturbance characterization</li>
+            <li><strong>3.7 Multiple Comparison Corrections:</strong> Bonferroni, FDR, and Family-wise Error Rate corrections</li>
+        </ol>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Comprehensive validation through cross-validation, null tests, bias characterization, and multiple comparison corrections.</p>
+        
+        <h4 style="color: #2D0140; margin-top: 20px;">Step 4: Advanced Analysis and Visualization</h4>
+        <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
+            <li><strong>4.0 TEP Advanced Analysis:</strong> Model comparison (7 models tested), circular statistics, and advanced correlation metrics</li>
+            <li><strong>4.1 TEP Visualization:</strong> Publication-quality figures for correlation patterns and multi-center consistency</li>
+            <li><strong>4.2 Synthesis Figure:</strong> Comprehensive synthesis of observational evidence</li>
+            <li><strong>4.3 High-Resolution Astronomical Events:</strong> Eclipse and supermoon coherence modulation analysis</li>
+            <li><strong>4.4 Gravitational Temporal Field Analysis:</strong> Multi-window planetary gravitational correlation analysis with timescale strengthening</li>
+            <li><strong>4.5 Comprehensive Diurnal Analysis:</strong> Hourly temporal analysis with seasonal pattern characterization</li>
+        </ol>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Advanced analyses including eclipse effects, gravitational correlations, and comprehensive visualizations.</p>
+        
+        <h4 style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #ddd;">Pipeline Validation Framework</h4>
+        <ul style="margin: 10px 0; line-height: 1.6;">
+            <li><strong>Multi-Center Consistency:</strong> All analyses performed across three independent GNSS analysis centers (CODE, IGS, ESA) with systematic cross-validation to assess coefficient of variation</li>
+            <li><strong>Statistical Rigor:</strong> Comprehensive null testing through data scrambling, cross-validation methods, and multiple comparison corrections applied throughout the pipeline</li>
+            <li><strong>Reproducibility:</strong> Complete computational provenance tracking, version control, execution logging, and open-source analysis scripts ensure full reproducibility</li>
+        </ul>
+        
+        <p style="margin-top: 20px; padding: 12px; background-color: rgba(45, 1, 64, 0.05); border-left: 3px solid #2D0140; font-size: 14px;">
+            <strong>Implementation Details:</strong> For complete usage instructions, configuration options, runtime estimates, and step-by-step execution guide for all 23 pipeline steps, see Section 6 (Analysis Package) at the end of this document. The complete source code and documentation are available at <a href="https://github.com/matthewsmawfield/TEP-GNSS" target="_blank" rel="noopener noreferrer" style="color: #2D0140; text-decoration: underline;">github.com/matthewsmawfield/TEP-GNSS</a>.
+        </p>
+    </div>
+    
+    <h2>2.2 Data Architecture</h2>
+    <p>The analysis employs a rigorous three-way validation approach using independent clock products from major analysis centers. To ensure cross-validation integrity, the analysis is restricted to the common temporal overlap period (2023-01-01 to 2025-06-30) when all three centers have available data:</p>
+    
+    <div class="experimental-section">
+        <h3>Authoritative data sources</h3>
+        <ul>
+            <li><strong>Station coordinates</strong>: International Terrestrial Reference Frame 2014 (ITRF2014) via IGS JSON API and BKG services, with mandatory ECEF validation</li>
+            <li><strong>Clock products</strong>: Official .CLK files from CODE (AIUB FTP), ESA (navigation-office repositories), and IGS (BKG root FTP)</li>
+            <li><strong>Quality assurance</strong>: Hard-fail policy on missing sources; zero tolerance for synthetic, fallback, or interpolated data</li>
+        </ul>
+        
+        <h3>Dataset characteristics</h3>
+        <ul>
+            <li><strong>Data type</strong>: Ground station atomic clock correlations</li>
+            <li><strong>Temporal coverage</strong>: 2023-01-01 to 2025-06-30 (912 days) with date filtering applied
+                <ul>
+                    <li>IGS: 912 files processed (complete coverage)</li>
+                    <li>CODE: 912 files processed (complete coverage)</li>
+                    <li>ESA: 912 files processed (complete coverage)</li>
+        </ul>
+            </li>
+            <li><strong>Spatial coverage</strong>: 529 analyzed stations (of 766 cataloged) from the global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
+            <li><strong>Data volume</strong>: 62.8 million station pair cross-spectral measurements</li>
+            <li><strong>Analysis centers</strong>: CODE (912 files processed, 39.1M pairs), ESA (912 files processed, 10.8M pairs), IGS (912 files processed, 12.9M pairs). Station pair counts vary across centers due to different station network sizes and center-specific data availability and quality criteria.</li>
+        </ul>
+        <p><em>File counts reflect actual processed files within the 912-day analysis window (2023-01-01 to 2025-06-30) after date filtering.</em></p>
+        <p><em>Station selection: Of 766 cataloged stations with coordinate data, only 529 meet the minimum data quality threshold of ≥20 observation epochs per file for reliable spectral analysis (TEP_MIN_EPOCHS = 20). This ensures sufficient temporal coverage for cross-spectral density computation while maintaining statistical rigor.</em></p>
+    </div>
+
+    <figure role="img" style="text-align:center; margin: 30px 0;">
+        <img src="public/figures/gnss_stations_three_globes.png" alt="Global distribution of GNSS stations shown on three globe perspectives" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1a. Global GNSS Station Network:</b> Three-globe perspective showing worldwide distribution of 529 analyzed ground stations (of 766 cataloged) across all continents, enabling detection of continental-scale correlation patterns.</figcaption>
+    </figure>
+
+    <figure role="img" style="text-align:center; margin: 30px 0;">
+        <img src="public/figures/gnss_stations_map.png" alt="Global map showing GNSS station distribution" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1b. GNSS Station Coverage Map:</b> Comprehensive global distribution of 529 analyzed stations (of 766 cataloged) showing station density and geographic coverage essential for intercontinental correlation analysis.</figcaption>
+    </figure>
+
+    <figure role="img" style="text-align:center; margin: 30px 0;">
+        <img src="public/figures/distance_distribution.png?v=20250928" alt="Distribution of station pair distances" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 2. Station Pair Distance Distribution:</b> Optimal sampling across 0–15,000 km range with peak density at intercontinental scales (8,000–12,000 km), providing robust statistical power for TEP detection.</figcaption>
+    </figure>
+
+    <figure role="img" style="text-align:center; margin: 30px 0;">
+        <img src="public/figures/analyzed_pairs_distribution.png" alt="Distribution of actually analyzed station pairs after quality filtering" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 3. Actually Analyzed Station Pairs Distribution:</b> Post-filtering distribution showing 47.5 million pairs actually used in correlation analysis (CODE: 30.0M, IGS: 9.6M, ESA: 7.9M). Peak at ~8,500 km demonstrates optimal coverage of TEP correlation length range (3,330–4,549 km).</figcaption>
+    </figure>
+    <h2>2.3 Phase-Coherent Analysis Method</h2>
+    <p>Standard signal processing techniques using band-averaged real coherency fail to detect TEP signals due to phase averaging effects. Magnitude-only metrics |CSD| discard the phase information that encodes the spatial structure of field coupling. A phase-coherent approach was developed that preserves the complex cross-spectral density information essential for TEP detection.</p>
+    <div class="experimental-section">
+        <h3>Core methodology</h3>
+        <ol>
+            <li><strong>Cross-spectral density computation</strong>: For each station pair (i, j), compute complex CSD from clock residual time series</li>
+            <li><strong>Phase-alignment index</strong>: Extract phase-coherent correlation as cos(phase(CSD)), preserving phase information</li>
+            <li><strong>Frequency band selection</strong>: Analyze 10-500 µHz (periods: 33 minutes to 28 hours) where GNSS clock noise shows characteristic low-frequency behavior</li>
+            <li><strong>Dynamic sampling</strong>: Compute actual sampling rate from timestamps (no hardcoded assumptions)</li>
+        </ol>
+        
+        <h3>Why phase coherence matters</h3>
+        <p>The TEP signal manifests as correlated fluctuations with consistent phase relationships. Band-averaged real coherency $\gamma(f) = \text{Re}(S_{xy}(f)/\sqrt{S_{xx}(f)S_{yy}(f)})$ destroys this phase information, yielding near-zero correlations ($R² &lt; 0.05$).</p>
+        
+        <h4>Why standard coherency fails here</h4>
+        <p>Standard coherency (complex: $\gamma(f)$) differs from coherence (magnitude-squared: $|\gamma(f)|^2$), but both suffer two critical problems in this GNSS context:</p>
+        <ul>
+            <li><strong>Amplitude dependence:</strong> GNSS processing explicitly removes spatially correlated signals through network constraints and environmental corrections. This shrinks $|S_{ij}(f)|$ precisely when phases are aligned, causing coherency to collapse toward zero even for genuine TEP signals.</li>
+            <li><strong>Phase smearing:</strong> Linear (Euclidean) averaging of complex values across frequencies/times allows small phase jitters around zero to cancel out, washing away the real directional clustering that encodes spatial structure.</li>
+        </ul>
+        <p><strong>Intuitive contrast:</strong> Standard coherency asks "how long is the average arrow?" (short due to amplitude suppression), while the cos(phase(CSD)) method asks "which direction do the arrows prefer?" (preference survives amplitude normalization).</p>
+        
+        <h3>Physical interpretation of the phase-based approach</h3>
+        <p>For two zero-mean, wide-sense stationary clock residual processes $x_i(t), x_j(t)$, the cross-spectrum $S_{ij}(f)$ is the Fourier transform of the cross-correlation $R_{ij}(\tau)$ (Wiener–Khinchin):</p>
+        <div class="equation">$$S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]$$</div>
+        <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10–500 $\mu$Hz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
+        <div class="equation">$$\phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}$$</div>
+        <p>Hence, the physically expected inter-station phase is $\approx 0$ in this band; the information lies in how tightly phases cluster, not in a systematic lag. Writing the unit phasor $U_{ij}(f)=S_{ij}(f)/|S_{ij}(f)|$, the metric uses $\mathrm{Re}\{U_{ij}(f)\}= \cos(\arg S_{ij}(f))$. When averaged over pairs within a distance bin, this estimates the circular mean of phases. If the within-bin phase distribution is von Mises $\mathrm{VM}(\mu\!\approx\!0, \kappa(r))$, the expected value is</p>
+        <div class="equation">$$\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)$$</div>
+        <p>If the underlying field has exponential spatial covariance, $\mathrm{Cov}[\phi(\mathbf{x}),\phi(\mathbf{x}+\mathbf{r})]\propto e^{-r/\lambda}$, then the concentration $\kappa(r)$ (and thus the circular mean above) inherits an exponential distance-decay, matching the fitted form.</p>
+        <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts as shown by: (i) distance/phase/station scrambling, which collapses the circular mean toward zero; and (ii) replication across independent processing chains (CODE, IGS, ESA). Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore miss the distance-structured phase coherence central to TEP.</p>
+        </div>
+
+    <h2>2.4 Validation Framework Overview</h2>
+    <p>To distinguish genuine physical phenomena from methodological artifacts, comprehensive validation testing is employed. Each potential source of bias or alternative explanation is directly tested with quantitative criteria. Detailed validation results demonstrating signal authenticity are presented in Section 4 following the observational findings.</p>
+
+    <h2>2.5 Statistical Framework</h2>
+    
+    <div class="experimental-section">
+        <h3>Model comparison and selection</h3>
+        <p>To validate the theoretical exponential decay assumption, comprehensive model comparison is performed using information-theoretic criteria:</p>
+        <ul>
+            <li><strong>Models tested</strong>: Seven correlation functions including Exponential, Gaussian, Squared Exponential, Power Law, Power Law with Cutoff, and Matérn (ν=1.5, 2.5)</li>
+            <li><strong>Selection criteria</strong>: Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC)</li>
+            <li><strong>Methodology</strong>: Each model fitted using weighted nonlinear least squares with full uncertainty propagation</li>
+            <li><strong>Validation</strong>: Cross-center consistency analysis to ensure robust model selection</li>
+        </ul>
+        
+        <h3>Exponential model fitting</h3>
+        <ul>
+            <li><strong>Model</strong>: $C(r) = A \cdot \exp(-r/\lambda) + C_0$
+                <ul>
+                    <li>$C(r)$: Mean phase-alignment index at distance $r$</li>
+                    <li>$A$: Correlation amplitude at zero distance</li>
+                    <li>$\lambda$: Characteristic correlation length (km)</li>
+                    <li>$C_0$: Asymptotic correlation offset</li>
+                </ul>
+            </li>
+            <li><strong>Distance metric</strong>: Geodesic distance on WGS-84 (Karney), computed via GeographicLib</li>
+            <li><strong>Rationale</strong>: For ground-to-ground baselines, geodesic separation tracks propagation-relevant geometry; results are unchanged ($\leq 1$–$2\%$) versus ECEF-chord distances at continental scales</li>
+            <li><strong>Distance binning</strong>: 40 logarithmic bins from 50 to 13,000 km (bins with insufficient data excluded based on minimum count threshold)</li>
+            <li><strong>Fitting method</strong>: Weighted nonlinear least squares with physical bounds</li>
+            <li><strong>Weights</strong>: Number of station pairs per distance bin</li>
+        </ul>
+        
+        <h3>Uncertainty quantification and independence</h3>
+        <ul>
+            <li><strong>Bootstrap resampling</strong>: 1000 iterations with replacement at distance-bin level</li>
+            <li><strong>Resampling unit</strong>: Distance bins (preserving pair count weights and spatial structure)</li>
+            <li><strong>Effective sample size</strong>: ~28-35 independent distance bins from 40 attempted logarithmic bins (bins with insufficient data excluded, accounting for spatial correlations between overlapping pairs)</li>
+            <li><strong>Independence validation</strong>: Station pair non-independence addressed through LOSO cross-validation and block-wise validation (Step 5.5)</li>
+            <li><strong>Confidence intervals</strong>: $95\%$ (2.5th to 97.5th percentiles) reflect bin-level uncertainty, not individual pair precision</li>
+            <li><strong>Random seeds</strong>: Sequential 0-999 for reproducibility</li>
+        </ul>
+        
+        <h3>Null test validation</h3>
+        <ul>
+            <li><strong>Distance scrambling</strong>: Randomize distance labels while preserving correlation values</li>
+            <li><strong>Phase scrambling</strong>: Randomize phase relationships while preserving magnitudes</li>
+            <li><strong>Station scrambling</strong>: Randomize station assignments within each day</li>
+            <li><strong>Iterations</strong>: 100 per test type per center</li>
+            <li><strong>Significance</strong>: Permutation p-values computed from null distribution, z-scores as descriptive statistics</li>
+        </ul>
+
+        <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(45, 1, 64, 0.08); border: 2px solid #2D0140;">
+            <h4>Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)</h4>
+            <p><strong>Critical Methodological Point:</strong> This analysis performs <em>spatial correlation analysis</em>, not multiple pairwise comparisons. Station pairs are aggregated into distance bins for fitting a single exponential correlation model—standard practice in spatial statistics, geostatistics, and variogram analysis.</p>
+            
+            <p><strong>Statistical Unit:</strong> The analysis operates on independent distance bins (from 40 attempted logarithmic bins), not individual station pair comparisons. Each bin aggregates thousands of pairs, providing robust statistics while controlling effective sample size.</p>
+            
+            <h5>Why Multiple Comparison Corrections Are Not Applied to Primary Analysis:</h5>
+            <ul style="margin-bottom: 10px;">
+                <li><strong>Single hypothesis test:</strong> Tests one exponential correlation model across distance bins</li>
+                <li><strong>Aggregated data structure:</strong> Pairs are binned by distance, not analyzed individually</li>
+                <li><strong>Standard spatial statistics:</strong> Identical to variogram analysis in geostatistics</li>
+                <li><strong>Cross-validation framework:</strong> LOSO/LODO methods test robustness to data structure</li>
+            </ul>
+            
+            <h5>When Multiple Comparison Corrections Are Applied:</h5>
+            <ul style="margin-bottom: 10px;">
+                <li><strong>Astronomical event analysis:</strong> Multiple planetary tests use Bonferroni and FDR corrections</li>
+                <li><strong>Model comparison:</strong> AIC/BIC account for model complexity</li>
+                <li><strong>Null testing:</strong> Permutation tests provide proper significance assessment</li>
+                <li><strong>Comprehensive validation suite:</strong> Formal corrections applied to all secondary statistical tests</li>
+            </ul>
+            
+            <p><strong>Validation approach:</strong> Multiple independent validation methodologies (spatial correlation modeling, temporal scrambling tests, cross-validation frameworks) reduce the risk of systematic artifacts through methodological diversity rather than statistical multiplicity corrections.</p>
+        </div>
+        <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(73, 87, 115, 0.05);">
+            <h4>Statistical Independence Considerations</h4>
+            <p><strong>Pair-level dependencies:</strong> Station pairs sharing common stations create covariance structures that could inflate precision estimates. This is addressed through:</p>
+            <ul style="margin-bottom: 10px;">
+                <li><strong>Distance-bin aggregation:</strong> Primary analysis operates on binned means rather than individual pairs, reducing dependency effects</li>
+                <li><strong>LOSO validation:</strong> Leave-one-station-out removes all pairs involving each station, testing robustness to network structure</li>
+                <li><strong>Block-wise cross-validation:</strong> Leave-N-stations-out blocks provide additional independence testing</li>
+                <li><strong>Effective N estimation:</strong> Bootstrap confidence intervals reflect ~28-35 independent bins (from 40 attempted), not 62.8M individual pairs</li>
+            </ul>
+            <p><strong>Interpretation:</strong> The confidence intervals appropriately reflect the statistical precision of distance-binned correlations rather than claiming precision from nominally large pair counts.</p>
+        </div>
+    </div>
+    
+    <figure role="img" style="text-align:center; margin: 30px 0;">
+        <img src="public/figures/binned_correlation_data.png" alt="Logarithmic distance binning strategy for TEP correlation analysis" style="max-width:100%; height:auto;" loading="lazy">
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 4. Logarithmic Distance Binning for TEP Correlation Analysis:</b> Statistical power distribution across 81 distance bins (28 CODE, 28 IGS, 25 ESA) showing logarithmic binning strategy. Narrow bins at short distances provide high resolution for near-field effects, while wide bins at long distances ensure adequate statistical power. TEP correlation range (3,330–4,549 km) highlighted in gray, demonstrating optimal sampling density for correlation length detection.</figcaption>
+    </figure>
+
+    <h2>2.6 Advanced Analysis Methods</h2>
+    <p>Beyond baseline correlation analysis, the phase-coherent methodology is applied to investigate dynamic responses, temporal modulation, and gravitational coupling. These analyses test specific TEP predictions and explore the full range of network sensitivity to spacetime structure.</p>
+    
+    <div class="experimental-section">
+        <h3>Dynamic Event Analysis</h3>
+        <p>Methodologically consistent analysis of astronomical events (eclipses, supermoons) using identical cos(phase(CSD)) algorithms to test dynamic field responses.</p>
+        
+        <h3>Earth Motion Coupling</h3>
+        <p>Temporal tracking of correlation anisotropy patterns to detect coupling with Earth's orbital motion, rotation, and polar wandering.</p>
+        
+        <h3>Gravitational Correlation Analysis</h3>
+        <p>Multi-window smoothing analysis correlating planetary gravitational influences with temporal coherence patterns using NASA/JPL ephemeris data.</p>
+        
+        <h3>Network Coherence Analysis</h3>
+        <p>Investigation of collective network behavior to detect unified detector responses and systematic motion signatures.</p>
+        
+        <h3>Temporal Modulation Studies</h3>
+        <p>High-resolution diurnal and seasonal analysis to detect systematic variations in correlation strength with Earth's orientation and orbital position.</p>
+    </div>
+    
