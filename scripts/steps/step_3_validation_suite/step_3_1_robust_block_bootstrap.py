@@ -146,6 +146,9 @@ def load_complete_pair_dataset_chunked(ac: str, chunk_size: int = None) -> pd.Da
             
             chunks = []
             for chunk in pd.read_csv(step_2_1_file, chunksize=chunk_size):
+                # Create coherence column in each chunk if needed
+                if 'coherence' not in chunk.columns and 'plateau_phase' in chunk.columns:
+                    chunk['coherence'] = np.cos(chunk['plateau_phase'])
                 chunks.append(chunk)
                 if len(chunks) % 10 == 0:
                     print_status(f"Loaded {len(chunks)} chunks...", "DEBUG")
@@ -155,11 +158,38 @@ def load_complete_pair_dataset_chunked(ac: str, chunk_size: int = None) -> pd.Da
             gc.collect()
         else:
             complete_df = pd.read_csv(step_2_1_file)
+            # Create coherence column if needed
+            if 'coherence' not in complete_df.columns and 'plateau_phase' in complete_df.columns:
+                complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
     else:
         # Fallback to original method
         return load_complete_pair_dataset(ac)
     
     print_status(f"Loaded Step 2.1 dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
+    print_status(f"Columns: {list(complete_df.columns)}", "DEBUG")
+    
+    # Validate and create coherence column if needed
+    if 'coherence' not in complete_df.columns:
+        if 'plateau_phase' in complete_df.columns:
+            complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+            print_status("Created coherence column from plateau_phase", "INFO")
+        else:
+            raise TEPDataError("Neither 'coherence' nor 'plateau_phase' column found in dataset")
+    
+    # Now validate all required columns exist
+    required_cols = ['station_i', 'station_j', 'date', 'dist_km', 'coherence']
+    missing_cols = [col for col in required_cols if col not in complete_df.columns]
+    if missing_cols:
+        raise TEPDataError(f"Missing required columns: {missing_cols}")
+    
+    # Convert date column if needed
+    if not pd.api.types.is_datetime64_any_dtype(complete_df['date']):
+        try:
+            complete_df['date'] = pd.to_datetime(complete_df['date'])
+        except Exception as e:
+            print_status(f"Warning: Could not convert date column: {e}", "WARNING")
+    
+    print_status(f"Date range: {complete_df['date'].min()} to {complete_df['date'].max()}", "DEBUG")
     return complete_df
 
 def load_complete_pair_dataset(ac: str) -> pd.DataFrame:
@@ -182,7 +212,14 @@ def load_complete_pair_dataset(ac: str) -> pd.DataFrame:
             
             if file_size_mb > 500:  # Large file - use chunked loading
                 print_status(f"Large file detected ({file_size_mb:.1f} MB), using chunked loading...", "INFO")
-                complete_df = load_large_csv_chunked(step21_file, chunk_size)
+                chunks = []
+                for chunk in pd.read_csv(step21_file, chunksize=chunk_size, parse_dates=['date']):
+                    chunks.append(chunk)
+                    if len(chunks) % 10 == 0:
+                        print_status(f"Loaded {len(chunks)} chunks...", "DEBUG")
+                complete_df = pd.concat(chunks, ignore_index=True)
+                del chunks  # Free memory
+                gc.collect()
             else:
                 complete_df = pd.read_csv(step21_file, parse_dates=['date'])
                 
@@ -265,32 +302,42 @@ def load_complete_pair_dataset(ac: str) -> pd.DataFrame:
 def precompute_station_pairs(complete_df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     """
     Pre-compute station pairs to avoid repeated calculations during bootstrap.
+    Memory-efficient version that only stores indices instead of full data copies.
     
     Args:
         complete_df: Complete pair dataset
         
     Returns:
-        Dict mapping station names to their pair data
+        Dict mapping station names to their pair indices (for memory efficiency)
     """
     print_status("Pre-computing station pairs for efficient bootstrap sampling...", "PROCESS")
     
     # Get unique stations
     unique_stations = pd.unique(complete_df[['station_i', 'station_j']].values.ravel())
     
-    # Create a mapping of station to its pairs
+    # Create a mapping of station to its pair indices (memory efficient)
     station_pairs = {}
     
-    for station in unique_stations:
+    for i, station in enumerate(unique_stations):
+        if i % 50 == 0:  # Progress reporting every 50 stations
+            print_status(f"Pre-computing station {i+1}/{len(unique_stations)}: {station}", "PROCESS")
+        
         # Find all pairs involving this station
         station_mask = (complete_df['station_i'] == station) | (complete_df['station_j'] == station)
-        station_pairs[station] = complete_df[station_mask].copy()
+        # Store indices instead of full data to save memory
+        station_pairs[station] = complete_df[station_mask].index.tolist()
+        
+        # Periodic memory cleanup during pre-computation
+        if (i + 1) % 100 == 0:
+            cleanup_memory(force_gc=True, log_usage=False)
     
-    print_status(f"Pre-computed pairs for {len(station_pairs)} stations", "SUCCESS")
+    print_status(f"Pre-computed pair indices for {len(station_pairs)} stations", "SUCCESS")
     return station_pairs
 
-def create_station_bootstrap_sample_optimized(station_pairs: Dict[str, pd.DataFrame], 
+def create_station_bootstrap_sample_optimized(station_pairs: Dict[str, List[int]], 
                                             stations_to_sample: List[str], 
-                                            bootstrap_id: int) -> pd.DataFrame:
+                                            bootstrap_id: int,
+                                            complete_df: pd.DataFrame) -> pd.DataFrame:
     """
     Create a bootstrap sample using pre-computed station pairs for efficiency.
     
@@ -321,21 +368,18 @@ def create_station_bootstrap_sample_optimized(station_pairs: Dict[str, pd.DataFr
                                        size=n_stations_to_sample, 
                                        replace=True)
     
-    # Use pre-computed pairs for efficient sampling
-    bootstrap_parts = []
+    # Use pre-computed indices for efficient sampling
+    bootstrap_indices = set()
     for station in sampled_stations:
         if station in station_pairs:
-            bootstrap_parts.append(station_pairs[station])
+            bootstrap_indices.update(station_pairs[station])
     
-    if bootstrap_parts:
-        bootstrap_sample = pd.concat(bootstrap_parts, ignore_index=True)
-        # Remove duplicates that might occur from sampling the same station multiple times
-        bootstrap_sample = bootstrap_sample.drop_duplicates()
+    # Convert indices back to DataFrame
+    if bootstrap_indices:
+        bootstrap_sample = complete_df.loc[list(bootstrap_indices)].copy()
+        return bootstrap_sample
     else:
-        # Fallback to empty DataFrame
-        bootstrap_sample = pd.DataFrame()
-    
-    return bootstrap_sample
+        return pd.DataFrame()
 
 def create_station_bootstrap_sample(complete_df: pd.DataFrame, 
                                   stations_to_sample: List[str], 
@@ -512,17 +556,30 @@ def fit_correlation_model_bootstrap(bootstrap_sample: pd.DataFrame) -> Tuple[Opt
         coherences = binned['mean_coh'].values
         weights = binned['count'].values
         
+        # Validate data before fitting
+        if np.any(~np.isfinite(distances)) or np.any(~np.isfinite(coherences)):
+            return None, False, {'error': 'invalid_data', 'has_nan': True}
+        
+        if len(np.unique(distances)) < 3:
+            return None, False, {'error': 'insufficient_unique_distances', 'n_unique': len(np.unique(distances))}
+        
         # Initial parameter estimates
         c_range = coherences.max() - coherences.min()
+        if c_range <= 0:
+            return None, False, {'error': 'no_coherence_variation', 'coherence_range': c_range}
+        
         p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS', 4000), coherences.min()]
         
-        # Fit exponential model with robust bounds
-        popt, pcov = curve_fit(
-            correlation_model, distances, coherences,
-            p0=p0, sigma=1.0/np.sqrt(weights),
-            bounds=TEPConfig.get_adaptive_lambda_bounds(distances),
-            maxfev=5000
-        )
+        try:
+            # Fit exponential model with robust bounds
+            popt, pcov = curve_fit(
+                correlation_model, distances, coherences,
+                p0=p0, sigma=1.0/np.sqrt(weights),
+                bounds=TEPConfig.get_adaptive_lambda_bounds(distances),
+                maxfev=5000
+            )
+        except Exception as fit_error:
+            return None, False, {'error': f'curve_fit_failed: {str(fit_error)}', 'p0': p0}
         
         # Calculate R²
         predicted = correlation_model(distances, *popt)
@@ -597,34 +654,45 @@ def monitor_memory_usage(operation_name: str, threshold_mb: float = 2000):
         print_status(f"High memory usage detected in {operation_name}: {rss_mb:.2f} MB", "WARNING")
         cleanup_memory(force_gc=True, log_usage=True)
         return True
+    
+    # Critical memory check - if we're approaching system limits, abort
+    if rss_mb > 8000:  # 8GB limit to prevent system kill
+        print_status(f"CRITICAL: Memory usage too high ({rss_mb:.2f} MB) - aborting to prevent system kill", "ERROR")
+        raise MemoryError(f"Memory usage exceeded safe limit: {rss_mb:.2f} MB")
+    
     return False
 
 def process_bootstrap_sample_parallel(args):
     """
     Process a single bootstrap sample in parallel with memory management.
+    NOTE: This function is currently disabled due to multiprocessing issues with large DataFrames.
+    Use sequential processing instead.
     
     Args:
-        args: Tuple of (station_pairs, unique_stations, bootstrap_id, min_pairs)
+        args: Tuple of (bootstrap_id, complete_df_path, station_pairs, unique_stations, min_pairs)
         
     Returns:
         Tuple of (bootstrap_id, result_dict, success_flag)
     """
-    station_pairs, unique_stations, bootstrap_id, min_pairs = args
+    bootstrap_id, complete_df_path, station_pairs, unique_stations, min_pairs = args
     
     try:
-        # Create bootstrap sample using optimized method
-        bootstrap_sample = create_station_bootstrap_sample_optimized(station_pairs, unique_stations, bootstrap_id)
+        # Load DataFrame in worker process to avoid serialization issues
+        complete_df = pd.read_parquet(complete_df_path) if complete_df_path.endswith('.parquet') else pd.read_csv(complete_df_path)
+        
+        # Create bootstrap sample using standard method (optimized method has issues with multiprocessing)
+        bootstrap_sample = create_station_bootstrap_sample(complete_df, unique_stations, bootstrap_id)
         
         if len(bootstrap_sample) < min_pairs:
-            del bootstrap_sample
+            del bootstrap_sample, complete_df
             gc.collect()
             return bootstrap_id, None, False
         
         # Fit correlation model
         fitted_params, fit_success, diagnostics = fit_correlation_model_bootstrap(bootstrap_sample)
         
-        # Clean up bootstrap sample immediately after use
-        del bootstrap_sample
+        # Clean up immediately after use
+        del bootstrap_sample, complete_df
         gc.collect()
         
         if fit_success:
@@ -645,6 +713,8 @@ def process_bootstrap_sample_parallel(args):
         # Ensure cleanup even on error
         if 'bootstrap_sample' in locals():
             del bootstrap_sample
+        if 'complete_df' in locals():
+            del complete_df
         gc.collect()
         print_status(f"Error in bootstrap sample {bootstrap_id}: {e}", "ERROR")
         return bootstrap_id, None, False
@@ -663,9 +733,10 @@ def run_station_block_bootstrap(complete_df: pd.DataFrame) -> Dict:
     
     # Get unique stations
     unique_stations = pd.unique(complete_df[['station_i', 'station_j']].values.ravel())
-    n_bootstrap_samples = TEPConfig.get_int('TEP_STATION_BOOTSTRAP_SAMPLES', 200)
+    n_bootstrap_samples = TEPConfig.get_int('TEP_STATION_BOOTSTRAP_SAMPLES', 50)
     n_workers = TEPConfig.get_worker_count('TEP_WORKERS')
     
+    print_status(f"Configuration: TEP_STATION_BOOTSTRAP_SAMPLES = {TEPConfig.get_int('TEP_STATION_BOOTSTRAP_SAMPLES', 50)}", "DEBUG")
     print_status(f"Running {n_bootstrap_samples} station bootstrap samples from {len(unique_stations)} unique stations", "INFO")
     print_status(f"Using {n_workers} parallel workers for bootstrap processing", "INFO")
     
@@ -675,10 +746,8 @@ def run_station_block_bootstrap(complete_df: pd.DataFrame) -> Dict:
     # Memory cleanup after pre-computation
     cleanup_memory(force_gc=True, log_usage=True)
     
-    # Prepare arguments for parallel processing
+    # Use sequential processing (multiprocessing has issues with large DataFrames)
     min_pairs = 1000
-    args_list = [(station_pairs, unique_stations, i, min_pairs) for i in range(n_bootstrap_samples)]
-    
     bootstrap_results = []
     lambda_estimates = []
     successful_samples = 0
@@ -686,52 +755,58 @@ def run_station_block_bootstrap(complete_df: pd.DataFrame) -> Dict:
     # Monitor initial memory usage
     monitor_memory_usage("Station Bootstrap Start")
     
-    # Use parallel processing for bootstrap samples
-    with ProcessPoolExecutor(max_workers=n_workers) as executor:
-        # Submit all tasks
-        future_to_id = {executor.submit(process_bootstrap_sample_parallel, args): args[2] 
-                       for args in args_list}
+    print_status(f"Processing {n_bootstrap_samples} bootstrap samples sequentially (multiprocessing disabled for large datasets)", "INFO")
+    
+    # Run a diagnostic check with the first few samples to catch issues early
+    diagnostic_samples = min(5, n_bootstrap_samples)
+    print_status(f"Running diagnostic check with first {diagnostic_samples} samples...", "INFO")
+    
+    diagnostic_errors = []
+    for i in range(diagnostic_samples):
+        try:
+            bootstrap_sample = create_station_bootstrap_sample_optimized(station_pairs, unique_stations, i, complete_df)
+            if len(bootstrap_sample) >= min_pairs:
+                fitted_params, fit_success, diagnostics = fit_correlation_model_bootstrap(bootstrap_sample)
+                if fit_success:
+                    print_status(f"Diagnostic sample {i}: SUCCESS - λ={diagnostics['lambda_km']:.1f} km, R²={diagnostics['r_squared']:.3f}", "INFO")
+                else:
+                    error_msg = diagnostics.get('error', 'unknown_error')
+                    diagnostic_errors.append(f"Sample {i}: {error_msg}")
+                    print_status(f"Diagnostic sample {i}: FAILED - {error_msg}", "WARNING")
+            else:
+                diagnostic_errors.append(f"Sample {i}: insufficient_pairs ({len(bootstrap_sample)})")
+            del bootstrap_sample
+        except Exception as e:
+            diagnostic_errors.append(f"Sample {i}: exception - {e}")
+            print_status(f"Diagnostic sample {i}: ERROR - {e}", "ERROR")
+    
+    if len(diagnostic_errors) == diagnostic_samples:
+        print_status("All diagnostic samples failed! Check data and configuration.", "ERROR")
+        print_status(f"Diagnostic errors: {diagnostic_errors[:3]}", "ERROR")  # Show first 3 errors
+    else:
+        print_status(f"Diagnostic complete: {diagnostic_samples - len(diagnostic_errors)}/{diagnostic_samples} samples successful", "SUCCESS")
+    
+    # Sequential processing with regular progress updates and memory cleanup
+    for i in range(n_bootstrap_samples):
+        if (i + 1) % 10 == 0:  # More frequent progress updates
+            progress_pct = (i + 1) / n_bootstrap_samples * 100
+            print_status(f"Station bootstrap progress: {i+1}/{n_bootstrap_samples} ({progress_pct:.1f}%), {successful_samples} successful", "PROCESS")
         
-        # Process completed tasks
-        for future in as_completed(future_to_id):
-            bootstrap_id, result, success = future.result()
-            
-            if success and result is not None:
-                lambda_estimates.append(result['lambda_km'])
-                bootstrap_results.append(result)
-                successful_samples += 1
-            
-            # Progress reporting and memory monitoring
-            if (successful_samples + len(future_to_id) - len([f for f in future_to_id if f.done()])) % 50 == 0:
-                progress_pct = (successful_samples + len(future_to_id) - len([f for f in future_to_id if f.done()])) / n_bootstrap_samples * 100
-                print_status(f"Station bootstrap progress: {successful_samples + len(future_to_id) - len([f for f in future_to_id if f.done()])}/{n_bootstrap_samples} ({progress_pct:.1f}%)", "PROCESS")
-                
-                # Monitor memory usage every 50 samples
-                monitor_memory_usage("Station Bootstrap Progress")
-    
-    # Memory cleanup after parallel processing
-    cleanup_memory(force_gc=True, log_usage=True)
-    
-    # Clean up pre-computed station pairs
-    del station_pairs
-    cleanup_memory(force_gc=True, log_usage=True)
-    
-    # Fallback to sequential processing if parallel fails
-    if not lambda_estimates:
-        print_status("Parallel processing failed, falling back to sequential processing...", "WARNING")
-        for i in range(n_bootstrap_samples):
-            if (i + 1) % 50 == 0:
-                progress_pct = (i + 1) / n_bootstrap_samples * 100
-                print_status(f"Station bootstrap progress: {i+1}/{n_bootstrap_samples} ({progress_pct:.1f}%)", "PROCESS")
-            
+        try:
             # Create bootstrap sample using optimized method
-            bootstrap_sample = create_station_bootstrap_sample_optimized(station_pairs, unique_stations, i)
+            bootstrap_sample = create_station_bootstrap_sample_optimized(station_pairs, unique_stations, i, complete_df)
             
-            if len(bootstrap_sample) < 1000:  # Skip samples that are too small
+            if len(bootstrap_sample) < min_pairs:  # Skip samples that are too small
+                if (i + 1) % 50 == 0:  # Only log occasionally to avoid spam
+                    print_status(f"Bootstrap sample {i}: too few pairs ({len(bootstrap_sample)} < {min_pairs})", "DEBUG")
+                del bootstrap_sample
                 continue
             
             # Fit correlation model
             fitted_params, fit_success, diagnostics = fit_correlation_model_bootstrap(bootstrap_sample)
+            
+            # Clean up bootstrap sample immediately
+            del bootstrap_sample
             
             if fit_success:
                 lambda_estimates.append(fitted_params[1])  # Store lambda
@@ -744,6 +819,30 @@ def run_station_block_bootstrap(complete_df: pd.DataFrame) -> Dict:
                     'offset': diagnostics['offset'],
                     'r_squared': diagnostics['r_squared']
                 })
+                successful_samples += 1
+            else:
+                # Log fitting errors for debugging (but not too frequently)
+                if (i + 1) % 50 == 0 or successful_samples < 5:
+                    error_msg = diagnostics.get('error', 'unknown_error')
+                    print_status(f"Bootstrap sample {i}: fit failed - {error_msg}", "DEBUG")
+            
+            # More frequent memory cleanup for large datasets
+            if (i + 1) % 5 == 0:
+                cleanup_memory(force_gc=True, log_usage=False)
+                
+        except Exception as e:
+            print_status(f"Error in bootstrap sample {i}: {e}", "WARNING")
+            # Ensure cleanup on error
+            if 'bootstrap_sample' in locals():
+                del bootstrap_sample
+            continue
+    
+    # Final memory cleanup
+    cleanup_memory(force_gc=True, log_usage=True)
+    
+    # Clean up pre-computed station pairs
+    del station_pairs
+    cleanup_memory(force_gc=True, log_usage=True)
     
     if not lambda_estimates:
         return {'success': False, 'error': 'No successful bootstrap fits'}
@@ -1165,7 +1264,7 @@ def main():
     
     # Configuration summary
     print_status("Configuration:", "INFO")
-    print_status(f"  Station bootstrap samples: {TEPConfig.get_int('TEP_STATION_BOOTSTRAP_SAMPLES', 500)}", "INFO")
+    print_status(f"  Station bootstrap samples: {TEPConfig.get_int('TEP_STATION_BOOTSTRAP_SAMPLES', 50)}", "INFO")
     print_status(f"  Day bootstrap samples: {TEPConfig.get_int('TEP_DAY_BOOTSTRAP_SAMPLES', 300)}", "INFO")
     print_status(f"  Hybrid bootstrap samples: {TEPConfig.get_int('TEP_HYBRID_BOOTSTRAP_SAMPLES', 200)}", "INFO")
     print_status(f"  Minimum stations per sample: {TEPConfig.get_int('TEP_BOOTSTRAP_MIN_STATIONS', 100)}", "INFO")

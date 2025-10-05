@@ -30,7 +30,7 @@
             <li><strong>3.3 Methodology Validation:</strong> Bias characterization and geometric artifact detection</li>
             <li><strong>3.4 Geographic Bias Validation:</strong> Continental and hemispheric bias analysis</li>
             <li><strong>3.5 Ionospheric Validation:</strong> Realistic ionospheric control analysis</li>
-            <li><strong>3.6 TID Exclusion Analysis:</strong> Traveling Ionospheric Disturbance characterization</li>
+            <li><strong>3.6 Multi-Band Frequency Analysis:</strong> Spectral characterization across 13 frequency bands (10-1500 µHz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands</li>
             <li><strong>3.7 Multiple Comparison Corrections:</strong> Bonferroni, FDR, and Family-wise Error Rate corrections</li>
         </ol>
         <p style="margin-top: 10px; font-style: italic; color: #666;">Comprehensive validation through cross-validation, null tests, bias characterization, and multiple comparison corrections.</p>
@@ -43,8 +43,9 @@
             <li><strong>4.3 High-Resolution Astronomical Events:</strong> Eclipse and supermoon coherence modulation analysis</li>
             <li><strong>4.4 Gravitational Temporal Field Analysis:</strong> Multi-window planetary gravitational correlation analysis with timescale strengthening</li>
             <li><strong>4.5 Comprehensive Diurnal Analysis:</strong> Hourly temporal analysis with seasonal pattern characterization</li>
+            <li><strong>4.8 Multi-Band Visualization:</strong> Publication-quality figures for spectral analysis, frequency specificity assessment, and gravitational enhancement patterns across 13 frequency bands</li>
         </ol>
-        <p style="margin-top: 10px; font-style: italic; color: #666;">Advanced analyses including eclipse effects, gravitational correlations, and comprehensive visualizations.</p>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Advanced analyses including multi-band spectral characterization, eclipse effects, gravitational correlations, and comprehensive visualizations.</p>
         
         <h4 style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #ddd;">Pipeline Validation Framework</h4>
         <ul style="margin: 10px 0; line-height: 1.6;">
@@ -79,22 +80,51 @@
                     <li>ESA: 912 files processed (complete coverage)</li>
         </ul>
             </li>
-            <li><strong>Spatial coverage</strong>: 529 analyzed stations (of 766 cataloged) from the global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
+            <li><strong>Spatial coverage</strong>: 367 unique stations across all analysis centers (CODE: 324, IGS: 254, ESA: 230) from the global GNSS network (ECEF coordinates validated and converted to geodetic)</li>
             <li><strong>Data volume</strong>: 62.8 million station pair cross-spectral measurements</li>
             <li><strong>Analysis centers</strong>: CODE (912 files processed, 39.1M pairs), ESA (912 files processed, 10.8M pairs), IGS (912 files processed, 12.9M pairs). Station pair counts vary across centers due to different station network sizes and center-specific data availability and quality criteria.</li>
         </ul>
         <p><em>File counts reflect actual processed files within the 912-day analysis window (2023-01-01 to 2025-06-30) after date filtering.</em></p>
-        <p><em>Station selection: Of 766 cataloged stations with coordinate data, only 529 meet the minimum data quality threshold of ≥20 observation epochs per file for reliable spectral analysis (TEP_MIN_EPOCHS = 20). This ensures sufficient temporal coverage for cross-spectral density computation while maintaining statistical rigor.</em></p>
+        <p><em>Station selection: Analysis centers use different subsets of the 766 cataloged stations, resulting in 367 unique stations analyzed across all centers (CODE: 324, IGS: 254, ESA: 230). High station overlap between centers (233 shared CODE-IGS stations: 91.7% of IGS network, 71.9% of CODE network) enables robust cross-validation while maintaining comprehensive global coverage.</em></p>
+        
+        <h3>Data Quality Assurance</h3>
+        <p>Comprehensive quality validation across 62.73 million station pair measurements demonstrates exceptional data integrity essential for phase-coherent analysis:</p>
+        <ul>
+            <li><strong>Filtering efficiency</strong>: 99.958% overall data retention across all centers (CODE: 99.944%, IGS: 99.964%, ESA: 99.9999%)</li>
+            <li><strong>Phase quality</strong>: Healthy boundary clustering (1.62-1.67% of values within ±0.05 rad of ±π boundaries) indicates proper phase wrapping without accumulation artifacts</li>
+            <li><strong>Temporal completeness</strong>: Zero missing dates across 912-day analysis window for all centers</li>
+            <li><strong>Data integrity</strong>: Zero duplicate pairs, zero missing coordinates, zero distance outliers (post-filtering)</li>
+            <li><strong>Phase distribution</strong>: Uniform coverage across full ±π range enables unbiased cos(phase(CSD)) analysis</li>
+        </ul>
+        <p><em>The boundary clustering metric provides critical validation that phase wrapping is handled correctly—values should distribute uniformly across the ±π range with minimal accumulation at boundaries. The observed 1.62-1.67% boundary clustering (expected ~1.6% for uniform distribution with ±0.05 rad threshold) confirms proper phase processing across all analysis centers.</em></p>
+        
+        <h3>Distance Quality Filtering</h3>
+        <p>Systematic distance outlier removal ensures geodesic calculation accuracy:</p>
+        <ul>
+            <li><strong>CODE</strong>: 21,679 outliers removed (&lt;1 km or &gt;20,000 km) from 39,068,754 initial pairs (0.056%)</li>
+            <li><strong>IGS_COMBINED</strong>: 4,633 outliers removed from 12,879,380 initial pairs (0.036%)</li>
+            <li><strong>ESA_FINAL</strong>: 0 outliers removed from 10,809,085 initial pairs (0.000%)</li>
+        </ul>
+        <p><em>Post-filtering, all analysis centers show zero distance outliers, ensuring clean exponential decay fitting without contamination from geodesic calculation errors or data artifacts.</em></p>
+        
+        <h3>Temporal Data Density Patterns</h3>
+        <p>Daily pair count variation across the 912-day analysis window differs between centers, reflecting their operational characteristics:</p>
+        <ul>
+            <li><strong>CODE</strong>: CV = 6.2% (highly consistent: 33,372-48,776 pairs/day)</li>
+            <li><strong>IGS_COMBINED</strong>: CV = 58.4% (variable: 990-29,618 pairs/day, reflects multi-center combination strategy)</li>
+            <li><strong>ESA_FINAL</strong>: CV = 14.1% (consistent: 10,731-16,290 pairs/day)</li>
+        </ul>
+        <p><em>The higher temporal variation in IGS_COMBINED reflects its nature as a weighted combination of multiple analysis center solutions, with varying contributor availability over time. Despite this operational difference, IGS achieves R² = 0.966 and λ consistent with independent centers, demonstrating robustness to temporal sampling patterns.</em></p>
     </div>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/gnss_stations_three_globes.png" alt="Global distribution of GNSS stations shown on three globe perspectives" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1a. Global GNSS Station Network:</b> Three-globe perspective showing worldwide distribution of 529 analyzed ground stations (of 766 cataloged) across all continents, enabling detection of continental-scale correlation patterns.</figcaption>
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1a. Global GNSS Station Network:</b> Three-globe perspective showing global GNSS infrastructure with 367 unique stations analyzed across all centers (CODE: 324, IGS: 254, ESA: 230). High station overlap (233 shared CODE-IGS stations: 91.7% of IGS network, 71.9% of CODE network) enables robust cross-validation across independent processing chains.</figcaption>
     </figure>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/gnss_stations_map.png" alt="Global map showing GNSS station distribution" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1b. GNSS Station Coverage Map:</b> Comprehensive global distribution of 529 analyzed stations (of 766 cataloged) showing station density and geographic coverage essential for intercontinental correlation analysis.</figcaption>
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 1b. GNSS Station Coverage Map:</b> Global distribution of 367 unique stations analyzed across all centers, showing substantial overlap between analysis centers and comprehensive geographic coverage essential for intercontinental correlation analysis.</figcaption>
     </figure>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
@@ -104,7 +134,7 @@
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/analyzed_pairs_distribution.png" alt="Distribution of actually analyzed station pairs after quality filtering" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 3. Actually Analyzed Station Pairs Distribution:</b> Post-filtering distribution showing 47.5 million pairs actually used in correlation analysis (CODE: 30.0M, IGS: 9.6M, ESA: 7.9M). Peak at ~8,500 km demonstrates optimal coverage of TEP correlation length range (3,330–4,549 km).</figcaption>
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 3. Actually Analyzed Station Pairs Distribution:</b> Post-filtering distribution showing 47.5 million pairs actually used in correlation analysis (CODE: 30.0M, IGS: 9.6M, ESA: 7.9M). Peak at ~8,500 km demonstrates optimal coverage of TEP correlation length range (3,397–4,566 km).</figcaption>
     </figure>
     <h2>2.3 Phase-Coherent Analysis Method</h2>
     <p>Standard signal processing techniques using band-averaged real coherency fail to detect TEP signals due to phase averaging effects. Magnitude-only metrics |CSD| discard the phase information that encodes the spatial structure of field coupling. A phase-coherent approach was developed that preserves the complex cross-spectral density information essential for TEP detection.</p>
@@ -131,7 +161,7 @@
         <h3>Physical interpretation of the phase-based approach</h3>
         <p>For two zero-mean, wide-sense stationary clock residual processes $x_i(t), x_j(t)$, the cross-spectrum $S_{ij}(f)$ is the Fourier transform of the cross-correlation $R_{ij}(\tau)$ (Wiener–Khinchin):</p>
         <div class="equation">$$S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]$$</div>
-        <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10–500 $\mu$Hz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
+        <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10-500 &micro;Hz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
         <div class="equation">$$\phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}$$</div>
         <p>Hence, the physically expected inter-station phase is $\approx 0$ in this band; the information lies in how tightly phases cluster, not in a systematic lag. Writing the unit phasor $U_{ij}(f)=S_{ij}(f)/|S_{ij}(f)|$, the metric uses $\mathrm{Re}\{U_{ij}(f)\}= \cos(\arg S_{ij}(f))$. When averaged over pairs within a distance bin, this estimates the circular mean of phases. If the within-bin phase distribution is von Mises $\mathrm{VM}(\mu\!\approx\!0, \kappa(r))$, the expected value is</p>
         <div class="equation">$$\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)$$</div>
@@ -229,7 +259,7 @@
     
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/binned_correlation_data.png" alt="Logarithmic distance binning strategy for TEP correlation analysis" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 4. Logarithmic Distance Binning for TEP Correlation Analysis:</b> Statistical power distribution across 81 distance bins (28 CODE, 28 IGS, 25 ESA) showing logarithmic binning strategy. Narrow bins at short distances provide high resolution for near-field effects, while wide bins at long distances ensure adequate statistical power. TEP correlation range (3,330–4,549 km) highlighted in gray, demonstrating optimal sampling density for correlation length detection.</figcaption>
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 4. Logarithmic Distance Binning for TEP Correlation Analysis:</b> Statistical power distribution across 81 distance bins (28 CODE, 28 IGS, 25 ESA) showing logarithmic binning strategy. Narrow bins at short distances provide high resolution for near-field effects, while wide bins at long distances ensure adequate statistical power. TEP correlation range (3,397–4,566 km) highlighted in gray, demonstrating optimal sampling density for correlation length detection.</figcaption>
     </figure>
 
     <h2>2.6 Advanced Analysis Methods</h2>

@@ -17,6 +17,38 @@ The Temporal Equivalence Principle (TEP) extends General Relativity by treating 
 
 This repository contains a complete analysis package for testing Temporal Equivalence Principle (TEP) predictions using Global Navigation Satellite System (GNSS) precision timing networks. The analysis examines distance-structured correlations across three independent analysis centers: CODE, IGS, and ESA.
 
+## Quick Start - Google Colab (Recommended)
+
+**For cloud-based analysis with professional scientific output:**
+
+1. **Prepare the analysis package:**
+   ```bash
+   ./prepare_colab_package.sh
+   ```
+   This creates `tep-gnss-colab-package.zip` (396KB)
+
+2. **Open Google Colab:**
+   - Go to [colab.research.google.com](https://colab.research.google.com)
+   - Upload `TEP_GNSS_Colab_Analysis.ipynb`
+   - Upload `tep-gnss-colab-package.zip`
+
+3. **Execute the analysis:**
+   - Run all cells in the notebook
+   - The system automatically handles dependencies, data acquisition, and configuration
+
+**Analysis Configuration:**
+- **Date range:** 30 days (2024-01-01 to 2024-01-30) - optimized for cloud execution
+- **Expected runtime:** 2-4 hours in Colab Pro
+- **Output format:** Professional scientific formatting with comprehensive progress reporting
+- **Results:** Downloadable ZIP archive containing all figures and statistical summaries
+
+**Advantages of Colab execution:**
+- No local setup required
+- Professional scientific output formatting
+- Robust error handling and retry mechanisms
+- Persistent results storage via Google Drive
+- Optimized for cloud computing resources
+
 ## Key Findings
 
 Through analysis of 47.5 million station pair measurements from 529 analyzed ground stations (of 766 cataloged), we observe:

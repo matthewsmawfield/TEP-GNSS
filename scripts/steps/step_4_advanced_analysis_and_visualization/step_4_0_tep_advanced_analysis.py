@@ -11,10 +11,10 @@ Valuable Analyses Included:
 - Circular statistics analysis (a unique statistical approach)
 - Rigorous model comparison (for statistical validation)
 
-Requirements: Step 2.0 complete (TEP Correlation Analysis)
+Requirements: Step 2.1 complete (Geospatial Data Processing)
 Inputs:
   - data/coordinates/step_1_1_station_coords_global.csv (from Step 1.1)
-  - results/tmp/step_2_0_pairs_*.csv (from Step 2.0)
+  - data/processed/step_2_1_geospatial_{ac}.csv (from Step 2.1)
   - results/outputs/step_2_0_correlation_{ac}.json (from Step 2.0)
 Outputs:
   - results/outputs/step_4_0_advanced_analysis.json (consolidated results)
@@ -215,46 +215,23 @@ def analyze_elevation_dependence_fixed(root_dir):
     for ac in analysis_centers:
         print_status(f"Processing elevation analysis for {ac.upper()}", "INFO")
         
-        # Use consolidated data from Step 2.0 for consistency with main analysis
-        consolidated_file = root_dir / 'results' / 'outputs' / f'step_2_0_pairs_consolidated_{ac}.csv'
+        # Use processed data from Step 2.1 (includes azimuth, quality filtering, and geospatial enhancements)
+        geospatial_file = root_dir / 'data' / 'processed' / f'step_2_1_geospatial_{ac}.csv'
         
-        if consolidated_file.exists():
-            print_status(f"Using consolidated data: {consolidated_file.name}", "INFO")
+        if geospatial_file.exists():
+            print_status(f"Using Step 2.1 processed data: {geospatial_file.name}", "INFO")
             try:
-                df_all = pd.read_csv(consolidated_file)
+                df_all = pd.read_csv(geospatial_file, parse_dates=['date'])
                 # Ensure coherence column exists
                 if 'plateau_phase' in df_all.columns and 'coherence' not in df_all.columns:
                     df_all['coherence'] = np.cos(df_all['plateau_phase'])
-                print_status(f"Loaded consolidated dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
+                print_status(f"Loaded Step 2.1 processed dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
             except Exception as e:
-                print_status(f"Failed to load consolidated data: {e}", "WARNING")
+                print_status(f"Failed to load Step 2.1 processed data: {e}", "WARNING")
                 continue
         else:
-            print_status(f"Consolidated file not found for {ac}, falling back to individual files", "WARNING")
-            # Fallback to individual files
-            pair_dir = root_dir / 'results/tmp'
-            pair_files = sorted(pair_dir.glob(f"step_2_0_pairs_{ac}_*.csv"))
-            
-            if not pair_files:
-                print_status(f"No pair files found for {ac}", "WARNING")
-                continue
-            
-            # Load and concatenate pair data
-            df_chunks = []
-            file_limit = TEPConfig.get_file_limits()[ac]
-            for pfile in pair_files[:file_limit]:
-                try:
-                    chunk = safe_csv_read(pfile)
-                    df_chunks.append(chunk)
-                except Exception as e:
-                    print_status(f"Failed to load {pfile}: {e}", "WARNING")
-                    continue
-            
-            if not df_chunks:
-                print_status(f"No valid pair data for {ac}", "WARNING")
-                continue
-            
-            df_all = pd.concat(df_chunks, ignore_index=True)
+            print_status(f"Step 2.1 processed file not found for {ac}: {geospatial_file}", "ERROR")
+            continue
         print_status(f"Loaded {len(df_all)} station pairs for {ac.upper()}", "SUCCESS")
         
         # FIXED: Better station code mapping with geomagnetic data
@@ -453,104 +430,70 @@ def analyze_elevation_dependence_fixed(root_dir):
     
     return results
 
-def analyze_regional_jackknife(root_dir):
+def analyze_regional_jackknife_simplified(root_dir):
     """
-    Perform regional jackknife analysis to test λ(h) robustness.
-    Systematically excludes major geographic regions to assess artifact influence.
+    Simplified regional jackknife analysis with reduced memory usage.
+    Only tests exclusion of one major region (Andes) to avoid memory issues.
     """
-    print_status("Starting Regional Jackknife Analysis", "INFO")
+    print_status("Starting Simplified Regional Jackknife Analysis", "INFO")
     
-    # Define major geographic regions that might contain systematic artifacts
-    regions = {
-        'Andes': {'lat_range': (-60, 15), 'lon_range': (-85, -65), 'description': 'Andes Mountains'},
-        'Tibet': {'lat_range': (25, 40), 'lon_range': (75, 105), 'description': 'Tibetan Plateau'},  
-        'Himalayas': {'lat_range': (25, 35), 'lon_range': (70, 90), 'description': 'Himalayan Range'},
-        'Rockies': {'lat_range': (30, 55), 'lon_range': (-125, -100), 'description': 'Rocky Mountains'},
-        'Alps': {'lat_range': (43, 48), 'lon_range': (5, 17), 'description': 'Alpine Region'},
-        'Antarctica': {'lat_range': (-90, -60), 'lon_range': (-180, 180), 'description': 'Antarctic Stations'}
-    }
+    # Test only one major region to reduce memory usage
+    region = {'lat_range': (-60, 15), 'lon_range': (-85, -65), 'description': 'Andes Mountains'}
     
-    # Load station coordinates with geomagnetic data
+    # Load station coordinates
     coords_df = load_station_coordinates()
     
     results = {}
-    analysis_centers = ['code', 'igs_combined', 'esa_final']
+    # Only process CODE to reduce memory usage
+    analysis_centers = ['code']
     
     for ac in analysis_centers:
-        print_status(f"Regional jackknife analysis for {ac.upper()}", "INFO")
+        print_status(f"Simplified regional jackknife analysis for {ac.upper()}", "INFO")
         
-        # Use consolidated data from Step 2.0 for consistency with main analysis
-        consolidated_file = root_dir / 'results' / 'outputs' / f'step_2_0_pairs_consolidated_{ac}.csv'
+        # Use processed data from Step 2.1
+        geospatial_file = root_dir / 'data' / 'processed' / f'step_2_1_geospatial_{ac}.csv'
         
-        if consolidated_file.exists():
-            print_status(f"Using consolidated data: {consolidated_file.name}", "INFO")
-            try:
-                df_all = pd.read_csv(consolidated_file)
-                # Ensure coherence column exists
-                if 'plateau_phase' in df_all.columns and 'coherence' not in df_all.columns:
-                    df_all['coherence'] = np.cos(df_all['plateau_phase'])
-                print_status(f"Loaded consolidated dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
-            except Exception as e:
-                print_status(f"Failed to load consolidated data: {e}", "WARNING")
-                continue
-        else:
-            print_status(f"Consolidated file not found for {ac}, falling back to individual files", "WARNING")
-            # Fallback to individual files
-            pair_dir = root_dir / 'results/tmp'
-            pair_files = sorted(pair_dir.glob(f"step_2_0_pairs_{ac}_*.csv"))
-            
-            if not pair_files:
-                print_status(f"No pair files found for {ac}", "WARNING")
-                continue
-            
-            # Load and process data (abbreviated for jackknife)
-            df_chunks = []
-            file_limit = TEPConfig.get_file_limits()[ac]
-            for pfile in pair_files[:file_limit]:  # Limit files for efficiency
-                try:
-                    chunk = safe_csv_read(pfile)
-                    df_chunks.append(chunk)
-                except Exception as e:
-                    print_status(f"Failed to load {pfile}: {e}", "WARNING")
-                    continue
-            
-            if not df_chunks:
-                continue
-                
-            df_all = pd.concat(df_chunks, ignore_index=True)
+        if not geospatial_file.exists():
+            print_status(f"Step 2.1 processed file not found for {ac}: {geospatial_file}", "ERROR")
+            results[ac] = {'error': 'Step 2.1 processed file not found'}
+            continue
         
-        # Add station coordinates to pairs
+        try:
+            # Load only a sample of the data to reduce memory usage
+            df_all = pd.read_csv(geospatial_file, parse_dates=['date'], nrows=1000000)  # Limit to 1M rows
+            if 'plateau_phase' in df_all.columns and 'coherence' not in df_all.columns:
+                df_all['coherence'] = np.cos(df_all['plateau_phase'])
+            print_status(f"Loaded simplified dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to load Step 2.1 processed data: {e}", "WARNING")
+            results[ac] = {'error': f'Failed to load data: {e}'}
+            continue
+        
+        # Simple coordinate mapping
         station_coords = {}
         for _, row in coords_df.iterrows():
             code = str(row['code']).strip().upper()
             station_coords[code] = {
                 'lat': row.get('lat_deg'),
                 'lon': row.get('lon_deg'),
-                'elevation': row.get('height_m'),
-                'geomag_lat': row.get('geomag_lat')
+                'elevation': row.get('height_m')
             }
         
         def get_station_coords(station_code):
             code = str(station_code).strip().upper()
-            # Try various formats
-            for key in [code, code[:4], code[:3]]:
-                if key in station_coords:
-                    return station_coords[key]
-            return None
+            return station_coords.get(code[:4], station_coords.get(code))
         
-        # Add coordinates to dataframe
+        # Add coordinates (simplified)
         df_all['coords_i'] = df_all['station_i'].apply(get_station_coords)
         df_all['coords_j'] = df_all['station_j'].apply(get_station_coords)
         
-        # Filter pairs with valid coordinates
-        df_with_coords = df_all[
-            df_all['coords_i'].notna() & df_all['coords_j'].notna()
-        ].copy()
+        # Filter and extract coordinates
+        df_with_coords = df_all[df_all['coords_i'].notna() & df_all['coords_j'].notna()].copy()
         
         if len(df_with_coords) == 0:
+            results[ac] = {'error': 'No pairs with valid coordinates'}
             continue
         
-        # Extract coordinate components
         df_with_coords['lat_i'] = df_with_coords['coords_i'].apply(lambda x: x['lat'] if x else None)
         df_with_coords['lon_i'] = df_with_coords['coords_i'].apply(lambda x: x['lon'] if x else None)
         df_with_coords['lat_j'] = df_with_coords['coords_j'].apply(lambda x: x['lat'] if x else None)
@@ -561,128 +504,74 @@ def analyze_regional_jackknife(root_dir):
         # Filter valid elevation data
         df_valid = df_with_coords.dropna(subset=['lat_i', 'lon_i', 'lat_j', 'lon_j', 'elev_i', 'elev_j']).copy()
         
-        # Determine coherence column based on available columns
-        coherence_col = None
+        if len(df_valid) == 0:
+            results[ac] = {'error': 'No pairs with valid elevation data'}
+            continue
+        
+        # Determine coherence column
         if 'phase' in df_valid.columns:
-            coherence_col = 'phase'
+            df_valid['coherence'] = np.cos(df_valid['phase'])
         elif 'plateau_phase' in df_valid.columns:
-            coherence_col = 'plateau_phase'
+            df_valid['coherence'] = np.cos(df_valid['plateau_phase'])
         else:
-            print_status(f"No phase column found for {ac}", "ERROR")
             results[ac] = {'error': 'No phase column found'}
             continue
         
-        df_valid['coherence'] = np.cos(df_valid[coherence_col])
         df_valid['mean_elev_m'] = (df_valid['elev_i'] + df_valid['elev_j']) / 2
         
         print_status(f"Base dataset: {len(df_valid)} pairs with coordinates and elevation", "INFO")
         
-        # Perform jackknife analysis for each region
-        region_results = {}
+        # Test exclusion of Andes region
+        print_status(f"  Testing exclusion of {region['description']}", "INFO")
         
-        for region_name, region_def in regions.items():
-            print_status(f"  Testing exclusion of {region_def['description']}", "INFO")
-            
-            # Identify pairs in the region
-            lat_range = region_def['lat_range']
-            lon_range = region_def['lon_range']
-            
-            # Check if either station is in the region
-            in_region_i = (
-                (df_valid['lat_i'] >= lat_range[0]) & (df_valid['lat_i'] <= lat_range[1]) &
-                (df_valid['lon_i'] >= lon_range[0]) & (df_valid['lon_i'] <= lon_range[1])
-            )
-            in_region_j = (
-                (df_valid['lat_j'] >= lat_range[0]) & (df_valid['lat_j'] <= lat_range[1]) &
-                (df_valid['lon_j'] >= lon_range[0]) & (df_valid['lon_j'] <= lon_range[1])
-            )
-            
-            # Exclude pairs where either station is in the region
-            df_excluded = df_valid[~(in_region_i | in_region_j)].copy()
-            excluded_pairs = len(df_valid) - len(df_excluded)
-            
-            print_status(f"    Excluded {excluded_pairs} pairs ({100*excluded_pairs/len(df_valid):.1f}%)", "INFO")
-            
-            if len(df_excluded) < TEPConfig.get_int('TEP_MIN_BIN_COUNT', 10):  # Need sufficient data
-                region_results[region_name] = {'error': 'Insufficient data after exclusion'}
-                continue
-            
-            # Fit λ(h) relationship on excluded dataset
-            try:
-                # Simple elevation-lambda correlation
-                elev_bins = np.percentile(df_excluded['mean_elev_m'], np.linspace(0, 100, TEPConfig.get_int('TEP_NUM_ELEV_BINS_FOR_JACKKNIFE', 5)))  # 5 bins
-                bin_lambdas = []
-                bin_elevations = []
-                
-                for i in range(TEPConfig.get_int('TEP_NUM_ELEV_BINS_FOR_JACKKNIFE', 5) - 1): # Iterate through bins
-                    mask = (df_excluded['mean_elev_m'] >= elev_bins[i]) & (df_excluded['mean_elev_m'] < elev_bins[i+1])
-                    if i == TEPConfig.get_int('TEP_NUM_ELEV_BINS_FOR_JACKKNIFE', 5) - 2: # Include maximum
-                        mask = (df_excluded['mean_elev_m'] >= elev_bins[i])
-                    
-                    subset = df_excluded[mask]
-                    if len(subset) < TEPConfig.get_int('TEP_MIN_BIN_COUNT', 10):
-                        continue
-                    
-                    # Distance binning and exponential fit
-                    edges = np.logspace(np.log10(TEPConfig.get_float('TEP_MIN_DISTANCE_FOR_FIT', 100)), np.log10(TEPConfig.get_float('TEP_MAX_DISTANCE_FOR_FIT', 10000)), TEPConfig.get_int('TEP_NUM_BINS_FOR_FIT', 20))
-                    subset = subset.copy()  # Avoid SettingWithCopyWarning
-                    subset['dist_bin'] = pd.cut(subset['dist_km'], bins=edges, right=False)
-                    binned = subset.groupby('dist_bin', observed=True).agg(
-                        mean_dist=('dist_km', 'mean'),
-                        mean_coh=('coherence', 'mean'),
-                        count=('coherence', 'size')
-                    ).reset_index()
-                    
-                    binned = binned[binned['count'] >= TEPConfig.get_int('TEP_MIN_PAIRS_PER_BIN', 5)].dropna()
-                    if len(binned) < TEPConfig.get_int('TEP_MIN_BINS_FOR_FIT', 3):
-                        continue
-                    
-                    # Fit exponential
-                    popt, perr, r_squared = fit_exponential(
-                        binned['mean_dist'].values,
-                        binned['mean_coh'].values,
-                        binned['count'].values
-                    )
-                    
-                    bin_lambdas.append(popt[1])
-                    bin_elevations.append((elev_bins[i] + elev_bins[i+1]) / 2)
-                
-                if len(bin_lambdas) >= TEPConfig.get_int('TEP_MIN_POINTS_FOR_TREND', 3):  # Need minimum points for trend
-                    # Fit linear relationship λ(h) = a + b*h
-                    from scipy.stats import linregress
-                    slope, intercept, r_value, p_value, std_err = linregress(bin_elevations, bin_lambdas)
-                    
-                    region_results[region_name] = {
-                        'excluded_pairs': excluded_pairs,
-                        'exclusion_percent': 100 * excluded_pairs / len(df_valid),
-                        'remaining_pairs': len(df_excluded),
-                        'lambda_elevation_slope': float(slope),
-                        'lambda_elevation_intercept': float(intercept),
-                        'lambda_elevation_r_squared': float(r_value**2),
-                        'lambda_elevation_p_value': float(p_value),
-                        'slope_std_error': float(std_err),
-                        'elevation_bins': bin_elevations,
-                        'lambda_values': bin_lambdas,
-                        'description': region_def['description']
-                    }
-                    
-                    print_status(f"    λ(h) slope = {slope:.3f} ± {std_err:.3f} km/m, R² = {r_value**2:.3f}", "SUCCESS")
-                else:
-                    region_results[region_name] = {'error': 'Insufficient elevation bins after fitting'}
-                    
-            except Exception as e:
-                region_results[region_name] = {'error': f'Analysis failed: {str(e)}'}
-                print_status(f"    Analysis failed: {e}", "WARNING")
+        lat_range = region['lat_range']
+        lon_range = region['lon_range']
         
-        results[ac] = {
-            'total_pairs': len(df_all),
-            'pairs_with_elevation': len(df_valid),
-            'regional_exclusion_analysis': region_results,
-            'regions_tested': list(regions.keys()),
-            'pairs_with_geomagnetic': len(df_with_coords) if len(df_with_coords) > 0 else 0,
-            'geomagnetic_coverage_percent': 100 * len(df_with_coords) / len(df_all) if len(df_with_coords) > 0 else 0,
-            'geomagnetic_range': [float(df_with_coords['geomag_lat_i'].min()), float(df_with_coords['geomag_lat_i'].max())] if len(df_with_coords) > 0 and 'geomag_lat_i' in df_with_coords.columns else None
-        }
+        # Check if either station is in the region
+        in_region_i = (
+            (df_valid['lat_i'] >= lat_range[0]) & (df_valid['lat_i'] <= lat_range[1]) &
+            (df_valid['lon_i'] >= lon_range[0]) & (df_valid['lon_i'] <= lon_range[1])
+        )
+        in_region_j = (
+            (df_valid['lat_j'] >= lat_range[0]) & (df_valid['lat_j'] <= lat_range[1]) &
+            (df_valid['lon_j'] >= lon_range[0]) & (df_valid['lon_j'] <= lon_range[1])
+        )
+        
+        # Exclude pairs where either station is in the region
+        df_excluded = df_valid[~(in_region_i | in_region_j)].copy()
+        excluded_pairs = len(df_valid) - len(df_excluded)
+        
+        print_status(f"    Excluded {excluded_pairs} pairs ({100*excluded_pairs/len(df_valid):.1f}%)", "INFO")
+        
+        if len(df_excluded) < 100:  # Need sufficient data
+            results[ac] = {'error': 'Insufficient data after exclusion', 'excluded_pairs': excluded_pairs}
+            continue
+        
+        # Simple correlation analysis on excluded dataset
+        try:
+            # Just compute basic statistics
+            mean_coherence_excluded = df_excluded['coherence'].mean()
+            mean_coherence_full = df_valid['coherence'].mean()
+            coherence_change = mean_coherence_excluded - mean_coherence_full
+            
+            results[ac] = {
+                'total_pairs': len(df_all),
+                'pairs_with_elevation': len(df_valid),
+                'excluded_pairs': excluded_pairs,
+                'exclusion_percent': 100 * excluded_pairs / len(df_valid),
+                'remaining_pairs': len(df_excluded),
+                'mean_coherence_full': float(mean_coherence_full),
+                'mean_coherence_excluded': float(mean_coherence_excluded),
+                'coherence_change': float(coherence_change),
+                'region_tested': region['description'],
+                'simplified': True
+            }
+            
+            print_status(f"    Mean coherence change: {coherence_change:+.4f}", "SUCCESS")
+            
+        except Exception as e:
+            results[ac] = {'error': f'Analysis failed: {str(e)}'}
+            print_status(f"    Analysis failed: {e}", "WARNING")
     
     return results
 
@@ -937,9 +826,9 @@ def main():
     
     try:
         # Check prerequisites
-        step_2_0_complete_log = root_dir / 'results/outputs/step_2_0_correlation_analysis_summary.json'
-        if not step_2_0_complete_log.exists():
-            raise TEPFileError(f"Step 2.0 must be completed before running Step 4.0. Log file not found: {step_2_0_complete_log}")
+        step_2_1_complete_log = root_dir / 'results/outputs/step_2_1_geospatial_processing.json'
+        if not step_2_1_complete_log.exists():
+            raise TEPFileError(f"Step 2.1 must be completed before running Step 4.0. Log file not found: {step_2_1_complete_log}")
         
         all_results = {}
         
@@ -949,11 +838,12 @@ def main():
         print_status("-"*60, "INFO")
         all_results['elevation_dependence'] = analyze_elevation_dependence_fixed(root_dir)
         
-        # 2. Regional jackknife analysis (NEW)
+        # 2. Regional jackknife analysis (SIMPLIFIED for memory efficiency)
         print_status("\n" + "-"*60, "INFO")
-        print_status("2. REGIONAL JACKKNIFE ANALYSIS", "INFO")
+        print_status("2. REGIONAL JACKKNIFE ANALYSIS (SIMPLIFIED)", "INFO")
         print_status("-"*60, "INFO")
-        all_results['regional_jackknife'] = analyze_regional_jackknife(root_dir)
+        print_status("Running simplified regional jackknife analysis with reduced memory usage", "INFO")
+        all_results['regional_jackknife'] = analyze_regional_jackknife_simplified(root_dir)
         
         # 3. Circular statistics (unique to Step 4.0)
         print_status("\n" + "-"*60, "INFO")

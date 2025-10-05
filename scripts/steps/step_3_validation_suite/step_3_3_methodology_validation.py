@@ -15,8 +15,7 @@ Inputs:
   - results/outputs/step_2_0_correlation_{ac}.json (from Step 2.0)
   - results/tmp/step_2_0_pairs_{ac}_*.csv (from Step 2.0, if `TEP_WRITE_PAIR_LEVEL=1`)
 Outputs:
-  - results/outputs/step_3_3_validation_report.json (comprehensive validation summary)
-  - results/outputs/step_3_3_bias_characterization.json (detailed bias analysis)
+  - results/outputs/step_3_3_methodology_validation.json (comprehensive validation summary and bias analysis)
   - results/figures/step_3_3_bias_comparison_plot.png (figures demonstrating bias control)
 Next: Step 4.0 (Advanced Analysis - TEP Advanced Analysis)
 
@@ -148,35 +147,158 @@ set_step_logger(step_logger)
 #     """Custom exception for validation failures."""
 #     pass
 
-class DataQualityError(Exception):
-    """Custom exception for data quality issues."""
-    pass
+# Removed custom exception - using standard TEP exceptions instead
 
 # class StatisticalError(Exception):
 #     """Custom exception for statistical analysis failures."""
 #     pass
 
+def run_distribution_neutral_validation(analysis_centers, equal_count_bins=40):
+    """
+    Validates the TEP methodology against distribution-based biases by using
+    an equal-count binning strategy.
+    
+    Args:
+        analysis_centers: List of analysis centers to validate
+        equal_count_bins: Number of equal-count bins to use
+        
+    Returns:
+        dict: Distribution-neutral validation results
+    """
+    print_status("  Running distribution-neutral validation...", "TEST")
+    
+    results = {'passed': True, 'validation_score': 1.0, 'key_findings': []}
+    
+    for ac in analysis_centers:
+        correlation_file = PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_correlation_{ac}.json"
+        if not correlation_file.exists():
+            raise TEPFileError(f"Correlation file not found for {ac}: {correlation_file}")
+        
+        correlation_data = safe_json_read(correlation_file)
+        
+        if 'best_fit' not in correlation_data or 'r_squared' not in correlation_data['best_fit']:
+            raise TEPDataError(f"Missing best_fit or r_squared in {ac} correlation data. Ensure Step 2.0 completed successfully.")
+        
+        original_r_squared = correlation_data['best_fit']['r_squared']
+        original_lambda_km = correlation_data['best_fit']['lambda_km']
+        
+        # Re-binning with equal counts
+        pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
+        pair_files = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
+        
+        if not pair_files:
+            # Fallback: if no pair files, skip detailed re-binning but log a warning
+            print_status(f"WARNING: No pair-level data found for {ac} in {pair_data_pattern.parent}. Skipping detailed distribution-neutral validation. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
+            results['key_findings'].append(f"WARNING: No pair data for {ac}, detailed distribution-neutral validation skipped.")
+            continue
+
+        # Load and combine all pair data for this AC
+        all_pair_dfs = []
+        for f_path in pair_files:
+            try:
+                df_chunk = pd.read_csv(f_path)
+                if not df_chunk.empty and 'dist_km' in df_chunk.columns and 'plateau_phase' in df_chunk.columns:
+                    # Convert plateau_phase to coherence using cos() for compatibility
+                    df_chunk['coherence'] = np.cos(df_chunk['plateau_phase'])
+                    all_pair_dfs.append(df_chunk)
+                else:
+                    print_status(f"WARNING: Skipping empty or unreadable chunk file: {f_path.name}", "WARNING")
+            except Exception as e:
+                print_status(f"WARNING: Error reading chunk file {f_path.name}: {e}. Skipping.", "WARNING")
+                continue
+        
+        if not all_pair_dfs:
+            print_status(f"WARNING: No valid pair data could be loaded for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
+            results['key_findings'].append(f"WARNING: No valid pair data for {ac}, detailed distribution-neutral validation skipped.")
+            continue
+        
+        combined_pairs = pd.concat(all_pair_dfs, ignore_index=True)
+        
+        # Equal-count binning for distance and coherence
+        if len(combined_pairs) < equal_count_bins * 2: # Need at least 2 pairs per bin
+            print_status(f"WARNING: Insufficient pairs ({len(combined_pairs)}) for {equal_count_bins} equal-count bins for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
+            results['key_findings'].append(f"WARNING: Insufficient pair data for {ac} for equal-count binning, detailed validation skipped.")
+            continue
+                
+        combined_pairs['distance_bin'] = pd.qcut(combined_pairs['dist_km'], q=equal_count_bins, labels=False, duplicates='drop')
+        
+        if combined_pairs['distance_bin'].nunique() < 5: # Need at least 5 unique bins for a meaningful fit
+            print_status(f"WARNING: Only {combined_pairs['distance_bin'].nunique()} unique bins formed for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
+            results['key_findings'].append(f"WARNING: Too few unique bins for {ac}, detailed validation skipped.")
+            continue
+                    
+        binned_data = combined_pairs.groupby('distance_bin').agg(
+            distance_mean=('dist_km', 'mean'),
+            coherence_mean=('coherence', 'mean'),
+            coherence_std=('coherence', 'std'),
+            n_pairs=('coherence', 'count')
+        ).reset_index()
+        
+        # Filter bins with insufficient data (e.g., less than 5 pairs)
+        binned_data = binned_data[binned_data['n_pairs'] >= 5]
+        
+        if len(binned_data) < 5: # Need at least 5 data points for curve fitting
+            print_status(f"WARNING: Insufficient binned data points ({len(binned_data)}) for curve fitting after filtering for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
+            results['key_findings'].append(f"WARNING: Insufficient binned data for {ac} for curve fitting, detailed validation skipped.")
+            continue
+        
+        # Fit exponential decay model to equal-count binned data
+        try:
+            popt_equal_count, pcov_equal_count = curve_fit(
+                lambda x, A, L: A * np.exp(-x / L),
+                binned_data['distance_mean'],
+                binned_data['coherence_mean'],
+                p0=[1.0, 1000.0],  # Initial guess
+                sigma=binned_data['coherence_std'],
+                absolute_sigma=True,
+                bounds=([0, 100], [1.5, 20000]) # A between 0 and 1.5, L between 100 and 20000
+            )
+            A_equal_count, lambda_equal_count = popt_equal_count
+            
+            y_pred_equal_count = A_equal_count * np.exp(-binned_data['distance_mean'] / lambda_equal_count)
+            ss_res_equal_count = np.sum((binned_data['coherence_mean'] - y_pred_equal_count)**2)
+            ss_tot_equal_count = np.sum((binned_data['coherence_mean'] - binned_data['coherence_mean'].mean())**2)
+            r_squared_equal_count = 1 - (ss_res_equal_count / ss_tot_equal_count) if ss_tot_equal_count > 0 else 0
+            
+            print_status(f"  {ac.upper()}: Original R²={original_r_squared:.3f}, Equal-Count R²={r_squared_equal_count:.3f}", "INFO")
+            
+            # Compare R-squared values
+            r_squared_difference = abs(original_r_squared - r_squared_equal_count)
+            
+            if r_squared_difference < 0.15 and r_squared_equal_count > 0.6: # R-squared should remain high and similar
+                results['key_findings'].append(f"✅ {ac.upper()}: Distribution-neutral validation passed. R² changed by {r_squared_difference:.3f}.")
+            else:
+                results['passed'] = False
+                results['validation_score'] *= 0.5 # Penalize significantly
+                results['key_findings'].append(f"❌ {ac.upper()}: Distribution-neutral validation FAILED. R² difference {r_squared_difference:.3f} is too high or equal-count R² is too low ({r_squared_equal_count:.3f}).")
+        
+        except Exception as e:
+            print_status(f"  WARNING: Curve fitting failed for equal-count bins for {ac.upper()}: {e}. Skipping R² comparison.", "WARNING")
+            results['key_findings'].append(f"WARNING: Curve fitting failed for {ac} equal-count bins, R² comparison skipped.")
+            
+    if results['passed'] and results['validation_score'] > 0.8:
+        print_status("  Distribution-neutral validation PASSED.", "SUCCESS")
+    else:
+        print_status("  Distribution-neutral validation FAILED or inconclusive.", "WARNING")
+        results['passed'] = False
+        results['validation_score'] *= 0.5 # Further penalize overall score
+        
+    return results
+
+
 class MethodologyValidator:
     """
-    WATERTIGHT METHODOLOGY VALIDATION FOR TEP-GNSS ANALYSIS
+    SIMPLIFIED METHODOLOGY VALIDATION FOR TEP-GNSS ANALYSIS
     
-    This class implements a comprehensive, peer-review-ready validation framework
-    that addresses all potential criticisms of the cos(phase(CSD)) methodology
-    through rigorous statistical analysis and bias characterization.
+    This class implements a streamlined validation framework that addresses
+    key criticisms of the cos(phase(CSD)) methodology through focused
+    statistical analysis and bias characterization.
     
     VALIDATION PHILOSOPHY:
     - Every result must be statistically significant and reproducible
     - All potential biases must be characterized and controlled
     - Clear discrimination criteria between genuine signals and artifacts
     - Transparent uncertainty quantification and sensitivity analysis
-    - Multi-level validation with independent cross-checks
-    
-    QUALITY ASSURANCE:
-    - Comprehensive error handling with informative diagnostics
-    - Data quality validation at every processing step
-    - Statistical significance testing with proper multiple comparison correction
-    - Robust confidence interval estimation using bootstrap methods
-    - Cross-validation between independent analysis methods
     """
     
     def __init__(self, output_dir: str = "results/outputs", random_seed: int = 42):
@@ -246,7 +368,7 @@ class MethodologyValidator:
         # 1. Distribution-Neutral Validation
         print_status("Phase 1/6: Performing distribution-neutral validation...", "PROCESS")
         try:
-            dist_neutral_results = self._run_distribution_neutral_validation()
+            dist_neutral_results = run_distribution_neutral_validation(self.analysis_centers, self.equal_count_bins)
             self.validation_results['details']['distribution_neutral'] = dist_neutral_results
             key_findings.extend(dist_neutral_results['key_findings'])
             validation_score_components.append(dist_neutral_results['validation_score'])
@@ -334,145 +456,23 @@ class MethodologyValidator:
         print_status("Methodology validation complete.", "SUCCESS")
         check_memory_usage("End of comprehensive validation")
         
-        # Save comprehensive report
-        validation_report_path = self.output_dir / "step_3_3_validation_report.json"
+        # Save comprehensive report (consolidated into single file per analysis center)
+        validation_report_path = self.output_dir / "step_3_3_methodology_validation.json"
         print_status(f"Attempting to save validation report to: {validation_report_path.resolve()}", "DEBUG")
-        safe_json_write(self.validation_results, validation_report_path, indent=2)
         
-        # Save bias characterization report
-        bias_characterization_path = self.output_dir / "step_3_3_bias_characterization.json"
-        print_status(f"Attempting to save bias characterization report to: {bias_characterization_path.resolve()}", "DEBUG")
-        safe_json_write(self.bias_characterization_results, bias_characterization_path, indent=2)
+        # Consolidate both validation and bias characterization into single output
+        consolidated_results = {
+            'validation_results': self.validation_results,
+            'bias_characterization_results': self.bias_characterization_results
+        }
+        safe_json_write(consolidated_results, validation_report_path, indent=2)
         
         # Generate and save figures
         self._generate_validation_figures(self.validation_results, self.bias_characterization_results)
         
         return self.validation_results
 
-    def _run_distribution_neutral_validation(self) -> Dict:
-        """
-        Validates the TEP methodology against distribution-based biases by using
-        an equal-count binning strategy.
-        """
-        print_status("  Running distribution-neutral validation...", "TEST")
-        
-        results = {'passed': True, 'validation_score': 1.0, 'key_findings': []}
-        
-        for ac in self.analysis_centers:
-            correlation_file = PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_correlation_{ac}.json"
-            if not correlation_file.exists():
-                raise TEPFileError(f"Correlation file not found for {ac}: {correlation_file}")
-            
-            correlation_data = safe_json_read(correlation_file)
-            
-            if 'best_fit' not in correlation_data or 'r_squared' not in correlation_data['best_fit']:
-                raise TEPDataError(f"Missing best_fit or r_squared in {ac} correlation data. Ensure Step 2.0 completed successfully.")
-            
-            original_r_squared = correlation_data['best_fit']['r_squared']
-            original_lambda_km = correlation_data['best_fit']['lambda_km']
-            
-            # Re-binning with equal counts
-            pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
-            pair_files = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
-            
-            if not pair_files:
-                # Fallback: if no pair files, skip detailed re-binning but log a warning
-                print_status(f"WARNING: No pair-level data found for {ac} in {pair_data_pattern.parent}. Skipping detailed distribution-neutral validation. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
-                results['key_findings'].append(f"WARNING: No pair data for {ac}, detailed distribution-neutral validation skipped.")
-                continue
-
-            # Load and combine all pair data for this AC
-            all_pair_dfs = []
-            for f_path in pair_files:
-                try:
-                    df_chunk = pd.read_csv(f_path)
-                    if not df_chunk.empty and 'dist_km' in df_chunk.columns and 'plateau_phase' in df_chunk.columns:
-                        # Convert plateau_phase to coherence using cos() for compatibility
-                        df_chunk['coherence'] = np.cos(df_chunk['plateau_phase'])
-                        all_pair_dfs.append(df_chunk)
-                    else:
-                        print_status(f"WARNING: Skipping empty or unreadable chunk file: {f_path.name}", "WARNING")
-                except Exception as e:
-                    print_status(f"WARNING: Error reading chunk file {f_path.name}: {e}. Skipping.", "WARNING")
-                continue
-            
-            if not all_pair_dfs:
-                print_status(f"WARNING: No valid pair data could be loaded for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
-                results['key_findings'].append(f"WARNING: No valid pair data for {ac}, detailed distribution-neutral validation skipped.")
-                continue
-            
-            combined_pairs = pd.concat(all_pair_dfs, ignore_index=True)
-            
-            # Equal-count binning for distance and coherence
-            if len(combined_pairs) < self.equal_count_bins * 2: # Need at least 2 pairs per bin
-                print_status(f"WARNING: Insufficient pairs ({len(combined_pairs)}) for {self.equal_count_bins} equal-count bins for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
-                results['key_findings'].append(f"WARNING: Insufficient pair data for {ac} for equal-count binning, detailed validation skipped.")
-                continue
-                    
-            combined_pairs['distance_bin'] = pd.qcut(combined_pairs['dist_km'], q=self.equal_count_bins, labels=False, duplicates='drop')
-            
-            if combined_pairs['distance_bin'].nunique() < 5: # Need at least 5 unique bins for a meaningful fit
-                print_status(f"WARNING: Only {combined_pairs['distance_bin'].nunique()} unique bins formed for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
-                results['key_findings'].append(f"WARNING: Too few unique bins for {ac}, detailed validation skipped.")
-                continue
-                        
-            binned_data = combined_pairs.groupby('distance_bin').agg(
-                distance_mean=('dist_km', 'mean'),
-                coherence_mean=('coherence', 'mean'),
-                coherence_std=('coherence', 'std'),
-                n_pairs=('coherence', 'count')
-            ).reset_index()
-            
-            # Filter bins with insufficient data (e.g., less than 5 pairs)
-            binned_data = binned_data[binned_data['n_pairs'] >= 5]
-            
-            if len(binned_data) < 5: # Need at least 5 data points for curve fitting
-                print_status(f"WARNING: Insufficient binned data points ({len(binned_data)}) for curve fitting after filtering for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
-                results['key_findings'].append(f"WARNING: Insufficient binned data for {ac} for curve fitting, detailed validation skipped.")
-                continue
-            
-            # Fit exponential decay model to equal-count binned data
-            try:
-                popt_equal_count, pcov_equal_count = curve_fit(
-                    lambda x, A, L: A * np.exp(-x / L),
-                    binned_data['distance_mean'],
-                    binned_data['coherence_mean'],
-                    p0=[1.0, 1000.0],  # Initial guess
-                    sigma=binned_data['coherence_std'],
-                    absolute_sigma=True,
-                    bounds=([0, 100], [1.5, 20000]) # A between 0 and 1.5, L between 100 and 20000
-                )
-                A_equal_count, lambda_equal_count = popt_equal_count
-                
-                y_pred_equal_count = A_equal_count * np.exp(-binned_data['distance_mean'] / lambda_equal_count)
-                ss_res_equal_count = np.sum((binned_data['coherence_mean'] - y_pred_equal_count)**2)
-                ss_tot_equal_count = np.sum((binned_data['coherence_mean'] - binned_data['coherence_mean'].mean())**2)
-                r_squared_equal_count = 1 - (ss_res_equal_count / ss_tot_equal_count) if ss_tot_equal_count > 0 else 0
-                
-                print_status(f"  {ac.upper()}: Original R²={original_r_squared:.3f}, Equal-Count R²={r_squared_equal_count:.3f}", "INFO")
-                
-                # Compare R-squared values
-                r_squared_difference = abs(original_r_squared - r_squared_equal_count)
-                
-                if r_squared_difference < 0.15 and r_squared_equal_count > 0.6: # R-squared should remain high and similar
-                    results['key_findings'].append(f"✅ {ac.upper()}: Distribution-neutral validation passed. R² changed by {r_squared_difference:.3f}.")
-                else:
-                    results['passed'] = False
-                    results['validation_score'] *= 0.5 # Penalize significantly
-                    results['key_findings'].append(f"❌ {ac.upper()}: Distribution-neutral validation FAILED. R² difference {r_squared_difference:.3f} is too high or equal-count R² is too low ({r_squared_equal_count:.3f}).")
-            
-            except Exception as e:
-                print_status(f"  WARNING: Curve fitting failed for equal-count bins for {ac.upper()}: {e}. Skipping R² comparison.", "WARNING")
-                results['key_findings'].append(f"WARNING: Curve fitting failed for {ac} equal-count bins, R² comparison skipped.")
-                
-        if results['passed'] and results['validation_score'] > 0.8:
-            print_status("  Distribution-neutral validation PASSED.", "SUCCESS")
-        else:
-            print_status("  Distribution-neutral validation FAILED or inconclusive.", "WARNING")
-            results['passed'] = False
-            results['validation_score'] *= 0.5 # Further penalize overall score
-            
-        return results
+    # Distribution-neutral validation method removed - now using standalone function
 
     def _run_geometric_control_analysis(self) -> Dict:
         """

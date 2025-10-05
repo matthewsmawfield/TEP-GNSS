@@ -313,7 +313,7 @@ def validate_directory_exists(dir_path: Union[str, Path], description: str = "Di
 
 def safe_csv_read(file_path: Union[str, Path], **kwargs):
     """
-    Safely read CSV files with proper error handling.
+    Safely read CSV files with proper error handling and automatic fallback.
     
     Args:
         file_path: Path to CSV file
@@ -330,14 +330,29 @@ def safe_csv_read(file_path: Union[str, Path], **kwargs):
     
     path = validate_file_exists(file_path, "CSV file")
     
+    # Try C engine first (faster)
     try:
-        return pd.read_csv(path, **kwargs)
-    except pd.errors.EmptyDataError:
-        raise TEPDataError(f"CSV file is empty: {path}")
-    except pd.errors.ParserError as e:
-        raise TEPDataError(f"Failed to parse CSV file {path}: {e}")
+        return pd.read_csv(path, engine='c', **kwargs)
+    except (pd.errors.ParserError, pd.errors.EmptyDataError) as e:
+        # If C engine fails, try Python engine (more robust)
+        try:
+            print_status(f"CSV parsing with C engine failed, trying Python engine: {e}", "WARNING")
+            return pd.read_csv(path, engine='python', **kwargs)
+        except pd.errors.EmptyDataError:
+            raise TEPDataError(f"CSV file is empty: {path}")
+        except pd.errors.ParserError as e2:
+            raise TEPDataError(f"Failed to parse CSV file {path} with both engines. C engine error: {e}, Python engine error: {e2}")
+        except (UnicodeDecodeError, UnicodeError) as e2:
+            raise TEPDataError(f"Encoding error reading CSV file {path}: {e2}")
     except (UnicodeDecodeError, UnicodeError) as e:
-        raise TEPDataError(f"Encoding error reading CSV file {path}: {e}")
+        # Try Python engine for encoding issues
+        try:
+            print_status(f"CSV encoding error with C engine, trying Python engine: {e}", "WARNING")
+            return pd.read_csv(path, engine='python', **kwargs)
+        except (UnicodeDecodeError, UnicodeError) as e2:
+            raise TEPDataError(f"Encoding error reading CSV file {path}: {e2}")
+        except pd.errors.ParserError as e2:
+            raise TEPDataError(f"Failed to parse CSV file {path}: {e2}")
 
 
 def safe_json_read(file_path: Union[str, Path]):

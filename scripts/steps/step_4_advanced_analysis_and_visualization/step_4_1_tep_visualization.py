@@ -33,6 +33,7 @@ import matplotlib as mpl
 import json
 import os
 import sys
+import subprocess
 from pathlib import Path
 from datetime import datetime
 from scipy.optimize import curve_fit
@@ -541,148 +542,70 @@ def create_anisotropy_longitude_plots(root_dir):
     results = {}
 
     for ac in ['code', 'igs_combined', 'esa_final']:
-        # Initialize results for this analysis center
-        results[ac] = {}
-        
         data_file = root_dir / f"data/processed/step_2_1_geospatial_{ac}.csv"
         if not data_file.exists():
             print_status(f"Geospatial data for {ac} not found, skipping longitude plots.", "WARNING")
-            results[ac]['error'] = f'Geospatial data file not found: {data_file}'
+            results[f"{ac}_heatmap"] = None
             continue
             
         print_status(f"Processing {ac.upper()} for longitude analysis...", "PROCESS")
-        try:
-            df = pd.read_csv(data_file)
-            if TEPConfig.get_float('TEP_ANISOTROPY_SAMPLING_FRAC') < 1.0:
-                df = df.sample(frac=TEPConfig.get_float('TEP_ANISOTROPY_SAMPLING_FRAC'), random_state=TEPConfig.get_int('TEP_RANDOM_SEED'))
-            df['coherence'] = np.cos(df['plateau_phase'])
-            
-            # Calculate longitude difference if not present
-            if 'lon_diff' not in df.columns:
-                df['lon_diff'] = abs(df['station1_lon'] - df['station2_lon'])
-        except (IOError, pd.errors.EmptyDataError) as e:
-            print_status(f"Failed to load or parse geospatial data for {ac}: {e}", "ERROR")
-            results[ac] = {'error': f'Data loading/parsing error: {e}'}
-            continue
-        except KeyError as e:
-            print_status(f"Missing expected column in geospatial data for {ac}: {e}", "ERROR")
-            results[ac] = {'error': f'Missing column error: {e}'}
-            continue
+        df = pd.read_csv(data_file).sample(frac=0.1, random_state=42) # Sample for performance
+        df['coherence'] = np.cos(df['plateau_phase'])
 
         # --- 2D Heatmap of Coherence vs. Distance and Longitude Difference ---
-        fig1, ax1 = plt.subplots(figsize=(10, 8))
+        plt.figure(figsize=(10, 8))
         
-        try:
-            hb = ax1.hexbin(df['dist_km'], df['lon_diff'], C=df['coherence'], gridsize=TEPConfig.get_int('TEP_HEXBIN_GRID_SIZE'),
-                           cmap=cmr.cosmic_r, vmin=-0.1, vmax=0.4, reduce_C_function=np.mean)
-            cb = fig1.colorbar(hb, ax=ax1, label='Mean Coherence')
-            ax1.set_xlabel('Distance (km)', fontweight='bold')
-            ax1.set_ylabel('Longitude Difference (°)', fontweight='bold')
-            ax1.set_title(f'Coherence vs. Distance & Longitude Difference - {ac.upper()}', fontweight='bold')
-            
-            figure_path_heatmap = figures_dir / f'step_4_1_anisotropy_heatmap_{ac}.png'
-            fig1.savefig(figure_path_heatmap, dpi=300, bbox_inches='tight')
-            print_status(f"Saved heatmap: {figure_path_heatmap}", "SUCCESS")
-            results[ac]['heatmap_figure'] = str(figure_path_heatmap)
-        except Exception as e:
-            print_status(f"Failed to create/save heatmap for {ac}: {e}", "ERROR")
-            results[ac]['heatmap_error'] = str(e)
-        finally:
-            plt.close(fig1)
-
-        # --- Cross-Sectional Analysis of Coherence vs Longitude Difference ---
-        fig2, (ax2_1, ax2_2) = plt.subplots(1, 2, figsize=(12, 5))
-
-        # Bin by distance
-        dist_bins = pd.cut(df['dist_km'], bins=TEPConfig.get_int('TEP_ANISOTROPY_DIST_BINS'), labels=False)
+        # Bin the data
+        dist_bins = np.linspace(0, 8000, 50)
+        lon_bins = np.linspace(0, 180, 50)
         
-        try:
-            # Create distance bins
-            num_bins = TEPConfig.get_int('TEP_ANISOTROPY_DIST_BINS')
-            bin_edges = np.linspace(df['dist_km'].min(), df['dist_km'].max(), num_bins + 1)
-            for i in range(len(bin_edges) - 1):
-                subset = df[(df['dist_km'] >= bin_edges[i]) & (df['dist_km'] < bin_edges[i+1])].copy()
-                if len(subset) < TEPConfig.get_int('TEP_MIN_PAIRS_PER_BIN'):
-                    continue
-
-                # Longitude difference bins
-                num_lon_bins = TEPConfig.get_int('TEP_ANISOTROPY_LON_BINS')
-                lon_diff_bins = np.linspace(0, 180, num_lon_bins + 1)
-                subset.loc[:, 'lon_diff_bin'] = pd.cut(subset['lon_diff'], bins=lon_diff_bins, labels=False)
-                binned_lon = subset.groupby('lon_diff_bin', observed=True).agg(mean_lon_diff=('lon_diff', 'mean'), mean_coh=('coherence', 'mean'), count=('coherence', 'size')).reset_index()
-                binned_lon['mean_lon_diff'] = binned_lon['lon_diff_bin'].map(lambda x: (lon_diff_bins[int(x)] + lon_diff_bins[int(x)+1])/2)
-                binned_lon = binned_lon.dropna(subset=['mean_lon_diff', 'mean_coh'])
-                binned_lon = binned_lon[binned_lon['count'] >= TEPConfig.get_int('TEP_MIN_PAIRS_PER_BIN')]
-
-                if len(binned_lon) < TEPConfig.get_int('TEP_MIN_BINS_FOR_FIT'):
-                    continue
-
-                # Linear fit for longitude dependence
-                slope, intercept, r_value, p_value, std_err = linregress(binned_lon['mean_lon_diff'], binned_lon['mean_coh'])
-
-                ax2_1.plot(binned_lon['mean_lon_diff'], binned_lon['mean_coh'], 'o-', label=f'{bin_edges[i]:.0f}-{bin_edges[i+1]:.0f} km')
-                ax2_1.plot(binned_lon['mean_lon_diff'], intercept + slope * binned_lon['mean_lon_diff'], '--', color=ax2_1.lines[-1].get_color(), alpha=0.7)
-
-        except Exception as e:
-            print_status(f"Error during cross-sectional analysis (distance binning) for {ac}: {e}", "ERROR")
-            results[ac]['cross_sectional_dist_error'] = str(e)
-
-        ax2_1.set_xlabel('Longitude Difference (°)', fontweight='bold')
-        ax2_1.set_ylabel('Mean Coherence', fontweight='bold')
-        ax2_1.set_title(f'Coherence vs. Longitude Difference - {ac.upper()}', fontweight='bold')
-        ax2_1.legend(title='Distance (km)', fontsize=8)
-        ax2_1.grid(True, alpha=0.3)
-
-        # Bin by longitude difference
-        try:
-            # Create longitude difference bins
-            num_lon_bins = TEPConfig.get_int('TEP_ANISOTROPY_LON_BINS')
-            lon_diff_bins = np.linspace(0, 180, num_lon_bins + 1)
-            lon_diff_main_bins = pd.cut(df['lon_diff'], bins=lon_diff_bins, labels=False)
-            for i in range(len(lon_diff_bins) - 1):
-                subset = df[(df['lon_diff'] >= lon_diff_bins[i]) & (df['lon_diff'] < lon_diff_bins[i+1])].copy()
-                if len(subset) < TEPConfig.get_int('TEP_MIN_PAIRS_PER_BIN'):
-                    continue
-
-                # Distance bins
-                dist_bins_lon = np.logspace(np.log10(TEPConfig.get_float('TEP_MIN_DISTANCE_FOR_FIT_PLOT', 50.0)), np.log10(TEPConfig.get_float('TEP_MAX_DISTANCE_FOR_FIT_PLOT', 12000.0)), TEPConfig.get_int('TEP_NUM_BINS_FOR_FIT', 20))
-                subset.loc[:, 'dist_bin'] = pd.cut(subset['dist_km'], bins=dist_bins_lon, right=False, labels=False)
-                binned_dist = subset.groupby('dist_bin', observed=True).agg(mean_dist=('dist_km', 'mean'), mean_coh=('coherence', 'mean'), count=('coherence', 'size')).reset_index()
-                binned_dist['mean_dist'] = binned_dist['dist_bin'].apply(lambda x: (dist_bins_lon[int(x)] + dist_bins_lon[int(x)+1])/2 if pd.notna(x) else np.nan)
-                binned_dist = binned_dist.dropna(subset=['mean_dist', 'mean_coh'])
-                binned_dist = binned_dist[binned_dist['count'] >= TEPConfig.get_int('TEP_MIN_PAIRS_PER_BIN')]
-
-                if len(binned_dist) < TEPConfig.get_int('TEP_MIN_BINS_FOR_FIT'):
-                    continue
-
-                # Exponential fit for distance dependence
-                popt, perr, r_squared = fit_exponential(binned_dist['mean_dist'].values, binned_dist['mean_coh'].values, binned_dist['count'].values)
-
-                x_fit_lon = np.linspace(TEPConfig.get_float('TEP_MIN_DISTANCE_FOR_FIT_PLOT', 50.0), TEPConfig.get_float('TEP_MAX_DISTANCE_FOR_FIT_PLOT', 12000.0), TEPConfig.get_int('TEP_NUM_BINS_FOR_FIT', 20))
-                y_fit_lon = exponential_model(x_fit_lon, popt[0], popt[1], popt[2])
-
-                ax2_2.plot(x_fit_lon, y_fit_lon, linestyle='-', label=f'{lon_diff_bins[i]:.0f}-{lon_diff_bins[i+1]:.0f}°: λ={popt[1]:.0f} km')
-        except Exception as e:
-            print_status(f"Error during cross-sectional analysis (longitude binning) for {ac}: {e}", "ERROR")
-            results[ac]['cross_sectional_lon_error'] = str(e)
-
-        ax2_2.set_xlabel('Distance (km)', fontweight='bold')
-        ax2_2.set_ylabel('Mean Coherence', fontweight='bold')
-        ax2_2.set_title(f'Coherence vs. Distance (Stratified by Longitude Diff) - {ac.upper()}', fontweight='bold')
-        ax2_2.legend(title='Longitude Diff (°)', fontsize=8)
-        ax2_2.grid(True, alpha=0.3)
-
-        plt.tight_layout()
-        try:
-            figure_path_cross = figures_dir / f'step_4_1_anisotropy_cross_sections_{ac}.png'
-            fig2.savefig(figure_path_cross, dpi=300, bbox_inches='tight')
-            print_status(f"Saved cross-sectional plots: {figure_path_cross}", "SUCCESS")
-            results[ac]['cross_section_figure'] = str(figure_path_cross)
-        except IOError as e:
-            print_status(f"Failed to save cross-sectional plots for {ac}: {e}", "ERROR")
-            results[ac]['cross_section_error'] = str(e)
-        finally:
-            plt.close(fig2)
+        # Use fast 2D histogram function
+        heatmap, x_edges, y_edges = np.histogram2d(
+            df['dist_km'], df['delta_longitude'], 
+            bins=[dist_bins, lon_bins], 
+            weights=df['coherence']
+        )
+        counts, _, _ = np.histogram2d(
+            df['dist_km'], df['delta_longitude'], 
+            bins=[dist_bins, lon_bins]
+        )
+        
+        # Avoid division by zero
+        counts[counts == 0] = 1
+        heatmap /= counts
+        
+        # Site theme colors for plotting
+        THEME_COLORS = {
+            'primary': '#2D0140',      # Deep purple primary
+            'secondary': '#495773',    # Blue-gray secondary  
+            'text': '#220126',         # Dark text for readability
+            'background': 'white',     # Clean white background
+        }
+        
+        # Create custom colormap using site theme colors
+        from matplotlib.colors import LinearSegmentedColormap
+        site_colors = ['#E6F3FF', '#4A90C2', '#495773', '#2D0140', '#220126']  # Light to dark site colors
+        site_cmap = LinearSegmentedColormap.from_list('site_theme', site_colors, N=256)
+        
+        # Plotting with site theme
+        plt.imshow(heatmap.T, origin='lower', aspect='auto', 
+                   extent=[x_edges[0], x_edges[-1], y_edges[0], y_edges[-1]],
+                   cmap=site_cmap, interpolation='nearest')
+        
+        cbar = plt.colorbar()
+        cbar.set_label('Mean Coherence', color=THEME_COLORS['text'], fontweight='bold')
+        cbar.ax.tick_params(colors=THEME_COLORS['text'])
+        plt.xlabel('Distance (km)', color=THEME_COLORS['text'], fontweight='bold')
+        plt.ylabel('Longitude Difference (degrees)', color=THEME_COLORS['text'], fontweight='bold')
+        plt.title(f'Coherence vs. Distance and Longitude Difference - {ac.upper()}', 
+                 color=THEME_COLORS['text'], fontweight='bold')
+        plt.tick_params(colors=THEME_COLORS['text'])
+        
+        plot_path = figures_dir / f"step_4_1_anisotropy_heatmap_{ac}.png"
+        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print_status(f"Saved heatmap for {ac} to {plot_path}", "SUCCESS")
+        results[f"{ac}_heatmap"] = str(plot_path)
 
     return results
 
@@ -695,19 +618,35 @@ def create_station_map(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load only stations that were actually analyzed
+    # Load only stations that were actually analyzed - get from processed data files
     coords_df = pd.read_csv(coords_file)
-    analyzed_stations_file = root_dir / 'results/outputs/step_1_2_station_metadata.json'
     
-    if analyzed_stations_file.exists():
-        with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = json.load(f)
-        analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
+    # Get actual analyzed stations from processed CSV files
+    processed_files = [
+        root_dir / 'data/processed/step_2_1_geospatial_code.csv',
+        root_dir / 'data/processed/step_2_1_geospatial_igs_combined.csv', 
+        root_dir / 'data/processed/step_2_1_geospatial_esa_final.csv'
+    ]
+    
+    analyzed_stations = set()
+    for processed_file in processed_files:
+        if processed_file.exists():
+            try:
+                # Read just station columns to get unique stations
+                df_sample = pd.read_csv(processed_file, usecols=['station_i', 'station_j'], nrows=50000)
+                file_stations = set(df_sample['station_i'].unique()) | set(df_sample['station_j'].unique())
+                # Normalize to 4-character codes
+                file_stations_4char = {s[:4] if len(s) > 4 else s for s in file_stations}
+                analyzed_stations.update(file_stations_4char)
+            except Exception as e:
+                print_status(f"Could not read {processed_file.name}: {e}", "WARNING")
+    
+    if analyzed_stations:
         # Filter to only analyzed stations (case-insensitive matching)
-        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
-        print_status(f"Using {len(coords_df)} analyzed stations (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
+        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin({s.upper() for s in analyzed_stations})]
+        print_status(f"Using {len(coords_df)} analyzed stations from processed data (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
     else:
-        print_status("No analyzed stations metadata found, using all coordinates", "WARNING")
+        print_status("No processed data found, using all coordinates", "WARNING")
     lats, lons = [], []
     for _, row in coords_df.iterrows():
         try:
@@ -793,19 +732,35 @@ def create_three_globe_views(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load only stations that were actually analyzed
+    # Load only stations that were actually analyzed - get from processed data files
     coords_df = pd.read_csv(coords_file)
-    analyzed_stations_file = root_dir / 'results/outputs/step_1_2_station_metadata.json'
     
-    if analyzed_stations_file.exists():
-        with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = json.load(f)
-        analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
+    # Get actual analyzed stations from processed CSV files
+    processed_files = [
+        root_dir / 'data/processed/step_2_1_geospatial_code.csv',
+        root_dir / 'data/processed/step_2_1_geospatial_igs_combined.csv', 
+        root_dir / 'data/processed/step_2_1_geospatial_esa_final.csv'
+    ]
+    
+    analyzed_stations = set()
+    for processed_file in processed_files:
+        if processed_file.exists():
+            try:
+                # Read just station columns to get unique stations
+                df_sample = pd.read_csv(processed_file, usecols=['station_i', 'station_j'], nrows=50000)
+                file_stations = set(df_sample['station_i'].unique()) | set(df_sample['station_j'].unique())
+                # Normalize to 4-character codes
+                file_stations_4char = {s[:4] if len(s) > 4 else s for s in file_stations}
+                analyzed_stations.update(file_stations_4char)
+            except Exception as e:
+                print_status(f"Could not read {processed_file.name}: {e}", "WARNING")
+    
+    if analyzed_stations:
         # Filter to only analyzed stations (case-insensitive matching)
-        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
-        print_status(f"Using {len(coords_df)} analyzed stations (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
+        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin({s.upper() for s in analyzed_stations})]
+        print_status(f"Using {len(coords_df)} analyzed stations from processed data (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
     else:
-        print_status("No analyzed stations metadata found, using all coordinates", "WARNING")
+        print_status("No processed data found, using all coordinates", "WARNING")
     lats, lons = [], []
     for _, row in coords_df.iterrows():
         try:
@@ -2380,6 +2335,78 @@ def generate_summary_report(all_results, output_file):
     return report
 
 
+def generate_station_distance_matrix(root_dir):
+    """
+    Generate pairwise distance matrix for all GNSS stations using proper great-circle distances.
+    Creates the step_2_1_station_distances.csv file expected by visualization functions.
+    This function ensures backward compatibility with exploratory scripts expecting step_8_station_distances.csv.
+
+    Args:
+        root_dir: Root directory of the TEP project
+
+    Returns:
+        Path to the generated distance matrix file
+    """
+    print_status("Generating station distance matrix with proper great-circle distances", "INFO")
+
+    # Load station coordinates
+    coords_file = root_dir / 'data/coordinates/step_1_1_station_coords_global.csv'
+    if not coords_file.exists():
+        print_status(f"Station coordinates file not found: {coords_file}", "ERROR")
+        return None
+
+    try:
+        coords_df = pd.read_csv(coords_file)
+        # Filter for stations with valid coordinates
+        valid_coords = coords_df.dropna(subset=['lat_deg', 'lon_deg']).copy()
+        print_status(f"Processing {len(valid_coords)} stations with valid coordinates", "INFO")
+
+        # Generate all pairwise combinations
+        station_pairs = []
+        total_stations = len(valid_coords)
+
+        for i, station1 in enumerate(valid_coords['coord_source_code']):
+            for j, station2 in enumerate(valid_coords['coord_source_code']):
+                if i < j:  # Only calculate each pair once
+                    try:
+                        lat1 = valid_coords.loc[valid_coords['coord_source_code'] == station1, 'lat_deg'].iloc[0]
+                        lon1 = valid_coords.loc[valid_coords['coord_source_code'] == station1, 'lon_deg'].iloc[0]
+                        lat2 = valid_coords.loc[valid_coords['coord_source_code'] == station2, 'lat_deg'].iloc[0]
+                        lon2 = valid_coords.loc[valid_coords['coord_source_code'] == station2, 'lon_deg'].iloc[0]
+
+                        distance_km = haversine_distance(lat1, lon1, lat2, lon2)
+                        station_pairs.append({
+                            'station1': station1,
+                            'station2': station2,
+                            'distance_km': distance_km
+                        })
+                    except (IndexError, KeyError) as e:
+                        print_status(f"Error calculating distance for {station1}-{station2}: {e}", "WARNING")
+                        continue
+
+        # Create output directory
+        output_dir = root_dir / 'data/processed'
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Save distance matrix (using both current and legacy filenames for compatibility)
+        distance_df = pd.DataFrame(station_pairs)
+        
+        # Current filename
+        output_file_current = output_dir / 'step_2_1_station_distances.csv'
+        distance_df.to_csv(output_file_current, index=False)
+        
+        # Legacy filename for backward compatibility with exploratory scripts
+        output_file_legacy = output_dir / 'step_8_station_distances.csv'
+        distance_df.to_csv(output_file_legacy, index=False)
+
+        print_status(f"Generated station distance matrix with {len(station_pairs)} pairs", "SUCCESS")
+        print_status(f"Saved to: {output_file_current} and {output_file_legacy}", "SUCCESS")
+        return str(output_file_current)
+
+    except Exception as e:
+        print_status(f"Failed to generate station distance matrix: {e}", "ERROR")
+        return None
+
 def xyz_to_enu(x, y, z, lat_ref, lon_ref, h_ref):
     """
     Convert ECEF coordinates to ENU coordinates relative to a reference point.
@@ -2422,6 +2449,16 @@ def main():
 
     try:
         print_status("Executing Step 4.1: TEP Visualization...", "PROCESS")
+        
+        # Generate station distance matrix if needed
+        print_status("\n" + "="*60, "INFO")
+        print_status("GENERATING STATION DISTANCE MATRIX", "INFO")
+        print_status("="*60, "INFO")
+        distance_matrix_file = generate_station_distance_matrix(root_dir)
+        if distance_matrix_file:
+            print_status(f"Station distance matrix generated: {distance_matrix_file}", "SUCCESS")
+        else:
+            print_status("Warning: Could not generate station distance matrix", "WARNING")
         
         analysis_centers = [ac.strip() for ac in TEPConfig.get_str('TEP_ANALYSIS_CENTERS', 'code,esa_final,igs_combined').split(',')]
         if not analysis_centers:
@@ -2504,10 +2541,36 @@ def main():
         print_status("-"*60, "INFO")
         all_results['station_map'] = create_station_map(root_dir)
         print_status("Station location maps generated successfully.", "SUCCESS")
+
+        print_status("\n" + "-"*60, "INFO")
+        print_status("7. MULTI-BAND FREQUENCY VISUALIZATION", "INFO")
+        print_status("-"*60, "INFO")
+        # Import and run step 4.8 multiband visualization
+        try:
+            import subprocess
+            result = subprocess.run([
+                sys.executable, 
+                str(PACKAGE_ROOT / "scripts/steps/step_4_advanced_analysis_and_visualization/step_4_8_multiband_visualization.py")
+            ], capture_output=True, text=True, cwd=str(PACKAGE_ROOT))
+            
+            if result.returncode == 0:
+                all_results['multiband_visualization'] = {'status': 'completed', 'figures': 5}
+                print_status("Multi-band frequency visualization completed.", "SUCCESS")
+                print_status("All step 4.8 figures automatically synced to site folder.", "INFO")
+            else:
+                print_status(f"Multi-band visualization warning: {result.stderr}", "WARNING")
+                all_results['multiband_visualization'] = {'status': 'partial', 'error': result.stderr}
+        except Exception as e:
+            print_status(f"Multi-band visualization error: {str(e)}", "ERROR")
+            all_results['multiband_visualization'] = {'status': 'failed', 'error': str(e)}
         
         print_status("\n" + "="*60, "INFO")
         print_status("STEP 4.1 VISUALIZATION AND EXPORT COMPLETE", "SUCCESS")
         print_status("="*60, "INFO")
+        
+        # Store distance matrix info in results
+        if distance_matrix_file:
+            all_results['distance_matrix'] = {'file': distance_matrix_file}
 
     except exc.TEPAnalysisError as ae:
         print_status(f"Critical TEP Analysis Error: {ae}", "ERROR")

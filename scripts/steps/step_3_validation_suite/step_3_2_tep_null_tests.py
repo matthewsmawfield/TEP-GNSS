@@ -12,7 +12,7 @@ Inputs:
   - results/outputs/step_2_0_correlation_{ac}.json (from Step 2.0)
   - data/raw/{igs,esa,code}/*.CLK.gz files
   - data/coordinates/step_1_1_station_coords_global.csv (from Step 1.1)
-  - results/tmp/step_2_0_pairs_{ac}_*.csv (from Step 2.0, if `TEP_WRITE_PAIR_LEVEL=1`)
+  - results/outputs/step_2_0_pairs_consolidated_{ac}.csv (from Step 2.0)
 Outputs:
   - results/outputs/step_3_2_null_tests_{ac}.json (results of null tests)
 Next: Step 4.0 (Advanced Analysis)
@@ -67,8 +67,8 @@ WGS84_E2 = 2 * WGS84_F - WGS84_F**2  # first eccentricity squared
 EARTH_RADIUS_KM = 6371.0088 # Mean Earth radius in km for great circle distance
 
 # Anchor to package root
-PACKAGE_PACKAGE_ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(PACKAGE_PACKAGE_ROOT))
+PACKAGE_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(PACKAGE_ROOT))
 
 # Import TEP utilities for better configuration and error handling
 from scripts.utils.config import TEPConfig
@@ -196,7 +196,7 @@ def build_distance_cache(coords_map: dict) -> Dict[Tuple[str, str], float]:
     Returns:
         Dict[Tuple[str, str], float]: Cache mapping (station1, station2) -> distance_km
     """
-    from .tep_logger import print_status
+    from scripts.utils.logger import print_status
     
     print_status("Building distance cache for station pairs...", "PROCESS")
     
@@ -268,58 +268,37 @@ def load_pair_data_once(ac: str, null_type: str = 'distance'):
     """
     print_status(f"Loading pair data for {ac.upper()} (one-time load for efficiency)...", "INFO")
     
-    # Load real pair-level data written by Step 2.0 (env TEP_WRITE_PAIR_LEVEL=1)
-    pair_dir = PACKAGE_PACKAGE_ROOT / 'results' / 'tmp'
-    if not pair_dir.exists():
-        raise TEPFileError(f"No pair-level data directory found: {pair_dir}. Re-run Step 2.0 with TEP_WRITE_PAIR_LEVEL=1.")
+    # Load consolidated pair-level data from Step 2.0 outputs
+    consolidated_file = PACKAGE_ROOT / 'results' / 'outputs' / f'step_2_0_pairs_consolidated_{ac}.csv'
+    
+    if not consolidated_file.exists():
+        raise TEPFileError(f"No consolidated pair file found for analysis center: {ac} at {consolidated_file}. Ensure Step 2.0 is complete.")
 
-    files = sorted(pair_dir.glob(f"step_2_0_pairs_{ac}_*.csv"))
-    if not files:
-        raise TEPFileError(f"No pair files found for analysis center: {ac} in {pair_dir}. Ensure Step 2.0 is complete and TEP_WRITE_PAIR_LEVEL is set to 1.")
+    print_status(f"    Loading consolidated pair data: {consolidated_file.name}", "INFO")
+    
+    try:
+        # Load the consolidated pair data
+        df = pd.read_csv(consolidated_file)
+        total_rows = len(df)
+        
+        if null_type == 'station':
+            # For station scrambling, use a representative sample to avoid excessive computation
+            sample_size = min(len(df), 100000)  # Sample up to 100k pairs for efficiency
+            df = df.sample(n=sample_size, random_state=42)
+            print_status(f"    Station scrambling: Using {len(df):,} sample pairs for efficiency", "INFO")
+        
+        # Derive coherence from plateau_phase for compatibility with null test functions
+        if 'plateau_phase' in df.columns:
+            df['coherence'] = np.cos(df['plateau_phase'])
+            print_status(f"    Derived coherence from plateau_phase: {len(df):,} pairs", "INFO")
+        else:
+            raise TEPDataError(f"Required 'plateau_phase' column not found in consolidated data for {ac}")
 
-    if null_type == 'station':
-        # For station scrambling, use a representative sample to avoid excessive computation
-        files = files[::10]  # Take every 10th file
-        print_status(f"    Station scrambling: Using {len(files)} sample files (every 10th) for efficiency", "INFO")
-
-    frames = []
-    total_rows = 0
-    
-    for p in files:
-        try:
-            dfp = safe_csv_read(p)
-            if dfp is not None:
-                frames.append(dfp)
-                total_rows += len(dfp)
-            else:
-                print_status(f"WARNING: Failed to load {p.name}: safe_csv_read returned None.", "WARNING")
-        except (TEPDataError, TEPFileError) as e:
-            print_status(f"WARNING: Failed to load {p.name}: {e}. Skipping this file.", "WARNING")
-            continue
-        except Exception as e:
-            print_status(f"WARNING: Unexpected error loading {p.name}: {e}. Skipping this file.", "WARNING")
-            continue
-    
-    if not frames:
-        raise TEPDataError(f"No valid pair data loaded for {ac} from {pair_dir}.")
-    
-    df = pd.concat(frames, ignore_index=True)
-    print_status(f"    Loaded {len(files)} pair files with {len(df):,} rows", "INFO")
-    
-    # Preprocess the data once
-    df = df.dropna(subset=['dist_km', 'plateau_phase']).copy()
-    if len(df) == 0:
-        raise TEPDataError(f"DataFrame is empty after dropping NaNs for analysis in {null_type} null test.")
-    df['coherence'] = np.cos(df['plateau_phase'])
-    
-    print_status(f"    Preprocessed data: {len(df):,} valid rows ready for null tests", "SUCCESS")
-    
-    # Clean up intermediate variables to free memory
-    del frames
-    import gc
-    gc.collect()
-    
-    return df, len(files)
+        print_status(f"    Loaded {len(df):,} pairs from consolidated file", "INFO")
+        return df, 1  # Return 1 to indicate 1 file processed
+        
+    except Exception as e:
+        raise TEPFileError(f"Failed to load consolidated pair data from {consolidated_file}: {e}")
 
 def run_null_test_from_file(ac: str, null_type: str, random_seed: int = 42, coords_map: dict = None, data_file_path: str = None, files_processed: int = 0):
     """
@@ -766,7 +745,7 @@ def validate_tep_signal(ac: str):
     print_status(f"Validating TEP signal for {ac.upper()}", "INFO")
     
     # Load real results from Step 2.0
-    real_results_file = PACKAGE_PACKAGE_ROOT / f"results/outputs/step_2_0_correlation_{ac}.json" # Updated from step_3_correlation
+    real_results_file = PACKAGE_ROOT / f"results/outputs/step_2_0_correlation_{ac}.json" # Updated from step_3_correlation
     if not real_results_file.exists():
         raise TEPFileError(f"No Step 2.0 correlation results file found for {ac.upper()}: {real_results_file}. Ensure Step 2.0 is complete.")
     
@@ -781,7 +760,7 @@ def validate_tep_signal(ac: str):
     print_status(f"Real signal: λ = {real_lambda:.1f} km, R² = {real_r_squared:.3f}", "INFO")
     
     # Check for existing checkpoint
-    checkpoint_file = PACKAGE_PACKAGE_ROOT / f"results/tmp/step_3_2_checkpoint_{ac}.json" # Updated from step6_checkpoint
+    checkpoint_file = PACKAGE_ROOT / f"results/tmp/step_3_2_checkpoint_{ac}.json" # Updated from step6_checkpoint
     null_results = {}
     
     if checkpoint_file.exists():
@@ -797,7 +776,7 @@ def validate_tep_signal(ac: str):
             raise TEPFileError(f"Corrupted checkpoint file detected for {ac}: {e}. Please manually inspect or delete {checkpoint_file} to proceed.")
     
     # Load station coordinates once for efficiency
-    coords_path = PACKAGE_PACKAGE_ROOT / 'data' / 'coordinates' / 'step_1_1_station_coords_global.csv'
+    coords_path = PACKAGE_ROOT / 'data' / 'coordinates' / 'step_1_1_station_coords_global.csv'
     coords_df = safe_csv_read(coords_path)
     global_coords_map = coords_df.set_index('coord_source_code')[['X', 'Y', 'Z']].to_dict('index')
 
@@ -823,7 +802,7 @@ def validate_tep_signal(ac: str):
         preloaded_data, files_processed = load_pair_data_once(ac, null_type)
         
         # Save to temporary file for shared access
-        temp_data_file = PACKAGE_PACKAGE_ROOT / f"results/tmp/step_3_2_temp_data_{ac}_{null_type}.parquet"
+        temp_data_file = PACKAGE_ROOT / f"results/tmp/step_3_2_temp_data_{ac}_{null_type}.parquet"
         temp_data_file.parent.mkdir(exist_ok=True)
         preloaded_data.to_parquet(temp_data_file, compression='snappy')
         print_status(f"    Saved preprocessed data to {temp_data_file} for memory-efficient processing", "INFO")
@@ -934,25 +913,25 @@ def validate_tep_signal(ac: str):
         if len(null_r_squareds) == 0:
             print_status(f"WARNING: No R-squared values for {null_type} null test. Skipping p-value calculation.", "WARNING")
             continue
-            
-            # Permutation p-value: fraction of null results >= real result
-            p_value = sum(1 for null_r2 in null_r_squareds if null_r2 >= real_r_squared) / len(null_r_squareds)
-            # Add small correction for zero p-values
-            if p_value == 0:
-                p_value = 1.0 / (len(null_r_squareds) + 1)
-            
-            # Legacy z-score for comparison
-            z_score = (real_r_squared - null_stats['r_squared_mean']) / null_stats['r_squared_std'] if null_stats['r_squared_std'] > 0 else 0
-            
-            is_significant = p_value < 0.05  # 5% threshold
-            
-            validation_results['validation_assessment'][null_type] = {
-                'p_value': float(p_value),
-                'z_score': float(z_score),
-                'significant': bool(is_significant),
-                'n_permutations': len(null_r_squareds),
-                'interpretation': f'Real signal significantly different from null (p = {p_value:.4f})' if is_significant else f'No significant difference from null (p = {p_value:.4f})'
-            }
+        
+        # Permutation p-value: fraction of null results >= real result
+        p_value = sum(1 for null_r2 in null_r_squareds if null_r2 >= real_r_squared) / len(null_r_squareds)
+        # Add small correction for zero p-values
+        if p_value == 0:
+            p_value = 1.0 / (len(null_r_squareds) + 1)
+        
+        # Legacy z-score for comparison
+        z_score = (real_r_squared - null_stats['r_squared_mean']) / null_stats['r_squared_std'] if null_stats['r_squared_std'] > 0 else 0
+        
+        is_significant = p_value < 0.05  # 5% threshold
+        
+        validation_results['validation_assessment'][null_type] = {
+            'p_value': float(p_value),
+            'z_score': float(z_score),
+            'significant': bool(is_significant),
+            'n_permutations': len(null_r_squareds),
+            'interpretation': f'Real signal significantly different from null (p = {p_value:.4f})' if is_significant else f'No significant difference from null (p = {p_value:.4f})'
+        }
     
     # Clean up checkpoint on successful completion
     if len(null_results) == len(null_types):
@@ -1001,7 +980,7 @@ def main():
                 validation_results[ac] = result
                 
                 # Save individual results
-                output_file = PACKAGE_PACKAGE_ROOT / f"results/outputs/step_3_2_null_tests_{ac}.json" # Updated from step_6_null_tests
+                output_file = PACKAGE_ROOT / f"results/outputs/step_3_2_null_tests_{ac}.json" # Updated from step_6_null_tests
                 try:
                     safe_json_write(result, output_file, indent=2)
                     print_status(f"Validation results saved: {output_file}", "SUCCESS")
@@ -1076,6 +1055,10 @@ if __name__ == "__main__":
         sys.exit(0)  # Don't stop pipeline
     except KeyboardInterrupt:
         print_status("Analysis interrupted by user", "WARNING")
+        sys.exit(0)  # Don't stop pipeline
+    except BrokenPipeError as e:
+        print_status(f"Broken pipe error (process communication issue): {e}", "WARNING")
+        print_status("This is typically caused by process termination or memory issues", "INFO")
         sys.exit(0)  # Don't stop pipeline
     except Exception as e:
         print_status(f"An unexpected error occurred: {e}", "ERROR")

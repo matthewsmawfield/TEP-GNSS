@@ -52,7 +52,7 @@ class PIDManager:
         killed_count = 0
         
         try:
-            # Simple approach: just kill processes with the exact script name
+            # CONSERVATIVE APPROACH: Only kill exact script matches to avoid conflicts
             result = subprocess.run(
                 ['pgrep', '-f', f'{self.script_name}.py'],
                 capture_output=True, text=True, timeout=3
@@ -70,7 +70,7 @@ class PIDManager:
             if other_pids:
                 print(f"\n{'='*80}")
                 print(f"WARNING: Found {len(other_pids)} existing instance(s) of {self.script_name}")
-                print("Terminating all previous instances...")
+                print("Terminating previous instances...")
                 print("="*80)
                 
                 for pid in other_pids:
@@ -85,15 +85,20 @@ class PIDManager:
                     except OSError:
                         pass  # Already dead
                 
-                time.sleep(1)  # Wait for cleanup
+                time.sleep(2)  # Wait for cleanup
                 print(f"Successfully terminated {killed_count} process(es)\n")
         except (FileNotFoundError, subprocess.TimeoutExpired, Exception):
             # pgrep not available or timed out - continue anyway
             pass
         
-        # Clean up any stale PID file
-        if self.pid_file.exists():
-            self.pid_file.unlink()
+        # Clean up any stale PID files
+        tmp_dir = self.root_dir / "results/tmp"
+        if tmp_dir.exists():
+            for pid_file in tmp_dir.glob("*.pid"):
+                try:
+                    pid_file.unlink()
+                except Exception:
+                    pass  # Best effort cleanup
         
         return killed_count
     

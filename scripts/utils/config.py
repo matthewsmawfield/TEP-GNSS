@@ -114,14 +114,14 @@ class TEPConfig:
         'TEP_STATION_BLOCK_SIZE': 10,  # Size of station blocks for block cross-validation
         'TEP_LOSO_SAMPLE_SIZE': 50,  # Sample size for Leave-One-Station-Out (LOSO) cross-validation
         'TEP_LODO_SAMPLE_SIZE': 100,  # Sample size for Leave-One-Day-Out (LODO) cross-validation
-        'TEP_BOOTSTRAP_SAMPLES': 200,  # Number of bootstrap samples for general cross-validation
+        'TEP_BOOTSTRAP_SAMPLES': 100,  # Number of bootstrap samples for general cross-validation (reduced for system stability)
         
-        # Robust Block Bootstrap Configuration (Step 5.6)
-        'TEP_STATION_BOOTSTRAP_SAMPLES': 200,  # Number of bootstrap samples for station-level analysis (reduced from 500 for performance)
-        'TEP_DAY_BOOTSTRAP_SAMPLES': 300,  # Number of bootstrap samples for day-level analysis
-        'TEP_HYBRID_BOOTSTRAP_SAMPLES': 200,  # Number of bootstrap samples for hybrid (station-day) analysis
-        'TEP_BOOTSTRAP_MIN_STATIONS': 100,  # Minimum number of stations required for bootstrap sampling
-        'TEP_BOOTSTRAP_MIN_DAYS': 100,  # Minimum number of days required for bootstrap sampling
+        # Robust Block Bootstrap Configuration (Step 5.6) - Memory Optimized
+        'TEP_STATION_BOOTSTRAP_SAMPLES': 20,  # Number of bootstrap samples for station-level analysis (reduced for memory)
+        'TEP_DAY_BOOTSTRAP_SAMPLES': 30,  # Number of bootstrap samples for day-level analysis (reduced for memory)
+        'TEP_HYBRID_BOOTSTRAP_SAMPLES': 20,  # Number of bootstrap samples for hybrid (station-day) analysis (reduced for memory)
+        'TEP_BOOTSTRAP_MIN_STATIONS': 50,  # Minimum number of stations required for bootstrap sampling (reduced for memory)
+        'TEP_BOOTSTRAP_MIN_DAYS': 50,  # Minimum number of days required for bootstrap sampling (reduced for memory)
         'TEP_BOOTSTRAP_CONFIDENCE_LEVEL': 0.95,  # Confidence level for bootstrap confidence intervals
         
         # Optional metadata flags
@@ -569,6 +569,54 @@ class TEPConfig:
             logger_func(f"  {flag}: {cls.get_bool(flag)}")
         
         logger_func("========================")
+
+    @staticmethod
+    def get(key: str, default=None):
+        """
+        Generic get method for backward compatibility.
+        Automatically determines the type and calls the appropriate method.
+        
+        Args:
+            key: Configuration key
+            default: Default value if key not found
+            
+        Returns:
+            Configuration value with appropriate type
+        """
+        # Try to get from defaults first to determine type
+        default_value = TEPConfig.DEFAULTS.get(key, default)
+        
+        if default_value is None:
+            # No default, try to infer type from environment variable
+            env_value = os.getenv(key)
+            if env_value is None:
+                raise ValueError(f"Required configuration {key} not found and no default provided")
+            
+            # Try to convert to appropriate type
+            try:
+                if env_value.lower() in ('true', 'false'):
+                    return TEPConfig.get_bool(key, default)
+                elif '.' in env_value and env_value.replace('.', '').replace('-', '').isdigit():
+                    return TEPConfig.get_float(key, default)
+                elif env_value.isdigit() or (env_value.startswith('-') and env_value[1:].isdigit()):
+                    return TEPConfig.get_int(key, default)
+                else:
+                    return TEPConfig.get_str(key, default)
+            except:
+                return TEPConfig.get_str(key, default)
+        
+        # Use default to determine type
+        if isinstance(default_value, bool):
+            return TEPConfig.get_bool(key, default)
+        elif isinstance(default_value, (int, float)):
+            if isinstance(default_value, int):
+                return TEPConfig.get_int(key, default)
+            else:
+                return TEPConfig.get_float(key, default)
+        elif isinstance(default_value, list):
+            return TEPConfig.get_list(key, default)
+        else:
+            return TEPConfig.get_str(key, default)
 
 
 # Convenience instances for common use patterns

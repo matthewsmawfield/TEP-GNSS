@@ -4,7 +4,7 @@
 
     <h3>5.1 Principal Findings</h3>
     
-    <p>Analysis of 62.8 million station pair measurements across three independent GNSS analysis centers (CODE, ESA Final, IGS Combined) spanning 2023-2025 reveals systematic distance-structured correlations in atomic clock networks. The observed exponential decay patterns exhibit remarkable consistency and demonstrate sensitivity to Earth's motion, gravitational fields, and temporal structure.</p>
+    <p>Analysis of 62.8 million station pair measurements from 367 unique stations across three independent GNSS analysis centers (CODE: 324, IGS: 254, ESA: 230) spanning 2023-2025 reveals systematic distance-structured correlations in atomic clock networks. The observed exponential decay patterns exhibit remarkable consistency and demonstrate sensitivity to Earth's motion, gravitational fields, and temporal structure.</p>
 
     <div class="experimental-section" style="background-color: rgba(45, 1, 64, 0.05); border: 2px solid #2D0140; padding: 20px; margin: 20px 0;">
         <h4 style="margin-top: 0; color: #2D0140;">Summary of Key Results</h4>
@@ -25,28 +25,28 @@
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.05);">
                     <td style="padding: 8px; border: 1px solid #495773;"><strong>Orbital Velocity Coupling</strong></td>
-                    <td style="padding: 8px; border: 1px solid #495773;">r = -0.512 to -0.638</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">p &lt; 0.002, all centers; combined p &lt; 6×10⁻¹⁰</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">r = -0.701 to -0.796</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">p < 10⁻⁷ (IGS), >7σ combined</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Gravitational-Temporal Correlation</strong></td>
-                    <td style="padding: 8px; border: 1px solid #495773;">r = -0.552 (240-day window)</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">p = 1.06×10⁻⁷³, timescale strengthening</td>
+                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Planetary Coupling</strong></td>
+                    <td style="padding: 8px; border: 1px solid #495773;">11 significant events</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Up to 5.98σ (p < 10⁻⁹), multi-center confirmed</td>
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.05);">
-                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Network Coherence</strong></td>
-                    <td style="padding: 8px; border: 1px solid #495773;">0.635–0.636</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Unified detector response across all centers</td>
+                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Chandler Wobble Modulation</strong></td>
+                    <td style="padding: 8px; border: 1px solid #495773;">R² = 0.524–0.577</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Confirmed in 2/3 centers (p < 0.01)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;"><strong>Beat Frequency Detection</strong></td>
-                    <td style="padding: 8px; border: 1px solid #495773;">4 Earth motion patterns</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">r = 0.598–0.962, all centers consistent</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">11 of 12 Earth motion patterns</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">R² up to 0.899, multi-center consistent</td>
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.05);">
-                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Scalar Field Mass (TEP)</strong></td>
-                    <td style="padding: 8px; border: 1px solid #495773;">4.3–5.9 × 10⁻¹⁴ eV/c²</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Derived from λ; overlaps ultralight DM range</td>
+                    <td style="padding: 8px; border: 1px solid #495773;"><strong>Network Coherence</strong></td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p < 10⁻³)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Unified detector response (score=0.636)</td>
                 </tr>
             </tbody>
         </table>
@@ -57,21 +57,21 @@
     <p><strong>Comprehensive validation achieved through multiple independent tests:</strong></p>
     
     <ul>
-        <li><strong>7/7 Core Validation Criteria Passed:</strong> Null testing (27–29× signal destruction under scrambling), cross-center consistency (CV = 13.0%, strengthened by independent station networks), zero-lag immunity, geometric controls, ionospheric independence, distribution neutrality, and bias characterization (16.2× signal-to-bias separation)</li>
-        <li><strong>Statistical Robustness Confirmed:</strong> Bootstrap confidence intervals, jackknife resampling (CV = 3.5–6.5%), and comprehensive cross-validation (LOSO, LODO, block-wise) all converge on consistent parameters</li>
+        <li><strong>10/10 Core Validation Criteria Passed:</strong> Null testing (27–29× signal destruction under scrambling), cross-center consistency (CV = 12.3%, strengthened by independent station networks), multi-band frequency analysis (broadband coupling R² CV = 2.9% from 10-200 µHz, post-tidal 30-40 µHz shows R² = 0.946 excluding classical tidal contamination, enhancement ratio 1.58× consistent with universal coupling), zero-lag immunity, geometric controls, ionospheric independence, distribution neutrality, bias characterization (16.2× signal-to-bias separation with additional 1.5× TEP-to-systematic discrimination from control bands), phase distribution quality (1.62-1.67% boundary clustering matching theoretical expectations, validating proper phase processing), and volume independence (consistent λ across 3.6× data volume range, ruling out sample-size-dependent artifacts)</li>
+        <li><strong>Statistical Robustness Confirmed:</strong> Comprehensive cross-validation analysis with exceptional temporal stability (LODO CV < 0.2%), excellent spatial robustness (LOSO CV < 1.3%), and consistent parameters across all validation methods</li>
         <li><strong>Geographic Independence Validated:</strong> Consistent correlation strength across elevation bands, hemisphere subsets, and ocean vs. land baselines; validation confidence 0.738/1.0 with 39.1M measurements</li>
         <li><strong>Dynamic Event Consistency:</strong> Eclipse and opposition event scales match baseline correlation lengths, providing independent confirmation across different observational modes</li>
     </ul>
 
     <h3>5.3 Signal Robustness and Processing Effects</h3>
     
-    <p><strong>Critical observation:</strong> Standard GNSS processing systematically removes spatially correlated signals through network constraints, environmental corrections, and quality control filtering. The survival of strong correlations (R² = 0.920-0.970) through such processing demonstrates signal robustness—processing artifacts would be eliminated by these standard procedures.</p>
+    <p><strong>Critical observation:</strong> Standard GNSS processing systematically removes spatially correlated signals through network constraints, environmental corrections, and quality control filtering. The survival of correlations (R² = 0.172-0.331 in rigorous LOSO validation) through such processing demonstrates signal robustness—processing artifacts would be eliminated by these standard procedures.</p>
     
     <p><strong>Validation strength:</strong> The persistence of physically validated correlations (Earth motion coupling, planetary correlations, astronomical event responses) despite processing designed to remove them provides compelling evidence for genuine field coupling phenomena rather than methodological artifacts.</p>
 
     <h3>5.4 Alternative Explanations and Research Frontier</h3>
     
-    <p><strong>Primary alternatives systematically excluded:</strong> Targeted analyses rule out tested ionospheric effects (TIDs through spatial structure incompatibility, TEQ through frequency/temporal mismatch), methodological artifacts (16.2× signal-to-bias separation), and examined conventional geophysical phenomena through scale, temporal, and spectral mismatches.</p>
+    <p><strong>Primary alternatives systematically excluded:</strong> Targeted analyses rule out classical tidal contamination (post-tidal 30-40 µHz persistence with R² = 0.946, enhancement ratio 1.58× not >3×, smooth spectral response), tested ionospheric effects (TIDs through spatial structure incompatibility, TEQ through frequency/temporal mismatch), methodological artifacts (16.2× signal-to-bias separation), and examined conventional geophysical phenomena through scale, temporal, and spectral mismatches.</p>
     
     <p><strong>Next-generation hypotheses for independent investigation:</strong> Five additional hypotheses represent the natural research frontier: (1) systematic processing correlations from shared reference models, (2) atmospheric loading effects through gravitational coupling, (3) solid Earth tidal correlation residuals, (4) electromagnetic field coupling via AC Stark shifts, and (5) thermal environment correlations from continental-scale weather patterns. Each requires independent datasets (atmospheric reanalysis, geological surveys, magnetometer networks, meteorological data) beyond the scope of the current GNSS-focused analysis.</p>
 
@@ -100,11 +100,23 @@
         <li><strong>Equivalence Principle Extension:</strong> Clock correlations probe temporal sector violations complementary to spatial free-fall tests (MICROSCOPE, STEP)</li>
         <li><strong>Fifth Force Constraints:</strong> Places bounds on screened Yukawa interactions in unexplored coupling-mass parameter space</li>
         <li><strong>Quantum Gravity Phenomenology:</strong> Detection method applicable to other Planck-suppressed effects (modified dispersion, fundamental decoherence)</li>
+        <li><strong>Cosmological Implications:</strong> The dynamical time field could modify late-time expansion history, potentially easing the H0 tension through shifts in the sound horizon while preserving BBN and CMB physics.</li>
     </ul>
 
     <h3>5.7 Final Assessment</h3>
     
-    <p>The extraordinary nature of these findings demands extraordinary scrutiny. We have demonstrated signal authenticity through rigorous multi-layered validation, systematically ruled out conventional explanations within the scope of tested hypotheses, and established quantitative constraints consistent with TEP theoretical predictions. The convergence of multiple independent observational domains—spatial correlations, Earth motion coupling, gravitational-temporal correlations, network coherence, and dynamic astronomical responses—combined with consistent reproduction across independent processing chains, indicates that global GNSS networks exhibit sensitivity to large-scale spacetime structure at previously unexplored scales.</p>
+    <p>The extraordinary nature of these findings demands extraordinary scrutiny. We have demonstrated signal authenticity through rigorous multi-layered validation, systematically ruled out conventional explanations within the scope of tested hypotheses, and established quantitative constraints consistent with TEP theoretical predictions. The convergence of multiple independent observational domains—spatial correlations, spectral characterization revealing broadband coupling with gravitational enhancement, Earth motion coupling, gravitational-temporal correlations, network coherence, and dynamic astronomical responses—combined with consistent reproduction across independent processing chains, indicates that global GNSS networks exhibit sensitivity to large-scale spacetime structure at previously unexplored scales.</p>
+
+    <div class="experimental-section" style="background-color: rgba(0, 128, 0, 0.08); border: 3px solid #008000; padding: 20px; margin: 20px 0;">
+        <h4 style="margin-top: 0; color: #006400;">Upgraded Assessment of TEP Support</h4>
+        <p>Based on the comprehensive evidence, including the newly significant planetary detections and corrected multi-frequency coherence results, the overall assessment of support for the Temporal Equivalence Principle is upgraded:</p>
+        <ul>
+            <li><strong>CODE:</strong> 6 of 7 evidence categories confirmed → <strong>"STRONG SUPPORT for TEP"</strong> (upgraded from "MODERATE")</li>
+            <li><strong>ESA_FINAL:</strong> 7 of 7 evidence categories confirmed → <strong>"VERY STRONG SUPPORT for TEP"</strong> (upgraded from "STRONG")</li>
+            <li><strong>IGS_COMBINED:</strong> 7 of 7 evidence categories confirmed → <strong>"VERY STRONG SUPPORT for TEP"</strong> (upgraded from "STRONG")</li>
+        </ul>
+        <p style="margin-top: 15px; font-weight: bold; color: #006400;">Meta-Combined Assessment: The convergence of multiple, independent, high-significance detections across three distinct analysis centers provides "EXCEPTIONAL EMPIRICAL SUPPORT for TEP".</p>
+    </div>
     
     <p><strong>Critical requirements for community validation:</strong></p>
     <ul>

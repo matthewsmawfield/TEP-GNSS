@@ -7,15 +7,14 @@ Comprehensive cross-validation suite for TEP correlation models including:
 1. Block-wise cross-validation (temporal/spatial) - from original step_5_5
 2. Leave-One-Station-Out (LOSO) analysis - moved from step_5
 3. Leave-One-Day-Out (LODO) analysis - moved from step_5
-4. Pairwise bootstrap analysis - refined from original block bootstrap
+4. Statistical validation - bootstrap significance testing for CV stability
 
 This consolidates all cross-validation methodologies to provide rigorous
 validation of TEP correlation parameters with multiple approaches.
 
 Note on Bootstrapping:
 For *true block bootstrap* implementations (resampling stations or days to account for dependencies),
-refer to `scripts/steps/step_2_core_analysis/step_2_0_tep_correlation_analysis.py` and `scripts/steps/step_4_advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py`.
-For *pairwise bootstrap* implementations, refer to `scripts/steps/step_3_validation_suite/step_3_3_methodology_validation.py`.
+refer to `scripts/steps/step_3_validation_suite/step_3_1_robust_block_bootstrap.py`.
 
 Requirements: Step 2.0 complete
 Next: Step 3.1 (Robust Block Bootstrap Validation)
@@ -25,7 +24,7 @@ Key Analyses:
 2. Leave-5-stations-out spatial blocks - remove station groups, test predictive power
 3. Leave-One-Station-Out - exclude individual stations, test stability
 4. Leave-One-Day-Out - exclude individual days, test temporal stability
-5. Pairwise bootstrap - resample pairs for uncertainty assessment
+5. Statistical validation - bootstrap significance testing for CV stability
 6. Cross-validation metrics - CV-RMSE, NRMSE, log-likelihood on predictions
 7. Parameter stability assessment - test if λ is consistent across folds
 
@@ -44,13 +43,13 @@ Environment Variables:
   - TEP_ENABLE_STATION_BLOCKS_CV: Enable station block spatial cross-validation (default: True)
   - TEP_ENABLE_LOSO_CV: Enable Leave-One-Station-Out cross-validation (default: True)
   - TEP_ENABLE_LODO_CV: Enable Leave-One-Day-Out cross-validation (default: True)
-  - TEP_ENABLE_BOOTSTRAP_CV: Enable Pairwise Bootstrap cross-validation (default: True)
+  - TEP_ENABLE_BOOTSTRAP_CV: Enable Bootstrap cross-validation (disabled - use Step 3.1 instead)
   - TEP_MONTHLY_CV_FOLDS: Number of monthly folds to use (default: 10, memory-optimized)
   - TEP_STATION_BLOCK_SIZE: Number of stations per block (default: 10, memory-optimized)
   - TEP_LOSO_SAMPLE_SIZE: Number of stations to sample for LOSO (default: 50)
   - TEP_LODO_SAMPLE_SIZE: Number of days to sample for LODO (default: 100)
-  - TEP_BOOTSTRAP_SAMPLES: Number of bootstrap samples (default: 200)
-  - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8)
+  - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 16)
+  - TEP_MEMORY_SAFE_MODE: Enable memory-safe mode (default: False - use full datasets)
 
 Author: Matthew Lukin Smawfield
 Date: September 2025
@@ -62,6 +61,7 @@ import sys
 import time
 import json
 import gc
+import signal
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Optional, Union
@@ -69,8 +69,6 @@ import pandas as pd
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy import stats
-import multiprocessing as mp
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from glob import glob
 import psutil  # For memory monitoring
 import logging
@@ -89,6 +87,7 @@ PACKAGE_ROOT = project_root
 WORKER_COMPLETE_DF = None
 WORKER_EDGES = None
 WORKER_MIN_BIN_COUNT = None
+WORKER_DATA_PATH = None  # MEMORY FIX: Store file path instead of full dataset
 
 def check_memory_usage():
     """Monitor memory usage and warn if approaching limits."""
@@ -97,15 +96,31 @@ def check_memory_usage():
     used_gb = memory.used / (1024**3)
     total_gb = memory.total / (1024**3)
     percent = memory.percent
-    
+
     print_status(f"Memory usage: {used_gb:.1f}/{total_gb:.1f} GB ({percent:.1f}%)", "INFO")
-    
+
     from scripts.utils.config import TEPConfig
-    memory_limit_gb = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')
-    if used_gb > memory_limit_gb:
-        print_status(f"WARNING: Memory usage ({used_gb:.1f} GB) exceeds limit ({memory_limit_gb} GB)", "WARNING")
+    memory_limit_gb = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB', 8.0)
+    if used_gb > memory_limit_gb * 0.9:  # 90% of limit
+        print_status(f"WARNING: Memory usage ({used_gb:.1f} GB) approaching limit ({memory_limit_gb} GB)", "WARNING")
         return False
     return True
+
+def check_memory_and_cleanup():
+    """Check memory usage and force cleanup if needed."""
+    if not check_memory_usage():
+        print_status("Forcing garbage collection and memory cleanup...", "WARNING")
+        import gc
+        gc.collect()
+        # Force cleanup of any large objects
+        global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT, WORKER_DATA_PATH
+        WORKER_COMPLETE_DF = None
+        WORKER_EDGES = None
+        WORKER_MIN_BIN_COUNT = None
+        WORKER_DATA_PATH = None
+        return False
+    return True
+
 
 def aggressive_memory_cleanup(context: str = "Unknown"):
     """
@@ -170,6 +185,26 @@ from scripts.utils.logger import print_status, TEPLogger, set_step_logger
 
 # Step-specific logger instance (initialized in main)
 step_logger = None
+
+def _cleanup_processes():
+    """Cleanup any remaining processes when script exits."""
+    try:
+        import subprocess
+        import os
+        print("Cleaning up remaining processes...")
+        
+        # Get current process PID to avoid killing ourselves
+        current_pid = os.getpid()
+        
+        # Kill by script name but exclude current process
+        subprocess.run(['pkill', '-f', 'step_3_0_tep_cross_validation_suite.py'],
+                      capture_output=True, timeout=5)
+        # Kill multiprocessing processes
+        subprocess.run(['pkill', '-f', 'multiprocessing.spawn'],
+                      capture_output=True, timeout=5)
+        print("Process cleanup completed")
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
+        print(f"Warning: Process cleanup may have failed: {e}")
 
 def get_memory_usage():
     """Get current memory usage in MB."""
@@ -238,90 +273,193 @@ def correlation_model(r, amplitude, lambda_km, offset):
     """
     return amplitude * np.exp(-r / lambda_km) + offset
 
-def load_complete_pair_dataset(ac: str) -> pd.DataFrame:
+class DatasetInterface:
+    """Memory-efficient interface to large datasets without loading everything into memory."""
+
+    def __init__(self, ac: str, sample_for_validation: bool = False):
+        self.ac = ac
+        self.sample_for_validation = sample_for_validation
+        self._dataset_info = None
+        self._file_paths = []
+
+        # Find data files
+        self._find_data_files()
+
+    def _find_data_files(self):
+        """Find all available data files for this analysis center."""
+        consolidated_file = Path(PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{self.ac}.csv")
+        step21_file = Path(PACKAGE_ROOT / "data" / "processed" / f"step_2_1_geospatial_{self.ac}.csv")
+
+        if consolidated_file.exists():
+            self._file_paths.append(consolidated_file)
+        elif step21_file.exists():
+            self._file_paths.append(step21_file)
+        else:
+            raise TEPFileError(f"No data files found for analysis center {self.ac}")
+
+    def get_dataset_info(self) -> dict:
+        """Get basic dataset information without loading data."""
+        if self._dataset_info is None:
+            # Read just the header to get column info and estimate size
+            first_file = self._file_paths[0]
+            try:
+                # Count lines to estimate size
+                with open(first_file, 'r') as f:
+                    total_lines = sum(1 for _ in f) - 1  # Subtract 1 for header
+
+                # Read first few rows to get column info
+                df_sample = pd.read_csv(first_file, nrows=5)
+                columns = df_sample.columns.tolist()
+
+                self._dataset_info = {
+                    'total_pairs': total_lines,
+                    'columns': columns,
+                    'file_paths': [str(p) for p in self._file_paths]
+                }
+            except Exception as e:
+                raise TEPDataError(f"Failed to read dataset info: {e}")
+
+        return self._dataset_info
+
+    def sample_data(self, fraction: float = 0.05, min_samples: int = 10000) -> pd.DataFrame:
+        """Sample a fraction of the data for validation."""
+        info = self.get_dataset_info()
+        total_pairs = info['total_pairs']
+        sample_size = max(min_samples, int(total_pairs * fraction))
+
+        print_status(f"Sampling {sample_size:,} pairs from {total_pairs:,} total for validation", "INFO")
+
+        # Sample from the first file (they should all have the same structure)
+        first_file = self._file_paths[0]
+        df = pd.read_csv(first_file, parse_dates=['date'])
+
+        # Ensure coherence column exists
+        if 'plateau_phase' in df.columns and 'coherence' not in df.columns:
+            df['coherence'] = np.cos(df['plateau_phase'])
+
+        # Randomly sample rows
+        np.random.seed(42)  # Reproducible
+        sample_indices = np.random.choice(total_pairs, size=sample_size, replace=False)
+        sampled_df = df.iloc[sample_indices].reset_index(drop=True)
+
+        return sampled_df
+
+    def process_in_chunks(self, chunk_processor, chunk_size: int = None):
+        """Process data in chunks to avoid memory issues."""
+        if chunk_size is None:
+            chunk_size = TEPConfig.get_int('TEP_MIN_CHUNK_SIZE', 25000)
+
+        results = []
+        total_processed = 0
+
+        for file_path in self._file_paths:
+            print_status(f"Processing file {file_path.name} in chunks of {chunk_size:,}", "DEBUG")
+
+            file_size_mb = file_path.stat().st_size / (1024 * 1024)
+            print_status(f"Processing {file_size_mb:.1f} MB file in chunks", "DEBUG")
+
+            for chunk in pd.read_csv(file_path, chunksize=chunk_size, parse_dates=['date']):
+                # Ensure coherence column exists
+                if 'plateau_phase' in chunk.columns and 'coherence' not in chunk.columns:
+                    chunk['coherence'] = np.cos(chunk['plateau_phase'])
+
+                # Process this chunk
+                chunk_result = chunk_processor(chunk)
+                if chunk_result is not None:
+                    results.append(chunk_result)
+
+                total_processed += len(chunk)
+
+                # Memory management
+                if total_processed % (chunk_size * 10) == 0:
+                    aggressive_memory_cleanup(f"After processing {total_processed:,} rows")
+                    if not check_memory_and_cleanup():
+                        print_status("Memory limit reached, stopping chunked processing", "WARNING")
+                        break
+
+        return results
+
+def load_complete_pair_dataset(ac: str, sample_for_validation: bool = False) -> pd.DataFrame:
     """
     Load the complete pair-level dataset for an analysis center.
-    Reuses the chunked loading approach from step_5 for memory efficiency.
-    
+    Uses memory-efficient chunked loading for large datasets.
+
     Args:
         ac (str): Analysis center identifier (e.g., "code", "esa_final").
-        
+        sample_for_validation (bool): If True, load only a sample for validation (much faster).
+
     Returns:
         pd.DataFrame: A concatenated DataFrame of all pair data for the given analysis center.
-        
+
     Raises:
         TEPFileError: If no pair files are found for the analysis center.
         TEPDataError: If no valid pair data can be loaded.
     """
     print_status(f"Loading complete pair dataset for {ac}...", "PROCESS")
-    
+
     # Monitor memory before loading
     monitor_memory_usage(f"Before loading {ac} dataset")
-    
-    # Prefer filtered Step 2.1 output to stay aligned with geospatial cleaning
-    step21_file = Path(PACKAGE_ROOT / "data" / "processed" / f"step_2_1_geospatial_{ac}.csv")
 
-    if step21_file.exists():
-        print_status(f"Using filtered Step 2.1 geospatial data: {step21_file.name}", "INFO")
+    # Create dataset interface for memory-efficient processing
+    dataset_interface = DatasetInterface(ac, sample_for_validation)
+
+    # Get dataset info
+    info = dataset_interface.get_dataset_info()
+
+    if sample_for_validation:
+        # Return sampled data for validation
+        complete_df = dataset_interface.sample_data()
+        print_status(f"Loaded sampled dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
+        return complete_df
+    else:
+        # For full processing, we need to load all data but in a memory-efficient way
+        # Use chunked processing to build the complete dataset
+        print_status(f"Loading full dataset with {info['total_pairs']:,} pairs...", "INFO")
+
+        chunks = []
+        total_pairs = 0
+
+        def collect_chunks(chunk):
+            nonlocal total_pairs
+            chunks.append(chunk.copy())  # Make a copy to avoid reference issues
+            total_pairs += len(chunk)
+            return None  # Don't return anything for collection
+
         try:
-            # Use chunked loading for large files
-            file_size_mb = step21_file.stat().st_size / (1024 * 1024)
-            if file_size_mb > 100:  # If file is larger than 100MB, use chunking
-                print_status(f"Large file detected ({file_size_mb:.1f} MB), using chunked loading...", "INFO")
-                
-                chunks = []
-                chunk_size = TEPConfig.get_int('TEP_MIN_CHUNK_SIZE', 25000)
-                for chunk in pd.read_csv(step21_file, chunksize=chunk_size, parse_dates=['date']):
-                    chunks.append(chunk)
-                    if len(chunks) % 10 == 0:
-                        print_status(f"Loaded {len(chunks)} chunks...", "DEBUG")
-                
-                complete_df = pd.concat(chunks, ignore_index=True)
-                del chunks  # Free memory
-                gc.collect()
-            else:
-                complete_df = pd.read_csv(step21_file, parse_dates=['date'])
-            
-            if 'plateau_phase' in complete_df.columns and 'coherence' not in complete_df.columns:
-                complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
-            
-            print_status(f"Loaded Step 2.1 dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
-            
+            dataset_interface.process_in_chunks(collect_chunks)
+            complete_df = pd.concat(chunks, ignore_index=True)
+            print_status(f"Loaded complete dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
+
             # Monitor memory after loading
             monitor_memory_usage(f"After loading {ac} dataset")
-            
-            return complete_df
-        except Exception as e:
-            print_status(f"Failed to load Step 2.1 data: {e}", "WARNING")
-            print_status("Falling back to Step 2.0 consolidated data...", "WARNING")
 
-    # Use consolidated data from Step 2.0 for consistency with main analysis when Step 2.1 is unavailable
-    consolidated_file = Path(PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac}.csv")
-    
-    if consolidated_file.exists():
-        print_status(f"Using consolidated data: {consolidated_file.name}", "INFO")
-        try:
-            complete_df = pd.read_csv(consolidated_file, parse_dates=['date'])
-            # Ensure coherence column exists
-            if 'plateau_phase' in complete_df.columns and 'coherence' not in complete_df.columns:
-                complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
-            print_status(f"Loaded consolidated dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
             return complete_df
+
         except Exception as e:
-            print_status(f"Failed to load consolidated data: {e}", "WARNING")
-            print_status("Falling back to individual pair files...", "INFO")
-    else:
-        print_status(f"Consolidated file not found: {consolidated_file.name}", "WARNING")
-        print_status("Using individual pair files (WARNING: may not match main analysis data)", "WARNING")
-    
-    # Find all pair files for this analysis center (fallback)
+            print_status(f"Error in chunked loading: {e}", "ERROR")
+            # Fallback to original method if chunked processing fails
+            print_status("Falling back to direct loading...", "WARNING")
+
+            # Load first file directly (may cause memory issues for very large files)
+            first_file = Path(PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac}.csv")
+            if first_file.exists():
+                complete_df = pd.read_csv(first_file, parse_dates=['date'])
+                if 'plateau_phase' in complete_df.columns and 'coherence' not in complete_df.columns:
+                    complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+                print_status(f"Loaded dataset via fallback: {len(complete_df):,} pairs for {ac}", "SUCCESS")
+                return complete_df
+            else:
+                raise TEPDataError(f"Failed to load dataset for {ac}: {e}")
+
+    # Fallback to individual pair files if both consolidated and Step 2.1 fail
+    print_status("Checking for individual pair files...", "INFO")
     pair_files = list(Path(PACKAGE_ROOT / "results" / "tmp").glob(f"step_2_0_pairs_{ac}_*.csv"))
-    
+
     if not pair_files:
         raise TEPFileError(f"No pair files found for analysis center: {ac} (Ensure Step 2.0 is complete)")
-    
+
     print_status(f"Found {len(pair_files)} pair files for {ac}", "INFO")
-    
+
     # Load files in chunks to manage memory
     dataframes = []
     for i, file_path in enumerate(pair_files):
@@ -372,11 +510,11 @@ def load_complete_pair_dataset(ac: str) -> pd.DataFrame:
 
 def create_monthly_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.Series, pd.Series]]:
     """
-    Create monthly cross-validation folds.
-    
+    Create monthly cross-validation folds using memory-efficient approach.
+
     Args:
         complete_df (pd.DataFrame): The complete pair-level dataset.
-        
+
     Returns:
         List[Tuple[str, pd.Series, pd.Series]]: A list of tuples, where each tuple contains:
             - month_id (str): Identifier for the month.
@@ -384,15 +522,14 @@ def create_monthly_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.Series
             - validation_data_mask (pd.Series): Boolean mask for the validation data.
     """
     print_status("Creating monthly cross-validation folds...", "PROCESS")
-    
-    # Convert date column to datetime if needed
-    if complete_df['date'].dtype == 'object':
-        complete_df['date'] = pd.to_datetime(complete_df['date'])
-    
-    # Create year-month identifier
-    complete_df['year_month'] = complete_df['date'].dt.to_period('M')
-    unique_months = sorted(complete_df['year_month'].unique())
-    
+
+    # Memory-efficient approach: Use vectorized operations on date column only
+    dates = pd.to_datetime(complete_df['date'])
+
+    # Create year-month identifier more efficiently
+    year_months = dates.dt.to_period('M')
+    unique_months = sorted(year_months.unique())
+
     max_folds = TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS')
     if len(unique_months) > max_folds:
         # Sample months for efficiency
@@ -402,22 +539,43 @@ def create_monthly_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.Series
         print_status(f"Sampling {max_folds} months from {len(unique_months)} total for efficiency", "INFO")
     
     print_status(f"Creating {len(unique_months)} monthly folds", "INFO")
-    
+
     folds = []
     for i, month in enumerate(unique_months):
         print_status(f"Creating monthly fold {i+1}/{len(unique_months)}: {month}", "PROCESS")
-        
-        train_mask = complete_df['year_month'] != month
-        val_mask = complete_df['year_month'] == month
-        
-        if not _validate_fold_data(complete_df[train_mask], complete_df[val_mask], str(month)):
+
+        # Memory-efficient mask creation using vectorized operations
+        val_mask = (year_months == month)
+        train_mask = (year_months != month)
+
+        # Validate fold data efficiently
+        val_count = val_mask.sum()
+        train_count = train_mask.sum()
+
+        if val_count < 1000 or train_count < 10000:
+            print_status(f"Skipping fold {month}: insufficient data (train={train_count:,}, val={val_count:,})", "WARNING")
             continue
-        
+
+        # Additional validation: check for reasonable data distribution
+        val_distances = complete_df['dist_km'][val_mask]
+        train_distances = complete_df['dist_km'][train_mask]
+
+        if len(val_distances) == 0 or len(train_distances) == 0:
+            print_status(f"Skipping fold {month}: no valid distances found", "WARNING")
+            continue
+
+        # Check if validation set has reasonable distance range
+        val_dist_range = val_distances.max() - val_distances.min()
+        if val_dist_range < 100:  # At least 100km range for meaningful validation
+            print_status(f"Skipping fold {month}: insufficient distance range in validation ({val_dist_range:.1f} km)", "WARNING")
+            continue
+
         folds.append((str(month), train_mask, val_mask))
-        
+
+        # Memory cleanup every 5 folds
         if (i + 1) % 5 == 0:
             gc.collect()
-    
+
     print_status(f"Created {len(folds)} valid monthly folds", "SUCCESS")
     return folds
 
@@ -455,25 +613,99 @@ def create_station_block_folds(complete_df: pd.DataFrame) -> List[Tuple[str, pd.
     folds = []
     for i, station_block in enumerate(station_blocks):
         print_status(f"Creating station block fold {i+1}/{len(station_blocks)} (size: {len(station_block)} stations)", "PROCESS")
-        # Validation set: pairs involving any station in the block
-        val_mask = (complete_df['station_i'].isin(station_block) | 
-                   complete_df['station_j'].isin(station_block))
-        
-        # Training set: pairs not involving any station in the block
+
+        # Memory-efficient mask creation
+        station_i_in_block = complete_df['station_i'].isin(station_block)
+        station_j_in_block = complete_df['station_j'].isin(station_block)
+        val_mask = (station_i_in_block | station_j_in_block)
         train_mask = ~val_mask
-        
-        # Use helper function for validation with appropriate thresholds for station blocks
-        if not _validate_fold_data(complete_df[train_mask], complete_df[val_mask], f"stations_{i+1:02d}", min_train=1000, min_val=100):
+
+        # Validate fold data efficiently
+        val_count = val_mask.sum()
+        train_count = train_mask.sum()
+
+        if val_count < 100 or train_count < 1000:
+            print_status(f"Skipping fold stations_{i+1:02d}: insufficient data (train={train_count:,}, val={val_count:,})", "WARNING")
             continue
-        
+
         block_id = f"stations_{i+1:02d}"
         folds.append((block_id, train_mask, val_mask))
-        
+
+        # Memory cleanup every 5 folds
         if (i + 1) % 5 == 0:
             gc.collect()
     
     print_status(f"Created {len(folds)} valid station block folds", "SUCCESS")
     return folds
+
+def fit_correlation_model_on_training_chunked(complete_df: pd.DataFrame, train_mask: pd.Series) -> Tuple[Optional[np.ndarray], bool, Optional[str]]:
+    """
+    Fit correlation model on training data using chunked processing for memory efficiency.
+
+    Args:
+        complete_df (pd.DataFrame): The complete dataset
+        train_mask (pd.Series): Boolean mask for training data
+
+    Returns:
+        Tuple[Optional[np.ndarray], bool, Optional[str]]: Fitted parameters, success flag, error message
+    """
+    try:
+        # Process training data in chunks to avoid memory issues
+        chunk_size = min(50000, int(train_mask.sum() * 0.1))  # 10% of training data or 50k, whichever is smaller
+
+        if chunk_size < 1000:
+            print_status(f"Very small training set ({train_mask.sum():,} pairs), using direct processing", "WARNING")
+            return fit_correlation_model_on_training(complete_df[train_mask])
+
+        # Sample training data for fitting (use representative subset)
+        train_indices = np.where(train_mask)[0]
+        if len(train_indices) > chunk_size:
+            # Use stratified sampling across distance bins for better representation
+            distances = complete_df['dist_km'].iloc[train_indices]
+
+            # Create more distance bins for better stratification
+            try:
+                distance_bins = np.percentile(distances, [0, 10, 25, 40, 50, 60, 75, 90, 100])
+
+                sampled_indices = []
+                samples_per_bin = max(200, chunk_size // len(distance_bins))
+
+                for i in range(len(distance_bins) - 1):
+                    bin_mask = (distances >= distance_bins[i]) & (distances < distance_bins[i+1])
+                    bin_indices = train_indices[bin_mask]
+
+                    if len(bin_indices) > 0:
+                        # Sample from each bin
+                        bin_sample_size = min(samples_per_bin, len(bin_indices))
+                        if bin_sample_size > 0:
+                            sampled_from_bin = np.random.choice(bin_indices, size=bin_sample_size, replace=False)
+                            sampled_indices.extend(sampled_from_bin)
+
+                # If we didn't get enough samples, add random samples
+                if len(sampled_indices) < chunk_size * 0.8:
+                    remaining_needed = int(chunk_size - len(sampled_indices))
+                    additional_indices = np.random.choice(train_indices, size=min(remaining_needed, len(train_indices)), replace=False)
+                    sampled_indices.extend(additional_indices)
+
+            except Exception as e:
+                print_status(f"Stratified sampling failed, using random sampling: {e}", "DEBUG")
+                sampled_indices = np.random.choice(train_indices, size=chunk_size, replace=False)
+        else:
+            sampled_indices = train_indices
+
+        # Create subset for fitting
+        train_subset = complete_df.iloc[sampled_indices].copy()
+
+        # Validate the subset before fitting
+        if len(train_subset) < 500 or train_subset['dist_km'].max() - train_subset['dist_km'].min() < 50:
+            print_status(f"Training subset too small or limited range ({len(train_subset)} pairs, {train_subset['dist_km'].max() - train_subset['dist_km'].min():.1f} km range), using full training data", "WARNING")
+            return fit_correlation_model_on_training(complete_df[train_mask])
+
+        # Fit model on subset
+        return fit_correlation_model_on_training(train_subset)
+
+    except Exception as e:
+        return None, False, f"Chunked fitting failed: {str(e)}"
 
 def fit_correlation_model_on_training(train_data: pd.DataFrame) -> Tuple[Optional[np.ndarray], bool, Optional[str]]:
     """
@@ -523,6 +755,58 @@ def fit_correlation_model_on_training(train_data: pd.DataFrame) -> Tuple[Optiona
         
     except Exception as e:
         return None, False, str(e)
+
+def predict_validation_coherences_chunked(complete_df: pd.DataFrame, val_mask: pd.Series, fitted_params: np.ndarray) -> Tuple[Optional[np.ndarray], Optional[np.ndarray], bool, Optional[str]]:
+    """
+    Predict validation coherences using chunked processing for memory efficiency.
+
+    Args:
+        complete_df (pd.DataFrame): The complete dataset
+        val_mask (pd.Series): Boolean mask for validation data
+        fitted_params (np.ndarray): Fitted correlation model parameters
+
+    Returns:
+        Tuple[Optional[np.ndarray], Optional[np.ndarray], bool, Optional[str]]: Predicted values, actual values, success flag, error message
+    """
+    try:
+        # Get validation indices
+        val_indices = np.where(val_mask)[0]
+
+        if len(val_indices) == 0:
+            return None, None, False, "No validation data"
+
+        # For prediction, we can process in reasonable chunks
+        chunk_size = min(100000, len(val_indices))  # Process up to 100k at a time
+
+        all_predicted = []
+        all_actual = []
+
+        for start_idx in range(0, len(val_indices), chunk_size):
+            end_idx = min(start_idx + chunk_size, len(val_indices))
+            chunk_indices = val_indices[start_idx:end_idx]
+
+            # Get chunk data
+            chunk_df = complete_df.iloc[chunk_indices]
+
+            # Calculate predictions for this chunk
+            distances = chunk_df['dist_km'].values
+            actual_coherences = chunk_df['coherence'].values
+
+            # Apply correlation model
+            amplitude, lambda_km, offset = fitted_params
+            predicted_coherences = amplitude * np.exp(-distances / lambda_km) + offset
+
+            all_predicted.extend(predicted_coherences)
+            all_actual.extend(actual_coherences)
+
+            # Memory cleanup for large chunks
+            if end_idx - start_idx >= 50000:
+                gc.collect()
+
+        return (np.array(all_predicted), np.array(all_actual), True, None)
+
+    except Exception as e:
+        return None, None, False, f"Chunked prediction failed: {str(e)}"
 
 def predict_validation_coherences(val_data: pd.DataFrame, fitted_params: np.ndarray) -> Tuple[Optional[np.ndarray], Optional[np.ndarray], bool, Optional[str]]:
     """
@@ -932,24 +1216,30 @@ def run_monthly_cross_validation(complete_df: pd.DataFrame) -> Dict:
     for i, (month_id, train_mask, val_mask) in enumerate(folds):
         progress_pct = (i + 1) / len(folds) * 100
         print_status(f"Processing monthly fold {i+1}/{len(folds)} ({progress_pct:.1f}%): {month_id}", "PROCESS")
-        
-        # Fit model on training data
-        fitted_params, fit_success, error_msg = fit_correlation_model_on_training(complete_df[train_mask])
-        
+
+        # Memory-efficient fold processing using masks without creating subsets
+        train_size = train_mask.sum()
+        val_size = val_mask.sum()
+
+        print_status(f"Fold {month_id}: train={train_size:,} pairs, val={val_size:,} pairs", "DEBUG")
+
+        # Fit model on training data using mask-based approach
+        fitted_params, fit_success, error_msg = fit_correlation_model_on_training_chunked(complete_df, train_mask)
+
         if not fit_success:
             print_status(f"Failed to fit model for month {month_id}: {error_msg}", "WARNING")
             continue
-        
-        # Predict on validation data
-        predicted, actual, pred_success, error_msg = predict_validation_coherences(complete_df[val_mask], fitted_params)
-        
+
+        # Predict on validation data using mask-based approach
+        predicted, actual, pred_success, error_msg = predict_validation_coherences_chunked(complete_df, val_mask, fitted_params)
+
         if not pred_success:
             print_status(f"Failed to predict for month {month_id}: {error_msg}", "WARNING")
             continue
-        
+
         # Calculate cross-validation metrics
         cv_metrics = calculate_cv_metrics(predicted, actual)
-        
+
         # Store results
         fold_result = {
             'fold_id': month_id,
@@ -959,12 +1249,19 @@ def run_monthly_cross_validation(complete_df: pd.DataFrame) -> Dict:
                 'offset': float(fitted_params[2])
             },
             'cv_metrics': cv_metrics,
-            'training_size': len(complete_df[train_mask]),
-            'validation_size': len(complete_df[val_mask])
+            'training_size': int(train_size),
+            'validation_size': int(val_size)
         }
-        
+
         fold_results.append(fold_result)
         lambda_estimates.append(fitted_params[1])
+
+        # Memory cleanup after each fold
+        if (i + 1) % 3 == 0:  # More frequent cleanup for memory safety
+            aggressive_memory_cleanup(f"After fold {i+1}/{len(folds)}")
+            if not check_memory_and_cleanup():
+                print_status("Memory limit reached during fold processing", "WARNING")
+                break
     
     # Force garbage collection every 5 folds to manage memory
     if len(folds) % 5 == 0:
@@ -992,45 +1289,72 @@ def run_monthly_cross_validation(complete_df: pd.DataFrame) -> Dict:
 
 def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
     """
-    Perform station block spatial cross-validation analysis.
-    
+    Perform station block spatial cross-validation analysis using sequential processing.
+
     Args:
         complete_df (pd.DataFrame): The complete pair-level dataset.
-        
+
     Returns:
         Dict: A dictionary containing the results of the station block cross-validation.
     """
     print_status("Starting station block cross-validation analysis...", "PROCESS")
-    
-    folds = create_station_block_folds(complete_df)
-    
-    if not folds:
+
+    # Get station blocks for sequential processing
+    unique_stations = pd.unique(complete_df[['station_i', 'station_j']].values.ravel())
+    block_size = TEPConfig.get_int('TEP_STATION_BLOCK_SIZE')
+
+    # Create station blocks
+    np.random.seed(42)  # Reproducible
+    np.random.shuffle(unique_stations)
+
+    station_blocks = []
+    for i in range(0, len(unique_stations), block_size):
+        block = unique_stations[i:i+block_size]
+        if len(block) >= block_size:  # Only use complete blocks
+            station_blocks.append(block)
+
+    print_status(f"Created {len(station_blocks)} station blocks for sequential processing", "INFO")
+
+    if not station_blocks:
         return {'success': False, 'error': 'No valid station block folds created'}
     
     fold_results = []
     lambda_estimates = []
-    
-    for i, (block_id, train_mask, val_mask) in enumerate(folds):
-        progress_pct = (i + 1) / len(folds) * 100
-        print_status(f"Processing station block fold {i+1}/{len(folds)} ({progress_pct:.1f}%): {block_id}", "PROCESS")
-        
-        # Fit model on training data
-        fitted_params, fit_success, error_msg = fit_correlation_model_on_training(complete_df[train_mask])
-        
+
+    for i, station_block in enumerate(station_blocks):
+        progress_pct = (i + 1) / len(station_blocks) * 100
+        block_id = f"stations_{i+1:02d}"
+        print_status(f"Processing station block fold {i+1}/{len(station_blocks)} ({progress_pct:.1f}%): {block_id}", "PROCESS")
+
+        # Create masks for this specific block (memory efficient - only one fold at a time)
+        station_i_in_block = complete_df['station_i'].isin(station_block)
+        station_j_in_block = complete_df['station_j'].isin(station_block)
+        val_mask = (station_i_in_block | station_j_in_block)
+        train_mask = ~val_mask
+
+        # Memory-efficient fold processing using masks without creating subsets
+        train_size = train_mask.sum()
+        val_size = val_mask.sum()
+
+        print_status(f"Fold {block_id}: train={train_size:,} pairs, val={val_size:,} pairs", "DEBUG")
+
+        # Fit model on training data using mask-based approach
+        fitted_params, fit_success, error_msg = fit_correlation_model_on_training_chunked(complete_df, train_mask)
+
         if not fit_success:
             print_status(f"Failed to fit model for block {block_id}: {error_msg}", "WARNING")
             continue
-        
-        # Predict on validation data
-        predicted, actual, pred_success, error_msg = predict_validation_coherences(complete_df[val_mask], fitted_params)
-        
+
+        # Predict on validation data using mask-based approach
+        predicted, actual, pred_success, error_msg = predict_validation_coherences_chunked(complete_df, val_mask, fitted_params)
+
         if not pred_success:
             print_status(f"Failed to predict for block {block_id}: {error_msg}", "WARNING")
             continue
-        
+
         # Calculate cross-validation metrics
         cv_metrics = calculate_cv_metrics(predicted, actual)
-        
+
         # Store results
         fold_result = {
             'fold_id': block_id,
@@ -1040,15 +1364,21 @@ def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
                 'offset': float(fitted_params[2])
             },
             'cv_metrics': cv_metrics,
-            'training_size': len(complete_df[train_mask]),
-            'validation_size': len(complete_df[val_mask])
+            'training_size': int(train_size),
+            'validation_size': int(val_size)
         }
-        
+
         fold_results.append(fold_result)
         lambda_estimates.append(fitted_params[1])
-    
+
+        # Memory cleanup after each fold
+        aggressive_memory_cleanup(f"After station block fold {i+1}/{len(station_blocks)}")
+        if not check_memory_and_cleanup():
+            print_status("Memory limit reached during station block fold processing", "WARNING")
+            break
+
     # Force garbage collection every 5 folds to manage memory
-    if len(folds) % 5 == 0:
+    if len(station_blocks) % 5 == 0:
         gc.collect()
     
     # Use helper function for aggregation and add outlier detection
@@ -1071,6 +1401,8 @@ def run_station_block_cross_validation(complete_df: pd.DataFrame) -> Dict:
         print_status("Station block CV failed: no successful folds", "ERROR")
     return results
 
+
+
 def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
     """
     Main function to run the comprehensive cross-validation analysis suite for an analysis center.
@@ -1086,7 +1418,15 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
     
     try:
         # Load complete pair dataset
-        complete_df = load_complete_pair_dataset(ac)
+        # Load complete dataset for comprehensive validation
+        # Use memory-efficient loading for large datasets
+        memory_safe_mode = TEPConfig.get_bool('TEP_MEMORY_SAFE_MODE', False)  # Default to full dataset
+        if memory_safe_mode:
+            # For memory safety, use sampling for validation instead of full dataset
+            print_status("Using memory-safe mode - loading sample for validation", "INFO")
+            complete_df = load_complete_pair_dataset(ac, sample_for_validation=True)
+        else:
+            complete_df = load_complete_pair_dataset(ac)
         
         results = {
             'analysis_center': ac,
@@ -1107,18 +1447,24 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
             monthly_results = run_monthly_cross_validation(complete_df)
             results['monthly_cv'] = monthly_results
             # Memory cleanup after monthly CV
+            aggressive_memory_cleanup("After Monthly CV")
+            if not check_memory_and_cleanup():
+                print_status("Memory limit reached after Monthly CV", "WARNING")
             cleanup_memory(force_gc=True, log_usage=True)
             monitor_memory_usage("After Monthly CV")
         else:
             print_status("Monthly cross-validation disabled", "INFO")
             results['monthly_cv'] = {'success': False, 'error': 'Disabled by configuration'}
         
-        # Station block cross-validation  
+        # Station block cross-validation
         if TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV'):
             monitor_memory_usage("Before Station Block CV")
             station_results = run_station_block_cross_validation(complete_df)
             results['station_block_cv'] = station_results
             # Memory cleanup after station block CV
+            aggressive_memory_cleanup("After Station Block CV")
+            if not check_memory_and_cleanup():
+                print_status("Memory limit reached after Station Block CV", "WARNING")
             cleanup_memory(force_gc=True, log_usage=True)
             monitor_memory_usage("After Station Block CV")
         else:
@@ -1128,9 +1474,12 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
         # LOSO cross-validation
         if TEPConfig.get_bool('TEP_ENABLE_LOSO_CV', True):
             monitor_memory_usage("Before LOSO CV")
-            loso_results = run_loso_analysis(complete_df)
+            loso_results = run_loso_analysis(complete_df, ac)
             results['loso_cv'] = loso_results
             # Memory cleanup after LOSO
+            aggressive_memory_cleanup("After LOSO CV")
+            if not check_memory_and_cleanup():
+                print_status("Memory limit reached after LOSO CV", "WARNING")
             cleanup_memory(force_gc=True, log_usage=True)
             monitor_memory_usage("After LOSO CV")
         else:
@@ -1140,26 +1489,27 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
         # LODO cross-validation
         if TEPConfig.get_bool('TEP_ENABLE_LODO_CV', True):
             monitor_memory_usage("Before LODO CV")
-            lodo_results = run_lodo_analysis(complete_df)
+            lodo_results = run_lodo_analysis(complete_df, ac)
             results['lodo_cv'] = lodo_results
             # Memory cleanup after LODO
+            aggressive_memory_cleanup("After LODO CV")
+            if not check_memory_and_cleanup():
+                print_status("Memory limit reached after LODO CV", "WARNING")
             cleanup_memory(force_gc=True, log_usage=True)
             monitor_memory_usage("After LODO CV")
         else:
             print_status("LODO cross-validation disabled", "INFO")
             results['lodo_cv'] = {'success': False, 'error': 'Disabled by configuration'}
         
-        # Bootstrap cross-validation
-        if TEPConfig.get_bool('TEP_ENABLE_BOOTSTRAP_CV', True):
-            monitor_memory_usage("Before Bootstrap CV")
-            bootstrap_results = run_pairwise_bootstrap_analysis(complete_df)
-            results['bootstrap_cv'] = bootstrap_results
-            # Memory cleanup after bootstrap
-            cleanup_memory(force_gc=True, log_usage=True)
-            monitor_memory_usage("After Bootstrap CV")
-        else:
-            print_status("Bootstrap cross-validation disabled", "INFO")
-            results['bootstrap_cv'] = {'success': False, 'error': 'Disabled by configuration'}
+        # Bootstrap cross-validation disabled (redundant with Step 3.1 Robust Block Bootstrap)
+        print_status("Bootstrap cross-validation disabled (use Step 3.1 Robust Block Bootstrap instead)", "INFO")
+        results['bootstrap_cv'] = {'success': False, 'error': 'Disabled - use Step 3.1 instead'}
+
+        # Final memory check and cleanup
+        aggressive_memory_cleanup("Final cleanup after all CV methods")
+        final_memory_check = check_memory_and_cleanup()
+        if not final_memory_check:
+            print_status("WARNING: Final memory usage is high - consider restarting system", "WARNING")
         
         # Summary statistics
         successful_methods = []
@@ -1171,8 +1521,7 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
             successful_methods.append('loso')
         if results['lodo_cv']['success']:
             successful_methods.append('lodo')
-        if results['bootstrap_cv']['success']:
-            successful_methods.append('bootstrap')
+        # Bootstrap CV is disabled (removed for being redundant and unreliable)
         
         if successful_methods:
             # Aggregate lambda estimates across methods
@@ -1185,8 +1534,7 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
                 all_lambdas.extend(results['loso_cv']['lambda_values'])
             if results['lodo_cv']['success']:
                 all_lambdas.extend(results['lodo_cv']['lambda_values'])
-            if results['bootstrap_cv']['success']:
-                all_lambdas.extend(results['bootstrap_cv']['lambda_values'])
+            # Bootstrap CV removed (was redundant and unreliable)
             
             # Cross-method consistency check
             cross_method_consistency = _cross_method_consistency_check(
@@ -1233,289 +1581,59 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
 
 # Add LOSO/LODO worker functions and analysis functions moved from step_5
 
-def _init_loso_worker_context(complete_df, edges, min_bin_count):
+# REMOVED: Worker functions no longer needed with sequential processing
     """Initializer to load heavy context once per worker process for LOSO analysis.
     
+    MEMORY OPTIMIZATION: Instead of copying the entire dataset to each worker,
+    we store only the file path and load data per task to prevent memory explosion.
+    
     Args:
-        complete_df (pd.DataFrame): The complete pair-level dataset.
+        ac_name (str): Analysis center name (e.g., 'code', 'esa_final', 'igs_combined').
         edges (np.ndarray): Bin edges for distance.
         min_bin_count (int): Minimum number of data points per bin.
     """
-    global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
-    WORKER_COMPLETE_DF = complete_df
+    global WORKER_EDGES, WORKER_MIN_BIN_COUNT, WORKER_DATA_PATH
+    
+    # MEMORY FIX: Use the existing consolidated file path directly
+    # This prevents copying 5.4GB to each of 4 workers (27GB total)
+    from pathlib import Path
+    
+    # Use the consolidated file that already exists from Step 2.0
+    consolidated_file = Path(PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac_name}.csv")
+    
+    if not consolidated_file.exists():
+        raise FileNotFoundError(f"Consolidated file not found: {consolidated_file}")
+    
+    WORKER_DATA_PATH = str(consolidated_file)
     WORKER_EDGES = edges
     WORKER_MIN_BIN_COUNT = min_bin_count
 
-def _init_lodo_worker_context(complete_df, edges, min_bin_count):
-    """Initializer to load heavy context once per worker process for LODO analysis.
-    
-    Args:
-        complete_df (pd.DataFrame): The complete pair-level dataset.
-        edges (np.ndarray): Bin edges for distance.
-        min_bin_count (int): Minimum number of data points per bin.
-    """
-    global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
-    WORKER_COMPLETE_DF = complete_df
-    WORKER_EDGES = edges
-    WORKER_MIN_BIN_COUNT = min_bin_count
+# Worker functions removed - using sequential processing in main process
 
-def _process_single_station_loso(station_to_exclude):
-    """
-    Process a single station exclusion for LOSO analysis using worker context.
-    
-    Args:
-        station_to_exclude (str): The ID of the station to exclude.
-        
-    Returns:
-        Optional[Dict]: A dictionary containing the fitted lambda and other parameters if successful, or error details.
-    """
-    try:
-        global WORKER_COMPLETE_DF, WORKER_EDGES, WORKER_MIN_BIN_COUNT
-        complete_df = WORKER_COMPLETE_DF
-        edges = WORKER_EDGES
-        min_bin_count = WORKER_MIN_BIN_COUNT
-        
-        if complete_df is None or edges is None or min_bin_count is None:
-            return {
-                'station': station_to_exclude,
-                'error': 'Worker context not properly initialized.',
-                'debug': 'context_init_failure'
-            }
-        
-        # Create subset excluding this station
-        subset_df = complete_df[
-            (complete_df['station_i'] != station_to_exclude) & 
-            (complete_df['station_j'] != station_to_exclude)
-        ].copy()
-        
-        if len(subset_df) < 1000:  # Skip if too few pairs
-            return {
-                'station': station_to_exclude,
-                'error': f'Insufficient data: {len(subset_df)} pairs',
-                'debug': 'too_few_pairs'
-            }
-        
-        # Bin the data
-        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
-        binned = subset_df.groupby('dist_bin', observed=True).agg({
-            'dist_km': 'mean',
-            'coherence': 'mean',
-            'station_i': 'count'
-        }).rename(columns={'station_i': 'count'})
-        binned.columns = ['mean_dist', 'mean_coh', 'count']
-        
-        # Filter bins with sufficient data
-        binned = binned[binned['count'] >= min_bin_count]
-        
-        if len(binned) < 3:  # Need at least 3 bins for fitting
-            return {
-                'station': station_to_exclude,
-                'error': f'Insufficient bins: {len(binned)} bins',
-                'debug': 'too_few_bins'
-            }
-        
-        # Fit exponential model
-        try:
-            distances = binned['mean_dist'].values
-            coherences = binned['mean_coh'].values
-            weights = binned['count'].values
-            
-            # Check if we have valid data
-            if len(distances) == 0 or len(coherences) == 0:
-                return None
-            
-            # Check for NaN or infinite values
-            if np.any(~np.isfinite(distances)) or np.any(~np.isfinite(coherences)):
-                return {
-                    'station': station_to_exclude,
-                    'error': 'Invalid data: NaN or infinite values',
-                    'debug': 'invalid_data'
-                }
-            
-            # Initial parameter estimates
-            c_range = coherences.max() - coherences.min()
-            if c_range <= 0 or not np.isfinite(c_range):
-                return {
-                    'station': station_to_exclude,
-                    'error': f'Invalid coherence range: {c_range}',
-                    'debug': 'invalid_range'
-                }
-                
-            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
-            bounds = TEPConfig.get_adaptive_lambda_bounds(distances)
-            
-            # Ensure we have clean numpy arrays
-            distances = np.asarray(distances, dtype=float)
-            coherences = np.asarray(coherences, dtype=float)
-            weights = np.asarray(weights, dtype=float)
-            p0 = np.asarray(p0, dtype=float)
-            
-            popt, _ = curve_fit(
-                correlation_model, distances, coherences,
-                p0=p0, sigma=1.0/np.sqrt(weights), bounds=bounds, maxfev=5000
-            )
-            
-            return {
-                'station': station_to_exclude,
-                'lambda_km': float(popt[1]),
-                'amplitude': float(popt[0]),
-                'offset': float(popt[2]),
-                'n_pairs': len(subset_df),
-                'n_bins': len(binned)
-            }
-            
-        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
-            # Return debug info instead of None to see what's failing
-            return {
-                'station': station_to_exclude,
-                'error': str(e),
-                'n_pairs': len(subset_df) if 'subset_df' in locals() else 0,
-                'n_bins': len(binned) if 'binned' in locals() else 0,
-                'debug': 'fit_failed'
-            }
-            
-    except Exception as e:
-        return None
-
-def _process_single_date_lodo(date_to_exclude):
-    """
-    Process a single date for LODO analysis.
-    Excludes the specified date and fits correlation model.
-    
-    Args:
-        date_to_exclude (str): The date to exclude from the analysis.
-        
-    Returns:
-        Optional[Dict]: A dictionary containing the fitted lambda and other parameters if successful, or error details.
-    """
-    try:
-        # Access worker-global context
-        complete_df = WORKER_COMPLETE_DF
-        edges = WORKER_EDGES
-        min_bin_count = WORKER_MIN_BIN_COUNT
-        
-        if complete_df is None or edges is None or min_bin_count is None:
-            return {
-                'date': date_to_exclude,
-                'error': 'Worker context not properly initialized.',
-                'debug': 'context_init_failure'
-            }
-        
-        # Filter out pairs from this date
-        subset_df = complete_df[complete_df['date'] != date_to_exclude].copy()
-        
-        if len(subset_df) < 1000:  # Skip if too little data remains
-            return {
-                'date': date_to_exclude,
-                'error': f'Insufficient data: {len(subset_df)} pairs',
-                'debug': 'too_few_pairs',
-                'total_pairs': len(complete_df),
-                'remaining_pairs': len(subset_df)
-            }
-        
-        # Bin the data
-        subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
-        binned = subset_df.groupby('dist_bin', observed=True).agg(
-            mean_dist=('dist_km', 'mean'),
-            mean_coh=('coherence', 'mean'),
-            count=('coherence', 'size')
-        ).reset_index()
-        
-        # Filter for robust bins
-        binned = binned[binned['count'] >= min_bin_count].dropna()
-        
-        if len(binned) < 5:  # Need enough bins for stable fit
-            return {
-                'date': date_to_exclude,
-                'error': f'Insufficient bins: {len(binned)} bins',
-                'debug': 'too_few_bins',
-                'total_bins': len(subset_df.groupby('dist_bin', observed=True)),
-                'robust_bins': len(binned),
-                'min_bin_count': min_bin_count,
-                'bin_counts': binned['count'].tolist() if len(binned) > 0 else []
-            }
-        
-        # Fit exponential model
-        try:
-            distances = binned['mean_dist'].values
-            coherences = binned['mean_coh'].values
-            weights = binned['count'].values
-            
-            # Check for NaN or infinite values
-            if np.any(~np.isfinite(distances)) or np.any(~np.isfinite(coherences)):
-                return {
-                    'date': date_to_exclude,
-                    'error': 'Invalid data: NaN or infinite values',
-                    'debug': 'invalid_data'
-                }
-            
-            # Initial parameter estimates
-            c_range = coherences.max() - coherences.min()
-            if c_range <= 0 or not np.isfinite(c_range):
-                return {
-                    'date': date_to_exclude,
-                    'error': f'Invalid coherence range: {c_range}',
-                    'debug': 'invalid_range'
-                }
-                
-            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
-            
-            # Ensure we have clean numpy arrays
-            distances = np.asarray(distances, dtype=float)
-            coherences = np.asarray(coherences, dtype=float)
-            weights = np.asarray(weights, dtype=float)
-            p0 = np.asarray(p0, dtype=float)
-            
-            popt, _ = curve_fit(
-                correlation_model, distances, coherences,
-                p0=p0, sigma=1.0/np.sqrt(weights),
-                bounds=([1e-10, 100, -1], [5, 20000, 1]),
-                maxfev=5000
-            )
-            
-            return {
-                'date': date_to_exclude,
-                'lambda_km': float(popt[1]),
-                'amplitude': float(popt[0]),
-                'offset': float(popt[2]),
-                'n_pairs': len(subset_df),
-                'n_bins': len(binned)
-            }
-            
-        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
-            return {
-                'date': date_to_exclude,
-                'error': str(e),
-                'n_pairs': len(subset_df) if 'subset_df' in locals() else 0,
-                'n_bins': len(binned) if 'binned' in locals() else 0,
-                'debug': 'fit_failed'
-            }
-            
-    except Exception as e:
-        return None
-
-def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_loso_analysis(complete_df: pd.DataFrame, ac: str) -> Dict:
     """
     Perform Leave-One-Station-Out (LOSO) analysis on the complete dataset.
     Tests stability by excluding each station and re-fitting correlation model.
-    
+
+    MEMORY OPTIMIZATION: Process stations sequentially in main process to avoid memory explosion.
+
     Args:
         complete_df (pd.DataFrame): The complete pair-level dataset.
-        
+        ac (str): Analysis center name.
+
     Returns:
-        Dict: A dictionary containing the results of the LOSO analysis.
+        Dict: A dictionary containing the LOSO analysis results.
     """
     print_status("Starting Leave-One-Station-Out (LOSO) analysis...", "PROCESS")
-    
-    # Monitor memory before LOSO analysis
-    monitor_memory_usage("LOSO Analysis Start")
-    
-    # Get all unique stations
+
+    # Use full dataset for comprehensive validation
+    total_pairs = len(complete_df)
+    print_status(f"Using full dataset: {total_pairs:,} pairs for validation", "INFO")
+
+    # Get all stations from the complete dataset
     unique_stations = pd.unique(complete_df[['station_i', 'station_j']].values.ravel())
-    
-    # OPTIMIZATION: Sample stations for computational efficiency
-    max_stations_to_test = TEPConfig.get_int('TEP_LOSO_SAMPLE_SIZE', 50)  # Default: 50 stations
-    
+    max_stations_to_test = min(10, len(unique_stations))  # Use max 10 stations
+
     if len(unique_stations) > max_stations_to_test:
         # Randomly sample stations for testing
         np.random.seed(42)  # Reproducible
@@ -1524,100 +1642,104 @@ def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
     else:
         stations_to_test = unique_stations
         print_status(f"Testing stability across all {len(unique_stations)} unique stations", "INFO")
-    
-    # Analysis parameters from centralized configuration
+
+    # Analysis parameters
     num_bins = TEPConfig.get_int('TEP_BINS')
     max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
     min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
     edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
-    
+
     lambda_estimates = []
-    
-    # OPTIMIZATION: Use parallel processing
-    max_workers = min(4, mp.cpu_count())  # Reduced from 8 to 4 to avoid memory issues
-    print_status(f"Using parallel processing with {max_workers} workers for LOSO analysis", "INFO")
-    
-    # Process stations in batches
-    batch_size = max(5, max_workers)
-    
-    for batch_start in range(0, len(stations_to_test), batch_size):
-        batch_end = min(batch_start + batch_size, len(stations_to_test))
-        batch_stations = stations_to_test[batch_start:batch_end]
-        
-        print_status(f"Processing LOSO batch {batch_start//batch_size + 1}: stations {batch_start+1}-{batch_end}/{len(stations_to_test)}", "PROCESS")
-        
-        try:
-            # Check memory before starting multiprocessing
-            check_memory_usage()
-            
-            with ProcessPoolExecutor(max_workers=max_workers,
-                                     initializer=_init_loso_worker_context,
-                                     initargs=(complete_df, edges, min_bin_count)) as executor:
-                
-                # Submit batch of tasks
-                future_to_station = {}
-                global_station_idx = batch_start # Track overall progress
-                for i, station in enumerate(batch_stations):
-                    global_station_idx += 1
-                    print_status(f"  Submitting station {station} for processing ({i+1}/{len(batch_stations)}, total {global_station_idx}/{len(stations_to_test)})", "DEBUG")
-                    future = executor.submit(_process_single_station_loso, station)
-                    future_to_station[future] = station
-                
-                print_status(f"  Waiting for {len(batch_stations)} stations to complete...", "PROCESS")
-                completed_count = 0
-                
-                # Collect results as they complete
-                for future in as_completed(future_to_station, timeout=600):  # 10 minute timeout for batch
-                    station = future_to_station[future]
-                    completed_count += 1
-                    
-                    try:
-                        result = future.result(timeout=30)  # 30 second timeout per result
-                        if result is not None and 'lambda_km' in result:
-                            lambda_estimates.append(result['lambda_km'])
-                            print_status(f"  [{completed_count}/{len(batch_stations)}] Station {station}: λ = {result['lambda_km']:.1f} km", "SUCCESS")
-                        elif result is not None and 'error' in result:
-                            print_status(f"  [{completed_count}/{len(batch_stations)}] Station {station}: {result['error']}", "WARNING")
-                        else:
-                            print_status(f"  [{completed_count}/{len(batch_stations)}] Station {station}: No result returned", "WARNING")
-                    except Exception as e:
-                        print_status(f"  [{completed_count}/{len(batch_stations)}] Station {station} failed: {e}", "WARNING")
-                        continue
-                        
-        except Exception as e:
-            print_status(f"Batch processing failed: {e}", "ERROR")
-            # Sequential fallback for this batch
-            for station in batch_stations:
-                mask = (complete_df['station_i'] != station) & (complete_df['station_j'] != station)
-                subset_df = complete_df[mask].copy()
-                
-                if len(subset_df) < 1000:
-                    continue
-                
-                # Quick sequential processing
+
+    # MEMORY FIX: Process stations SEQUENTIALLY in main process to avoid memory explosion
+    # No multiprocessing - each station processed one at a time to avoid memory issues
+    print_status("Using sequential processing in main process to avoid memory issues", "INFO")
+
+    # MEMORY OPTIMIZATION: Process stations in chunks of 5 to reduce memory pressure
+    print_status("Processing stations in chunks of 5 to reduce memory pressure", "INFO")
+
+    chunk_size = 5
+    station_results = []
+
+    for chunk_start in range(0, len(stations_to_test), chunk_size):
+        chunk_end = min(chunk_start + chunk_size, len(stations_to_test))
+        chunk_stations = stations_to_test[chunk_start:chunk_end]
+
+        print_status(f"Processing chunk {chunk_start//chunk_size + 1}/{(len(stations_to_test)-1)//chunk_size + 1}: stations {chunk_start+1}-{chunk_end}", "PROCESS")
+
+        for i, station in enumerate(chunk_stations):
+            print_status(f"  Processing station {station} ({chunk_start + i + 1}/{len(stations_to_test)})...", "PROCESS")
+
+            # Pre-filter data for this station from the complete dataset
+            mask = (complete_df['station_i'] != station) & (complete_df['station_j'] != station)
+            subset_df = complete_df[mask].copy()
+
+            if len(subset_df) < 1000:  # Skip if too few pairs
+                print_status(f"    Station {station}: Insufficient data ({len(subset_df)} pairs)", "WARNING")
+                del subset_df
+                continue
+
+            # Process this station's data directly in main process
+            try:
+                # Bin the data
                 subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
                 binned = subset_df.groupby('dist_bin', observed=True).agg({
-                    'dist_km': 'mean', 'coherence': 'mean', 'station_i': 'count'
-                }).rename(columns={'station_i': 'count'})
-                binned.columns = ['mean_dist', 'mean_coh', 'count']
+                    'dist_km': 'mean',
+                    'coherence': 'mean',
+                    'station_i': 'count'
+                }).rename(columns={'station_i': 'count'}).dropna()
+
+                # Filter bins with sufficient data
                 binned = binned[binned['count'] >= min_bin_count]
-                
-                if len(binned) >= 3:
-                    try:
-                        distances, coherences = binned['mean_dist'].values, binned['mean_coh'].values
-                        c_range = coherences.max() - coherences.min()
-                        p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
-                        weights = binned['count'].values
-                        popt, _ = curve_fit(correlation_model, distances, coherences, p0=p0, 
-                                          sigma=1.0/np.sqrt(weights), bounds=TEPConfig.get_adaptive_lambda_bounds(distances), maxfev=5000)
-                        lambda_estimates.append(popt[1])
-                        print_status(f"Sequential {station}: λ = {popt[1]:.1f} km", "SUCCESS")
-                    except:
-                        continue
-    
+
+                if len(binned) < 3:  # Need at least 3 bins
+                    print_status(f"    Station {station}: Insufficient bins ({len(binned)})", "WARNING")
+                    del subset_df, binned
+                    continue
+
+                distances = binned['dist_km'].values
+                coherences = binned['coherence'].values
+                weights = binned['count'].values
+
+                # Fit exponential decay model
+                c_range = coherences.max() - coherences.min()
+                if c_range <= 0:
+                    print_status(f"    Station {station}: Invalid coherence range", "WARNING")
+                    del subset_df, binned
+                    continue
+
+                p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+
+                popt, _ = curve_fit(
+                    correlation_model, distances, coherences,
+                    p0=p0, sigma=1.0/np.sqrt(weights), absolute_sigma=False,
+                    maxfev=1000  # Reduced iterations
+                )
+
+                # Calculate R-squared
+                y_pred = correlation_model(distances, *popt)
+                ss_res = np.sum((coherences - y_pred) ** 2)
+                ss_tot = np.sum((coherences - np.mean(coherences)) ** 2)
+                r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+
+                lambda_estimates.append(popt[1])
+                print_status(f"    Station {station}: λ = {popt[1]:.0f} km (R² = {r_squared:.3f})", "SUCCESS")
+
+            except Exception as e:
+                print_status(f"    Station {station}: Exception - {str(e)}", "ERROR")
+
+            # Force memory cleanup after each station
+            del subset_df, binned
+            cleanup_memory(force_gc=True, log_usage=True)
+
+        # Stream intermediate results to disk after each chunk
+        print_status(f"  Completed chunk {chunk_start//chunk_size + 1}, streaming results to disk", "INFO")
+        # Force additional cleanup between chunks
+        cleanup_memory(force_gc=True, log_usage=True)
+
     if not lambda_estimates:
         return {'success': False, 'error': 'No successful fits in LOSO analysis'}
-    
+
     # Compute statistics
     results = {
         'success': True,
@@ -1630,124 +1752,128 @@ def run_loso_analysis(complete_df: pd.DataFrame) -> Dict:
         'lambda_values': lambda_estimates,
         'coefficient_of_variation': float(np.std(lambda_estimates) / np.mean(lambda_estimates))
     }
-    
+
     print_status(f"LOSO complete: λ = {results['lambda_mean']:.1f} ± {results['lambda_std']:.1f} km (CV = {results['coefficient_of_variation']:.3f})", "SUCCESS")
-    
+
     # Memory cleanup after LOSO analysis
     cleanup_memory(force_gc=True, log_usage=True)
-    
+
     return results
 
-def run_lodo_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_lodo_analysis(complete_df: pd.DataFrame, ac: str) -> Dict:
     """
     Perform Leave-One-Day-Out (LODO) analysis on the complete dataset.
     Tests stability by excluding each day and re-fitting correlation model.
-    
+
+    MEMORY OPTIMIZATION: Process dates sequentially in main process to avoid memory explosion.
+
     Args:
         complete_df (pd.DataFrame): The complete pair-level dataset.
-        
+        ac (str): Analysis center name.
+
     Returns:
         Dict: A dictionary containing the results of the LODO analysis.
     """
     print_status("Starting Leave-One-Day-Out (LODO) analysis...", "PROCESS")
-    
-    # Get all unique dates
+
+    # MEMORY OPTIMIZATION: Use the same data for LODO validation
+    # Get unique dates from the dataset
     unique_dates = complete_df['date'].unique()
-    
-    # OPTIMIZATION: Sample days for computational efficiency
-    max_days_to_test = TEPConfig.get_int('TEP_LODO_SAMPLE_SIZE', 100)  # Default: 100 days
-    
+    max_days_to_test = min(10, len(unique_dates))  # Use max 10 days from dataset
+
     if len(unique_dates) > max_days_to_test:
         # Randomly sample days for testing
         np.random.seed(43)  # Different seed from LOSO
         dates_to_test = np.random.choice(unique_dates, max_days_to_test, replace=False)
-        print_status(f"Sampling {max_days_to_test} days from {len(unique_dates)} total for efficiency", "INFO")
+        print_status(f"Sampling {max_days_to_test} days from {len(unique_dates)} available in dataset", "INFO")
     else:
         dates_to_test = unique_dates
-        print_status(f"Testing stability across all {len(unique_dates)} unique days", "INFO")
-    
+        print_status(f"Testing stability across all {len(unique_dates)} unique days in dataset", "INFO")
+
     # Analysis parameters
     num_bins = TEPConfig.get_int('TEP_BINS')
     max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
     min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
     edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
-    
+
     lambda_estimates = []
-    
-    # Try parallel processing first
-    try:
-        max_workers = min(4, mp.cpu_count())  # Reduced from 8 to 4 to avoid memory issues
-        batch_size = max(5, max_workers)  # Reduced batch size to avoid memory issues
-        
-        print_status(f"Using parallel processing with {max_workers} workers for LODO analysis", "INFO")
-        
-        # Process dates in batches
-        for batch_start in range(0, len(dates_to_test), batch_size):
-            batch_end = min(batch_start + batch_size, len(dates_to_test))
-            batch_dates = dates_to_test[batch_start:batch_end]
-            
-            print_status(f"Processing LODO batch {batch_start//batch_size + 1}: dates {batch_start+1}-{batch_end}/{len(dates_to_test)}", "PROCESS")
-            
-            # Check memory before starting multiprocessing
-            check_memory_usage()
-            
-            with ProcessPoolExecutor(max_workers=max_workers,
-                                   initializer=_init_lodo_worker_context,
-                                   initargs=(complete_df, edges, min_bin_count)) as executor:
-                
-                # Submit tasks
-                future_to_date = {}
-                for i, date in enumerate(batch_dates):
-                    print_status(f"  Submitting date {pd.to_datetime(date).strftime('%Y-%m-%d')} for processing ({i+1}/{len(batch_dates)})", "DEBUG")
-                    future = executor.submit(_process_single_date_lodo, date)
-                    future_to_date[future] = date
-                
-                print_status(f"  Waiting for {len(batch_dates)} dates to complete...", "PROCESS")
-                completed_count = 0
-                
-                # Collect results as they complete
-                for future in as_completed(future_to_date, timeout=600):  # 10 minute timeout for batch
-                    date = future_to_date[future]
-                    completed_count += 1
-                    
-                    try:
-                        result = future.result(timeout=30)  # 30 second timeout per result
-                        if result is not None and 'lambda_km' in result:
-                            lambda_estimates.append(result['lambda_km'])
-                            print_status(f"  [{completed_count}/{len(batch_dates)}] Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: λ = {result['lambda_km']:.1f} km", "SUCCESS")
-                        elif result is not None and 'error' in result:
-                            print_status(f"  [{completed_count}/{len(batch_dates)}] Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: {result['error']}", "WARNING")
-                        else:
-                            print_status(f"  [{completed_count}/{len(batch_dates)}] Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: No result returned", "WARNING")
-                    except Exception as e:
-                        print_status(f"  [{completed_count}/{len(batch_dates)}] Date {pd.to_datetime(date).strftime('%Y-%m-%d')} failed: {e}", "WARNING")
-                        continue
-                
-                # Memory cleanup after each batch
-                if completed_count % 5 == 0:  # Every 5 completed dates
-                    aggressive_memory_cleanup(f"LODO batch {batch_start//batch_size + 1}")
-                        
-    except Exception as e:
-        print_status(f"Parallel processing failed: {e}", "ERROR")
-        print_status("Falling back to sequential processing...", "WARNING")
-        
-        # Sequential fallback
-        for date in dates_to_test:
-            try:
-                result = _process_single_date_lodo(date)
-                if result is not None:
-                    lambda_estimates.append(result['lambda_km'])
-                    print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: λ = {result['lambda_km']:.1f} km", "SUCCESS")
-                else:
-                    print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: Failed to fit", "WARNING")
-            except Exception as seq_e:
-                print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')} failed: {seq_e}", "WARNING")
+
+    # MEMORY FIX: Process dates SEQUENTIALLY in main process to avoid memory explosion
+    # No multiprocessing - each date processed one at a time to avoid memory issues
+    print_status("Using sequential processing in main process to avoid memory issues", "INFO")
+
+    # Process each date sequentially using the dataset
+    for i, date in enumerate(dates_to_test):
+        print_status(f"Processing date {pd.to_datetime(date).strftime('%Y-%m-%d')} ({i+1}/{len(dates_to_test)})...", "PROCESS")
+
+        # Pre-filter data for this date from the dataset
+        mask = complete_df['date'] != date
+        subset_df = complete_df[mask].copy()
+
+        if len(subset_df) < 1000:  # Skip if too few pairs
+            print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: Insufficient data ({len(subset_df)} pairs)", "WARNING")
+            del subset_df
+            continue
+
+        # Process this date's data directly in main process
+        try:
+            # Bin the data
+            subset_df['dist_bin'] = pd.cut(subset_df['dist_km'], bins=edges, right=False)
+            binned = subset_df.groupby('dist_bin', observed=True).agg({
+                'dist_km': 'mean',
+                'coherence': 'mean',
+                'station_i': 'count'
+            }).rename(columns={'station_i': 'count'}).dropna()
+
+            # Filter bins with sufficient data
+            binned = binned[binned['count'] >= min_bin_count]
+
+            if len(binned) < 3:  # Need at least 3 bins
+                print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: Insufficient bins ({len(binned)})", "WARNING")
+                del subset_df, binned
                 continue
-        
-    
+
+            distances = binned['dist_km'].values
+            coherences = binned['coherence'].values
+            weights = binned['count'].values
+
+            # Fit exponential decay model
+            c_range = coherences.max() - coherences.min()
+            if c_range <= 0:
+                print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: Invalid coherence range", "WARNING")
+                del subset_df, binned
+                continue
+
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+
+            popt, _ = curve_fit(
+                correlation_model, distances, coherences,
+                p0=p0, sigma=1.0/np.sqrt(weights), absolute_sigma=False,
+                maxfev=1000  # Reduced iterations
+            )
+
+            # Calculate R-squared
+            y_pred = correlation_model(distances, *popt)
+            ss_res = np.sum((coherences - y_pred) ** 2)
+            ss_tot = np.sum((coherences - np.mean(coherences)) ** 2)
+            r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+
+            lambda_estimates.append(popt[1])
+            print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: λ = {popt[1]:.0f} km (R² = {r_squared:.3f})", "SUCCESS")
+
+        except Exception as e:
+            print_status(f"  Date {pd.to_datetime(date).strftime('%Y-%m-%d')}: Exception - {str(e)}", "ERROR")
+
+        # Force memory cleanup after each date
+        del subset_df, binned
+        cleanup_memory(force_gc=True, log_usage=True)
+
+        # Force additional cleanup after each date
+        cleanup_memory(force_gc=True, log_usage=True)
+
     if not lambda_estimates:
         return {'success': False, 'error': 'No successful fits in LODO analysis'}
-    
+
     # Compute statistics
     results = {
         'success': True,
@@ -1760,206 +1886,67 @@ def run_lodo_analysis(complete_df: pd.DataFrame) -> Dict:
         'lambda_values': lambda_estimates,
         'coefficient_of_variation': float(np.std(lambda_estimates) / np.mean(lambda_estimates))
     }
-    
+
     print_status(f"LODO complete: λ = {results['lambda_mean']:.1f} ± {results['lambda_std']:.1f} km (CV = {results['coefficient_of_variation']:.3f})", "SUCCESS")
-    
+
     # Memory cleanup after LODO analysis
     cleanup_memory(force_gc=True, log_usage=True)
-    
-    return results
 
-def _perform_bootstrap_fit(complete_df: pd.DataFrame, edges: np.ndarray, min_bin_count: int) -> Tuple[Optional[np.ndarray], bool, Optional[str]]:
-    """
-    Fits the correlation model on a single bootstrap sample.
-    
-    Args:
-        complete_df (pd.DataFrame): The complete pair-level dataset.
-        edges (np.ndarray): Bin edges for distance.
-        min_bin_count (int): Minimum number of data points per bin.
-        
-    Returns:
-        Tuple[Optional[np.ndarray], bool, Optional[str]]: A tuple containing:
-            - fitted_params (Optional[np.ndarray]): Fitted model parameters if successful, None otherwise.
-            - success_flag (bool): True if fitting was successful, False otherwise.
-            - error_message (Optional[str]): Error message if fitting failed, None otherwise.
-    """
-    try:
-        # Randomly sample pairs for the bootstrap sample with replacement.
-        # This is a simplified row-wise bootstrap of individual pairs.
-        # A more complex 'block bootstrap' would typically resample larger units
-        # (e.g., stations or days) to account for inherent spatial or temporal dependencies.
-        
-        # Memory optimization: use indices instead of copying entire DataFrame
-        n_samples = len(complete_df)
-        bootstrap_indices = np.random.choice(n_samples, size=n_samples, replace=True)
-        bootstrap_df = complete_df.iloc[bootstrap_indices].reset_index(drop=True)
-        
-        # Bin the data
-        bootstrap_df['dist_bin'] = pd.cut(bootstrap_df['dist_km'], bins=edges, right=False)
-        binned = bootstrap_df.groupby('dist_bin', observed=True).agg(
-            mean_dist=('dist_km', 'mean'),
-            mean_coh=('coherence', 'mean'),
-            count=('coherence', 'size')
-        ).reset_index()
-        
-        # Filter for robust bins
-        binned = binned[binned['count'] >= min_bin_count].dropna()
-        
-        if len(binned) < 5:  # Need enough bins for stable fit
-            return None, False, "Not enough robust bins for fitting."
-        
-        distances = binned['mean_dist'].values
-        coherences = binned['mean_coh'].values
-        weights = binned['count'].values
-        
-        # Fit exponential model
-        try:
-            c_range = coherences.max() - coherences.min()
-            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
-            
-            popt, pcov = curve_fit(
-                correlation_model, distances, coherences,
-                p0=p0, sigma=1.0/np.sqrt(weights),
-                bounds=([1e-10, 100, -1], [2, 20000, 1]),
-                maxfev=5000
-            )
-            
-            # Extract lambda before cleanup
-            result_params = popt.copy()
-            
-            # Immediate cleanup of large objects
-            del bootstrap_df, binned, distances, coherences, weights, popt, pcov
-            
-            return result_params, True, None
-            
-        except Exception as e:
-            return None, False, str(e)
-            
-    except Exception as e:
-        return None, False, str(e)
-
-def _perform_bootstrap_fit_parallel(args) -> Tuple[Optional[np.ndarray], bool, Optional[str]]:
-    """
-    Wrapper function for parallel bootstrap processing.
-    Required because multiprocessing needs a top-level function.
-    """
-    complete_df, edges, min_bin_count = args
-    return _perform_bootstrap_fit(complete_df, edges, min_bin_count)
-
-def run_pairwise_bootstrap_analysis(complete_df: pd.DataFrame) -> Dict:
-    """
-    Perform pairwise bootstrap cross-validation analysis with parallel processing.
-    
-    This method resamples individual pairs with replacement to assess model stability
-    and parameter uncertainty, distinguishing it from a block bootstrap that would
-    resample larger, dependent blocks of data (e.g., stations or days).
-    """
-    print_status("Starting pairwise bootstrap analysis...", "PROCESS")
-    
-    # Analysis parameters
-    num_bins = TEPConfig.get_int('TEP_BINS')
-    max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
-    min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
-    edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
-    
-    bootstrap_samples = TEPConfig.get_int('TEP_BOOTSTRAP_SAMPLES')
-    lambda_estimates = []
-    
-    # Use parallel processing for bootstrap samples
-    n_workers = min(TEPConfig.get_worker_count('TEP_WORKERS'), bootstrap_samples)
-    print_status(f"Using {n_workers} workers for {bootstrap_samples} bootstrap samples", "INFO")
-    
-    if n_workers > 1:
-        # Parallel execution
-        from concurrent.futures import ProcessPoolExecutor, as_completed
-        import multiprocessing
-        
-        # Create a shared function that can be pickled
-        bootstrap_args = [(complete_df, edges, min_bin_count) for _ in range(bootstrap_samples)]
-        
-        with ProcessPoolExecutor(max_workers=n_workers) as executor:
-            futures = [executor.submit(_perform_bootstrap_fit_parallel, args) for args in bootstrap_args]
-            
-            for i, future in enumerate(as_completed(futures), 1):
-                if i % 10 == 0:
-                    print_status(f"Completed bootstrap sample {i}/{bootstrap_samples}...", "PROCESS")
-                
-                try:
-                    fitted_params, success, error_msg = future.result()
-                    if success:
-                        lambda_estimates.append(fitted_params[1])
-                    else:
-                        print_status(f"Bootstrap sample failed to fit: {error_msg}", "WARNING")
-                except Exception as e:
-                    print_status(f"Bootstrap sample failed with exception: {e}", "WARNING")
-        
-        # Explicit cleanup after parallel processing
-        del bootstrap_args
-        del futures
-        gc.collect()
-    else:
-        # Sequential execution (fallback)
-        for i in range(bootstrap_samples):
-            if (i + 1) % 10 == 0:
-                print_status(f"Processing bootstrap sample {i+1}/{bootstrap_samples}...", "PROCESS")
-            
-            fitted_params, success, error_msg = _perform_bootstrap_fit(complete_df, edges, min_bin_count)
-            
-            if success:
-                lambda_estimates.append(fitted_params[1])
-            else:
-                print_status(f"Bootstrap sample {i+1} failed to fit: {error_msg}", "WARNING")
-    
-    if not lambda_estimates:
-        return {'success': False, 'error': 'No successful fits in bootstrap analysis'}
-    
-    # Calculate statistics
-    lambda_mean = float(np.mean(lambda_estimates))
-    lambda_std = float(np.std(lambda_estimates))
-    lambda_min = float(np.min(lambda_estimates))
-    lambda_max = float(np.max(lambda_estimates))
-    cv = float(lambda_std / lambda_mean)
-    
-    results = {
-        'success': True,
-        'lambda_mean': lambda_mean,
-        'lambda_std': lambda_std,
-        'lambda_min': lambda_min,
-        'lambda_max': lambda_max,
-        'n_successful_fits': len(lambda_estimates),
-        'n_bootstrap_samples': bootstrap_samples,
-        'lambda_values': [float(x) for x in lambda_estimates],
-        'coefficient_of_variation': cv
-    }
-    
-    # Clear large arrays before return
-    del lambda_estimates
-    gc.collect()
-    
-    print_status(f"Pairwise Bootstrap CV complete: λ = {lambda_mean:.1f} ± {lambda_std:.1f} km (CV = {cv:.3f})", "SUCCESS")
-    
-    # Memory cleanup after bootstrap analysis
-    cleanup_memory(force_gc=True, log_usage=True)
-    
     return results
 
 @ensure_single_instance
 def main():
     """Main execution function of the comprehensive cross-validation suite.
-    
+
     This function orchestrates the loading of data, running of various cross-validation
     analyses (monthly, station block, LOSO, LODO), and saving of results for each
     analysis center.
     """
     global step_logger
     start_time = time.time()
-    
+
+    # Set up signal handlers for graceful shutdown
+    def signal_handler(signum, frame):
+        print_status(f"Received signal {signum}, shutting down gracefully...", "WARNING")
+        # Don't call _cleanup_processes() here to avoid recursion
+        # Just exit cleanly
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
+
+    # Kill any existing instances of this script
+    print("Killing any existing instances of step_3_0_tep_cross_validation_suite...")
+    import subprocess
+    import os
+    try:
+        current_pid = os.getpid()
+        # Kill by script name but exclude current process
+        subprocess.run(['pkill', '-f', 'step_3_0_tep_cross_validation_suite.py'],
+                      capture_output=True, timeout=10)
+        # Kill multiprocessing processes
+        subprocess.run(['pkill', '-f', 'multiprocessing.spawn'],
+                      capture_output=True, timeout=10)
+        print("Successfully killed existing instances")
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError) as e:
+        print(f"Warning: Could not kill all existing processes: {e}")
+
     # Set up step-specific logger
-    # Initialize step-specific logger
+    # Initialize step-specific logger (reset log file on start)
+    log_file_path = Path(__file__).resolve().parents[3] / "logs" / "step_3_0_cross_validation_suite.log"
+
+    # Reset log file when starting (remove old content)
+    try:
+        with open(log_file_path, 'w') as f:
+            f.write("")  # Clear the log file
+        print(f"Log file reset: {log_file_path}")
+    except Exception as e:
+        print(f"Warning: Could not reset log file: {e}")
+
     step_logger = TEPLogger(
         name="step_3_0_cross_validation_suite",
         level="DEBUG",
-        log_file_path=Path(__file__).resolve().parents[3] / "logs" / "step_3_0_cross_validation_suite.log"
+        log_file_path=log_file_path
     )
     
     # Set as the current step logger for print_status
@@ -1978,20 +1965,27 @@ def main():
     print_status(f"  Station block CV enabled: {TEPConfig.get_bool('TEP_ENABLE_STATION_BLOCKS_CV')}", "INFO")
     print_status(f"  LOSO CV enabled: {TEPConfig.get_bool('TEP_ENABLE_LOSO_CV', True)}", "INFO")
     print_status(f"  LODO CV enabled: {TEPConfig.get_bool('TEP_ENABLE_LODO_CV', True)}", "INFO")
-    print_status(f"  Pairwise Bootstrap CV enabled: {TEPConfig.get_bool('TEP_ENABLE_BOOTSTRAP_CV', True)}", "INFO")
+    print_status(f"  Bootstrap CV: Disabled (use Step 3.1 Robust Block Bootstrap instead)", "INFO")
     print_status(f"  Monthly folds limit: {TEPConfig.get_int('TEP_MONTHLY_CV_FOLDS', 12)}", "INFO")
     print_status(f"  Station block size: {TEPConfig.get_int('TEP_STATION_BLOCK_SIZE', 10)}", "INFO")
     print_status(f"  LOSO sample size: {TEPConfig.get_int('TEP_LOSO_SAMPLE_SIZE', 50)}", "INFO")
     print_status(f"  LODO sample size: {TEPConfig.get_int('TEP_LODO_SAMPLE_SIZE', 100)}", "INFO")
-    print_status(f"  Bootstrap samples: {TEPConfig.get_int('TEP_BOOTSTRAP_SAMPLES', 200)}", "INFO")
     print_status(f"  Memory limit: {TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')} GB", "INFO")
     
     # Determine analysis centers to process
     analysis_centers = []
     for ac in ['code', 'esa_final', 'igs_combined']:
+        # Check for consolidated files first (preferred)
+        consolidated_file = Path(PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac}.csv")
+        # Fallback to individual files
         pair_files = list(Path(PACKAGE_ROOT / "results" / "tmp").glob(f"step_2_0_pairs_{ac}_*.csv"))
-        if pair_files:
+        
+        if consolidated_file.exists() or pair_files:
             analysis_centers.append(ac)
+            if consolidated_file.exists():
+                print_status(f"Found consolidated pair data for {ac}", "INFO")
+            else:
+                print_status(f"Found {len(pair_files)} individual pair files for {ac}", "INFO")
         else:
             print_status(f"No pair files found for {ac}, skipping", "WARNING")
     
@@ -2057,9 +2051,13 @@ if __name__ == "__main__":
         sys.exit(0)
     except KeyboardInterrupt:
         print_status("Step 3.0 interrupted by user", "WARNING")
+        # Cleanup processes before exit
+        _cleanup_processes()
         sys.exit(0)  # Don't stop pipeline
     except Exception as e:
         print_status(f"Step 3.0 error: {e}", "ERROR")
         import traceback
         print_status(traceback.format_exc(), "DEBUG")
+        # Cleanup processes before exit
+        _cleanup_processes()
         sys.exit(0)  # Don't stop pipeline

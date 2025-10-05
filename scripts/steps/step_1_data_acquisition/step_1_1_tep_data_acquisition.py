@@ -291,8 +291,8 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
         # File exists but is too small, remove and re-download
         destination.unlink()
     
-    max_retries = 3
-    retry_delay = 1
+    max_retries = 5  # Increased from 3 to 5
+    retry_delay = 2  # Increased base delay
     
     for attempt in range(max_retries):
         try:
@@ -304,9 +304,11 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
             # Create SSL context for HTTPS URLs
             ssl_context = ssl.create_default_context() if url.startswith('https') else None
             
+            # Increase timeout for retries
+            timeout = TEPConfig.get_int('TEP_DOWNLOAD_TIMEOUT', 60) + (attempt * 30)
+            
             # Download with urllib
-            with urllib.request.urlopen(url, context=ssl_context, 
-                                      timeout=TEPConfig.get_int('TEP_DOWNLOAD_TIMEOUT', 60)) as response:
+            with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
                 data = response.read()
             
             with open(destination, 'wb') as f:
@@ -327,9 +329,13 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
             if destination.exists():
                 destination.unlink()
         
-        # Retry logic with exponential backoff
+        # Enhanced retry logic with exponential backoff and jitter
         if attempt < max_retries - 1:
-            time.sleep(retry_delay * (2 ** attempt))
+            # Add jitter to prevent thundering herd
+            import random
+            jitter = random.uniform(0.5, 1.5)
+            delay = retry_delay * (2 ** attempt) * jitter
+            time.sleep(min(delay, 120))  # Cap at 2 minutes max delay
     
     return result
 
@@ -500,7 +506,10 @@ def download_clock_files():
                 downloaded = 0
                 failed = 0
                 
+                failed_tasks = []
+                
                 for future in as_completed(future_to_task):
+                    original_task = future_to_task[future]
                     try:
                         result = future.result()
                         results[center].append(result)
@@ -521,8 +530,8 @@ def download_clock_files():
                                     
                                     progress_pct = (total_done / global_progress['total_missing']) * 100 if global_progress['total_missing'] > 0 else 0
                                 
-                                # Clean progress logging
-                                print_status(f"{center}: {Path(result['destination']).name} ({size_mb:.1f}MB) | Progress: {progress_pct:.1f}% | ETA: {eta_minutes:.0f}m", "SUCCESS")
+                                # Progress reporting with scientific precision
+                                print_status(f"{center}: {Path(result['destination']).name} ({size_mb:.1f}MB) | Progress: {progress_pct:.1f}% | ETA: {eta_minutes:.0f}min", "SUCCESS")
                                 
                                 # Overall progress update every 25 files
                                 if downloaded % 25 == 0:
@@ -531,17 +540,59 @@ def download_clock_files():
                                         print_status(f"[PROGRESS] Overall: {total_done}/{global_progress['total_missing']} files ({progress_pct:.1f}%) | Rate: {rate:.1f} files/sec", "INFO")
                         else:
                             failed += 1
+                            failed_tasks.append(original_task)  # Store failed task for retry
                             with progress_lock:
                                 global_progress['failed'] += 1
-                            print_status(f"{center} failed: {result.get('error', 'Unknown error')}", "DEBUG")
+                            print_status(f"{center} download failed: {result.get('error', 'Unknown error')}", "DEBUG")
                             
                     except Exception as e:
                         failed += 1
+                        failed_tasks.append(original_task)  # Store failed task for retry
                         with progress_lock:
                             global_progress['failed'] += 1
-                        print_status(f"{center} exception: {e}", "DEBUG")
+                        print_status(f"{center} processing exception: {e}", "DEBUG")
                 
-                print_status(f"{center} complete: {downloaded} downloaded, {failed} failed", "SUCCESS")
+                print_status(f"{center} initial acquisition phase: {downloaded} files acquired, {failed} files failed", "SUCCESS")
+                
+                # Retry failed downloads with enhanced retry logic
+                if failed_tasks:
+                    print_status(f"{center}: Initiating retry sequence for {len(failed_tasks)} failed downloads", "PROCESS")
+                    retry_downloaded = 0
+                    retry_failed = 0
+                    
+                    # Use fewer workers for retries to be more conservative
+                    retry_workers = min(max_workers // 2, 4)
+                    
+                    with ThreadPoolExecutor(max_workers=retry_workers) as retry_executor:
+                        retry_futures = {retry_executor.submit(download_worker, task): task for task in failed_tasks}
+                        
+                        for future in as_completed(retry_futures):
+                            try:
+                                result = future.result()
+                                results[center].append(result)
+                                
+                                if result['success']:
+                                    retry_downloaded += 1
+                                    size_mb = result['size_bytes'] / (1024*1024)
+                                    print_status(f"{center} retry successful: {Path(result['destination']).name} ({size_mb:.1f}MB)", "SUCCESS")
+                                    
+                                    # Update global progress
+                                    with progress_lock:
+                                        global_progress['downloaded'] += 1
+                                        global_progress['failed'] -= 1  # Remove from failed count
+                                else:
+                                    retry_failed += 1
+                                    print_status(f"{center} retry unsuccessful: {result.get('error', 'Unknown error')}", "WARNING")
+                                    
+                            except Exception as e:
+                                retry_failed += 1
+                                print_status(f"{center} retry exception: {e}", "WARNING")
+                    
+                    print_status(f"{center} retry phase complete: {retry_downloaded} files recovered, {retry_failed} files remain failed", "SUCCESS")
+                    downloaded += retry_downloaded
+                    failed = retry_failed  # Update failed count to only remaining failures
+                
+                print_status(f"{center} acquisition summary: {downloaded} files successfully acquired, {failed} files failed", "SUCCESS")
         else:
             print_status(f"{center}: All files already exist", "SUCCESS")
     

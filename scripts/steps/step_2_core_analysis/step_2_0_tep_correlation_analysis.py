@@ -1811,9 +1811,9 @@ def build_distance_cache(coords_df: pd.DataFrame) -> Dict[Tuple[str, str], float
     """
     Pre-compute distances between all station pairs for performance optimization.
     
-    This dramatically reduces computation time by eliminating redundant distance
-    calculations during pair processing. Each unique station pair distance is
-    computed once and cached.
+    PERFORMANCE OPTIMIZATION: Uses persistent file-based cache to avoid rebuilding
+    the same distance calculations across multiple analysis centers. The cache is
+    built once and reused for CODE, IGS_COMBINED, and ESA_FINAL datasets.
     
     Args:
         coords_df (pd.DataFrame): Station coordinates dataframe
@@ -1821,6 +1821,29 @@ def build_distance_cache(coords_df: pd.DataFrame) -> Dict[Tuple[str, str], float
     Returns:
         Dict[Tuple[str, str], float]: Cache mapping (station1, station2) -> distance_km
     """
+    import pickle
+    import hashlib
+    
+    # Create cache file path based on coordinate data hash
+    cache_dir = ROOT / "results" / "tmp"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Generate hash of coordinate data to detect changes
+    coords_hash = hashlib.md5(str(coords_df.values).encode()).hexdigest()[:8]
+    cache_file = cache_dir / f"distance_cache_{coords_hash}.pkl"
+    
+    # Try to load existing cache
+    if cache_file.exists():
+        try:
+            step_logger.info(f"Loading existing distance cache from {cache_file.name}")
+            with open(cache_file, 'rb') as f:
+                distance_cache = pickle.load(f)
+            step_logger.success(f"Distance cache loaded: {len(distance_cache):,} cached distances")
+            return distance_cache
+        except Exception as e:
+            step_logger.warning(f"Failed to load cache file: {e}. Rebuilding...")
+    
+    # Build new cache
     step_logger.process("Building distance cache for station pairs...")
     
     # Get all unique station codes
@@ -1852,6 +1875,14 @@ def build_distance_cache(coords_df: pd.DataFrame) -> Dict[Tuple[str, str], float
             processed += 1
             if processed % 1000 == 0:
                 step_logger.info(f"Distance cache: {processed:,}/{total_pairs:,} pairs")
+    
+    # Save cache to file for future use
+    try:
+        with open(cache_file, 'wb') as f:
+            pickle.dump(distance_cache, f)
+        step_logger.success(f"Distance cache saved to {cache_file.name}")
+    except Exception as e:
+        step_logger.warning(f"Failed to save cache file: {e}")
     
     step_logger.success(f"Distance cache complete: {len(distance_cache):,} cached distances")
     return distance_cache
@@ -2011,7 +2042,7 @@ def process_file_worker(clk_file: Path):
             file_name = 'unknown'
         return {'error': str(e), 'file': file_name}
 
-def process_analysis_center(ac: str, coords_df, max_files: int = None):
+def process_analysis_center(ac: str, coords_df, max_files: int = None, distance_cache: Dict[Tuple[str, str], float] = None):
     """
     Process one analysis center with parallel workers to detect TEP correlations.
     
@@ -2153,8 +2184,12 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
     if not remaining_files:
         step_logger.success("All files already processed!")
     else:
-        # Build distance cache for performance optimization
-        distance_cache = build_distance_cache(coords_df)
+        # Use provided distance cache or build new one if not provided
+        if distance_cache is None:
+            step_logger.info("No distance cache provided, building new one...")
+            distance_cache = build_distance_cache(coords_df)
+        else:
+            step_logger.info(f"Using provided distance cache with {len(distance_cache):,} cached distances")
         
         # Process files with parallel workers (use initializer to set shared context)
         worker_files = remaining_files
@@ -2166,14 +2201,21 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
         processing_start_time = time.time()
         total_files_processed = 0
         
-        for batch_start in range(0, len(remaining_files), batch_size):
-            batch_files = remaining_files[batch_start:batch_start + batch_size]
+        # OPTIMIZATION: Create ProcessPoolExecutor ONCE for all batches
+        # This eliminates expensive process recreation overhead
+        step_logger.process(f"Initializing persistent worker pool with {num_workers} workers...")
+        
+        with ProcessPoolExecutor(
+            max_workers=num_workers,
+            initializer=_init_worker_context,
+            initargs=(coords_df, edges, num_bins, ac, distance_cache)
+        ) as executor:
             
-            step_logger.process(f"Processing batch {batch_start//batch_size + 1}: {len(batch_files)} files")
-            
-            with ProcessPoolExecutor(max_workers=num_workers,
-                                     initializer=_init_worker_context,
-                                     initargs=(coords_df, edges, num_bins, ac, distance_cache)) as executor:
+            for batch_start in range(0, len(remaining_files), batch_size):
+                batch_files = remaining_files[batch_start:batch_start + batch_size]
+                
+                step_logger.process(f"Processing batch {batch_start//batch_size + 1}: {len(batch_files)} files")
+                
                 future_to_file = {executor.submit(process_file_worker, f): f for f in batch_files}
                 
                 for future in as_completed(future_to_file):
@@ -2211,32 +2253,32 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                     except Exception as e:
                         processed_files.add(clk_file.name)  # Mark as processed even if failed
                         step_logger.error(f"{clk_file.name}: Worker failed: {e}")
-            
-            # Save checkpoint after each batch with atomic operations
-            checkpoint_data = {
-                'agg_sum_coh': agg_sum_coh,
-                'agg_sum_coh_sq': agg_sum_coh_sq,
-                'agg_sum_dist': agg_sum_dist,
-                'agg_count': agg_count,
-                'processed_files': list(processed_files),
-                'successful_files': successful_files,
-                'total_pairs_kept': total_pairs_kept
-            }
-
-            if atomic_save_checkpoint(checkpoint_file, checkpoint_data):
-                step_logger.info(f"Checkpoint saved: {len(processed_files)}/{len(clk_files)} files processed")
-            else:
-                step_logger.warning("Failed to save checkpoint - continuing without checkpoint")
-            
-            # PERFORMANCE OPTIMIZATION: Proactive memory management between batches
-            gc.collect()
-            
-            # Force memory cleanup with optimized thresholds
-            if hasattr(gc, 'set_threshold'):
-                gc.set_threshold(700, 10, 10)  # More aggressive collection
-            
-            # Simple completion tracking
-            total_files_processed += len(batch_files)
+                
+                # Save checkpoint after each batch with atomic operations
+                checkpoint_data = {
+                    'agg_sum_coh': agg_sum_coh,
+                    'agg_sum_coh_sq': agg_sum_coh_sq,
+                    'agg_sum_dist': agg_sum_dist,
+                    'agg_count': agg_count,
+                    'processed_files': list(processed_files),
+                    'successful_files': successful_files,
+                    'total_pairs_kept': total_pairs_kept
+                }
+                
+                if atomic_save_checkpoint(checkpoint_file, checkpoint_data):
+                    step_logger.info(f"Checkpoint saved: {len(processed_files)}/{len(clk_files)} files processed")
+                else:
+                    step_logger.warning("Failed to save checkpoint - continuing without checkpoint")
+                
+                # PERFORMANCE OPTIMIZATION: Proactive memory management between batches
+                gc.collect()
+                
+                # Force memory cleanup with optimized thresholds
+                if hasattr(gc, 'set_threshold'):
+                    gc.set_threshold(700, 10, 10)  # More aggressive collection
+                
+                # Simple completion tracking
+                total_files_processed += len(batch_files)
     
     if total_pairs_kept == 0:
         step_logger.error(f"No valid pairs extracted from {ac.upper()}")
@@ -2603,8 +2645,11 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None):
                     
                     # Clean up temp file after merging
                     try:
-                        temp_file.unlink()
-                        step_logger.debug(f"Cleaned up temp file: {temp_file.name}")
+                        if temp_file.exists():
+                            temp_file.unlink()
+                            step_logger.debug(f"Cleaned up temp file: {temp_file.name}")
+                        else:
+                            step_logger.debug(f"Temp file already cleaned up: {temp_file.name}")
                     except Exception as e:
                         step_logger.warning(f"Warning: Could not remove temp file {temp_file.name}: {e}")
                 
@@ -2815,6 +2860,13 @@ def main():
     output_dir = ROOT / 'results/outputs'
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # PERFORMANCE OPTIMIZATION: Build distance cache once and reuse for all analysis centers
+    print_status("", "INFO")
+    print_status("="*60, "INFO")
+    print_status("BUILDING SHARED DISTANCE CACHE", "INFO")
+    print_status("="*60, "INFO")
+    distance_cache = build_distance_cache(coords_df)
+    
     results = {}
     for ac in centers:
         print_status("", "INFO")
@@ -2822,7 +2874,7 @@ def main():
         print_status(f"PROCESSING {ac.upper()} - Phase-Coherent Analysis", "INFO")
         print_status("="*60, "INFO")
         
-        result = process_analysis_center(ac, coords_df)
+        result = process_analysis_center(ac, coords_df, distance_cache=distance_cache)
         if result and 'exponential_fit' in result and result['exponential_fit']:
             results[ac] = result
         else:
