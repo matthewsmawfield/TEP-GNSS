@@ -26,7 +26,7 @@
         <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
             <li><strong>3.0 Cross-Validation Suite:</strong> Block-wise validation (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses</li>
             <li><strong>3.1 Robust Block Bootstrap:</strong> Bootstrap confidence intervals with 1000 iterations</li>
-            <li><strong>3.2 TEP Null Tests:</strong> Distance/phase/station scrambling with 100 iterations per test</li>
+            <li><strong>3.2 TEP Null Tests:</strong> Comprehensive null hypothesis testing through three independent scrambling approaches: distance randomization (100 iterations), phase randomization (20 iterations), and station identity randomization (20 iterations), with statistical significance assessment via permutation testing and z-score analysis</li>
             <li><strong>3.3 Methodology Validation:</strong> Bias characterization and geometric artifact detection</li>
             <li><strong>3.4 Geographic Bias Validation:</strong> Continental and hemispheric bias analysis</li>
             <li><strong>3.5 Ionospheric Validation:</strong> Realistic ionospheric control analysis</li>
@@ -166,7 +166,7 @@
         <p>Hence, the physically expected inter-station phase is $\approx 0$ in this band; the information lies in how tightly phases cluster, not in a systematic lag. Writing the unit phasor $U_{ij}(f)=S_{ij}(f)/|S_{ij}(f)|$, the metric uses $\mathrm{Re}\{U_{ij}(f)\}= \cos(\arg S_{ij}(f))$. When averaged over pairs within a distance bin, this estimates the circular mean of phases. If the within-bin phase distribution is von Mises $\mathrm{VM}(\mu\!\approx\!0, \kappa(r))$, the expected value is</p>
         <div class="equation">$$\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)$$</div>
         <p>If the underlying field has exponential spatial covariance, $\mathrm{Cov}[\phi(\mathbf{x}),\phi(\mathbf{x}+\mathbf{r})]\propto e^{-r/\lambda}$, then the concentration $\kappa(r)$ (and thus the circular mean above) inherits an exponential distance-decay, matching the fitted form.</p>
-        <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts as shown by: (i) distance/phase/station scrambling, which collapses the circular mean toward zero; and (ii) replication across independent processing chains (CODE, IGS, ESA). Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore miss the distance-structured phase coherence central to TEP.</p>
+        <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts through: (i) comprehensive randomization testing (distance, phase, and station scrambling), which destroys the spatial correlation structure in null tests while preserving it in genuine data; and (ii) replication across independent processing chains (CODE, IGS, ESA) with different systematic vulnerabilities. Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore cannot detect the distance-structured phase coherence central to TEP.</p>
         </div>
 
     <h2>2.4 Validation Framework Overview</h2>
@@ -213,11 +213,11 @@
         
         <h3>Null test validation</h3>
         <ul>
-            <li><strong>Distance scrambling</strong>: Randomize distance labels while preserving correlation values</li>
-            <li><strong>Phase scrambling</strong>: Randomize phase relationships while preserving magnitudes</li>
-            <li><strong>Station scrambling</strong>: Randomize station assignments within each day</li>
-            <li><strong>Iterations</strong>: 100 per test type per center</li>
-            <li><strong>Significance</strong>: Permutation p-values computed from null distribution, z-scores as descriptive statistics</li>
+            <li><strong>Distance scrambling:</strong> Randomize distance labels while preserving correlation values (100 iterations)</li>
+            <li><strong>Phase scrambling:</strong> Randomize phase relationships while preserving magnitudes (20 iterations)</li>
+            <li><strong>Station scrambling:</strong> Randomize station assignments within each day (20 iterations)</li>
+            <li><strong>Statistical assessment:</strong> Permutation p-values computed from null distributions, z-scores for effect size quantification</li>
+            <li><strong>Significance threshold:</strong> α = 0.05 with correction for multiple testing where appropriate</li>
         </ul>
 
         <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(45, 1, 64, 0.08); border: 2px solid #2D0140;">
