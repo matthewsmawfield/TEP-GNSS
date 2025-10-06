@@ -89,7 +89,7 @@ Our comprehensive analysis of 47.5 million station-pair measurements across 529 
 
 *Note: Station inclusion criteria require ≥20 observation epochs per temporal file (TEP_MIN_EPOCHS = 20) to ensure reliable spectral analysis and statistical validity.*
 
-![Distance-structured correlations in GNSS precision timing networks](site/figures/figure_1_TEP_site_themed.png)
+![Distance-structured correlations in GNSS precision timing networks](site/public/figures/figure_1_TEP_site_themed.png)
 
 **Correlation Structure:**
 - **Characteristic lengths:** \(\lambda = 2,747-2,759\) km across independent analysis centers (0.015-0.033 inter-center variation)
