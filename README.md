@@ -1,339 +1,252 @@
-# TEP-GNSS Analysis Package
+# Temporal Equivalence Principle GNSS Analysis Framework
 
-**Author:** Matthew Lukin Smawfield  
-**Version:** v0.13 (Jaipur)  
-**Date:** September 29, 2025  
+**Author:** Matthew Lukin Smawfield
+**Version:** v0.14 (Jaipur)
+**Date:** 6 October 2025
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
-## Theoretical Framework
+## Theoretical Foundation
 
-The Temporal Equivalence Principle (TEP) extends General Relativity by treating proper time as a dynamical field rather than a fixed parameter. The framework employs a two-metric geometry where matter couples to a causal metric g̃μν = A(φ) gμν + B(φ) ∇μφ ∇νφ, with universal conformal factor A(φ) = exp(2βφ/MPl).
+The Temporal Equivalence Principle (TEP) represents a fundamental extension of General Relativity, wherein proper time is treated as a dynamical scalar field rather than a fixed kinematic parameter. The theoretical framework employs a two-metric geometric structure where matter fields couple to an effective causal metric:
 
-**Central Prediction**: Precision timing networks should exhibit distance-structured correlations following exponential decay C(r) = A·exp(-r/λ) + C₀, with characteristic lengths λ = 1,000-10,000 km for screened scalar field configurations.
+\[\tilde{g}_{\mu\nu} = A(\phi) g_{\mu\nu} + B(\phi) \nabla_\mu\phi \nabla_\nu\phi\]
 
-**Fundamental Implication**: Synchronization procedures become non-integrable, yielding measurable synchronization holonomy in closed-loop time transport protocols.
+with a universal conformal coupling \(A(\phi) = \exp(2\beta\phi/M_{Pl})\).
 
-## Overview
+**Core Prediction:** Precision timing networks exhibit distance-structured correlations following exponential decay:
+\[C(r) = A\cdot\exp(-r/\lambda) + C_0\]
+with characteristic correlation lengths \(\lambda = 1,000-10,000\) km for screened scalar field configurations.
 
-This repository contains a complete analysis package for testing Temporal Equivalence Principle (TEP) predictions using Global Navigation Satellite System (GNSS) precision timing networks. The analysis examines distance-structured correlations across three independent analysis centers: CODE, IGS, and ESA.
+**Fundamental Consequence:** Clock synchronization procedures exhibit non-integrable properties, yielding measurable synchronization holonomy in closed-loop time transfer protocols.
 
-## Quick Start - Google Colab (Recommended)
+## Abstract
 
-**For cloud-based analysis with professional scientific output:**
+This repository implements a comprehensive experimental framework for testing Temporal Equivalence Principle predictions through analysis of Global Navigation Satellite System (GNSS) precision timing networks. The analysis systematically examines distance-structured correlations across three independent analysis centers (CODE, IGS, ESA), providing rigorous experimental validation of theoretical predictions regarding screened scalar field dynamics and gravitational-temporal coupling.
 
-1. **Prepare the analysis package:**
-   ```bash
-   ./prepare_colab_package.sh
-   ```
-   This creates `tep-gnss-colab-package.zip` (396KB)
+We present observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, we identify exponential correlation decay patterns with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 15-42x signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
+## Cloud-Based Analysis Execution (Recommended)
 
-2. **Open Google Colab:**
-   - Go to [colab.research.google.com](https://colab.research.google.com)
-   - Upload `TEP_GNSS_Colab_Analysis.ipynb`
-   - Upload `tep-gnss-colab-package.zip`
+**For optimal computational performance and scientific output quality:**
 
-3. **Execute the analysis:**
-   - Run all cells in the notebook
-   - The system automatically handles dependencies, data acquisition, and configuration
+### Cloud Deployment Options
 
-**Analysis Configuration:**
-- **Date range:** 30 days (2024-01-01 to 2024-01-30) - optimized for cloud execution
-- **Expected runtime:** 2-4 hours in Colab Pro
-- **Output format:** Professional scientific formatting with comprehensive progress reporting
-- **Results:** Downloadable ZIP archive containing all figures and statistical summaries
+#### GCP High-CPU Analysis (Recommended for Large-Scale)
 
-**Advantages of Colab execution:**
-- No local setup required
-- Professional scientific output formatting
-- Robust error handling and retry mechanisms
-- Persistent results storage via Google Drive
-- Optimized for cloud computing resources
+Professional cloud deployment optimized for Google Cloud Platform high-CPU instances:
 
-## Key Findings
-
-Through analysis of 47.5 million station pair measurements from 529 analyzed ground stations (of 766 cataloged), we observe:
-
-*Note: Station selection is based on data quality criteria requiring ≥20 observation epochs per file (TEP_MIN_EPOCHS = 20) for reliable spectral analysis.*
-
-![Distance-structured correlations in GNSS clock networks](site/figures/figure_1_TEP_site_themed.png)
-
-- **Correlation lengths**: λ = 3,330–4,549 km across all analysis centers (13.0% variation)
-- **Statistical significance**: Strong exponential fits (R² = 0.920–0.970)
-- **Theoretical consistency**: Results within predicted range [1,000–10,000 km]
-- **Multi-center validation**: Comprehensive null tests confirm signal authenticity (8.5–44× destruction under scrambling)
-- **Advanced validation**: Circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5) and comprehensive bias testing
-- **Gravitational coupling**: Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
-- **Diurnal analysis**: Step 4.5 reveals seasonal correlation patterns with optimal 240-day coupling windows
-- **Complementary metrics**: Enhanced validation framework with exploratory analysis capabilities
-
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- Internet connection for data download (GNSS clock products)
-- ~10 GB disk space for complete analysis
-
-### Setup
 ```bash
-# Clone the repository
+# Configure GCP credentials and run
+export GCP_PROJECT_ID=your-project-id
+export GCP_ZONE=us-central1-a  
+export GCP_INSTANCE_NAME=tep-gnss-analysis
+./run_tep_gcp_high_cpu.sh
+```
+
+**Recommended Instance Types:**
+- `c2-standard-60`: 60 vCPUs, 240 GB RAM (Maximum performance)
+- `c2-standard-30`: 30 vCPUs, 120 GB RAM (High performance) 
+- `n2-highcpu-80`: 80 vCPUs, 80 GB RAM (Maximum CPU cores)
+- `n2-highcpu-32`: 32 vCPUs, 32 GB RAM (High CPU cores)
+
+**Features:**
+- Automated GCP instance setup and package deployment
+- Optimized for full 911-day analysis window (2023-2025)
+- High-CPU configuration with parallel processing
+- Background execution with comprehensive logging
+- Persistent storage setup for large datasets
+
+#### Local Pipeline Execution
+
+For development and targeted analysis:
+
+```bash
+# Core geospatial analysis
+python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py
+
+# Advanced gravitational-temporal field analysis
+python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
+```
+
+**Analysis Components:**
+- **Step 2.2:** Comprehensive geospatial temporal analysis including orbital tracking, Chandler wobble detection, and lunar standstill correlations
+- **Step 4.4:** Gravitational-temporal field correlation analysis with Earth motion energy hierarchy validation
+
+**Computational Parameters:**
+- **Temporal coverage:** Full 2.5-year dataset (2023-2025) with 62.7M station pair measurements
+- **Expected duration:** 30-45 minutes per major step
+- **Requirements:** Local Python environment with scientific computing libraries
+
+**Analytical Advantages:**
+- Eliminates local computational infrastructure requirements
+- Ensures consistent scientific output formatting across execution environments
+- Implements robust error handling with automatic retry mechanisms
+- Provides persistent results storage through Google Drive integration
+- Optimized for high-performance cloud computing resources
+
+## Principal Results
+
+Our comprehensive analysis of 47.5 million station-pair measurements across 529 high-quality ground stations (selected from 766 cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
+
+*Note: Station inclusion criteria require ≥20 observation epochs per temporal file (TEP_MIN_EPOCHS = 20) to ensure reliable spectral analysis and statistical validity.*
+
+![Distance-structured correlations in GNSS precision timing networks](site/figures/figure_1_TEP_site_themed.png)
+
+**Correlation Structure:**
+- **Characteristic lengths:** \(\lambda = 2,747-2,759\) km across independent analysis centers (0.015-0.033 inter-center variation)
+- **Statistical robustness:** Strong exponential model fits (R² = 0.920–0.970)
+- **Theoretical alignment:** Results within predicted range [1,000–10,000 km]
+
+**Validation Framework:**
+- **Multi-center consistency:** Comprehensive null hypothesis testing confirms signal authenticity (8.5–44× signal attenuation under data scrambling)
+- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance p < 10⁻⁵
+- **Bias characterization:** Systematic geometric artifact detection and mitigation
+
+**Advanced Correlations:**
+- **Gravitational coupling:** Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
+- **Temporal dynamics:** Seasonal correlation patterns identified with optimal coupling windows of 240 days
+- **Enhanced validation:** Comprehensive framework with exploratory analysis capabilities
+
+## Experimental Setup and Configuration
+
+### System Requirements
+- **Python:** Version 3.8 or higher
+- **Network connectivity:** Required for acquisition of GNSS precision clock products
+- **Storage allocation:** Approximately 10 GB for complete analysis pipeline execution
+- **Cloud platform access:** Google Cloud Platform account required for high-performance computing deployment
+
+### Installation Procedure
+```bash
+# Clone repository
 git clone https://github.com/matthewsmawfield/TEP-GNSS.git
 cd TEP-GNSS
 
-# Install dependencies
+# Install computational dependencies
 pip install -r requirements/requirements.txt
 
-# Verify installation
+# Configure computational environment (high-performance deployment)
+cp env.example .env.local
+# Configure .env.local with appropriate cloud platform credentials
+
+# Validate installation integrity
 python scripts/steps/data_acquisition/step_1_0_provenance_snapshot.py
 ```
 
-### Key Dependencies
-- **Core**: numpy, pandas, scipy, matplotlib
-- **Geospatial**: cartopy, pyproj
-- **Advanced**: scikit-learn, statsmodels, PyWavelets
-- **Specialized**: pyIGRF (geomagnetic field calculations)
+### Configuration Management
+The analysis framework employs environment variables for computational configuration management. Detailed setup instructions are provided in [SETUP_GUIDE.md](SETUP_GUIDE.md).
 
-## Usage
+**Security Protocol:** All cloud platform credentials are managed exclusively through environment variables. No authentication credentials are stored within the repository structure.
 
-### Complete Analysis Pipeline
+### Computational Dependencies
+**Core Scientific Libraries:**
+- numpy, pandas, scipy, matplotlib
 
-#### Core Pipeline (Steps 0-8)
+**Geospatial Analysis:**
+- cartopy, pyproj
+
+**Advanced Statistical Methods:**
+- scikit-learn, statsmodels, PyWavelets
+
+**Specialized Geophysical Calculations:**
+- pyIGRF (geomagnetic field modeling)
+
+## Analysis Pipeline Execution
+
+### Complete Experimental Protocol
+
+#### Primary Analysis Sequence (Steps 1.0-4.1)
 ```bash
-# Step 1.0: Provenance snapshot
+# Step 1.0: Data provenance and integrity verification
 python scripts/steps/data_acquisition/step_1_0_provenance_snapshot.py
 
-# Step 1.1: Download GNSS clock data
+# Step 1.1: GNSS precision clock data acquisition
 python scripts/steps/data_acquisition/step_1_1_tep_data_acquisition.py
 
-# Step 1.2: Coordinate validation and comprehensive audit
+# Step 1.2: Coordinate validation and comprehensive audit framework
 python scripts/steps/data_acquisition/step_1_2_tep_coordinate_validation.py
 
-Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1.1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates definitive station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.
+Establishes coordinate system integrity through comprehensive audit procedures. Validates ECEF coordinate data quality, performs integrated station identification audit with spatial analysis, determines authoritative station catalog for correlation analysis, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes definitive station catalog for subsequent correlation analysis.
 
-# Step 2.0: TEP Correlation Analysis (CORE ANALYSIS) ~3-4 hours*
+# Step 2.0: Temporal Equivalence Principle correlation analysis (Primary signal detection) ~3-4 hours*
 python scripts/steps/core_analysis/step_2_0_tep_correlation_analysis.py
 
-Core TEP signal detection using phase-coherent cross-spectral density analysis. Computes complex CSD between all station pairs in the 10-500 µHz frequency band, extracts phase-coherent correlations as cos(phase(CSD)), and fits exponential decay models to correlation vs. distance relationships. Implements the band-limited methodology that preserves essential phase information for TEP detection.
+Implements core TEP signal detection methodology using phase-coherent cross-spectral density analysis. Computes complex cross-spectral density between all station pairs within the 10-500 µHz frequency band, extracts phase-coherent correlations using cos(phase(CSD)), and fits exponential decay models to correlation-distance relationships. Employs band-limited analytical approach preserving essential phase information for TEP signal detection.
 
-# Step 2.1: Data Quality Validation
+# Step 2.1: Data quality validation and transparency framework
 python scripts/steps/step_2_core_analysis/step_2_1_data_quality_validation.py
 
-Comprehensive data quality validation and transparency analysis. Analyzes quality-filtered correlation data from Step 2.0, adds geospatial enrichments (azimuth, local time differences), and performs extensive validation including station coverage analysis, temporal gap detection, duplicate detection, outlier validation, plateau phase boundary clustering analysis, and inter-AC comparison. Generates transparency reports with red flags and analyst recommendations to ensure scientific rigor.
+Comprehensive data quality assessment and transparency analysis. Processes quality-filtered correlation data from Step 2.0 with geospatial enrichments (azimuth, local time differences), performs extensive validation including station coverage analysis, temporal discontinuity detection, duplicate identification, outlier validation, boundary phase clustering analysis, and inter-analysis center comparison. Generates comprehensive transparency reports with identified anomalies and analytical recommendations to ensure scientific rigor.
 
-# Step 2.2: Geospatial temporal analysis
+# Step 2.2: Geospatial-temporal correlation analysis
 python scripts/steps/core_analysis/step_2_2_tep_geospatial_temporal_analysis.py
 
-Comprehensive geospatial and temporal analysis including astronomical event correlations, orbital tracking, anisotropy analysis, spherical harmonics, and advanced temporal field studies. Analyzes correlations with planetary positions, lunar standstills, solar eclipses, and Earth's orbital motion to validate TEP predictions across multiple temporal and spatial scales.
+Comprehensive geospatial and temporal analysis framework including astronomical event correlations, orbital mechanics, anisotropy analysis, spherical harmonics, and advanced temporal field studies. Examines correlations with planetary positions, lunar standstill periods, solar eclipse events, and Earth's orbital motion to validate TEP predictions across multiple temporal and spatial scales.
 
-# Step 3.0: Cross-validation suite
+# Step 3.0: Cross-validation framework
 python scripts/steps/validation_suite/step_3_0_tep_cross_validation_suite.py
 
-Comprehensive cross-validation framework including block-wise (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses. Provides rigorous validation of TEP correlation parameters using multiple complementary approaches to ensure robustness and statistical validity.
+Comprehensive validation framework implementing block-wise (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses. Provides rigorous validation of TEP correlation parameters through multiple complementary statistical approaches to ensure analytical robustness.
 
-# Step 3.2: Null hypothesis testing
+# Step 3.2: Null hypothesis validation framework
 python scripts/steps/validation_suite/step_3_2_tep_null_tests.py
 
-# Step 4.0: Advanced analysis
+# Step 4.0: Advanced analytical procedures
 python scripts/steps/advanced_analysis_and_visualization/step_4_0_tep_advanced_analysis.py
 
-# Step 4.1: Generate visualizations
+# Step 4.1: Scientific visualization generation
 python scripts/steps/advanced_analysis_and_visualization/step_4_1_tep_visualization.py
 ```
 
-#### Extended Analysis Pipeline (Steps 9-16)
+#### Extended Analysis Protocol (Steps 4.2-4.7)
 ```bash
-# Step 4.2: Synthesis figure generation
+# Step 4.2: Synthesis visualization generation
 python scripts/steps/advanced_analysis_and_visualization/step_4_2_tep_synthesis_figure.py
 
-# Step 4.3: High-resolution astronomical events
+# Step 4.3: High-resolution astronomical event analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py
 
-# Step 3.3: Methodology validation
+# Step 3.3: Methodology validation framework
 python scripts/steps/validation_suite/step_3_3_methodology_validation.py
 
-# Step 3.4: Geographic bias validation
+# Step 3.4: Geographic bias characterization and validation
 python scripts/steps/validation_suite/step_3_4_geographic_bias_validation.py
 
-# Step 3.5: Realistic ionospheric validation
+# Step 3.5: Realistic ionospheric validation procedures
 python scripts/steps/validation_suite/step_3_5_realistic_ionospheric_validation.py
 
-# Step 3.6: Control band analysis (NEW - Frequency Specificity Validation)
+# Step 3.6: Control band analysis (Frequency specificity validation)
 python scripts/steps/validation_suite/step_3_6_control_band_analysis.py
 
-Validates that TEP correlations are frequency-specific by analyzing a theoretically unmotivated control band (1000-2000 μHz) where no signal is predicted. Runs identical phase-coherent analysis as Step 2.0 but in a higher frequency range dominated by white noise. Expected result: R² ≈ 0.05 in control band vs R² ≈ 0.85 in TEP band, demonstrating the signal is not a broadband statistical artifact. Addresses "look-elsewhere effect" criticism.
+Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 μHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band, demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
 
-# Step 4.4: Gravitational temporal field analysis
+# Step 4.4: Gravitational-temporal field coupling analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
 
-# Step 4.5: Comprehensive diurnal analysis
+# Step 4.5: Comprehensive diurnal and seasonal analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_5_comprehensive_diurnal_analysis.py
 
-# Step 4.6: TID exclusion analysis
+# Step 4.6: Traveling Ionospheric Disturbance exclusion analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_6_tid_exclusion_analysis.py
 
-# Step 4.7: Multiple comparison corrections (FINAL VALIDATION STEP)
+# Step 4.7: Multiple comparison correction framework (Final validation)
 python scripts/steps/advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections.py
 
-Systematic application of Bonferroni, FDR, and Family-wise Error Rate corrections to all statistical tests performed across Steps 2.0-4.6. Ensures robust control of Type I error inflation across the entire analysis pipeline. Must run AFTER Step 4.0 (requires model comparison results).
+Systematic application of multiple comparison correction procedures including Bonferroni, False Discovery Rate (FDR), and Family-wise Error Rate corrections to all statistical tests performed across Steps 2.0-4.6. Ensures robust control of Type I error inflation across the complete analysis pipeline. Must be executed AFTER Step 4.0 completion (requires model comparison results for comprehensive correction).
 ```
 
-### Configuration
+### Analytical Configuration
 
-### v0.13 Configuration (Jaipur Release - Published Method Defaults)
+#### v0.14 Configuration Framework (Jaipur Release - Established Methodology)
 
-**Core Analysis Settings:**
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis (v0.6 method) |
-| `TEP_COHERENCY_F1` | 1e-5 | Lower frequency bound (10 μHz) |
-| `TEP_COHERENCY_F2` | 5e-4 | Upper frequency bound (500 μHz) |
-| `TEP_BINS` | 40 | Distance bins for correlation analysis |
+**Core Analysis Parameters:**
+| Parameter | Default Value | Description |
+|-----------|---------------|-------------|
+| `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis methodology (v0.6 implementation) |
+| `TEP_COHERENCY_F1` | 1×10⁻⁵ | Lower frequency boundary (10 μHz) |
+| `TEP_COHERENCY_F2` | 5×10⁻⁴ | Upper frequency boundary (500 μHz) |
+| `TEP_BINS` | 40 | Distance binning structure for correlation analysis |
 
-**Processing Settings:**
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `TEP_PROCESS_ALL_CENTERS` | 1 | Process CODE, IGS, and ESA data |
-| `TEP_WORKERS` | auto | Number of parallel workers |
-| `TEP_BOOTSTRAP_ITER` | 1000 | Bootstrap iterations for confidence intervals |
-
-**Quick Start (Core Results):**
-```bash
-# Download data and run core analysis
-python scripts/steps/data_acquisition/step_1_1_tep_data_acquisition.py
-python scripts/steps/core_analysis/step_2_0_tep_correlation_analysis.py
-
-# Generate visualizations
-python scripts/steps/advanced_analysis_and_visualization/step_4_1_tep_visualization.py
-```
-
-## Data Sources
-
-- **CODE**: Center for Orbit Determination in Europe
-- **IGS**: International GNSS Service  
-- **ESA**: European Space Agency
-
-All data sourced directly from official repositories. No synthetic or fallback data is used.
-
-## Results
-
-Main outputs are located in:
-- `results/outputs/`: Analysis results in JSON format (50+ files)
-- `results/figures/`: Generated visualizations (40+ publication-quality figures)
-- `site/`: Complete project website and documentation
-- Full analysis report (PDF): `site/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf`
-
-### Key Result Files
-- **Core Analysis**: `step_2_0_correlation_{center}.json` - Main correlation analysis results
-- **Geospatial Temporal Analysis**: `step_2_2_tep_geospatial_temporal_analysis_{center}.json` - Astronomical events and temporal field analysis
-- **Cross-Validation Suite**: `step_3_0_cross_validation_suite_{center}.json` - Comprehensive validation framework
-- **Null Tests**: `step_3_2_null_tests_{center}.json` - Signal authenticity validation
-- **Methodology Validation**: `step_3_3_validation_report.json` - Bias characterization and validation
-- **Advanced Findings**: `step_4_4_gravitational_temporal_field_analysis.json` - Gravitational-temporal correlations
-- **Diurnal Analysis**: `step_4_5_comprehensive_diurnal_analysis.json` - Seasonal correlation patterns and optimal coupling windows
-- **TID Exclusion**: `step_4_6_tid_exclusion_comprehensive.json` - Traveling Ionospheric Disturbance analysis
-- **Multiple Comparison Corrections**: `step_4_7_multiple_comparison_corrections.json` - Statistical validation with formal corrections
-- **Complementary Metrics**: `scripts/exploratory/` - Enhanced validation framework and exploratory analysis tools
-
-## Scientific Background
-
-This analysis implements **Clock Network Correlation Analysis**, a key experimental test from the Temporal Equivalence Principle (TEP) framework ([Smawfield, 2025](https://matthewsmawfield.github.io/TEP/); [DOI: 10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911)).
-
-**Major Finding**: Direct experimental evidence of gravitational-temporal field coupling has been discovered through comprehensive analysis of planetary gravitational influences on Earth's temporal field structure.
-
-![Gravitational-Temporal Field Coupling](site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png)
-
-- **Stacked gravitational correlation**: r = -0.458, p < 10⁻⁴⁸ with Earth's temporal field
-- **Individual planetary signatures**: Venus (stabilizer), Jupiter (moderate stabilizer), Mars (destabilizer), Saturn (disruptor)
-- **Temporal stability difference**: 0.47% more stable during high gravity periods
-- **Optimal coupling lag**: 42 days between gravitational and temporal patterns
-
-This provides the first direct experimental validation of TEP's core prediction that gravitational fields couple to temporal field dynamics.
-
-### Theoretical Foundation
-
-The TEP proposes that gravitational fields couple directly to clock transition frequencies through a conformal factor A(φ) = exp(2βφ/M_Pl), where φ is a scalar time field. This coupling manifests as distance-structured correlations in precision timing networks, with correlation structure determined by screening properties of the underlying field.
-
-### Experimental Design (TEP Section E)
-
-**Objective**: Detect spatial correlations and environmental screening signatures in ground station clock frequency residuals consistent with screened scalar field coupling to transition frequencies.
-
-**Phase I - Distance Correlation Analysis**:
-- Analyze precision timing networks (GNSS ground stations) for distance-dependent correlations
-- Apply phase-coherent cross-spectral analysis between station pairs  
-- Bin pairs by 3D distance, fit exponential correlation model: C(r) = A·exp(-r/λ) + C₀
-- Cross-validate across independent analysis centers to control systematics
-
-**Theoretical Predictions**:
-- Exponential decay with characteristic length λ ~ 1,000-10,000 km for viable screening parameters
-- Multi-center consistency with <5% variation in fitted parameters
-
-## Methodology
-
-1. **Phase-coherent analysis**: Preserves complex cross-spectral density phase information using cos(phase(CSD))
-2. **Distance binning**: 40 logarithmic bins from 50 km to 13,000 km
-3. **Exponential fitting**: Nonlinear least squares optimization with model comparison (7 models tested)
-4. **Multi-center validation**: Independent analysis across CODE, IGS, and ESA data products
-5. **Statistical validation**: Comprehensive null tests, bootstrap confidence intervals, and circular statistics
-6. **Advanced validation**: Geometric bias characterization, ionospheric controls, and gravitational coupling analysis
-
-## Quality Assurance
-
-- **Multi-center consistency**: 13.0% variation across independent analysis centers
-- **Comprehensive null testing**: Distance/phase/station scrambling (8.5–44× signal destruction)
-- **Statistical robustness**: Bootstrap confidence intervals and circular statistics
-- **Bias characterization**: Geometric artifact detection and mitigation (Step 3.3)
-- **Coordinate validation**: ECEF validation against ITRF2014 with comprehensive audit and spatial analysis
-- **Ionospheric controls**: Realistic ionospheric validation and TID exclusion
-- **Complete reproducibility**: Version control with execution logs and checkpointing
-
-## Citation
-
-If you use this analysis package, please cite both the analysis and underlying theory:
-
-**This Analysis:**
-```bibtex
-@misc{Smawfield_TEP_GNSS_2025,
-  author = {Matthew Lukin Smawfield},
-  title = {Global Time Echoes: Distance-Structured Correlations in GNSS 
-           Clocks Across Independent Networks},
-  year = {2025},
-  publisher = {Zenodo},
-  doi = {10.5281/zenodo.17127229},
-  url = {https://doi.org/10.5281/zenodo.17127229}
-}
-```
-
-**TEP Theory:**
-```bibtex
-@misc{Smawfield_TEP_2025,
-  author = {Matthew Lukin Smawfield},
-  title = {The Temporal Equivalence Principle: Dynamic Time, Emergent Light 
-           Speed, and a Two-Metric Geometry of Measurement},
-  year = {2025},
-  publisher = {Zenodo},
-  doi = {10.5281/zenodo.16921911},
-  url = {https://doi.org/10.5281/zenodo.16921911},
-  note = {Cites the latest version}
-}
-```
-
-## Documentation
-
-- **Project website**: [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
-- **Full analysis report (PDF)**: `Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf`
-- **Underlying theory**: [Temporal Equivalence Principle Preprint](https://doi.org/10.5281/zenodo.16921911)
-- **Analysis DOI**: [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
-- **Execution logs**: `logs/` directory
-
-## License
-
-This work is licensed under CC BY 4.0. See LICENSE file for details.
-
-## Contact
-
-For questions or collaboration opportunities:  
-**Matthew Lukin Smawfield**  
-matthewsmawfield@gmail.com
-
----
-
-*Time estimates based on Apple MacBook Pro M4 performance
+**Computational Processing Parameters:**
+| Parameter | Default Value | Description |
+|-----------|---------------|-------------|
+| `TEP_PROCESS_ALL_CENTERS` | 1 | Process all analysis centers (CODE, IGS, ESA) |
+| `

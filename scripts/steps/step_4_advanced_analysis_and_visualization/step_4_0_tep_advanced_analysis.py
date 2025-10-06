@@ -70,6 +70,64 @@ def exponential_model(r, A, lambda_km, C0):
     """Exponential decay model: C(r) = A * exp(-r/λ) + C0"""
     return A * np.exp(-r / lambda_km) + C0
 
+def fit_model_with_aic_bic(distances, coherences, weights, model_func, p0, bounds, name):
+    """Fit a model and compute AIC/BIC"""
+    try:
+        sigma = 1.0 / np.sqrt(weights) if weights is not None else None
+        popt, pcov = curve_fit(model_func, distances, coherences, 
+                             p0=p0, sigma=sigma, bounds=bounds, maxfev=5000)
+        
+        # Calculate residuals and statistics (weighted consistently with sigma)
+        y_pred = model_func(distances, *popt)
+        residuals = coherences - y_pred
+        
+        if weights is not None:
+            # Weighted RSS consistent with sigma=1/sqrt(weights)
+            wrss = np.sum(weights * residuals**2)
+            # Weighted R-squared
+            weighted_mean = np.average(coherences, weights=weights)
+            ss_tot = np.sum(weights * (coherences - weighted_mean)**2)
+        else:
+            wrss = np.sum(residuals**2)
+            ss_tot = np.sum((coherences - np.mean(coherences))**2)
+            
+        n = len(distances)
+        k = len(popt)  # Number of parameters
+        
+        r_squared = 1 - (wrss / ss_tot) if ss_tot > 0 else 0
+        
+        # AIC and BIC based on weighted RSS
+        wrss = max(wrss, 1e-12)  # Guard against perfect fits
+        aic = n * np.log(wrss / n) + 2 * k
+        bic = n * np.log(wrss / n) + k * np.log(n)
+        
+        # Log-likelihood for likelihood ratio tests
+        # For weighted least squares with normal errors
+        log_likelihood = -0.5 * n * (np.log(2 * np.pi) + np.log(wrss / n) + 1)
+        
+        return {
+            'name': name,
+            'params': popt,
+            'covariance': pcov,
+            'r_squared': r_squared,
+            'aic': aic,
+            'bic': bic,
+            'rss': wrss,
+            'n_params': k,
+            'n_samples': n,
+            'log_likelihood': log_likelihood,
+            'success': True
+        }
+    except Exception as e:
+        return {
+            'name': name,
+            'success': False,
+            'error': str(e),
+            'aic': np.inf,
+            'bic': np.inf,
+            'r_squared': -np.inf
+        }
+
 def fit_exponential(distances, coherences, weights=None, p0=None,
                     bounds=([0.01, 100, -1], [2, 20000, 1]), maxfev=5000):
     """Fit exponential_model to data and return params, errors, R²."""
@@ -204,10 +262,18 @@ def analyze_elevation_dependence_fixed(root_dir):
         if clean_code and clean_code != station_code:
             station_lookup[clean_code] = station_data
     
-    # Count stations with geomagnetic data
-    stations_with_geomag = sum(1 for data in station_lookup.values() if data['geomag_lat'] is not None)
-    print_status(f"Created station lookup with {len(station_lookup)} entries", "SUCCESS")
-    print_status(f"Stations with geomagnetic coordinates: {stations_with_geomag}", "INFO")
+    # Count unique stations and lookup entries
+    unique_station_data = {}
+    for key, data in station_lookup.items():
+        # Use elevation and coordinates as unique identifier for actual stations
+        station_id = (data['elevation_m'], data.get('lat_deg'), data.get('lon_deg'))
+        unique_station_data[station_id] = data
+    
+    unique_stations = len(unique_station_data)
+    stations_with_geomag = sum(1 for data in unique_station_data.values() if data['geomag_lat'] is not None)
+    
+    print_status(f"Created station lookup with {len(station_lookup)} name variants", "SUCCESS")
+    print_status(f"Unique stations with geomagnetic coordinates: {stations_with_geomag}", "INFO")
     
     results = {}
     analysis_centers = ['code', 'igs_combined', 'esa_final']
@@ -813,12 +879,186 @@ def analyze_model_comparison(root_dir):
     
     return results
 
+def analyze_binning_sensitivity(root_dir):
+    """
+    Comprehensive binning and weighting sensitivity analysis.
+    
+    Tests the robustness of correlation parameters (λ and R²) to different:
+    - Binning strategies: logarithmic, linear, quantile (equal-count)
+    - Bin counts: 25, 40, 80
+    - Weighting schemes: count, sqrt_count, none
+    
+    This addresses reviewer concerns about methodological robustness.
+    """
+    print_status("Starting comprehensive binning sensitivity analysis", "INFO")
+    
+    # Define scenarios to test
+    scenarios = []
+    # 1. Bin Count Sweep (Logarithmic Binning, Standard Weighting)
+    for n_bins in [25, 40, 80]:
+        scenarios.append({'strategy': 'log', 'n_bins': n_bins, 'weighting': 'count'})
+
+    # 2. Binning Strategy Sweep (40 Bins, Standard Weighting)  
+    for strategy in ['linear', 'quantile']:
+        scenarios.append({'strategy': strategy, 'n_bins': 40, 'weighting': 'count'})
+
+    # 3. Weighting Scheme Sweep (Logarithmic Binning, 40 Bins)
+    for weighting in ['sqrt_count', 'none']:
+        scenarios.append({'strategy': 'log', 'n_bins': 40, 'weighting': weighting})
+    
+    results = {}
+    analysis_centers = ['code', 'igs_combined', 'esa_final']
+    
+    for ac in analysis_centers:
+        print_status(f"Processing {ac.upper()} binning sensitivity", "INFO")
+        
+        # Load pair-level data
+        pair_data_dir = root_dir / "results" / "tmp"  
+        pair_files = list(pair_data_dir.glob(f"step_2_0_pairs_{ac}_tep_band.csv"))
+        
+        if not pair_files:
+            print_status(f"No pair-level data found for {ac}, skipping", "WARNING")
+            continue
+            
+        try:
+            # Load data efficiently
+            pair_df = pd.read_csv(pair_files[0], usecols=['dist_km', 'plateau_phase'])
+            pair_df.dropna(inplace=True)
+            pair_df['coherence'] = np.cos(pair_df['plateau_phase'])
+            
+            print_status(f"Loaded {len(pair_df):,} pairs for {ac} sensitivity analysis", "SUCCESS")
+            
+        except Exception as e:
+            print_status(f"Failed to load data for {ac}: {e}", "ERROR")
+            continue
+        
+        ac_results = []
+        min_dist = 50.0
+        max_dist = TEPConfig.get_float('TEP_MAX_DISTANCE_KM', 13000)
+        
+        for i, params in enumerate(scenarios):
+            print_status(f"  Scenario {i+1}/{len(scenarios)}: {params['strategy']} bins={params['n_bins']}, weights={params['weighting']}", "PROCESS")
+            
+            # Apply binning strategy
+            if params['strategy'] == 'log':
+                edges = np.logspace(np.log10(min_dist), np.log10(max_dist), params['n_bins'] + 1)
+            elif params['strategy'] == 'linear':
+                edges = np.linspace(min_dist, max_dist, params['n_bins'] + 1)
+            elif params['strategy'] == 'quantile':
+                edges = np.percentile(pair_df['dist_km'], np.linspace(0, 100, params['n_bins'] + 1))
+                edges = np.unique(edges)
+                if len(edges) < params['n_bins'] / 2:
+                    print_status(f"    Insufficient unique edges for quantile binning, skipping", "WARNING")
+                    continue
+            
+            # Bin the data
+            pair_df_copy = pair_df.copy()
+            pair_df_copy['bin'] = pd.cut(pair_df_copy['dist_km'], bins=edges, include_lowest=True, right=False)
+            
+            binned = pair_df_copy.groupby('bin', observed=False).agg(
+                mean_dist=('dist_km', 'mean'),
+                mean_coh=('coherence', 'mean'),
+                count=('coherence', 'size')
+            ).dropna().reset_index()
+            
+            # Filter for sufficient statistical power
+            min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT', 100)
+            binned = binned[binned['count'] >= min_bin_count]
+            
+            if len(binned) < 5:
+                print_status(f"    Insufficient bins ({len(binned)}) for fitting, skipping", "WARNING")
+                continue
+            
+            # Apply weighting scheme
+            distances = binned['mean_dist'].values
+            coherences = binned['mean_coh'].values
+            
+            weights = None
+            if params['weighting'] == 'count':
+                weights = binned['count'].values
+            elif params['weighting'] == 'sqrt_count':
+                weights = np.sqrt(binned['count'].values)
+            
+            # Fit exponential model using the same function as main pipeline
+            try:
+                result = fit_model_with_aic_bic(
+                    distances, coherences, weights,
+                    exponential_model, 
+                    [0.1, 4000, 0],  # p0
+                    ([0.0, 100.0, -1.0], [2.0, 20000.0, 1.0]),  # bounds
+                    f"{params['strategy']}_{params['n_bins']}_{params['weighting']}"
+                )
+                
+                if result['success']:
+                    lambda_km = result['params'][1]  # Extract lambda from parameters
+                    ac_results.append({
+                        'strategy': params['strategy'],
+                        'n_bins': params['n_bins'], 
+                        'weighting': params['weighting'],
+                        'lambda': float(lambda_km),
+                        'lambda_err': float(np.sqrt(result['covariance'][1,1])),
+                        'r_squared': float(result['r_squared']),
+                        'aic': float(result['aic']),
+                        'n_samples': int(result['n_samples'])
+                    })
+                    print_status(f"    Success: λ = {lambda_km:.0f} km, R² = {result['r_squared']:.3f}", "SUCCESS")
+                else:
+                    print_status(f"    Fit failed: {result.get('error')}", "WARNING")
+                    
+            except Exception as e:
+                print_status(f"    Exception during fitting: {e}", "ERROR")
+                continue
+        
+        results[ac] = ac_results
+        print_status(f"Completed {len(ac_results)} successful fits for {ac}", "SUCCESS")
+    
+    # Generate summary statistics
+    summary = {}
+    for ac in results:
+        if not results[ac]:
+            continue
+            
+        ac_data = pd.DataFrame(results[ac])
+        
+        # Calculate stability metrics
+        baseline_mask = (ac_data['strategy'] == 'log') & (ac_data['n_bins'] == 40) & (ac_data['weighting'] == 'count')
+        if baseline_mask.any():
+            baseline_lambda = ac_data[baseline_mask]['lambda'].iloc[0]
+            baseline_r2 = ac_data[baseline_mask]['r_squared'].iloc[0]
+        else:
+            baseline_lambda = ac_data['lambda'].mean()
+            baseline_r2 = ac_data['r_squared'].mean()
+        
+        summary[ac] = {
+            'baseline_lambda': float(baseline_lambda),
+            'baseline_r_squared': float(baseline_r2),
+            'lambda_range': [float(ac_data['lambda'].min()), float(ac_data['lambda'].max())],
+            'lambda_cv': float(ac_data['lambda'].std() / ac_data['lambda'].mean()),
+            'r_squared_range': [float(ac_data['r_squared'].min()), float(ac_data['r_squared'].max())],
+            'r_squared_cv': float(ac_data['r_squared'].std() / ac_data['r_squared'].mean()),
+            'n_scenarios': len(ac_data)
+        }
+        
+        print_status(f"{ac.upper()} Summary: λ CV = {summary[ac]['lambda_cv']:.1%}, R² CV = {summary[ac]['r_squared_cv']:.1%}", "INFO")
+    
+    return {
+        'scenarios_tested': len(scenarios),
+        'detailed_results': results,
+        'summary': summary,
+        'methodology': {
+            'binning_strategies': ['log', 'linear', 'quantile'],
+            'bin_counts': [25, 40, 80],
+            'weighting_schemes': ['count', 'sqrt_count', 'none'],
+            'model': 'exponential'
+        }
+    }
+
 @ensure_single_instance
 def main():
     """Main entry point for Step 4.0 Advanced Analysis."""
 
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 4.0: Advanced Analysis", "INFO")
-    print_status("Focused validation: Elevation, Circular Statistics, Model Comparison", "INFO")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.0: Advanced Analysis", "INFO")
+    print_status("Focused validation: Elevation, Circular Statistics, Model Comparison, Binning Sensitivity", "INFO")
     
     root_dir = PACKAGE_ROOT  # Use PACKAGE_ROOT consistently
     output_dir = root_dir / 'results/outputs'
@@ -857,6 +1097,12 @@ def main():
         print_status("-"*60, "INFO")
         all_results['model_comparison'] = analyze_model_comparison(root_dir)
         
+        # 5. Binning sensitivity analysis (addresses reviewer concerns)
+        print_status("\n" + "-"*60, "INFO")
+        print_status("5. BINNING & WEIGHTING SENSITIVITY ANALYSIS", "INFO")
+        print_status("-"*60, "INFO")
+        all_results['binning_sensitivity'] = analyze_binning_sensitivity(root_dir)
+        
         # Save consolidated results
         output_file = output_dir / 'step_4_0_advanced_analysis.json'
         try:
@@ -867,7 +1113,8 @@ def main():
                 'analyses_performed': [
                     'elevation_dependence',
                     'circular_statistics',
-                    'model_comparison'
+                    'model_comparison',
+                    'binning_sensitivity'
                 ],
                 'results': all_results
             }, output_file, indent=2)

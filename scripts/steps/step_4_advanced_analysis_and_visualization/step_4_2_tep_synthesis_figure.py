@@ -16,7 +16,7 @@ Outputs:
   - results/figures/step_4_2_tep_synthesis_figure.png
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -275,7 +275,7 @@ def create_panel_c(ax, all_correlation_results):
 @ensure_single_instance
 def main():
     """Main function to generate the TEP Synthesis Figure."""
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 4.2: Synthesis Figure Generation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.2: Synthesis Figure Generation", "TITLE")
 
     # Setup paths
     results_dir = PACKAGE_ROOT / 'results'

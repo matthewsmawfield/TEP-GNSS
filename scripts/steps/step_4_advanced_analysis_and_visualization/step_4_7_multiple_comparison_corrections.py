@@ -777,7 +777,7 @@ class MultipleComparisonCorrector:
 def main():
     """Main function for Step 4.7: Multiple Comparison Corrections"""
     print_status("", "INFO")
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 4.7: Multiple Comparison Corrections", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.7: Multiple Comparison Corrections", "TITLE")
     print_status("Systematic statistical validation with formal corrections", "INFO")
     print_status("", "INFO")
     

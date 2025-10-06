@@ -10,7 +10,7 @@ Usage:
     python scripts/run_step2_only.py
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 """
 
 import os

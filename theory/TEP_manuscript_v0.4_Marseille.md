@@ -277,7 +277,7 @@ Forecast:
 Recent analysis of Global Navigation Satellite System (GNSS) clock data provides compelling evidence for the dynamical time field predicted by TEP. Using phase-coherent cross-spectral methods on residuals from three independent analysis centers (CODE, IGS Combined, ESA Final), encompassing 62.7 million station pairs over 2.5 years, we detect distance-structured correlations consistent with screened scalar field coupling.
 
 11.1 Distance Correlation Structure
-Exponential decay patterns are observed with characteristic lengths λ = 3,330–4,549 km (CV: 13.0%), falling within the predicted range for screened φ fields. Multi-center consistency and null tests (p < 0.01) confirm the signal's authenticity.
+Exponential decay patterns are observed with characteristic lengths λ = 3,330–4,549 km, with a bootstrap validation of 2,747–2,759 km (CV: 0.015-0.033), falling within the predicted range for screened φ fields. Multi-center consistency and null tests (p < 0.01) confirm the signal's authenticity.
 
 11.2 Directional Anisotropy and 3D Decomposition
 Full 3D spherical harmonic analysis reveals extreme anisotropy (CV ≈ 1.0) with dipole and quadrupole moments, indicating direction-dependent spacetime structure. This aligns with TEP's path-dependent time transport, where φ-gradients induce non-uniform effects.

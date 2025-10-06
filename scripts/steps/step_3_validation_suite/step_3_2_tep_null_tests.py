@@ -28,7 +28,7 @@ Expected Results:
 - This validates that our TEP signal is genuine
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -818,8 +818,8 @@ def validate_tep_signal(ac: str):
         null_r_squareds = []
         
         # Process in smaller batches to reduce memory pressure
-        batch_size = min(max_processes, 4)  # Limit concurrent processes to reduce memory usage
-        print_status(f"    Processing {n_iterations} iterations in batches of {batch_size} to manage memory", "INFO")
+        batch_size = 1  # Force single iteration processing to prevent memory exhaustion
+        print_status(f"    Processing {n_iterations} iterations one at a time to prevent memory exhaustion", "INFO")
         
         for batch_start in range(0, n_iterations, batch_size):
             batch_end = min(batch_start + batch_size, n_iterations)
@@ -951,7 +951,7 @@ def main():
     """
     start_time = time.time()
     
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.2: Null Tests", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.2: Null Tests", "TITLE")
     print_status("Validating TEP signatures through rigorous null hypothesis tests", "INFO") # Use print_status
     print_status("="*80, "INFO") # Use print_status
     

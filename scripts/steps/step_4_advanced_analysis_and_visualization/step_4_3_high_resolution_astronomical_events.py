@@ -7,7 +7,7 @@ Analyzes rapid transient astronomical events at sub-daily temporal resolution
 by processing original GPS CLK files directly, bypassing the daily aggregation
 used in previous steps.
 
-METHODOLOGICAL CORRECTION (v0.13.0):
+METHODOLOGICAL CORRECTION (v0.14.0):
 ===================================
 This version implements proper TEP cos(phase(CSD)) methodology for eclipse analysis,
 replacing the previously flawed approach that used simple bias differences.
@@ -50,8 +50,8 @@ Algorithm Overview:
 5. Detect rapid transient signatures in timing correlations
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
-Methodological Fix: September 2025 (v0.13.0)
+Date: October 2025
+Methodological Fix: October 2025 (v0.14.0)
 """
 
 import os
@@ -1325,7 +1325,7 @@ def get_geomagnetic_solar_data(start_date: pd.Timestamp, end_date: pd.Timestamp)
     Data sources:
     - NOAA Space Weather Prediction Center (Kp/Ap indices)
     - Space Weather Canada (F10.7 solar flux)
-    - Climatological quiet conditions as fallback (NOT synthetic patterns)
+    Note: No fallbacks are used; failures raise errors to avoid masking issues.
     
     Returns DataFrame with columns: date, kp_index, ap_index, f107_flux
     """
@@ -1337,17 +1337,8 @@ def get_geomagnetic_solar_data(start_date: pd.Timestamp, end_date: pd.Timestamp)
         return get_authentic_space_weather_data(start_date, end_date)
         
     except Exception as e:
-        print_status(f"Space weather utility unavailable: {e}", "WARNING")
-        print_status("Using climatological quiet conditions", "WARNING")
-        
-        # Fallback to climatological quiet conditions
-        dates = pd.date_range(start=start_date, end=end_date, freq='D')
-        return pd.DataFrame({
-            'date': dates,
-            'kp_index': 2.0,  # Quiet geomagnetic conditions
-            'ap_index': 7.0,  # Quiet geomagnetic conditions
-            'f107_flux': 120.0  # Solar minimum conditions
-        })
+        # Escalate errors; do not return climatological placeholders
+        raise TEPDataError(f"Space weather utility unavailable: {e}")
 
 # Note: Space weather data fetching functions moved to scripts.utils.space_weather_data module
 
@@ -3084,8 +3075,8 @@ def main():
     args = parser.parse_args()
     
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.13")
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 4.3: High-Resolution Astronomical Event Analysis", "TITLE")
+    print("TEP GNSS Analysis Package v0.14")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.3: High-Resolution Astronomical Event Analysis", "TITLE")
     print("=" * 80)
     print(f"Event: {args.event.upper()}")
     print(f"Center: {args.center.upper()}")
@@ -3493,11 +3484,12 @@ def compute_tep_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs
         weighted_phase = np.angle(weighted_complex)
         
         # STEP 6: TEP correlation metric - cos(phase(CSD))
+        # CORRECTED: Use pure cos(phase) without magnitude scaling to match Step 2.0
         phase_coherent_correlation = np.cos(weighted_phase)
         
-        # Scale by average magnitude (identical to step 3)
-        avg_magnitude = np.mean(magnitudes)
-        correlation_strength = phase_coherent_correlation * avg_magnitude
+        # REMOVED INCORRECT SCALING: Step 2.0 uses pure cos(phase) without magnitude scaling
+        # This ensures methodological consistency and valid scale comparisons
+        correlation_strength = phase_coherent_correlation
         
         return float(correlation_strength), float(weighted_phase)
         

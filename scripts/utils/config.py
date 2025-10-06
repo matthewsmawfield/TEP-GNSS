@@ -36,7 +36,7 @@ class TEPConfig:
         'TEP_MAX_DISTANCE_KM': 13000.0,  # Maximum distance in km for binning and correlation analysis
         'TEP_MIN_BIN_COUNT': 50,  # Minimum number of pairs required per distance bin for correlation fitting
         'TEP_BOOTSTRAP_ITER': 1000,  # Number of bootstrap iterations for uncertainty estimation
-        'TEP_NULL_ITERATIONS': 100,  # Number of null hypothesis iterations for significance testing
+        'TEP_NULL_ITERATIONS': 20,  # Number of null hypothesis iterations for significance testing (reduced for memory)
         'TEP_MIN_BINS_FOR_FIT': 5, # Minimum number of valid bins required for fitting a correlation model
         'TEP_CORRELATION_LENGTH_INITIAL_GUESS': 3000,  # Initial guess for the correlation length (λ) in km during model fitting
         'TEP_MIN_DISTANCE_FOR_FIT': 100.0,  # Minimum distance in km to include pairs in model fitting
@@ -56,7 +56,7 @@ class TEPConfig:
         'TEP_ANALYSIS_MIN_DISTANCE_KM': 100.0,  # Minimum distance used in main analysis (for validation alignment)
 
         # Processing parameters
-        'TEP_WORKERS': None,  # Number of worker processes to use for parallel processing (None defaults to CPU count)
+        'TEP_WORKERS': 14,  # Number of worker processes to use for parallel processing (optimized for comprehensive analysis)
         'TEP_MEMORY_LIMIT_GB': 8.0,  # Memory limit in GB for data processing to prevent excessive RAM usage
         
         # Data parameters

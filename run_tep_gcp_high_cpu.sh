@@ -5,10 +5,21 @@
 
 set -e
 
-# GCP Configuration - UPDATE THESE VALUES
-PROJECT_ID="tvp-bbpm"  # Your GCP project ID
-ZONE="us-central1-f"        # Your instance zone
-INSTANCE_NAME="instance-20251005-043854"  # Your high-CPU instance name
+# GCP Configuration - Load from environment variables
+# Set these in .env.local or as environment variables:
+# GCP_PROJECT_ID, GCP_ZONE, GCP_INSTANCE_NAME
+
+# Load environment variables from .env files if they exist
+if [ -f ".env.local" ]; then
+    export $(grep -v '^#' .env.local | xargs)
+elif [ -f ".env" ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# Get configuration from environment variables
+PROJECT_ID="${GCP_PROJECT_ID:-}"
+ZONE="${GCP_ZONE:-}"
+INSTANCE_NAME="${GCP_INSTANCE_NAME:-}"
 PACKAGE_NAME="tep-gnss-gcp-optimized.tar.gz"
 
 # High-CPU Instance recommendations:
@@ -30,10 +41,22 @@ fi
 
 # Check if user has set the required variables
 if [ -z "$PROJECT_ID" ] || [ -z "$ZONE" ] || [ -z "$INSTANCE_NAME" ]; then
-    echo "❌ Please set the following variables in this script:"
-    echo "   PROJECT_ID: Your GCP project ID"
-    echo "   ZONE: Your GCP zone (e.g., us-central1-a)"
-    echo "   INSTANCE_NAME: Your GCP instance name"
+    echo "❌ GCP configuration missing!"
+    echo ""
+    echo "Please set the following environment variables:"
+    echo "   GCP_PROJECT_ID: Your GCP project ID"
+    echo "   GCP_ZONE: Your GCP zone (e.g., us-central1-a)"
+    echo "   GCP_INSTANCE_NAME: Your GCP instance name"
+    echo ""
+    echo "Options:"
+    echo "1. Create .env.local file (recommended):"
+    echo "   cp env.example .env.local"
+    echo "   # Edit .env.local with your GCP details"
+    echo ""
+    echo "2. Set environment variables directly:"
+    echo "   export GCP_PROJECT_ID=your-project-id"
+    echo "   export GCP_ZONE=us-central1-a"
+    echo "   export GCP_INSTANCE_NAME=your-instance-name"
     echo ""
     echo "Recommended high-CPU instance types:"
     echo "  - c2-standard-60 (60 vCPUs, 240 GB RAM)"
@@ -211,31 +234,34 @@ export TEP_BOOTSTRAP_ITER=5000  # Higher iterations for high-CPU
 export TEP_NULL_ITERATIONS=500  # Higher iterations for high-CPU
 export TEP_DATE_START=2023-01-01
 export TEP_DATE_END=2025-06-30
+export TEP_FULL_FRESH_RUN=1  # Enable complete fresh analysis
 export PYTHONUNBUFFERED=1
 export OMP_NUM_THREADS=$CORES
 export MKL_NUM_THREADS=$CORES
 export NUMEXPR_NUM_THREADS=$CORES
 
 echo ""
-echo "🚀 Starting TEP-GNSS high-CPU analysis on GCP..."
+echo "🚀 Starting TEP-GNSS high-CPU analysis on GCP (FRESH DEPLOYMENT)..."
 echo "   This includes:"
-echo "     - Data acquisition (Step 1)"
+echo "     - COMPLETE DATA CLEANUP (fresh start)"
+echo "     - Data acquisition (Step 1) - Full date range"
 echo "     - Core analysis (Step 2)" 
 echo "     - Validation suite (Step 3)"
 echo "     - Advanced analysis & visualization (Step 4)"
 echo ""
+echo "   Date Range: 2023-01-01 to 2025-06-30 (911 days)"
 echo "   High-CPU Configuration:"
 echo "     - Workers: $TEP_WORKERS (all CPU cores)"
 echo "     - Parallel downloads: $TEP_MAX_PARALLEL_DOWNLOADS"
 echo "     - Bootstrap iterations: $TEP_BOOTSTRAP_ITER"
 echo "     - Null test iterations: $TEP_NULL_ITERATIONS"
-echo "     - Checkpointing: Enabled (TEP_RESUME=1)"
+echo "     - Fresh deployment: ENABLED"
 echo "     - Working directory: $(pwd)"
 echo ""
 echo "   Starting full pipeline execution..."
 
 # Run the complete TEP-GNSS analysis pipeline with error handling
-echo "🚀 Starting TEP-GNSS 120-day analysis pipeline..."
+echo "🚀 Starting TEP-GNSS FRESH 911-day analysis pipeline..."
 echo "   Start time: $(date)"
 echo "   Working directory: $(pwd)"
 echo "   Available disk space:"

@@ -75,7 +75,7 @@ References:
     Smawfield, M.L. (2025). Global Time Echoes: Distance-Structured Correlations
     in GNSS Clocks Across Independent Networks. Zenodo.
 
-Environment Variables (v0.13 defaults for published methodology):
+Environment Variables (v0.14 defaults for published methodology):
   
   CORE ANALYSIS:
   - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.6 method)
@@ -100,7 +100,7 @@ Environment Variables (v0.13 defaults for published methodology):
   - TEP_MIN_BIN_COUNT: Minimum pairs per bin (default: 200)
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -2785,7 +2785,7 @@ def main():
     """
     print_status("", "INFO")
     print_status("="*80, "INFO")
-    print_status("TEP GNSS Analysis Package v0.13", "INFO")
+    print_status("TEP GNSS Analysis Package v0.14", "INFO")
     print_status("STEP 2.0: Correlation Analysis", "INFO")
     print_status("Detecting TEP signatures through phase-coherent clock correlation analysis", "INFO")
     print_status("="*80, "INFO")

@@ -34,6 +34,7 @@ import json
 import os
 import sys
 import subprocess
+import shutil
 from pathlib import Path
 from datetime import datetime
 from scipy.optimize import curve_fit
@@ -283,7 +284,7 @@ def export_null_test_results(root_dir):
         
         try:
             with open(null_test_file, 'r') as f:
-                step6_data = json.load(f)
+                step6_data = safe_json_read
         except (IOError, json.JSONDecodeError) as e:
             print_status(f"Failed to load Step 6 results for {ac}: {e}", "WARNING")
             continue
@@ -461,7 +462,7 @@ def create_publication_figure(root_dir):
         try:
             df = pd.read_csv(binned_file)
             with open(results_file, 'r') as f:
-                results = json.load(f)
+                results = safe_json_read
         except (IOError, pd.errors.EmptyDataError, json.JSONDecodeError) as e:
             print_status(f"Failed to load or parse visualization data for {ac}: {e}", "ERROR")
             ax.text(0.5, 0.5, 'Data loading error', ha='center', va='center', transform=ax.transAxes, fontsize=10, color=THEME_COLORS['text'])
@@ -668,7 +669,7 @@ def create_station_map(root_dir):
     # Draw land polygons in white
     if land_polygons_file.exists():
         with open(land_polygons_file, 'r') as f:
-            land_data = json.load(f)
+            land_data = safe_json_read
         
         from matplotlib.patches import Polygon as MPLPolygon
         from matplotlib.collections import PatchCollection
@@ -778,7 +779,7 @@ def create_three_globe_views(root_dir):
     
     # Load land polygon data for proper landmass filling
     with open(land_polygons_file, 'r') as f:
-        land_data = json.load(f)
+        land_data = safe_json_read
 
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
@@ -881,7 +882,7 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     
     if analyzed_stations_file.exists():
         with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = json.load(f)
+            analyzed_stations = safe_json_read
         analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
         coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
         print_status(f"Using {len(coords_df)} analyzed stations", "INFO")
@@ -913,7 +914,7 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     
     # Load land polygon data
     with open(land_polygons_file, 'r') as f:
-        land_data = json.load(f)
+        land_data = safe_json_read
     
     font_props = {'family': 'Times New Roman', 'color': '#1e4a5f', 'fontweight': 'bold'}
     
@@ -1225,7 +1226,7 @@ def create_three_globe_views_with_connections(root_dir, analysis_center='code', 
     
     if analyzed_stations_file.exists():
         with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = json.load(f)
+            analyzed_stations = safe_json_read
         analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
         # Filter to only analyzed stations (case-insensitive matching)
         coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
@@ -1277,7 +1278,7 @@ def create_three_globe_views_with_connections(root_dir, analysis_center='code', 
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
     with open(coastline_file, 'r') as f:
-        coastline_data = json.load(f)
+        coastline_data = safe_json_read
 
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
@@ -1519,7 +1520,8 @@ def create_correlation_vs_distance_all_centers(root_dir):
         try:
             df = safe_csv_read(binned_file)
             with open(results_file, 'r') as f:
-                fit_results = json.load(f)
+                with open(results_file, 'r') as f:
+                    fit_results = json.load(f)
         except Exception as e:
             print_status(f"Failed to load data for {ac}: {e}", "WARNING")
             continue
@@ -1586,7 +1588,7 @@ def get_stations_by_analysis_center(root_dir):
         return {center: set() for center in centers}
     
     with open(metadata_file, 'r') as f:
-        station_metadata = json.load(f)
+        station_metadata = safe_json_read
     
     all_analyzed_stations = set(s[:4].upper() for s in station_metadata.keys())
     print_status(f"Found {len(all_analyzed_stations)} total analyzed stations", "INFO")
@@ -1607,7 +1609,7 @@ def get_stations_by_analysis_center(root_dir):
 
 def load_all_distances_by_analysis_center(root_dir):
     """
-    Load ALL distance data for each analysis center by processing all pair files.
+    Load ALL distance data for each analysis center by processing consolidated pair files.
     This gives us the complete picture without sampling.
     """
     centers = ['code', 'igs_combined', 'esa_final']
@@ -1616,37 +1618,25 @@ def load_all_distances_by_analysis_center(root_dir):
     for center in centers:
         print_status(f"Loading ALL distance pairs for {center.upper()}", "INFO")
         
-        # Find all pair files for this center
-        pair_dir = root_dir / 'results/tmp'
-        pair_files = sorted(pair_dir.glob(f"step_2_0_pairs_{center}_*.csv"))
+        # Look for consolidated pair files in outputs directory
+        consolidated_file = root_dir / f'results/outputs/step_2_0_pairs_consolidated_{center}.csv'
         
-        if not pair_files:
-            print_status(f"No pair files found for {center}", "WARNING")
+        if not consolidated_file.exists():
+            print_status(f"No consolidated pair file found for {center}: {consolidated_file}", "WARNING")
             center_distances[center] = np.array([])
             continue
         
-        print_status(f"Processing {len(pair_files)} files for {center.upper()}", "INFO")
-        
-        all_distances = []
-        processed_files = 0
-        
-        for pfile in pair_files:
-            try:
-                df = pd.read_csv(pfile)
-                # Extract distances from this file
-                distances = df['dist_km'].values
-                all_distances.extend(distances)
-                
-                processed_files += 1
-                if processed_files % 100 == 0:
-                    print_status(f"Processed {processed_files}/{len(pair_files)} files for {center.upper()}, {len(all_distances):,} pairs so far", "INFO")
+        try:
+            df = pd.read_csv(consolidated_file)
+            # Extract distances from this file
+            distances = df['dist_km'].values
+            center_distances[center] = np.array(distances)
+            print_status(f"Loaded {len(distances):,} distance pairs for {center.upper()}", "SUCCESS")
                     
-            except Exception as e:
-                print_status(f"Failed to load {pfile}: {e}", "WARNING")
-                continue
-        
-        center_distances[center] = np.array(all_distances)
-        print_status(f"Loaded {len(all_distances):,} distance pairs for {center.upper()}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to load {consolidated_file}: {e}", "WARNING")
+            center_distances[center] = np.array([])
+            continue
     
     return center_distances
 
@@ -1676,7 +1666,8 @@ def create_distance_distribution_plot(root_dir):
         try:
             results_file = root_dir / f'results/outputs/step_2_0_correlation_{center}.json'
             if results_file.exists():
-                fit_results = safe_json_read(results_file)
+                with open(results_file, 'r') as f:
+                    fit_results = json.load(f)(results_file)
                 lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
                 if lambda_km:
                     lambda_values.append(lambda_km)
@@ -1701,14 +1692,31 @@ def create_distance_distribution_plot(root_dir):
     fig.patch.set_facecolor('white')
     ax.set_facecolor('white')
     
-    # Use centralized color configuration for consistency
-    AC_COLORS = TEPConfig.get_ac_colors()
-    THEME_COLORS = TEPConfig.get_site_theme_colors()
-    
-    # Override specific colors for visualization
-    THEME_COLORS.update({
-        'range_highlight': THEME_COLORS['primary']  # Use primary color for range highlight
-    })
+    # Use centralized color configuration for consistency (fallback to manual colors if not available)
+    try:
+        AC_COLORS = TEPConfig.get_ac_colors()
+        THEME_COLORS = TEPConfig.get_site_theme_colors()
+        # Override specific colors for visualization
+        THEME_COLORS.update({
+            'range_highlight': THEME_COLORS['primary']
+        })
+    except AttributeError:
+        # Fallback to manual color definitions
+        AC_COLORS = {
+            'code': '#2D0140',      # Deep purple
+            'igs_combined': '#495773',  # Blue-gray
+            'esa_final': '#8B4A8B'      # Purple
+        }
+        
+        # Theme colors for plotting
+        THEME_COLORS = {
+            'primary': '#2D0140',      # Primary accents
+            'secondary': '#495773',    # Secondary text  
+            'text': '#2D0140',         # Text color
+            'border': '#E0E0E0',       # Border color
+            'highlight': '#FF6B6B',    # Highlight color
+            'range_highlight': '#2D0140'  # Range highlight
+        }
     
     # Determine common bin edges for all centers
     all_distances = []
@@ -1796,6 +1804,13 @@ def create_distance_distribution_plot(root_dir):
     
     print_status(f"Saved distance distribution plot to {output_file}", "SUCCESS")
     
+    # Also copy to site directory for web display
+    site_figures_dir = root_dir / 'site/public/figures'
+    site_figures_dir.mkdir(parents=True, exist_ok=True)
+    site_output_file = site_figures_dir / 'distance_distribution.png'
+    shutil.copy2(output_file, site_output_file)
+    print_status(f"Synced distance distribution plot to site directory: {site_output_file}", "SUCCESS")
+    
     # Calculate statistics by analysis center and overall
     stats = {
         'total_pairs': len(all_distances),
@@ -1823,6 +1838,288 @@ def create_distance_distribution_plot(root_dir):
         }
     
     return stats
+
+def create_binned_correlation_data_plot(root_dir):
+    """
+    Create a plot showing the logarithmic binning strategy as a binning diagram.
+    Shows bin edges, ranges, and pair counts in a clear, informative way.
+    """
+    print_status("Creating binning strategy diagram", "INFO")
+    set_publication_style()
+    
+    figures_dir = root_dir / 'results/figures'
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Analysis center colors for consistency
+    AC_COLORS = {
+        'code': '#2D0140',      # Deep purple
+        'igs_combined': '#495773',  # Blue-gray
+        'esa_final': '#8B4A8B'      # Purple
+    }
+    
+    # Theme colors for plotting
+    THEME_COLORS = {
+        'primary': '#2D0140',      # Primary accents
+        'secondary': '#495773',    # Secondary text  
+        'text': '#2D0140',         # Text color
+        'border': '#E0E0E0',       # Border color
+        'highlight': '#FF6B6B',    # Highlight color
+        'range_highlight': '#2D0140'  # Range highlight
+    }
+    
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_names = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
+    
+    # Load binned correlation data
+    binned_data = {}
+    
+    for center in centers:
+        try:
+            data_file = root_dir / f'results/outputs/step_2_0_correlation_data_{center}.csv'
+            if data_file.exists():
+                df = pd.read_csv(data_file)
+                binned_data[center] = df
+                print_status(f"Loaded {len(df)} distance bins for {center.upper()}", "INFO")
+            else:
+                print_status(f"No correlation data found for {center}", "WARNING")
+                binned_data[center] = pd.DataFrame()
+        except Exception as e:
+            print_status(f"Failed to load binned data for {center}: {e}", "WARNING")
+            binned_data[center] = pd.DataFrame()
+    
+    if not binned_data or all(df.empty for df in binned_data.values()):
+        print_status("No binned correlation data available", "WARNING")
+        return None
+    
+    # Create separate subplots for each analysis center
+    fig, axes = plt.subplots(3, 1, figsize=(12, 10), sharex=True)
+    fig.patch.set_facecolor('white')
+    
+    # Load correlation range for highlighting
+    lambda_values = []
+    for center in centers:
+        try:
+            results_file = root_dir / f'results/outputs/step_2_0_correlation_{center}.json'
+            if results_file.exists():
+                with open(results_file, 'r') as f:
+                    fit_results = json.load(f)
+                lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
+                if lambda_km:
+                    lambda_values.append(lambda_km)
+        except Exception as e:
+            continue
+    
+    correlation_range = None
+    if lambda_values:
+        lambda_min = min(lambda_values)
+        lambda_max = max(lambda_values)
+        lambda_mean = sum(lambda_values) / len(lambda_values)
+        correlation_range = (lambda_min, lambda_max, lambda_mean)
+    
+    # Create separate subplot for each analysis center
+    for i, center in enumerate(['code', 'igs_combined', 'esa_final']):
+        ax = axes[i]
+        ax.set_facecolor('white')
+        
+        if center in binned_data and not binned_data[center].empty:
+            df = binned_data[center]
+            distances = df['distance_km'].values
+            counts = df['count'].values
+            
+            # Calculate perfectly continuous bin edges (no gaps, no overlaps)
+            edges = []
+            
+            # First edge: extend left from first bin center
+            if len(distances) > 1:
+                first_spacing = distances[1] - distances[0]
+                first_edge = max(distances[0] - first_spacing / 2, distances[0] * 0.5)
+            else:
+                first_edge = distances[0] * 0.7
+            edges.append(first_edge)
+            
+            # Middle edges: exact midpoints between adjacent bin centers
+            for j in range(len(distances) - 1):
+                midpoint = (distances[j] + distances[j+1]) / 2
+                edges.append(midpoint)
+            
+            # Last edge: extend right from last bin center
+            if len(distances) > 1:
+                last_spacing = distances[-1] - distances[-2]
+                last_edge = distances[-1] + last_spacing / 2
+            else:
+                last_edge = distances[-1] * 1.3
+            edges.append(last_edge)
+            
+            # Convert to (left, right) pairs
+            bin_edges = [(edges[j], edges[j+1]) for j in range(len(distances))]
+            
+            # Create bars with uniform thin edge lines for consistent separation
+            left_edges = []
+            widths = []
+            heights = []
+            
+            for j, (dist, count) in enumerate(zip(distances, counts)):
+                left_edge, right_edge = bin_edges[j]
+                width = right_edge - left_edge
+                
+                left_edges.append(left_edge)
+                widths.append(width)
+                heights.append(count)
+            
+            # Create all bars with consistent edge lines optimized for high-DPI rendering
+            bars = ax.bar(left_edges, heights, width=widths, align='edge', 
+                         alpha=0.8, color=AC_COLORS[center],
+                         edgecolor='white', linewidth=0.5)
+            
+            # Add count labels for very wide bins (>1000 km width)
+            for j, (left_edge, width, count) in enumerate(zip(left_edges, widths, heights)):
+                if width > 1000 and count > 1000:
+                    ax.text(left_edge + width/2, count * 1.2, f'{count:,.0f}', 
+                           ha='center', va='bottom', fontsize=7, 
+                           color=THEME_COLORS['text'], rotation=0)
+            
+            # Add TEP correlation range highlighting
+            if correlation_range:
+                lambda_min, lambda_max, lambda_mean = correlation_range
+                ax.axvspan(lambda_min, lambda_max, alpha=0.2, 
+                          color=THEME_COLORS['range_highlight'], zorder=1)
+                ax.axvline(lambda_mean, color=THEME_COLORS['highlight'], linestyle='-', 
+                          linewidth=2, alpha=0.8)
+            
+            # Styling for this subplot
+            ax.set_ylabel(f'{center_names[center]}\nPairs per bin', 
+                         color=THEME_COLORS['text'], fontweight='bold')
+            ax.set_yscale('log')
+            
+            # Set x-axis to show full range starting from first bin
+            min_dist = min([edge[0] for edge in bin_edges])
+            max_dist = max([edge[1] for edge in bin_edges])
+            ax.set_xlim(0, max_dist * 1.02)
+            
+            # Set y-axis with slightly higher maximum for better visual spacing
+            max_count = max(heights)
+            ax.set_ylim(bottom=1, top=max_count * 2.5)
+            
+            ax.grid(True, alpha=0.3, color=THEME_COLORS['border'])
+            ax.tick_params(colors=THEME_COLORS['text'])
+            
+            # Add statistics text
+            total_pairs = df['count'].sum()
+            total_bins = len(df)
+            min_pairs = df['count'].min()
+            max_pairs = df['count'].max()
+            
+            stats_text = f'{total_bins} bins • {total_pairs:,} pairs\nRange: {min_pairs:,} - {max_pairs:,}'
+            ax.text(0.02, 0.96, stats_text, transform=ax.transAxes, 
+                   ha='left', va='top', fontsize=9,
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8),
+                   color=THEME_COLORS['text'])
+            
+        else:
+            ax.text(0.5, 0.5, f'No data for {center_names[center]}', 
+                   transform=ax.transAxes, ha='center', va='center',
+                   color=THEME_COLORS['text'], fontsize=12)
+            ax.set_ylabel(f'{center_names[center]}', color=THEME_COLORS['text'], fontweight='bold')
+    
+    # Set common x-axis label and title
+    axes[-1].set_xlabel('Distance (km)', color=THEME_COLORS['text'])
+    fig.suptitle('Logarithmic Distance Binning for TEP Correlation Analysis\n(Statistical Power by Analysis Center)', 
+                 fontsize=16, fontweight='bold', color=THEME_COLORS['text'])
+    
+    # Add global note about logarithmic scale
+    fig.text(0.99, 0.02, 'Note: Y-axes use logarithmic scale to show full dynamic range', 
+             ha='right', va='bottom', fontsize=9,
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8),
+             color=THEME_COLORS['text'])
+    
+    plt.tight_layout()
+    
+    output_file = figures_dir / 'binned_correlation_data.png'
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close(fig)
+    
+    print_status(f"Saved binning strategy diagram to {output_file}", "SUCCESS")
+    
+    # Also copy to site directory for web display
+    site_figures_dir = root_dir / 'site/public/figures'
+    site_figures_dir.mkdir(parents=True, exist_ok=True)
+    site_output_file = site_figures_dir / 'binned_correlation_data.png'
+    shutil.copy2(output_file, site_output_file)
+    print_status(f"Synced binning strategy diagram to site directory: {site_output_file}", "SUCCESS")
+    
+    # Calculate statistics
+    total_pairs_binned = 0
+    total_bins_all = 0
+    stats = {'output_file': str(output_file), 'by_center': {}}
+    
+    for center in centers:
+        if center in binned_data and not binned_data[center].empty:
+            df = binned_data[center]
+            center_name = center_names[center]
+            total_pairs = df['count'].sum()
+            total_pairs_binned += total_pairs
+            total_bins_all += len(df)
+            
+            stats['by_center'][center_name] = {
+                'total_bins': len(df),
+                'total_pairs_in_bins': int(total_pairs),
+                'min_distance_km': float(df['distance_km'].min()),
+                'max_distance_km': float(df['distance_km'].max()),
+                'mean_pairs_per_bin': float(total_pairs / len(df))
+            }
+    
+    stats.update({
+        'total_bins_all_centers': total_bins_all,
+        'total_pairs_in_all_bins': total_pairs_binned,
+        'mean_bins_per_center': total_bins_all / len([c for c in centers if c in binned_data and not binned_data[c].empty]) if any(not df.empty for df in binned_data.values()) else 0
+    })
+    
+    return stats
+
+def load_analyzed_distances_by_analysis_center(root_dir):
+    """
+    Load individual analyzed distance pairs for each analysis center by processing all pair files.
+    This gives us smooth histograms like the distance_distribution.png but only for analyzed pairs.
+    """
+    centers = ['code', 'igs_combined', 'esa_final']
+    center_distances = {}
+    
+    for center in centers:
+        print_status(f"Loading analyzed distance pairs for {center.upper()}", "INFO")
+        
+        # Find all pair files for this center
+        pair_dir = root_dir / 'results/tmp'
+        pair_files = sorted(pair_dir.glob(f"step_2_0_pairs_{center}_*.csv"))
+        
+        if not pair_files:
+            print_status(f"No pair files found for {center}", "WARNING")
+            center_distances[center] = np.array([])
+            continue
+        
+        print_status(f"Processing {len(pair_files)} files for {center.upper()}", "INFO")
+        
+        all_distances = []
+        processed_files = 0
+        
+        for pfile in pair_files:
+            try:
+                df = pd.read_csv(pfile)
+                # Extract distances from this file (these are already the analyzed pairs)
+                distances = df['dist_km'].values
+                all_distances.extend(distances)
+                
+                processed_files += 1
+                if processed_files % 100 == 0:
+                    print_status(f"Processed {processed_files}/{len(pair_files)} files for {center.upper()}, {len(all_distances):,} pairs so far", "INFO")
+                    
+            except Exception as e:
+                print_status(f"Failed to load {pfile}: {e}", "WARNING")
+                continue
+        
+        center_distances[center] = np.array(all_distances)
+        print_status(f"Loaded {len(all_distances):,} analyzed distance pairs for {center.upper()}", "SUCCESS")
+    
+    return center_distances
 
 def create_analyzed_pairs_distribution_plot(root_dir):
     """
@@ -1897,7 +2194,8 @@ def create_analyzed_pairs_distribution_plot(root_dir):
         try:
             results_file = root_dir / f'results/outputs/step_2_0_correlation_{center}.json'
             if results_file.exists():
-                fit_results = safe_json_read(results_file)
+                with open(results_file, 'r') as f:
+                    fit_results = json.load(f)(results_file)
                 lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
                 if lambda_km:
                     lambda_values.append(lambda_km)
@@ -2070,14 +2368,31 @@ def create_binned_correlation_data_plot(root_dir):
     figures_dir = root_dir / 'results/figures'
     figures_dir.mkdir(parents=True, exist_ok=True)
     
-    # Use centralized color configuration for consistency
-    AC_COLORS = TEPConfig.get_ac_colors()
-    THEME_COLORS = TEPConfig.get_site_theme_colors()
-    
-    # Override specific colors for visualization
-    THEME_COLORS.update({
-        'range_highlight': THEME_COLORS['primary']
-    })
+    # Use centralized color configuration for consistency (fallback to manual colors if not available)
+    try:
+        AC_COLORS = TEPConfig.get_ac_colors()
+        THEME_COLORS = TEPConfig.get_site_theme_colors()
+        # Override specific colors for visualization
+        THEME_COLORS.update({
+            'range_highlight': THEME_COLORS['primary']
+        })
+    except AttributeError:
+        # Fallback to manual color definitions
+        AC_COLORS = {
+            'code': '#2D0140',      # Deep purple
+            'igs_combined': '#495773',  # Blue-gray
+            'esa_final': '#8B4A8B'      # Purple
+        }
+        
+        # Theme colors for plotting
+        THEME_COLORS = {
+            'primary': '#2D0140',      # Primary accents
+            'secondary': '#495773',    # Secondary text  
+            'text': '#2D0140',         # Text color
+            'border': '#E0E0E0',       # Border color
+            'highlight': '#FF6B6B',    # Highlight color
+            'range_highlight': '#2D0140'  # Range highlight
+        }
     
     centers = ['code', 'igs_combined', 'esa_final']
     center_names = {'code': 'CODE', 'igs_combined': 'IGS', 'esa_final': 'ESA'}
@@ -2113,7 +2428,8 @@ def create_binned_correlation_data_plot(root_dir):
         try:
             results_file = root_dir / f'results/outputs/step_2_0_correlation_{center}.json'
             if results_file.exists():
-                fit_results = safe_json_read(results_file)
+                with open(results_file, 'r') as f:
+                    fit_results = json.load(f)(results_file)
                 lambda_km = fit_results.get('exponential_fit', {}).get('lambda_km')
                 if lambda_km:
                     lambda_values.append(lambda_km)
@@ -2563,6 +2879,28 @@ def main():
         except Exception as e:
             print_status(f"Multi-band visualization error: {str(e)}", "ERROR")
             all_results['multiband_visualization'] = {'status': 'failed', 'error': str(e)}
+        
+        print_status("\n" + "-"*60, "INFO")
+        print_status("8. DISTANCE DISTRIBUTION ANALYSIS", "INFO")
+        print_status("-"*60, "INFO")
+        try:
+            distance_dist_result = create_distance_distribution_plot(root_dir)
+            all_results['distance_distribution'] = {'status': 'completed', 'file': distance_dist_result.get('output_file') if distance_dist_result else None}
+            print_status("Distance distribution plot generated successfully.", "SUCCESS")
+        except Exception as e:
+            print_status(f"Distance distribution plot error: {str(e)}", "WARNING")
+            all_results['distance_distribution'] = {'status': 'failed', 'error': str(e)}
+        
+        print_status("\n" + "-"*60, "INFO")
+        print_status("9. BINNED CORRELATION DATA VISUALIZATION", "INFO")
+        print_status("-"*60, "INFO")
+        try:
+            binned_result = create_binned_correlation_data_plot(root_dir)
+            all_results['binned_correlation_data'] = {'status': 'completed', 'file': binned_result.get('output_file') if binned_result else None}
+            print_status("Binned correlation data plot generated successfully.", "SUCCESS")
+        except Exception as e:
+            print_status(f"Binned correlation data plot error: {str(e)}", "WARNING")
+            all_results['binned_correlation_data'] = {'status': 'failed', 'error': str(e)}
         
         print_status("\n" + "="*60, "INFO")
         print_status("STEP 4.1 VISUALIZATION AND EXPORT COMPLETE", "SUCCESS")

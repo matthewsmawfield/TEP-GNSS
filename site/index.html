@@ -33,8 +33,8 @@
     <meta property="og:site_name" content="TEP-GNSS">
     <meta property="article:author" content="Matthew Lukin Smawfield">
     <meta property="article:published_time" content="2025-09-17T00:00:00Z">
-    <meta property="article:modified_time" content="2025-09-29T00:00:00Z">
-    <meta property="og:updated_time" content="2025-09-29T00:00:00Z">
+    <meta property="article:modified_time" content="2025-10-06T00:00:00Z">
+    <meta property="og:updated_time" content="2025-10-06T00:00:00Z">
     <meta property="article:section" content="Physics">
     <meta property="article:tag" content="GNSS">
     <meta property="article:tag" content="Atomic Clocks">
@@ -71,7 +71,7 @@
     <meta name="citation_journal_title" content="Preprint">
     <meta name="citation_doi" content="10.5281/zenodo.17127229">
     <meta name="citation_abstract_html_url" content="https://matthewsmawfield.github.io/TEP-GNSS/">
-    <meta name="citation_pdf_url" content="https://zenodo.org/records/17216517/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf?download=1">
+    <meta name="citation_pdf_url" content="https://zenodo.org/records/17216517/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.14_Jaipur.pdf?download=1">
     <meta name="citation_language" content="en">
     <meta name="citation_keywords" content="TEP-GNSS; GNSS; atomic clocks; distance correlations; phase coherence; temporal equivalence principle">
     
@@ -136,8 +136,8 @@
         ]
       },
       "datePublished": "2025-09-17",
-      "dateModified": "2025-09-29",
-        "version": "Jaipur v0.13",
+      "dateModified": "2025-10-06",
+        "version": "Jaipur v0.14",
       "publisher": {
         "@type": "Organization",
         "name": "Independent Research",
@@ -247,6 +247,31 @@
     
     
     <style>
+        /* Prevent horizontal scrolling */
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+        }
+        
+        /* Force long URLs and text to wrap */
+        a {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
+        }
+        
+        /* Code blocks and preformatted text */
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
         /* Academic paper styling */
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -394,6 +419,9 @@
             text-align: center;
             margin: 20px 0;
             padding: 10px;
+            overflow-x: auto;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
         .theorem, .principle {
@@ -593,6 +621,23 @@
                 grid-template-columns: 1fr !important;
                 gap: 15px !important;
             }
+            
+            /* Ensure tables don't cause horizontal scrolling */
+            table {
+                font-size: 12px !important;
+            }
+            
+            table th, table td {
+                padding: 4px !important;
+                word-wrap: break-word;
+                hyphens: auto;
+                min-width: 0;
+            }
+            
+            /* Make specific problematic headers more compact */
+            th:contains("Analysis Center") {
+                font-size: 11px !important;
+            }
         }
         @media screen and (max-width: 480px) {
             body {
@@ -623,6 +668,16 @@
             .doi a {
                 font-size: 13px;
                 word-break: break-all;
+            }
+            
+            /* Extra compact tables for very small screens */
+            table {
+                font-size: 10px !important;
+            }
+            
+            table th, table td {
+                padding: 2px !important;
+                line-height: 1.2;
             }
         }
 
@@ -657,10 +712,10 @@
         <img src="public/og-image.jpg" alt="Global Time Echoes - Distance-structured correlations in GNSS clocks analysis overview" class="header-image" loading="eager">
         <h1 class="title">Global Time Echoes: Distance-Structured Correlations in GNSS Clocks</h1>
         <div class="author">Matthew Lukin Smawfield</div>
-        <div class="version">Version: v0.13 (Jaipur)</div>
+        <div class="version">Version: v0.14 (Jaipur)</div>
         <div class="status-chip">Status: Preprint</div>
-        <div class="date">First published: 17 September 2025 · Last updated: 29 September 2025</div>
-        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17127229">10.5281/zenodo.17127229</a><a class="pdf-link no-print" href="https://zenodo.org/records/17216517/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf?download=1" aria-label="Download PDF (v0.13)" title="Download PDF (v0.13)">
+        <div class="date">First published: 17 September 2025 · Last updated: 6 October 2025</div>
+        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17127229">10.5281/zenodo.17127229</a><a class="pdf-link no-print" href="https://zenodo.org/records/17216517/files/Smawfield_2025_GlobalTimeEchoes_Preprint_v0.14_Jaipur.pdf?download=1" aria-label="Download PDF (v0.14)" title="Download PDF (v0.14)">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
             </svg>

@@ -33,7 +33,7 @@ Environment Variables:
   - TEP_OCEAN_THRESHOLD_KM: Distance threshold for ocean classification (default: 5000)
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -478,7 +478,7 @@ def generate_validation_summary(validation_results: Dict, sample_analysis: Dict,
 @ensure_single_instance
 def main():
     """Main validation function using efficient approach"""
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.4: Geographic Bias Validation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.4: Geographic Bias Validation", "TITLE")
     print_status("Using statistical resampling of existing results for efficient validation", "INFO")
     
     # Load existing data

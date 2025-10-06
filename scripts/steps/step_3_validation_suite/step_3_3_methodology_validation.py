@@ -94,7 +94,7 @@ REVIEWER CONCERNS ADDRESSED:
 
 AUTHOR: TEP-GNSS Analysis Framework
 VERSION: 2.0 (Watertight Implementation)
-DATE: 2025-09-28
+DATE: 2025-10-06
 STATUS: Peer-Review Ready
 """
 
@@ -507,11 +507,12 @@ class MethodologyValidator:
         if station_distances_df.empty:
             raise TEPDataError("Cannot perform geometric control - no station distances data available.")
 
-        # Define synthetic coherence scenarios (e.g., uniform noise, Gaussian noise)
+        # Define synthetic coherence scenarios (FIXED: proper geometric controls)
         scenarios = {
-            'uniform_noise': lambda n: np.random.uniform(0.1, 0.9, n),
-            'gaussian_noise': lambda n: np.random.normal(0.5, 0.1, n).clip(0, 1),
-            'anti_correlated': lambda n, distances: 1 - (distances / distances.max()) # Coherence decreases linearly with distance
+            'uniform_noise': lambda n: np.random.uniform(-0.1, 0.1, n),  # Centered around zero
+            'gaussian_noise': lambda n: np.random.normal(0.0, 0.05, n),  # Small variance around zero
+            'distance_independent': lambda n, distances: np.full(n, 0.05),  # Constant coherence (no distance dependence)
+            'network_geometry': lambda n, distances: 0.02 * np.sin(distances / 1000.0) + np.random.normal(0, 0.01, n)  # Weak geometric pattern
         }
 
         for ac in self.analysis_centers:
@@ -553,7 +554,7 @@ class MethodologyValidator:
             
             scenario_r_squareds = {}
             for scenario_name, scenario_func in scenarios.items():
-                if scenario_name == 'anti_correlated':
+                if scenario_name in ['distance_independent', 'network_geometry']:
                     synthetic_coherence = scenario_func(num_pairs, actual_distances) # Pass distances
                 else:
                     synthetic_coherence = scenario_func(num_pairs)
@@ -591,16 +592,25 @@ class MethodologyValidator:
                                     lambda x, A, L: A * np.exp(-x / L),
                                     binned_synthetic_data['distance_mean'],
                                     binned_synthetic_data['coherence_mean'],
-                                    p0=[1.0, 1000.0],
-                                    sigma=binned_synthetic_data['coherence_std'],
+                                    p0=[0.1, 3000.0],  # More realistic initial guess
+                                    sigma=np.maximum(binned_synthetic_data['coherence_std'].fillna(0.01), 0.001),  # Prevent zero/NaN sigma
                                     absolute_sigma=True,
-                                    bounds=([0, 100], [1.5, 20000])
+                                    bounds=([-0.5, 100], [0.5, 20000]),  # Allow negative amplitude
+                                    maxfev=2000
                                 )
                                 A_synthetic, lambda_synthetic = popt_synthetic
                                 y_pred_synthetic = A_synthetic * np.exp(-binned_synthetic_data['distance_mean'] / lambda_synthetic)
+                                
+                                # Calculate R² with proper bounds checking
                                 ss_res_synthetic = np.sum((binned_synthetic_data['coherence_mean'] - y_pred_synthetic)**2)
                                 ss_tot_synthetic = np.sum((binned_synthetic_data['coherence_mean'] - binned_synthetic_data['coherence_mean'].mean())**2)
-                                synthetic_r_squared = 1 - (ss_res_synthetic / ss_tot_synthetic) if ss_tot_synthetic > 0 else 0
+                                
+                                if ss_tot_synthetic > 1e-10:  # Avoid division by very small numbers
+                                    synthetic_r_squared = 1 - (ss_res_synthetic / ss_tot_synthetic)
+                                    # CRITICAL FIX: Bound R² to valid range [0, 1]
+                                    synthetic_r_squared = max(0.0, min(1.0, synthetic_r_squared))
+                                else:
+                                    synthetic_r_squared = 0.0
                             except Exception as fit_e:
                                 print_status(f"    WARNING: Curve fitting failed for synthetic {scenario_name} for {ac.upper()}: {fit_e}. Setting R² to 0.", "WARNING")
                                 synthetic_r_squared = 0.0 # If fit fails, it's not a strong signal
@@ -1022,7 +1032,7 @@ class MethodologyValidator:
 @ensure_single_instance
 def main():
     """Main function for the methodology validation suite."""
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.3: Methodology Validation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.3: Methodology Validation", "TITLE")
     print_status("Validating core TEP methodology with geometric controls and macro analysis", "INFO")
     print_status("="*80, "INFO")
     

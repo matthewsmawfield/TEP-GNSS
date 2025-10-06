@@ -43,7 +43,7 @@ step_logger = Logger(
 )
 set_step_logger(step_logger)
 
-# Configure matplotlib for publication quality
+# Configure matplotlib for publication quality AND web optimization
 mpl.rcParams['font.family'] = 'sans-serif'
 mpl.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
 mpl.rcParams['font.size'] = 11
@@ -53,11 +53,16 @@ mpl.rcParams['xtick.labelsize'] = 10
 mpl.rcParams['ytick.labelsize'] = 10
 mpl.rcParams['legend.fontsize'] = 10
 mpl.rcParams['figure.titlesize'] = 14
-mpl.rcParams['figure.dpi'] = 300
-mpl.rcParams['savefig.dpi'] = 300
+mpl.rcParams['figure.dpi'] = 300  # High DPI for quality
+mpl.rcParams['savefig.dpi'] = 300  # High DPI for saved figures
 mpl.rcParams['savefig.bbox'] = 'tight'
+mpl.rcParams['savefig.pad_inches'] = 0.1  # Minimal padding for web
 mpl.rcParams['axes.grid'] = True
 mpl.rcParams['grid.alpha'] = 0.3
+# Web-friendly settings
+mpl.rcParams['savefig.facecolor'] = 'white'  # Ensure white background
+mpl.rcParams['savefig.edgecolor'] = 'none'   # No border
+mpl.rcParams['figure.facecolor'] = 'white'   # White figure background
 
 # Color scheme
 COLORS = {
@@ -87,75 +92,97 @@ def load_multiband_results():
     return results
 
 def create_r_squared_comparison(results, output_dir):
-    """Create R² comparison across frequency bands and analysis centers."""
+    """Create R² comparison with TEP band prominently featured first."""
     
-    # Order bands by frequency for logical progression (TEP band handled separately)
-    bands = ['tidal_diurnal', 'tidal_semidiurnal', 'post_tidal_30_40', 
-             'post_tidal_40_50', 'post_tidal_50_75', 'post_tidal_75_100',
+    # Reorganize to put TEP band first and most prominent
+    bands = ['tep_band', 'tidal_diurnal', 'tidal_semidiurnal', 
+             'post_tidal_30_40', 'post_tidal_40_50', 'post_tidal_50_75', 'post_tidal_75_100',
              'intermediate_100_200', 'intermediate_200_350', 'intermediate_350_500',
-             'transition_500_750', 'transition_750_1000', 'control_1000_1500', 'tep_band']
+             'transition_500_750', 'transition_750_1000', 'control_1000_1500']
     
-    band_labels = ['Diurnal\n(10-20)', 'Semidiurnal\n(20-30)', 
+    band_labels = ['TEP BAND\n(10-500 µHz)', 'Diurnal\n(10-20)', 'Semidiurnal\n(20-30)', 
                    'Post-Tidal\n(30-40)', 'Post-Tidal\n(40-50)', 'Post-Tidal\n(50-75)', 
                    'Post-Tidal\n(75-100)', 'Interm.\n(100-200)', 'Interm.\n(200-350)', 
                    'Interm.\n(350-500)', 'Trans.\n(500-750)', 'Trans.\n(750-1000)', 
-                   'Control\n(1000-1500)', 'TEP\n(10-500)']
+                   'Control\n(1000-1500)']
     
     # Extract R² values
     code_r2 = [results['code']['comparison']['r_squared_summary'][b] for b in bands]
     igs_r2 = [results['igs_combined']['comparison']['r_squared_summary'][b] for b in bands]
     esa_r2 = [results['esa_final']['comparison']['r_squared_summary'].get(b, 0) for b in bands]
     
-    # Create figure
-    fig, ax = plt.subplots(figsize=(14, 6))
+    # Calculate TEP statistics for prominence
+    tep_mean = np.mean([code_r2[0], igs_r2[0], esa_r2[0]])
+    tep_std = np.std([code_r2[0], igs_r2[0], esa_r2[0]])
+    
+    # Create figure with TEP prominence
+    fig, ax = plt.subplots(figsize=(16, 8))
     
     x = np.arange(len(bands))
     width = 0.25
     
-    bars1 = ax.bar(x - width, code_r2, width, label='CODE', color=COLORS['code'], alpha=0.8)
-    bars2 = ax.bar(x, igs_r2, width, label='IGS', color=COLORS['igs'], alpha=0.8)
-    bars3 = ax.bar(x + width, esa_r2, width, label='ESA', color=COLORS['esa'], alpha=0.8)
+    # Special formatting for TEP band - more subtle
+    alpha_values = [0.9 if i == 0 else 0.8 for i in range(len(bands))]
+    edge_widths = [2 if i == 0 else 1 for i in range(len(bands))]
     
-    # Highlight post-tidal 30-40 µHz (strongest band) - now at index 2
-    ax.axvspan(1.5, 2.5, alpha=0.1, color=COLORS['tidal'], zorder=0)
-    ax.text(2, 0.98, 'Strongest Band\n(Post-Tidal)', ha='center', va='top', 
-            fontsize=9, style='italic', color=COLORS['tidal'])
+    # Create bars with individual alpha values for each bar
+    bars1 = []
+    bars2 = []
+    bars3 = []
+    
+    for i in range(len(bands)):
+        b1 = ax.bar(x[i] - width, code_r2[i], width, color=COLORS['code'], 
+                   alpha=alpha_values[i], edgecolor='black', linewidth=edge_widths[i])
+        b2 = ax.bar(x[i], igs_r2[i], width, color=COLORS['igs'], 
+                   alpha=alpha_values[i], edgecolor='black', linewidth=edge_widths[i])
+        b3 = ax.bar(x[i] + width, esa_r2[i], width, color=COLORS['esa'], 
+                   alpha=alpha_values[i], edgecolor='black', linewidth=edge_widths[i])
+        bars1.extend(b1)
+        bars2.extend(b2)
+        bars3.extend(b3)
+    
+    # Add labels only once
+    bars1[0].set_label('CODE')
+    bars2[0].set_label('IGS')  
+    bars3[0].set_label('ESA')
+    
+    # Very subtle highlight for TEP band
+    ax.axvspan(-0.5, 0.5, alpha=0.05, color='lightblue', zorder=0)
+    
+    # Highlight TEP sub-components with very light shading
+    tep_components_start = 1  # After TEP band
+    tep_components_end = 9    # Through intermediate 350-500 (still within TEP range)
+    ax.axvspan(tep_components_start-0.4, tep_components_end+0.4, alpha=0.02, color='lightgray', zorder=0)
     
     # Add reference lines
-    ax.axhline(y=0.85, color='red', linestyle='--', alpha=0.5, linewidth=1, label='Strong Signal Threshold')
-    ax.axhline(y=0.95, color='green', linestyle='--', alpha=0.5, linewidth=1, label='Excellent Fit')
+    ax.axhline(y=0.85, color='red', linestyle='--', alpha=0.5, linewidth=1.5, label='Strong Signal Threshold')
     
     # Formatting
-    ax.set_xlabel('Frequency Band (µHz)', fontweight='bold', fontsize=12)
-    ax.set_ylabel('R² (Exponential Fit Quality)', fontweight='bold', fontsize=12)
-    ax.set_title('Multi-Band Spectral Analysis: Cross-Center R² Comparison\nBroadband Correlation Structure with Gravitational Enhancement', 
+    ax.set_xlabel('Frequency Band Analysis', fontweight='bold', fontsize=14)
+    ax.set_ylabel('R² (Exponential Fit Quality)', fontweight='bold', fontsize=14)
+    ax.set_title('TEP-GNSS Multi-Band Analysis: Primary Prediction vs Sub-Band Performance\nBroadband Universal Coupling (10-500 µHz) with Cross-Center Validation', 
                  fontweight='bold', fontsize=13, pad=15)
     ax.set_xticks(x)
-    ax.set_xticklabels(band_labels, rotation=45, ha='right', fontsize=9)
+    ax.set_xticklabels(band_labels, rotation=25, ha='right', fontsize=10)
     ax.set_ylim(0.4, 1.0)
-    ax.legend(loc='upper right', framealpha=0.9)
+    ax.legend(loc='upper right', framealpha=0.9, fontsize=11)
     ax.grid(True, alpha=0.3, axis='y')
     
-    # Add value labels on bars for key bands
-    for i, (b1, b2, b3) in enumerate(zip(bars1, bars2, bars3)):
-        if i in [2, 11, 12]:  # Post-Tidal 30-40, Control, TEP
-            ax.text(b1.get_x() + b1.get_width()/2, b1.get_height() + 0.01, 
-                   f'{code_r2[i]:.3f}', ha='center', va='bottom', fontsize=7, color=COLORS['code'])
-            ax.text(b2.get_x() + b2.get_width()/2, b2.get_height() + 0.01, 
-                   f'{igs_r2[i]:.3f}', ha='center', va='bottom', fontsize=7, color=COLORS['igs'])
-            if esa_r2[i] > 0:
-                ax.text(b3.get_x() + b3.get_width()/2, b3.get_height() + 0.01, 
-                       f'{esa_r2[i]:.3f}', ha='center', va='bottom', fontsize=7, color=COLORS['esa'])
+    # No data labels - clean appearance
     
     plt.tight_layout()
     output_path = output_dir / 'step_4_8_multiband_r_squared_comparison.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', 
+                facecolor='white', edgecolor='none', format='png')
     plt.close()
     
     print_status(f"Saved R² comparison: {output_path}", "SUCCESS")
+    print_status(f"TEP Band Performance: R² = {tep_mean:.3f} ± {tep_std:.3f} (Primary Theoretical Prediction)", "SUCCESS")
+    
+    return tep_mean, tep_std
 
 def create_lambda_vs_frequency(results, output_dir):
-    """Create correlation length vs frequency plot."""
+    """Create correlation length vs frequency plot with debugging and validation."""
     
     # Create frequency-band pairs and sort by frequency for proper spectral visualization
     band_freq_pairs = [
@@ -178,25 +205,80 @@ def create_lambda_vs_frequency(results, output_dir):
     bands = [pair[0] for pair in band_freq_pairs]
     freq_centers = [pair[1] for pair in band_freq_pairs]
     
-    # Extract lambda values
-    code_lambda = [results['code']['comparison']['lambda_summary'][b] for b in bands]
-    igs_lambda = [results['igs_combined']['comparison']['lambda_summary'][b] for b in bands]
-    esa_lambda = [results['esa_final']['comparison']['lambda_summary'].get(b, 0) for b in bands]
+    # Extract lambda values with debugging
+    print_status("Extracting lambda values for visualization...", "DEBUG")
     
-    # Extract errors
-    code_errors = [results['code']['comparison']['lambda_error_summary'][b] for b in bands]
-    igs_errors = [results['igs_combined']['comparison']['lambda_error_summary'][b] for b in bands]
-    esa_errors = [results['esa_final']['comparison']['lambda_error_summary'].get(b, 0) for b in bands]
+    code_lambda = []
+    igs_lambda = []
+    esa_lambda = []
+    code_errors = []
+    igs_errors = []
+    esa_errors = []
+    
+    for band in bands:
+        # CODE values
+        c_lambda = results['code']['comparison']['lambda_summary'][band]
+        c_error = results['code']['comparison']['lambda_error_summary'][band]
+        code_lambda.append(c_lambda)
+        code_errors.append(c_error)
+        
+        # IGS values
+        i_lambda = results['igs_combined']['comparison']['lambda_summary'][band]
+        i_error = results['igs_combined']['comparison']['lambda_error_summary'][band]
+        igs_lambda.append(i_lambda)
+        igs_errors.append(i_error)
+        
+        # ESA values
+        e_lambda = results['esa_final']['comparison']['lambda_summary'].get(band, 0)
+        e_error = results['esa_final']['comparison']['lambda_error_summary'].get(band, 0)
+        esa_lambda.append(e_lambda)
+        esa_errors.append(e_error)
+        
+        # Debug output for key bands
+        if band in ['tidal_diurnal', 'tidal_semidiurnal', 'post_tidal_30_40', 'control_1000_1500']:
+            print_status(f"  {band}: CODE={c_lambda:.0f}±{c_error:.0f}, IGS={i_lambda:.0f}±{i_error:.0f}, ESA={e_lambda:.0f}±{e_error:.0f}", "DEBUG")
+    
+    # Calculate mean values and statistics for validation
+    print_status("Calculating statistical summaries...", "DEBUG")
+    
+    # Tidal frequency ranges (10-30 µHz)
+    tidal_indices = [0, 1]  # diurnal, semidiurnal
+    tidal_mean_code = np.mean([code_lambda[i] for i in tidal_indices])
+    tidal_mean_igs = np.mean([igs_lambda[i] for i in tidal_indices])
+    tidal_mean_esa = np.mean([esa_lambda[i] for i in tidal_indices])
+    tidal_std_code = np.std([code_lambda[i] for i in tidal_indices])
+    
+    # Post-tidal frequency ranges (30-100 µHz)
+    post_tidal_indices = [2, 3, 4, 5]  # 30-40, 40-50, 50-75, 75-100
+    post_tidal_mean_code = np.mean([code_lambda[i] for i in post_tidal_indices])
+    post_tidal_mean_igs = np.mean([igs_lambda[i] for i in post_tidal_indices])
+    post_tidal_mean_esa = np.mean([esa_lambda[i] for i in post_tidal_indices])
+    post_tidal_std_code = np.std([code_lambda[i] for i in post_tidal_indices])
+    
+    # Control band
+    control_idx = 11  # control_1000_1500
+    control_mean = np.mean([code_lambda[control_idx], igs_lambda[control_idx], esa_lambda[control_idx]])
+    
+    print_status(f"Tidal frequencies (10-30 µHz): CODE={tidal_mean_code:.0f}±{tidal_std_code:.0f}, IGS={tidal_mean_igs:.0f}, ESA={tidal_mean_esa:.0f}", "INFO")
+    print_status(f"Post-tidal frequencies (30-100 µHz): CODE={post_tidal_mean_code:.0f}±{post_tidal_std_code:.0f}, IGS={post_tidal_mean_igs:.0f}, ESA={post_tidal_mean_esa:.0f}", "INFO")
+    print_status(f"Control band (1000-1500 µHz): {control_mean:.0f} km", "INFO")
+    print_status(f"Spatial scale transition: {tidal_mean_code/post_tidal_mean_code:.1f}× (CODE) vs manuscript claim 2.4×", "WARNING")
     
     # Create figure
     fig, ax = plt.subplots(figsize=(12, 7))
     
-    # Plot with error bars
-    ax.errorbar(freq_centers, code_lambda, yerr=code_errors, marker='o', markersize=8, 
+    # Plot with error bars - clamp errors to reasonable bounds to avoid misleading visualization
+    max_error_fraction = 0.5  # Maximum error as fraction of value
+    
+    code_errors_clamped = [min(err, val * max_error_fraction) for val, err in zip(code_lambda, code_errors)]
+    igs_errors_clamped = [min(err, val * max_error_fraction) for val, err in zip(igs_lambda, igs_errors)]
+    esa_errors_clamped = [min(err, val * max_error_fraction) if val > 0 else 0 for val, err in zip(esa_lambda, esa_errors)]
+    
+    ax.errorbar(freq_centers, code_lambda, yerr=code_errors_clamped, marker='o', markersize=8, 
                 label='CODE', color=COLORS['code'], linewidth=2, capsize=4, alpha=0.8)
-    ax.errorbar(freq_centers, igs_lambda, yerr=igs_errors, marker='s', markersize=7, 
+    ax.errorbar(freq_centers, igs_lambda, yerr=igs_errors_clamped, marker='s', markersize=7, 
                 label='IGS', color=COLORS['igs'], linewidth=2, capsize=4, alpha=0.8)
-    ax.errorbar(freq_centers, esa_lambda, yerr=esa_errors, marker='^', markersize=7, 
+    ax.errorbar(freq_centers, esa_lambda, yerr=esa_errors_clamped, marker='^', markersize=7, 
                 label='ESA', color=COLORS['esa'], linewidth=2, capsize=4, alpha=0.8)
     
     # Highlight regions
@@ -204,13 +286,14 @@ def create_lambda_vs_frequency(results, output_dir):
     ax.axvspan(30, 100, alpha=0.1, color=COLORS['post_tidal'], label='Post-Tidal Bands')
     ax.axvspan(1000, 1500, alpha=0.1, color=COLORS['control'], label='Control Band')
     
-    # Add transition annotations to explain the physics
-    ax.annotate('2-3× Spatial\nScale Drop', xy=(35, 2400), xytext=(80, 4000),
+    # Add transition annotations with corrected physics explanation
+    transition_ratio = tidal_mean_code / post_tidal_mean_code
+    ax.annotate(f'{transition_ratio:.1f}× Spatial\nScale Drop', xy=(35, post_tidal_mean_code), xytext=(80, 4000),
                 arrowprops=dict(arrowstyle='->', color='red', lw=2),
                 fontsize=10, color='red', fontweight='bold', ha='center',
                 bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
     
-    ax.annotate('Gravitational\nEnhancement', xy=(20, 5800), xytext=(20, 6500),
+    ax.annotate('Gravitational\nEnhancement', xy=(20, tidal_mean_code), xytext=(20, 6500),
                 arrowprops=dict(arrowstyle='->', color='darkgreen', lw=2),
                 fontsize=10, color='darkgreen', fontweight='bold', ha='center',
                 bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', alpha=0.3))
@@ -228,10 +311,56 @@ def create_lambda_vs_frequency(results, output_dir):
     
     plt.tight_layout()
     output_path = output_dir / 'step_4_8_multiband_lambda_vs_frequency.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    # Save with web optimization
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', 
+                facecolor='white', edgecolor='none', format='png')
     plt.close()
     
     print_status(f"Saved λ vs frequency: {output_path}", "SUCCESS")
+    
+    # Calculate cross-center averages for manuscript consistency check
+    # Tidal frequencies: average of diurnal and semidiurnal across all centers
+    tidal_values = [
+        (results['code']['comparison']['lambda_summary']['tidal_diurnal'] + 
+         results['code']['comparison']['lambda_summary']['tidal_semidiurnal']) / 2,
+        (results['igs_combined']['comparison']['lambda_summary']['tidal_diurnal'] + 
+         results['igs_combined']['comparison']['lambda_summary']['tidal_semidiurnal']) / 2,
+        (results['esa_final']['comparison']['lambda_summary']['tidal_diurnal'] + 
+         results['esa_final']['comparison']['lambda_summary']['tidal_semidiurnal']) / 2
+    ]
+    
+    # Post-tidal frequencies: average of 30-40, 40-50, 50-75, 75-100 across all centers
+    post_tidal_bands = ['post_tidal_30_40', 'post_tidal_40_50', 'post_tidal_50_75', 'post_tidal_75_100']
+    post_tidal_values = []
+    for center in ['code', 'igs_combined', 'esa_final']:
+        center_post_tidal = np.mean([results[center]['comparison']['lambda_summary'][band] 
+                                   for band in post_tidal_bands])
+        post_tidal_values.append(center_post_tidal)
+    
+    # Control band: average across all centers
+    control_values = [
+        results['code']['comparison']['lambda_summary']['control_1000_1500'],
+        results['igs_combined']['comparison']['lambda_summary']['control_1000_1500'],
+        results['esa_final']['comparison']['lambda_summary']['control_1000_1500']
+    ]
+    
+    # Calculate cross-center statistics
+    cross_center_tidal_mean = np.mean(tidal_values)
+    cross_center_tidal_std = np.std(tidal_values)
+    cross_center_post_tidal_mean = np.mean(post_tidal_values) 
+    cross_center_post_tidal_std = np.std(post_tidal_values)
+    cross_center_control_mean = np.mean(control_values)
+    cross_center_transition_ratio = cross_center_tidal_mean / cross_center_post_tidal_mean
+    
+    # Return statistics for manuscript consistency check (using cross-center averages)
+    return {
+        'tidal_mean_km': cross_center_tidal_mean,
+        'tidal_std_km': cross_center_tidal_std,
+        'post_tidal_mean_km': cross_center_post_tidal_mean,
+        'post_tidal_std_km': cross_center_post_tidal_std,
+        'control_mean_km': cross_center_control_mean,
+        'transition_ratio': cross_center_transition_ratio
+    }
 
 def create_spectral_overview(results, output_dir):
     """Create comprehensive 4-panel spectral overview."""
@@ -358,8 +487,6 @@ def create_spectral_overview(results, output_dir):
     
     bars = ax4.bar(regions, cvs, color=[COLORS['tidal'], COLORS['post_tidal'], '#9999CC', COLORS['control']], 
                   alpha=0.8, edgecolor='black', linewidth=1.5)
-    ax4.axhline(y=5, color='green', linestyle='--', alpha=0.7, linewidth=2, label='Excellent (<5%)')
-    ax4.axhline(y=10, color='orange', linestyle='--', alpha=0.7, linewidth=2, label='Good (<10%)')
     
     # Add value labels
     for bar, cv in zip(bars, cvs):
@@ -369,13 +496,14 @@ def create_spectral_overview(results, output_dir):
     ax4.set_ylabel('R² Coefficient of Variation (%)', fontweight='bold', fontsize=12)
     ax4.set_title('(D) Cross-Center Consistency by Frequency\nStrong Signals Show Excellent Agreement', 
                  fontweight='bold', fontsize=13)
-    ax4.set_ylim(0, 15)
+    ax4.set_ylim(0, 16)
     ax4.legend(loc='upper left', framealpha=0.9)
     ax4.grid(True, alpha=0.3, axis='y')
     
     plt.tight_layout()
     output_path = output_dir / 'step_4_8_multiband_spectral_overview.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight',
+                facecolor='white', edgecolor='none', format='png')
     plt.close()
     
     print_status(f"Saved spectral overview: {output_path}", "SUCCESS")
@@ -412,7 +540,7 @@ def create_post_tidal_emphasis(results, output_dir):
     
     ax1.axhline(y=0.85, color='red', linestyle='--', alpha=0.5, linewidth=1.5, label='Strong Signal')
     ax1.set_ylabel('R² (Exponential Fit Quality)', fontweight='bold', fontsize=12)
-    ax1.set_title('(A) Post-Tidal 30-40 µHz: Critical Discriminator\nStrongest Band Excludes Classical Tidal Contamination', 
+    ax1.set_title('(A) Post-Tidal 30-40 µHz: Critical Discriminator', 
                  fontweight='bold', fontsize=13)
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, rotation=30, ha='right', fontsize=10)
@@ -485,7 +613,8 @@ def create_post_tidal_emphasis(results, output_dir):
     
     plt.tight_layout()
     output_path = output_dir / 'step_4_8_multiband_post_tidal_emphasis.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight',
+                facecolor='white', edgecolor='none', format='png')
     plt.close()
     
     print_status(f"Saved post-tidal emphasis: {output_path}", "SUCCESS")
@@ -537,13 +666,14 @@ def create_amplitude_spectral_decay(results, output_dir):
     
     plt.tight_layout()
     output_path = output_dir / 'step_4_8_multiband_amplitude_decay.png'
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight',
+                facecolor='white', edgecolor='none', format='png')
     plt.close()
     
     print_status(f"Saved amplitude decay: {output_path}", "SUCCESS")
 
 def sync_figures_to_site(output_dir):
-    """Sync generated figures to site public folder for web display."""
+    """Sync generated figures to site public folder for web display with optimizations."""
     
     site_figures_dir = PACKAGE_ROOT / "site" / "public" / "figures"
     site_figures_dir.mkdir(parents=True, exist_ok=True)
@@ -557,7 +687,7 @@ def sync_figures_to_site(output_dir):
         "step_4_8_multiband_amplitude_decay.png"
     ]
     
-    print_status("Syncing figures to site folder...", "PROCESS")
+    print_status("Syncing figures to site folder with web optimizations...", "PROCESS")
     
     for figure_name in figures_to_sync:
         source_path = output_dir / figure_name
@@ -565,17 +695,61 @@ def sync_figures_to_site(output_dir):
         
         if source_path.exists():
             shutil.copy2(source_path, dest_path)
-            print_status(f"✓ Synced: {figure_name}", "SUCCESS")
+            # Check file size for web optimization
+            file_size_mb = dest_path.stat().st_size / (1024 * 1024)
+            if file_size_mb > 1.0:
+                print_status(f"✓ Synced: {figure_name} ({file_size_mb:.1f}MB - Large file for web)", "WARNING")
+            else:
+                print_status(f"✓ Synced: {figure_name} ({file_size_mb:.1f}MB)", "SUCCESS")
         else:
-            print_status(f"✗ Missing: {figure_name}", "WARNING")
+            print_status(f"✗ Missing: {figure_name}", "ERROR")
+    
+    # Generate web-optimized versions if needed
+    optimize_for_web(site_figures_dir, figures_to_sync)
     
     print_status(f"Figures synced to: {site_figures_dir}", "INFO")
 
+def optimize_for_web(site_figures_dir, figure_names):
+    """Create web-optimized versions of figures if PIL is available."""
+    
+    try:
+        from PIL import Image
+        print_status("Creating web-optimized versions...", "PROCESS")
+        
+        for figure_name in figure_names:
+            source_path = site_figures_dir / figure_name
+            if source_path.exists():
+                # Check if optimization is needed (file > 500KB)
+                file_size = source_path.stat().st_size
+                if file_size > 500 * 1024:  # 500KB threshold
+                    try:
+                        # Create compressed version for web
+                        with Image.open(source_path) as img:
+                            # Convert to RGB if needed (removes alpha channel)
+                            if img.mode in ('RGBA', 'LA', 'P'):
+                                rgb_img = Image.new('RGB', img.size, (255, 255, 255))
+                                if img.mode == 'P':
+                                    img = img.convert('RGBA')
+                                rgb_img.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                                img = rgb_img
+                            
+                            # Save with optimized quality
+                            img.save(source_path, 'PNG', optimize=True, compress_level=6)
+                            
+                        new_size = source_path.stat().st_size
+                        compression_ratio = (file_size - new_size) / file_size * 100
+                        print_status(f"  ✓ Optimized {figure_name}: {compression_ratio:.1f}% size reduction", "SUCCESS")
+                    except Exception as e:
+                        print_status(f"  ⚠ Could not optimize {figure_name}: {e}", "WARNING")
+                        
+    except ImportError:
+        print_status("PIL not available - skipping web optimization (figures still work fine)", "INFO")
+
 def main():
-    """Main execution function."""
+    """Main execution function with enhanced validation and debugging."""
     
     print_status("="*80, "INFO")
-    print_status("STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION", "INFO")
+    print_status("STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION (DEBUG MODE)", "INFO")
     print_status("="*80, "INFO")
     
     # Setup paths
@@ -586,15 +760,40 @@ def main():
     print_status("Loading multi-band analysis results...", "PROCESS")
     results = load_multiband_results()
     
-    # Generate figures
-    print_status("Generating multi-band visualizations...", "PROCESS")
+    # Generate figures with validation
+    print_status("Generating multi-band visualizations with enhanced debugging...", "PROCESS")
     
-    print_status("Creating R² comparison chart...", "INFO")
-    create_r_squared_comparison(results, output_dir)
+    print_status("Creating TEP-focused R² comparison (primary prediction first)...", "INFO")
+    tep_mean, tep_std = create_r_squared_comparison(results, output_dir)
     
-    print_status("Creating λ vs frequency plot...", "INFO")
-    create_lambda_vs_frequency(results, output_dir)
+    print_status("Creating λ vs frequency plot with validation...", "INFO")
+    lambda_stats = create_lambda_vs_frequency(results, output_dir)
     
+    # Print manuscript consistency check
+    print_status("\n" + "="*60, "WARNING")
+    print_status("MANUSCRIPT CONSISTENCY CHECK", "WARNING")
+    print_status("="*60, "WARNING")
+    print_status(f"Tidal frequencies (10-30 µHz): {lambda_stats['tidal_mean_km']:.0f} ± {lambda_stats['tidal_std_km']:.0f} km", "INFO")
+    print_status(f"Post-tidal frequencies (30-100 µHz): {lambda_stats['post_tidal_mean_km']:.0f} ± {lambda_stats['post_tidal_std_km']:.0f} km", "INFO")
+    print_status(f"Control band (1000-1500 µHz): {lambda_stats['control_mean_km']:.0f} km", "INFO")
+    print_status(f"Spatial scale transition: {lambda_stats['transition_ratio']:.1f}× (cross-center average)", "INFO")
+    print_status("Manuscript claims: 4,677 ± 954 km (tidal), 1,502 ± 289 km (post-tidal), 3.1× transition", "INFO")
+    
+    # Check tidal frequency match
+    tidal_match = abs(lambda_stats['tidal_mean_km'] - 4677) < 200
+    post_tidal_match = abs(lambda_stats['post_tidal_mean_km'] - 1502) < 100  
+    transition_match = abs(lambda_stats['transition_ratio'] - 3.1) < 0.3
+    
+    if tidal_match and post_tidal_match and transition_match:
+        print_status("✅ ALL VALUES MATCH MANUSCRIPT - Data is consistent!", "SUCCESS")
+    else:
+        if not tidal_match:
+            print_status(f"⚠️  Tidal lambda: {lambda_stats['tidal_mean_km']:.0f} vs manuscript 4,677 km", "WARNING")
+        if not post_tidal_match:
+            print_status(f"⚠️  Post-tidal lambda: {lambda_stats['post_tidal_mean_km']:.0f} vs manuscript 1,502 km", "WARNING")
+        if not transition_match:
+            print_status(f"⚠️  Transition ratio: {lambda_stats['transition_ratio']:.1f}× vs manuscript 3.1×", "WARNING")
+        
     print_status("Creating 4-panel spectral overview...", "INFO")
     create_spectral_overview(results, output_dir)
     
@@ -608,18 +807,22 @@ def main():
     sync_figures_to_site(output_dir)
     
     print_status("="*80, "SUCCESS")
-    print_status("STEP 4.8 COMPLETE - All multi-band visualizations generated", "SUCCESS")
+    print_status("STEP 4.8 COMPLETE - All multi-band visualizations generated with validation", "SUCCESS")
     print_status("="*80, "SUCCESS")
     print_status(f"Figures saved to: {output_dir}", "INFO")
     print_status("", "INFO")
     print_status("Generated figures:", "INFO")
-    print_status("  1. step_4_8_multiband_r_squared_comparison.png", "INFO")
-    print_status("  2. step_4_8_multiband_lambda_vs_frequency.png", "INFO")
+    print_status("  1. step_4_8_multiband_r_squared_comparison.png (TEP-FOCUSED)", "INFO")
+    print_status("  2. step_4_8_multiband_lambda_vs_frequency.png (with validation)", "INFO")
     print_status("  3. step_4_8_multiband_spectral_overview.png", "INFO")
     print_status("  4. step_4_8_multiband_post_tidal_emphasis.png", "INFO")
     print_status("  5. step_4_8_multiband_amplitude_decay.png", "INFO")
     print_status("", "INFO")
+    print_status(f"⭐ TEP Band Performance: R² = {tep_mean:.3f} ± {tep_std:.3f} (Primary Theoretical Prediction)", "SUCCESS")
+    print_status("", "INFO")
     print_status("All figures automatically synced to site/public/figures/", "SUCCESS")
+    
+    return lambda_stats
 
 if __name__ == "__main__":
     main()

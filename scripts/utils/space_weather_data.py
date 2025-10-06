@@ -5,10 +5,10 @@ TEP-GNSS Space Weather Data Utilities
 Provides authentic space weather data from official sources:
 - NOAA Space Weather Prediction Center (Kp/Ap indices)
 - National Research Council Canada (F10.7 solar flux)
-- Fallback to climatological quiet conditions (NOT synthetic patterns)
+Note: No fallbacks or mock values are used; failures raise errors to avoid masking issues.
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -74,34 +74,25 @@ def get_authentic_space_weather_data(start_date: pd.Timestamp, end_date: pd.Time
             space_weather_df = space_weather_df.drop(columns=['f107_flux_swc'], errors='ignore')
             real_data_fetched = True
             
-        # Fill gaps with climatological quiet conditions (NOT synthetic patterns)
-        space_weather_df['kp_index'] = space_weather_df['kp_index'].fillna(2.0)  # Quiet geomagnetic
-        space_weather_df['ap_index'] = space_weather_df['ap_index'].fillna(7.0)  # Quiet geomagnetic
-        space_weather_df['f107_flux'] = space_weather_df['f107_flux'].fillna(120.0)  # Solar minimum
-        
+        # Require at least one authentic source; otherwise, raise to avoid masked errors
+        if not real_data_fetched:
+            raise TEPDataError("Space weather data unavailable from all sources; aborting without fallback")
+
+        # Drop days without authentic values across all parameters
+        space_weather_df = space_weather_df.dropna(subset=['kp_index', 'ap_index'], how='all')
+        if space_weather_df.empty:
+            raise TEPDataError("Space weather dataset empty after filtering invalid rows")
+
         # Report data quality
-        authentic_count = len(space_weather_df) - space_weather_df.isna().sum().sum()
+        authentic_count = space_weather_df[['kp_index','ap_index','f107_flux']].notna().sum().sum()
         total_count = len(space_weather_df) * 3  # 3 parameters per day
-        
-        if real_data_fetched:
-            print_status(f"Space weather: {authentic_count}/{total_count} authentic values fetched", "SUCCESS")
-        else:
-            print_status("No real-time data available - using climatological quiet conditions", "WARNING")
-            
+        print_status(f"Space weather: {authentic_count}/{total_count} authentic values fetched", "SUCCESS")
+
         return space_weather_df
         
     except Exception as e:
-        print_status(f"Failed to fetch space weather data: {e}", "ERROR")
-        print_status("Using climatological quiet conditions as fallback", "WARNING")
-        
-        # Fallback to climatological quiet conditions
-        dates = pd.date_range(start=start_date, end=end_date, freq='D')
-        return pd.DataFrame({
-            'date': dates,
-            'kp_index': 2.0,  # Quiet geomagnetic conditions
-            'ap_index': 7.0,  # Quiet geomagnetic conditions  
-            'f107_flux': 120.0  # Solar minimum conditions
-        })
+        # Escalate errors to callers to avoid hidden fallbacks
+        raise TEPDataError(f"Failed to fetch authentic space weather data: {e}")
 
 def fetch_noaa_recent_kp_ap(start_date: pd.Timestamp, end_date: pd.Timestamp) -> pd.DataFrame:
     """

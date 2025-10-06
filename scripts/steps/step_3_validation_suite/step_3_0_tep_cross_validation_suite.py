@@ -52,7 +52,7 @@ Environment Variables:
   - TEP_MEMORY_SAFE_MODE: Enable memory-safe mode (default: False - use full datasets)
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -1952,7 +1952,7 @@ def main():
     # Set as the current step logger for print_status
     set_step_logger(step_logger)
 
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.0: Cross-Validation Suite (Comprehensive)", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.0: Cross-Validation Suite (Comprehensive)", "TITLE")
     print_status("=" * 70, "INFO")
     
     # Validate inputs

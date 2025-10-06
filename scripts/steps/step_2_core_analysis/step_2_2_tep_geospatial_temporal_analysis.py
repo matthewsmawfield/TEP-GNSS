@@ -62,7 +62,7 @@ Environment Variables:
   - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8.0)
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -1155,7 +1155,7 @@ def run_helical_motion_only(analysis_center: str = None) -> Dict:
               analyses, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if an analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("HELICAL MOTION ANALYSIS - Advanced Earth Motion Detection", "TITLE")
 
     all_results = {}
@@ -1337,7 +1337,7 @@ def run_jupiter_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("JUPITER OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
 
     all_results = {}
@@ -1430,7 +1430,7 @@ def run_saturn_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("SATURN OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
 
     all_results = {}
@@ -1494,7 +1494,7 @@ def run_mars_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("MARS OPPOSITION ANALYSIS - Weakest Signal Sensitivity Test", "TITLE")
 
     all_results = {}
@@ -1557,7 +1557,7 @@ def run_lunar_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("LUNAR STANDSTILL ANALYSIS - Sidereal Day Amplitude Tracking", "TITLE")
 
     all_results = {}
@@ -1621,7 +1621,7 @@ def run_astronomical_events_only(analysis_center: str = None) -> Dict:
               results from Jupiter, Saturn, and Mars analyses, along with an overall
               comparison summary.
     """
-    print_status("TEP GNSS Analysis Package v0.13", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
     print_status("ASTRONOMICAL EVENTS ANALYSIS - Jupiter vs Saturn vs Mars Opposition Comparison", "TITLE")
 
     all_results = {}
@@ -2255,7 +2255,7 @@ def main():
         return all(r.get('success', False) for r in results.values())
     
     # Original full Step 2.2 analysis
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 2.2: Geospatial Temporal Analysis", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 2.2: Geospatial Temporal Analysis", "TITLE")
     
     start_time = time.time()
     
@@ -2316,8 +2316,8 @@ def main():
 
                 if result.get('enhanced_anisotropy_analysis', {}).get('success', False):
                     anisotropy = result['enhanced_anisotropy_analysis']
-                    stats = anisotropy['anisotropy_statistics']
-                    print_status(f"    Enhanced Anisotropy: {stats['n_sectors']} sectors, CV = {stats['coefficient_of_variation']:.3f} ({stats['anisotropy_category']})", "INFO")
+                    aniso_stats = anisotropy['anisotropy_statistics']
+                    print_status(f"    Enhanced Anisotropy: {aniso_stats['n_sectors']} sectors, CV = {aniso_stats['coefficient_of_variation']:.3f} ({aniso_stats['anisotropy_category']})", "INFO")
             else:
                 print_status(f"  {ac.upper()}: FAILED - {result.get('error', 'Unknown error')}", "ERROR")
         
@@ -6173,12 +6173,12 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         
         print_status(f"Multiple Testing Correction Results:", "INFO")
         if correction_results.get('correction_stats'):
-            stats = correction_results['correction_stats']
-            print_status(f"   Total tests: {stats.get('total_tests', 0)}", "INFO")
-            print_status(f"   Uncorrected significant: {stats.get('uncorrected_significant_count', 0)}", "INFO")
-            print_status(f"   Bonferroni significant: {stats.get('bonferroni_significant_count', 0)}", "INFO")
-            print_status(f"   FDR significant: {stats.get('fdr_significant_count', 0)}", "INFO")
-            print_status(f"   Bonferroni α: {stats.get('bonferroni_alpha', 0.05):.6f}", "INFO")
+            correction_stats = correction_results['correction_stats']
+            print_status(f"   Total tests: {correction_stats.get('total_tests', 0)}", "INFO")
+            print_status(f"   Uncorrected significant: {correction_stats.get('uncorrected_significant_count', 0)}", "INFO")
+            print_status(f"   Bonferroni significant: {correction_stats.get('bonferroni_significant_count', 0)}", "INFO")
+            print_status(f"   FDR significant: {correction_stats.get('fdr_significant_count', 0)}", "INFO")
+            print_status(f"   Bonferroni α: {correction_stats.get('bonferroni_alpha', 0.05):.6f}", "INFO")
         else:
             print_status("   No planetary detections found for correction analysis", "INFO")
         

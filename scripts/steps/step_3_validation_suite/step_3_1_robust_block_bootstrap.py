@@ -48,7 +48,7 @@ Environment Variables:
   - TEP_BOOTSTRAP_CONFIDENCE_LEVEL: Confidence level for intervals (default: 0.95)
 
 Author: Matthew Lukin Smawfield
-Date: September 2025
+Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
@@ -1259,7 +1259,7 @@ def main():
     start_time = time.time()
     
     print_status("=" * 80, "INFO")
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.1: Robust Block Bootstrap", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.1: Robust Block Bootstrap", "TITLE")
     print_status("=" * 80, "INFO")
     
     # Configuration summary

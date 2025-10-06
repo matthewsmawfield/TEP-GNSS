@@ -1,4 +1,5 @@
     <h2>6. Analysis Package</h2>
+    <p style="font-size: 14px; color: #666; font-style: italic; margin-bottom: 15px;">Complete Reproducible Pipeline</p>
     
     <p>This work provides a complete, reproducible analysis pipeline for testing TEP predictions using GNSS data:</p>
     
@@ -44,26 +45,27 @@
         <p><strong>Purpose:</strong> Obtain the full analysis code locally to run the pipeline and reproduce results.</p>
 
         <div style="background-color: rgba(45, 1, 64, 0.08); border-left: 4px solid #2D0140; padding: 15px; margin: 20px 0; border-radius: 4px;">
-            <h3 style="margin-top: 0; color: #2D0140;">🚀 Google Colab Analysis (Recommended)</h3>
-            <p style="margin: 10px 0;"><strong>Cloud-based scientific analysis:</strong> Professional implementation optimized for Google Colab with 30-day analysis window for efficient execution.</p>
+            <h3 style="margin-top: 0; color: #2D0140;">GCP High-CPU Analysis (Recommended for Large-Scale)</h3>
+            <p style="margin: 10px 0;"><strong>Professional cloud deployment:</strong> Optimized for Google Cloud Platform high-CPU instances with full 911-day analysis window and automated deployment.</p>
             
             <div class="error-budget" style="margin: 15px 0;">
-                <strong>1. Prepare package:</strong> <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">./prepare_colab_package.sh</code>
-                <button type="button" aria-label="Copy command" onclick="copyToClipboard('./prepare_colab_package.sh', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+                <strong>1. Configure GCP:</strong> <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">export GCP_PROJECT_ID=your-project-id</code><br>
+                <strong>2. Deploy:</strong> <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">./run_tep_gcp_high_cpu.sh</code>
+                <button type="button" aria-label="Copy command" onclick="copyToClipboard('./run_tep_gcp_high_cpu.sh', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                     </svg>
                 </button><br>
-                <strong>2. Upload to Colab:</strong> <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">TEP_GNSS_Colab_Analysis.ipynb</code> + <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">tep-gnss-colab-package.zip</code><br>
-                <strong>3. Execute:</strong> Run all notebook cells
             </div>
             
-            <p style="margin: 10px 0;"><strong>Features:</strong> Professional scientific output formatting, robust error handling, 30-day analysis window (2024-01-01 to 2024-01-30), expected runtime 2-4 hours in Colab Pro.</p>
+            <p style="margin: 10px 0;"><strong>Features:</strong> Automated GCP setup, high-CPU optimization (60-80 vCPUs), persistent storage, background execution, full 911-day analysis (2023-2025), Moon-Chandler coupling validation.</p>
+            
+            <p style="margin: 10px 0; font-size: 13px; color: #666;"><strong>Recommended instances:</strong> c2-standard-60 (60 vCPUs, 240GB RAM), c2-standard-30 (30 vCPUs, 120GB RAM), n2-highcpu-80 (80 vCPUs, 80GB RAM)</p>
         </div>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border-left: 4px solid #495773; padding: 15px; margin: 20px 0; border-radius: 4px;">
-            <h3 style="margin-top: 0; color: #495773;">⚡ Local Installation: Full Pipeline</h3>
-            <p style="margin: 10px 0;"><strong>For complete local reproduction:</strong> Run the entire pipeline with a single command that handles cleanup, data acquisition, analysis, validation, and visualization automatically.</p>
+            <h3 style="margin-top: 0; color: #495773;">Local Pipeline Execution</h3>
+            <p style="margin: 10px 0;"><strong>For development and targeted analysis:</strong> Run specific pipeline steps locally with precise control over analysis parameters.</p>
             
             <div class="error-budget" style="margin: 15px 0;">
                 <strong>Command:</strong> <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/clean_run_full_pipeline.py</code>
@@ -130,7 +132,7 @@
                 </svg>
             </button><br>
         </div>
-        <p><strong>Purpose:</strong> Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates definitive station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.</p>
+        <p><strong>Purpose:</strong> Validates station coordinates and performs comprehensive audit for pipeline consistency. Checks Step 1 completion, validates ECEF coordinate data quality, runs integrated station ID audit with spatial analysis, creates authoritative station counts for the pipeline, and generates comprehensive validation summary with data-driven metadata. Ensures coordinate data integrity and establishes authoritative station catalogue for subsequent correlation analysis.</p>
         
         <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #495773;">
             <h4 style="margin-top: 0; color: #495773;">Group 2: Core Analysis (step_2_core_analysis/)</h4>
@@ -228,7 +230,7 @@
                 </svg>
             </button><br>
         </div>
-        <p><strong>Purpose:</strong> Comprehensive geographic bias validation using statistical resampling to assess geographic consistency, hemisphere balance, elevation independence, and ocean vs land baseline characteristics.</p>
+        <p><strong>Purpose:</strong> Comprehensive geographic bias validation using statistical resampling to assess geographic consistency, hemisphere balance, elevation quintile independence, and ocean vs land baseline characteristics.</p>
 
         <h4>Step 3.5: Realistic Ionospheric Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~15-20 minutes</span></h4>
         <div class="error-budget">
@@ -310,7 +312,7 @@
                 </svg>
             </button><br>
         </div>
-        <p><strong>Purpose:</strong> Comprehensive high-resolution astronomical analysis including: (1) Complete 5-eclipse study (2023-2025) using identical TEP cos(phase(CSD)) methodology across all major eclipse types (Total, Annular, Hybrid, Partial) with 294,572 station pair measurements demonstrating eclipse type hierarchy consistent with theoretical predictions; (2) Cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness - Venus (4.05 orbits) shows strong correlations (ESA: +17.7%, IGS: +10.6%, CODE: +4.8%) while outer planets show incomplete cycles and weaker effects; (3) Advanced sham controls confirming robust statistical significance beyond GPS processing artifacts; (4) Instantaneous frequency analysis detecting event-locked solar rotation modulations. This analysis demonstrates how the global GPS network acts as a sensitive detector of both transient (eclipse) and persistent (orbital periodicity) field modulations, providing comprehensive validation of TEP astronomical coupling predictions using 30-second CLK file data.</p>
+        <p><strong>Purpose:</strong> Comprehensive high-resolution astronomical analysis including: (1) Complete 5-eclipse study (2023-2025) using 30-second CLK data revealing substantial coherence modulations (18-87% of baseline TEP signal) with eclipse type hierarchy where partial eclipses produce strongest network responses (mean: 4.54×10⁻², 87% of baseline) through ionospheric gradient mechanisms; (2) Cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness - Venus (4.05 orbits) shows strong correlations (ESA: +17.7%, IGS: +10.6%, CODE: +4.8%) while outer planets show incomplete cycles and weaker effects; (3) Advanced sham controls confirming robust statistical significance beyond GPS processing artifacts; (4) Instantaneous frequency analysis detecting event-locked solar rotation modulations. This analysis demonstrates how the global GPS network acts as a sensitive detector of both transient (eclipse) and persistent (orbital periodicity) field modulations, providing comprehensive validation of TEP astronomical coupling predictions using 30-second CLK file data.</p>
         
         <h4>Step 4.4: Gravitational Temporal Field Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~30-45 minutes</span></h4>
         <div class="error-budget">
@@ -321,7 +323,7 @@
                 </svg>
             </button><br>
         </div>
-        <p><strong>Purpose:</strong> Comprehensive gravitational-temporal field correlation analysis using NASA/JPL DE440/441 ephemeris to correlate planetary gravitational influences with GPS clock coherence patterns, revealing exceptionally strong stacked gravitational pattern correlations (r = -0.503, p = 1.51×10<sup>-59</sup>) with optimal 227-day smoothing window using quality-filtered Step 2.1 geospatial data and validating TEP's core predictions of non-integrable time transport and synchronization holonomy.</p>
+        <p><strong>Purpose:</strong> Comprehensive gravitational-temporal field correlation analysis using NASA/JPL DE440/441 ephemeris to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, p = 1.51×10<sup>-59</sup>) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV = 0.5-0.6). Energy vs velocity scaling analysis reveals complex multi-mechanism coupling, validating TEP's core predictions of non-integrable time transport and synchronization holonomy.</p>
 
         <h4>Step 4.5: Comprehensive Diurnal Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~2-4 hours</span></h4>
         <div class="error-budget">

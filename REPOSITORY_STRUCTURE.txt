@@ -5,7 +5,7 @@ Scientific Computing Best Practices
 CORE PHILOSOPHY
 ================================================================================
 OFFICIAL PIPELINE    ->  PUBLICATION READY
-EXPLORATORY WORK     ->  RESEARCH & DEVELOPMENT
+CLEAN REPOSITORY     ->  NO DEVELOPMENT CLUTTER
 
 ================================================================================
 FOLDER STRUCTURE
@@ -15,22 +15,23 @@ SCRIPTS (Code Organization)
 ---------------------------
 scripts/
 ├── steps/           ->  OFFICIAL PIPELINE
-│   ├── data_acquisition/
+│   ├── step_1_data_acquisition/
 │   │   ├── step_1_0_provenance_snapshot.py
 │   │   ├── step_1_1_tep_data_acquisition.py
 │   │   └── step_1_2_tep_coordinate_validation.py
-│   ├── core_analysis/
+│   ├── step_2_core_analysis/
 │   │   ├── step_2_0_tep_correlation_analysis.py
 │   │   ├── step_2_1_data_quality_validation.py
 │   │   └── step_2_2_tep_geospatial_temporal_analysis.py
-│   ├── validation_suite/
+│   ├── step_3_validation_suite/
 │   │   ├── step_3_0_tep_cross_validation_suite.py
 │   │   ├── step_3_1_robust_block_bootstrap.py
 │   │   ├── step_3_2_tep_null_tests.py
 │   │   ├── step_3_3_methodology_validation.py
 │   │   ├── step_3_4_geographic_bias_validation.py
-│   │   └── step_3_5_realistic_ionospheric_validation.py
-│   └── advanced_analysis_and_visualization/
+│   │   ├── step_3_5_realistic_ionospheric_validation.py
+│   │   └── step_3_6_control_band_analysis.py
+│   └── step_4_advanced_analysis_and_visualization/
 │       ├── step_4_0_tep_advanced_analysis.py
 │       ├── step_4_1_tep_visualization.py
 │       ├── step_4_2_tep_synthesis_figure.py
@@ -38,43 +39,42 @@ scripts/
 │       ├── step_4_4_gravitational_temporal_field_analysis.py
 │       ├── step_4_5_comprehensive_diurnal_analysis.py
 │       ├── step_4_6_tid_exclusion_analysis.py
-│       └── step_4_7_multiple_comparison_corrections.py
-│
-├── exploratory/     ->  ALL EXPERIMENTAL WORK 
-│   ├── Step 14 Variants
-│   ├── Analysis & Investigation
-│   └── Utilities & Research/historical_code/aggressive_acquire.py
+│       ├── step_4_7_multiple_comparison_corrections.py
+│       └── step_4_8_multiband_visualization.py
 │
 └── utils/           ->  SHARED INFRASTRUCTURE 
     ├── __init__.py
     ├── config.py           ->  Configuration management
     ├── exceptions.py       ->  Custom exception classes
     ├── logger.py           ->  Logging utilities
-    └── space_weather_data.py ->  Space weather data handling
+    ├── space_weather_data.py ->  Space weather data handling
+    ├── data_validation.py  ->  Data quality checks
+    ├── file_operations.py  ->  File I/O utilities
+    ├── geospatial_utils.py ->  Geographic calculations
+    ├── statistical_utils.py ->  Statistical functions
+    ├── visualization_utils.py ->  Plotting utilities
+    ├── astronomical_utils.py ->  Astronomical calculations
+    ├── temporal_utils.py   ->  Time series utilities
+    └── sync_figures.sh     ->  Figure synchronization
 
 DATA (Input Organization)
 -------------------------
 data/
-├── raw/             ->  ORIGINAL GNSS DATA (3,869 files)
-│   ├── code/        ->  CODE analysis center (1,907 files)
-│   ├── esa_final/   ->  ESA analysis center (997 files)
-│   └── igs_combined/ ->  IGS combined data (965 files)
+├── raw/             ->  ORIGINAL GNSS DATA (gitignored)
+│   ├── code/        ->  CODE analysis center
+│   ├── esa_final/   ->  ESA analysis center
+│   └── igs_combined/ ->  IGS combined data
 │
-├── processed/       ->  PIPELINE OUTPUTS (5 files)
+├── processed/       ->  PIPELINE OUTPUTS
 │   ├── step_1_1_station_coords_global.csv
 │   ├── step_2_1_geospatial_code.csv
 │   ├── step_2_1_geospatial_esa_final.csv
 │   ├── step_2_1_geospatial_igs_combined.csv
-│   ├── step_4_1_station_distances.csv
+│   ├── step_2_1_station_distances.csv
 │   └── step_4_4_comprehensive_gravitational_temporal_data.csv
 │
-├── coordinates/     ->  STATION METADATA (1 file)
-│   └── station_eclipse_distances.csv
-│
-├── exploratory/     ->  EXPERIMENTAL DATA (gitignored)
-│   ├── checkpoints/ ->  Analysis state snapshots
-│   ├── historical_code/raw/ ->  Legacy data archives (2010-2025)
-│   └── step_4_4_complete_2010_2025_gravitational_temporal_data.csv
+├── coordinates/     ->  STATION METADATA
+│   └── step_1_1_station_coords_global.csv
 │
 ├── station_logs/    ->  Station operational information
 │
@@ -95,11 +95,13 @@ results/
 │   ├── step_3_3_*_validation.json
 │   ├── step_3_4_geographic_bias_validation.json
 │   ├── step_3_5_*_ionospheric_validation.json
+│   ├── step_3_6_control_band_analysis.json
 │   ├── step_4_3_*_high_res_*.json
 │   ├── step_4_4_gravitational_temporal_field_analysis.json
 │   ├── step_4_5_diurnal_validation_*.json
 │   ├── step_4_6_tid_exclusion_comprehensive.json
-│   └── step_4_7_multiple_comparison_corrections.json
+│   ├── step_4_7_multiple_comparison_corrections.json
+│   └── step_4_8_multiband_analysis.json
 │
 ├── figures/         ->  PUBLICATION FIGURES
 │   ├── figure_1_TEP_site_themed.png
@@ -118,37 +120,35 @@ results/
 │   ├── step_4_5_seasonal_analysis_*.png
 │   └── tep_correlation_publication.png
 │
-├── exploratory/     ->  EXPERIMENTAL RESULTS (gitignored)
-│   ├── figures/     ->  Research visualizations (12 files)
-│   ├── step_4_4_2022_*_results.json
-│   ├── step_4_4_extended_code_analysis_results.json
-│   ├── step_4_4_outlier_*_results.json
-│   ├── step_4_4_smoothing_comparison_results.json
-│   ├── csd_projection_bias_report.txt
-│   ├── projection_bias_rebuttal.md
-│   ├── eclipse_methodology_validation.png
-│   ├── phase_distributions.png
-│   └── phase_metrics_code.csv
+├── tmp/             ->  Temporary files (gitignored)
+│   ├── methodology_validation_checkpoints/
+│   ├── step_1_2_station_audit.json
+│   ├── step_2_0_pairs_*_tep_band.csv
+│   ├── step_4_4_gravitational_temporal_field_analysis.pid
+│   └── streaming/
 │
-├── validation/      ->  QUALITY CONTROL (2 files)
-│   ├── bias_characterization.json
-│   └── validation_report.json
-│
-└── tmp/             ->  Temporary files (gitignored)
+└── [Analysis Reports]
+    ├── earth_motion_proportion_analysis.md
+    ├── gravitational_proportions_analysis.md
+    ├── pipeline_amendments_proposal.md
+    ├── step_2_2_analysis_summary.md
+    ├── step_4_4_enhancement_plan.md
+    └── step_4_4_implementation_plan.md
 
 SITE (Web Documentation)
 ------------------------
 site/
 ├── index.html       ->  Interactive research website
-├── figures/         ->  Website figures (44 files)
+├── figures/         ->  Website figures
 ├── data/            ->  Interactive data
-│   ├── step_4_4/gravitational_temporal_daily.json
-│   └── step_17/
-├── public/          ->  Static web assets (28 files)
-├── Smawfield_2025_GlobalTimeEchoes_Preprint_v0.13_Jaipur.pdf
+│   └── step_4_4/gravitational_temporal_daily.json
+├── public/          ->  Static web assets
+├── components/      ->  Website components
 ├── package.json     ->  Node.js dependencies
 ├── netlify.toml     ->  Deployment configuration
-└── visualizations/  ->  Interactive visualizations
+├── manifest.json    ->  PWA configuration
+├── CITATION.cff     ->  Citation metadata
+└── LICENSE          ->  License information
 
 THEORY (Theoretical Documentation)
 ----------------------------------
@@ -159,43 +159,43 @@ theory/
 DOCUMENTATION & CONFIGURATION
 -----------------------------
 logs/                ->  EXECUTION LOGS
-├── step_1_1_data_acquisition.json
-├── step_1_1_downloads.json
-├── step_1_2_coordinate_validation.json
-├── step_2_0_correlation_analysis.json
-├── step_2_0_correlation.log
-├── step_4_0_advanced_analysis.json
-└── step_4_1_visualization.json
-
-docs/                ->  Project documentation (currently empty)
+├── general_tep_gnss.log
+├── step_1_0_provenance_snapshot.log
+├── step_1_1_data_acquisition.log
+├── step_1_2_coordinate_validation.log
+├── step_2_0_correlation_analysis.log
+├── step_2_1_aggregate_geospatial_data.log
+├── step_2_1_data_quality_validation.log
+├── step_2_2_geospatial_temporal_analysis.log
+├── step_3_0_cross_validation_suite.log
+├── step_3_1_robust_block_bootstrap.log
+├── step_3_2_tep_null_tests.log
+├── step_3_3_methodology_validation.log
+├── step_3_4_geographic_bias_validation.log
+├── step_3_5_realistic_ionospheric_validation.log
+├── step_3_6_control_band_analysis.log
+├── step_4_0_tep_advanced_analysis.log
+├── step_4_1_tep_visualization.log
+├── step_4_2_tep_synthesis_figure.log
+├── step_4_3_high_resolution_astronomical_events.log
+├── step_4_4_gravitational_temporal_field_analysis.log
+├── step_4_5_comprehensive_diurnal_analysis.log
+├── step_4_6_tid_exclusion_analysis.log
+├── step_4_7_multiple_comparison_corrections.log
+├── step_4_8_multiband_visualization.log
+└── clean_run_step3.log
 
 requirements/        ->  Dependencies
 └── requirements.txt ->  Python package dependencies
 
-figures/             ->  Root figures (currently empty)
-
 ROOT FILES
 ----------
 README.md                                    ->  Project overview
-TEP-GNSS_manuscript_v0.13_Jaipur.md          ->  Main manuscript
-TID_EXCLUSION_SUMMARY.md                     ->  Analysis summary
-description text                             ->  Project description
-TEP-GNSS.code-workspace                      ->  VS Code workspace
-sync_figures.sh                              ->  Figure synchronization script
-
-================================================================================
-KEY DISTINCTIONS
-================================================================================
-
-OFFICIAL PIPELINE vs EXPERIMENTAL WORK
---------------------------------------
-OFFICIAL PIPELINE:           EXPERIMENTAL WORK:
-/scripts/steps/              /scripts/exploratory/
-Publication ready            Research & development
-Peer-reviewed               Testing new approaches
-Stable interfaces           Alternative methods
-Well-documented             Future candidates
-Grouped (step_1.0-4.5)      Multiple variants
+SETUP_GUIDE.md                              ->  Setup instructions
+REPOSITORY_STRUCTURE.txt                    ->  This file
+TEP-GNSS.code-workspace                     ->  VS Code workspace
+run_tep_gcp_high_cpu.sh                     ->  High-performance execution script
+env.example                                 ->  Environment variables template
 
 ================================================================================
 VERSION CONTROL
@@ -206,48 +206,83 @@ TRACKED (In Git)
 ✅ scripts/steps/        ->  Official pipeline
 ✅ scripts/utils/        ->  Shared infrastructure  
 ✅ data/processed/       ->  Pipeline outputs
+✅ data/coordinates/     ->  Station metadata
 ✅ results/outputs/      ->  Official results
 ✅ results/figures/      ->  Publication figures
+✅ results/*.md          ->  Analysis reports
 ✅ site/                 ->  Web documentation
 ✅ theory/               ->  Theoretical documentation
 ✅ logs/                 ->  Execution logs
 ✅ requirements/         ->  Dependencies
+✅ Root documentation    ->  README, setup guides
 
 GITIGNORED (Not Tracked)
 ------------------------
-🚫 scripts/exploratory/  ->  Experimental scripts
-🚫 data/exploratory/     ->  Experimental data
-🚫 results/exploratory/  ->  Experimental results
-🚫 data/raw/*/          ->  Large raw files
+🚫 data/raw/            ->  Large raw GNSS files
+🚫 data/station_logs/   ->  Station operational logs
 🚫 results/tmp/         ->  Temporary files
+🚫 venv/                ->  Python virtual environment
+🚫 .env                 ->  Environment variables
+🚫 .cursor/             ->  Cursor IDE files
+🚫 .cursorrules         ->  Cursor rules
+🚫 .cursor-settings     ->  Cursor settings
+🚫 exploratory/         ->  Any exploratory directories
+🚫 **/exploratory/      ->  Exploratory work anywhere
+🚫 *.log                ->  Log files
+🚫 *.tmp                ->  Temporary files
+🚫 .DS_Store            ->  macOS system files
+
+================================================================================
+PIPELINE EXECUTION
+================================================================================
+
+CLEAN EXECUTION SCRIPTS
+-----------------------
+scripts/
+├── clean_run_full_pipeline.py     ->  Complete pipeline
+├── clean_run_step1.py             ->  Data acquisition
+├── clean_run_step1_2.py           ->  Acquisition + validation
+├── clean_run_step3.py             ->  Validation suite
+├── clean_run_step3_4.py           ->  Validation + analysis
+├── clean_run_step4.py             ->  Advanced analysis
+└── run_step2_only.py              ->  Core analysis only
+
+HIGH-PERFORMANCE EXECUTION
+--------------------------
+run_tep_gcp_high_cpu.sh            ->  Google Cloud Platform execution
 
 ================================================================================
 BENEFITS
 ================================================================================
 
-Clear Separation
-- Production vs Research code clearly separated
-- Official pipeline ready for publication
-- Experimental work isolated for development
+Clean Repository
+- No development clutter or experimental files
+- Publication-ready code only
+- Clear separation of concerns
+- Professional scientific presentation
 
 Scalable Architecture
-- Sequential pipeline (step_1.0 -> step_4.7)
+- Sequential pipeline (step_1.0 -> step_4.8)
 - Modular design - easy to extend
-- Research-friendly - supports experimentation
+- Comprehensive validation suite
+- Advanced analysis capabilities
 
-Workflow
-EXPLORATORY -> OFFICIAL PIPELINE -> PUBLICATION
-(Research)   (Validation)        (Manuscript)
+Scientific Best Practices
+- Reproducible research
+- Comprehensive logging
+- Data provenance tracking
+- Quality validation at each step
 
 ================================================================================
 SUMMARY
 ================================================================================
 
 TEP-GNSS Repository Structure:
-✅ One official pipeline for publication
-✅ One exploratory folder for all research
-✅ Clear separation of concerns
+✅ Clean, publication-ready repository
+✅ Official pipeline with comprehensive validation
+✅ No experimental or development clutter
+✅ Professional scientific computing standards
 ✅ Proper gitignore configuration
-✅ Scientific computing best practices
+✅ Complete documentation and setup guides
 
-Perfect for: Publication-ready research with experimental development space
+Perfect for: Publication-ready research with professional presentation

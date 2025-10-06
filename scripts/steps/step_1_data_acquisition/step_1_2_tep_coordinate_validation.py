@@ -52,7 +52,7 @@ step_logger = TEPLogger(
 
 def print_step_header():
     """Print formatted step header"""
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 1.2: Coordinate Validation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 1.2: Coordinate Validation", "TITLE")
 
 def check_step_1_1_completion():
     """Check that Step 1 completed successfully"""
@@ -286,7 +286,7 @@ def main():
     
     args = parser.parse_args()
     
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 1.2: Coordinate Validation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 1.2: Coordinate Validation", "TITLE")
     
     # Validation only mode
     if args.validate_only:

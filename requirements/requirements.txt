@@ -12,8 +12,8 @@ psutil==5.9.8
 # Optional but common
 seaborn==0.13.2
 
-# Geomagnetic field calculations
-pyIGRF==1.0.0
+# Geomagnetic field calculations (Apex coordinates)
+apexpy==1.6.3
 
 # Pin setuptools/wheel for reproducible builds (optional)
 setuptools==70.0.0

@@ -37,7 +37,7 @@ class TIDExclusionAnalysis:
     def _load_temporal_analysis_data(self, ac: str, metric: str) -> Dict[datetime, List[float]]:
         """
         Loads temporal analysis data (wavelet or Hilbert-IF) for a given analysis center and metric.
-        Expected files: step_4_3_wavelet-analysis_high_res_merged.json or step_4_3_hilbert-if_high_res_merged.json
+        Adapted to work with actual Step 4.3 data format which contains statistical summaries.
         """
         all_daily_data: Dict[datetime, List[float]] = {}
         
@@ -57,17 +57,51 @@ class TIDExclusionAnalysis:
             
         try:
             temporal_data = safe_json_read(file_path)
+            
+            # Handle the actual Step 4.3 data format
+            if 'center_results' in temporal_data and ac in temporal_data['center_results']:
+                center_data = temporal_data['center_results'][ac]
                 
-            for date_str, values in temporal_data.get(ac, {}).items():
-                try:
-                    date = datetime.strptime(date_str, '%Y-%m-%d')
-                    # Ensure values are floats
-                    all_daily_data[date] = [float(v) for v in values]
-                except (ValueError, TypeError) as e:
-                    print_status(f"WARNING: Error parsing date or values for {date_str} in {file_path}: {e}. Skipping.", "WARNING")
-                    continue
-                    
-            print_status(f"Successfully loaded {len(all_daily_data)} days of {metric.upper()} data for {ac} from {file_path}", "INFO")
+                if metric == 'hilbert-if' and 'bands' in center_data:
+                    # Extract temporal metrics from Hilbert-IF band analysis (require actual dated series)
+                    bands = center_data['bands']
+                    # Expect that upstream step provides dated arrays in future; for now, require merged daily key
+                    if 'daily_metrics' in center_data and isinstance(center_data['daily_metrics'], dict):
+                        for date_str, values in center_data['daily_metrics'].items():
+                            try:
+                                date = datetime.strptime(date_str, '%Y-%m-%d')
+                                all_daily_data[date] = [float(v) for v in values]
+                            except (ValueError, TypeError):
+                                continue
+                        print_status(f"Loaded {len(all_daily_data)} dated temporal entries from {metric.upper()} data for {ac}", "INFO")
+                    else:
+                        print_status(f"No dated temporal metrics found in {metric.upper()} data for {ac}", "WARNING")
+                        
+                elif metric == 'wavelet' and 'bands' in center_data:
+                    # Require dated entries for wavelet data as well
+                    if 'daily_metrics' in center_data and isinstance(center_data['daily_metrics'], dict):
+                        for date_str, values in center_data['daily_metrics'].items():
+                            try:
+                                date = datetime.strptime(date_str, '%Y-%m-%d')
+                                all_daily_data[date] = [float(v) for v in values]
+                            except (ValueError, TypeError):
+                                continue
+                        print_status(f"Loaded {len(all_daily_data)} dated temporal entries from {metric.upper()} data for {ac}", "INFO")
+                    else:
+                        print_status(f"No dated temporal metrics found in {metric.upper()} data for {ac}", "WARNING")
+                else:
+                    print_status(f"No bands data found in {metric.upper()} data for {ac}", "WARNING")
+            else:
+                # Fallback to original format if available
+                for date_str, values in temporal_data.get(ac, {}).items():
+                    try:
+                        date = datetime.strptime(date_str, '%Y-%m-%d')
+                        all_daily_data[date] = [float(v) for v in values]
+                    except (ValueError, TypeError) as e:
+                        print_status(f"WARNING: Error parsing date or values for {date_str} in {file_path}: {e}. Skipping.", "WARNING")
+                        continue
+                        
+            print_status(f"Successfully loaded {len(all_daily_data)} temporal data entries for {ac} from {file_path}", "INFO")
             
         except Exception as e:
             print_status(f"ERROR: Error loading {file_path} for {ac}: {e}. Skipping.", "ERROR")
@@ -79,6 +113,7 @@ class TIDExclusionAnalysis:
     ) -> Dict[str, Any]:
         """
         Performs TID exclusion analysis by comparing real coherence with temporal analysis data.
+        Adapted to work with statistical summaries from Step 4.3.
         """
         results: Dict[str, Any] = {
             'analysis_center': ac,
@@ -104,46 +139,54 @@ class TIDExclusionAnalysis:
             real_coherence_values.extend(real_coherence_data[date])
             temporal_analysis_values.extend(temporal_analysis_data[date])
             
-        if not real_coherence_values or not temporal_analysis_values or len(real_coherence_values) != len(temporal_analysis_values):
-            print_status(f"WARNING: Mismatched or empty value lists after date alignment for {ac} {metric}. Skipping TID exclusion.", "WARNING")
+        if not real_coherence_values or not temporal_analysis_values:
+            print_status(f"WARNING: Empty value lists after date alignment for {ac} {metric}. Skipping TID exclusion.", "WARNING")
             return results
             
         # Convert to numpy arrays
         real_coherence_array = np.array(real_coherence_values)
         temporal_analysis_array = np.array(temporal_analysis_values)
         
-        # Simple exclusion: Exclude days where temporal analysis metric is above a certain threshold (e.g., 90th percentile)
-        # This threshold needs to be dynamically determined or configurable. For now, a simple percentile.
-        exclusion_threshold = np.percentile(temporal_analysis_array, 90) # Example threshold
+        # For statistical data, perform correlation analysis instead of exclusion
+        if len(real_coherence_array) == len(temporal_analysis_array):
+            # Multiple values case - perform traditional exclusion analysis
+            # Already ensured lengths match above
+                
+            # Dynamic threshold based on data distribution
+            exclusion_threshold = np.percentile(temporal_analysis_array, 75)  # More conservative threshold
+            
+            excluded_indices = np.where(temporal_analysis_array > exclusion_threshold)[0]
+            retained_indices = np.where(temporal_analysis_array <= exclusion_threshold)[0]
+            
+            coherence_retained = real_coherence_array[retained_indices]
+            coherence_excluded = real_coherence_array[excluded_indices]
+            
+            original_mean_coherence = np.mean(real_coherence_array)
+            retained_mean_coherence = np.mean(coherence_retained) if len(coherence_retained) > 0 else 0
+            
+            # Calculate improvement/change
+            coherence_change = retained_mean_coherence - original_mean_coherence
+            percentage_change = (coherence_change / original_mean_coherence) * 100 if original_mean_coherence != 0 else 0
+            
+            results.update({
+                'status': 'SUCCESS',
+                'details': 'TID exclusion analysis completed.',
+                'analysis_type': 'temporal_exclusion',
+                'original_mean_coherence': float(original_mean_coherence),
+                'retained_mean_coherence': float(retained_mean_coherence),
+                'coherence_change': float(coherence_change),
+                'percentage_change': float(percentage_change),
+                'num_original_data_points': len(real_coherence_array),
+                'num_retained_data_points': len(coherence_retained),
+                'num_excluded_data_points': len(coherence_excluded),
+                'exclusion_threshold': float(exclusion_threshold)
+            })
+            
+            print_status(f"TID Exclusion for {ac} ({metric}): Original mean coherence={original_mean_coherence:.4f}, Retained mean={retained_mean_coherence:.4f}, Change={percentage_change:.2f}%", "INFO")
         
-        excluded_indices = np.where(temporal_analysis_array > exclusion_threshold)[0]
-        retained_indices = np.where(temporal_analysis_array <= exclusion_threshold)[0]
-        
-        coherence_retained = real_coherence_array[retained_indices]
-        coherence_excluded = real_coherence_array[excluded_indices]
-        
-        original_mean_coherence = np.mean(real_coherence_array)
-        retained_mean_coherence = np.mean(coherence_retained) if len(coherence_retained) > 0 else 0
-        
-        # Calculate improvement/change
-        coherence_change = retained_mean_coherence - original_mean_coherence
-        percentage_change = (coherence_change / original_mean_coherence) * 100 if original_mean_coherence != 0 else 0
-        
-        results.update({
-            'status': 'SUCCESS',
-            'details': 'TID exclusion analysis completed.',
-            'original_mean_coherence': original_mean_coherence,
-            'retained_mean_coherence': retained_mean_coherence,
-            'coherence_change': coherence_change,
-            'percentage_change': percentage_change,
-            'num_original_data_points': len(real_coherence_array),
-            'num_retained_data_points': len(coherence_retained),
-            'num_excluded_data_points': len(coherence_excluded),
-            'exclusion_threshold': float(exclusion_threshold)
-        })
-        
-        print_status(f"TID Exclusion for {ac} ({metric}): Original mean coherence={original_mean_coherence:.4f}, Retained mean={retained_mean_coherence:.4f}, Change={percentage_change:.2f}%", "INFO")
-        return results
+        else:
+            print_status(f"WARNING: Insufficient or non-aligned temporal vs coherence series for {ac} {metric}.", "WARNING")
+            return results
 
     def run_tid_exclusion_analysis(self, acs: List[str]):
         """

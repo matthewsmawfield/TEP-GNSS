@@ -67,13 +67,23 @@ class PIDManager:
             unique_pids = list(set(existing_pids))
             other_pids = [pid for pid in unique_pids if pid != our_pid]
             
-            if other_pids:
+            # **CRITICAL FIX**: Verify processes exist FIRST, then show message only if needed
+            verified_pids = []
+            for pid in other_pids:
+                try:
+                    os.kill(pid, 0)  # Signal 0 just checks if process exists
+                    verified_pids.append(pid)
+                except OSError:
+                    pass  # Process doesn't exist, skip it
+            
+            # **ONLY SHOW MESSAGE IF WE ACTUALLY FOUND REAL PROCESSES**
+            if verified_pids:
                 print(f"\n{'='*80}")
-                print(f"WARNING: Found {len(other_pids)} existing instance(s) of {self.script_name}")
+                print(f"WARNING: Found {len(verified_pids)} existing instance(s) of {self.script_name}")
                 print("Terminating previous instances...")
                 print("="*80)
                 
-                for pid in other_pids:
+                for pid in verified_pids:
                     try:
                         # Try graceful termination first
                         os.kill(pid, signal.SIGTERM)
@@ -87,6 +97,7 @@ class PIDManager:
                 
                 time.sleep(2)  # Wait for cleanup
                 print(f"Successfully terminated {killed_count} process(es)\n")
+            # **NO MESSAGE AT ALL IF NO REAL PROCESSES FOUND**
         except (FileNotFoundError, subprocess.TimeoutExpired, Exception):
             # pgrep not available or timed out - continue anyway
             pass

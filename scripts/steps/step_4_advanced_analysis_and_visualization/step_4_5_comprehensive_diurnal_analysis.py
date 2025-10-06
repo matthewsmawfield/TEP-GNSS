@@ -102,7 +102,7 @@ class Step4_5Config:
     start_date: datetime
     end_date: datetime
     centers: List[str]
-    max_workers: int = 8
+    max_workers: int = 14  # Updated to match TEP config default
     max_stations: int = 50
     max_pairs: int = 2000
     min_epochs: int = 24
@@ -145,7 +145,7 @@ class Step4_5Config:
             start_date=start_date,
             end_date=end_date,
             centers=centers,
-            max_workers=env_or_arg("STEP4_5_MAX_WORKERS", args.max_workers, int, 8),
+            max_workers=env_or_arg("STEP4_5_MAX_WORKERS", args.max_workers, int, 14),
             max_stations=env_or_arg("STEP4_5_MAX_STATIONS", args.max_stations, int, 50),
             max_pairs=env_or_arg("STEP4_5_MAX_PAIRS", args.max_pairs, int, 2000),
             min_epochs=env_or_arg("STEP4_5_MIN_EPOCHS", args.min_epochs, int, 24),
@@ -375,7 +375,14 @@ def get_step2_0_processed_files(center: str) -> List[str]:
         else:
             return []
     
-    # Extract filenames from pair file names
+    # Check if we have the tep_band files (aggregated results)
+    tep_band_files = [f for f in pair_files if 'tep_band' in f.name]
+    if tep_band_files:
+        # If we have tep_band files, we need to fall back to scanning all CLK files
+        # since the tep_band files don't contain individual CLK filenames
+        return []
+    
+    # Extract filenames from pair file names (for individual CLK files)
     processed_files = []
     for pair_file in pair_files:
         # Extract filename from: step_2_0_pairs_code_COD0OPSFIN_20230010000_01D_30S_CLK.CLK.csv
@@ -661,26 +668,36 @@ def run_center_analysis(cfg: Step4_5Config, center: str, logger) -> Dict[str, ob
     file_args = [(clk_path, cfg, coords_df, rng, center) for clk_path in clk_files]
     
     with ProcessPoolExecutor(max_workers=cfg.max_workers) as executor:
-        future_to_file = {
-            executor.submit(process_single_file, args): args[0] 
-            for args in file_args
-        }
-        
-        completed_files = 0
-        for future in as_completed(future_to_file):
-            clk_path = future_to_file[future]
-            completed_files += 1
+        try:
+            future_to_file = {
+                executor.submit(process_single_file, args): args[0] 
+                for args in file_args
+            }
             
-            try:
-                file_records = future.result()
-                hourly_records.extend(file_records)
+            completed_files = 0
+            for future in as_completed(future_to_file):
+                clk_path = future_to_file[future]
+                completed_files += 1
                 
-                if cfg.verbose and completed_files % 50 == 0:
-                    print_status(f"Completed {completed_files}/{len(clk_files)} files, {len(hourly_records)} hourly records", "INFO")
+                try:
+                    file_records = future.result()
+                    hourly_records.extend(file_records)
                     
-            except Exception as exc:
-                print_status(f"Error processing {clk_path.name}: {exc}", "ERROR")
-                continue
+                    # Progress logging: Every 10 files, always show progress
+                    if completed_files % 10 == 0:
+                        progress_pct = (completed_files / len(clk_files)) * 100
+                        print_status(f"Progress: {completed_files}/{len(clk_files)} files ({progress_pct:.1f}%) - {len(hourly_records):,} hourly records", "INFO")
+                        
+                except Exception as exc:
+                    print_status(f"Error processing {clk_path.name}: {exc}", "ERROR")
+                    continue
+        except KeyboardInterrupt:
+            print_status("Analysis interrupted by user. Shutting down workers...", "WARNING")
+            executor.shutdown(wait=False, cancel_futures=True)
+            raise
+        finally:
+            # Ensure clean shutdown
+            executor.shutdown(wait=True, cancel_futures=True)
     
     if not hourly_records:
         raise RuntimeError(f"No hourly records generated for {center}")
@@ -745,17 +762,21 @@ def save_results(results: Dict[str, object], center: str, cfg: Step4_5Config):
 def run_comprehensive_analysis(cfg: Step4_5Config) -> Dict[str, object]:
     """Run comprehensive diurnal analysis across all centers."""
     
-    # Setup logging
-    
-    print_status(f"Date range: {cfg.start_date} to {cfg.end_date}", "INFO")
-    print_status(f"Centers: {', '.join(cfg.centers)}", "INFO")
-    print_status(f"Max workers: {cfg.max_workers}", "INFO")
+    # Configuration summary
+    print_status("", "INFO")
+    print_status(f"Configuration:", "INFO")
+    print_status(f"  Date range: {cfg.start_date.strftime('%Y-%m-%d')} to {cfg.end_date.strftime('%Y-%m-%d')}", "INFO")
+    print_status(f"  Analysis centers: {', '.join([c.upper() for c in cfg.centers])}", "INFO")
+    print_status(f"  Parallel workers: {cfg.max_workers}", "INFO")
+    print_status(f"  Analysis scope: Comprehensive (all stations and pairs)", "INFO")
     
     all_results = {}
     
     for center in cfg.centers:
         try:
-            print_status(f"\n--- Processing {center.upper()} ---", "INFO")
+            print_status(f"\n{'='*60}", "INFO")
+            print_status(f"PROCESSING {center.upper()}", "INFO")
+            print_status(f"{'='*60}", "INFO")
             
             # Run analysis for this center
             center_results = run_center_analysis(cfg, center, logger)
@@ -766,18 +787,19 @@ def run_comprehensive_analysis(cfg: Step4_5Config) -> Dict[str, object]:
             
             # Print summary
             annual = center_results['annual_patterns']
-            print_status(f"Annual CV: {annual['coherence_cv']:.4f}", "INFO")
-            print_status(f"Day/Night ratio: {annual['day_night_ratio']:.3f}", "INFO")
-            print_status(f"Day mean: {annual['day_mean']:.6f}", "INFO")
-            print_status(f"Night mean: {annual['night_mean']:.6f}", "INFO")
+            print_status(f"Results for {center.upper()}:", "SUCCESS")
+            print_status(f"  Annual CV: {annual['coherence_cv']:.4f}", "INFO")
+            print_status(f"  Day/Night ratio: {annual['day_night_ratio']:.3f}", "INFO")
+            print_status(f"  Day mean: {annual['day_mean']:.6f}", "INFO")
+            print_status(f"  Night mean: {annual['night_mean']:.6f}", "INFO")
             
             # Print seasonal summary
             seasonal = center_results['seasonal_patterns']
-            print_status("Seasonal peaks:", "INFO")
+            print_status("  Seasonal peaks:", "INFO")
             for season in ['DJF', 'MAM', 'JJA', 'SON']:
                 if season in seasonal:
                     data = seasonal[season]
-                    print_status(f"  {season}: Hour {data['peak_hour']:.0f}, Ratio {data['day_night_ratio']:.3f}", "INFO")
+                    print_status(f"    {season}: Hour {data['peak_hour']:.0f}, Ratio {data['day_night_ratio']:.3f}", "INFO")
             
         except Exception as exc:
             print_status(f"Error processing {center}: {exc}", "ERROR")
@@ -787,7 +809,7 @@ def run_comprehensive_analysis(cfg: Step4_5Config) -> Dict[str, object]:
     combined_path = PACKAGE_ROOT / "results" / "outputs" / "step_4_5_comprehensive_analysis.json"
     safe_json_write(all_results, combined_path)
     
-    print_status(f"\nComprehensive analysis complete. Results saved to {combined_path}", "INFO")
+    print_status(f"\nCombined results saved: {combined_path.name}", "SUCCESS")
     
     return all_results
 
@@ -820,7 +842,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 @ensure_single_instance
 def main():
-    """Main entry point."""
+    """Main entry point for Step 4.5 Comprehensive Diurnal Analysis."""
+    
+    # Proper TEP step header
+    print_status("", "INFO")
+    print_status("="*80, "INFO")
+    print_status("TEP GNSS Analysis Package v0.14", "INFO")
+    print_status("STEP 4.5: Comprehensive Diurnal Analysis", "INFO")
+    print_status("Multi-center diurnal pattern analysis with phase-coherent correlation", "INFO")
+    print_status("="*80, "INFO")
     
     # Setup logger for this step
     step_log_file = PACKAGE_ROOT / "logs" / "step_4_5_comprehensive_diurnal_analysis.log"
@@ -839,10 +869,13 @@ def main():
         # Run analysis
         results = run_comprehensive_analysis(cfg)
         
-        print_status("\n=== ANALYSIS COMPLETE ===", "INFO")
-        print_status(f"Processed {len(cfg.centers)} centers", "INFO")
+        print_status("", "INFO")
+        print_status("="*80, "INFO")
+        print_status("STEP 4.5 COMPREHENSIVE DIURNAL ANALYSIS COMPLETE", "SUCCESS")
+        print_status(f"Processed {len(cfg.centers)} analysis centers", "INFO")
         print_status(f"Date range: {cfg.start_date} to {cfg.end_date}", "INFO")
         print_status("Results saved to results/outputs/", "INFO")
+        print_status("="*80, "INFO")
         
     except Exception as exc:
         print_status(f"Error: {exc}", "ERROR")

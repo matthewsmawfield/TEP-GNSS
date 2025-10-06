@@ -2424,7 +2424,7 @@ def main():
         if args.single_band:
             args.multiband = False
     
-    print_status("TEP GNSS Analysis Package v0.13 - STEP 3.6: Multi-Band Frequency Validation", "TITLE")
+    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.6: Multi-Band Frequency Validation", "TITLE")
     
     if args.multiband:
         print_status("MULTI-BAND FREQUENCY SPECTRUM ANALYSIS", "INFO")

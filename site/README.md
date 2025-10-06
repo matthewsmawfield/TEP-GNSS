@@ -5,15 +5,15 @@
 ![TEP-GNSS Analysis Overview](./public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.13 (Jaipur)  
-**Date:** 17 Sep 2025  
+**Version:** v0.14 (Jaipur)  
+**Date:** 6 Oct 2025  
 **Status:** Preprint (Analysis Package)  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
 
 ## Abstract
 
-We report distance-structured correlations in GNSS clock products using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers. Across 62.7M station-pair measurements, exponential correlation lengths of 3,330–4,549 km are observed with strong fits (R² = 0.920–0.970), validated by comprehensive null tests (8.5–44× signal destruction) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
+We report distance-structured correlations in GNSS clock products using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers. Across 62.7M station-pair measurements, exponential correlation lengths of 2,747–2,759 km are observed with strong fits (R² = 0.920–0.970), validated by comprehensive null tests (8.5–44× signal destruction) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
 
 ## Analysis Package
 
@@ -26,7 +26,7 @@ This repository contains the complete analysis pipeline for testing the Temporal
 
 ## Key Results
 
-- **Multi-center consistency**: λ = 3,330–4,549 km (13.0% variation) across independent analysis centers
+- **Multi-center consistency**: λ = 2,747–2,759 km (0.015-0.033 variation) across independent analysis centers
 - **Strong statistical fits**: R² = 0.920–0.970 for exponential correlation models
 - **Theoretical compatibility**: Results within TEP-predicted range [1,000–10,000 km]
 - **Validated methodology**: Null tests confirm signal authenticity (8.5–44× destruction under scrambling)
@@ -41,7 +41,7 @@ BibTeX:
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS
-                  Clocks (Jaipur v0.13)},
+                  Clocks (Jaipur v0.14)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},

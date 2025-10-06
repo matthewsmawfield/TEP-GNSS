@@ -35,6 +35,11 @@ venv.bak/
 *.swo
 *~
 
+# Cursor IDE
+.cursor/
+.cursorrules
+.cursor-settings
+
 # OS
 .DS_Store
 .DS_Store?
@@ -54,6 +59,8 @@ results/outputs/
 results/figures/
 results/tmp/
 results/exploratory/
+exploratory/
+**/exploratory/
 results/validation/
 
 # Temporary files
@@ -77,3 +84,5 @@ results/validation/
 # Docker
 .dockerignore
 Dockerfile
+.cursor/rules/general.mdc
+
