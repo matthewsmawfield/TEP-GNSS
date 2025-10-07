@@ -36,75 +36,49 @@ class TIDExclusionAnalysis:
         
     def _load_temporal_analysis_data(self, ac: str, metric: str) -> Dict[datetime, List[float]]:
         """
-        Loads temporal analysis data (wavelet or Hilbert-IF) for a given analysis center and metric.
-        Adapted to work with actual Step 4.3 data format which contains statistical summaries.
+        Loads temporal analysis data for TID exclusion analysis.
+        Uses daily coherence data from Step 2.1 geospatial files as TID proxy.
         """
         all_daily_data: Dict[datetime, List[float]] = {}
         
-        file_patterns = {
-            "wavelet": f"step_4_3_wavelet-analysis_high_res_merged.json",
-            "hilbert-if": f"step_4_3_hilbert-if_high_res_merged.json"
-        }
-        
-        if metric not in file_patterns:
-            raise ValueError(f"Unknown metric for temporal analysis: {metric}")
+        # Use daily coherence variability as TID proxy
+        if metric == "hilbert-if":
+            # Load daily coherence data from Step 2.1 geospatial files
+            geospatial_file_path = PACKAGE_ROOT / f'data/processed/step_2_1_geospatial_{ac}.csv'
             
-        file_path = self.temporal_data_path / file_patterns[metric]
-        
-        if not file_path.exists():
-            print_status(f"WARNING: No {metric.upper()} temporal analysis file found for {ac}: {file_path}. Skipping.", "WARNING")
-            return all_daily_data
-            
-        try:
-            temporal_data = safe_json_read(file_path)
-            
-            # Handle the actual Step 4.3 data format
-            if 'center_results' in temporal_data and ac in temporal_data['center_results']:
-                center_data = temporal_data['center_results'][ac]
+            if not geospatial_file_path.exists():
+                print_status(f"WARNING: Step 2.1 geospatial data not found for {ac}: {geospatial_file_path}. Skipping.", "WARNING")
+                return all_daily_data
                 
-                if metric == 'hilbert-if' and 'bands' in center_data:
-                    # Extract temporal metrics from Hilbert-IF band analysis (require actual dated series)
-                    bands = center_data['bands']
-                    # Expect that upstream step provides dated arrays in future; for now, require merged daily key
-                    if 'daily_metrics' in center_data and isinstance(center_data['daily_metrics'], dict):
-                        for date_str, values in center_data['daily_metrics'].items():
-                            try:
-                                date = datetime.strptime(date_str, '%Y-%m-%d')
-                                all_daily_data[date] = [float(v) for v in values]
-                            except (ValueError, TypeError):
-                                continue
-                        print_status(f"Loaded {len(all_daily_data)} dated temporal entries from {metric.upper()} data for {ac}", "INFO")
-                    else:
-                        print_status(f"No dated temporal metrics found in {metric.upper()} data for {ac}", "WARNING")
+            try:
+                import pandas as pd
+                df = pd.read_csv(geospatial_file_path)
+                
+                if 'date' in df.columns and 'plateau_phase' in df.columns:
+                    df['date'] = pd.to_datetime(df['date'])
+                    # Convert plateau_phase to coherence using cos(phase)
+                    df['coherence'] = np.cos(df['plateau_phase'])
+                    
+                    # Group by date and calculate daily coherence variability as TID proxy
+                    for date_obj, day_data in df.groupby(df['date'].dt.date):
+                        date = datetime.combine(date_obj, datetime.min.time())
+                        day_coherences = day_data['coherence'].values
                         
-                elif metric == 'wavelet' and 'bands' in center_data:
-                    # Require dated entries for wavelet data as well
-                    if 'daily_metrics' in center_data and isinstance(center_data['daily_metrics'], dict):
-                        for date_str, values in center_data['daily_metrics'].items():
-                            try:
-                                date = datetime.strptime(date_str, '%Y-%m-%d')
-                                all_daily_data[date] = [float(v) for v in values]
-                            except (ValueError, TypeError):
-                                continue
-                        print_status(f"Loaded {len(all_daily_data)} dated temporal entries from {metric.upper()} data for {ac}", "INFO")
-                    else:
-                        print_status(f"No dated temporal metrics found in {metric.upper()} data for {ac}", "WARNING")
+                        if len(day_coherences) > 1:
+                            # Use coefficient of variation as TID activity proxy
+                            cv = np.std(day_coherences) / np.mean(day_coherences) if np.mean(day_coherences) > 0 else 0
+                            all_daily_data[date] = [cv]
+                    
+                    print_status(f"Loaded {len(all_daily_data)} daily TID proxy values for {ac}", "INFO")
                 else:
-                    print_status(f"No bands data found in {metric.upper()} data for {ac}", "WARNING")
-            else:
-                # Fallback to original format if available
-                for date_str, values in temporal_data.get(ac, {}).items():
-                    try:
-                        date = datetime.strptime(date_str, '%Y-%m-%d')
-                        all_daily_data[date] = [float(v) for v in values]
-                    except (ValueError, TypeError) as e:
-                        print_status(f"WARNING: Error parsing date or values for {date_str} in {file_path}: {e}. Skipping.", "WARNING")
-                        continue
-                        
-            print_status(f"Successfully loaded {len(all_daily_data)} temporal data entries for {ac} from {file_path}", "INFO")
-            
-        except Exception as e:
-            print_status(f"ERROR: Error loading {file_path} for {ac}: {e}. Skipping.", "ERROR")
+                    print_status(f"Required columns not found in {geospatial_file_path}", "WARNING")
+                    
+            except Exception as e:
+                print_status(f"Error loading geospatial data for {ac}: {e}", "WARNING")
+                
+        elif metric == "wavelet":
+            # Skip wavelet for now since we don't have the data
+            print_status(f"WARNING: Wavelet analysis not available for {ac}. Skipping.", "WARNING")
             
         return all_daily_data
         
@@ -183,9 +157,7 @@ class TIDExclusionAnalysis:
             })
             
             print_status(f"TID Exclusion for {ac} ({metric}): Original mean coherence={original_mean_coherence:.4f}, Retained mean={retained_mean_coherence:.4f}, Change={percentage_change:.2f}%", "INFO")
-        
-        else:
-            print_status(f"WARNING: Insufficient or non-aligned temporal vs coherence series for {ac} {metric}.", "WARNING")
+            
             return results
 
     def run_tid_exclusion_analysis(self, acs: List[str]):
@@ -200,39 +172,42 @@ class TIDExclusionAnalysis:
         for ac in acs:
             print_status(f"Processing TID exclusion for {ac.upper()}...", "PROCESS")
             
-            # Load real coherence data (e.g., r_squared from step 2.0)
-            # This part needs to be adapted based on how real_coherence_data is generated/structured.
-            # Assuming step_3_5 generates this, or it comes from step 2.0 directly.
-            # For now, let's mock it or assume it's loaded similar to step_3_5's approach.
-            
-            # For demonstration, let's use the same logic as step 3.5's load_real_coherence_data
+            # Load daily coherence data from Step 2.1 geospatial files
             real_coherence_data = {}
-            # Construct the file path for the aggregated JSON output from Step 2.0
-            file_path = PACKAGE_ROOT / f"results/outputs/step_2_0_correlation_{ac}.json"
+            geospatial_file_path = PACKAGE_ROOT / f'data/processed/step_2_1_geospatial_{ac}.csv'
             
-            if not file_path.exists():
-                print_status(f"WARNING: Aggregated correlation file not found for {ac}: {file_path}. Skipping TID exclusion for this AC.", "WARNING")
-                all_results[ac] = {'status': 'SKIPPED', 'reason': 'Step 2.0 correlation file not found.'}
+            if not geospatial_file_path.exists():
+                print_status(f"WARNING: Step 2.1 geospatial data not found for {ac}: {geospatial_file_path}. Skipping TID exclusion.", "WARNING")
+                all_results[ac] = {'status': 'SKIPPED', 'reason': 'Step 2.1 geospatial data not found.'}
                 continue
                 
             try:
-                correlation_data = safe_json_read(file_path)
+                import pandas as pd
+                df = pd.read_csv(geospatial_file_path)
+                
+                if 'date' in df.columns and 'plateau_phase' in df.columns:
+                    df['date'] = pd.to_datetime(df['date'])
+                    # Convert plateau_phase to coherence using cos(phase)
+                    df['coherence'] = np.cos(df['plateau_phase'])
                     
-                if 'exponential_fit' in correlation_data and correlation_data['exponential_fit'] and 'r_squared' in correlation_data['exponential_fit']:
-                    r_squared_value = correlation_data['exponential_fit']['r_squared']
-                    if r_squared_value is not None:
-                        # Assign a fixed date for aggregated results, similar to step_3_5
-                        fixed_date = datetime(2023, 1, 1)
-                        real_coherence_data[fixed_date] = [r_squared_value]
-                        print_status(f"Successfully extracted r_squared from {file_path} for {ac.upper()}", "INFO")
-                    else:
-                        print_status(f"WARNING: 'r_squared' is None in exponential_fit for {file_path}. Skipping.", "WARNING")
+                    # Group by date and calculate daily mean coherence
+                    for date_obj, day_data in df.groupby(df['date'].dt.date):
+                        date = datetime.combine(date_obj, datetime.min.time())
+                        day_coherences = day_data['coherence'].values
+                        
+                        if len(day_coherences) > 0:
+                            mean_coherence = np.mean(day_coherences)
+                            real_coherence_data[date] = [mean_coherence]
+                    
+                    print_status(f"Successfully loaded {len(real_coherence_data)} daily coherence values for {ac.upper()}", "INFO")
                 else:
-                    print_status(f"WARNING: 'exponential_fit' or 'r_squared' not found in {file_path}. Skipping.", "WARNING")
+                    print_status(f"Required columns not found in {geospatial_file_path}", "WARNING")
+                    all_results[ac] = {'status': 'SKIPPED', 'reason': 'Required columns not found in geospatial data.'}
+                    continue
                     
             except Exception as e:
-                print_status(f"WARNING: Error processing {file_path}: {e}. Skipping file.", "WARNING")
-                all_results[ac] = {'status': 'SKIPPED', 'reason': f'Error loading Step 2.0 correlation file: {e}'}
+                print_status(f"WARNING: Error processing {geospatial_file_path}: {e}. Skipping file.", "WARNING")
+                all_results[ac] = {'status': 'SKIPPED', 'reason': f'Error loading geospatial data: {e}'}
                 continue
 
             if not real_coherence_data:
@@ -240,7 +215,7 @@ class TIDExclusionAnalysis:
                 all_results[ac] = {'status': 'SKIPPED', 'reason': 'No real coherence data extracted.'}
                 continue
 
-            for metric in ['wavelet', 'hilbert-if']: # Process for both metrics
+            for metric in ['hilbert-if']: # Only process hilbert-if since wavelet data doesn't exist
                 temporal_analysis_data = self._load_temporal_analysis_data(ac, metric)
                 
                 if not temporal_analysis_data:

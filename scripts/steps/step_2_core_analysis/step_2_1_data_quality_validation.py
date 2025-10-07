@@ -677,6 +677,43 @@ def analyze_station_overlap_across_centers(log_data: dict, coords_df: pd.DataFra
             "percentage_of_unique_total": (len(station_sets[ac]) / total_unique_stations) * 100 if total_unique_stations > 0 else 0
         }
     
+    # Calculate hemisphere distribution for the 392 analyzed stations
+    hemisphere_distribution = {"north_count": 0, "south_count": 0, "hemisphere_ratio": 0.0}
+    if total_unique_stations > 0:
+        # Get coordinates for all analyzed stations
+        analyzed_station_codes = list(all_stations)
+        
+        # Match with coordinate data (handle both 4-char and full codes)
+        matched_coords = []
+        for station_code in analyzed_station_codes:
+            # Try exact match first
+            coord_match = coords_df[coords_df['code'] == station_code]
+            if coord_match.empty:
+                # Try matching with coord_source_code (4-char)
+                coord_match = coords_df[coords_df['coord_source_code'] == station_code]
+            if not coord_match.empty:
+                matched_coords.append(coord_match.iloc[0])
+        
+        if matched_coords:
+            matched_coords_df = pd.DataFrame(matched_coords)
+            # Count hemispheres (latitude >= 0 is Northern, < 0 is Southern)
+            north_count = len(matched_coords_df[matched_coords_df['lat_deg'] >= 0])
+            south_count = len(matched_coords_df[matched_coords_df['lat_deg'] < 0])
+            
+            hemisphere_distribution = {
+                "north_count": int(north_count),
+                "south_count": int(south_count),
+                "hemisphere_ratio": float(north_count / south_count) if south_count > 0 else float('inf'),
+                "north_percentage": float((north_count / len(matched_coords_df)) * 100) if len(matched_coords_df) > 0 else 0.0,
+                "south_percentage": float((south_count / len(matched_coords_df)) * 100) if len(matched_coords_df) > 0 else 0.0,
+                "matched_stations": len(matched_coords_df),
+                "total_analyzed_stations": total_unique_stations
+            }
+            
+            print_status(f"  → Hemisphere distribution for {total_unique_stations} analyzed stations: {north_count} Northern / {south_count} Southern ({hemisphere_distribution['north_percentage']:.1f}%/{hemisphere_distribution['south_percentage']:.1f}%)", "INFO")
+        else:
+            print_status("  → Warning: Could not match analyzed stations with coordinate data for hemisphere calculation", "WARNING")
+    
     return {
         "total_unique_stations_across_all_centers": total_unique_stations,
         "stations_by_analysis_center": {ac: len(stations) for ac, stations in station_sets.items()},
@@ -688,6 +725,7 @@ def analyze_station_overlap_across_centers(log_data: dict, coords_df: pd.DataFra
         },
         "unique_to_each_center": unique_to_center,
         "coverage_statistics": coverage_stats,
+        "hemisphere_distribution_analyzed_stations": hemisphere_distribution,
         "overlap_summary": {
             "stations_used_by_all_centers": len(three_way_overlap),
             "stations_used_by_multiple_centers": total_unique_stations - sum(unique_to_center[ac]["count"] for ac in unique_to_center),
@@ -1749,7 +1787,7 @@ def create_station_distances_file(root_dir: Path):
 @ensure_single_instance
 def main():
     """Main function to perform comprehensive geospatial data quality analysis and validation."""
-    print_status("TEP-GNSS Analysis Framework v0.14", "TITLE")
+    print_status("TEP-GNSS Analysis Framework v0.15", "TITLE")
     print_status("STEP 2.1: Comprehensive Geospatial Data Quality Assessment", "TITLE")
     print_status("Performing rigorous quality validation of multi-center GNSS timing correlations", "INFO")
     print_status("Analysis scope: Quality assurance, statistical validation, and methodological transparency", "INFO")

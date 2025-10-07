@@ -75,12 +75,12 @@ References:
     Smawfield, M.L. (2025). Global Time Echoes: Distance-Structured Correlations
     in GNSS Clocks Across Independent Networks. Zenodo.
 
-Environment Variables (v0.14 defaults for published methodology):
+Environment Variables (v0.15 defaults for published methodology):
   
   CORE ANALYSIS:
   - TEP_USE_PHASE_BAND: Use band-limited phase analysis (default: 1, v0.6 method)
-  - TEP_COHERENCY_F1: Lower frequency bound Hz (default: 1e-5, 10 μHz)
-  - TEP_COHERENCY_F2: Upper frequency bound Hz (default: 5e-4, 500 μHz)
+  - TEP_COHERENCY_F1: Lower frequency bound Hz (default: 1e-5, 10 µHz)
+  - TEP_COHERENCY_F2: Upper frequency bound Hz (default: 5e-4, 500 µHz)
   - TEP_BINS: Number of distance bins (default: 40)
   - TEP_MAX_DISTANCE_KM: Maximum distance for analysis (default: 13000)
   
@@ -750,10 +750,74 @@ def analyze_earth_motion_patterns(sector_stats):
         'assessment': assessment
     }
 
+def _subsample_to_match_distribution(sector_distances, reference_distances, max_samples=5000):
+    """
+    Subsample sector distances to match the reference distance distribution.
+    
+    This function implements distance distribution matching by subsampling pairs
+    from a sector to match the global distance distribution, preventing bias
+    in λEW/λNS ratios from differing distance sampling patterns.
+    
+    Args:
+        sector_distances: Array of distances for the specific sector
+        reference_distances: Array of all distances (global reference)
+        max_samples: Maximum number of samples to return
+        
+    Returns:
+        Array of indices to subsample from sector_distances
+    """
+    import numpy as np
+    from scipy import stats
+    
+    # Create distance bins based on reference distribution
+    n_bins = min(20, len(np.unique(reference_distances)) // 10)
+    if n_bins < 5:
+        n_bins = 5
+    
+    # Compute reference histogram
+    ref_hist, ref_bins = np.histogram(reference_distances, bins=n_bins, density=True)
+    
+    # Compute sector histogram
+    sector_hist, sector_bins = np.histogram(sector_distances, bins=ref_bins, density=True)
+    
+    # Calculate target counts per bin for the sector
+    total_sector_pairs = len(sector_distances)
+    target_samples = min(max_samples, total_sector_pairs)
+    
+    # For each bin, determine how many samples we want
+    target_counts = []
+    for i in range(len(ref_bins) - 1):
+        # Target fraction based on reference distribution
+        target_fraction = ref_hist[i] / np.sum(ref_hist)
+        target_count = int(target_fraction * target_samples)
+        target_counts.append(target_count)
+    
+    # Subsample from each bin
+    selected_indices = []
+    for i in range(len(ref_bins) - 1):
+        # Find indices in this distance bin
+        bin_mask = (sector_distances >= ref_bins[i]) & (sector_distances < ref_bins[i+1])
+        bin_indices = np.where(bin_mask)[0]
+        
+        if len(bin_indices) > 0:
+            # Sample up to target count
+            n_sample = min(target_counts[i], len(bin_indices))
+            if n_sample > 0:
+                # Random sampling with fixed seed for reproducibility
+                np.random.seed(42 + i)  # Different seed per bin
+                sampled_indices = np.random.choice(bin_indices, size=n_sample, replace=False)
+                selected_indices.extend(sampled_indices)
+    
+    return np.array(selected_indices)
+
+
 def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
     """
     Test for directional anisotropy in correlations using actual station pair azimuths
     TEP should be isotropic; systematic effects are often directional
+    
+    CRITICAL GUARDRAIL: Implements distance distribution matching to prevent bias
+    in λEW/λNS ratios from differing distance distributions across azimuth sectors.
     
     Args:
         pair_data_with_coords: List of dicts with keys: distance_km, coherence, station1_coords, station2_coords
@@ -790,49 +854,165 @@ def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
             sector_data[sector]['distances'].append(dist)
             sector_data[sector]['coherences'].append(coh)
         
-        # Analyze each sector with sufficient data
-        sector_stats = {}
+        # DISTANCE DISTRIBUTION MATCHING GUARDRAIL
+        # ========================================
+        # Compute global distance distribution for reference
+        all_distances = np.array(distances)
+        global_dist_hist, global_dist_bins = np.histogram(all_distances, bins=20, density=True)
+        
+        # Apply distance distribution matching to each sector
+        sector_data_matched = {}
+        distance_matching_results = {}
+        
         for sector, data in sector_data.items():
-            if len(data['distances']) >= 50:  # Need reasonable sample size
-                # Compute mean correlation in distance bands
-                distances_arr = np.array(data['distances'])
-                coherences_arr = np.array(data['coherences'])
+            if len(data['distances']) < 50:  # Skip sectors with insufficient data
+                continue
                 
-                # Simple binning and correlation calculation
-                dist_bins = np.logspace(np.log10(100), np.log10(10000), 10)
-                bin_corrs = []
-                bin_dists = []
+            sector_distances = np.array(data['distances'])
+            sector_coherences = np.array(data['coherences'])
+            
+            # Method 1: Distance-weighted analysis
+            # Weight each pair by inverse of local distance density
+            sector_dist_hist, sector_dist_bins = np.histogram(sector_distances, bins=20, density=True)
+            
+            # Compute weights to match global distribution
+            weights = np.ones_like(sector_distances)
+            for i, dist in enumerate(sector_distances):
+                # Find which global bin this distance falls into
+                global_bin_idx = np.digitize(dist, global_dist_bins) - 1
+                global_bin_idx = max(0, min(global_bin_idx, len(global_dist_hist) - 1))
                 
-                for i in range(len(dist_bins)-1):
-                    mask = (distances_arr >= dist_bins[i]) & (distances_arr < dist_bins[i+1])
-                    if np.sum(mask) >= 10:  # Minimum pairs per bin
-                        bin_corrs.append(np.mean(coherences_arr[mask]))
-                        bin_dists.append(np.mean(distances_arr[mask]))
+                # Find which sector bin this distance falls into
+                sector_bin_idx = np.digitize(dist, sector_dist_bins) - 1
+                sector_bin_idx = max(0, min(sector_bin_idx, len(sector_dist_hist) - 1))
                 
-                if len(bin_corrs) >= 5:  # Need enough bins for fitting
-                    try:
-                        # Fit exponential model
-                        bin_dists = np.array(bin_dists)
-                        bin_corrs = np.array(bin_corrs)
-                        
-                        c_range = bin_corrs.max() - bin_corrs.min()
-                        p0 = [c_range, 3000, bin_corrs.min()]
-                        
-                        # Adaptive bounds based on data characteristics
-                        adaptive_bounds = TEPConfig.get_adaptive_lambda_bounds(bin_dists)
+                # Weight inversely proportional to sector density relative to global density
+                if sector_dist_hist[sector_bin_idx] > 0:
+                    weight = global_dist_hist[global_bin_idx] / sector_dist_hist[sector_bin_idx]
+                    weights[i] = weight
+            
+            # Method 2: Matched-distance subsampling
+            # Subsample to match global distance distribution
+            matched_indices = _subsample_to_match_distribution(
+                sector_distances, all_distances, max_samples=min(5000, len(sector_distances))
+            )
+            
+            sector_data_matched[sector] = {
+                'distances_weighted': sector_distances,
+                'coherences_weighted': sector_coherences,
+                'weights': weights,
+                'distances_matched': sector_distances[matched_indices],
+                'coherences_matched': sector_coherences[matched_indices],
+                'original_count': len(sector_distances),
+                'matched_count': len(matched_indices)
+            }
+            
+            # Validate distance distribution matching
+            if len(matched_indices) > 100:
+                from scipy import stats
+                ks_stat, ks_pvalue = stats.ks_2samp(
+                    sector_distances[matched_indices], all_distances
+                )
+                distance_matching_results[sector] = {
+                    'ks_statistic': float(ks_stat),
+                    'ks_pvalue': float(ks_pvalue),
+                    'distribution_matched': ks_pvalue > 0.05
+                }
+        
+        # Analyze each sector with distance-matched data
+        sector_stats = {}
+        sector_stats_weighted = {}
+        
+        for sector, matched_data in sector_data_matched.items():
+            # Use matched-distance subsampling approach (Method 2)
+            distances_arr = matched_data['distances_matched']
+            coherences_arr = matched_data['coherences_matched']
+            
+            if len(distances_arr) < 50:  # Need reasonable sample size
+                continue
+            
+            # Compute mean correlation in distance bands using matched data
+            dist_bins = np.logspace(np.log10(100), np.log10(10000), 10)
+            bin_corrs = []
+            bin_dists = []
+            bin_weights = []
+            
+            for i in range(len(dist_bins)-1):
+                mask = (distances_arr >= dist_bins[i]) & (distances_arr < dist_bins[i+1])
+                if np.sum(mask) >= 10:  # Minimum pairs per bin
+                    bin_corrs.append(np.mean(coherences_arr[mask]))
+                    bin_dists.append(np.mean(distances_arr[mask]))
+                    bin_weights.append(np.sum(mask))  # Weight by bin count
+            
+            if len(bin_corrs) >= 5:  # Need enough bins for fitting
+                try:
+                    # Fit exponential model to distance-matched data
+                    bin_dists = np.array(bin_dists)
+                    bin_corrs = np.array(bin_corrs)
+                    bin_weights = np.array(bin_weights)
+                    
+                    c_range = bin_corrs.max() - bin_corrs.min()
+                    p0 = [c_range, 3000, bin_corrs.min()]
+                    
+                    # Adaptive bounds based on data characteristics
+                    adaptive_bounds = TEPConfig.get_adaptive_lambda_bounds(bin_dists)
 
-                        popt, _ = curve_fit(correlation_model, bin_dists, bin_corrs,
-                                           p0=p0, bounds=adaptive_bounds,
-                                           maxfev=5000)
+                    popt, _ = curve_fit(correlation_model, bin_dists, bin_corrs,
+                                       p0=p0, bounds=adaptive_bounds,
+                                       maxfev=5000)
+                    
+                    sector_stats[sector] = {
+                        'lambda_km': float(popt[1]),
+                        'amplitude': float(popt[0]),
+                        'n_pairs': len(distances_arr),
+                        'n_bins': len(bin_corrs),
+                        'distance_matching_applied': True,
+                        'original_pairs': matched_data['original_count'],
+                        'matched_pairs': matched_data['matched_count']
+                    }
+                    
+                    # Also compute weighted analysis for comparison
+                    distances_weighted = matched_data['distances_weighted']
+                    coherences_weighted = matched_data['coherences_weighted']
+                    weights = matched_data['weights']
+                    
+                    # Weighted binning
+                    bin_corrs_weighted = []
+                    bin_dists_weighted = []
+                    bin_weights_weighted = []
+                    
+                    for i in range(len(dist_bins)-1):
+                        mask = (distances_weighted >= dist_bins[i]) & (distances_weighted < dist_bins[i+1])
+                        if np.sum(mask) >= 10:
+                            # Weighted mean
+                            weighted_coherence = np.average(coherences_weighted[mask], weights=weights[mask])
+                            weighted_distance = np.average(distances_weighted[mask], weights=weights[mask])
+                            total_weight = np.sum(weights[mask])
+                            
+                            bin_corrs_weighted.append(weighted_coherence)
+                            bin_dists_weighted.append(weighted_distance)
+                            bin_weights_weighted.append(total_weight)
+                    
+                    if len(bin_corrs_weighted) >= 5:
+                        bin_dists_weighted = np.array(bin_dists_weighted)
+                        bin_corrs_weighted = np.array(bin_corrs_weighted)
+                        bin_weights_weighted = np.array(bin_weights_weighted)
                         
-                        sector_stats[sector] = {
-                            'lambda_km': float(popt[1]),
-                            'amplitude': float(popt[0]),
-                            'n_pairs': len(data['distances']),
-                            'n_bins': len(bin_corrs)
+                        popt_weighted, _ = curve_fit(correlation_model, bin_dists_weighted, bin_corrs_weighted,
+                                                   p0=p0, bounds=adaptive_bounds, sigma=1/np.sqrt(bin_weights_weighted),
+                                                   maxfev=5000)
+                        
+                        sector_stats_weighted[sector] = {
+                            'lambda_km': float(popt_weighted[1]),
+                            'amplitude': float(popt_weighted[0]),
+                            'n_pairs': len(distances_weighted),
+                            'n_bins': len(bin_corrs_weighted),
+                            'distance_weighting_applied': True
                         }
-                    except Exception:
-                        continue
+                        
+                except Exception as e:
+                    step_logger.warning(f"Failed to fit sector {sector}: {e}")
+                    continue
         
         if len(sector_stats) >= 4:  # Need reasonable directional coverage
             lambda_values = [s['lambda_km'] for s in sector_stats.values()]
@@ -859,6 +1039,7 @@ def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
             
             return {
                 'sector_results': sector_stats,
+                'sector_results_weighted': sector_stats_weighted,
                 'lambda_mean': float(lambda_mean),
                 'lambda_std': float(lambda_std),
                 'coefficient_of_variation': float(lambda_cv),
@@ -866,7 +1047,15 @@ def directional_anisotropy_test(pair_data_with_coords, enable_anisotropy=True):
                 'n_sectors': len(sector_stats),
                 'interpretation': interpretation,
                 'tep_assessment': 'Earth-motion-consistent anisotropy supports TEP' if is_moderate_anisotropy else 'Investigate alignment with Earth motion vectors',
-                'earth_motion_analysis': earth_motion_analysis
+                'earth_motion_analysis': earth_motion_analysis,
+                'distance_matching_results': distance_matching_results,
+                'distance_matching_applied': True,
+                'guardrail_summary': {
+                    'sectors_analyzed': len(sector_stats),
+                    'sectors_with_valid_matching': sum(1 for r in distance_matching_results.values() if r['distribution_matched']),
+                    'matching_methods': ['subsampling', 'weighting'],
+                    'validation_passed': all(r['distribution_matched'] for r in distance_matching_results.values()) if distance_matching_results else False
+                }
             }
             
     except Exception as e:
@@ -1104,7 +1293,7 @@ def compute_band_averaged_coherency(x, y, fs, f1=1e-5, f2=5e-4, nperseg=None):
     fs : float
         Sampling frequency in Hz
     f1, f2 : float
-        Frequency band limits (Hz) for averaging (TEP band: 10 μHz to 500 μHz)
+        Frequency band limits (Hz) for averaging (TEP band: 10 µHz to 500 µHz)
     nperseg : int
         Length of each segment for Welch's method (affects frequency resolution)
         
@@ -1225,7 +1414,7 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
         # ======================
         # Parse the standardized RINEX clock format used by all analysis centers.
         # Format: AR STATION YYYY MM DD HH MM SS.SSS N_DATA CLOCK_OFFSET
-        # Example: AR ALGO 2023  1  1  0  0  0.000000    1  -0.123456789E-06
+        # Example: AR ALGO 2023  1  1  0  0  0.000000    1  -v0.153456789E-06
         clk_pattern = re.compile(
             r'^AR\s+'          # Record type (AR = Atomic Receiver clock)
             r'(\S+)\s+'        # Station ID (4-char code, e.g., ALGO)
@@ -1369,8 +1558,8 @@ def process_single_clk_file(file_path: Path, coords_df: pd.DataFrame) -> List[Di
             # This is where the TEP magic happens - extract correlations
             # while preserving phase information that reveals causal structure
             use_real_coherency = TEPConfig.get_bool('TEP_USE_REAL_COHERENCY')
-            f1 = TEPConfig.get_float('TEP_COHERENCY_F1')  # 10 μHz lower bound
-            f2 = TEPConfig.get_float('TEP_COHERENCY_F2')  # 500 μHz upper bound
+            f1 = TEPConfig.get_float('TEP_COHERENCY_F1')  # 10 µHz lower bound
+            f2 = TEPConfig.get_float('TEP_COHERENCY_F2')  # 500 µHz upper bound
             
             # Call the core phase-coherent analysis function
             plateau_value, plateau_phase = compute_cross_power_plateau(
@@ -1488,7 +1677,7 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         (alternative method for validation)
     f1, f2 : float
         Frequency band limits for coherency averaging (Hz)
-        Default TEP band: 10 μHz to 500 μHz (periods: 28 hours to 33 minutes)
+        Default TEP band: 10 µHz to 500 µHz (periods: 28 hours to 33 minutes)
     
     Returns:
     --------
@@ -1538,7 +1727,7 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         # ============================================================
         # Focus analysis on the TEP-predicted frequency band where scalar field
         # fluctuations are expected to dominate over other noise sources.
-        # Default band: 10 μHz to 500 μHz (periods: 28 hours to 33 minutes)
+        # Default band: 10 µHz to 500 µHz (periods: 28 hours to 33 minutes)
         use_phase_band = os.getenv('TEP_USE_PHASE_BAND', '1') == '1'  # Default to v0.6 method
         if use_phase_band:
             # Select the TEP frequency band for analysis
@@ -2785,7 +2974,8 @@ def main():
     """
     print_status("", "INFO")
     print_status("="*80, "INFO")
-    print_status("TEP GNSS Analysis Package v0.14", "INFO")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "INFO")
     print_status("STEP 2.0: Correlation Analysis", "INFO")
     print_status("Detecting TEP signatures through phase-coherent clock correlation analysis", "INFO")
     print_status("="*80, "INFO")

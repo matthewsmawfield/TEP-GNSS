@@ -1,0 +1,38 @@
+[16:24:33] [INFO] 
+[16:24:33] [INFO] ================================================================================
+[16:24:33] [INFO] TEP GNSS Analysis Package v0.14 - STEP 4.2: Synthesis Figure Generation
+[16:24:33] [INFO] ================================================================================
+[16:24:33] [INFO] 
+[16:24:33] [ERROR] Error loading data for code: JSON file not found: /mnt/data/results/outputs/step_3_2_null_tests_code.json. Skipping.
+[16:24:33] [ERROR] Error loading data for igs_combined: JSON file not found: /mnt/data/results/outputs/step_3_2_null_tests_igs_combined.json. Skipping.
+[16:24:33] [ERROR] Error loading data for esa_final: JSON file not found: /mnt/data/results/outputs/step_3_2_null_tests_esa_final.json. Skipping.
+[16:24:33] [ERROR] No valid correlation results found for any center. Cannot generate synthesis figure.
+[16:26:58] [INFO] 
+[16:26:58] [INFO] ================================================================================
+[16:26:58] [INFO] TEP GNSS Analysis Package v0.14 - STEP 4.2: Synthesis Figure Generation
+[16:26:58] [INFO] ================================================================================
+[16:26:58] [INFO] 
+[16:26:58] [WARNING] Null test data not available for code, will use simplified Panel B
+[16:26:58] [WARNING] Null test data not available for igs_combined, will use simplified Panel B
+[16:26:58] [WARNING] Null test data not available for esa_final, will use simplified Panel B
+[16:26:58] [INFO] Creating Panel A (Multi-center reproducibility)...
+[16:26:58] [INFO] Creating Panel A with site theme colors...
+[16:26:58] [DEBUG] Panel A: Plotted CODE (λ=4549km)
+[16:26:58] [DEBUG] Panel A: Plotted IGS_COMBINED (λ=3764km)
+[16:26:58] [DEBUG] Panel A: Plotted ESA_FINAL (λ=3330km)
+[16:26:58] [DEBUG] Panel A created.
+[16:26:58] [INFO] Creating Panel B (Statistical significance)...
+[16:26:58] [INFO] Creating Panel B with site theme...
+[16:26:58] [INFO] No null test data for code, showing real R² only
+[16:26:58] [DEBUG] Panel B: Loaded null test data for CODE
+[16:26:58] [INFO] No null test data for igs_combined, showing real R² only
+[16:26:58] [DEBUG] Panel B: Loaded null test data for IGS_COMBINED
+[16:26:58] [INFO] No null test data for esa_final, showing real R² only
+[16:26:58] [DEBUG] Panel B: Loaded null test data for ESA_FINAL
+[16:26:58] [DEBUG] Panel B created.
+[16:26:58] [INFO] Creating Panel C (Signal vs Null Comparison)...
+[16:26:58] [INFO] Creating Panel C with site theme...
+[16:27:41] [DEBUG] Panel C created.
+[16:27:41] [SUCCESS] 
+Saving site-themed figure: /mnt/data/results/figures/step_4_2_tep_synthesis_figure.png
+[16:27:41] [SUCCESS] STEP 4.2 SYNTHESIS FIGURE GENERATION COMPLETE

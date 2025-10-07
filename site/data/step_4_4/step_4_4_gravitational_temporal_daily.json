@@ -10057,33 +10057,42 @@
   ],
   "advanced_pattern_analysis": {
     "smoothed_correlation": -0.5026185765899182,
-    "smoothed_p_value": 1.5121575099058724e-59,
+    "smoothed_p_value": 0.0003310303176344842,
+    "p_value_raw": 1.5121575099058724e-59,
+    "autocorr_ci_lower": -0.7629821755046495,
+    "autocorr_ci_upper": -0.24225497767518672,
+    "n_effective": 46.73850197109069,
+    "n_original": 912,
+    "autocorr_x": 0.95,
+    "autocorr_y": 0.95,
+    "ljung_box_p": 0.0,
     "optimal_lag_days": 176,
     "max_cross_correlation": 514.2075934765985,
     "smoothing_window": 227,
-    "pattern_relationship": "in_phase"
+    "pattern_relationship": "in_phase",
+    "autocorr_correction_note": "Autocorrelation-corrected p-value accounts for temporal structure in 227-day smoothed data"
   },
   "earth_motion_energy_hierarchy": {
     "success": true,
     "analysis_type": "earth_motion_energy_hierarchy",
     "n_analysis_centers": 3,
-    "aggregate_energy_correlation": -0.19052601047214643,
-    "aggregate_velocity_correlation": -0.13378868957543855,
-    "aggregate_discrimination": -0.05673732089670786,
-    "discrimination_std": 0.028500142851654517,
+    "aggregate_energy_correlation": -0.19036237489503224,
+    "aggregate_velocity_correlation": -0.13362783952415272,
+    "aggregate_discrimination": -0.05673453537087947,
+    "discrimination_std": 0.028498127744801437,
     "validated_scaling_type": "velocity",
     "center_results": {
       "code": {
-        "energy_correlation": 0.17114199869341917,
-        "energy_p_value": 0.8905086232967627,
-        "velocity_correlation": 0.24874496562940468,
-        "velocity_p_value": 0.8399637983634557,
-        "energy_velocity_discrimination": -0.0776029669359855,
+        "energy_correlation": 0.17163259383810964,
+        "energy_p_value": 0.8901916101120468,
+        "velocity_correlation": 0.2492272464444369,
+        "velocity_p_value": 0.8396467851787401,
+        "energy_velocity_discrimination": -0.07759465260632725,
         "preferred_scaling": "velocity",
         "motion_detections": {
-          "orbital_motion": 0.7009992528848447,
-          "chandler_wobble": 0.6143114554806599,
-          "daily_rotation": 0.47527820484538913
+          "orbital_motion": 0.7009816474683052,
+          "chandler_wobble": 0.6141933331320582,
+          "daily_rotation": 0.47525686295860586
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -10093,16 +10102,16 @@
         "n_motions_analyzed": 3
       },
       "esa_final": {
-        "energy_correlation": -0.9857638744660444,
-        "energy_p_value": 0.10754930242327787,
-        "velocity_correlation": -0.9693233318757379,
-        "velocity_p_value": 0.1580941273565842,
-        "energy_velocity_discrimination": -0.016440542590306473,
+        "energy_correlation": -0.9857639468031925,
+        "energy_p_value": 0.10754902852938686,
+        "velocity_correlation": -0.9693234376218627,
+        "velocity_p_value": 0.1580938534626936,
+        "energy_velocity_discrimination": -0.016440509181329777,
         "preferred_scaling": "energy",
         "motion_detections": {
-          "orbital_motion": 0.5713624097155314,
-          "chandler_wobble": 0.672955060882951,
-          "daily_rotation": 0.5862553339491463
+          "orbital_motion": 0.5713624178332463,
+          "chandler_wobble": 0.6729550698472757,
+          "daily_rotation": 0.5862553863469941
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -10112,16 +10121,16 @@
         "n_motions_analyzed": 3
       },
       "igs_combined": {
-        "energy_correlation": 0.24304384435618595,
-        "energy_p_value": 0.8437082174465194,
-        "velocity_correlation": 0.31921229752001756,
-        "velocity_p_value": 0.7931633925132124,
-        "energy_velocity_discrimination": -0.07616845316383161,
+        "energy_correlation": 0.24304422827998617,
+        "energy_p_value": 0.84370796547782,
+        "velocity_correlation": 0.31921267260496755,
+        "velocity_p_value": 0.7931631405445131,
+        "energy_velocity_discrimination": -0.07616844432498138,
         "preferred_scaling": "velocity",
         "motion_detections": {
-          "orbital_motion": 0.7931554775152226,
-          "chandler_wobble": 0.6865465864641601,
-          "daily_rotation": 0.5553684026313284
+          "orbital_motion": 0.7931554807990865,
+          "chandler_wobble": 0.6865465049622416,
+          "daily_rotation": 0.5553683992449369
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -10143,7 +10152,7 @@
     "external_planetary_coupling": "weak_to_moderate",
     "internal_earth_motion_coupling": "velocity",
     "energy_hierarchy_validated": false,
-    "energy_velocity_discrimination": -0.05673732089670786,
+    "energy_velocity_discrimination": -0.05673453537087947,
     "framework_consistency": "Mixed evidence for energy vs velocity scaling",
     "scientific_significance": "Requires further investigation of energy vs velocity coupling mechanisms"
   }

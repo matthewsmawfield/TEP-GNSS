@@ -53,6 +53,9 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from scipy import stats
 from scipy.signal import savgol_filter, correlate
+import statsmodels.api as sm
+from statsmodels.stats.diagnostic import acorr_ljungbox
+from statsmodels.tsa.stattools import acf
 import seaborn as sns
 from astropy.time import Time
 from astropy.coordinates import solar_system_ephemeris, get_body_barycentric_posvel
@@ -90,7 +93,93 @@ PLANETARY_MASSES = {
     'saturn': 95.2,       # Saturn mass in Earth masses
     'venus': 0.815,       # Venus mass in Earth masses
     'mars': 0.107,        # Mars mass in Earth masses
+    'mercury': 0.055,     # Mercury mass in Earth masses (ADDED)
 }
+
+def autocorr_robust_correlation(x, y, max_lags=None):
+    """
+    Calculate autocorrelation-robust correlation with Newey-West standard errors.
+    
+    For smoothed time series, this provides:
+    1. Effective sample size correction based on autocorrelation
+    2. Autocorrelation-robust confidence intervals
+    3. Ljung-Box test for residual autocorrelation
+    
+    Args:
+        x, y: Time series arrays (e.g., smoothed data)
+        max_lags: Maximum lags for autocorrelation estimation
+        
+    Returns:
+        dict with robust correlation results
+    """
+    x = np.array(x)
+    y = np.array(y)
+    n = len(x)
+    
+    if max_lags is None:
+        max_lags = min(20, n // 5)  # Rule of thumb for smoothed series
+    
+    # Standard correlation
+    r_raw, p_raw = stats.pearsonr(x, y)
+    
+    # Check autocorrelation in both series
+    acf_x = acf(x, nlags=max_lags, alpha=0.05)
+    acf_y = acf(y, nlags=max_lags, alpha=0.05)
+    
+    # Effective sample size based on first-order autocorrelation
+    # Bretherton et al. (1999) formula: N_eff = N * (1-r1_x*r1_y)/(1+r1_x*r1_y)
+    r1_x = acf_x[0][1] if len(acf_x[0]) > 1 else 0  # First-order autocorr of x
+    r1_y = acf_y[0][1] if len(acf_y[0]) > 1 else 0  # First-order autocorr of y
+    
+    # Clip autocorrelations to avoid division issues
+    r1_x = np.clip(r1_x, -0.95, 0.95)
+    r1_y = np.clip(r1_y, -0.95, 0.95)
+    
+    n_eff = n * (1 - r1_x * r1_y) / (1 + r1_x * r1_y)
+    n_eff = max(10, n_eff)  # Minimum effective sample size
+    
+    # Autocorrelation-corrected confidence interval
+    # Standard error with effective sample size
+    se_corrected = np.sqrt((1 - r_raw**2) / (n_eff - 2))
+    
+    # t-statistic with corrected degrees of freedom
+    t_stat = r_raw / se_corrected
+    df_corrected = n_eff - 2
+    
+    # Two-tailed p-value
+    p_corrected = 2 * (1 - stats.t.cdf(np.abs(t_stat), df_corrected))
+    
+    # 95% confidence interval
+    t_crit = stats.t.ppf(0.975, df_corrected)
+    ci_lower = r_raw - t_crit * se_corrected
+    ci_upper = r_raw + t_crit * se_corrected
+    
+    # Ljung-Box test for residual autocorrelation in regression residuals
+    try:
+        # Simple linear regression to get residuals
+        X = sm.add_constant(x)
+        model = sm.OLS(y, X).fit()
+        residuals = model.resid
+        
+        # Test residuals for autocorrelation
+        ljung_box = acorr_ljungbox(residuals, lags=min(10, len(residuals)//5), return_df=True)
+        ljung_box_p = ljung_box['lb_pvalue'].iloc[-1]  # Use highest lag p-value
+    except:
+        ljung_box_p = np.nan
+    
+    return {
+        'correlation': r_raw,
+        'p_value_raw': p_raw,
+        'p_value_autocorr_corrected': p_corrected,
+        'ci_lower': ci_lower,
+        'ci_upper': ci_upper,
+        'n_effective': n_eff,
+        'n_original': n,
+        'autocorr_x': r1_x,
+        'autocorr_y': r1_y,
+        'ljung_box_p': ljung_box_p,
+        'autocorr_correction_applied': True
+    }
 
 def calculate_high_precision_gravitational_influence(date: datetime) -> Dict:
     """
@@ -392,18 +481,34 @@ def analyze_earth_motion_energy_hierarchy() -> Dict:
         velocity_corrs = [r['velocity_correlation'] for r in all_centers_results.values()]
         discriminations = [r['energy_velocity_discrimination'] for r in all_centers_results.values()]
         
+        # Calculate confidence interval for discrimination using t-distribution
+        mean_discrimination = float(np.mean(discriminations))
+        std_discrimination = float(np.std(discriminations))
+        n_centers = len(discriminations)
+        
+        # t-distribution critical value for 95% CI
+        t_crit = stats.t.ppf(0.975, n_centers - 1) if n_centers > 1 else 1.96
+        sem_discrimination = std_discrimination / np.sqrt(n_centers) if n_centers > 1 else std_discrimination
+        
+        # 95% Confidence interval for discrimination
+        ci_lower = mean_discrimination - t_crit * sem_discrimination  
+        ci_upper = mean_discrimination + t_crit * sem_discrimination
+
         aggregate_results = {
             'success': True,
             'analysis_type': 'earth_motion_energy_hierarchy',
             'n_analysis_centers': len(all_centers_results),
             'aggregate_energy_correlation': float(np.mean(energy_corrs)),
             'aggregate_velocity_correlation': float(np.mean(velocity_corrs)),
-            'aggregate_discrimination': float(np.mean(discriminations)),
-            'discrimination_std': float(np.std(discriminations)),
-            'validated_scaling_type': 'energy' if np.mean(discriminations) > 0.1 else 'velocity',
+            'aggregate_discrimination': mean_discrimination,
+            'discrimination_std': std_discrimination,
+            'discrimination_95_ci': [float(ci_lower), float(ci_upper)],
+            'discrimination_sem': float(sem_discrimination),
+            'validated_scaling_type': 'energy' if mean_discrimination > 0.1 else 'velocity',
             'center_results': all_centers_results,
             'energy_scales_analyzed': energy_scales,
-            'interpretation': generate_energy_hierarchy_interpretation(discriminations)
+            'interpretation': generate_energy_hierarchy_interpretation(discriminations),
+            'methodology_note': 'Discrimination = r(energy) - r(velocity) computed as simple difference of Pearson correlations across analysis centers'
         }
         
         print_status(f"ENERGY HIERARCHY VALIDATION: {aggregate_results['interpretation']}", "SUCCESS")
@@ -574,10 +679,12 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
                     smoothed_stacked = savgol_filter(combined_df['total_planetary_influence'], adjusted_window, poly_order)
                     smoothed_coherence_std = savgol_filter(combined_df['coherence_std'], adjusted_window, poly_order)
                     
-                    # Calculate correlation for this window
-                    smooth_r, smooth_p = stats.pearsonr(smoothed_stacked, smoothed_coherence_std)
+                    # Calculate AUTOCORRELATION-ROBUST correlation for this window
+                    robust_corr = autocorr_robust_correlation(smoothed_stacked, smoothed_coherence_std)
+                    smooth_r = robust_corr['correlation']
+                    smooth_p = robust_corr['p_value_autocorr_corrected']  # Use corrected p-value
                     
-                    print_status(f"  Window {adjusted_window}d: r = {smooth_r:.4f}, p = {smooth_p:.2e}", "INFO")
+                    print_status(f"  Window {adjusted_window}d: r = {smooth_r:.4f}, p_raw = {robust_corr['p_value_raw']:.2e}, p_corrected = {smooth_p:.2e} (N_eff = {robust_corr['n_effective']:.1f})", "INFO")
                     
                     # Keep track of best correlation
                     if abs(smooth_r) > abs(best_correlation):
@@ -597,10 +704,19 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
                         best_results = {
                             'smoothed_correlation': smooth_r,
                             'smoothed_p_value': smooth_p,
+                            'p_value_raw': robust_corr['p_value_raw'],
+                            'autocorr_ci_lower': robust_corr['ci_lower'],
+                            'autocorr_ci_upper': robust_corr['ci_upper'],
+                            'n_effective': robust_corr['n_effective'],
+                            'n_original': robust_corr['n_original'],
+                            'autocorr_x': robust_corr['autocorr_x'],
+                            'autocorr_y': robust_corr['autocorr_y'],
+                            'ljung_box_p': robust_corr['ljung_box_p'],
                             'optimal_lag_days': int(optimal_lag),
                             'max_cross_correlation': float(max_correlation),
                             'smoothing_window': adjusted_window,
-                            'pattern_relationship': 'anti_phase' if max_correlation < 0 else 'in_phase'
+                            'pattern_relationship': 'anti_phase' if max_correlation < 0 else 'in_phase',
+                            'autocorr_correction_note': f'Autocorrelation-corrected p-value accounts for temporal structure in {adjusted_window}-day smoothed data'
                         }
                         
                 except Exception as e:
@@ -869,10 +985,15 @@ def create_comprehensive_visualization(combined_df: pd.DataFrame, analysis_resul
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
     
-    # Copy to site figures folder for manuscript
+    # Copy to site figures folder for manuscript (if directory exists)
     import shutil
     site_path = PACKAGE_ROOT / 'site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png'
-    shutil.copy2(output_path, site_path)
+    try:
+        site_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(output_path, site_path)
+        print_status(f"Figure copied to site directory: {site_path}", "INFO")
+    except Exception as e:
+        print_status(f"Could not copy to site directory: {e}", "WARNING")
     
     print_status(f"Comprehensive visualization saved: {output_path}", "INFO")
     print_status(f"Figure synced to site: {site_path}", "INFO")
@@ -883,7 +1004,8 @@ def main():
     """
     Main execution function that recreates the correct working analysis.
     """
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.4: Comprehensive Gravitational-Temporal Field Correlation Analysis", "INFO")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 4.4: Comprehensive Gravitational-Temporal Field Correlation Analysis", "INFO")
     print_status("\n", "INFO")
     
     # Configuration

@@ -1,0 +1,377 @@
+{
+  "timestamp": "2025-10-07T01:28:17.077163",
+  "total_tests_analyzed": 172,
+  "correction_methods_applied": [
+    "bonferroni",
+    "fdr_bh",
+    "family_wise"
+  ],
+  "family_alpha": 0.05,
+  "method_comparison": {
+    "bonferroni": {
+      "n_significant_tests": 118,
+      "significance_rate": 0.686046511627907,
+      "method_details": {
+        "corrected_alpha": 0.00029069767441860465,
+        "n_rejected": null
+      }
+    },
+    "fdr_bh": {
+      "n_significant_tests": 146,
+      "significance_rate": 0.8488372093023255,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": 146
+      }
+    },
+    "family_wise": {
+      "n_significant_tests": 129,
+      "significance_rate": 0.75,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": null
+      }
+    }
+  },
+  "primary_findings_status": {
+    "primary_tep": {
+      "bonferroni": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      }
+    },
+    "model_comparison": {
+      "bonferroni": {
+        "n_tests": 18,
+        "n_significant": 3,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 18,
+        "n_significant": 9,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 18,
+        "n_significant": 4,
+        "all_significant": false
+      }
+    },
+    "null_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "astronomical_events": {
+      "bonferroni": {
+        "n_tests": 8,
+        "n_significant": 6,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 8,
+        "n_significant": 8,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 8,
+        "n_significant": 8,
+        "all_significant": true
+      }
+    },
+    "anisotropy_orbital": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "cross_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "advanced_analysis": {
+      "bonferroni": {
+        "n_tests": 15,
+        "n_significant": 15,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 15,
+        "n_significant": 15,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 15,
+        "n_significant": 15,
+        "all_significant": true
+      }
+    },
+    "geographic_validation": {
+      "bonferroni": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      }
+    },
+    "chandler_wobble": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "bootstrap_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "multiband_analysis": {
+      "bonferroni": {
+        "n_tests": 40,
+        "n_significant": 37,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
+      }
+    },
+    "gravitational_field": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "diurnal_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "eclipse_analysis": {
+      "bonferroni": {
+        "n_tests": 15,
+        "n_significant": 5,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 15,
+        "n_significant": 9,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 15,
+        "n_significant": 7,
+        "all_significant": false
+      }
+    },
+    "bootstrap_cross_method": {
+      "bonferroni": {
+        "n_tests": 12,
+        "n_significant": 3,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 12,
+        "n_significant": 12,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 12,
+        "n_significant": 3,
+        "all_significant": false
+      }
+    },
+    "coordinate_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "data_quality_validation": {
+      "bonferroni": {
+        "n_tests": 6,
+        "n_significant": 6,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 6,
+        "n_significant": 6,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 6,
+        "n_significant": 6,
+        "all_significant": true
+      }
+    },
+    "hilbert_if_astronomical": {
+      "bonferroni": {
+        "n_tests": 12,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 12,
+        "n_significant": 1,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 12,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    },
+    "band_diagnostics": {
+      "bonferroni": {
+        "n_tests": 40,
+        "n_significant": 37,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
+      }
+    }
+  },
+  "impact_analysis": {
+    "uncorrected_significant": 172,
+    "uncorrected_rate": 1.0,
+    "bonferroni_reduction": {
+      "absolute": 54,
+      "relative": 0.313953488372093
+    },
+    "fdr_bh_reduction": {
+      "absolute": 26,
+      "relative": 0.1511627906976744
+    },
+    "family_wise_reduction": {
+      "absolute": 43,
+      "relative": 0.25
+    }
+  }
+}

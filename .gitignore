@@ -50,23 +50,34 @@ ehthumbs.db
 Thumbs.db
 
 # TEP-GNSS specific
-# Large data files (will be downloaded in Codespace)
+# Large raw data files (will be downloaded in Codespace)
 data/raw/
 data/processed/
 data/coordinates/
-logs/
-results/outputs/
-results/figures/
+
+# Large CSV files (too big for git)
+*.csv
+results/outputs/*.csv
+data/processed/*.csv
+
+# Temporary and intermediate files
 results/tmp/
 results/exploratory/
 exploratory/
 **/exploratory/
 results/validation/
-
-# Temporary files
 *.tmp
 *.temp
-*.log
+
+# Keep these important files:
+# - results/outputs/*.json (analysis results)
+# - results/figures/*.png (visualizations) 
+# - logs/*.log (pipeline logs)
+
+# Archive files
+*.tar.gz
+*.zip
+*.tar
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/

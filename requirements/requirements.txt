@@ -5,15 +5,26 @@ scipy==1.11.4
 
 # Plotting
 matplotlib==3.8.4
+cmasher==1.9.2
+plotly==6.3.1
+kaleido==1.1.0
+adjustText==1.3.0
+
+# Data formats
+h5py==3.14.0
 
 # System utilities
 psutil==5.9.8
 
 # Optional but common
-seaborn==0.13.2
+seaborn==0.15.2
 
 # Geomagnetic field calculations (Apex coordinates)
 apexpy==1.6.3
+
+# Astronomical calculations
+ephem==4.2
+astropy==7.1.0
 
 # Pin setuptools/wheel for reproducible builds (optional)
 setuptools==70.0.0
@@ -25,6 +36,9 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 
 cartopy==0.23.0
-statsmodels==0.14.2
+statsmodels==0.15.2
 scikit-learn==1.5.0
+
+# HTML to PDF conversion
+playwright==1.48.0
 

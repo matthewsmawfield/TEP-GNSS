@@ -1057,7 +1057,8 @@ def analyze_binning_sensitivity(root_dir):
 def main():
     """Main entry point for Step 4.0 Advanced Analysis."""
 
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.0: Advanced Analysis", "INFO")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 4.0: Advanced Analysis", "INFO")
     print_status("Focused validation: Elevation, Circular Statistics, Model Comparison, Binning Sensitivity", "INFO")
     
     root_dir = PACKAGE_ROOT  # Use PACKAGE_ROOT consistently

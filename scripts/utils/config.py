@@ -67,7 +67,7 @@ class TEPConfig:
         # Network timeouts
         'TEP_NETWORK_TIMEOUT': 30,  # General network timeout in seconds for requests
         'TEP_DOWNLOAD_TIMEOUT': 60,  # Timeout in seconds for individual file downloads
-        'TEP_MAX_PARALLEL_DOWNLOADS': 14,  # Maximum number of concurrent file downloads
+        'TEP_MAX_PARALLEL_DOWNLOADS': 10,  # Maximum number of concurrent file downloads
         'TEP_MIN_FILE_SIZE_MB': 1.0, # Minimum expected file size in MB for a successful download (used for validation)
 
         # Data Source URLs

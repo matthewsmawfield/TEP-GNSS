@@ -1,0 +1,1808 @@
+[08:20:15] [INFO] 
+[08:20:15] [INFO] ================================================================================
+[08:20:15] [INFO] TEP GNSS Analysis Package v0.13 - STEP 3.0: Cross-Validation Suite (Comprehensive)
+[08:20:15] [INFO] ================================================================================
+[08:20:15] [INFO] 
+[08:20:15] [INFO] ======================================================================
+[08:20:15] [INFO] Configuration:
+[08:20:15] [INFO]   Monthly CV enabled: True
+[08:20:15] [INFO]   Station block CV enabled: True
+[08:20:15] [INFO]   LOSO CV enabled: True
+[08:20:15] [INFO]   LODO CV enabled: True
+[08:20:15] [INFO]   Bootstrap CV: Disabled (use Step 3.1 Robust Block Bootstrap instead)
+[08:20:15] [INFO]   Monthly folds limit: 12
+[08:20:15] [INFO]   Station block size: 10
+[08:20:15] [INFO]   LOSO sample size: 50
+[08:20:15] [INFO]   LODO sample size: 100
+[08:20:15] [INFO]   Memory limit: 8.0 GB
+[08:20:15] [INFO] Found consolidated pair data for code
+[08:20:15] [INFO] Found consolidated pair data for esa_final
+[08:20:15] [INFO] Found consolidated pair data for igs_combined
+[08:20:15] [INFO] Processing 3 analysis centers: code, esa_final, igs_combined
+[08:20:15] [PROCESS] 
+Processing analysis center: CODE
+[08:20:15] [INFO] --------------------------------------------------
+[08:20:15] [PROCESS] Starting block-wise cross-validation analysis for code
+[08:20:15] [PROCESS] Loading complete pair dataset for code...
+[08:20:19] [INFO] Loading full dataset with 39,068,754 pairs...
+[08:20:19] [DEBUG] Processing file step_2_0_pairs_consolidated_code.csv in chunks of 25,000
+[08:20:19] [DEBUG] Processing 3643.2 MB file in chunks
+[08:20:19] [DEBUG] Memory cleanup in After processing 250,000 rows: Collected 0 objects
+[08:20:19] [DEBUG] Memory cleanup in After processing 250,000 rows: Freed -1.2 MB (RSS: 241.8 → 243.0 MB)
+[08:20:19] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:19] [DEBUG] Memory cleanup in After processing 500,000 rows: Collected 0 objects
+[08:20:19] [DEBUG] Memory cleanup in After processing 500,000 rows: Freed 0.0 MB (RSS: 302.9 → 302.9 MB)
+[08:20:19] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:20] [DEBUG] Memory cleanup in After processing 750,000 rows: Collected 0 objects
+[08:20:20] [DEBUG] Memory cleanup in After processing 750,000 rows: Freed 0.0 MB (RSS: 334.1 → 334.1 MB)
+[08:20:20] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Collected 0 objects
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Freed 0.0 MB (RSS: 363.4 → 363.4 MB)
+[08:20:20] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Collected 0 objects
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Freed 0.0 MB (RSS: 381.2 → 381.2 MB)
+[08:20:20] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Collected 0 objects
+[08:20:20] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Freed 0.0 MB (RSS: 399.9 → 399.9 MB)
+[08:20:20] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:21] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Collected 0 objects
+[08:20:21] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Freed 0.0 MB (RSS: 432.5 → 432.5 MB)
+[08:20:21] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Collected 0 objects
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Freed -0.0 MB (RSS: 447.7 → 447.7 MB)
+[08:20:21] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Collected 0 objects
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Freed 0.0 MB (RSS: 473.6 → 473.6 MB)
+[08:20:21] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Collected 0 objects
+[08:20:21] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Freed 0.0 MB (RSS: 488.4 → 488.4 MB)
+[08:20:21] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:22] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Collected 0 objects
+[08:20:22] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Freed 0.0 MB (RSS: 518.4 → 518.4 MB)
+[08:20:22] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Collected 0 objects
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Freed 0.0 MB (RSS: 544.0 → 544.0 MB)
+[08:20:22] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Collected 0 objects
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Freed 0.0 MB (RSS: 554.4 → 554.4 MB)
+[08:20:22] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Collected 0 objects
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Freed -0.0 MB (RSS: 579.0 → 579.0 MB)
+[08:20:22] [INFO] Memory usage: 2.8/24.0 GB (88.5%)
+[08:20:22] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Collected 0 objects
+[08:20:23] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Freed 0.0 MB (RSS: 606.3 → 606.3 MB)
+[08:20:23] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Collected 0 objects
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Freed 0.0 MB (RSS: 621.6 → 621.6 MB)
+[08:20:23] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Collected 0 objects
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Freed 0.0 MB (RSS: 645.4 → 645.4 MB)
+[08:20:23] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Collected 0 objects
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Freed 0.0 MB (RSS: 666.8 → 666.8 MB)
+[08:20:23] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Collected 0 objects
+[08:20:23] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Freed 0.0 MB (RSS: 685.1 → 685.1 MB)
+[08:20:23] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Collected 0 objects
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Freed 0.0 MB (RSS: 705.4 → 705.4 MB)
+[08:20:24] [INFO] Memory usage: 2.8/24.0 GB (88.4%)
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Collected 0 objects
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Freed 0.0 MB (RSS: 718.6 → 718.6 MB)
+[08:20:24] [INFO] Memory usage: 2.8/24.0 GB (88.3%)
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Collected 0 objects
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Freed 0.0 MB (RSS: 735.9 → 735.9 MB)
+[08:20:24] [INFO] Memory usage: 2.8/24.0 GB (88.3%)
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Collected 0 objects
+[08:20:24] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Freed 0.0 MB (RSS: 766.4 → 766.4 MB)
+[08:20:24] [INFO] Memory usage: 2.8/24.0 GB (88.3%)
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Collected 0 objects
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Freed 0.0 MB (RSS: 794.3 → 794.3 MB)
+[08:20:25] [INFO] Memory usage: 2.8/24.0 GB (88.3%)
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Collected 0 objects
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Freed 0.0 MB (RSS: 817.5 → 817.5 MB)
+[08:20:25] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Collected 0 objects
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Freed 0.0 MB (RSS: 840.2 → 840.2 MB)
+[08:20:25] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Collected 0 objects
+[08:20:25] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Freed 0.0 MB (RSS: 861.4 → 861.4 MB)
+[08:20:25] [INFO] Memory usage: 2.7/24.0 GB (88.2%)
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Collected 0 objects
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Freed 0.0 MB (RSS: 881.0 → 881.0 MB)
+[08:20:26] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Collected 0 objects
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Freed 0.0 MB (RSS: 899.5 → 899.5 MB)
+[08:20:26] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Collected 0 objects
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Freed 0.0 MB (RSS: 914.6 → 914.6 MB)
+[08:20:26] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Collected 0 objects
+[08:20:26] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Freed 0.0 MB (RSS: 935.0 → 935.0 MB)
+[08:20:26] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:26] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Collected 0 objects
+[08:20:26] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Freed 0.0 MB (RSS: 958.0 → 958.0 MB)
+[08:20:26] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Collected 0 objects
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Freed 0.0 MB (RSS: 976.0 → 976.0 MB)
+[08:20:27] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Collected 0 objects
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Freed 0.0 MB (RSS: 997.6 → 997.6 MB)
+[08:20:27] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Collected 0 objects
+[08:20:27] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Freed 0.0 MB (RSS: 1020.1 → 1020.1 MB)
+[08:20:27] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:27] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Collected 0 objects
+[08:20:27] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Freed 0.0 MB (RSS: 1037.0 → 1037.0 MB)
+[08:20:27] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Collected 0 objects
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Freed 0.0 MB (RSS: 1054.9 → 1054.9 MB)
+[08:20:28] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Collected 0 objects
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Freed 0.0 MB (RSS: 1079.5 → 1079.5 MB)
+[08:20:28] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Collected 0 objects
+[08:20:28] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Freed 0.0 MB (RSS: 1093.8 → 1093.8 MB)
+[08:20:28] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:28] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Collected 0 objects
+[08:20:28] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Freed -0.0 MB (RSS: 1119.5 → 1119.5 MB)
+[08:20:28] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Collected 0 objects
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Freed 0.0 MB (RSS: 1142.7 → 1142.7 MB)
+[08:20:29] [INFO] Memory usage: 2.8/24.0 GB (88.2%)
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Collected 0 objects
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Freed 0.0 MB (RSS: 1160.3 → 1160.3 MB)
+[08:20:29] [INFO] Memory usage: 2.7/24.0 GB (88.2%)
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Collected 0 objects
+[08:20:29] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Freed 0.0 MB (RSS: 1175.1 → 1175.1 MB)
+[08:20:29] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:29] [DEBUG] Memory cleanup in After processing 11,000,000 rows: Collected 0 objects
+[08:20:29] [DEBUG] Memory cleanup in After processing 11,000,000 rows: Freed 0.1 MB (RSS: 1200.7 → 1200.6 MB)
+[08:20:29] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,250,000 rows: Collected 0 objects
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,250,000 rows: Freed 0.0 MB (RSS: 1231.0 → 1231.0 MB)
+[08:20:30] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,500,000 rows: Collected 0 objects
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,500,000 rows: Freed 0.0 MB (RSS: 1247.2 → 1247.2 MB)
+[08:20:30] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,750,000 rows: Collected 0 objects
+[08:20:30] [DEBUG] Memory cleanup in After processing 11,750,000 rows: Freed 0.0 MB (RSS: 1268.9 → 1268.9 MB)
+[08:20:30] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:30] [DEBUG] Memory cleanup in After processing 12,000,000 rows: Collected 0 objects
+[08:20:30] [DEBUG] Memory cleanup in After processing 12,000,000 rows: Freed 0.0 MB (RSS: 1281.3 → 1281.3 MB)
+[08:20:30] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,250,000 rows: Collected 0 objects
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,250,000 rows: Freed 0.0 MB (RSS: 1310.1 → 1310.1 MB)
+[08:20:31] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,500,000 rows: Collected 0 objects
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,500,000 rows: Freed 0.0 MB (RSS: 1333.5 → 1333.5 MB)
+[08:20:31] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,750,000 rows: Collected 0 objects
+[08:20:31] [DEBUG] Memory cleanup in After processing 12,750,000 rows: Freed 0.0 MB (RSS: 1354.6 → 1354.6 MB)
+[08:20:31] [INFO] Memory usage: 2.7/24.0 GB (88.1%)
+[08:20:31] [DEBUG] Memory cleanup in After processing 13,000,000 rows: Collected 0 objects
+[08:20:31] [DEBUG] Memory cleanup in After processing 13,000,000 rows: Freed 0.0 MB (RSS: 1372.7 → 1372.7 MB)
+[08:20:31] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:31] [DEBUG] Memory cleanup in After processing 13,250,000 rows: Collected 0 objects
+[08:20:32] [DEBUG] Memory cleanup in After processing 13,250,000 rows: Freed 0.0 MB (RSS: 1385.9 → 1385.9 MB)
+[08:20:32] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:32] [DEBUG] Memory cleanup in After processing 13,500,000 rows: Collected 0 objects
+[08:20:32] [DEBUG] Memory cleanup in After processing 13,500,000 rows: Freed 0.0 MB (RSS: 1399.3 → 1399.3 MB)
+[08:20:32] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:32] [DEBUG] Memory cleanup in After processing 13,750,000 rows: Collected 0 objects
+[08:20:32] [DEBUG] Memory cleanup in After processing 13,750,000 rows: Freed 0.0 MB (RSS: 1410.8 → 1410.8 MB)
+[08:20:32] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:32] [DEBUG] Memory cleanup in After processing 14,000,000 rows: Collected 0 objects
+[08:20:32] [DEBUG] Memory cleanup in After processing 14,000,000 rows: Freed 0.0 MB (RSS: 1437.8 → 1437.8 MB)
+[08:20:32] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:32] [DEBUG] Memory cleanup in After processing 14,250,000 rows: Collected 0 objects
+[08:20:33] [DEBUG] Memory cleanup in After processing 14,250,000 rows: Freed 0.0 MB (RSS: 1459.6 → 1459.6 MB)
+[08:20:33] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:33] [DEBUG] Memory cleanup in After processing 14,500,000 rows: Collected 0 objects
+[08:20:33] [DEBUG] Memory cleanup in After processing 14,500,000 rows: Freed 0.0 MB (RSS: 1481.6 → 1481.6 MB)
+[08:20:33] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:33] [DEBUG] Memory cleanup in After processing 14,750,000 rows: Collected 0 objects
+[08:20:33] [DEBUG] Memory cleanup in After processing 14,750,000 rows: Freed 0.0 MB (RSS: 1504.5 → 1504.5 MB)
+[08:20:33] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:33] [DEBUG] Memory cleanup in After processing 15,000,000 rows: Collected 0 objects
+[08:20:33] [DEBUG] Memory cleanup in After processing 15,000,000 rows: Freed 0.0 MB (RSS: 1524.8 → 1524.8 MB)
+[08:20:33] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:33] [DEBUG] Memory cleanup in After processing 15,250,000 rows: Collected 0 objects
+[08:20:33] [DEBUG] Memory cleanup in After processing 15,250,000 rows: Freed 0.0 MB (RSS: 1548.4 → 1548.4 MB)
+[08:20:33] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:34] [DEBUG] Memory cleanup in After processing 15,500,000 rows: Collected 0 objects
+[08:20:34] [DEBUG] Memory cleanup in After processing 15,500,000 rows: Freed 0.0 MB (RSS: 1574.0 → 1574.0 MB)
+[08:20:34] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:34] [DEBUG] Memory cleanup in After processing 15,750,000 rows: Collected 0 objects
+[08:20:34] [DEBUG] Memory cleanup in After processing 15,750,000 rows: Freed 0.0 MB (RSS: 1590.5 → 1590.5 MB)
+[08:20:34] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:34] [DEBUG] Memory cleanup in After processing 16,000,000 rows: Collected 0 objects
+[08:20:34] [DEBUG] Memory cleanup in After processing 16,000,000 rows: Freed 0.0 MB (RSS: 1611.6 → 1611.6 MB)
+[08:20:34] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:34] [DEBUG] Memory cleanup in After processing 16,250,000 rows: Collected 0 objects
+[08:20:34] [DEBUG] Memory cleanup in After processing 16,250,000 rows: Freed 0.0 MB (RSS: 1630.7 → 1630.7 MB)
+[08:20:34] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:35] [DEBUG] Memory cleanup in After processing 16,500,000 rows: Collected 0 objects
+[08:20:35] [DEBUG] Memory cleanup in After processing 16,500,000 rows: Freed 0.0 MB (RSS: 1644.2 → 1644.2 MB)
+[08:20:35] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:35] [DEBUG] Memory cleanup in After processing 16,750,000 rows: Collected 0 objects
+[08:20:35] [DEBUG] Memory cleanup in After processing 16,750,000 rows: Freed 0.0 MB (RSS: 1662.1 → 1662.1 MB)
+[08:20:35] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:35] [DEBUG] Memory cleanup in After processing 17,000,000 rows: Collected 0 objects
+[08:20:35] [DEBUG] Memory cleanup in After processing 17,000,000 rows: Freed 0.0 MB (RSS: 1688.4 → 1688.4 MB)
+[08:20:35] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:35] [DEBUG] Memory cleanup in After processing 17,250,000 rows: Collected 0 objects
+[08:20:35] [DEBUG] Memory cleanup in After processing 17,250,000 rows: Freed 0.0 MB (RSS: 1705.8 → 1705.8 MB)
+[08:20:35] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:36] [DEBUG] Memory cleanup in After processing 17,500,000 rows: Collected 0 objects
+[08:20:36] [DEBUG] Memory cleanup in After processing 17,500,000 rows: Freed 0.0 MB (RSS: 1727.9 → 1727.9 MB)
+[08:20:36] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:36] [DEBUG] Memory cleanup in After processing 17,750,000 rows: Collected 0 objects
+[08:20:36] [DEBUG] Memory cleanup in After processing 17,750,000 rows: Freed 0.0 MB (RSS: 1747.6 → 1747.6 MB)
+[08:20:36] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:36] [DEBUG] Memory cleanup in After processing 18,000,000 rows: Collected 0 objects
+[08:20:36] [DEBUG] Memory cleanup in After processing 18,000,000 rows: Freed 0.0 MB (RSS: 1777.0 → 1777.0 MB)
+[08:20:36] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:36] [DEBUG] Memory cleanup in After processing 18,250,000 rows: Collected 0 objects
+[08:20:36] [DEBUG] Memory cleanup in After processing 18,250,000 rows: Freed 0.0 MB (RSS: 1798.5 → 1798.5 MB)
+[08:20:36] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:37] [DEBUG] Memory cleanup in After processing 18,500,000 rows: Collected 0 objects
+[08:20:37] [DEBUG] Memory cleanup in After processing 18,500,000 rows: Freed 0.0 MB (RSS: 1815.5 → 1815.5 MB)
+[08:20:37] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:37] [DEBUG] Memory cleanup in After processing 18,750,000 rows: Collected 0 objects
+[08:20:37] [DEBUG] Memory cleanup in After processing 18,750,000 rows: Freed 0.0 MB (RSS: 1842.8 → 1842.8 MB)
+[08:20:37] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:37] [DEBUG] Memory cleanup in After processing 19,000,000 rows: Collected 0 objects
+[08:20:37] [DEBUG] Memory cleanup in After processing 19,000,000 rows: Freed 0.0 MB (RSS: 1859.7 → 1859.7 MB)
+[08:20:37] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:37] [DEBUG] Memory cleanup in After processing 19,250,000 rows: Collected 0 objects
+[08:20:37] [DEBUG] Memory cleanup in After processing 19,250,000 rows: Freed 0.0 MB (RSS: 1885.6 → 1885.6 MB)
+[08:20:37] [INFO] Memory usage: 2.7/24.0 GB (87.8%)
+[08:20:38] [DEBUG] Memory cleanup in After processing 19,500,000 rows: Collected 0 objects
+[08:20:38] [DEBUG] Memory cleanup in After processing 19,500,000 rows: Freed 0.0 MB (RSS: 1902.4 → 1902.4 MB)
+[08:20:38] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:38] [DEBUG] Memory cleanup in After processing 19,750,000 rows: Collected 0 objects
+[08:20:38] [DEBUG] Memory cleanup in After processing 19,750,000 rows: Freed 0.0 MB (RSS: 1917.1 → 1917.1 MB)
+[08:20:38] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:38] [DEBUG] Memory cleanup in After processing 20,000,000 rows: Collected 0 objects
+[08:20:38] [DEBUG] Memory cleanup in After processing 20,000,000 rows: Freed 0.0 MB (RSS: 1936.1 → 1936.1 MB)
+[08:20:38] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:38] [DEBUG] Memory cleanup in After processing 20,250,000 rows: Collected 0 objects
+[08:20:38] [DEBUG] Memory cleanup in After processing 20,250,000 rows: Freed 0.0 MB (RSS: 1967.2 → 1967.2 MB)
+[08:20:38] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:39] [DEBUG] Memory cleanup in After processing 20,500,000 rows: Collected 0 objects
+[08:20:39] [DEBUG] Memory cleanup in After processing 20,500,000 rows: Freed 0.0 MB (RSS: 1981.0 → 1981.0 MB)
+[08:20:39] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:39] [DEBUG] Memory cleanup in After processing 20,750,000 rows: Collected 0 objects
+[08:20:39] [DEBUG] Memory cleanup in After processing 20,750,000 rows: Freed 0.0 MB (RSS: 2005.2 → 2005.2 MB)
+[08:20:39] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:39] [DEBUG] Memory cleanup in After processing 21,000,000 rows: Collected 0 objects
+[08:20:39] [DEBUG] Memory cleanup in After processing 21,000,000 rows: Freed 0.0 MB (RSS: 2029.0 → 2029.0 MB)
+[08:20:39] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:39] [DEBUG] Memory cleanup in After processing 21,250,000 rows: Collected 0 objects
+[08:20:39] [DEBUG] Memory cleanup in After processing 21,250,000 rows: Freed 0.0 MB (RSS: 2048.7 → 2048.7 MB)
+[08:20:39] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:40] [DEBUG] Memory cleanup in After processing 21,500,000 rows: Collected 0 objects
+[08:20:40] [DEBUG] Memory cleanup in After processing 21,500,000 rows: Freed 0.0 MB (RSS: 2066.9 → 2066.9 MB)
+[08:20:40] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:40] [DEBUG] Memory cleanup in After processing 21,750,000 rows: Collected 0 objects
+[08:20:40] [DEBUG] Memory cleanup in After processing 21,750,000 rows: Freed 0.0 MB (RSS: 2090.5 → 2090.5 MB)
+[08:20:40] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:40] [DEBUG] Memory cleanup in After processing 22,000,000 rows: Collected 0 objects
+[08:20:40] [DEBUG] Memory cleanup in After processing 22,000,000 rows: Freed 0.0 MB (RSS: 2110.9 → 2110.9 MB)
+[08:20:40] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:40] [DEBUG] Memory cleanup in After processing 22,250,000 rows: Collected 0 objects
+[08:20:40] [DEBUG] Memory cleanup in After processing 22,250,000 rows: Freed 0.0 MB (RSS: 2137.2 → 2137.2 MB)
+[08:20:40] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:41] [DEBUG] Memory cleanup in After processing 22,500,000 rows: Collected 0 objects
+[08:20:41] [DEBUG] Memory cleanup in After processing 22,500,000 rows: Freed 0.0 MB (RSS: 2154.3 → 2154.3 MB)
+[08:20:41] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:41] [DEBUG] Memory cleanup in After processing 22,750,000 rows: Collected 0 objects
+[08:20:41] [DEBUG] Memory cleanup in After processing 22,750,000 rows: Freed 0.0 MB (RSS: 2177.1 → 2177.1 MB)
+[08:20:41] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:41] [DEBUG] Memory cleanup in After processing 23,000,000 rows: Collected 0 objects
+[08:20:41] [DEBUG] Memory cleanup in After processing 23,000,000 rows: Freed 0.0 MB (RSS: 2190.4 → 2190.4 MB)
+[08:20:41] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:41] [DEBUG] Memory cleanup in After processing 23,250,000 rows: Collected 0 objects
+[08:20:41] [DEBUG] Memory cleanup in After processing 23,250,000 rows: Freed 0.0 MB (RSS: 2215.7 → 2215.7 MB)
+[08:20:41] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:42] [DEBUG] Memory cleanup in After processing 23,500,000 rows: Collected 0 objects
+[08:20:42] [DEBUG] Memory cleanup in After processing 23,500,000 rows: Freed 0.0 MB (RSS: 2240.5 → 2240.5 MB)
+[08:20:42] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:42] [DEBUG] Memory cleanup in After processing 23,750,000 rows: Collected 0 objects
+[08:20:42] [DEBUG] Memory cleanup in After processing 23,750,000 rows: Freed 0.0 MB (RSS: 2258.3 → 2258.3 MB)
+[08:20:42] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:42] [DEBUG] Memory cleanup in After processing 24,000,000 rows: Collected 0 objects
+[08:20:42] [DEBUG] Memory cleanup in After processing 24,000,000 rows: Freed 0.0 MB (RSS: 2275.3 → 2275.3 MB)
+[08:20:42] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:42] [DEBUG] Memory cleanup in After processing 24,250,000 rows: Collected 0 objects
+[08:20:42] [DEBUG] Memory cleanup in After processing 24,250,000 rows: Freed 0.0 MB (RSS: 2298.0 → 2298.0 MB)
+[08:20:42] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:43] [DEBUG] Memory cleanup in After processing 24,500,000 rows: Collected 0 objects
+[08:20:43] [DEBUG] Memory cleanup in After processing 24,500,000 rows: Freed 0.0 MB (RSS: 2320.3 → 2320.3 MB)
+[08:20:43] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:43] [DEBUG] Memory cleanup in After processing 24,750,000 rows: Collected 0 objects
+[08:20:43] [DEBUG] Memory cleanup in After processing 24,750,000 rows: Freed 0.0 MB (RSS: 2338.1 → 2338.1 MB)
+[08:20:43] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:43] [DEBUG] Memory cleanup in After processing 25,000,000 rows: Collected 0 objects
+[08:20:43] [DEBUG] Memory cleanup in After processing 25,000,000 rows: Freed 0.0 MB (RSS: 2352.5 → 2352.5 MB)
+[08:20:43] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:43] [DEBUG] Memory cleanup in After processing 25,250,000 rows: Collected 0 objects
+[08:20:43] [DEBUG] Memory cleanup in After processing 25,250,000 rows: Freed 0.0 MB (RSS: 2379.7 → 2379.7 MB)
+[08:20:43] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:44] [DEBUG] Memory cleanup in After processing 25,500,000 rows: Collected 0 objects
+[08:20:44] [DEBUG] Memory cleanup in After processing 25,500,000 rows: Freed 0.0 MB (RSS: 2399.0 → 2399.0 MB)
+[08:20:44] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:44] [DEBUG] Memory cleanup in After processing 25,750,000 rows: Collected 0 objects
+[08:20:44] [DEBUG] Memory cleanup in After processing 25,750,000 rows: Freed 0.0 MB (RSS: 2415.5 → 2415.5 MB)
+[08:20:44] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:44] [DEBUG] Memory cleanup in After processing 26,000,000 rows: Collected 0 objects
+[08:20:44] [DEBUG] Memory cleanup in After processing 26,000,000 rows: Freed 0.0 MB (RSS: 2428.5 → 2428.5 MB)
+[08:20:44] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:44] [DEBUG] Memory cleanup in After processing 26,250,000 rows: Collected 0 objects
+[08:20:44] [DEBUG] Memory cleanup in After processing 26,250,000 rows: Freed 0.0 MB (RSS: 2449.0 → 2449.0 MB)
+[08:20:44] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:45] [DEBUG] Memory cleanup in After processing 26,500,000 rows: Collected 0 objects
+[08:20:45] [DEBUG] Memory cleanup in After processing 26,500,000 rows: Freed 0.0 MB (RSS: 2469.5 → 2469.5 MB)
+[08:20:45] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:45] [DEBUG] Memory cleanup in After processing 26,750,000 rows: Collected 0 objects
+[08:20:45] [DEBUG] Memory cleanup in After processing 26,750,000 rows: Freed 0.0 MB (RSS: 2482.9 → 2482.9 MB)
+[08:20:45] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:45] [DEBUG] Memory cleanup in After processing 27,000,000 rows: Collected 0 objects
+[08:20:45] [DEBUG] Memory cleanup in After processing 27,000,000 rows: Freed 0.0 MB (RSS: 2503.5 → 2503.5 MB)
+[08:20:45] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:45] [DEBUG] Memory cleanup in After processing 27,250,000 rows: Collected 0 objects
+[08:20:45] [DEBUG] Memory cleanup in After processing 27,250,000 rows: Freed 0.0 MB (RSS: 2522.1 → 2522.1 MB)
+[08:20:45] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:46] [DEBUG] Memory cleanup in After processing 27,500,000 rows: Collected 0 objects
+[08:20:46] [DEBUG] Memory cleanup in After processing 27,500,000 rows: Freed 0.0 MB (RSS: 2550.7 → 2550.7 MB)
+[08:20:46] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:46] [DEBUG] Memory cleanup in After processing 27,750,000 rows: Collected 0 objects
+[08:20:46] [DEBUG] Memory cleanup in After processing 27,750,000 rows: Freed 0.0 MB (RSS: 2576.1 → 2576.1 MB)
+[08:20:46] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:46] [DEBUG] Memory cleanup in After processing 28,000,000 rows: Collected 0 objects
+[08:20:46] [DEBUG] Memory cleanup in After processing 28,000,000 rows: Freed 0.0 MB (RSS: 2593.1 → 2593.1 MB)
+[08:20:46] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:46] [DEBUG] Memory cleanup in After processing 28,250,000 rows: Collected 0 objects
+[08:20:46] [DEBUG] Memory cleanup in After processing 28,250,000 rows: Freed 0.0 MB (RSS: 2618.3 → 2618.3 MB)
+[08:20:46] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:47] [DEBUG] Memory cleanup in After processing 28,500,000 rows: Collected 0 objects
+[08:20:47] [DEBUG] Memory cleanup in After processing 28,500,000 rows: Freed 0.0 MB (RSS: 2638.3 → 2638.3 MB)
+[08:20:47] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:47] [DEBUG] Memory cleanup in After processing 28,750,000 rows: Collected 0 objects
+[08:20:47] [DEBUG] Memory cleanup in After processing 28,750,000 rows: Freed 0.0 MB (RSS: 2653.9 → 2653.9 MB)
+[08:20:47] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:47] [DEBUG] Memory cleanup in After processing 29,000,000 rows: Collected 0 objects
+[08:20:47] [DEBUG] Memory cleanup in After processing 29,000,000 rows: Freed 0.0 MB (RSS: 2674.1 → 2674.1 MB)
+[08:20:47] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:47] [DEBUG] Memory cleanup in After processing 29,250,000 rows: Collected 0 objects
+[08:20:47] [DEBUG] Memory cleanup in After processing 29,250,000 rows: Freed 0.0 MB (RSS: 2707.9 → 2707.9 MB)
+[08:20:47] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:47] [DEBUG] Memory cleanup in After processing 29,500,000 rows: Collected 0 objects
+[08:20:48] [DEBUG] Memory cleanup in After processing 29,500,000 rows: Freed 0.0 MB (RSS: 2724.7 → 2724.7 MB)
+[08:20:48] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:48] [DEBUG] Memory cleanup in After processing 29,750,000 rows: Collected 0 objects
+[08:20:48] [DEBUG] Memory cleanup in After processing 29,750,000 rows: Freed 0.0 MB (RSS: 2744.7 → 2744.7 MB)
+[08:20:48] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:48] [DEBUG] Memory cleanup in After processing 30,000,000 rows: Collected 0 objects
+[08:20:48] [DEBUG] Memory cleanup in After processing 30,000,000 rows: Freed 0.0 MB (RSS: 2759.9 → 2759.9 MB)
+[08:20:48] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:48] [DEBUG] Memory cleanup in After processing 30,250,000 rows: Collected 0 objects
+[08:20:48] [DEBUG] Memory cleanup in After processing 30,250,000 rows: Freed 0.0 MB (RSS: 2785.6 → 2785.6 MB)
+[08:20:48] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:49] [DEBUG] Memory cleanup in After processing 30,500,000 rows: Collected 0 objects
+[08:20:49] [DEBUG] Memory cleanup in After processing 30,500,000 rows: Freed 0.0 MB (RSS: 2801.7 → 2801.7 MB)
+[08:20:49] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:49] [DEBUG] Memory cleanup in After processing 30,750,000 rows: Collected 0 objects
+[08:20:49] [DEBUG] Memory cleanup in After processing 30,750,000 rows: Freed 0.0 MB (RSS: 2820.1 → 2820.1 MB)
+[08:20:49] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:49] [DEBUG] Memory cleanup in After processing 31,000,000 rows: Collected 0 objects
+[08:20:49] [DEBUG] Memory cleanup in After processing 31,000,000 rows: Freed 0.0 MB (RSS: 2835.3 → 2835.3 MB)
+[08:20:49] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:49] [DEBUG] Memory cleanup in After processing 31,250,000 rows: Collected 0 objects
+[08:20:49] [DEBUG] Memory cleanup in After processing 31,250,000 rows: Freed 0.0 MB (RSS: 2858.3 → 2858.3 MB)
+[08:20:49] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:50] [DEBUG] Memory cleanup in After processing 31,500,000 rows: Collected 0 objects
+[08:20:50] [DEBUG] Memory cleanup in After processing 31,500,000 rows: Freed 0.0 MB (RSS: 2887.3 → 2887.3 MB)
+[08:20:50] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:50] [DEBUG] Memory cleanup in After processing 31,750,000 rows: Collected 0 objects
+[08:20:50] [DEBUG] Memory cleanup in After processing 31,750,000 rows: Freed 0.0 MB (RSS: 2904.1 → 2904.1 MB)
+[08:20:50] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:50] [DEBUG] Memory cleanup in After processing 32,000,000 rows: Collected 0 objects
+[08:20:50] [DEBUG] Memory cleanup in After processing 32,000,000 rows: Freed 0.0 MB (RSS: 2928.0 → 2928.0 MB)
+[08:20:50] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:50] [DEBUG] Memory cleanup in After processing 32,250,000 rows: Collected 0 objects
+[08:20:50] [DEBUG] Memory cleanup in After processing 32,250,000 rows: Freed 0.0 MB (RSS: 2964.0 → 2964.0 MB)
+[08:20:50] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:51] [DEBUG] Memory cleanup in After processing 32,500,000 rows: Collected 0 objects
+[08:20:51] [DEBUG] Memory cleanup in After processing 32,500,000 rows: Freed 0.0 MB (RSS: 2979.6 → 2979.6 MB)
+[08:20:51] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:51] [DEBUG] Memory cleanup in After processing 32,750,000 rows: Collected 0 objects
+[08:20:51] [DEBUG] Memory cleanup in After processing 32,750,000 rows: Freed 0.0 MB (RSS: 2991.9 → 2991.9 MB)
+[08:20:51] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:51] [DEBUG] Memory cleanup in After processing 33,000,000 rows: Collected 0 objects
+[08:20:51] [DEBUG] Memory cleanup in After processing 33,000,000 rows: Freed 0.0 MB (RSS: 3012.9 → 3012.9 MB)
+[08:20:51] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:51] [DEBUG] Memory cleanup in After processing 33,250,000 rows: Collected 0 objects
+[08:20:51] [DEBUG] Memory cleanup in After processing 33,250,000 rows: Freed 0.0 MB (RSS: 3033.3 → 3033.3 MB)
+[08:20:51] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:52] [DEBUG] Memory cleanup in After processing 33,500,000 rows: Collected 0 objects
+[08:20:52] [DEBUG] Memory cleanup in After processing 33,500,000 rows: Freed 0.0 MB (RSS: 3051.2 → 3051.2 MB)
+[08:20:52] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:52] [DEBUG] Memory cleanup in After processing 33,750,000 rows: Collected 0 objects
+[08:20:52] [DEBUG] Memory cleanup in After processing 33,750,000 rows: Freed 0.0 MB (RSS: 3070.1 → 3070.1 MB)
+[08:20:52] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:52] [DEBUG] Memory cleanup in After processing 34,000,000 rows: Collected 0 objects
+[08:20:52] [DEBUG] Memory cleanup in After processing 34,000,000 rows: Freed 0.0 MB (RSS: 3097.9 → 3097.9 MB)
+[08:20:52] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:52] [DEBUG] Memory cleanup in After processing 34,250,000 rows: Collected 0 objects
+[08:20:52] [DEBUG] Memory cleanup in After processing 34,250,000 rows: Freed 0.0 MB (RSS: 3121.7 → 3121.7 MB)
+[08:20:52] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:53] [DEBUG] Memory cleanup in After processing 34,500,000 rows: Collected 0 objects
+[08:20:53] [DEBUG] Memory cleanup in After processing 34,500,000 rows: Freed 0.0 MB (RSS: 3137.2 → 3137.2 MB)
+[08:20:53] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:53] [DEBUG] Memory cleanup in After processing 34,750,000 rows: Collected 0 objects
+[08:20:53] [DEBUG] Memory cleanup in After processing 34,750,000 rows: Freed 0.0 MB (RSS: 3158.2 → 3158.2 MB)
+[08:20:53] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:53] [DEBUG] Memory cleanup in After processing 35,000,000 rows: Collected 0 objects
+[08:20:53] [DEBUG] Memory cleanup in After processing 35,000,000 rows: Freed 0.0 MB (RSS: 3178.5 → 3178.5 MB)
+[08:20:53] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:53] [DEBUG] Memory cleanup in After processing 35,250,000 rows: Collected 0 objects
+[08:20:53] [DEBUG] Memory cleanup in After processing 35,250,000 rows: Freed 0.0 MB (RSS: 3212.1 → 3212.1 MB)
+[08:20:53] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:54] [DEBUG] Memory cleanup in After processing 35,500,000 rows: Collected 0 objects
+[08:20:54] [DEBUG] Memory cleanup in After processing 35,500,000 rows: Freed 0.0 MB (RSS: 3232.0 → 3232.0 MB)
+[08:20:54] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:54] [DEBUG] Memory cleanup in After processing 35,750,000 rows: Collected 0 objects
+[08:20:54] [DEBUG] Memory cleanup in After processing 35,750,000 rows: Freed 0.0 MB (RSS: 3244.9 → 3244.9 MB)
+[08:20:54] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:54] [DEBUG] Memory cleanup in After processing 36,000,000 rows: Collected 0 objects
+[08:20:54] [DEBUG] Memory cleanup in After processing 36,000,000 rows: Freed 0.0 MB (RSS: 3267.1 → 3267.1 MB)
+[08:20:54] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:54] [DEBUG] Memory cleanup in After processing 36,250,000 rows: Collected 0 objects
+[08:20:54] [DEBUG] Memory cleanup in After processing 36,250,000 rows: Freed 0.0 MB (RSS: 3282.5 → 3282.5 MB)
+[08:20:54] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:55] [DEBUG] Memory cleanup in After processing 36,500,000 rows: Collected 0 objects
+[08:20:55] [DEBUG] Memory cleanup in After processing 36,500,000 rows: Freed -0.0 MB (RSS: 3299.7 → 3299.7 MB)
+[08:20:55] [INFO] Memory usage: 2.7/24.0 GB (87.8%)
+[08:20:55] [DEBUG] Memory cleanup in After processing 36,750,000 rows: Collected 0 objects
+[08:20:55] [DEBUG] Memory cleanup in After processing 36,750,000 rows: Freed 0.0 MB (RSS: 3315.9 → 3315.9 MB)
+[08:20:55] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:55] [DEBUG] Memory cleanup in After processing 37,000,000 rows: Collected 0 objects
+[08:20:55] [DEBUG] Memory cleanup in After processing 37,000,000 rows: Freed 0.0 MB (RSS: 3348.0 → 3348.0 MB)
+[08:20:55] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:55] [DEBUG] Memory cleanup in After processing 37,250,000 rows: Collected 0 objects
+[08:20:55] [DEBUG] Memory cleanup in After processing 37,250,000 rows: Freed 0.0 MB (RSS: 3366.1 → 3366.1 MB)
+[08:20:55] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:56] [DEBUG] Memory cleanup in After processing 37,500,000 rows: Collected 0 objects
+[08:20:56] [DEBUG] Memory cleanup in After processing 37,500,000 rows: Freed 0.0 MB (RSS: 3380.4 → 3380.4 MB)
+[08:20:56] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:56] [DEBUG] Memory cleanup in After processing 37,750,000 rows: Collected 0 objects
+[08:20:56] [DEBUG] Memory cleanup in After processing 37,750,000 rows: Freed 0.0 MB (RSS: 3402.2 → 3402.2 MB)
+[08:20:56] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:56] [DEBUG] Memory cleanup in After processing 38,000,000 rows: Collected 0 objects
+[08:20:56] [DEBUG] Memory cleanup in After processing 38,000,000 rows: Freed 0.0 MB (RSS: 3422.0 → 3422.0 MB)
+[08:20:56] [INFO] Memory usage: 2.7/24.0 GB (87.9%)
+[08:20:56] [DEBUG] Memory cleanup in After processing 38,250,000 rows: Collected 0 objects
+[08:20:56] [DEBUG] Memory cleanup in After processing 38,250,000 rows: Freed 0.0 MB (RSS: 3443.8 → 3443.8 MB)
+[08:20:56] [INFO] Memory usage: 2.7/24.0 GB (88.0%)
+[08:20:57] [DEBUG] Memory cleanup in After processing 38,500,000 rows: Collected 0 objects
+[08:20:57] [DEBUG] Memory cleanup in After processing 38,500,000 rows: Freed 0.0 MB (RSS: 3463.2 → 3463.2 MB)
+[08:20:57] [INFO] Memory usage: 2.7/24.0 GB (88.2%)
+[08:20:57] [DEBUG] Memory cleanup in After processing 38,750,000 rows: Collected 0 objects
+[08:20:57] [DEBUG] Memory cleanup in After processing 38,750,000 rows: Freed 0.0 MB (RSS: 3486.0 → 3486.0 MB)
+[08:20:57] [INFO] Memory usage: 2.7/24.0 GB (88.2%)
+[08:20:57] [DEBUG] Memory cleanup in After processing 39,000,000 rows: Collected 0 objects
+[08:20:57] [DEBUG] Memory cleanup in After processing 39,000,000 rows: Freed 0.0 MB (RSS: 3506.9 → 3506.9 MB)
+[08:20:57] [INFO] Memory usage: 2.8/24.0 GB (88.3%)
+[08:20:59] [SUCCESS] Loaded complete dataset: 39,068,754 pairs for code
+[08:20:59] [WARNING] High memory usage detected in After loading code dataset: 4875.63 MB
+[08:20:59] [DEBUG] Memory cleanup: RSS=4930.14 MB, VMS=43993.03 MB
+[08:21:02] [WARNING] High memory usage detected in Before Monthly CV: 4207.00 MB
+[08:21:02] [DEBUG] Memory cleanup: RSS=4207.00 MB, VMS=44062.05 MB
+[08:21:02] [PROCESS] Starting monthly cross-validation analysis...
+[08:21:02] [PROCESS] Creating monthly cross-validation folds...
+[08:21:04] [INFO] Sampling 10 months from 10 total for efficiency
+[08:21:04] [INFO] Creating 10 monthly folds
+[08:21:04] [PROCESS] Creating monthly fold 1/10: 2023-01
+[08:21:05] [PROCESS] Creating monthly fold 2/10: 2023-09
+[08:21:05] [PROCESS] Creating monthly fold 3/10: 2023-10
+[08:21:05] [PROCESS] Creating monthly fold 4/10: 2024-01
+[08:21:06] [PROCESS] Creating monthly fold 5/10: 2024-04
+[08:21:06] [PROCESS] Creating monthly fold 6/10: 2024-06
+[08:21:06] [PROCESS] Creating monthly fold 7/10: 2024-12
+[08:21:07] [PROCESS] Creating monthly fold 8/10: 2025-01
+[08:21:07] [PROCESS] Creating monthly fold 9/10: 2025-04
+[08:21:07] [PROCESS] Creating monthly fold 10/10: 2025-05
+[08:21:08] [SUCCESS] Created 10 valid monthly folds
+[08:21:08] [PROCESS] Processing monthly fold 1/10 (10.0%): 2023-01
+[08:21:08] [DEBUG] Fold 2023-01: train=37,710,448 pairs, val=1,358,306 pairs
+[08:21:12] [PROCESS] Processing monthly fold 2/10 (20.0%): 2023-09
+[08:21:12] [DEBUG] Fold 2023-09: train=37,736,948 pairs, val=1,331,806 pairs
+[08:21:16] [PROCESS] Processing monthly fold 3/10 (30.0%): 2023-10
+[08:21:16] [DEBUG] Fold 2023-10: train=37,654,117 pairs, val=1,414,637 pairs
+[08:21:20] [DEBUG] Memory cleanup in After fold 3/10: Collected 0 objects
+[08:21:20] [DEBUG] Memory cleanup in After fold 3/10: Freed -0.0 MB (RSS: 7463.5 → 7463.5 MB)
+[08:21:20] [INFO] Memory usage: 2.8/24.0 GB (89.7%)
+[08:21:20] [PROCESS] Processing monthly fold 4/10 (40.0%): 2024-01
+[08:21:20] [DEBUG] Fold 2024-01: train=37,715,962 pairs, val=1,352,792 pairs
+[08:21:23] [PROCESS] Processing monthly fold 5/10 (50.0%): 2024-04
+[08:21:23] [DEBUG] Fold 2024-04: train=37,784,847 pairs, val=1,283,907 pairs
+[08:21:27] [PROCESS] Processing monthly fold 6/10 (60.0%): 2024-06
+[08:21:27] [DEBUG] Fold 2024-06: train=37,796,228 pairs, val=1,272,526 pairs
+[08:21:31] [DEBUG] Memory cleanup in After fold 6/10: Collected 0 objects
+[08:21:31] [DEBUG] Memory cleanup in After fold 6/10: Freed 0.0 MB (RSS: 7784.2 → 7784.2 MB)
+[08:21:31] [INFO] Memory usage: 2.8/24.0 GB (89.7%)
+[08:21:31] [PROCESS] Processing monthly fold 7/10 (70.0%): 2024-12
+[08:21:31] [DEBUG] Fold 2024-12: train=37,845,075 pairs, val=1,223,679 pairs
+[08:21:35] [PROCESS] Processing monthly fold 8/10 (80.0%): 2025-01
+[08:21:35] [DEBUG] Fold 2025-01: train=37,873,102 pairs, val=1,195,652 pairs
+[08:21:38] [PROCESS] Processing monthly fold 9/10 (90.0%): 2025-04
+[08:21:38] [DEBUG] Fold 2025-04: train=37,860,623 pairs, val=1,208,131 pairs
+[08:21:42] [DEBUG] Memory cleanup in After fold 9/10: Collected 0 objects
+[08:21:42] [DEBUG] Memory cleanup in After fold 9/10: Freed 0.0 MB (RSS: 7825.5 → 7825.5 MB)
+[08:21:42] [INFO] Memory usage: 2.8/24.0 GB (89.7%)
+[08:21:42] [PROCESS] Processing monthly fold 10/10 (100.0%): 2025-05
+[08:21:42] [DEBUG] Fold 2025-05: train=37,823,839 pairs, val=1,244,915 pairs
+[08:21:46] [SUCCESS] Monthly CV completed: λ = 5286 ± 2690 km, CV-RMSE = 0.7162
+[08:21:46] [DEBUG] Memory cleanup in After Monthly CV: Collected 0 objects
+[08:21:46] [DEBUG] Memory cleanup in After Monthly CV: Freed 0.0 MB (RSS: 7102.9 → 7102.9 MB)
+[08:21:46] [INFO] Memory usage: 2.7/24.0 GB (89.3%)
+[08:21:46] [DEBUG] Memory cleanup: RSS=7102.92 MB, VMS=44820.05 MB
+[08:21:46] [WARNING] High memory usage detected in After Monthly CV: 7102.92 MB
+[08:21:46] [DEBUG] Memory cleanup: RSS=7102.92 MB, VMS=44820.05 MB
+[08:21:46] [WARNING] High memory usage detected in Before Station Block CV: 7102.92 MB
+[08:21:46] [DEBUG] Memory cleanup: RSS=7102.92 MB, VMS=44820.05 MB
+[08:21:46] [PROCESS] Starting station block cross-validation analysis...
+[08:21:49] [INFO] Created 34 station blocks for sequential processing
+[08:21:49] [PROCESS] Processing station block fold 1/34 (2.9%): stations_01
+[08:21:51] [DEBUG] Fold stations_01: train=36,975,746 pairs, val=2,093,008 pairs
+[08:21:55] [DEBUG] Memory cleanup in After station block fold 1/34: Collected 0 objects
+[08:21:55] [DEBUG] Memory cleanup in After station block fold 1/34: Freed 0.0 MB (RSS: 7189.9 → 7189.9 MB)
+[08:21:55] [INFO] Memory usage: 2.7/24.0 GB (89.3%)
+[08:21:55] [PROCESS] Processing station block fold 2/34 (5.9%): stations_02
+[08:21:56] [DEBUG] Fold stations_02: train=36,829,520 pairs, val=2,239,234 pairs
+[08:22:00] [DEBUG] Memory cleanup in After station block fold 2/34: Collected 0 objects
+[08:22:00] [DEBUG] Memory cleanup in After station block fold 2/34: Freed 0.0 MB (RSS: 7205.3 → 7205.3 MB)
+[08:22:00] [INFO] Memory usage: 2.7/24.0 GB (89.3%)
+[08:22:00] [PROCESS] Processing station block fold 3/34 (8.8%): stations_03
+[08:22:02] [DEBUG] Fold stations_03: train=36,591,688 pairs, val=2,477,066 pairs
+[08:22:06] [DEBUG] Memory cleanup in After station block fold 3/34: Collected 0 objects
+[08:22:06] [DEBUG] Memory cleanup in After station block fold 3/34: Freed 0.0 MB (RSS: 7114.5 → 7114.5 MB)
+[08:22:06] [INFO] Memory usage: 2.7/24.0 GB (89.3%)
+[08:22:06] [PROCESS] Processing station block fold 4/34 (11.8%): stations_04
+[08:22:08] [DEBUG] Fold stations_04: train=37,204,956 pairs, val=1,863,798 pairs
+[08:22:12] [DEBUG] Memory cleanup in After station block fold 4/34: Collected 0 objects
+[08:22:12] [DEBUG] Memory cleanup in After station block fold 4/34: Freed 0.0 MB (RSS: 7274.4 → 7274.4 MB)
+[08:22:12] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:22:12] [PROCESS] Processing station block fold 5/34 (14.7%): stations_05
+[08:22:14] [DEBUG] Fold stations_05: train=37,001,330 pairs, val=2,067,424 pairs
+[08:22:18] [DEBUG] Memory cleanup in After station block fold 5/34: Collected 0 objects
+[08:22:18] [DEBUG] Memory cleanup in After station block fold 5/34: Freed 0.0 MB (RSS: 7250.5 → 7250.5 MB)
+[08:22:18] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:22:18] [PROCESS] Processing station block fold 6/34 (17.6%): stations_06
+[08:22:20] [DEBUG] Fold stations_06: train=36,555,837 pairs, val=2,512,917 pairs
+[08:22:24] [DEBUG] Memory cleanup in After station block fold 6/34: Collected 0 objects
+[08:22:24] [DEBUG] Memory cleanup in After station block fold 6/34: Freed 0.0 MB (RSS: 7178.3 → 7178.3 MB)
+[08:22:24] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:22:24] [PROCESS] Processing station block fold 7/34 (20.6%): stations_07
+[08:22:26] [DEBUG] Fold stations_07: train=37,290,484 pairs, val=1,778,270 pairs
+[08:22:30] [DEBUG] Memory cleanup in After station block fold 7/34: Collected 0 objects
+[08:22:30] [DEBUG] Memory cleanup in After station block fold 7/34: Freed 0.0 MB (RSS: 7277.5 → 7277.5 MB)
+[08:22:30] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:22:30] [PROCESS] Processing station block fold 8/34 (23.5%): stations_08
+[08:22:32] [DEBUG] Fold stations_08: train=37,143,261 pairs, val=1,925,493 pairs
+[08:22:36] [DEBUG] Memory cleanup in After station block fold 8/34: Collected 0 objects
+[08:22:36] [DEBUG] Memory cleanup in After station block fold 8/34: Freed 0.0 MB (RSS: 7251.8 → 7251.8 MB)
+[08:22:36] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:22:36] [PROCESS] Processing station block fold 9/34 (26.5%): stations_09
+[08:22:37] [DEBUG] Fold stations_09: train=36,868,328 pairs, val=2,200,426 pairs
+[08:22:41] [DEBUG] Memory cleanup in After station block fold 9/34: Collected 0 objects
+[08:22:41] [DEBUG] Memory cleanup in After station block fold 9/34: Freed 0.0 MB (RSS: 7184.5 → 7184.5 MB)
+[08:22:41] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:22:41] [PROCESS] Processing station block fold 10/34 (29.4%): stations_10
+[08:22:43] [DEBUG] Fold stations_10: train=36,826,939 pairs, val=2,241,815 pairs
+[08:22:47] [DEBUG] Memory cleanup in After station block fold 10/34: Collected 0 objects
+[08:22:47] [DEBUG] Memory cleanup in After station block fold 10/34: Freed 0.0 MB (RSS: 7174.4 → 7174.4 MB)
+[08:22:47] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:22:47] [PROCESS] Processing station block fold 11/34 (32.4%): stations_11
+[08:22:49] [DEBUG] Fold stations_11: train=36,773,048 pairs, val=2,295,706 pairs
+[08:22:53] [DEBUG] Memory cleanup in After station block fold 11/34: Collected 0 objects
+[08:22:53] [DEBUG] Memory cleanup in After station block fold 11/34: Freed 0.0 MB (RSS: 7158.2 → 7158.2 MB)
+[08:22:53] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:22:53] [PROCESS] Processing station block fold 12/34 (35.3%): stations_12
+[08:22:55] [DEBUG] Fold stations_12: train=36,691,352 pairs, val=2,377,402 pairs
+[08:22:59] [DEBUG] Memory cleanup in After station block fold 12/34: Collected 0 objects
+[08:22:59] [DEBUG] Memory cleanup in After station block fold 12/34: Freed 0.0 MB (RSS: 7181.5 → 7181.5 MB)
+[08:22:59] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:22:59] [PROCESS] Processing station block fold 13/34 (38.2%): stations_13
+[08:23:01] [DEBUG] Fold stations_13: train=36,728,592 pairs, val=2,340,162 pairs
+[08:23:05] [DEBUG] Memory cleanup in After station block fold 13/34: Collected 0 objects
+[08:23:05] [DEBUG] Memory cleanup in After station block fold 13/34: Freed 0.2 MB (RSS: 7198.1 → 7197.8 MB)
+[08:23:05] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:05] [PROCESS] Processing station block fold 14/34 (41.2%): stations_14
+[08:23:06] [DEBUG] Fold stations_14: train=36,885,777 pairs, val=2,182,977 pairs
+[08:23:10] [DEBUG] Memory cleanup in After station block fold 14/34: Collected 0 objects
+[08:23:11] [DEBUG] Memory cleanup in After station block fold 14/34: Freed 0.0 MB (RSS: 7208.9 → 7208.9 MB)
+[08:23:11] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:11] [PROCESS] Processing station block fold 15/34 (44.1%): stations_15
+[08:23:12] [DEBUG] Fold stations_15: train=36,661,961 pairs, val=2,406,793 pairs
+[08:23:16] [DEBUG] Memory cleanup in After station block fold 15/34: Collected 0 objects
+[08:23:16] [DEBUG] Memory cleanup in After station block fold 15/34: Freed 0.0 MB (RSS: 7174.1 → 7174.1 MB)
+[08:23:16] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:16] [PROCESS] Processing station block fold 16/34 (47.1%): stations_16
+[08:23:18] [DEBUG] Fold stations_16: train=36,756,360 pairs, val=2,312,394 pairs
+[08:23:22] [DEBUG] Memory cleanup in After station block fold 16/34: Collected 0 objects
+[08:23:22] [DEBUG] Memory cleanup in After station block fold 16/34: Freed 0.0 MB (RSS: 7121.9 → 7121.9 MB)
+[08:23:22] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:22] [PROCESS] Processing station block fold 17/34 (50.0%): stations_17
+[08:23:24] [DEBUG] Fold stations_17: train=36,709,855 pairs, val=2,358,899 pairs
+[08:23:28] [DEBUG] Memory cleanup in After station block fold 17/34: Collected 0 objects
+[08:23:28] [DEBUG] Memory cleanup in After station block fold 17/34: Freed -0.0 MB (RSS: 7156.7 → 7156.7 MB)
+[08:23:28] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:28] [PROCESS] Processing station block fold 18/34 (52.9%): stations_18
+[08:23:30] [DEBUG] Fold stations_18: train=36,830,621 pairs, val=2,238,133 pairs
+[08:23:34] [DEBUG] Memory cleanup in After station block fold 18/34: Collected 0 objects
+[08:23:34] [DEBUG] Memory cleanup in After station block fold 18/34: Freed 0.0 MB (RSS: 7157.2 → 7157.2 MB)
+[08:23:34] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:34] [PROCESS] Processing station block fold 19/34 (55.9%): stations_19
+[08:23:35] [DEBUG] Fold stations_19: train=36,610,409 pairs, val=2,458,345 pairs
+[08:23:40] [DEBUG] Memory cleanup in After station block fold 19/34: Collected 0 objects
+[08:23:40] [DEBUG] Memory cleanup in After station block fold 19/34: Freed 0.0 MB (RSS: 7107.1 → 7107.1 MB)
+[08:23:40] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:40] [PROCESS] Processing station block fold 20/34 (58.8%): stations_20
+[08:23:41] [DEBUG] Fold stations_20: train=36,591,933 pairs, val=2,476,821 pairs
+[08:23:46] [DEBUG] Memory cleanup in After station block fold 20/34: Collected 0 objects
+[08:23:46] [DEBUG] Memory cleanup in After station block fold 20/34: Freed 0.0 MB (RSS: 7198.9 → 7198.9 MB)
+[08:23:46] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:23:46] [PROCESS] Processing station block fold 21/34 (61.8%): stations_21
+[08:23:48] [DEBUG] Fold stations_21: train=36,951,295 pairs, val=2,117,459 pairs
+[08:23:52] [DEBUG] Memory cleanup in After station block fold 21/34: Collected 0 objects
+[08:23:52] [DEBUG] Memory cleanup in After station block fold 21/34: Freed 0.2 MB (RSS: 7213.7 → 7213.4 MB)
+[08:23:52] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:23:52] [PROCESS] Processing station block fold 22/34 (64.7%): stations_22
+[08:23:53] [DEBUG] Fold stations_22: train=36,896,177 pairs, val=2,172,577 pairs
+[08:23:57] [DEBUG] Memory cleanup in After station block fold 22/34: Collected 0 objects
+[08:23:57] [DEBUG] Memory cleanup in After station block fold 22/34: Freed 0.0 MB (RSS: 7233.9 → 7233.9 MB)
+[08:23:57] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:23:57] [PROCESS] Processing station block fold 23/34 (67.6%): stations_23
+[08:23:59] [DEBUG] Fold stations_23: train=36,987,236 pairs, val=2,081,518 pairs
+[08:24:03] [DEBUG] Memory cleanup in After station block fold 23/34: Collected 0 objects
+[08:24:03] [DEBUG] Memory cleanup in After station block fold 23/34: Freed 0.0 MB (RSS: 7217.3 → 7217.3 MB)
+[08:24:03] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:03] [PROCESS] Processing station block fold 24/34 (70.6%): stations_24
+[08:24:05] [DEBUG] Fold stations_24: train=36,911,716 pairs, val=2,157,038 pairs
+[08:24:09] [DEBUG] Memory cleanup in After station block fold 24/34: Collected 0 objects
+[08:24:09] [DEBUG] Memory cleanup in After station block fold 24/34: Freed 0.0 MB (RSS: 7199.6 → 7199.6 MB)
+[08:24:09] [INFO] Memory usage: 2.8/24.0 GB (89.5%)
+[08:24:09] [PROCESS] Processing station block fold 25/34 (73.5%): stations_25
+[08:24:11] [DEBUG] Fold stations_25: train=36,586,182 pairs, val=2,482,572 pairs
+[08:24:15] [DEBUG] Memory cleanup in After station block fold 25/34: Collected 0 objects
+[08:24:15] [DEBUG] Memory cleanup in After station block fold 25/34: Freed 0.0 MB (RSS: 7167.8 → 7167.8 MB)
+[08:24:15] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:15] [PROCESS] Processing station block fold 26/34 (76.5%): stations_26
+[08:24:17] [DEBUG] Fold stations_26: train=36,817,051 pairs, val=2,251,703 pairs
+[08:24:21] [DEBUG] Memory cleanup in After station block fold 26/34: Collected 0 objects
+[08:24:21] [DEBUG] Memory cleanup in After station block fold 26/34: Freed 0.0 MB (RSS: 7269.0 → 7269.0 MB)
+[08:24:21] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:21] [PROCESS] Processing station block fold 27/34 (79.4%): stations_27
+[08:24:23] [DEBUG] Fold stations_27: train=36,688,368 pairs, val=2,380,386 pairs
+[08:24:27] [DEBUG] Memory cleanup in After station block fold 27/34: Collected 0 objects
+[08:24:27] [DEBUG] Memory cleanup in After station block fold 27/34: Freed 0.0 MB (RSS: 7252.1 → 7252.1 MB)
+[08:24:27] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:27] [PROCESS] Processing station block fold 28/34 (82.4%): stations_28
+[08:24:29] [DEBUG] Fold stations_28: train=36,855,436 pairs, val=2,213,318 pairs
+[08:24:33] [DEBUG] Memory cleanup in After station block fold 28/34: Collected 0 objects
+[08:24:33] [DEBUG] Memory cleanup in After station block fold 28/34: Freed 0.0 MB (RSS: 7267.5 → 7267.5 MB)
+[08:24:33] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:33] [PROCESS] Processing station block fold 29/34 (85.3%): stations_29
+[08:24:35] [DEBUG] Fold stations_29: train=36,895,974 pairs, val=2,172,780 pairs
+[08:24:39] [DEBUG] Memory cleanup in After station block fold 29/34: Collected 0 objects
+[08:24:39] [DEBUG] Memory cleanup in After station block fold 29/34: Freed 0.0 MB (RSS: 7266.9 → 7266.9 MB)
+[08:24:39] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:39] [PROCESS] Processing station block fold 30/34 (88.2%): stations_30
+[08:24:40] [DEBUG] Fold stations_30: train=36,880,188 pairs, val=2,188,566 pairs
+[08:24:44] [DEBUG] Memory cleanup in After station block fold 30/34: Collected 0 objects
+[08:24:44] [DEBUG] Memory cleanup in After station block fold 30/34: Freed 0.0 MB (RSS: 7246.8 → 7246.8 MB)
+[08:24:44] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:44] [PROCESS] Processing station block fold 31/34 (91.2%): stations_31
+[08:24:46] [DEBUG] Fold stations_31: train=37,078,109 pairs, val=1,990,645 pairs
+[08:24:50] [DEBUG] Memory cleanup in After station block fold 31/34: Collected 0 objects
+[08:24:50] [DEBUG] Memory cleanup in After station block fold 31/34: Freed 0.0 MB (RSS: 7237.3 → 7237.3 MB)
+[08:24:50] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:50] [PROCESS] Processing station block fold 32/34 (94.1%): stations_32
+[08:24:52] [DEBUG] Fold stations_32: train=36,753,632 pairs, val=2,315,122 pairs
+[08:24:56] [DEBUG] Memory cleanup in After station block fold 32/34: Collected 0 objects
+[08:24:56] [DEBUG] Memory cleanup in After station block fold 32/34: Freed 0.0 MB (RSS: 7206.7 → 7206.7 MB)
+[08:24:56] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:24:56] [PROCESS] Processing station block fold 33/34 (97.1%): stations_33
+[08:24:58] [DEBUG] Fold stations_33: train=36,594,814 pairs, val=2,473,940 pairs
+[08:25:02] [DEBUG] Memory cleanup in After station block fold 33/34: Collected 0 objects
+[08:25:02] [DEBUG] Memory cleanup in After station block fold 33/34: Freed 0.0 MB (RSS: 7193.6 → 7193.6 MB)
+[08:25:02] [INFO] Memory usage: 2.8/24.0 GB (89.4%)
+[08:25:02] [PROCESS] Processing station block fold 34/34 (100.0%): stations_34
+[08:25:04] [DEBUG] Fold stations_34: train=37,084,417 pairs, val=1,984,337 pairs
+[08:25:08] [DEBUG] Memory cleanup in After station block fold 34/34: Collected 0 objects
+[08:25:08] [DEBUG] Memory cleanup in After station block fold 34/34: Freed 0.0 MB (RSS: 7247.5 → 7247.5 MB)
+[08:25:08] [INFO] Memory usage: 2.9/24.0 GB (89.7%)
+[08:25:08] [SUCCESS] Station block CV completed: λ = 5186 ± 2140 km, CV-RMSE = 0.7158
+[08:25:08] [DEBUG] Memory cleanup in After Station Block CV: Collected 0 objects
+[08:25:08] [DEBUG] Memory cleanup in After Station Block CV: Freed 0.0 MB (RSS: 7045.6 → 7045.6 MB)
+[08:25:08] [INFO] Memory usage: 2.9/24.0 GB (89.6%)
+[08:25:08] [DEBUG] Memory cleanup: RSS=7045.64 MB, VMS=44746.57 MB
+[08:25:08] [WARNING] High memory usage detected in After Station Block CV: 7045.64 MB
+[08:25:08] [DEBUG] Memory cleanup: RSS=7045.64 MB, VMS=44746.57 MB
+[08:25:08] [WARNING] High memory usage detected in Before LOSO CV: 7045.64 MB
+[08:25:08] [DEBUG] Memory cleanup: RSS=7045.64 MB, VMS=44746.57 MB
+[08:25:08] [PROCESS] Starting Leave-One-Station-Out (LOSO) analysis...
+[08:25:08] [INFO] Using full dataset: 39,068,754 pairs for validation
+[08:25:11] [INFO] Sampling 10 stations from 345 total for efficiency
+[08:25:11] [INFO] Using sequential processing in main process to avoid memory issues
+[08:25:11] [INFO] Processing stations in chunks of 5 to reduce memory pressure
+[08:25:11] [PROCESS] Processing chunk 1/2: stations 1-5
+[08:25:11] [PROCESS]   Processing station QAQ100GRL (1/10)...
+[08:25:19] [SUCCESS]     Station QAQ100GRL: λ = 4608 km (R² = 0.249)
+[08:25:19] [DEBUG] Memory cleanup: RSS=4221.94 MB, VMS=44746.57 MB
+[08:25:19] [PROCESS]   Processing station NIST00USA (2/10)...
+[08:25:26] [SUCCESS]     Station NIST00USA: λ = 4564 km (R² = 0.255)
+[08:25:27] [DEBUG] Memory cleanup: RSS=3636.48 MB, VMS=44746.57 MB
+[08:25:27] [PROCESS]   Processing station STHL00GBR (3/10)...
+[08:25:34] [SUCCESS]     Station STHL00GBR: λ = 4515 km (R² = 0.255)
+[08:25:34] [DEBUG] Memory cleanup: RSS=3707.27 MB, VMS=44746.57 MB
+[08:25:34] [PROCESS]   Processing station SAMO00WSM (4/10)...
+[08:25:41] [SUCCESS]     Station SAMO00WSM: λ = 4578 km (R² = 0.177)
+[08:25:41] [DEBUG] Memory cleanup: RSS=3628.45 MB, VMS=44746.57 MB
+[08:25:41] [PROCESS]   Processing station VNDP00USA (5/10)...
+[08:25:48] [SUCCESS]     Station VNDP00USA: λ = 4536 km (R² = 0.253)
+[08:25:49] [DEBUG] Memory cleanup: RSS=3723.86 MB, VMS=44746.57 MB
+[08:25:49] [INFO]   Completed chunk 1, streaming results to disk
+[08:25:49] [DEBUG] Memory cleanup: RSS=3723.86 MB, VMS=44746.57 MB
+[08:25:49] [PROCESS] Processing chunk 2/2: stations 6-10
+[08:25:49] [PROCESS]   Processing station HNUS00ZAF (6/10)...
+[08:25:56] [SUCCESS]     Station HNUS00ZAF: λ = 4560 km (R² = 0.253)
+[08:25:56] [DEBUG] Memory cleanup: RSS=3723.83 MB, VMS=44746.57 MB
+[08:25:56] [PROCESS]   Processing station WIND00NAM (7/10)...
+[08:26:03] [SUCCESS]     Station WIND00NAM: λ = 4582 km (R² = 0.253)
+[08:26:04] [DEBUG] Memory cleanup: RSS=3723.86 MB, VMS=44746.57 MB
+[08:26:04] [PROCESS]   Processing station USUD00JPN (8/10)...
+[08:26:11] [SUCCESS]     Station USUD00JPN: λ = 4542 km (R² = 0.277)
+[08:26:11] [DEBUG] Memory cleanup: RSS=3723.80 MB, VMS=44746.57 MB
+[08:26:11] [PROCESS]   Processing station LAMA00POL (9/10)...
+[08:26:18] [SUCCESS]     Station LAMA00POL: λ = 4537 km (R² = 0.250)
+[08:26:18] [DEBUG] Memory cleanup: RSS=3723.73 MB, VMS=44746.57 MB
+[08:26:18] [PROCESS]   Processing station SMST00JPN (10/10)...
+[08:26:25] [SUCCESS]     Station SMST00JPN: λ = 4578 km (R² = 0.253)
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.58 MB, VMS=44746.57 MB
+[08:26:26] [INFO]   Completed chunk 2, streaming results to disk
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.58 MB, VMS=44746.57 MB
+[08:26:26] [SUCCESS] LOSO complete: λ = 4560.0 ± 26.3 km (CV = 0.006)
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.58 MB, VMS=44746.57 MB
+[08:26:26] [DEBUG] Memory cleanup in After LOSO CV: Collected 0 objects
+[08:26:26] [DEBUG] Memory cleanup in After LOSO CV: Freed 0.0 MB (RSS: 3722.6 → 3722.6 MB)
+[08:26:26] [INFO] Memory usage: 1.8/24.0 GB (88.3%)
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.58 MB, VMS=44746.57 MB
+[08:26:26] [WARNING] High memory usage detected in After LOSO CV: 3722.58 MB
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.59 MB, VMS=44746.57 MB
+[08:26:26] [WARNING] High memory usage detected in Before LODO CV: 3722.59 MB
+[08:26:26] [DEBUG] Memory cleanup: RSS=3722.59 MB, VMS=44746.57 MB
+[08:26:26] [PROCESS] Starting Leave-One-Day-Out (LODO) analysis...
+[08:26:26] [INFO] Sampling 10 days from 912 available in dataset
+[08:26:26] [INFO] Using sequential processing in main process to avoid memory issues
+[08:26:26] [PROCESS] Processing date 2024-06-12 (1/10)...
+[08:26:31] [SUCCESS]   Date 2024-06-12: λ = 4571 km (R² = 0.253)
+[08:26:31] [DEBUG] Memory cleanup: RSS=3721.86 MB, VMS=44746.57 MB
+[08:26:31] [DEBUG] Memory cleanup: RSS=3721.86 MB, VMS=44746.57 MB
+[08:26:31] [PROCESS] Processing date 2024-10-18 (2/10)...
+[08:26:36] [SUCCESS]   Date 2024-10-18: λ = 4570 km (R² = 0.252)
+[08:26:37] [DEBUG] Memory cleanup: RSS=3721.86 MB, VMS=44746.57 MB
+[08:26:37] [DEBUG] Memory cleanup: RSS=3721.86 MB, VMS=44746.57 MB
+[08:26:37] [PROCESS] Processing date 2025-04-28 (3/10)...
+[08:26:42] [SUCCESS]   Date 2025-04-28: λ = 4561 km (R² = 0.254)
+[08:26:42] [DEBUG] Memory cleanup: RSS=3716.70 MB, VMS=44746.57 MB
+[08:26:42] [DEBUG] Memory cleanup: RSS=3716.70 MB, VMS=44746.57 MB
+[08:26:42] [PROCESS] Processing date 2024-09-09 (4/10)...
+[08:26:47] [SUCCESS]   Date 2024-09-09: λ = 4578 km (R² = 0.254)
+[08:26:47] [DEBUG] Memory cleanup: RSS=3714.25 MB, VMS=44746.57 MB
+[08:26:47] [DEBUG] Memory cleanup: RSS=3714.25 MB, VMS=44746.57 MB
+[08:26:47] [PROCESS] Processing date 2025-03-11 (5/10)...
+[08:26:52] [SUCCESS]   Date 2025-03-11: λ = 4563 km (R² = 0.253)
+[08:26:53] [DEBUG] Memory cleanup: RSS=3714.25 MB, VMS=44746.57 MB
+[08:26:53] [DEBUG] Memory cleanup: RSS=3714.25 MB, VMS=44746.57 MB
+[08:26:53] [PROCESS] Processing date 2024-08-02 (6/10)...
+[08:26:58] [SUCCESS]   Date 2024-08-02: λ = 4575 km (R² = 0.254)
+[08:26:58] [DEBUG] Memory cleanup: RSS=3713.26 MB, VMS=44746.57 MB
+[08:26:58] [DEBUG] Memory cleanup: RSS=3713.26 MB, VMS=44746.57 MB
+[08:26:58] [PROCESS] Processing date 2023-11-23 (7/10)...
+[08:27:03] [SUCCESS]   Date 2023-11-23: λ = 4563 km (R² = 0.255)
+[08:27:04] [DEBUG] Memory cleanup: RSS=3675.73 MB, VMS=44746.57 MB
+[08:27:04] [DEBUG] Memory cleanup: RSS=3675.73 MB, VMS=44746.57 MB
+[08:27:04] [PROCESS] Processing date 2023-12-07 (8/10)...
+[08:27:09] [SUCCESS]   Date 2023-12-07: λ = 4559 km (R² = 0.253)
+[08:27:09] [DEBUG] Memory cleanup: RSS=3588.59 MB, VMS=44746.57 MB
+[08:27:09] [DEBUG] Memory cleanup: RSS=3588.59 MB, VMS=44746.57 MB
+[08:27:09] [PROCESS] Processing date 2025-01-07 (9/10)...
+[08:27:14] [SUCCESS]   Date 2025-01-07: λ = 4562 km (R² = 0.252)
+[08:27:15] [DEBUG] Memory cleanup: RSS=3307.51 MB, VMS=44746.57 MB
+[08:27:15] [DEBUG] Memory cleanup: RSS=3307.51 MB, VMS=44746.57 MB
+[08:27:15] [PROCESS] Processing date 2023-11-08 (10/10)...
+[08:27:20] [SUCCESS]   Date 2023-11-08: λ = 4559 km (R² = 0.250)
+[08:27:20] [DEBUG] Memory cleanup: RSS=3376.32 MB, VMS=44746.57 MB
+[08:27:20] [DEBUG] Memory cleanup: RSS=3376.32 MB, VMS=44746.57 MB
+[08:27:20] [SUCCESS] LODO complete: λ = 4566.2 ± 6.7 km (CV = 0.001)
+[08:27:20] [DEBUG] Memory cleanup: RSS=3376.32 MB, VMS=44746.57 MB
+[08:27:20] [DEBUG] Memory cleanup in After LODO CV: Collected 0 objects
+[08:27:20] [DEBUG] Memory cleanup in After LODO CV: Freed 0.0 MB (RSS: 3376.3 → 3376.3 MB)
+[08:27:20] [INFO] Memory usage: 1.8/24.0 GB (88.3%)
+[08:27:20] [DEBUG] Memory cleanup: RSS=3376.32 MB, VMS=44746.57 MB
+[08:27:20] [WARNING] High memory usage detected in After LODO CV: 3376.32 MB
+[08:27:20] [DEBUG] Memory cleanup: RSS=3376.32 MB, VMS=44746.57 MB
+[08:27:20] [INFO] Bootstrap cross-validation disabled (use Step 3.1 Robust Block Bootstrap instead)
+[08:27:20] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Collected 0 objects
+[08:27:20] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Freed 0.0 MB (RSS: 3376.3 → 3376.3 MB)
+[08:27:20] [INFO] Memory usage: 1.8/24.0 GB (88.3%)
+[08:27:20] [SUCCESS] Cross-method validation: PASSED - Monthly and station block CV are consistent
+[08:27:20] [SUCCESS] Block-wise cross-validation completed for code in 425.6 seconds
+[08:27:21] [SUCCESS] Results saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_3_0_cross_validation_suite_code.json (fallback method)
+[08:27:21] [DEBUG] Memory cleanup: RSS=385.53 MB, VMS=41456.51 MB
+[08:27:21] [DEBUG] Memory usage after code: RSS=385.53 MB, VMS=41456.51 MB
+[08:27:21] [INFO] Performing additional memory cleanup for CODE dataset...
+[08:27:21] [DEBUG] Memory cleanup: RSS=385.53 MB, VMS=41456.51 MB
+[08:27:21] [PROCESS] 
+Processing analysis center: ESA_FINAL
+[08:27:21] [INFO] --------------------------------------------------
+[08:27:21] [PROCESS] Starting block-wise cross-validation analysis for esa_final
+[08:27:21] [PROCESS] Loading complete pair dataset for esa_final...
+[08:27:22] [INFO] Loading full dataset with 10,809,085 pairs...
+[08:27:22] [DEBUG] Processing file step_2_0_pairs_consolidated_esa_final.csv in chunks of 25,000
+[08:27:22] [DEBUG] Processing 908.6 MB file in chunks
+[08:27:22] [DEBUG] Memory cleanup in After processing 250,000 rows: Collected 0 objects
+[08:27:22] [DEBUG] Memory cleanup in After processing 250,000 rows: Freed 0.0 MB (RSS: 477.3 → 477.3 MB)
+[08:27:22] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:22] [DEBUG] Memory cleanup in After processing 500,000 rows: Collected 0 objects
+[08:27:22] [DEBUG] Memory cleanup in After processing 500,000 rows: Freed 0.0 MB (RSS: 539.3 → 539.3 MB)
+[08:27:22] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:22] [DEBUG] Memory cleanup in After processing 750,000 rows: Collected 0 objects
+[08:27:22] [DEBUG] Memory cleanup in After processing 750,000 rows: Freed -0.0 MB (RSS: 568.6 → 568.6 MB)
+[08:27:22] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Collected 0 objects
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Freed 0.0 MB (RSS: 593.8 → 593.8 MB)
+[08:27:23] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Collected 0 objects
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Freed 0.0 MB (RSS: 620.6 → 620.6 MB)
+[08:27:23] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Collected 0 objects
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Freed 0.0 MB (RSS: 643.1 → 643.1 MB)
+[08:27:23] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Collected 0 objects
+[08:27:23] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Freed 0.0 MB (RSS: 666.0 → 666.0 MB)
+[08:27:23] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Collected 0 objects
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Freed 0.0 MB (RSS: 695.0 → 695.0 MB)
+[08:27:24] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Collected 0 objects
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Freed 0.0 MB (RSS: 710.0 → 710.0 MB)
+[08:27:24] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Collected 0 objects
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Freed 0.0 MB (RSS: 737.0 → 737.0 MB)
+[08:27:24] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Collected 0 objects
+[08:27:24] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Freed 0.0 MB (RSS: 755.2 → 755.2 MB)
+[08:27:24] [INFO] Memory usage: 1.4/24.0 GB (86.7%)
+[08:27:24] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Collected 0 objects
+[08:27:24] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Freed 0.0 MB (RSS: 782.5 → 782.5 MB)
+[08:27:24] [INFO] Memory usage: 1.4/24.0 GB (86.6%)
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Collected 0 objects
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Freed 0.0 MB (RSS: 802.6 → 802.6 MB)
+[08:27:25] [INFO] Memory usage: 1.4/24.0 GB (86.6%)
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Collected 0 objects
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Freed 0.0 MB (RSS: 832.9 → 832.9 MB)
+[08:27:25] [INFO] Memory usage: 1.4/24.0 GB (86.6%)
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Collected 0 objects
+[08:27:25] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Freed 0.0 MB (RSS: 858.5 → 858.5 MB)
+[08:27:25] [INFO] Memory usage: 1.4/24.0 GB (86.6%)
+[08:27:25] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Collected 0 objects
+[08:27:25] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Freed 0.0 MB (RSS: 879.3 → 879.3 MB)
+[08:27:25] [INFO] Memory usage: 1.4/24.0 GB (86.6%)
+[08:27:25] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Collected 0 objects
+[08:27:25] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Freed 0.0 MB (RSS: 892.5 → 892.5 MB)
+[08:27:25] [INFO] Memory usage: 1.4/24.0 GB (86.5%)
+[08:27:26] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Collected 0 objects
+[08:27:26] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Freed 0.0 MB (RSS: 915.7 → 915.7 MB)
+[08:27:26] [INFO] Memory usage: 1.4/24.0 GB (86.5%)
+[08:27:26] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Collected 0 objects
+[08:27:26] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Freed 0.0 MB (RSS: 944.1 → 944.1 MB)
+[08:27:26] [INFO] Memory usage: 1.4/24.0 GB (86.5%)
+[08:27:26] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Collected 0 objects
+[08:27:26] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Freed 0.0 MB (RSS: 958.9 → 958.9 MB)
+[08:27:26] [INFO] Memory usage: 1.4/24.0 GB (86.5%)
+[08:27:26] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Collected 0 objects
+[08:27:26] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Freed 0.0 MB (RSS: 985.9 → 985.9 MB)
+[08:27:26] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:26] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Collected 0 objects
+[08:27:27] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Freed 0.0 MB (RSS: 999.2 → 999.2 MB)
+[08:27:27] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:27] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Collected 0 objects
+[08:27:27] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Freed 0.0 MB (RSS: 1017.1 → 1017.1 MB)
+[08:27:27] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Collected 0 objects
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Freed 0.0 MB (RSS: 1032.8 → 1032.8 MB)
+[08:27:27] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Collected 0 objects
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Freed 0.0 MB (RSS: 1062.4 → 1062.4 MB)
+[08:27:27] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Collected 0 objects
+[08:27:27] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Freed 0.0 MB (RSS: 1080.4 → 1080.4 MB)
+[08:27:27] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:28] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Collected 0 objects
+[08:27:28] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Freed -0.0 MB (RSS: 1096.7 → 1096.7 MB)
+[08:27:28] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Collected 0 objects
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Freed 0.0 MB (RSS: 1126.1 → 1126.1 MB)
+[08:27:28] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Collected 0 objects
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Freed 0.0 MB (RSS: 1148.0 → 1148.0 MB)
+[08:27:28] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Collected 0 objects
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Freed 0.0 MB (RSS: 1165.9 → 1165.9 MB)
+[08:27:28] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Collected 0 objects
+[08:27:28] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Freed 0.0 MB (RSS: 1185.3 → 1185.3 MB)
+[08:27:28] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Collected 0 objects
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Freed 0.0 MB (RSS: 1199.3 → 1199.3 MB)
+[08:27:29] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Collected 0 objects
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Freed 0.0 MB (RSS: 1219.9 → 1219.9 MB)
+[08:27:29] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Collected 0 objects
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Freed 0.0 MB (RSS: 1244.0 → 1244.0 MB)
+[08:27:29] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Collected 0 objects
+[08:27:29] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Freed 0.0 MB (RSS: 1254.8 → 1254.8 MB)
+[08:27:29] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Collected 0 objects
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Freed 0.0 MB (RSS: 1281.5 → 1281.5 MB)
+[08:27:30] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Collected 0 objects
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Freed 0.0 MB (RSS: 1304.1 → 1304.1 MB)
+[08:27:30] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Collected 0 objects
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Freed 0.0 MB (RSS: 1323.6 → 1323.6 MB)
+[08:27:30] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Collected 0 objects
+[08:27:30] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Freed 0.0 MB (RSS: 1348.3 → 1348.3 MB)
+[08:27:30] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:30] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Collected 0 objects
+[08:27:30] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Freed 0.0 MB (RSS: 1368.8 → 1368.8 MB)
+[08:27:30] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Collected 0 objects
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Freed 0.0 MB (RSS: 1384.7 → 1384.7 MB)
+[08:27:31] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Collected 0 objects
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Freed 0.0 MB (RSS: 1406.4 → 1406.4 MB)
+[08:27:31] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Collected 0 objects
+[08:27:31] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Freed 0.0 MB (RSS: 1438.9 → 1438.9 MB)
+[08:27:31] [INFO] Memory usage: 1.5/24.0 GB (86.6%)
+[08:27:31] [SUCCESS] Loaded complete dataset: 10,809,085 pairs for esa_final
+[08:27:31] [WARNING] High memory usage detected in After loading esa_final dataset: 2265.17 MB
+[08:27:31] [DEBUG] Memory cleanup: RSS=2265.17 MB, VMS=42281.20 MB
+[08:27:32] [WARNING] High memory usage detected in Before Monthly CV: 2273.44 MB
+[08:27:32] [DEBUG] Memory cleanup: RSS=2273.44 MB, VMS=42269.16 MB
+[08:27:32] [PROCESS] Starting monthly cross-validation analysis...
+[08:27:32] [PROCESS] Creating monthly cross-validation folds...
+[08:27:33] [INFO] Sampling 10 months from 10 total for efficiency
+[08:27:33] [INFO] Creating 10 monthly folds
+[08:27:33] [PROCESS] Creating monthly fold 1/10: 2023-01
+[08:27:33] [PROCESS] Creating monthly fold 2/10: 2023-09
+[08:27:33] [PROCESS] Creating monthly fold 3/10: 2023-10
+[08:27:33] [PROCESS] Creating monthly fold 4/10: 2024-01
+[08:27:33] [PROCESS] Creating monthly fold 5/10: 2024-04
+[08:27:33] [PROCESS] Creating monthly fold 6/10: 2024-06
+[08:27:33] [PROCESS] Creating monthly fold 7/10: 2024-12
+[08:27:33] [PROCESS] Creating monthly fold 8/10: 2025-01
+[08:27:33] [PROCESS] Creating monthly fold 9/10: 2025-04
+[08:27:33] [PROCESS] Creating monthly fold 10/10: 2025-05
+[08:27:33] [SUCCESS] Created 10 valid monthly folds
+[08:27:33] [PROCESS] Processing monthly fold 1/10 (10.0%): 2023-01
+[08:27:33] [DEBUG] Fold 2023-01: train=10,463,703 pairs, val=345,382 pairs
+[08:27:34] [PROCESS] Processing monthly fold 2/10 (20.0%): 2023-09
+[08:27:34] [DEBUG] Fold 2023-09: train=10,474,580 pairs, val=334,505 pairs
+[08:27:35] [PROCESS] Processing monthly fold 3/10 (30.0%): 2023-10
+[08:27:35] [DEBUG] Fold 2023-10: train=10,465,485 pairs, val=343,600 pairs
+[08:27:35] [DEBUG] Memory cleanup in After fold 3/10: Collected 0 objects
+[08:27:35] [DEBUG] Memory cleanup in After fold 3/10: Freed 0.0 MB (RSS: 2985.1 → 2985.1 MB)
+[08:27:35] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:35] [PROCESS] Processing monthly fold 4/10 (40.0%): 2024-01
+[08:27:35] [DEBUG] Fold 2024-01: train=10,466,529 pairs, val=342,556 pairs
+[08:27:36] [PROCESS] Processing monthly fold 5/10 (50.0%): 2024-04
+[08:27:36] [DEBUG] Fold 2024-04: train=10,476,064 pairs, val=333,021 pairs
+[08:27:37] [PROCESS] Processing monthly fold 6/10 (60.0%): 2024-06
+[08:27:37] [DEBUG] Fold 2024-06: train=10,475,027 pairs, val=334,058 pairs
+[08:27:38] [DEBUG] Memory cleanup in After fold 6/10: Collected 0 objects
+[08:27:38] [DEBUG] Memory cleanup in After fold 6/10: Freed 0.0 MB (RSS: 2985.1 → 2985.1 MB)
+[08:27:38] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:38] [PROCESS] Processing monthly fold 7/10 (70.0%): 2024-12
+[08:27:38] [DEBUG] Fold 2024-12: train=10,467,426 pairs, val=341,659 pairs
+[08:27:38] [PROCESS] Processing monthly fold 8/10 (80.0%): 2025-01
+[08:27:38] [DEBUG] Fold 2025-01: train=10,444,720 pairs, val=364,365 pairs
+[08:27:39] [PROCESS] Processing monthly fold 9/10 (90.0%): 2025-04
+[08:27:39] [DEBUG] Fold 2025-04: train=10,346,714 pairs, val=462,371 pairs
+[08:27:40] [DEBUG] Memory cleanup in After fold 9/10: Collected 0 objects
+[08:27:40] [DEBUG] Memory cleanup in After fold 9/10: Freed 0.0 MB (RSS: 2985.3 → 2985.3 MB)
+[08:27:40] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:40] [PROCESS] Processing monthly fold 10/10 (100.0%): 2025-05
+[08:27:40] [DEBUG] Fold 2025-05: train=10,334,829 pairs, val=474,256 pairs
+[08:27:41] [WARNING] Monthly CV: Detected 1 outlier folds: ['2023-09']
+[08:27:41] [SUCCESS] Monthly CV completed: λ = 4115 ± 1100 km, CV-RMSE = 0.7131
+[08:27:41] [DEBUG] Memory cleanup in After Monthly CV: Collected 0 objects
+[08:27:41] [DEBUG] Memory cleanup in After Monthly CV: Freed 0.0 MB (RSS: 2281.6 → 2281.6 MB)
+[08:27:41] [INFO] Memory usage: 1.7/24.0 GB (87.3%)
+[08:27:41] [DEBUG] Memory cleanup: RSS=2281.55 MB, VMS=42101.46 MB
+[08:27:41] [WARNING] High memory usage detected in After Monthly CV: 2281.55 MB
+[08:27:41] [DEBUG] Memory cleanup: RSS=2281.55 MB, VMS=42101.46 MB
+[08:27:41] [WARNING] High memory usage detected in Before Station Block CV: 2281.55 MB
+[08:27:41] [DEBUG] Memory cleanup: RSS=2281.55 MB, VMS=42101.46 MB
+[08:27:41] [PROCESS] Starting station block cross-validation analysis...
+[08:27:41] [INFO] Created 28 station blocks for sequential processing
+[08:27:41] [PROCESS] Processing station block fold 1/28 (3.6%): stations_01
+[08:27:42] [DEBUG] Fold stations_01: train=10,022,513 pairs, val=786,572 pairs
+[08:27:43] [DEBUG] Memory cleanup in After station block fold 1/28: Collected 0 objects
+[08:27:43] [DEBUG] Memory cleanup in After station block fold 1/28: Freed 0.0 MB (RSS: 2590.8 → 2590.8 MB)
+[08:27:43] [INFO] Memory usage: 1.8/24.0 GB (87.7%)
+[08:27:43] [PROCESS] Processing station block fold 2/28 (7.1%): stations_02
+[08:27:43] [DEBUG] Fold stations_02: train=10,224,806 pairs, val=584,279 pairs
+[08:27:44] [DEBUG] Memory cleanup in After station block fold 2/28: Collected 0 objects
+[08:27:44] [DEBUG] Memory cleanup in After station block fold 2/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:44] [INFO] Memory usage: 1.8/24.0 GB (87.9%)
+[08:27:44] [PROCESS] Processing station block fold 3/28 (10.7%): stations_03
+[08:27:44] [DEBUG] Fold stations_03: train=9,972,166 pairs, val=836,919 pairs
+[08:27:45] [DEBUG] Memory cleanup in After station block fold 3/28: Collected 0 objects
+[08:27:45] [DEBUG] Memory cleanup in After station block fold 3/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:45] [INFO] Memory usage: 1.8/24.0 GB (87.9%)
+[08:27:45] [PROCESS] Processing station block fold 4/28 (14.3%): stations_04
+[08:27:46] [DEBUG] Fold stations_04: train=10,113,357 pairs, val=695,728 pairs
+[08:27:46] [DEBUG] Memory cleanup in After station block fold 4/28: Collected 0 objects
+[08:27:46] [DEBUG] Memory cleanup in After station block fold 4/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:46] [INFO] Memory usage: 1.8/24.0 GB (87.9%)
+[08:27:46] [PROCESS] Processing station block fold 5/28 (17.9%): stations_05
+[08:27:47] [DEBUG] Fold stations_05: train=9,980,338 pairs, val=828,747 pairs
+[08:27:48] [DEBUG] Memory cleanup in After station block fold 5/28: Collected 0 objects
+[08:27:48] [DEBUG] Memory cleanup in After station block fold 5/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:48] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:48] [PROCESS] Processing station block fold 6/28 (21.4%): stations_06
+[08:27:48] [DEBUG] Fold stations_06: train=10,215,943 pairs, val=593,142 pairs
+[08:27:49] [DEBUG] Memory cleanup in After station block fold 6/28: Collected 0 objects
+[08:27:49] [DEBUG] Memory cleanup in After station block fold 6/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:49] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:49] [PROCESS] Processing station block fold 7/28 (25.0%): stations_07
+[08:27:50] [DEBUG] Fold stations_07: train=9,857,630 pairs, val=951,455 pairs
+[08:27:51] [DEBUG] Memory cleanup in After station block fold 7/28: Collected 0 objects
+[08:27:51] [DEBUG] Memory cleanup in After station block fold 7/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:51] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:51] [PROCESS] Processing station block fold 8/28 (28.6%): stations_08
+[08:27:51] [DEBUG] Fold stations_08: train=10,034,733 pairs, val=774,352 pairs
+[08:27:52] [DEBUG] Memory cleanup in After station block fold 8/28: Collected 0 objects
+[08:27:52] [DEBUG] Memory cleanup in After station block fold 8/28: Freed 0.0 MB (RSS: 2862.0 → 2862.0 MB)
+[08:27:52] [INFO] Memory usage: 1.9/24.0 GB (87.9%)
+[08:27:52] [PROCESS] Processing station block fold 9/28 (32.1%): stations_09
+[08:27:53] [DEBUG] Fold stations_09: train=9,882,081 pairs, val=927,004 pairs
+[08:27:54] [DEBUG] Memory cleanup in After station block fold 9/28: Collected 0 objects
+[08:27:54] [DEBUG] Memory cleanup in After station block fold 9/28: Freed -0.0 MB (RSS: 2862.1 → 2862.1 MB)
+[08:27:54] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:54] [PROCESS] Processing station block fold 10/28 (35.7%): stations_10
+[08:27:54] [DEBUG] Fold stations_10: train=10,065,147 pairs, val=743,938 pairs
+[08:27:55] [DEBUG] Memory cleanup in After station block fold 10/28: Collected 0 objects
+[08:27:55] [DEBUG] Memory cleanup in After station block fold 10/28: Freed 0.0 MB (RSS: 2862.1 → 2862.1 MB)
+[08:27:55] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:55] [PROCESS] Processing station block fold 11/28 (39.3%): stations_11
+[08:27:55] [DEBUG] Fold stations_11: train=10,324,661 pairs, val=484,424 pairs
+[08:27:56] [DEBUG] Memory cleanup in After station block fold 11/28: Collected 0 objects
+[08:27:56] [DEBUG] Memory cleanup in After station block fold 11/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:27:56] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:56] [PROCESS] Processing station block fold 12/28 (42.9%): stations_12
+[08:27:57] [DEBUG] Fold stations_12: train=10,200,162 pairs, val=608,923 pairs
+[08:27:58] [DEBUG] Memory cleanup in After station block fold 12/28: Collected 0 objects
+[08:27:58] [DEBUG] Memory cleanup in After station block fold 12/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:27:58] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:58] [PROCESS] Processing station block fold 13/28 (46.4%): stations_13
+[08:27:58] [DEBUG] Fold stations_13: train=9,948,855 pairs, val=860,230 pairs
+[08:27:59] [DEBUG] Memory cleanup in After station block fold 13/28: Collected 0 objects
+[08:27:59] [DEBUG] Memory cleanup in After station block fold 13/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:27:59] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:27:59] [PROCESS] Processing station block fold 14/28 (50.0%): stations_14
+[08:27:59] [DEBUG] Fold stations_14: train=9,953,532 pairs, val=855,553 pairs
+[08:28:00] [DEBUG] Memory cleanup in After station block fold 14/28: Collected 0 objects
+[08:28:00] [DEBUG] Memory cleanup in After station block fold 14/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:28:00] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:28:00] [PROCESS] Processing station block fold 15/28 (53.6%): stations_15
+[08:28:01] [DEBUG] Fold stations_15: train=9,824,085 pairs, val=985,000 pairs
+[08:28:02] [DEBUG] Memory cleanup in After station block fold 15/28: Collected 0 objects
+[08:28:02] [DEBUG] Memory cleanup in After station block fold 15/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:28:02] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:28:02] [PROCESS] Processing station block fold 16/28 (57.1%): stations_16
+[08:28:02] [DEBUG] Fold stations_16: train=9,962,596 pairs, val=846,489 pairs
+[08:28:03] [DEBUG] Memory cleanup in After station block fold 16/28: Collected 0 objects
+[08:28:03] [DEBUG] Memory cleanup in After station block fold 16/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:28:03] [INFO] Memory usage: 1.9/24.0 GB (88.2%)
+[08:28:03] [PROCESS] Processing station block fold 17/28 (60.7%): stations_17
+[08:28:04] [DEBUG] Fold stations_17: train=10,313,110 pairs, val=495,975 pairs
+[08:28:04] [DEBUG] Memory cleanup in After station block fold 17/28: Collected 0 objects
+[08:28:04] [DEBUG] Memory cleanup in After station block fold 17/28: Freed 0.0 MB (RSS: 2871.4 → 2871.4 MB)
+[08:28:04] [INFO] Memory usage: 1.9/24.0 GB (88.2%)
+[08:28:04] [PROCESS] Processing station block fold 18/28 (64.3%): stations_18
+[08:28:05] [DEBUG] Fold stations_18: train=10,255,633 pairs, val=553,452 pairs
+[08:28:06] [DEBUG] Memory cleanup in After station block fold 18/28: Collected 0 objects
+[08:28:06] [DEBUG] Memory cleanup in After station block fold 18/28: Freed 0.0 MB (RSS: 2871.2 → 2871.2 MB)
+[08:28:06] [INFO] Memory usage: 1.9/24.0 GB (88.2%)
+[08:28:06] [PROCESS] Processing station block fold 19/28 (67.9%): stations_19
+[08:28:06] [DEBUG] Fold stations_19: train=9,931,977 pairs, val=877,108 pairs
+[08:28:07] [DEBUG] Memory cleanup in After station block fold 19/28: Collected 0 objects
+[08:28:07] [DEBUG] Memory cleanup in After station block fold 19/28: Freed 0.0 MB (RSS: 2871.5 → 2871.5 MB)
+[08:28:07] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:07] [PROCESS] Processing station block fold 20/28 (71.4%): stations_20
+[08:28:08] [DEBUG] Fold stations_20: train=10,099,440 pairs, val=709,645 pairs
+[08:28:08] [DEBUG] Memory cleanup in After station block fold 20/28: Collected 0 objects
+[08:28:08] [DEBUG] Memory cleanup in After station block fold 20/28: Freed 0.0 MB (RSS: 2871.5 → 2871.5 MB)
+[08:28:08] [INFO] Memory usage: 1.9/24.0 GB (88.2%)
+[08:28:08] [PROCESS] Processing station block fold 21/28 (75.0%): stations_21
+[08:28:09] [DEBUG] Fold stations_21: train=10,255,518 pairs, val=553,567 pairs
+[08:28:10] [DEBUG] Memory cleanup in After station block fold 21/28: Collected 0 objects
+[08:28:10] [DEBUG] Memory cleanup in After station block fold 21/28: Freed 0.0 MB (RSS: 2871.2 → 2871.2 MB)
+[08:28:10] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:10] [PROCESS] Processing station block fold 22/28 (78.6%): stations_22
+[08:28:10] [DEBUG] Fold stations_22: train=10,202,459 pairs, val=606,626 pairs
+[08:28:11] [DEBUG] Memory cleanup in After station block fold 22/28: Collected 0 objects
+[08:28:11] [DEBUG] Memory cleanup in After station block fold 22/28: Freed 0.0 MB (RSS: 2871.5 → 2871.5 MB)
+[08:28:11] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:11] [PROCESS] Processing station block fold 23/28 (82.1%): stations_23
+[08:28:11] [DEBUG] Fold stations_23: train=10,049,203 pairs, val=759,882 pairs
+[08:28:12] [DEBUG] Memory cleanup in After station block fold 23/28: Collected 0 objects
+[08:28:12] [DEBUG] Memory cleanup in After station block fold 23/28: Freed 0.0 MB (RSS: 2871.5 → 2871.5 MB)
+[08:28:12] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:12] [PROCESS] Processing station block fold 24/28 (85.7%): stations_24
+[08:28:13] [DEBUG] Fold stations_24: train=10,107,856 pairs, val=701,229 pairs
+[08:28:14] [DEBUG] Memory cleanup in After station block fold 24/28: Collected 0 objects
+[08:28:14] [DEBUG] Memory cleanup in After station block fold 24/28: Freed 0.0 MB (RSS: 2871.5 → 2871.5 MB)
+[08:28:14] [INFO] Memory usage: 2.0/24.0 GB (88.3%)
+[08:28:14] [PROCESS] Processing station block fold 25/28 (89.3%): stations_25
+[08:28:14] [DEBUG] Fold stations_25: train=9,811,221 pairs, val=997,864 pairs
+[08:28:15] [DEBUG] Memory cleanup in After station block fold 25/28: Collected 0 objects
+[08:28:15] [DEBUG] Memory cleanup in After station block fold 25/28: Freed 0.0 MB (RSS: 2873.0 → 2873.0 MB)
+[08:28:15] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:15] [PROCESS] Processing station block fold 26/28 (92.9%): stations_26
+[08:28:16] [DEBUG] Fold stations_26: train=10,199,595 pairs, val=609,490 pairs
+[08:28:17] [DEBUG] Memory cleanup in After station block fold 26/28: Collected 0 objects
+[08:28:17] [DEBUG] Memory cleanup in After station block fold 26/28: Freed 0.0 MB (RSS: 2873.0 → 2873.0 MB)
+[08:28:17] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:17] [PROCESS] Processing station block fold 27/28 (96.4%): stations_27
+[08:28:17] [DEBUG] Fold stations_27: train=10,153,341 pairs, val=655,744 pairs
+[08:28:18] [DEBUG] Memory cleanup in After station block fold 27/28: Collected 0 objects
+[08:28:18] [DEBUG] Memory cleanup in After station block fold 27/28: Freed 0.0 MB (RSS: 2873.0 → 2873.0 MB)
+[08:28:18] [INFO] Memory usage: 2.0/24.0 GB (88.2%)
+[08:28:18] [PROCESS] Processing station block fold 28/28 (100.0%): stations_28
+[08:28:18] [DEBUG] Fold stations_28: train=10,095,347 pairs, val=713,738 pairs
+[08:28:19] [DEBUG] Memory cleanup in After station block fold 28/28: Collected 0 objects
+[08:28:19] [DEBUG] Memory cleanup in After station block fold 28/28: Freed 0.0 MB (RSS: 2873.0 → 2873.0 MB)
+[08:28:19] [INFO] Memory usage: 2.0/24.0 GB (88.3%)
+[08:28:19] [SUCCESS] Station block CV completed: λ = 3395 ± 842 km, CV-RMSE = 0.7126
+[08:28:19] [DEBUG] Memory cleanup in After Station Block CV: Collected 0 objects
+[08:28:19] [DEBUG] Memory cleanup in After Station Block CV: Freed 0.0 MB (RSS: 2557.9 → 2557.9 MB)
+[08:28:19] [INFO] Memory usage: 1.9/24.0 GB (88.0%)
+[08:28:19] [DEBUG] Memory cleanup: RSS=2557.95 MB, VMS=42339.12 MB
+[08:28:19] [WARNING] High memory usage detected in After Station Block CV: 2557.95 MB
+[08:28:19] [DEBUG] Memory cleanup: RSS=2557.95 MB, VMS=42339.12 MB
+[08:28:19] [WARNING] High memory usage detected in Before LOSO CV: 2557.95 MB
+[08:28:19] [DEBUG] Memory cleanup: RSS=2557.95 MB, VMS=42339.12 MB
+[08:28:19] [PROCESS] Starting Leave-One-Station-Out (LOSO) analysis...
+[08:28:19] [INFO] Using full dataset: 10,809,085 pairs for validation
+[08:28:20] [INFO] Sampling 10 stations from 289 total for efficiency
+[08:28:20] [INFO] Using sequential processing in main process to avoid memory issues
+[08:28:20] [INFO] Processing stations in chunks of 5 to reduce memory pressure
+[08:28:20] [PROCESS] Processing chunk 1/2: stations 1-5
+[08:28:20] [PROCESS]   Processing station GAMB (1/10)...
+[08:28:22] [SUCCESS]     Station GAMB: λ = 3405 km (R² = 0.331)
+[08:28:22] [DEBUG] Memory cleanup: RSS=2773.28 MB, VMS=42567.15 MB
+[08:28:22] [PROCESS]   Processing station CHUR (2/10)...
+[08:28:24] [SUCCESS]     Station CHUR: λ = 3406 km (R² = 0.327)
+[08:28:24] [DEBUG] Memory cleanup: RSS=2924.57 MB, VMS=42718.43 MB
+[08:28:24] [PROCESS]   Processing station HNPT (3/10)...
+[08:28:26] [SUCCESS]     Station HNPT: λ = 3399 km (R² = 0.332)
+[08:28:26] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:26] [PROCESS]   Processing station FALK (4/10)...
+[08:28:28] [SUCCESS]     Station FALK: λ = 3477 km (R² = 0.337)
+[08:28:28] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:28] [PROCESS]   Processing station P043 (5/10)...
+[08:28:30] [SUCCESS]     Station P043: λ = 3412 km (R² = 0.332)
+[08:28:30] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:30] [INFO]   Completed chunk 1, streaming results to disk
+[08:28:30] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:30] [PROCESS] Processing chunk 2/2: stations 6-10
+[08:28:30] [PROCESS]   Processing station AUCK (6/10)...
+[08:28:31] [SUCCESS]     Station AUCK: λ = 3434 km (R² = 0.331)
+[08:28:31] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:31] [PROCESS]   Processing station GODE (7/10)...
+[08:28:33] [SUCCESS]     Station GODE: λ = 3312 km (R² = 0.326)
+[08:28:33] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:33] [PROCESS]   Processing station MCIL (8/10)...
+[08:28:35] [SUCCESS]     Station MCIL: λ = 3407 km (R² = 0.332)
+[08:28:35] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:35] [PROCESS]   Processing station MAW1 (9/10)...
+[08:28:37] [SUCCESS]     Station MAW1: λ = 3371 km (R² = 0.328)
+[08:28:37] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:37] [PROCESS]   Processing station UFPR (10/10)...
+[08:28:39] [SUCCESS]     Station UFPR: λ = 3343 km (R² = 0.337)
+[08:28:39] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:39] [INFO]   Completed chunk 2, streaming results to disk
+[08:28:39] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:39] [SUCCESS] LOSO complete: λ = 3396.5 ± 43.6 km (CV = 0.013)
+[08:28:39] [DEBUG] Memory cleanup: RSS=2999.36 MB, VMS=42791.07 MB
+[08:28:39] [DEBUG] Memory cleanup in After LOSO CV: Collected 0 objects
+[08:28:39] [DEBUG] Memory cleanup in After LOSO CV: Freed 0.0 MB (RSS: 2917.9 → 2917.9 MB)
+[08:28:39] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:28:39] [DEBUG] Memory cleanup: RSS=2917.92 MB, VMS=42709.62 MB
+[08:28:39] [WARNING] High memory usage detected in After LOSO CV: 2917.92 MB
+[08:28:39] [DEBUG] Memory cleanup: RSS=2917.92 MB, VMS=42709.62 MB
+[08:28:39] [WARNING] High memory usage detected in Before LODO CV: 2917.92 MB
+[08:28:39] [DEBUG] Memory cleanup: RSS=2917.92 MB, VMS=42709.62 MB
+[08:28:39] [PROCESS] Starting Leave-One-Day-Out (LODO) analysis...
+[08:28:39] [INFO] Sampling 10 days from 912 available in dataset
+[08:28:39] [INFO] Using sequential processing in main process to avoid memory issues
+[08:28:39] [PROCESS] Processing date 2025-06-19 (1/10)...
+[08:28:40] [SUCCESS]   Date 2025-06-19: λ = 3403 km (R² = 0.328)
+[08:28:40] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:40] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:40] [PROCESS] Processing date 2025-06-04 (2/10)...
+[08:28:42] [SUCCESS]   Date 2025-06-04: λ = 3399 km (R² = 0.332)
+[08:28:42] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:42] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:42] [PROCESS] Processing date 2023-10-15 (3/10)...
+[08:28:43] [SUCCESS]   Date 2023-10-15: λ = 3398 km (R² = 0.332)
+[08:28:43] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:43] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:43] [PROCESS] Processing date 2024-05-25 (4/10)...
+[08:28:44] [SUCCESS]   Date 2024-05-25: λ = 3399 km (R² = 0.331)
+[08:28:44] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:44] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:44] [PROCESS] Processing date 2025-04-09 (5/10)...
+[08:28:46] [SUCCESS]   Date 2025-04-09: λ = 3393 km (R² = 0.330)
+[08:28:46] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:46] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:46] [PROCESS] Processing date 2023-11-01 (6/10)...
+[08:28:47] [SUCCESS]   Date 2023-11-01: λ = 3396 km (R² = 0.333)
+[08:28:47] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:47] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:47] [PROCESS] Processing date 2024-03-05 (7/10)...
+[08:28:48] [SUCCESS]   Date 2024-03-05: λ = 3398 km (R² = 0.330)
+[08:28:48] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:48] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:48] [PROCESS] Processing date 2025-05-26 (8/10)...
+[08:28:50] [SUCCESS]   Date 2025-05-26: λ = 3402 km (R² = 0.329)
+[08:28:50] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:50] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:50] [PROCESS] Processing date 2024-10-04 (9/10)...
+[08:28:51] [SUCCESS]   Date 2024-10-04: λ = 3396 km (R² = 0.331)
+[08:28:51] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:51] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:51] [PROCESS] Processing date 2025-03-09 (10/10)...
+[08:28:52] [SUCCESS]   Date 2025-03-09: λ = 3399 km (R² = 0.330)
+[08:28:52] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:52] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:52] [SUCCESS] LODO complete: λ = 3398.4 ± 2.9 km (CV = 0.001)
+[08:28:52] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:52] [DEBUG] Memory cleanup in After LODO CV: Collected 0 objects
+[08:28:52] [DEBUG] Memory cleanup in After LODO CV: Freed 0.0 MB (RSS: 2839.9 → 2839.9 MB)
+[08:28:52] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:28:52] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:52] [WARNING] High memory usage detected in After LODO CV: 2839.91 MB
+[08:28:52] [DEBUG] Memory cleanup: RSS=2839.91 MB, VMS=42644.16 MB
+[08:28:52] [INFO] Bootstrap cross-validation disabled (use Step 3.1 Robust Block Bootstrap instead)
+[08:28:52] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Collected 0 objects
+[08:28:52] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Freed 0.0 MB (RSS: 2839.9 → 2839.9 MB)
+[08:28:52] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:28:52] [SUCCESS] Cross-method validation: PASSED - Monthly and station block CV are consistent
+[08:28:52] [SUCCESS] Block-wise cross-validation completed for esa_final in 91.7 seconds
+[08:28:52] [SUCCESS] Results saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_3_0_cross_validation_suite_esa_final.json (fallback method)
+[08:28:52] [DEBUG] Memory cleanup: RSS=1919.50 MB, VMS=41723.73 MB
+[08:28:52] [DEBUG] Memory usage after esa_final: RSS=1919.50 MB, VMS=41723.73 MB
+[08:28:52] [PROCESS] 
+Processing analysis center: IGS_COMBINED
+[08:28:52] [INFO] --------------------------------------------------
+[08:28:52] [PROCESS] Starting block-wise cross-validation analysis for igs_combined
+[08:28:52] [PROCESS] Loading complete pair dataset for igs_combined...
+[08:28:54] [INFO] Loading full dataset with 12,879,380 pairs...
+[08:28:54] [DEBUG] Processing file step_2_0_pairs_consolidated_igs_combined.csv in chunks of 25,000
+[08:28:54] [DEBUG] Processing 1081.5 MB file in chunks
+[08:28:54] [DEBUG] Memory cleanup in After processing 250,000 rows: Collected 0 objects
+[08:28:54] [DEBUG] Memory cleanup in After processing 250,000 rows: Freed 0.0 MB (RSS: 1914.0 → 1914.0 MB)
+[08:28:54] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:54] [DEBUG] Memory cleanup in After processing 500,000 rows: Collected 0 objects
+[08:28:54] [DEBUG] Memory cleanup in After processing 500,000 rows: Freed 0.0 MB (RSS: 1914.0 → 1914.0 MB)
+[08:28:54] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:54] [DEBUG] Memory cleanup in After processing 750,000 rows: Collected 0 objects
+[08:28:55] [DEBUG] Memory cleanup in After processing 750,000 rows: Freed 0.0 MB (RSS: 1918.8 → 1918.8 MB)
+[08:28:55] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Collected 0 objects
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,000,000 rows: Freed 0.0 MB (RSS: 1918.8 → 1918.8 MB)
+[08:28:55] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Collected 0 objects
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,250,000 rows: Freed 0.0 MB (RSS: 1918.8 → 1918.8 MB)
+[08:28:55] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Collected 0 objects
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,500,000 rows: Freed 0.0 MB (RSS: 1918.8 → 1918.8 MB)
+[08:28:55] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Collected 0 objects
+[08:28:55] [DEBUG] Memory cleanup in After processing 1,750,000 rows: Freed 0.0 MB (RSS: 1918.8 → 1918.8 MB)
+[08:28:55] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:55] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Collected 0 objects
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,000,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:56] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Collected 0 objects
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,250,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:56] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Collected 0 objects
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,500,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:56] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Collected 0 objects
+[08:28:56] [DEBUG] Memory cleanup in After processing 2,750,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:56] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:56] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Collected 0 objects
+[08:28:56] [DEBUG] Memory cleanup in After processing 3,000,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:56] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Collected 0 objects
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,250,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:57] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Collected 0 objects
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,500,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:57] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Collected 0 objects
+[08:28:57] [DEBUG] Memory cleanup in After processing 3,750,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:57] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:57] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Collected 0 objects
+[08:28:57] [DEBUG] Memory cleanup in After processing 4,000,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:57] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:57] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Collected 0 objects
+[08:28:57] [DEBUG] Memory cleanup in After processing 4,250,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:57] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:58] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Collected 0 objects
+[08:28:58] [DEBUG] Memory cleanup in After processing 4,500,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:58] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:58] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Collected 0 objects
+[08:28:58] [DEBUG] Memory cleanup in After processing 4,750,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:58] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Collected 0 objects
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,000,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:58] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Collected 0 objects
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,250,000 rows: Freed 0.0 MB (RSS: 1918.9 → 1918.9 MB)
+[08:28:58] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Collected 0 objects
+[08:28:58] [DEBUG] Memory cleanup in After processing 5,500,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:58] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:59] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Collected 0 objects
+[08:28:59] [DEBUG] Memory cleanup in After processing 5,750,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:59] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Collected 0 objects
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,000,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:59] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Collected 0 objects
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,250,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:59] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Collected 0 objects
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,500,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:59] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Collected 0 objects
+[08:28:59] [DEBUG] Memory cleanup in After processing 6,750,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:28:59] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Collected 0 objects
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,000,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:29:00] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Collected 0 objects
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,250,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:29:00] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Collected 0 objects
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,500,000 rows: Freed 0.0 MB (RSS: 1919.0 → 1919.0 MB)
+[08:29:00] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Collected 0 objects
+[08:29:00] [DEBUG] Memory cleanup in After processing 7,750,000 rows: Freed 0.0 MB (RSS: 1919.3 → 1919.3 MB)
+[08:29:00] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:00] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Collected 0 objects
+[08:29:00] [DEBUG] Memory cleanup in After processing 8,000,000 rows: Freed 0.0 MB (RSS: 1919.3 → 1919.3 MB)
+[08:29:00] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Collected 0 objects
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,250,000 rows: Freed 0.0 MB (RSS: 1919.3 → 1919.3 MB)
+[08:29:01] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Collected 0 objects
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,500,000 rows: Freed 0.0 MB (RSS: 1919.6 → 1919.6 MB)
+[08:29:01] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Collected 0 objects
+[08:29:01] [DEBUG] Memory cleanup in After processing 8,750,000 rows: Freed 0.0 MB (RSS: 1919.6 → 1919.6 MB)
+[08:29:01] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:01] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Collected 0 objects
+[08:29:01] [DEBUG] Memory cleanup in After processing 9,000,000 rows: Freed 0.0 MB (RSS: 1923.1 → 1923.1 MB)
+[08:29:01] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Collected 0 objects
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,250,000 rows: Freed 0.0 MB (RSS: 1928.2 → 1928.2 MB)
+[08:29:02] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Collected 0 objects
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,500,000 rows: Freed 0.0 MB (RSS: 1938.4 → 1938.4 MB)
+[08:29:02] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Collected 0 objects
+[08:29:02] [DEBUG] Memory cleanup in After processing 9,750,000 rows: Freed 0.0 MB (RSS: 1942.8 → 1942.8 MB)
+[08:29:02] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:02] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Collected 0 objects
+[08:29:02] [DEBUG] Memory cleanup in After processing 10,000,000 rows: Freed 0.0 MB (RSS: 1946.7 → 1946.7 MB)
+[08:29:02] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:02] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Collected 0 objects
+[08:29:02] [DEBUG] Memory cleanup in After processing 10,250,000 rows: Freed 0.0 MB (RSS: 1952.8 → 1952.8 MB)
+[08:29:02] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:03] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Collected 0 objects
+[08:29:03] [DEBUG] Memory cleanup in After processing 10,500,000 rows: Freed 0.0 MB (RSS: 1967.1 → 1967.1 MB)
+[08:29:03] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:03] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Collected 0 objects
+[08:29:03] [DEBUG] Memory cleanup in After processing 10,750,000 rows: Freed 0.0 MB (RSS: 1979.0 → 1979.0 MB)
+[08:29:03] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,000,000 rows: Collected 0 objects
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,000,000 rows: Freed 0.0 MB (RSS: 1982.1 → 1982.1 MB)
+[08:29:03] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,250,000 rows: Collected 0 objects
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,250,000 rows: Freed 0.0 MB (RSS: 1997.4 → 1997.4 MB)
+[08:29:03] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,500,000 rows: Collected 0 objects
+[08:29:03] [DEBUG] Memory cleanup in After processing 11,500,000 rows: Freed 0.0 MB (RSS: 2011.8 → 2011.8 MB)
+[08:29:03] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:04] [DEBUG] Memory cleanup in After processing 11,750,000 rows: Collected 0 objects
+[08:29:04] [DEBUG] Memory cleanup in After processing 11,750,000 rows: Freed 0.0 MB (RSS: 2033.5 → 2033.5 MB)
+[08:29:04] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,000,000 rows: Collected 0 objects
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,000,000 rows: Freed 0.0 MB (RSS: 2058.2 → 2058.2 MB)
+[08:29:04] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,250,000 rows: Collected 0 objects
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,250,000 rows: Freed 0.0 MB (RSS: 2069.9 → 2069.9 MB)
+[08:29:04] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,500,000 rows: Collected 0 objects
+[08:29:04] [DEBUG] Memory cleanup in After processing 12,500,000 rows: Freed 0.0 MB (RSS: 2085.4 → 2085.4 MB)
+[08:29:04] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:05] [DEBUG] Memory cleanup in After processing 12,750,000 rows: Collected 0 objects
+[08:29:05] [DEBUG] Memory cleanup in After processing 12,750,000 rows: Freed 0.0 MB (RSS: 2095.0 → 2095.0 MB)
+[08:29:05] [INFO] Memory usage: 1.7/24.0 GB (87.2%)
+[08:29:05] [SUCCESS] Loaded complete dataset: 12,879,380 pairs for igs_combined
+[08:29:05] [WARNING] High memory usage detected in After loading igs_combined dataset: 3090.65 MB
+[08:29:05] [DEBUG] Memory cleanup: RSS=3090.65 MB, VMS=42705.87 MB
+[08:29:06] [WARNING] High memory usage detected in Before Monthly CV: 3101.12 MB
+[08:29:06] [DEBUG] Memory cleanup: RSS=3101.12 MB, VMS=42705.87 MB
+[08:29:06] [PROCESS] Starting monthly cross-validation analysis...
+[08:29:06] [PROCESS] Creating monthly cross-validation folds...
+[08:29:06] [INFO] Sampling 10 months from 10 total for efficiency
+[08:29:06] [INFO] Creating 10 monthly folds
+[08:29:06] [PROCESS] Creating monthly fold 1/10: 2023-01
+[08:29:06] [PROCESS] Creating monthly fold 2/10: 2023-09
+[08:29:06] [PROCESS] Creating monthly fold 3/10: 2023-10
+[08:29:07] [PROCESS] Creating monthly fold 4/10: 2024-01
+[08:29:07] [PROCESS] Creating monthly fold 5/10: 2024-04
+[08:29:07] [PROCESS] Creating monthly fold 6/10: 2024-06
+[08:29:07] [PROCESS] Creating monthly fold 7/10: 2024-12
+[08:29:07] [PROCESS] Creating monthly fold 8/10: 2025-01
+[08:29:07] [PROCESS] Creating monthly fold 9/10: 2025-04
+[08:29:07] [PROCESS] Creating monthly fold 10/10: 2025-05
+[08:29:07] [SUCCESS] Created 10 valid monthly folds
+[08:29:07] [PROCESS] Processing monthly fold 1/10 (10.0%): 2023-01
+[08:29:07] [DEBUG] Fold 2023-01: train=12,700,045 pairs, val=179,335 pairs
+[08:29:08] [PROCESS] Processing monthly fold 2/10 (20.0%): 2023-09
+[08:29:08] [DEBUG] Fold 2023-09: train=12,702,893 pairs, val=176,487 pairs
+[08:29:09] [PROCESS] Processing monthly fold 3/10 (30.0%): 2023-10
+[08:29:09] [DEBUG] Fold 2023-10: train=12,697,109 pairs, val=182,271 pairs
+[08:29:09] [DEBUG] Memory cleanup in After fold 3/10: Collected 0 objects
+[08:29:09] [DEBUG] Memory cleanup in After fold 3/10: Freed 0.0 MB (RSS: 3424.7 → 3424.7 MB)
+[08:29:09] [INFO] Memory usage: 2.1/24.0 GB (88.6%)
+[08:29:09] [PROCESS] Processing monthly fold 4/10 (40.0%): 2024-01
+[08:29:09] [DEBUG] Fold 2024-01: train=12,692,844 pairs, val=186,536 pairs
+[08:29:10] [PROCESS] Processing monthly fold 5/10 (50.0%): 2024-04
+[08:29:10] [DEBUG] Fold 2024-04: train=12,316,661 pairs, val=562,719 pairs
+[08:29:11] [PROCESS] Processing monthly fold 6/10 (60.0%): 2024-06
+[08:29:11] [DEBUG] Fold 2024-06: train=12,337,865 pairs, val=541,515 pairs
+[08:29:12] [DEBUG] Memory cleanup in After fold 6/10: Collected 0 objects
+[08:29:12] [DEBUG] Memory cleanup in After fold 6/10: Freed 0.0 MB (RSS: 3424.7 → 3424.7 MB)
+[08:29:12] [INFO] Memory usage: 2.1/24.0 GB (88.6%)
+[08:29:12] [PROCESS] Processing monthly fold 7/10 (70.0%): 2024-12
+[08:29:12] [DEBUG] Fold 2024-12: train=12,281,220 pairs, val=598,160 pairs
+[08:29:13] [PROCESS] Processing monthly fold 8/10 (80.0%): 2025-01
+[08:29:13] [DEBUG] Fold 2025-01: train=12,300,203 pairs, val=579,177 pairs
+[08:29:14] [PROCESS] Processing monthly fold 9/10 (90.0%): 2025-04
+[08:29:14] [DEBUG] Fold 2025-04: train=12,129,282 pairs, val=750,098 pairs
+[08:29:15] [DEBUG] Memory cleanup in After fold 9/10: Collected 0 objects
+[08:29:15] [DEBUG] Memory cleanup in After fold 9/10: Freed 0.0 MB (RSS: 3424.8 → 3424.8 MB)
+[08:29:15] [INFO] Memory usage: 2.1/24.0 GB (88.5%)
+[08:29:15] [PROCESS] Processing monthly fold 10/10 (100.0%): 2025-05
+[08:29:15] [DEBUG] Fold 2025-05: train=12,021,954 pairs, val=857,426 pairs
+[08:29:16] [WARNING] Monthly CV: Detected 1 outlier folds: ['2025-01']
+[08:29:16] [SUCCESS] Monthly CV completed: λ = 4668 ± 1977 km, CV-RMSE = 0.7169
+[08:29:16] [DEBUG] Memory cleanup in After Monthly CV: Collected 0 objects
+[08:29:16] [DEBUG] Memory cleanup in After Monthly CV: Freed 0.0 MB (RSS: 2668.9 → 2668.9 MB)
+[08:29:16] [INFO] Memory usage: 1.9/24.0 GB (87.8%)
+[08:29:16] [DEBUG] Memory cleanup: RSS=2668.88 MB, VMS=42255.63 MB
+[08:29:16] [WARNING] High memory usage detected in After Monthly CV: 2668.88 MB
+[08:29:16] [DEBUG] Memory cleanup: RSS=2668.88 MB, VMS=42255.63 MB
+[08:29:16] [WARNING] High memory usage detected in Before Station Block CV: 2668.88 MB
+[08:29:16] [DEBUG] Memory cleanup: RSS=2668.88 MB, VMS=42255.63 MB
+[08:29:16] [PROCESS] Starting station block cross-validation analysis...
+[08:29:17] [INFO] Created 31 station blocks for sequential processing
+[08:29:17] [PROCESS] Processing station block fold 1/31 (3.2%): stations_01
+[08:29:17] [DEBUG] Fold stations_01: train=11,855,098 pairs, val=1,024,282 pairs
+[08:29:18] [DEBUG] Memory cleanup in After station block fold 1/31: Collected 0 objects
+[08:29:18] [DEBUG] Memory cleanup in After station block fold 1/31: Freed 0.0 MB (RSS: 3033.0 → 3033.0 MB)
+[08:29:18] [INFO] Memory usage: 2.0/24.0 GB (88.1%)
+[08:29:18] [PROCESS] Processing station block fold 2/31 (6.5%): stations_02
+[08:29:19] [DEBUG] Fold stations_02: train=12,074,084 pairs, val=805,296 pairs
+[08:29:20] [DEBUG] Memory cleanup in After station block fold 2/31: Collected 0 objects
+[08:29:20] [DEBUG] Memory cleanup in After station block fold 2/31: Freed 0.0 MB (RSS: 3274.6 → 3274.6 MB)
+[08:29:20] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:20] [PROCESS] Processing station block fold 3/31 (9.7%): stations_03
+[08:29:20] [DEBUG] Fold stations_03: train=12,285,833 pairs, val=593,547 pairs
+[08:29:21] [DEBUG] Memory cleanup in After station block fold 3/31: Collected 0 objects
+[08:29:21] [DEBUG] Memory cleanup in After station block fold 3/31: Freed 0.0 MB (RSS: 3286.5 → 3286.5 MB)
+[08:29:21] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:21] [PROCESS] Processing station block fold 4/31 (12.9%): stations_04
+[08:29:22] [DEBUG] Fold stations_04: train=12,221,715 pairs, val=657,665 pairs
+[08:29:23] [DEBUG] Memory cleanup in After station block fold 4/31: Collected 0 objects
+[08:29:23] [DEBUG] Memory cleanup in After station block fold 4/31: Freed 0.0 MB (RSS: 3286.5 → 3286.5 MB)
+[08:29:23] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:23] [PROCESS] Processing station block fold 5/31 (16.1%): stations_05
+[08:29:24] [DEBUG] Fold stations_05: train=11,850,878 pairs, val=1,028,502 pairs
+[08:29:25] [DEBUG] Memory cleanup in After station block fold 5/31: Collected 0 objects
+[08:29:25] [DEBUG] Memory cleanup in After station block fold 5/31: Freed 0.0 MB (RSS: 3286.5 → 3286.5 MB)
+[08:29:25] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:25] [PROCESS] Processing station block fold 6/31 (19.4%): stations_06
+[08:29:25] [DEBUG] Fold stations_06: train=12,030,870 pairs, val=848,510 pairs
+[08:29:26] [DEBUG] Memory cleanup in After station block fold 6/31: Collected 0 objects
+[08:29:26] [DEBUG] Memory cleanup in After station block fold 6/31: Freed -0.0 MB (RSS: 3286.5 → 3286.5 MB)
+[08:29:26] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:26] [PROCESS] Processing station block fold 7/31 (22.6%): stations_07
+[08:29:27] [DEBUG] Fold stations_07: train=11,957,538 pairs, val=921,842 pairs
+[08:29:28] [DEBUG] Memory cleanup in After station block fold 7/31: Collected 0 objects
+[08:29:28] [DEBUG] Memory cleanup in After station block fold 7/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:28] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:28] [PROCESS] Processing station block fold 8/31 (25.8%): stations_08
+[08:29:28] [DEBUG] Fold stations_08: train=12,092,372 pairs, val=787,008 pairs
+[08:29:29] [DEBUG] Memory cleanup in After station block fold 8/31: Collected 0 objects
+[08:29:29] [DEBUG] Memory cleanup in After station block fold 8/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:29] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:29] [PROCESS] Processing station block fold 9/31 (29.0%): stations_09
+[08:29:30] [DEBUG] Fold stations_09: train=12,144,157 pairs, val=735,223 pairs
+[08:29:31] [DEBUG] Memory cleanup in After station block fold 9/31: Collected 0 objects
+[08:29:31] [DEBUG] Memory cleanup in After station block fold 9/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:31] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:31] [PROCESS] Processing station block fold 10/31 (32.3%): stations_10
+[08:29:31] [DEBUG] Fold stations_10: train=12,135,423 pairs, val=743,957 pairs
+[08:29:32] [DEBUG] Memory cleanup in After station block fold 10/31: Collected 0 objects
+[08:29:32] [DEBUG] Memory cleanup in After station block fold 10/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:32] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:32] [PROCESS] Processing station block fold 11/31 (35.5%): stations_11
+[08:29:33] [DEBUG] Fold stations_11: train=12,019,573 pairs, val=859,807 pairs
+[08:29:34] [DEBUG] Memory cleanup in After station block fold 11/31: Collected 0 objects
+[08:29:34] [DEBUG] Memory cleanup in After station block fold 11/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:34] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:34] [PROCESS] Processing station block fold 12/31 (38.7%): stations_12
+[08:29:34] [DEBUG] Fold stations_12: train=11,903,745 pairs, val=975,635 pairs
+[08:29:35] [DEBUG] Memory cleanup in After station block fold 12/31: Collected 0 objects
+[08:29:35] [DEBUG] Memory cleanup in After station block fold 12/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:35] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:35] [PROCESS] Processing station block fold 13/31 (41.9%): stations_13
+[08:29:36] [DEBUG] Fold stations_13: train=11,970,357 pairs, val=909,023 pairs
+[08:29:37] [DEBUG] Memory cleanup in After station block fold 13/31: Collected 0 objects
+[08:29:37] [DEBUG] Memory cleanup in After station block fold 13/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:37] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:37] [PROCESS] Processing station block fold 14/31 (45.2%): stations_14
+[08:29:38] [DEBUG] Fold stations_14: train=12,230,173 pairs, val=649,207 pairs
+[08:29:38] [DEBUG] Memory cleanup in After station block fold 14/31: Collected 0 objects
+[08:29:39] [DEBUG] Memory cleanup in After station block fold 14/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:39] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:39] [PROCESS] Processing station block fold 15/31 (48.4%): stations_15
+[08:29:39] [DEBUG] Fold stations_15: train=12,205,077 pairs, val=674,303 pairs
+[08:29:40] [DEBUG] Memory cleanup in After station block fold 15/31: Collected 0 objects
+[08:29:40] [DEBUG] Memory cleanup in After station block fold 15/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:40] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:40] [PROCESS] Processing station block fold 16/31 (51.6%): stations_16
+[08:29:41] [DEBUG] Fold stations_16: train=12,192,439 pairs, val=686,941 pairs
+[08:29:42] [DEBUG] Memory cleanup in After station block fold 16/31: Collected 0 objects
+[08:29:42] [DEBUG] Memory cleanup in After station block fold 16/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:42] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:42] [PROCESS] Processing station block fold 17/31 (54.8%): stations_17
+[08:29:42] [DEBUG] Fold stations_17: train=12,142,835 pairs, val=736,545 pairs
+[08:29:43] [DEBUG] Memory cleanup in After station block fold 17/31: Collected 0 objects
+[08:29:43] [DEBUG] Memory cleanup in After station block fold 17/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:43] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:43] [PROCESS] Processing station block fold 18/31 (58.1%): stations_18
+[08:29:44] [DEBUG] Fold stations_18: train=12,176,509 pairs, val=702,871 pairs
+[08:29:45] [DEBUG] Memory cleanup in After station block fold 18/31: Collected 0 objects
+[08:29:45] [DEBUG] Memory cleanup in After station block fold 18/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:45] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:45] [PROCESS] Processing station block fold 19/31 (61.3%): stations_19
+[08:29:45] [DEBUG] Fold stations_19: train=11,869,642 pairs, val=1,009,738 pairs
+[08:29:46] [DEBUG] Memory cleanup in After station block fold 19/31: Collected 0 objects
+[08:29:46] [DEBUG] Memory cleanup in After station block fold 19/31: Freed 0.0 MB (RSS: 3286.6 → 3286.6 MB)
+[08:29:46] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:46] [PROCESS] Processing station block fold 20/31 (64.5%): stations_20
+[08:29:47] [DEBUG] Fold stations_20: train=12,323,672 pairs, val=555,708 pairs
+[08:29:48] [DEBUG] Memory cleanup in After station block fold 20/31: Collected 0 objects
+[08:29:48] [DEBUG] Memory cleanup in After station block fold 20/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:48] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:48] [PROCESS] Processing station block fold 21/31 (67.7%): stations_21
+[08:29:48] [DEBUG] Fold stations_21: train=12,117,252 pairs, val=762,128 pairs
+[08:29:49] [DEBUG] Memory cleanup in After station block fold 21/31: Collected 0 objects
+[08:29:49] [DEBUG] Memory cleanup in After station block fold 21/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:49] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:49] [PROCESS] Processing station block fold 22/31 (71.0%): stations_22
+[08:29:50] [DEBUG] Fold stations_22: train=12,087,686 pairs, val=791,694 pairs
+[08:29:51] [DEBUG] Memory cleanup in After station block fold 22/31: Collected 0 objects
+[08:29:51] [DEBUG] Memory cleanup in After station block fold 22/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:51] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:51] [PROCESS] Processing station block fold 23/31 (74.2%): stations_23
+[08:29:51] [DEBUG] Fold stations_23: train=12,051,254 pairs, val=828,126 pairs
+[08:29:52] [DEBUG] Memory cleanup in After station block fold 23/31: Collected 0 objects
+[08:29:52] [DEBUG] Memory cleanup in After station block fold 23/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:52] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:52] [PROCESS] Processing station block fold 24/31 (77.4%): stations_24
+[08:29:53] [DEBUG] Fold stations_24: train=11,958,871 pairs, val=920,509 pairs
+[08:29:54] [DEBUG] Memory cleanup in After station block fold 24/31: Collected 0 objects
+[08:29:54] [DEBUG] Memory cleanup in After station block fold 24/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:54] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:29:54] [PROCESS] Processing station block fold 25/31 (80.6%): stations_25
+[08:29:54] [DEBUG] Fold stations_25: train=11,988,165 pairs, val=891,215 pairs
+[08:29:55] [DEBUG] Memory cleanup in After station block fold 25/31: Collected 0 objects
+[08:29:55] [DEBUG] Memory cleanup in After station block fold 25/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:55] [INFO] Memory usage: 2.0/24.0 GB (88.5%)
+[08:29:55] [PROCESS] Processing station block fold 26/31 (83.9%): stations_26
+[08:29:56] [DEBUG] Fold stations_26: train=12,112,211 pairs, val=767,169 pairs
+[08:29:57] [DEBUG] Memory cleanup in After station block fold 26/31: Collected 0 objects
+[08:29:57] [DEBUG] Memory cleanup in After station block fold 26/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:57] [INFO] Memory usage: 2.0/24.0 GB (88.5%)
+[08:29:57] [PROCESS] Processing station block fold 27/31 (87.1%): stations_27
+[08:29:57] [DEBUG] Fold stations_27: train=11,885,972 pairs, val=993,408 pairs
+[08:29:58] [DEBUG] Memory cleanup in After station block fold 27/31: Collected 0 objects
+[08:29:59] [DEBUG] Memory cleanup in After station block fold 27/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:29:59] [INFO] Memory usage: 2.0/24.0 GB (88.5%)
+[08:29:59] [PROCESS] Processing station block fold 28/31 (90.3%): stations_28
+[08:29:59] [DEBUG] Fold stations_28: train=12,143,653 pairs, val=735,727 pairs
+[08:30:00] [DEBUG] Memory cleanup in After station block fold 28/31: Collected 0 objects
+[08:30:00] [DEBUG] Memory cleanup in After station block fold 28/31: Freed 0.0 MB (RSS: 3287.8 → 3287.8 MB)
+[08:30:00] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:30:00] [PROCESS] Processing station block fold 29/31 (93.5%): stations_29
+[08:30:01] [DEBUG] Fold stations_29: train=12,157,121 pairs, val=722,259 pairs
+[08:30:01] [DEBUG] Memory cleanup in After station block fold 29/31: Collected 0 objects
+[08:30:01] [DEBUG] Memory cleanup in After station block fold 29/31: Freed 0.0 MB (RSS: 3287.9 → 3287.9 MB)
+[08:30:01] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:30:01] [PROCESS] Processing station block fold 30/31 (96.8%): stations_30
+[08:30:02] [DEBUG] Fold stations_30: train=12,036,072 pairs, val=843,308 pairs
+[08:30:03] [DEBUG] Memory cleanup in After station block fold 30/31: Collected 0 objects
+[08:30:03] [DEBUG] Memory cleanup in After station block fold 30/31: Freed 0.0 MB (RSS: 3287.9 → 3287.9 MB)
+[08:30:03] [INFO] Memory usage: 2.0/24.0 GB (88.4%)
+[08:30:03] [PROCESS] Processing station block fold 31/31 (100.0%): stations_31
+[08:30:04] [DEBUG] Fold stations_31: train=12,171,540 pairs, val=707,840 pairs
+[08:30:04] [DEBUG] Memory cleanup in After station block fold 31/31: Collected 0 objects
+[08:30:04] [DEBUG] Memory cleanup in After station block fold 31/31: Freed 0.0 MB (RSS: 3287.9 → 3287.9 MB)
+[08:30:04] [INFO] Memory usage: 2.0/24.0 GB (88.5%)
+[08:30:04] [WARNING] Station Block CV: Detected 2 outlier folds: ['stations_20', 'stations_27']
+[08:30:04] [SUCCESS] Station block CV completed: λ = 4071 ± 1822 km, CV-RMSE = 0.7163
+[08:30:05] [DEBUG] Memory cleanup in After Station Block CV: Collected 0 objects
+[08:30:05] [DEBUG] Memory cleanup in After Station Block CV: Freed 0.0 MB (RSS: 2917.5 → 2917.5 MB)
+[08:30:05] [INFO] Memory usage: 1.9/24.0 GB (88.1%)
+[08:30:05] [DEBUG] Memory cleanup: RSS=2917.47 MB, VMS=42500.84 MB
+[08:30:05] [WARNING] High memory usage detected in After Station Block CV: 2917.47 MB
+[08:30:05] [DEBUG] Memory cleanup: RSS=2917.47 MB, VMS=42500.84 MB
+[08:30:05] [WARNING] High memory usage detected in Before LOSO CV: 2917.47 MB
+[08:30:05] [DEBUG] Memory cleanup: RSS=2917.47 MB, VMS=42500.84 MB
+[08:30:05] [PROCESS] Starting Leave-One-Station-Out (LOSO) analysis...
+[08:30:05] [INFO] Using full dataset: 12,879,380 pairs for validation
+[08:30:05] [INFO] Sampling 10 stations from 316 total for efficiency
+[08:30:05] [INFO] Using sequential processing in main process to avoid memory issues
+[08:30:05] [INFO] Processing stations in chunks of 5 to reduce memory pressure
+[08:30:05] [PROCESS] Processing chunk 1/2: stations 1-5
+[08:30:05] [PROCESS]   Processing station NOVM (1/10)...
+[08:30:08] [SUCCESS]     Station NOVM: λ = 3809 km (R² = 0.171)
+[08:30:08] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:08] [PROCESS]   Processing station GLPS (2/10)...
+[08:30:10] [SUCCESS]     Station GLPS: λ = 3864 km (R² = 0.173)
+[08:30:10] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:10] [PROCESS]   Processing station MCM4 (3/10)...
+[08:30:12] [SUCCESS]     Station MCM4: λ = 3796 km (R² = 0.171)
+[08:30:12] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:12] [PROCESS]   Processing station PTGG (4/10)...
+[08:30:14] [SUCCESS]     Station PTGG: λ = 3825 km (R² = 0.176)
+[08:30:14] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:14] [PROCESS]   Processing station SUTH (5/10)...
+[08:30:16] [SUCCESS]     Station SUTH: λ = 3823 km (R² = 0.170)
+[08:30:16] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:16] [INFO]   Completed chunk 1, streaming results to disk
+[08:30:16] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:16] [PROCESS] Processing chunk 2/2: stations 6-10
+[08:30:16] [PROCESS]   Processing station MQZG (6/10)...
+[08:30:18] [SUCCESS]     Station MQZG: λ = 3798 km (R² = 0.171)
+[08:30:19] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:19] [PROCESS]   Processing station DYNG (7/10)...
+[08:30:21] [SUCCESS]     Station DYNG: λ = 3827 km (R² = 0.181)
+[08:30:21] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:21] [PROCESS]   Processing station BRST (8/10)...
+[08:30:23] [SUCCESS]     Station BRST: λ = 3806 km (R² = 0.165)
+[08:30:23] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:23] [PROCESS]   Processing station MKEA (9/10)...
+[08:30:25] [SUCCESS]     Station MKEA: λ = 3825 km (R² = 0.115)
+[08:30:25] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:25] [PROCESS]   Processing station SANT (10/10)...
+[08:30:27] [SUCCESS]     Station SANT: λ = 3871 km (R² = 0.183)
+[08:30:27] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:27] [INFO]   Completed chunk 2, streaming results to disk
+[08:30:27] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:27] [SUCCESS] LOSO complete: λ = 3824.3 ± 24.2 km (CV = 0.006)
+[08:30:27] [DEBUG] Memory cleanup: RSS=3272.96 MB, VMS=42856.20 MB
+[08:30:27] [DEBUG] Memory cleanup in After LOSO CV: Collected 0 objects
+[08:30:27] [DEBUG] Memory cleanup in After LOSO CV: Freed 0.0 MB (RSS: 3260.7 → 3260.7 MB)
+[08:30:27] [INFO] Memory usage: 2.0/24.0 GB (88.5%)
+[08:30:27] [DEBUG] Memory cleanup: RSS=3260.68 MB, VMS=42843.90 MB
+[08:30:27] [WARNING] High memory usage detected in After LOSO CV: 3260.68 MB
+[08:30:27] [DEBUG] Memory cleanup: RSS=3260.68 MB, VMS=42843.90 MB
+[08:30:27] [WARNING] High memory usage detected in Before LODO CV: 3260.68 MB
+[08:30:27] [DEBUG] Memory cleanup: RSS=3260.68 MB, VMS=42843.90 MB
+[08:30:27] [PROCESS] Starting Leave-One-Day-Out (LODO) analysis...
+[08:30:27] [INFO] Sampling 10 days from 912 available in dataset
+[08:30:27] [INFO] Using sequential processing in main process to avoid memory issues
+[08:30:27] [PROCESS] Processing date 2025-05-01 (1/10)...
+[08:30:29] [SUCCESS]   Date 2025-05-01: λ = 3810 km (R² = 0.173)
+[08:30:29] [DEBUG] Memory cleanup: RSS=3453.03 MB, VMS=43035.91 MB
+[08:30:29] [DEBUG] Memory cleanup: RSS=3453.03 MB, VMS=43035.91 MB
+[08:30:29] [PROCESS] Processing date 2024-03-23 (2/10)...
+[08:30:30] [SUCCESS]   Date 2024-03-23: λ = 3807 km (R² = 0.171)
+[08:30:31] [DEBUG] Memory cleanup: RSS=3457.73 MB, VMS=43040.63 MB
+[08:30:31] [DEBUG] Memory cleanup: RSS=3457.73 MB, VMS=43040.63 MB
+[08:30:31] [PROCESS] Processing date 2024-11-10 (3/10)...
+[08:30:32] [SUCCESS]   Date 2024-11-10: λ = 3802 km (R² = 0.171)
+[08:30:32] [DEBUG] Memory cleanup: RSS=3457.77 MB, VMS=43040.63 MB
+[08:30:32] [DEBUG] Memory cleanup: RSS=3457.77 MB, VMS=43040.63 MB
+[08:30:32] [PROCESS] Processing date 2023-10-20 (4/10)...
+[08:30:34] [SUCCESS]   Date 2023-10-20: λ = 3806 km (R² = 0.171)
+[08:30:34] [DEBUG] Memory cleanup: RSS=3457.77 MB, VMS=43040.63 MB
+[08:30:34] [DEBUG] Memory cleanup: RSS=3457.77 MB, VMS=43040.63 MB
+[08:30:34] [PROCESS] Processing date 2024-10-16 (5/10)...
+[08:30:35] [SUCCESS]   Date 2024-10-16: λ = 3798 km (R² = 0.170)
+[08:30:35] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:35] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:35] [PROCESS] Processing date 2024-07-07 (6/10)...
+[08:30:37] [SUCCESS]   Date 2024-07-07: λ = 3810 km (R² = 0.171)
+[08:30:37] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:37] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:37] [PROCESS] Processing date 2025-01-07 (7/10)...
+[08:30:38] [SUCCESS]   Date 2025-01-07: λ = 3808 km (R² = 0.171)
+[08:30:38] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:38] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:38] [PROCESS] Processing date 2024-08-26 (8/10)...
+[08:30:40] [SUCCESS]   Date 2024-08-26: λ = 3801 km (R² = 0.174)
+[08:30:40] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:40] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:40] [PROCESS] Processing date 2023-11-23 (9/10)...
+[08:30:41] [SUCCESS]   Date 2023-11-23: λ = 3809 km (R² = 0.169)
+[08:30:41] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:41] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:41] [PROCESS] Processing date 2023-08-03 (10/10)...
+[08:30:43] [SUCCESS]   Date 2023-08-03: λ = 3805 km (R² = 0.171)
+[08:30:43] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:43] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:43] [SUCCESS] LODO complete: λ = 3805.7 ± 3.9 km (CV = 0.001)
+[08:30:43] [DEBUG] Memory cleanup: RSS=3457.78 MB, VMS=43040.63 MB
+[08:30:43] [DEBUG] Memory cleanup in After LODO CV: Collected 0 objects
+[08:30:43] [DEBUG] Memory cleanup in After LODO CV: Freed 0.0 MB (RSS: 3359.7 → 3359.7 MB)
+[08:30:43] [INFO] Memory usage: 2.1/24.0 GB (88.6%)
+[08:30:43] [DEBUG] Memory cleanup: RSS=3359.73 MB, VMS=42942.57 MB
+[08:30:43] [WARNING] High memory usage detected in After LODO CV: 3359.73 MB
+[08:30:43] [DEBUG] Memory cleanup: RSS=3359.73 MB, VMS=42942.57 MB
+[08:30:43] [INFO] Bootstrap cross-validation disabled (use Step 3.1 Robust Block Bootstrap instead)
+[08:30:43] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Collected 0 objects
+[08:30:43] [DEBUG] Memory cleanup in Final cleanup after all CV methods: Freed 0.0 MB (RSS: 3359.7 → 3359.7 MB)
+[08:30:43] [INFO] Memory usage: 2.1/24.0 GB (88.6%)
+[08:30:43] [SUCCESS] Cross-method validation: PASSED - Monthly and station block CV are consistent
+[08:30:43] [SUCCESS] Block-wise cross-validation completed for igs_combined in 110.6 seconds
+[08:30:43] [SUCCESS] Results saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_3_0_cross_validation_suite_igs_combined.json (fallback method)
+[08:30:43] [DEBUG] Memory cleanup: RSS=2359.64 MB, VMS=41941.10 MB
+[08:30:43] [DEBUG] Memory usage after igs_combined: RSS=2359.64 MB, VMS=41941.10 MB
+[08:30:43] [INFO] ======================================================================
+[08:30:43] [SUCCESS] Block-wise cross-validation completed in 628.5 seconds
+[08:30:43] [SUCCESS] Results saved for 3 analysis centers

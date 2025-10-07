@@ -1,0 +1,120 @@
+{
+  "meta_analysis_summary": {
+    "timestamp": "2025-10-07T01:11:35.828853",
+    "n_studies": 3,
+    "total_sample_size": 81,
+    "analysis_centers": [
+      "CODE",
+      "IGS COMBINED",
+      "ESA FINAL"
+    ]
+  },
+  "individual_studies": [
+    {
+      "name": "CODE",
+      "correlation_r": 0.1138012571655329,
+      "fisher_z": 0.11429637985526436,
+      "sample_size": 28,
+      "se_z": 0.2,
+      "weight_fixed": 24.999999999999996,
+      "weight_random": 24.999999999999996,
+      "ci_lower": -0.27077839957118827,
+      "ci_upper": 0.4670544996640812
+    },
+    {
+      "name": "IGS COMBINED",
+      "correlation_r": 0.15206455568261534,
+      "fisher_z": 0.15325318584741343,
+      "sample_size": 28,
+      "se_z": 0.2,
+      "weight_fixed": 24.999999999999996,
+      "weight_random": 24.999999999999996,
+      "ci_lower": -0.23431171437010803,
+      "ci_upper": 0.49695412541102674
+    },
+    {
+      "name": "ESA FINAL",
+      "correlation_r": 0.24970196443331308,
+      "fisher_z": 0.2550949325316489,
+      "sample_size": 25,
+      "se_z": 0.21320071635561041,
+      "weight_fixed": 22.000000000000004,
+      "weight_random": 22.000000000000004,
+      "ci_lower": -0.16135584314364002,
+      "ci_upper": 0.5869290600354875
+    }
+  ],
+  "fixed_effects_model": {
+    "pooled_correlation": 0.16920180477771724,
+    "pooled_correlation_ci": [
+      -0.06006674479818588,
+      0.3815126655953111
+    ],
+    "pooled_fisher_z": 0.17084482858698916,
+    "pooled_fisher_z_ci": [
+      -0.06013914213795715,
+      0.4018287993119355
+    ],
+    "Q_statistic": 0.2438375840291257,
+    "Q_p_value": 0.8852202525371855,
+    "degrees_freedom": 2
+  },
+  "random_effects_model": {
+    "pooled_correlation": 0.16920180477771724,
+    "pooled_correlation_ci": [
+      -0.06006674479818588,
+      0.3815126655953111
+    ],
+    "pooled_fisher_z": 0.17084482858698916,
+    "pooled_fisher_z_ci": [
+      -0.06013914213795715,
+      0.4018287993119355
+    ],
+    "Q_statistic": 0.2438375840291257,
+    "Q_p_value": 0.8852202525371855,
+    "I_squared": 0.0,
+    "tau_squared": 0.0,
+    "heterogeneity_assessment": "Low heterogeneity",
+    "degrees_freedom": 2
+  },
+  "interpretation": {
+    "primary_finding": "Pooled correlation coefficient: r = 0.1692 (95% CI: -0.0601 to 0.3815)",
+    "heterogeneity_test": "Q = 0.24, p = 0.8852",
+    "heterogeneity_magnitude": "I\u00b2 = 0.0% (low heterogeneity)",
+    "recommended_model": "fixed_effects",
+    "statistical_significance": "Not significant"
+  },
+  "forest_plot_data": {
+    "studies": [
+      {
+        "name": "CODE",
+        "correlation": 0.1138012571655329,
+        "ci_lower": -0.27077172460366766,
+        "ci_upper": 0.46704886783495214,
+        "weight_fixed": 24.999999999999996,
+        "weight_random": 24.999999999999996,
+        "sample_size": 28
+      },
+      {
+        "name": "IGS COMBINED",
+        "correlation": 0.15206455568261534,
+        "ci_lower": -0.23430490673063786,
+        "ci_upper": 0.49694870119972917,
+        "weight_fixed": 24.999999999999996,
+        "weight_random": 24.999999999999996,
+        "sample_size": 28
+      },
+      {
+        "name": "ESA FINAL",
+        "correlation": 0.24970196443331308,
+        "ci_lower": -0.16134836452826792,
+        "ci_upper": 0.5869240266320862,
+        "weight_fixed": 22.000000000000004,
+        "weight_random": 22.000000000000004,
+        "sample_size": 25
+      }
+    ],
+    "fixed_effects": null,
+    "random_effects": null
+  }
+}

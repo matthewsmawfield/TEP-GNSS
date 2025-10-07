@@ -951,7 +951,8 @@ def main():
     """
     start_time = time.time()
     
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.2: Null Tests", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 3.2: Null Tests", "TITLE")
     print_status("Validating TEP signatures through rigorous null hypothesis tests", "INFO") # Use print_status
     print_status("="*80, "INFO") # Use print_status
     

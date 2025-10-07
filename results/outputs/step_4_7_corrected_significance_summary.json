@@ -1,0 +1,88 @@
+{
+  "timestamp": "2025-10-06T18:45:04.274075",
+  "total_tests_analyzed": 21,
+  "correction_methods_applied": [
+    "bonferroni",
+    "fdr_bh",
+    "family_wise"
+  ],
+  "family_alpha": 0.05,
+  "method_comparison": {
+    "bonferroni": {
+      "n_significant_tests": 21,
+      "significance_rate": 1.0,
+      "method_details": {
+        "corrected_alpha": 0.002380952380952381,
+        "n_rejected": null
+      }
+    },
+    "fdr_bh": {
+      "n_significant_tests": 21,
+      "significance_rate": 1.0,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": 21
+      }
+    },
+    "family_wise": {
+      "n_significant_tests": 21,
+      "significance_rate": 1.0,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": null
+      }
+    }
+  },
+  "primary_findings_status": {
+    "primary_tep": {
+      "bonferroni": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "fdr_bh": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      },
+      "family_wise": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
+      }
+    },
+    "null_validation": {
+      "bonferroni": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "fdr_bh": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "family_wise": {
+        "n_tests": 0,
+        "n_significant": 0,
+        "all_significant": false
+      }
+    }
+  },
+  "impact_analysis": {
+    "uncorrected_significant": 21,
+    "uncorrected_rate": 1.0,
+    "bonferroni_reduction": {
+      "absolute": 0,
+      "relative": 0.0
+    },
+    "fdr_bh_reduction": {
+      "absolute": 0,
+      "relative": 0.0
+    },
+    "family_wise_reduction": {
+      "absolute": 0,
+      "relative": 0.0
+    }
+  }
+}

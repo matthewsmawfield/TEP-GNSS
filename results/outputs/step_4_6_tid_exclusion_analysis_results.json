@@ -1,0 +1,47 @@
+{
+    "code_hilbert-if": {
+        "analysis_center": "code",
+        "metric": "hilbert-if",
+        "status": "SUCCESS",
+        "details": "TID exclusion analysis completed.",
+        "analysis_type": "temporal_exclusion",
+        "original_mean_coherence": 0.006519445713918925,
+        "retained_mean_coherence": 0.007977313619556175,
+        "coherence_change": 0.00145786790563725,
+        "percentage_change": 22.361838254511763,
+        "num_original_data_points": 912,
+        "num_retained_data_points": 684,
+        "num_excluded_data_points": 228,
+        "exclusion_threshold": 169.7400946296742
+    },
+    "esa_final_hilbert-if": {
+        "analysis_center": "esa_final",
+        "metric": "hilbert-if",
+        "status": "SUCCESS",
+        "details": "TID exclusion analysis completed.",
+        "analysis_type": "temporal_exclusion",
+        "original_mean_coherence": 0.010330335184174986,
+        "retained_mean_coherence": 0.012528677195635949,
+        "coherence_change": 0.002198342011460963,
+        "percentage_change": 21.280451914363802,
+        "num_original_data_points": 912,
+        "num_retained_data_points": 684,
+        "num_excluded_data_points": 228,
+        "exclusion_threshold": 100.0813456589499
+    },
+    "igs_combined_hilbert-if": {
+        "analysis_center": "igs_combined",
+        "metric": "hilbert-if",
+        "status": "SUCCESS",
+        "details": "TID exclusion analysis completed.",
+        "analysis_type": "temporal_exclusion",
+        "original_mean_coherence": 0.014546225228287973,
+        "retained_mean_coherence": 0.01784211944142,
+        "coherence_change": 0.0032958942131320283,
+        "percentage_change": 22.658072189907514,
+        "num_original_data_points": 912,
+        "num_retained_data_points": 684,
+        "num_excluded_data_points": 228,
+        "exclusion_threshold": 78.94444928431794
+    }
+}

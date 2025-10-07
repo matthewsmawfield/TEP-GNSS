@@ -1,0 +1,115 @@
+[11:37:57] [INFO] Skipping cleanup phase
+[11:37:57] [INFO] Starting from Step 3.4 - will execute 11 steps
+[11:37:57] [INFO] Starting step 11/21: Step 3.4: Geographic Bias Validation
+[11:37:57] [PROCESS] Executing Step 3.4: Geographic Bias Validation...
+[11:38:51] [SUCCESS] Step 3.4: Geographic Bias Validation completed successfully
+[11:38:51] [SUCCESS] Step 11 completed in 53.7 seconds
+[11:38:51] [INFO] Starting step 12/21: Step 3.5: Realistic Ionospheric Validation
+[11:38:51] [PROCESS] Executing Step 3.5: Realistic Ionospheric Validation...
+[11:38:53] [SUCCESS] Step 3.5: Realistic Ionospheric Validation completed successfully
+[11:38:53] [SUCCESS] Step 12 completed in 2.8 seconds
+[11:38:53] [INFO] Starting step 13/21: Step 3.6: Control Band Analysis
+[11:38:53] [PROCESS] Executing Step 3.6: Control Band Analysis...
+[14:34:48] [SUCCESS] Step 3.6: Control Band Analysis completed successfully
+[14:34:48] [SUCCESS] Step 13 completed in 10554.2 seconds
+[14:34:48] [INFO] Starting step 14/21: Step 4.0: TEP Advanced Analysis
+[14:34:48] [PROCESS] Executing Step 4.0: TEP Advanced Analysis...
+[14:39:35] [SUCCESS] Step 4.0: TEP Advanced Analysis completed successfully
+[14:39:35] [SUCCESS] Step 14 completed in 287.5 seconds
+[14:39:35] [INFO] Starting step 15/21: Step 4.1: TEP Visualization
+[14:39:35] [PROCESS] Executing Step 4.1: TEP Visualization...
+[14:39:36] [ERROR] Step 4.1: TEP Visualization failed with return code 1
+[14:39:36] [ERROR] Step 15 failed after 1.3 seconds
+[14:39:36] [ERROR] Full pipeline execution stopped due to step failure
+[14:39:36] [ERROR] Full pipeline execution failed
+[16:10:42] [INFO] Skipping cleanup phase
+[16:10:42] [INFO] Starting from Step 4.1 - will execute 7 steps
+[16:10:42] [INFO] Starting step 15/21: Step 4.1: TEP Visualization
+[16:10:42] [PROCESS] Executing Step 4.1: TEP Visualization...
+[16:10:43] [ERROR] Step 4.1: TEP Visualization failed with return code 1
+[16:10:43] [ERROR] Step 15 failed after 1.2 seconds
+[16:10:43] [ERROR] Full pipeline execution stopped due to step failure
+[16:10:43] [ERROR] Full pipeline execution failed
+[16:11:53] [INFO] Skipping cleanup phase
+[16:11:53] [INFO] Starting from Step 4.1 - will execute 7 steps
+[16:11:53] [INFO] Starting step 15/21: Step 4.1: TEP Visualization
+[16:11:53] [PROCESS] Executing Step 4.1: TEP Visualization...
+[16:11:54] [ERROR] Step 4.1: TEP Visualization failed with return code 1
+[16:11:54] [ERROR] Step 15 failed after 1.2 seconds
+[16:11:54] [ERROR] Full pipeline execution stopped due to step failure
+[16:11:54] [ERROR] Full pipeline execution failed
+[16:12:48] [INFO] Skipping cleanup phase
+[16:12:48] [INFO] Starting from Step 4.1 - will execute 7 steps
+[16:12:48] [INFO] Starting step 15/21: Step 4.1: TEP Visualization
+[16:12:48] [PROCESS] Executing Step 4.1: TEP Visualization...
+[16:16:37] [ERROR] Step 4.1: TEP Visualization failed with return code 1
+[16:16:37] [ERROR] Step 15 failed after 229.2 seconds
+[16:16:37] [ERROR] Full pipeline execution stopped due to step failure
+[16:16:37] [ERROR] Full pipeline execution failed
+[16:18:17] [INFO] Skipping cleanup phase
+[16:18:17] [INFO] Starting from Step 4.1 - will execute 7 steps
+[16:18:17] [INFO] Starting step 15/21: Step 4.1: TEP Visualization
+[16:18:17] [PROCESS] Executing Step 4.1: TEP Visualization...
+[16:24:33] [SUCCESS] Step 4.1: TEP Visualization completed successfully
+[16:24:33] [SUCCESS] Step 15 completed in 376.0 seconds
+[16:24:33] [INFO] Starting step 16/21: Step 4.2: TEP Synthesis Figure
+[16:24:33] [PROCESS] Executing Step 4.2: TEP Synthesis Figure...
+[16:24:33] [ERROR] Step 4.2: TEP Synthesis Figure failed with return code 1
+[16:24:33] [ERROR] Step 16 failed after 0.9 seconds
+[16:24:33] [ERROR] Full pipeline execution stopped due to step failure
+[16:24:33] [ERROR] Full pipeline execution failed
+[16:26:57] [INFO] Skipping cleanup phase
+[16:26:57] [INFO] Starting from Step 4.2 - will execute 6 steps
+[16:26:57] [INFO] Starting step 16/21: Step 4.2: TEP Synthesis Figure
+[16:26:57] [PROCESS] Executing Step 4.2: TEP Synthesis Figure...
+[16:27:41] [SUCCESS] Step 4.2: TEP Synthesis Figure completed successfully
+[16:27:41] [SUCCESS] Step 16 completed in 44.4 seconds
+[16:27:41] [INFO] Starting step 17/21: Step 4.3: High Resolution Astronomical Events
+[16:27:41] [PROCESS] Executing Step 4.3: High Resolution Astronomical Events...
+[16:27:43] [ERROR] Step 4.3: High Resolution Astronomical Events failed with return code 1
+[16:27:43] [ERROR] Step 17 failed after 1.1 seconds
+[16:27:43] [ERROR] Full pipeline execution stopped due to step failure
+[16:27:43] [ERROR] Full pipeline execution failed
+[16:29:00] [INFO] Skipping cleanup phase
+[16:29:00] [INFO] Starting from Step 4.3 - will execute 5 steps
+[16:29:00] [INFO] Starting step 17/21: Step 4.3: High Resolution Astronomical Events
+[16:29:00] [PROCESS] Executing Step 4.3: High Resolution Astronomical Events...
+[16:32:40] [SUCCESS] Step 4.3: High Resolution Astronomical Events completed successfully
+[16:32:40] [SUCCESS] Step 17 completed in 220.7 seconds
+[16:32:40] [INFO] Starting step 18/21: Step 4.4: Gravitational Temporal Field Analysis
+[16:32:40] [PROCESS] Executing Step 4.4: Gravitational Temporal Field Analysis...
+[16:32:42] [ERROR] Step 4.4: Gravitational Temporal Field Analysis failed with return code 1
+[16:32:42] [ERROR] Step 18 failed after 1.1 seconds
+[16:32:42] [ERROR] Full pipeline execution stopped due to step failure
+[16:32:42] [ERROR] Full pipeline execution failed
+[16:35:34] [INFO] Skipping cleanup phase
+[16:35:34] [INFO] Starting from Step 4.4 - will execute 4 steps
+[16:35:34] [INFO] Starting step 18/21: Step 4.4: Gravitational Temporal Field Analysis
+[16:35:34] [PROCESS] Executing Step 4.4: Gravitational Temporal Field Analysis...
+[16:37:09] [ERROR] Step 4.4: Gravitational Temporal Field Analysis failed with return code 1
+[16:37:09] [ERROR] Step 18 failed after 94.5 seconds
+[16:37:09] [ERROR] Full pipeline execution stopped due to step failure
+[16:37:09] [ERROR] Full pipeline execution failed
+[16:51:03] [INFO] Skipping cleanup phase
+[16:51:03] [INFO] Starting from Step 4.4 - will execute 4 steps
+[16:51:03] [INFO] Starting step 18/21: Step 4.4: Gravitational Temporal Field Analysis
+[16:51:03] [PROCESS] Executing Step 4.4: Gravitational Temporal Field Analysis...
+[16:52:35] [SUCCESS] Step 4.4: Gravitational Temporal Field Analysis completed successfully
+[16:52:35] [SUCCESS] Step 18 completed in 91.3 seconds
+[16:52:35] [INFO] Starting step 19/21: Step 4.5: Comprehensive Diurnal Analysis
+[16:52:35] [PROCESS] Executing Step 4.5: Comprehensive Diurnal Analysis...
+[18:45:02] [SUCCESS] Step 4.5: Comprehensive Diurnal Analysis completed successfully
+[18:45:02] [SUCCESS] Step 19 completed in 6747.7 seconds
+[18:45:02] [INFO] Starting step 20/21: Step 4.6: TID Exclusion Analysis
+[18:45:02] [PROCESS] Executing Step 4.6: TID Exclusion Analysis...
+[18:45:03] [SUCCESS] Step 4.6: TID Exclusion Analysis completed successfully
+[18:45:03] [SUCCESS] Step 20 completed in 0.4 seconds
+[18:45:03] [INFO] Starting step 21/21: Step 4.7: Multiple Comparison Corrections
+[18:45:03] [PROCESS] Executing Step 4.7: Multiple Comparison Corrections...
+[18:45:05] [SUCCESS] Step 4.7: Multiple Comparison Corrections completed successfully
+[18:45:05] [SUCCESS] Step 21 completed in 2.7 seconds
+[18:45:05] [PROCESS] Validating full pipeline results...
+[18:45:05] [ERROR] Validation failed - missing expected outputs:
+[18:45:05] [ERROR]   Step 3: Cross-validation results: /mnt/data/results/outputs/step_3_0_cross_validation_suite_code.json
+[18:45:05] [ERROR]   Step 3.6: Control band analysis: /mnt/data/results/outputs/step_3_6_control_band_code.json
+[18:45:05] [ERROR] Full pipeline validation failed

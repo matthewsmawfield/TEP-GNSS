@@ -1,0 +1,229 @@
+[16:29:01] [INFO] 
+[16:29:01] [INFO] ================================================================================
+[16:29:01] [INFO] TEP GNSS Analysis Package v0.14 - STEP 4.3: High-Resolution Astronomical Event Analysis
+[16:29:01] [INFO] ================================================================================
+[16:29:01] [INFO] 
+[16:29:01] [PROCESS] Starting Comprehensive Multi-Eclipse Analysis with TEP Methodology...
+[16:29:01] [INFO] Analyzing all 5 eclipse events using corrected cos(phase(CSD)) methodology
+[16:29:01] [PROCESS] Analyzing Hybrid eclipse: 2023-04-20
+[16:29:01] [PROCESS] Analyzing eclipse at 2023-04-20 04:16:00 using TEP methodology...
+[16:29:02] [SUCCESS] Eclipse window data: 96,377 measurements
+[16:29:02] [INFO] Input data: 96377 measurements, 329 stations
+[16:29:02] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:29:02] [INFO] Building station time series for TEP analysis...
+[16:29:02] [INFO] Stations with sufficient data: 329
+[16:29:02] [INFO] Will compute sampling frequency individually for each station pair
+[16:29:30] [INFO] Processed 42266/53956 station pairs
+[16:29:30] [SUCCESS] Computed TEP coherence: 42266 station pairs
+[16:29:30] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:29:30] [SUCCESS] Computed coherence for 42,266 station pairs
+[16:29:30] [INFO] Eclipse coherence: 6.46e-03 ± 7.21e-01
+[16:29:30] [SUCCESS] Hybrid eclipse 2023-04-20: coherence = 6.46e-03
+[16:29:30] [PROCESS] Analyzing Annular eclipse: 2023-10-14
+[16:29:30] [PROCESS] Analyzing eclipse at 2023-10-14 18:00:00 using TEP methodology...
+[16:29:31] [SUCCESS] Eclipse window data: 96,952 measurements
+[16:29:31] [INFO] Input data: 96952 measurements, 332 stations
+[16:29:31] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:29:31] [INFO] Building station time series for TEP analysis...
+[16:29:31] [INFO] Stations with sufficient data: 332
+[16:29:31] [INFO] Will compute sampling frequency individually for each station pair
+[16:30:00] [INFO] Processed 45242/54946 station pairs
+[16:30:01] [SUCCESS] Computed TEP coherence: 45242 station pairs
+[16:30:01] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:30:01] [SUCCESS] Computed coherence for 45,242 station pairs
+[16:30:01] [INFO] Eclipse coherence: 3.81e-02 ± 7.19e-01
+[16:30:01] [SUCCESS] Annular eclipse 2023-10-14: coherence = 3.81e-02
+[16:30:01] [PROCESS] Analyzing Total eclipse: 2024-04-08
+[16:30:01] [PROCESS] Analyzing eclipse at 2024-04-08 18:18:00 using TEP methodology...
+[16:30:02] [SUCCESS] Eclipse window data: 93,824 measurements
+[16:30:02] [INFO] Input data: 93824 measurements, 320 stations
+[16:30:02] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:30:02] [INFO] Building station time series for TEP analysis...
+[16:30:02] [INFO] Stations with sufficient data: 320
+[16:30:02] [INFO] Will compute sampling frequency individually for each station pair
+[16:30:27] [INFO] Processed 38669/51040 station pairs
+[16:30:27] [SUCCESS] Computed TEP coherence: 38669 station pairs
+[16:30:27] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:30:27] [SUCCESS] Computed coherence for 38,669 station pairs
+[16:30:27] [INFO] Eclipse coherence: -8.38e-04 ± 7.24e-01
+[16:30:27] [SUCCESS] Total eclipse 2024-04-08: coherence = -8.38e-04
+[16:30:27] [PROCESS] Analyzing Annular eclipse: 2024-10-02
+[16:30:27] [PROCESS] Analyzing eclipse at 2024-10-02 18:45:00 using TEP methodology...
+[16:30:28] [SUCCESS] Eclipse window data: 92,455 measurements
+[16:30:28] [INFO] Input data: 92455 measurements, 314 stations
+[16:30:28] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:30:28] [INFO] Building station time series for TEP analysis...
+[16:30:28] [INFO] Stations with sufficient data: 314
+[16:30:28] [INFO] Will compute sampling frequency individually for each station pair
+[16:30:54] [INFO] Processed 41089/49141 station pairs
+[16:30:55] [SUCCESS] Computed TEP coherence: 41089 station pairs
+[16:30:55] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:30:55] [SUCCESS] Computed coherence for 41,089 station pairs
+[16:30:55] [INFO] Eclipse coherence: 2.18e-02 ± 7.31e-01
+[16:30:55] [SUCCESS] Annular eclipse 2024-10-02: coherence = 2.18e-02
+[16:30:55] [PROCESS] Analyzing Partial eclipse: 2025-03-29
+[16:30:55] [PROCESS] Analyzing eclipse at 2025-03-29 10:47:00 using TEP methodology...
+[16:30:56] [SUCCESS] Eclipse window data: 90,754 measurements
+[16:30:56] [INFO] Input data: 90754 measurements, 309 stations
+[16:30:56] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:30:56] [INFO] Building station time series for TEP analysis...
+[16:30:56] [INFO] Stations with sufficient data: 308
+[16:30:56] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:19] [INFO] Processed 39653/47278 station pairs
+[16:31:19] [SUCCESS] Computed TEP coherence: 39653 station pairs
+[16:31:19] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:19] [SUCCESS] Computed coherence for 39,653 station pairs
+[16:31:19] [INFO] Eclipse coherence: 5.32e-02 ± 7.12e-01
+[16:31:19] [SUCCESS] Partial eclipse 2025-03-29: coherence = 5.32e-02
+[16:31:19] [PROCESS] Starting Comprehensive Multi-Eclipse Analysis with TEP Methodology...
+[16:31:19] [INFO] Analyzing all 5 eclipse events using corrected cos(phase(CSD)) methodology
+[16:31:19] [PROCESS] Analyzing Hybrid eclipse: 2023-04-20
+[16:31:19] [PROCESS] Analyzing eclipse at 2023-04-20 04:16:00 using TEP methodology...
+[16:31:20] [SUCCESS] Eclipse window data: 32,249 measurements
+[16:31:20] [INFO] Input data: 32249 measurements, 114 stations
+[16:31:20] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:20] [INFO] Building station time series for TEP analysis...
+[16:31:20] [INFO] Stations with sufficient data: 114
+[16:31:20] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:22] [INFO] Processed 2990/6441 station pairs
+[16:31:22] [SUCCESS] Computed TEP coherence: 2990 station pairs
+[16:31:22] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:22] [SUCCESS] Computed coherence for 2,990 station pairs
+[16:31:22] [INFO] Eclipse coherence: 9.72e-03 ± 7.21e-01
+[16:31:22] [SUCCESS] Hybrid eclipse 2023-04-20: coherence = 9.72e-03
+[16:31:22] [PROCESS] Analyzing Annular eclipse: 2023-10-14
+[16:31:22] [PROCESS] Analyzing eclipse at 2023-10-14 18:00:00 using TEP methodology...
+[16:31:22] [SUCCESS] Eclipse window data: 33,588 measurements
+[16:31:22] [INFO] Input data: 33588 measurements, 111 stations
+[16:31:22] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:22] [INFO] Building station time series for TEP analysis...
+[16:31:22] [INFO] Stations with sufficient data: 111
+[16:31:22] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:25] [INFO] Processed 3663/6105 station pairs
+[16:31:25] [SUCCESS] Computed TEP coherence: 3663 station pairs
+[16:31:25] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:25] [SUCCESS] Computed coherence for 3,663 station pairs
+[16:31:25] [INFO] Eclipse coherence: 3.49e-02 ± 7.23e-01
+[16:31:25] [SUCCESS] Annular eclipse 2023-10-14: coherence = 3.49e-02
+[16:31:25] [PROCESS] Analyzing Total eclipse: 2024-04-08
+[16:31:25] [PROCESS] Analyzing eclipse at 2024-04-08 18:18:00 using TEP methodology...
+[16:31:26] [SUCCESS] Eclipse window data: 57,336 measurements
+[16:31:26] [INFO] Input data: 57336 measurements, 202 stations
+[16:31:26] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:26] [INFO] Building station time series for TEP analysis...
+[16:31:26] [INFO] Stations with sufficient data: 202
+[16:31:26] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:33] [INFO] Processed 11225/20301 station pairs
+[16:31:33] [SUCCESS] Computed TEP coherence: 11225 station pairs
+[16:31:33] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:33] [SUCCESS] Computed coherence for 11,225 station pairs
+[16:31:33] [INFO] Eclipse coherence: 6.32e-02 ± 7.32e-01
+[16:31:33] [SUCCESS] Total eclipse 2024-04-08: coherence = 6.32e-02
+[16:31:33] [PROCESS] Analyzing Annular eclipse: 2024-10-02
+[16:31:33] [PROCESS] Analyzing eclipse at 2024-10-02 18:45:00 using TEP methodology...
+[16:31:34] [SUCCESS] Eclipse window data: 62,344 measurements
+[16:31:34] [INFO] Input data: 62344 measurements, 222 stations
+[16:31:34] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:34] [INFO] Building station time series for TEP analysis...
+[16:31:34] [INFO] Stations with sufficient data: 222
+[16:31:34] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:41] [INFO] Processed 9653/24531 station pairs
+[16:31:41] [SUCCESS] Computed TEP coherence: 9653 station pairs
+[16:31:41] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:41] [SUCCESS] Computed coherence for 9,653 station pairs
+[16:31:41] [INFO] Eclipse coherence: 3.64e-03 ± 7.21e-01
+[16:31:41] [SUCCESS] Annular eclipse 2024-10-02: coherence = 3.64e-03
+[16:31:41] [PROCESS] Analyzing Partial eclipse: 2025-03-29
+[16:31:41] [PROCESS] Analyzing eclipse at 2025-03-29 10:47:00 using TEP methodology...
+[16:31:42] [SUCCESS] Eclipse window data: 65,013 measurements
+[16:31:42] [INFO] Input data: 65013 measurements, 234 stations
+[16:31:42] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:42] [INFO] Building station time series for TEP analysis...
+[16:31:42] [INFO] Stations with sufficient data: 228
+[16:31:42] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:52] [INFO] Processed 12927/25878 station pairs
+[16:31:52] [SUCCESS] Computed TEP coherence: 12927 station pairs
+[16:31:52] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:52] [SUCCESS] Computed coherence for 12,927 station pairs
+[16:31:52] [INFO] Eclipse coherence: 2.88e-02 ± 7.13e-01
+[16:31:52] [SUCCESS] Partial eclipse 2025-03-29: coherence = 2.88e-02
+[16:31:52] [PROCESS] Starting Comprehensive Multi-Eclipse Analysis with TEP Methodology...
+[16:31:52] [INFO] Analyzing all 5 eclipse events using corrected cos(phase(CSD)) methodology
+[16:31:52] [PROCESS] Analyzing Hybrid eclipse: 2023-04-20
+[16:31:52] [PROCESS] Analyzing eclipse at 2023-04-20 04:16:00 using TEP methodology...
+[16:31:52] [SUCCESS] Eclipse window data: 45,713 measurements
+[16:31:52] [INFO] Input data: 45713 measurements, 162 stations
+[16:31:52] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:52] [INFO] Building station time series for TEP analysis...
+[16:31:52] [INFO] Stations with sufficient data: 162
+[16:31:52] [INFO] Will compute sampling frequency individually for each station pair
+[16:31:57] [INFO] Processed 7641/13041 station pairs
+[16:31:57] [SUCCESS] Computed TEP coherence: 7641 station pairs
+[16:31:57] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:31:57] [SUCCESS] Computed coherence for 7,641 station pairs
+[16:31:57] [INFO] Eclipse coherence: 2.49e-02 ± 7.25e-01
+[16:31:57] [SUCCESS] Hybrid eclipse 2023-04-20: coherence = 2.49e-02
+[16:31:57] [PROCESS] Analyzing Annular eclipse: 2023-10-14
+[16:31:57] [PROCESS] Analyzing eclipse at 2023-10-14 18:00:00 using TEP methodology...
+[16:31:58] [SUCCESS] Eclipse window data: 45,926 measurements
+[16:31:58] [INFO] Input data: 45926 measurements, 156 stations
+[16:31:58] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:31:58] [INFO] Building station time series for TEP analysis...
+[16:31:58] [INFO] Stations with sufficient data: 156
+[16:31:58] [INFO] Will compute sampling frequency individually for each station pair
+[16:32:04] [INFO] Processed 9480/12090 station pairs
+[16:32:04] [SUCCESS] Computed TEP coherence: 9480 station pairs
+[16:32:04] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:32:04] [SUCCESS] Computed coherence for 9,480 station pairs
+[16:32:04] [INFO] Eclipse coherence: 3.53e-02 ± 7.16e-01
+[16:32:04] [SUCCESS] Annular eclipse 2023-10-14: coherence = 3.53e-02
+[16:32:04] [PROCESS] Analyzing Total eclipse: 2024-04-08
+[16:32:04] [PROCESS] Analyzing eclipse at 2024-04-08 18:18:00 using TEP methodology...
+[16:32:05] [SUCCESS] Eclipse window data: 45,720 measurements
+[16:32:05] [INFO] Input data: 45720 measurements, 156 stations
+[16:32:05] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:32:05] [INFO] Building station time series for TEP analysis...
+[16:32:05] [INFO] Stations with sufficient data: 156
+[16:32:05] [INFO] Will compute sampling frequency individually for each station pair
+[16:32:10] [INFO] Processed 8175/12090 station pairs
+[16:32:10] [SUCCESS] Computed TEP coherence: 8175 station pairs
+[16:32:10] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:32:10] [SUCCESS] Computed coherence for 8,175 station pairs
+[16:32:10] [INFO] Eclipse coherence: -3.98e-03 ± 7.60e-01
+[16:32:10] [SUCCESS] Total eclipse 2024-04-08: coherence = -3.98e-03
+[16:32:10] [PROCESS] Analyzing Annular eclipse: 2024-10-02
+[16:32:10] [PROCESS] Analyzing eclipse at 2024-10-02 18:45:00 using TEP methodology...
+[16:32:11] [SUCCESS] Eclipse window data: 45,881 measurements
+[16:32:11] [INFO] Input data: 45881 measurements, 158 stations
+[16:32:11] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:32:11] [INFO] Building station time series for TEP analysis...
+[16:32:11] [INFO] Stations with sufficient data: 158
+[16:32:11] [INFO] Will compute sampling frequency individually for each station pair
+[16:32:17] [INFO] Processed 8824/12403 station pairs
+[16:32:17] [SUCCESS] Computed TEP coherence: 8824 station pairs
+[16:32:17] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:32:17] [SUCCESS] Computed coherence for 8,824 station pairs
+[16:32:17] [INFO] Eclipse coherence: 2.57e-03 ± 7.24e-01
+[16:32:17] [SUCCESS] Annular eclipse 2024-10-02: coherence = 2.57e-03
+[16:32:17] [PROCESS] Analyzing Partial eclipse: 2025-03-29
+[16:32:17] [PROCESS] Analyzing eclipse at 2025-03-29 10:47:00 using TEP methodology...
+[16:32:22] [SUCCESS] Eclipse window data: 539,394 measurements
+[16:32:22] [INFO] Input data: 539394 measurements, 195 stations
+[16:32:22] [INFO] Using proper TEP cos(phase(CSD)) methodology for eclipse analysis
+[16:32:22] [INFO] Building station time series for TEP analysis...
+[16:32:22] [INFO] Stations with sufficient data: 195
+[16:32:22] [INFO] Will compute sampling frequency individually for each station pair
+[16:32:40] [INFO] Processed 13075/18915 station pairs
+[16:32:40] [SUCCESS] Computed TEP coherence: 13075 station pairs
+[16:32:40] [INFO] Frequency band: 10.0-500.0 μHz (TEP standard)
+[16:32:40] [SUCCESS] Computed coherence for 13,075 station pairs
+[16:32:40] [INFO] Eclipse coherence: 5.42e-02 ± 7.03e-01
+[16:32:40] [SUCCESS] Partial eclipse 2025-03-29: coherence = 5.42e-02
+[16:32:40] [SUCCESS] Results saved: /mnt/data/results/outputs/step_4_3_comprehensive_eclipses_all-centers.json
+[16:32:40] [INFO] 
+[16:32:40] [INFO] ================================================================================
+[16:32:40] [INFO] STEP 4.3 COMPLETED in 219.4 seconds
+[16:32:40] [INFO] ================================================================================
+[16:32:40] [INFO] 
+[16:32:40] [INFO] ================================================================================
+[16:32:40] [INFO] Ready for Step 4.4 (Gravitational Temporal Field Analysis)

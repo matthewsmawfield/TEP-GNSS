@@ -1,0 +1,500 @@
+{
+  "code": {
+    "analysis_center": "CODE",
+    "timestamp": "2025-10-06T03:09:21.987101",
+    "method": {
+      "type": "phase_alignment_index",
+      "formula": "cos(phase(CSD))"
+    },
+    "data_summary": {
+      "total_pairs": 39068753,
+      "files_processed": 912,
+      "files_total": 912,
+      "bins_used": 28,
+      "distance_range_km": [
+        69.6561425268544,
+        12147.893259429551
+      ],
+      "coherence_range": [
+        -0.0761082918469922,
+        0.15759340660405452
+      ],
+      "mean_coherence": 0.05166083196552456
+    },
+    "model_comparison": {
+      "models_tested": [
+        "Exponential",
+        "Gaussian",
+        "Squared Exponential",
+        "Power Law",
+        "Power Law w/ Cutoff",
+        "Mat\u00e9rn (\u03bd=1.5)",
+        "Mat\u00e9rn (\u03bd=2.5)"
+      ],
+      "best_model_aic": "Exponential",
+      "model_results": [
+        {
+          "name": "Exponential",
+          "aic": 118.8733258905327,
+          "bic": 122.8699394210583,
+          "r_squared": 0.9204832558172076,
+          "delta_aic": 0.0
+        },
+        {
+          "name": "Gaussian",
+          "aic": 124.39308171079293,
+          "bic": 128.38969524131855,
+          "r_squared": 0.9031559691929456,
+          "delta_aic": 5.5197558202602295
+        },
+        {
+          "name": "Squared Exponential",
+          "aic": 124.39308171243246,
+          "bic": 128.38969524295808,
+          "r_squared": 0.9031559691872748,
+          "delta_aic": 5.519755821899764
+        },
+        {
+          "name": "Power Law",
+          "aic": 129.60526311120526,
+          "bic": 133.60187664173085,
+          "r_squared": 0.8833414735259358,
+          "delta_aic": 10.731937220672563
+        },
+        {
+          "name": "Power Law w/ Cutoff",
+          "aic": 121.90271741961013,
+          "bic": 127.23153546031094,
+          "r_squared": 0.917505501908555,
+          "delta_aic": 3.0293915290774294
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=1.5)",
+          "aic": 120.62229900179383,
+          "bic": 124.61891253231944,
+          "r_squared": 0.9153579706955353,
+          "delta_aic": 1.7489731112611366
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=2.5)",
+          "aic": 121.73579818441509,
+          "bic": 125.7324117149407,
+          "r_squared": 0.9119241150830939,
+          "delta_aic": 2.8624722938823908
+        }
+      ]
+    },
+    "best_fit": {
+      "model_name": "Exponential",
+      "amplitude": 0.1138012571655329,
+      "amplitude_error": 0.006691684059886932,
+      "lambda_km": 4548.557688984334,
+      "lambda_error": 863.876704640322,
+      "offset": -0.02133282941494666,
+      "offset_error": 0.006422060106209313,
+      "r_squared": 0.9204832558172076,
+      "n_bins": 28
+    },
+    "exponential_fit": {
+      "model": "C(r) = A * exp(-r/lambda) + C0",
+      "amplitude": 0.1138012571655329,
+      "amplitude_error": 0.006691684059886932,
+      "lambda_km": 4548.557688984334,
+      "lambda_error": 863.876704640322,
+      "offset": -0.02133282941494666,
+      "offset_error": 0.006422060106209313,
+      "r_squared": 0.9204832558172076,
+      "n_bins": 28
+    },
+    "jackknife_analysis": {
+      "enabled": true,
+      "lambda_mean": 4538.567917561543,
+      "lambda_std": 295.693977864769,
+      "n_samples": 20,
+      "lambda_values": [
+        4484.161070150753,
+        4568.363083486714,
+        4388.276810680343,
+        4511.113429128682,
+        4401.665290889398,
+        4777.281857463959,
+        4093.4639746480552,
+        4714.789035869661,
+        4466.007910248048,
+        4283.322738248007,
+        4708.294771844885,
+        4294.637831948122,
+        5123.021745606234,
+        4285.048702858047,
+        4436.950897833641,
+        4266.385795336249,
+        4879.491934871089,
+        5123.245867349157,
+        4093.4639746480552,
+        4872.371628121762
+      ]
+    },
+    "advanced_analyses_note": "LOSO/LODO, anisotropy, and temporal analyses moved to Step 5",
+    "bootstrap_ci": {
+      "enabled": true,
+      "n_iterations": 5000,
+      "n_successful": 2707,
+      "confidence_level": 95.0,
+      "amplitude": {
+        "lower": 0.10702846476224266,
+        "upper": 0.12336352590058026,
+        "median": 0.11419414854626382
+      },
+      "lambda": {
+        "lower": 3305.1176439543565,
+        "upper": 6101.468458519694,
+        "median": 4478.731529057708
+      },
+      "offset": {
+        "lower": -0.03301077229744292,
+        "upper": -0.008372334193897829,
+        "median": -0.020946796425736686
+      }
+    },
+    "tep_interpretation": {
+      "tep_consistent": true,
+      "correlation_length_assessment": "TEP-consistent",
+      "signal_strength": "Strong",
+      "best_model_vs_exponential": "Best model: Exponential (\u0394AIC = 0.00)"
+    },
+    "loso_analysis": null,
+    "lodo_analysis": null
+  },
+  "igs_combined": {
+    "analysis_center": "IGS_COMBINED",
+    "timestamp": "2025-10-06T03:23:46.060719",
+    "method": {
+      "type": "phase_alignment_index",
+      "formula": "cos(phase(CSD))"
+    },
+    "data_summary": {
+      "total_pairs": 12879379,
+      "files_processed": 912,
+      "files_total": 912,
+      "bins_used": 28,
+      "distance_range_km": [
+        70.53730707922529,
+        12133.98504360929
+      ],
+      "coherence_range": [
+        -0.08075149073405363,
+        0.2507165879691646
+      ],
+      "mean_coherence": 0.08490241365830782
+    },
+    "model_comparison": {
+      "models_tested": [
+        "Exponential",
+        "Gaussian",
+        "Squared Exponential",
+        "Power Law",
+        "Power Law w/ Cutoff",
+        "Mat\u00e9rn (\u03bd=1.5)",
+        "Mat\u00e9rn (\u03bd=2.5)"
+      ],
+      "best_model_aic": "Mat\u00e9rn (\u03bd=1.5)",
+      "model_results": [
+        {
+          "name": "Exponential",
+          "aic": 82.2289940911367,
+          "bic": 86.2256076216623,
+          "r_squared": 0.9657072166491822,
+          "delta_aic": 2.0677544698073973
+        },
+        {
+          "name": "Gaussian",
+          "aic": 89.85011165469969,
+          "bic": 93.8467251852253,
+          "r_squared": 0.954979510686285,
+          "delta_aic": 9.688872033370387
+        },
+        {
+          "name": "Squared Exponential",
+          "aic": 89.85011164788075,
+          "bic": 93.84672517840636,
+          "r_squared": 0.954979510697249,
+          "delta_aic": 9.68887202655145
+        },
+        {
+          "name": "Power Law",
+          "aic": 105.80227976634579,
+          "bic": 109.7988932968714,
+          "r_squared": 0.9204140162400039,
+          "delta_aic": 25.64104014501649
+        },
+        {
+          "name": "Power Law w/ Cutoff",
+          "aic": 90.7065024377116,
+          "bic": 96.03532047841242,
+          "r_squared": 0.9567812461517584,
+          "delta_aic": 10.545262816382305
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=1.5)",
+          "aic": 80.1612396213293,
+          "bic": 84.15785315185491,
+          "r_squared": 0.9681484336370909,
+          "delta_aic": 0.0
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=2.5)",
+          "aic": 82.15618347028692,
+          "bic": 86.15279700081253,
+          "r_squared": 0.9657962750507011,
+          "delta_aic": 1.9949438489576181
+        }
+      ]
+    },
+    "best_fit": {
+      "model_name": "Mat\u00e9rn (\u03bd=1.5)",
+      "amplitude": 0.15206455568261534,
+      "amplitude_error": 0.006298596031175645,
+      "lambda_km": 3394.6090409974718,
+      "lambda_error": 209.63271635580483,
+      "offset": -0.012830942043602625,
+      "offset_error": 0.002631584026141106,
+      "r_squared": 0.9681484336370909,
+      "n_bins": 28
+    },
+    "exponential_fit": {
+      "model": "C(r) = A * exp(-r/lambda) + C0",
+      "amplitude": 0.19374731813338036,
+      "amplitude_error": 0.008516936519700924,
+      "lambda_km": 3763.574025672742,
+      "lambda_error": 375.9457826544929,
+      "offset": -0.0209323305289352,
+      "offset_error": 0.004351572882809281,
+      "r_squared": 0.9657072166491822,
+      "n_bins": 28
+    },
+    "jackknife_analysis": {
+      "enabled": true,
+      "lambda_mean": 3778.5742091898624,
+      "lambda_std": 151.83739198396574,
+      "n_samples": 20,
+      "lambda_values": [
+        3681.1638154227217,
+        3742.890209934666,
+        3760.004617285081,
+        3743.3448371176833,
+        3722.746731461871,
+        4063.312268431424,
+        3565.9788748425376,
+        3726.320089124772,
+        3782.385364399958,
+        3647.726216590835,
+        3828.715509748623,
+        3711.0636660893974,
+        3943.4120609538136,
+        3658.7223650749206,
+        3760.0588638673244,
+        3649.9648010441283,
+        4077.304894214384,
+        3855.907187676469,
+        3565.9788748425376,
+        4084.482935674097
+      ]
+    },
+    "advanced_analyses_note": "LOSO/LODO, anisotropy, and temporal analyses moved to Step 5",
+    "bootstrap_ci": {
+      "enabled": true,
+      "n_iterations": 5000,
+      "n_successful": 3163,
+      "confidence_level": 95.0,
+      "amplitude": {
+        "lower": 0.1893539404698258,
+        "upper": 0.22203124054727358,
+        "median": 0.2017837804492522
+      },
+      "lambda": {
+        "lower": 3205.1681059263833,
+        "upper": 4871.332078161739,
+        "median": 3826.47716721268
+      },
+      "offset": {
+        "lower": -0.05058463703496158,
+        "upper": -0.014398863707408262,
+        "median": -0.022679776875685276
+      }
+    },
+    "tep_interpretation": {
+      "tep_consistent": true,
+      "correlation_length_assessment": "TEP-consistent",
+      "signal_strength": "Strong",
+      "best_model_vs_exponential": "Best model: Mat\u00e9rn (\u03bd=1.5) (\u0394AIC = -2.07)"
+    },
+    "loso_analysis": null,
+    "lodo_analysis": null
+  },
+  "esa_final": {
+    "analysis_center": "ESA_FINAL",
+    "timestamp": "2025-10-06T03:34:31.864168",
+    "method": {
+      "type": "phase_alignment_index",
+      "formula": "cos(phase(CSD))"
+    },
+    "data_summary": {
+      "total_pairs": 10809084,
+      "files_processed": 912,
+      "files_total": 912,
+      "bins_used": 25,
+      "distance_range_km": [
+        73.53977219682521,
+        12134.013565031648
+      ],
+      "coherence_range": [
+        -0.05075206533710397,
+        0.284755868483955
+      ],
+      "mean_coherence": 0.09758646832574859
+    },
+    "model_comparison": {
+      "models_tested": [
+        "Exponential",
+        "Gaussian",
+        "Squared Exponential",
+        "Power Law",
+        "Power Law w/ Cutoff",
+        "Mat\u00e9rn (\u03bd=1.5)",
+        "Mat\u00e9rn (\u03bd=2.5)"
+      ],
+      "best_model_aic": "Exponential",
+      "model_results": [
+        {
+          "name": "Exponential",
+          "aic": 78.40133480441841,
+          "bic": 82.05796227902302,
+          "r_squared": 0.9701459937713739,
+          "delta_aic": 0.0
+        },
+        {
+          "name": "Gaussian",
+          "aic": 95.02557364211697,
+          "bic": 98.68220111672157,
+          "r_squared": 0.9419509352817994,
+          "delta_aic": 16.624238837698556
+        },
+        {
+          "name": "Squared Exponential",
+          "aic": 95.02557365630655,
+          "bic": 98.68220113091115,
+          "r_squared": 0.9419509352488518,
+          "delta_aic": 16.624238851888137
+        },
+        {
+          "name": "Power Law",
+          "aic": 92.69484554632021,
+          "bic": 96.35147302092481,
+          "r_squared": 0.9471181874022379,
+          "delta_aic": 14.293510741901798
+        },
+        {
+          "name": "Power Law w/ Cutoff",
+          "aic": 83.08429367396448,
+          "bic": 87.95979697343728,
+          "r_squared": 0.9667638746393424,
+          "delta_aic": 4.68295886954607
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=1.5)",
+          "aic": 82.77257631963353,
+          "bic": 86.42920379423813,
+          "r_squared": 0.9644418742182779,
+          "delta_aic": 4.371241515215118
+        },
+        {
+          "name": "Mat\u00e9rn (\u03bd=2.5)",
+          "aic": 86.2430989981344,
+          "bic": 89.899726472739,
+          "r_squared": 0.95914661791751,
+          "delta_aic": 7.8417641937159885
+        }
+      ]
+    },
+    "best_fit": {
+      "model_name": "Exponential",
+      "amplitude": 0.24970196443331308,
+      "amplitude_error": 0.012211217471186128,
+      "lambda_km": 3329.7728591388072,
+      "lambda_error": 309.0622752500861,
+      "offset": -0.024730319003301637,
+      "offset_error": 0.00439903604447551,
+      "r_squared": 0.9701459937713739,
+      "n_bins": 25
+    },
+    "exponential_fit": {
+      "model": "C(r) = A * exp(-r/lambda) + C0",
+      "amplitude": 0.24970196443331308,
+      "amplitude_error": 0.012211217471186128,
+      "lambda_km": 3329.7728591388072,
+      "lambda_error": 309.0622752500861,
+      "offset": -0.024730319003301637,
+      "offset_error": 0.00439903604447551,
+      "r_squared": 0.9701459937713739,
+      "n_bins": 25
+    },
+    "jackknife_analysis": {
+      "enabled": true,
+      "lambda_mean": 3296.0429716373824,
+      "lambda_std": 116.71364845411033,
+      "n_samples": 20,
+      "lambda_values": [
+        3314.385594388923,
+        3471.5596923432126,
+        3349.809310694565,
+        3017.384492909244,
+        3329.3604152083253,
+        3366.8647776942444,
+        3013.3665331093825,
+        3296.2209512307963,
+        3368.4559758583987,
+        3254.351942601588,
+        3246.9991160269333,
+        3496.7169213939133,
+        3325.8156073139685,
+        3183.9704577154957,
+        3350.7757913982364,
+        3361.6015391872093,
+        3314.0248512008793,
+        3334.889814395778,
+        3252.1803136942053,
+        3272.1253343823487
+      ]
+    },
+    "advanced_analyses_note": "LOSO/LODO, anisotropy, and temporal analyses moved to Step 5",
+    "bootstrap_ci": {
+      "enabled": true,
+      "n_iterations": 5000,
+      "n_successful": 3205,
+      "confidence_level": 95.0,
+      "amplitude": {
+        "lower": 0.24206570203270697,
+        "upper": 0.28394731605702767,
+        "median": 0.2631550535854795
+      },
+      "lambda": {
+        "lower": 2523.977755377697,
+        "upper": 4012.3631087085637,
+        "median": 3087.2131705375427
+      },
+      "offset": {
+        "lower": -0.055003488782103205,
+        "upper": -0.009731412754495534,
+        "median": -0.02136836085192076
+      }
+    },
+    "tep_interpretation": {
+      "tep_consistent": true,
+      "correlation_length_assessment": "TEP-consistent",
+      "signal_strength": "Strong",
+      "best_model_vs_exponential": "Best model: Exponential (\u0394AIC = 0.00)"
+    },
+    "loso_analysis": null,
+    "lodo_analysis": null
+  }
+}

@@ -491,6 +491,67 @@ def _load_dataset_chunked(pair_files: List[Path], ac: str) -> pd.DataFrame:
     
     return complete_df
 
+def _subsample_to_match_distribution_enhanced(sector_distances, reference_distances, max_samples=5000):
+    """
+    Subsample sector distances to match the reference distance distribution.
+    
+    This function implements distance distribution matching by subsampling pairs
+    from a sector to match the global distance distribution, preventing bias
+    in λEW/λNS ratios from differing distance sampling patterns.
+    
+    Args:
+        sector_distances: Array of distances for the specific sector
+        reference_distances: Array of all distances (global reference)
+        max_samples: Maximum number of samples to return
+        
+    Returns:
+        Array of indices to subsample from sector_distances
+    """
+    import numpy as np
+    from scipy import stats
+    
+    # Create distance bins based on reference distribution
+    n_bins = min(20, len(np.unique(reference_distances)) // 10)
+    if n_bins < 5:
+        n_bins = 5
+    
+    # Compute reference histogram
+    ref_hist, ref_bins = np.histogram(reference_distances, bins=n_bins, density=True)
+    
+    # Compute sector histogram
+    sector_hist, sector_bins = np.histogram(sector_distances, bins=ref_bins, density=True)
+    
+    # Calculate target counts per bin for the sector
+    total_sector_pairs = len(sector_distances)
+    target_samples = min(max_samples, total_sector_pairs)
+    
+    # For each bin, determine how many samples we want
+    target_counts = []
+    for i in range(len(ref_bins) - 1):
+        # Target fraction based on reference distribution
+        target_fraction = ref_hist[i] / np.sum(ref_hist)
+        target_count = int(target_fraction * target_samples)
+        target_counts.append(target_count)
+    
+    # Subsample from each bin
+    selected_indices = []
+    for i in range(len(ref_bins) - 1):
+        # Find indices in this distance bin
+        bin_mask = (sector_distances >= ref_bins[i]) & (sector_distances < ref_bins[i+1])
+        bin_indices = np.where(bin_mask)[0]
+        
+        if len(bin_indices) > 0:
+            # Sample up to target count
+            n_sample = min(target_counts[i], len(bin_indices))
+            if n_sample > 0:
+                # Random sampling with fixed seed for reproducibility
+                np.random.seed(42 + i)  # Different seed per bin
+                sampled_indices = np.random.choice(bin_indices, size=n_sample, replace=False)
+                selected_indices.extend(sampled_indices)
+    
+    return np.array(selected_indices)
+
+
 def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
     """
     Perform enhanced anisotropy analysis on the complete dataset.
@@ -538,6 +599,77 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
     sector_names = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
     coord_df['sector'] = coord_df['azimuth'].apply(lambda az: sector_names[int((az + 22.5) / 45) % 8])
     
+    # DISTANCE DISTRIBUTION MATCHING GUARDRAIL
+    # ========================================
+    print_status("Applying distance distribution matching guardrails...", "PROCESS")
+    
+    # Compute global distance distribution for reference
+    all_distances = coord_df['dist_km'].values
+    global_dist_hist, global_dist_bins = np.histogram(all_distances, bins=20, density=True)
+    
+    # Apply distance distribution matching to each sector
+    sector_data_matched = {}
+    distance_matching_results = {}
+    
+    for sector in sector_names:
+        sector_mask = coord_df['sector'] == sector
+        sector_data = coord_df[sector_mask]
+        
+        if len(sector_data) < 1000:  # Skip sectors with insufficient data
+            continue
+            
+        sector_distances = sector_data['dist_km'].values
+        sector_coherences = sector_data['coherence'].values
+        
+        # Method 1: Distance-weighted analysis
+        sector_dist_hist, sector_dist_bins = np.histogram(sector_distances, bins=20, density=True)
+        
+        # Compute weights to match global distribution
+        weights = np.ones_like(sector_distances)
+        for i, dist in enumerate(sector_distances):
+            # Find which global bin this distance falls into
+            global_bin_idx = np.digitize(dist, global_dist_bins) - 1
+            global_bin_idx = max(0, min(global_bin_idx, len(global_dist_hist) - 1))
+            
+            # Find which sector bin this distance falls into
+            sector_bin_idx = np.digitize(dist, sector_dist_bins) - 1
+            sector_bin_idx = max(0, min(sector_bin_idx, len(sector_dist_hist) - 1))
+            
+            # Weight inversely proportional to sector density relative to global density
+            if sector_dist_hist[sector_bin_idx] > 0:
+                weight = global_dist_hist[global_bin_idx] / sector_dist_hist[sector_bin_idx]
+                weights[i] = weight
+        
+        # Method 2: Matched-distance subsampling
+        matched_indices = _subsample_to_match_distribution_enhanced(
+            sector_distances, all_distances, max_samples=min(5000, len(sector_distances))
+        )
+        
+        sector_data_matched[sector] = {
+            'distances_weighted': sector_distances,
+            'coherences_weighted': sector_coherences,
+            'weights': weights,
+            'distances_matched': sector_distances[matched_indices],
+            'coherences_matched': sector_coherences[matched_indices],
+            'original_count': len(sector_distances),
+            'matched_count': len(matched_indices),
+            'sector_data': sector_data  # Keep original data for compatibility
+        }
+        
+        # Validate distance distribution matching
+        if len(matched_indices) > 100:
+            from scipy import stats
+            ks_stat, ks_pvalue = stats.ks_2samp(
+                sector_distances[matched_indices], all_distances
+            )
+            distance_matching_results[sector] = {
+                'ks_statistic': float(ks_stat),
+                'ks_pvalue': float(ks_pvalue),
+                'distribution_matched': ks_pvalue > 0.05
+            }
+    
+    print_status(f"Distance distribution matching applied to {len(sector_data_matched)} sectors", "SUCCESS")
+    
     # Analysis parameters
     num_bins = TEPConfig.get_int('TEP_BINS')
     max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
@@ -546,29 +678,43 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
     
     print_status(f"Analyzing {len(sector_names)} directional sectors with {num_bins} distance bins", "INFO")
     
-    # Analyze each sector
+    # Analyze each sector with distance-matched data
     sector_results = {}
+    sector_results_weighted = {}
     
     for i, sector in enumerate(sector_names):
-        sector_mask = coord_df['sector'] == sector
-        sector_data = coord_df[sector_mask]
-        print_status(f"Processing sector {i+1}/{len(sector_names)}: {sector} ({len(sector_data):,} pairs)", "PROCESS")
+        if sector not in sector_data_matched:
+            print_status(f"Skipping sector {sector}: insufficient data or matching failed", "WARNING")
+            continue
+            
+        matched_data = sector_data_matched[sector]
+        print_status(f"Processing sector {i+1}/{len(sector_names)}: {sector} ({matched_data['matched_count']:,} matched pairs from {matched_data['original_count']:,} original)", "PROCESS")
         
-        if len(sector_data) < 1000:  # Need sufficient data
-            print_status(f"Skipping sector {sector}: insufficient data ({len(sector_data)} pairs)", "WARNING")
+        # Use matched-distance subsampling approach (Method 2)
+        distances_arr = matched_data['distances_matched']
+        coherences_arr = matched_data['coherences_matched']
+        
+        if len(distances_arr) < 1000:  # Need sufficient data
+            print_status(f"Skipping sector {sector}: insufficient matched data ({len(distances_arr)} pairs)", "WARNING")
             continue
         
-        # Bin the sector data (create bins directly without modifying original data)
-        print_status(f"  Binning {sector} sector data into {num_bins} distance bins...", "DEBUG")
-        dist_bins = pd.cut(sector_data['dist_km'], bins=edges, right=False)
+        # Bin the matched sector data
+        print_status(f"  Binning {sector} matched data into {num_bins} distance bins...", "DEBUG")
+        dist_bins = pd.cut(pd.Series(distances_arr), bins=edges, right=False)
         
-        # Group by bins directly without modifying the original DataFrame
-        binned = sector_data.groupby(dist_bins, observed=True).agg(
+        # Create temporary DataFrame for binning
+        temp_df = pd.DataFrame({
+            'dist_km': distances_arr,
+            'coherence': coherences_arr,
+            'dist_bin': dist_bins
+        })
+        
+        # Group by bins
+        binned = temp_df.groupby('dist_bin', observed=True).agg(
             mean_dist=('dist_km', 'mean'),
             mean_coh=('coherence', 'mean'),
             count=('coherence', 'size')
         ).reset_index()
-        binned.rename(columns={'dist_km': 'dist_bin'}, inplace=True)
         
         # Filter for robust bins
         binned = binned[binned['count'] >= min_bin_count].dropna()
@@ -578,8 +724,8 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
             print_status(f"  Skipping {sector}: insufficient bins for fitting ({len(binned)} < 5)", "WARNING")
             continue
         
-        # Fit exponential model to this sector
-        print_status(f"  Fitting exponential correlation model to {sector} sector...", "DEBUG")
+        # Fit exponential model to distance-matched data
+        print_status(f"  Fitting exponential correlation model to {sector} matched data...", "DEBUG")
         try:
             distances = binned['mean_dist'].values
             coherences = binned['mean_coh'].values
@@ -609,11 +755,64 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
                 'lambda_km': float(popt[1]),
                 'offset': float(popt[2]),
                 'r_squared': float(r_squared),
-                'n_pairs': len(sector_data),
+                'n_pairs': len(distances_arr),
                 'n_bins': len(binned),
-                'param_errors': [float(np.sqrt(pcov[i, i])) for i in range(3)]
+                'param_errors': [float(np.sqrt(pcov[i, i])) for i in range(3)],
+                'distance_matching_applied': True,
+                'original_pairs': matched_data['original_count'],
+                'matched_pairs': matched_data['matched_count']
             }
-            print_status(f"  {sector} fit successful: λ = {popt[1]:.1f} km, R² = {r_squared:.3f}", "SUCCESS")
+            print_status(f"  {sector} fit successful: λ = {popt[1]:.1f} km, R² = {r_squared:.3f} (distance-matched)", "SUCCESS")
+            
+            # Also compute weighted analysis for comparison
+            distances_weighted = matched_data['distances_weighted']
+            coherences_weighted = matched_data['coherences_weighted']
+            weights_array = matched_data['weights']
+            
+            # Weighted binning
+            temp_df_weighted = pd.DataFrame({
+                'dist_km': distances_weighted,
+                'coherence': coherences_weighted,
+                'weight': weights_array,
+                'dist_bin': pd.cut(pd.Series(distances_weighted), bins=edges, right=False)
+            })
+            
+            binned_weighted = temp_df_weighted.groupby('dist_bin', observed=True).agg(
+                mean_dist=('dist_km', lambda x: np.average(x, weights=temp_df_weighted.loc[x.index, 'weight'])),
+                mean_coh=('coherence', lambda x: np.average(x, weights=temp_df_weighted.loc[x.index, 'weight'])),
+                count=('coherence', 'size'),
+                total_weight=('weight', 'sum')
+            ).reset_index()
+            
+            binned_weighted = binned_weighted[binned_weighted['count'] >= min_bin_count].dropna()
+            
+            if len(binned_weighted) >= 5:
+                distances_w = binned_weighted['mean_dist'].values
+                coherences_w = binned_weighted['mean_coh'].values
+                weights_w = binned_weighted['total_weight'].values
+                
+                popt_w, pcov_w = curve_fit(
+                    correlation_model, distances_w, coherences_w,
+                    p0=p0, sigma=1.0/np.sqrt(weights_w),
+                    bounds=adaptive_bounds,
+                    maxfev=5000
+                )
+                
+                y_pred_w = correlation_model(distances_w, *popt_w)
+                ss_res_w = np.sum(weights_w * (coherences_w - y_pred_w)**2)
+                ss_tot_w = np.sum(weights_w * (coherences_w - np.average(coherences_w, weights=weights_w))**2)
+                r_squared_w = 1 - ss_res_w/ss_tot_w if ss_tot_w > 0 else 0
+                
+                sector_results_weighted[sector] = {
+                    'amplitude': float(popt_w[0]),
+                    'lambda_km': float(popt_w[1]),
+                    'offset': float(popt_w[2]),
+                    'r_squared': float(r_squared_w),
+                    'n_pairs': len(distances_weighted),
+                    'n_bins': len(binned_weighted),
+                    'param_errors': [float(np.sqrt(pcov_w[i, i])) for i in range(3)],
+                    'distance_weighting_applied': True
+                }
             
         except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
             print_status(f"  {sector} fit failed: {str(e)[:50]}...", "WARNING")
@@ -655,6 +854,7 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
     results = {
         'success': True,
         'sector_results': sector_results,
+        'sector_results_weighted': sector_results_weighted,
         'anisotropy_statistics': {
             'lambda_mean': float(lambda_mean),
             'lambda_std': float(lambda_std),
@@ -663,9 +863,18 @@ def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
             'anisotropy_category': 'extreme' if lambda_cv > 0.8 else 'moderate' if lambda_cv > 0.2 else 'minimal'
         },
         'earth_motion_analysis': earth_motion_analysis,
+        'distance_matching_results': distance_matching_results,
+        'distance_matching_applied': True,
+        'guardrail_summary': {
+            'sectors_analyzed': len(sector_results),
+            'sectors_with_valid_matching': sum(1 for r in distance_matching_results.values() if r['distribution_matched']),
+            'matching_methods': ['subsampling', 'weighting'],
+            'validation_passed': all(r['distribution_matched'] for r in distance_matching_results.values()) if distance_matching_results else False
+        },
         'data_summary': {
             'total_pairs_with_coords': len(coord_df),
-            'sectors_analyzed': list(sector_results.keys())
+            'sectors_analyzed': list(sector_results.keys()),
+            'distance_matching_applied': True
         }
     }
     
@@ -1155,7 +1364,8 @@ def run_helical_motion_only(analysis_center: str = None) -> Dict:
               analyses, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if an analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("HELICAL MOTION ANALYSIS - Advanced Earth Motion Detection", "TITLE")
 
     all_results = {}
@@ -1337,7 +1547,8 @@ def run_jupiter_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("JUPITER OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
 
     all_results = {}
@@ -1430,7 +1641,8 @@ def run_saturn_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("SATURN OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
 
     all_results = {}
@@ -1494,7 +1706,8 @@ def run_mars_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("MARS OPPOSITION ANALYSIS - Weakest Signal Sensitivity Test", "TITLE")
 
     all_results = {}
@@ -1557,7 +1770,8 @@ def run_lunar_only(analysis_center: str = None) -> Dict:
               analysis, organized by analysis center. Each entry includes a
               'success' status and potentially an 'error' message if the analysis failed.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("LUNAR STANDSTILL ANALYSIS - Sidereal Day Amplitude Tracking", "TITLE")
 
     all_results = {}
@@ -1621,7 +1835,8 @@ def run_astronomical_events_only(analysis_center: str = None) -> Dict:
               results from Jupiter, Saturn, and Mars analyses, along with an overall
               comparison summary.
     """
-    print_status("TEP GNSS Analysis Package v0.14", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
     print_status("ASTRONOMICAL EVENTS ANALYSIS - Jupiter vs Saturn vs Mars Opposition Comparison", "TITLE")
 
     all_results = {}
@@ -2255,7 +2470,8 @@ def main():
         return all(r.get('success', False) for r in results.values())
     
     # Original full Step 2.2 analysis
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 2.2: Geospatial Temporal Analysis", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 2.2: Geospatial Temporal Analysis", "TITLE")
     
     start_time = time.time()
     
@@ -2705,11 +2921,11 @@ def run_multi_frequency_beat_analysis_aligned(complete_df: pd.DataFrame) -> Dict
     
     FREQUENCY BANDS (IDENTICAL TO STEP 3.6):
     ========================================
-    - Tidal bands (10-30 μHz): Principal gravitational forcing
-    - Post-tidal (30-100 μHz): Transition region  
-    - Intermediate (100-500 μHz): Mid-range TEP signal
-    - Transition (500-1000 μHz): Control approach
-    - Control (1000+ μHz): High-frequency reference
+    - Tidal bands (10-30 µHz): Principal gravitational forcing
+    - Post-tidal (30-100 µHz): Transition region  
+    - Intermediate (100-500 µHz): Mid-range TEP signal
+    - Transition (500-1000 µHz): Control approach
+    - Control (1000+ µHz): High-frequency reference
     
     This enables direct comparison with Step 3.6 correlation results in tables.
     """
@@ -2718,25 +2934,25 @@ def run_multi_frequency_beat_analysis_aligned(complete_df: pd.DataFrame) -> Dict
     try:
         # STEP 3.6 FREQUENCY BANDS - Direct import for consistency
         step_3_6_bands = {
-            'tidal_diurnal': {'f1_microhz': 10, 'f2_microhz': 20, 'name': 'Diurnal Tides (10-20 μHz)'},
-            'tidal_semidiurnal': {'f1_microhz': 20, 'f2_microhz': 30, 'name': 'Semidiurnal Tides (20-30 μHz)'},
-            'post_tidal_30_40': {'f1_microhz': 30, 'f2_microhz': 40, 'name': 'Post-Tidal 30-40 μHz'},
-            'post_tidal_40_50': {'f1_microhz': 40, 'f2_microhz': 50, 'name': 'Post-Tidal 40-50 μHz'},
-            'post_tidal_50_100': {'f1_microhz': 50, 'f2_microhz': 100, 'name': 'Post-Tidal 50-100 μHz'},
-            'intermediate_100_200': {'f1_microhz': 100, 'f2_microhz': 200, 'name': 'Intermediate 100-200 μHz'},
-            'intermediate_200_350': {'f1_microhz': 200, 'f2_microhz': 350, 'name': 'Intermediate 200-350 μHz'},
-            'intermediate_350_500': {'f1_microhz': 350, 'f2_microhz': 500, 'name': 'Intermediate 350-500 μHz'},
-            'transition_500_750': {'f1_microhz': 500, 'f2_microhz': 750, 'name': 'Transition 500-750 μHz'},
-            'transition_750_1000': {'f1_microhz': 750, 'f2_microhz': 1000, 'name': 'Transition 750-1000 μHz'},
-            'control_1000_1500': {'f1_microhz': 1000, 'f2_microhz': 1500, 'name': 'Control 1000-1500 μHz'},
-            'control_2000_3000': {'f1_microhz': 2000, 'f2_microhz': 3000, 'name': 'Control 2000-3000 μHz'}
+            'tidal_diurnal': {'f1_microhz': 10, 'f2_microhz': 20, 'name': 'Diurnal Tides (10-20 µHz)'},
+            'tidal_semidiurnal': {'f1_microhz': 20, 'f2_microhz': 30, 'name': 'Semidiurnal Tides (20-30 µHz)'},
+            'post_tidal_30_40': {'f1_microhz': 30, 'f2_microhz': 40, 'name': 'Post-Tidal 30-40 µHz'},
+            'post_tidal_40_50': {'f1_microhz': 40, 'f2_microhz': 50, 'name': 'Post-Tidal 40-50 µHz'},
+            'post_tidal_50_100': {'f1_microhz': 50, 'f2_microhz': 100, 'name': 'Post-Tidal 50-100 µHz'},
+            'intermediate_100_200': {'f1_microhz': 100, 'f2_microhz': 200, 'name': 'Intermediate 100-200 µHz'},
+            'intermediate_200_350': {'f1_microhz': 200, 'f2_microhz': 350, 'name': 'Intermediate 200-350 µHz'},
+            'intermediate_350_500': {'f1_microhz': 350, 'f2_microhz': 500, 'name': 'Intermediate 350-500 µHz'},
+            'transition_500_750': {'f1_microhz': 500, 'f2_microhz': 750, 'name': 'Transition 500-750 µHz'},
+            'transition_750_1000': {'f1_microhz': 750, 'f2_microhz': 1000, 'name': 'Transition 750-1000 µHz'},
+            'control_1000_1500': {'f1_microhz': 1000, 'f2_microhz': 1500, 'name': 'Control 1000-1500 µHz'},
+            'control_2000_3000': {'f1_microhz': 2000, 'f2_microhz': 3000, 'name': 'Control 2000-3000 µHz'}
         }
         
         # Convert to temporal periods for beat analysis
         aligned_beat_frequencies = {}
         
         for band_id, band_config in step_3_6_bands.items():
-            # Central frequency in μHz
+            # Central frequency in µHz
             f_center_microhz = (band_config['f1_microhz'] + band_config['f2_microhz']) / 2
             # Convert to Hz
             f_center_hz = f_center_microhz * 1e-6
@@ -2757,7 +2973,7 @@ def run_multi_frequency_beat_analysis_aligned(complete_df: pd.DataFrame) -> Dict
         
         print_status(f"Analyzing {len(aligned_beat_frequencies)} frequency bands aligned with Step 3.6", "INFO")
         for band_id, freq_data in aligned_beat_frequencies.items():
-            print_status(f"  {band_id}: {freq_data['frequency_microhz']:.0f} μHz ({freq_data['period_days']:.1f} day period)", "INFO")
+            print_status(f"  {band_id}: {freq_data['frequency_microhz']:.0f} µHz ({freq_data['period_days']:.1f} day period)", "INFO")
         
         # Rest of analysis continues with standard beat pattern detection...
         # Convert dates and setup temporal analysis
@@ -6082,12 +6298,13 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         all_planetary_detections = []
         
         # Expected amplitudes for planetary gravitational coupling analysis
+        # CORRECTED: Using actual planetary masses in Earth masses (not relative ratios)
         planet_info = {
-            'jupiter_opposition_analysis': {'name': 'Jupiter', 'expected_amp': 0.00220, 'mass_ratio': 1.0, 'expected_amp_pct': 0.220},
-            'saturn_opposition_analysis': {'name': 'Saturn', 'expected_amp': 0.00019, 'mass_ratio': 0.086, 'expected_amp_pct': 0.019},
-            'mars_opposition_analysis': {'name': 'Mars', 'expected_amp': 0.00005, 'mass_ratio': 0.023, 'expected_amp_pct': 0.0050},
-            'venus_conjunction_analysis': {'name': 'Venus', 'expected_amp': 0.00100, 'mass_ratio': 0.027, 'expected_amp_pct': 0.100},
-            'mercury_conjunction_analysis': {'name': 'Mercury', 'expected_amp': 0.00010, 'mass_ratio': 0.0018, 'expected_amp_pct': 0.010}
+            'jupiter_opposition_analysis': {'name': 'Jupiter', 'expected_amp': 0.00220, 'mass_ratio': 317.8, 'expected_amp_pct': 0.220},
+            'saturn_opposition_analysis': {'name': 'Saturn', 'expected_amp': 0.00019, 'mass_ratio': 95.2, 'expected_amp_pct': 0.019},
+            'mars_opposition_analysis': {'name': 'Mars', 'expected_amp': 0.00005, 'mass_ratio': 0.107, 'expected_amp_pct': 0.0050},
+            'venus_conjunction_analysis': {'name': 'Venus', 'expected_amp': 0.00100, 'mass_ratio': 0.815, 'expected_amp_pct': 0.100},
+            'mercury_conjunction_analysis': {'name': 'Mercury', 'expected_amp': 0.00010, 'mass_ratio': 0.055, 'expected_amp_pct': 0.010}
         }
         
         for planet_key, info in planet_info.items():

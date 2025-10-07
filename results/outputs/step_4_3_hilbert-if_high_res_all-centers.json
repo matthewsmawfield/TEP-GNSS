@@ -1,0 +1,149 @@
+{
+  "success": true,
+  "analysis_type": "hilbert-if_multi_center",
+  "centers_analyzed": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "successful_centers": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "center_results": {
+    "code": {
+      "success": true,
+      "analysis_center": "code",
+      "analysis_type": "hilbert_instantaneous_frequency",
+      "bands": {
+        "solar_rotation_27d": {
+          "target_period_days": 27.27,
+          "mean_instantaneous_period_days": 25.286560077474324,
+          "std_instantaneous_period_days": 2.6178224065315825,
+          "amplitude_threshold": 0.0013054333067925785,
+          "event_locked_effect": -0.5257347004352441,
+          "permutation_p_value": 0.2495,
+          "rel_bandwidth": 0.25
+        },
+        "lunar_month_29d": {
+          "target_period_days": 29.53,
+          "mean_instantaneous_period_days": 28.189186275085735,
+          "std_instantaneous_period_days": 3.176880740647366,
+          "amplitude_threshold": 0.001082465491777899,
+          "event_locked_effect": -0.6033408525638736,
+          "permutation_p_value": 0.4145,
+          "rel_bandwidth": 0.25
+        },
+        "dominant_112d": {
+          "target_period_days": 112.0,
+          "mean_instantaneous_period_days": 115.96418301145216,
+          "std_instantaneous_period_days": 8.231109395437178,
+          "amplitude_threshold": 0.0014968717819928694,
+          "event_locked_effect": -1.2333061364094515,
+          "permutation_p_value": 0.551,
+          "rel_bandwidth": 0.15
+        },
+        "js_beat_19d": {
+          "target_period_days": 19.86,
+          "mean_instantaneous_period_days": 19.68609934613547,
+          "std_instantaneous_period_days": 2.2777504374333755,
+          "amplitude_threshold": 0.0017094658502156365,
+          "event_locked_effect": -0.38800940823846225,
+          "permutation_p_value": 0.345,
+          "rel_bandwidth": 0.25
+        }
+      },
+      "plot_path": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_3_hilbert_if_code.png"
+    },
+    "igs_combined": {
+      "success": true,
+      "analysis_center": "igs_combined",
+      "analysis_type": "hilbert_instantaneous_frequency",
+      "bands": {
+        "solar_rotation_27d": {
+          "target_period_days": 27.27,
+          "mean_instantaneous_period_days": 26.850477332145047,
+          "std_instantaneous_period_days": 2.6033784008904464,
+          "amplitude_threshold": 0.003963796611681283,
+          "event_locked_effect": 0.5058787964191004,
+          "permutation_p_value": 0.0085,
+          "rel_bandwidth": 0.25
+        },
+        "lunar_month_29d": {
+          "target_period_days": 29.53,
+          "mean_instantaneous_period_days": 29.013972774498455,
+          "std_instantaneous_period_days": 2.7999506276571537,
+          "amplitude_threshold": 0.003977324605149945,
+          "event_locked_effect": -0.9266987083012551,
+          "permutation_p_value": 0.7945,
+          "rel_bandwidth": 0.25
+        },
+        "dominant_112d": {
+          "target_period_days": 112.0,
+          "mean_instantaneous_period_days": 117.97868549755012,
+          "std_instantaneous_period_days": 7.215927833257233,
+          "amplitude_threshold": 0.003928445039595584,
+          "event_locked_effect": -1.7331139188669114,
+          "permutation_p_value": 0.21784615384615386,
+          "rel_bandwidth": 0.15
+        },
+        "js_beat_19d": {
+          "target_period_days": 19.86,
+          "mean_instantaneous_period_days": 19.71449482318533,
+          "std_instantaneous_period_days": 2.110613809851555,
+          "amplitude_threshold": 0.004253614218296457,
+          "event_locked_effect": -0.12323239872915767,
+          "permutation_p_value": 0.09219858156028368,
+          "rel_bandwidth": 0.25
+        }
+      },
+      "plot_path": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_3_hilbert_if_igs_combined.png"
+    },
+    "esa_final": {
+      "success": true,
+      "analysis_center": "esa_final",
+      "analysis_type": "hilbert_instantaneous_frequency",
+      "bands": {
+        "solar_rotation_27d": {
+          "target_period_days": 27.27,
+          "mean_instantaneous_period_days": 26.565925958879205,
+          "std_instantaneous_period_days": 2.564669327069727,
+          "amplitude_threshold": 0.0032175240117591356,
+          "event_locked_effect": 0.59777353891317,
+          "permutation_p_value": 0.1505,
+          "rel_bandwidth": 0.25
+        },
+        "lunar_month_29d": {
+          "target_period_days": 29.53,
+          "mean_instantaneous_period_days": 28.61801163025664,
+          "std_instantaneous_period_days": 2.336501843030764,
+          "amplitude_threshold": 0.0032925078580433808,
+          "event_locked_effect": 0.06806479421926437,
+          "permutation_p_value": 0.1725,
+          "rel_bandwidth": 0.25
+        },
+        "dominant_112d": {
+          "target_period_days": 112.0,
+          "mean_instantaneous_period_days": 109.02765378708769,
+          "std_instantaneous_period_days": 10.858500679006402,
+          "amplitude_threshold": 0.0037794318032578263,
+          "event_locked_effect": -0.15566704403260362,
+          "permutation_p_value": 0.2465,
+          "rel_bandwidth": 0.15
+        },
+        "js_beat_19d": {
+          "target_period_days": 19.86,
+          "mean_instantaneous_period_days": 19.670775637454145,
+          "std_instantaneous_period_days": 2.160807990383858,
+          "amplitude_threshold": 0.0034569547998800606,
+          "event_locked_effect": -0.3211494558575418,
+          "permutation_p_value": 0.3387589013224822,
+          "rel_bandwidth": 0.25
+        }
+      },
+      "plot_path": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_3_hilbert_if_esa_final.png"
+    }
+  },
+  "interpretation": "Hilbert-If analysis completed for 3/3 analysis centers"
+}

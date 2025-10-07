@@ -635,7 +635,8 @@ def download_clock_files():
 def main():
     """Main data acquisition function"""
     set_step_logger(step_logger)
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 1.1: Data Acquisition", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 1.1: Data Acquisition", "TITLE")
 
     # Verify apexpy dependency
     try:

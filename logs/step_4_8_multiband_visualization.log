@@ -1,0 +1,228 @@
+[16:23:18] [INFO] ================================================================================
+[16:23:18] [INFO] STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION (DEBUG MODE)
+[16:23:18] [INFO] ================================================================================
+[16:23:18] [PROCESS] Loading multi-band analysis results...
+[16:23:18] [INFO] Loaded CODE results
+[16:23:18] [INFO] Loaded IGS_COMBINED results
+[16:23:18] [INFO] Loaded ESA_FINAL results
+[16:23:18] [PROCESS] Generating multi-band visualizations with enhanced debugging...
+[16:23:18] [INFO] Creating TEP-focused R² comparison (primary prediction first)...
+[16:23:19] [SUCCESS] Saved R² comparison: /mnt/data/results/figures/step_4_8_multiband_r_squared_comparison.png
+[16:23:19] [SUCCESS] TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[16:23:19] [INFO] Creating λ vs frequency plot with validation...
+[16:23:19] [INFO] Tidal frequencies (10-30 µHz): CODE=5801±111, IGS=4311, ESA=3918
+[16:23:19] [INFO] Post-tidal frequencies (30-100 µHz): CODE=1505±529, IGS=1530, ESA=1472
+[16:23:19] [INFO] Control band (1000-1500 µHz): 2149 km
+[16:23:19] [WARNING] Spatial scale transition: 3.9× (CODE) vs manuscript claim 2.4×
+[16:23:20] [SUCCESS] Saved λ vs frequency: /mnt/data/results/figures/step_4_8_multiband_lambda_vs_frequency.png
+[16:23:20] [WARNING] 
+============================================================
+[16:23:20] [WARNING] MANUSCRIPT CONSISTENCY CHECK
+[16:23:20] [WARNING] ============================================================
+[16:23:20] [INFO] Tidal frequencies (10-30 µHz): 4677 ± 811 km
+[16:23:20] [INFO] Post-tidal frequencies (30-100 µHz): 1502 ± 24 km
+[16:23:20] [INFO] Control band (1000-1500 µHz): 2149 km
+[16:23:20] [INFO] Spatial scale transition: 3.1× (cross-center average)
+[16:23:20] [INFO] Manuscript claims: 4,677 ± 954 km (tidal), 1,502 ± 289 km (post-tidal), 3.1× transition
+[16:23:20] [SUCCESS] ✅ ALL VALUES MATCH MANUSCRIPT - Data is consistent!
+[16:23:20] [INFO] Creating 4-panel spectral overview...
+[16:23:21] [SUCCESS] Saved spectral overview: /mnt/data/results/figures/step_4_8_multiband_spectral_overview.png
+[16:23:21] [INFO] Creating post-tidal emphasis figure...
+[16:23:22] [SUCCESS] Saved post-tidal emphasis: /mnt/data/results/figures/step_4_8_multiband_post_tidal_emphasis.png
+[16:23:22] [INFO] Creating amplitude spectral decay...
+[16:23:23] [SUCCESS] Saved amplitude decay: /mnt/data/results/figures/step_4_8_multiband_amplitude_decay.png
+[16:23:23] [PROCESS] Syncing figures to site folder with web optimizations...
+[16:23:23] [SUCCESS] ✓ Synced: step_4_8_multiband_r_squared_comparison.png (0.4MB)
+[16:23:23] [SUCCESS] ✓ Synced: step_4_8_multiband_lambda_vs_frequency.png (0.4MB)
+[16:23:23] [SUCCESS] ✓ Synced: step_4_8_multiband_spectral_overview.png (0.8MB)
+[16:23:23] [SUCCESS] ✓ Synced: step_4_8_multiband_post_tidal_emphasis.png (0.4MB)
+[16:23:23] [SUCCESS] ✓ Synced: step_4_8_multiband_amplitude_decay.png (0.3MB)
+[16:23:23] [PROCESS] Creating web-optimized versions...
+[16:23:25] [SUCCESS]   ✓ Optimized step_4_8_multiband_spectral_overview.png: 13.1% size reduction
+[16:23:25] [INFO] Figures synced to: /mnt/data/site/public/figures
+[16:23:25] [SUCCESS] ================================================================================
+[16:23:25] [SUCCESS] STEP 4.8 COMPLETE - All multi-band visualizations generated with validation
+[16:23:25] [SUCCESS] ================================================================================
+[16:23:25] [INFO] Figures saved to: /mnt/data/results/figures
+[16:23:25] [INFO] 
+[16:23:25] [INFO] Generated figures:
+[16:23:25] [INFO]   1. step_4_8_multiband_r_squared_comparison.png (TEP-FOCUSED)
+[16:23:25] [INFO]   2. step_4_8_multiband_lambda_vs_frequency.png (with validation)
+[16:23:25] [INFO]   3. step_4_8_multiband_spectral_overview.png
+[16:23:25] [INFO]   4. step_4_8_multiband_post_tidal_emphasis.png
+[16:23:25] [INFO]   5. step_4_8_multiband_amplitude_decay.png
+[16:23:25] [INFO] 
+[16:23:25] [SUCCESS] ⭐ TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[16:23:25] [INFO] 
+[16:23:25] [SUCCESS] All figures automatically synced to site/public/figures/
+[23:08:12] [INFO] ================================================================================
+[23:08:12] [INFO] STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION (DEBUG MODE)
+[23:08:12] [INFO] ================================================================================
+[23:08:12] [PROCESS] Loading multi-band analysis results...
+[23:08:12] [INFO] Loaded CODE results
+[23:08:12] [INFO] Loaded IGS_COMBINED results
+[23:08:12] [INFO] Loaded ESA_FINAL results
+[23:08:12] [PROCESS] Generating multi-band visualizations with enhanced debugging...
+[23:08:12] [INFO] Creating TEP-focused R² comparison (primary prediction first)...
+[23:08:13] [SUCCESS] Saved R² comparison: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_r_squared_comparison.png
+[23:08:13] [SUCCESS] TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:08:13] [INFO] Creating λ vs frequency plot with validation...
+[23:08:13] [INFO] Tidal frequencies (10-30 µHz): CODE=5801±111, IGS=4311, ESA=3918
+[23:08:13] [INFO] Post-tidal frequencies (30-100 µHz): CODE=1505±529, IGS=1530, ESA=1472
+[23:08:13] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:08:13] [WARNING] Spatial scale transition: 3.9× (CODE) vs manuscript claim 2.4×
+[23:08:14] [SUCCESS] Saved λ vs frequency: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_lambda_vs_frequency.png
+[23:08:14] [WARNING] 
+============================================================
+[23:08:14] [WARNING] MANUSCRIPT CONSISTENCY CHECK
+[23:08:14] [WARNING] ============================================================
+[23:08:14] [INFO] Tidal frequencies (10-30 µHz): 4677 ± 811 km
+[23:08:14] [INFO] Post-tidal frequencies (30-100 µHz): 1502 ± 24 km
+[23:08:14] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:08:14] [INFO] Spatial scale transition: 3.1× (cross-center average)
+[23:08:14] [INFO] Manuscript claims: 4,677 ± 954 km (tidal), 1,502 ± 289 km (post-tidal), 3.1× transition
+[23:08:14] [SUCCESS] ✅ ALL VALUES MATCH MANUSCRIPT - Data is consistent!
+[23:08:14] [INFO] Creating 4-panel spectral overview...
+[23:08:15] [SUCCESS] Saved spectral overview: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_spectral_overview.png
+[23:08:15] [INFO] Creating post-tidal emphasis figure...
+[23:08:15] [SUCCESS] Saved post-tidal emphasis: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_post_tidal_emphasis.png
+[23:08:15] [INFO] Creating amplitude spectral decay...
+[23:08:15] [SUCCESS] Saved amplitude decay: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_amplitude_decay.png
+[23:08:15] [PROCESS] Syncing figures to site folder with web optimizations...
+[23:08:15] [SUCCESS] ✓ Synced: step_4_8_multiband_r_squared_comparison.png (0.3MB)
+[23:08:15] [SUCCESS] ✓ Synced: step_4_8_multiband_lambda_vs_frequency.png (0.4MB)
+[23:08:15] [SUCCESS] ✓ Synced: step_4_8_multiband_spectral_overview.png (0.8MB)
+[23:08:15] [SUCCESS] ✓ Synced: step_4_8_multiband_post_tidal_emphasis.png (0.4MB)
+[23:08:15] [SUCCESS] ✓ Synced: step_4_8_multiband_amplitude_decay.png (0.3MB)
+[23:08:15] [PROCESS] Creating web-optimized versions...
+[23:08:16] [SUCCESS]   ✓ Optimized step_4_8_multiband_spectral_overview.png: 13.2% size reduction
+[23:08:16] [INFO] Figures synced to: /Users/matthewsmawfield/www/TEP-GNSS/site/public/figures
+[23:08:16] [SUCCESS] ================================================================================
+[23:08:16] [SUCCESS] STEP 4.8 COMPLETE - All multi-band visualizations generated with validation
+[23:08:16] [SUCCESS] ================================================================================
+[23:08:16] [INFO] Figures saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/figures
+[23:08:16] [INFO] 
+[23:08:16] [INFO] Generated figures:
+[23:08:16] [INFO]   1. step_4_8_multiband_r_squared_comparison.png (TEP-FOCUSED)
+[23:08:16] [INFO]   2. step_4_8_multiband_lambda_vs_frequency.png (with validation)
+[23:08:16] [INFO]   3. step_4_8_multiband_spectral_overview.png
+[23:08:16] [INFO]   4. step_4_8_multiband_post_tidal_emphasis.png
+[23:08:16] [INFO]   5. step_4_8_multiband_amplitude_decay.png
+[23:08:16] [INFO] 
+[23:08:16] [SUCCESS] ⭐ TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:08:16] [INFO] 
+[23:08:16] [SUCCESS] All figures automatically synced to site/public/figures/
+[23:12:57] [INFO] ================================================================================
+[23:12:57] [INFO] STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION (DEBUG MODE)
+[23:12:57] [INFO] ================================================================================
+[23:12:57] [PROCESS] Loading multi-band analysis results...
+[23:12:57] [INFO] Loaded CODE results
+[23:12:57] [INFO] Loaded IGS_COMBINED results
+[23:12:57] [INFO] Loaded ESA_FINAL results
+[23:12:57] [PROCESS] Generating multi-band visualizations with enhanced debugging...
+[23:12:57] [INFO] Creating TEP-focused R² comparison (primary prediction first)...
+[23:12:58] [SUCCESS] Saved R² comparison: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_r_squared_comparison.png
+[23:12:58] [SUCCESS] TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:12:58] [INFO] Creating λ vs frequency plot with validation...
+[23:12:58] [INFO] Tidal frequencies (10-30 µHz): CODE=5801±111, IGS=4311, ESA=3918
+[23:12:58] [INFO] Post-tidal frequencies (30-100 µHz): CODE=1505±529, IGS=1530, ESA=1472
+[23:12:58] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:12:58] [WARNING] Spatial scale transition: 3.9× (CODE) vs manuscript claim 2.4×
+[23:12:58] [SUCCESS] Saved λ vs frequency: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_lambda_vs_frequency.png
+[23:12:58] [WARNING] 
+============================================================
+[23:12:58] [WARNING] MANUSCRIPT CONSISTENCY CHECK
+[23:12:58] [WARNING] ============================================================
+[23:12:58] [INFO] Tidal frequencies (10-30 µHz): 4677 ± 811 km
+[23:12:58] [INFO] Post-tidal frequencies (30-100 µHz): 1502 ± 24 km
+[23:12:58] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:12:58] [INFO] Spatial scale transition: 3.1× (cross-center average)
+[23:12:58] [INFO] Manuscript claims: 4,677 ± 954 km (tidal), 1,502 ± 289 km (post-tidal), 3.1× transition
+[23:12:58] [SUCCESS] ✅ ALL VALUES MATCH MANUSCRIPT - Data is consistent!
+[23:12:58] [INFO] Creating 4-panel spectral overview...
+[23:12:59] [SUCCESS] Saved spectral overview: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_spectral_overview.png
+[23:12:59] [INFO] Creating post-tidal emphasis figure...
+[23:13:00] [SUCCESS] Saved post-tidal emphasis: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_post_tidal_emphasis.png
+[23:13:00] [INFO] Creating amplitude spectral decay...
+[23:13:00] [SUCCESS] Saved amplitude decay: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_amplitude_decay.png
+[23:13:00] [PROCESS] Syncing figures to site folder with web optimizations...
+[23:13:00] [SUCCESS] ✓ Synced: step_4_8_multiband_r_squared_comparison.png (0.3MB)
+[23:13:00] [SUCCESS] ✓ Synced: step_4_8_multiband_lambda_vs_frequency.png (0.4MB)
+[23:13:00] [SUCCESS] ✓ Synced: step_4_8_multiband_spectral_overview.png (0.8MB)
+[23:13:00] [SUCCESS] ✓ Synced: step_4_8_multiband_post_tidal_emphasis.png (0.4MB)
+[23:13:00] [SUCCESS] ✓ Synced: step_4_8_multiband_amplitude_decay.png (0.3MB)
+[23:13:00] [PROCESS] Creating web-optimized versions...
+[23:13:01] [SUCCESS]   ✓ Optimized step_4_8_multiband_spectral_overview.png: 13.2% size reduction
+[23:13:01] [INFO] Figures synced to: /Users/matthewsmawfield/www/TEP-GNSS/site/public/figures
+[23:13:01] [SUCCESS] ================================================================================
+[23:13:01] [SUCCESS] STEP 4.8 COMPLETE - All multi-band visualizations generated with validation
+[23:13:01] [SUCCESS] ================================================================================
+[23:13:01] [INFO] Figures saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/figures
+[23:13:01] [INFO] 
+[23:13:01] [INFO] Generated figures:
+[23:13:01] [INFO]   1. step_4_8_multiband_r_squared_comparison.png (TEP-FOCUSED)
+[23:13:01] [INFO]   2. step_4_8_multiband_lambda_vs_frequency.png (with validation)
+[23:13:01] [INFO]   3. step_4_8_multiband_spectral_overview.png
+[23:13:01] [INFO]   4. step_4_8_multiband_post_tidal_emphasis.png
+[23:13:01] [INFO]   5. step_4_8_multiband_amplitude_decay.png
+[23:13:01] [INFO] 
+[23:13:01] [SUCCESS] ⭐ TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:13:01] [INFO] 
+[23:13:01] [SUCCESS] All figures automatically synced to site/public/figures/
+[23:56:10] [INFO] ================================================================================
+[23:56:10] [INFO] STEP 4.8: MULTI-BAND FREQUENCY VISUALIZATION (DEBUG MODE)
+[23:56:10] [INFO] ================================================================================
+[23:56:10] [PROCESS] Loading multi-band analysis results...
+[23:56:10] [INFO] Loaded CODE results
+[23:56:10] [INFO] Loaded IGS_COMBINED results
+[23:56:10] [INFO] Loaded ESA_FINAL results
+[23:56:10] [PROCESS] Generating multi-band visualizations with enhanced debugging...
+[23:56:10] [INFO] Creating TEP-focused R² comparison (primary prediction first)...
+[23:56:11] [SUCCESS] Saved R² comparison: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_r_squared_comparison.png
+[23:56:11] [SUCCESS] TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:56:11] [INFO] Creating λ vs frequency plot with validation...
+[23:56:11] [INFO] Tidal frequencies (10-30 µHz): CODE=5801±111, IGS=4311, ESA=3918
+[23:56:11] [INFO] Post-tidal frequencies (30-100 µHz): CODE=1505±529, IGS=1530, ESA=1472
+[23:56:11] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:56:11] [WARNING] Spatial scale transition: 3.9× (CODE) vs manuscript claim 2.4×
+[23:56:11] [SUCCESS] Saved λ vs frequency: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_lambda_vs_frequency.png
+[23:56:11] [WARNING] 
+============================================================
+[23:56:11] [WARNING] MANUSCRIPT CONSISTENCY CHECK
+[23:56:11] [WARNING] ============================================================
+[23:56:11] [INFO] Tidal frequencies (10-30 µHz): 4677 ± 811 km
+[23:56:11] [INFO] Post-tidal frequencies (30-100 µHz): 1502 ± 24 km
+[23:56:11] [INFO] Control band (1000-1500 µHz): 2149 km
+[23:56:11] [INFO] Spatial scale transition: 3.1× (cross-center average)
+[23:56:11] [INFO] Manuscript claims: 4,677 ± 954 km (tidal), 1,502 ± 289 km (post-tidal), 3.1× transition
+[23:56:11] [SUCCESS] ✅ ALL VALUES MATCH MANUSCRIPT - Data is consistent!
+[23:56:11] [INFO] Creating 4-panel spectral overview...
+[23:56:12] [SUCCESS] Saved spectral overview: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_spectral_overview.png
+[23:56:12] [INFO] Creating post-tidal emphasis figure...
+[23:56:13] [SUCCESS] Saved post-tidal emphasis: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_post_tidal_emphasis.png
+[23:56:13] [INFO] Creating amplitude spectral decay...
+[23:56:13] [SUCCESS] Saved amplitude decay: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_8_multiband_amplitude_decay.png
+[23:56:13] [PROCESS] Syncing figures to site folder with web optimizations...
+[23:56:13] [SUCCESS] ✓ Synced: step_4_8_multiband_r_squared_comparison.png (0.3MB)
+[23:56:13] [SUCCESS] ✓ Synced: step_4_8_multiband_lambda_vs_frequency.png (0.4MB)
+[23:56:13] [SUCCESS] ✓ Synced: step_4_8_multiband_spectral_overview.png (0.8MB)
+[23:56:13] [SUCCESS] ✓ Synced: step_4_8_multiband_post_tidal_emphasis.png (0.4MB)
+[23:56:13] [SUCCESS] ✓ Synced: step_4_8_multiband_amplitude_decay.png (0.3MB)
+[23:56:13] [PROCESS] Creating web-optimized versions...
+[23:56:14] [SUCCESS]   ✓ Optimized step_4_8_multiband_spectral_overview.png: 13.2% size reduction
+[23:56:14] [INFO] Figures synced to: /Users/matthewsmawfield/www/TEP-GNSS/site/public/figures
+[23:56:14] [SUCCESS] ================================================================================
+[23:56:14] [SUCCESS] STEP 4.8 COMPLETE - All multi-band visualizations generated with validation
+[23:56:14] [SUCCESS] ================================================================================
+[23:56:14] [INFO] Figures saved to: /Users/matthewsmawfield/www/TEP-GNSS/results/figures
+[23:56:14] [INFO] 
+[23:56:14] [INFO] Generated figures:
+[23:56:14] [INFO]   1. step_4_8_multiband_r_squared_comparison.png (TEP-FOCUSED)
+[23:56:14] [INFO]   2. step_4_8_multiband_lambda_vs_frequency.png (with validation)
+[23:56:14] [INFO]   3. step_4_8_multiband_spectral_overview.png
+[23:56:14] [INFO]   4. step_4_8_multiband_post_tidal_emphasis.png
+[23:56:14] [INFO]   5. step_4_8_multiband_amplitude_decay.png
+[23:56:14] [INFO] 
+[23:56:14] [SUCCESS] ⭐ TEP Band Performance: R² = 0.952 ± 0.022 (Primary Theoretical Prediction)
+[23:56:14] [INFO] 
+[23:56:14] [SUCCESS] All figures automatically synced to site/public/figures/

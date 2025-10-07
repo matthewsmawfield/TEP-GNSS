@@ -28,10 +28,10 @@ FREQUENCY BAND ANALYSIS:
 The analysis examines correlation strength across multiple frequency bands to characterize
 the spectral properties of GNSS clock timing correlations:
 
-- Tidal Bands (10-30 μHz): Principal lunar and solar gravitational forcing frequencies
-- Broad TEP Band (10-500 μHz): Primary frequency range of theoretical interest  
-- Post-Tidal (30-100 μHz): Transition region beyond primary tidal frequencies
-- Control Bands (>1000 μHz): High-frequency reference bands
+- Tidal Bands (10-30 µHz): Principal lunar and solar gravitational forcing frequencies
+- Broad TEP Band (10-500 µHz): Primary frequency range of theoretical interest  
+- Post-Tidal (30-100 µHz): Transition region beyond primary tidal frequencies
+- Control Bands (>1000 µHz): High-frequency reference bands
 
 The φ-field couples universally to matter via A(φ), with gravitational forcing 
 driving spatial φ-field variations that modulate atomic clock rates across the 
@@ -92,24 +92,24 @@ Algorithm (IDENTICAL TO STEP 2.0):
 
 Frequency Bands (Default Analysis):
 ===================================
-- Primary TEP Band:      10-500 μHz    (periods: 28 hours - 33 minutes)
-- Diurnal Tides:         10-15 μHz     (periods: 18.5-27.8 hours)
-- Semidiurnal Tides:     20-30 μHz     (periods: 9.3-13.9 hours)
-- Intermediate 1:        500-1000 μHz  (periods: 17-33 minutes)
-- Intermediate 2:        100-500 μHz   (periods: 33 min - 2.8 hours)
-- Control 1:             1000-2000 μHz (periods: 8-17 minutes)
+- Primary TEP Band:      10-500 µHz    (periods: 28 hours - 33 minutes)
+- Diurnal Tides:         10-15 µHz     (periods: 18.5-27.8 hours)
+- Semidiurnal Tides:     20-30 µHz     (periods: 9.3-13.9 hours)
+- Intermediate 1:        500-1000 µHz  (periods: 17-33 minutes)
+- Intermediate 2:        100-500 µHz   (periods: 33 min - 2.8 hours)
+- Control 1:             1000-2000 µHz (periods: 8-17 minutes)
 - Control 2-4, High Freq: Additional control bands for systematic effect assessment
 
 EXPECTED VALIDATION OUTCOMES:
 ============================
 **OBSERVED PATTERN** (IGS Combined analysis):
-- Tidal Semidiurnal (20-30 μHz):  R² = 0.970, λ = 4701 km  (strongest correlation)
-- TEP Full Band (10-500 μHz):     R² = 0.966, λ = 3764 km  
-- Tidal Diurnal (10-20 μHz):      R² = 0.954, λ = 3920 km
-- Post-Tidal (30-40 μHz):         R² = 0.935, λ = 2453 km  (gradual rolloff begins)
-- Post-Tidal (40-50 μHz):         R² = 0.832, λ = 1409 km  (continued rolloff)
-- Intermediate (100-500 μHz):      R² = 0.625-0.864        (moderate signal strength)
-- Control (1000-1500 μHz):        R² = 0.613, λ = 2386 km  (non-zero signal persists)
+- Tidal Semidiurnal (20-30 µHz):  R² = 0.970, λ = 4701 km  (strongest correlation)
+- TEP Full Band (10-500 µHz):     R² = 0.966, λ = 3764 km  
+- Tidal Diurnal (10-20 µHz):      R² = 0.954, λ = 3920 km
+- Post-Tidal (30-40 µHz):         R² = 0.935, λ = 2453 km  (gradual rolloff begins)
+- Post-Tidal (40-50 µHz):         R² = 0.832, λ = 1409 km  (continued rolloff)
+- Intermediate (100-500 µHz):      R² = 0.625-0.864        (moderate signal strength)
+- Control (1000-1500 µHz):        R² = 0.613, λ = 2386 km  (non-zero signal persists)
 
 **SPECTRAL CHARACTERISTICS:**
 The observed correlation pattern exhibits:
@@ -548,7 +548,7 @@ FREQUENCY_BANDS = {
     # ============================================================================
     'tep_band': {
         'f1': 1e-5, 'f2': 5e-4, 
-        'name': 'TEP Band (10-500 μHz)', 
+        'name': 'TEP Band (10-500 µHz)', 
         'expected': 'strong',
         'bandwidth_microhz': 490,
         'description': 'Primary TEP prediction frequency range serving as reference baseline'
@@ -556,21 +556,21 @@ FREQUENCY_BANDS = {
     
     # ============================================================================
     # TIDAL FREQUENCY BANDS - Assessment of Gravitational Forcing Contributions
-    # Standardized 10 μHz bandwidth for statistical comparison
+    # Standardized 10 µHz bandwidth for statistical comparison
     # ============================================================================
     'tidal_diurnal': {
         'f1': 1.0e-5, 'f2': 2.0e-5,
-        'name': 'Diurnal Tides (10-20 μHz)', 
+        'name': 'Diurnal Tides (10-20 µHz)', 
         'expected': 'strongest_if_tidal_dominated',
         'bandwidth_microhz': 10,
-        'description': 'Principal diurnal constituents: K1 (11.55 μHz), O1 (13.94 μHz), P1 (14.96 μHz)'
+        'description': 'Principal diurnal constituents: K1 (11.55 µHz), O1 (13.94 µHz), P1 (14.96 µHz)'
     },
     'tidal_semidiurnal': {
         'f1': 2.0e-5, 'f2': 3.0e-5,
-        'name': 'Semidiurnal Tides (20-30 μHz)', 
+        'name': 'Semidiurnal Tides (20-30 µHz)', 
         'expected': 'strongest_if_tidal_dominated',
         'bandwidth_microhz': 10,
-        'description': 'Principal semidiurnal constituents: M2 (22.81 μHz), S2 (23.15 μHz), N2 (22.13 μHz)'
+        'description': 'Principal semidiurnal constituents: M2 (22.81 µHz), S2 (23.15 µHz), N2 (22.13 µHz)'
     },
     
     # ============================================================================
@@ -579,28 +579,28 @@ FREQUENCY_BANDS = {
     # ============================================================================
     'post_tidal_30_40': {
         'f1': 3.0e-5, 'f2': 4.0e-5,
-        'name': 'Post-Tidal 30-40 μHz', 
+        'name': 'Post-Tidal 30-40 µHz', 
         'expected': 'weak_if_tidal_strong_if_broadband',
         'bandwidth_microhz': 10,
         'description': 'First transition band beyond primary tidal frequencies'
     },
     'post_tidal_40_50': {
         'f1': 4.0e-5, 'f2': 5.0e-5,
-        'name': 'Post-Tidal 40-50 μHz', 
+        'name': 'Post-Tidal 40-50 µHz', 
         'expected': 'weak_if_tidal_strong_if_broadband',
         'bandwidth_microhz': 10,
         'description': 'CRITICAL: Confirms post-tidal transition pattern'
     },
     'post_tidal_50_75': {
         'f1': 5.0e-5, 'f2': 7.5e-5,
-        'name': 'Post-Tidal 50-75 μHz', 
+        'name': 'Post-Tidal 50-75 µHz', 
         'expected': 'weak_if_tidal_moderate_if_broadband',
         'bandwidth_microhz': 25,
         'description': 'Extended post-tidal region'
     },
     'post_tidal_75_100': {
         'f1': 7.5e-5, 'f2': 1.0e-4,
-        'name': 'Post-Tidal 75-100 μHz', 
+        'name': 'Post-Tidal 75-100 µHz', 
         'expected': 'weak_if_tidal_moderate_if_broadband',
         'bandwidth_microhz': 25,
         'description': 'Final post-tidal transition test'
@@ -611,21 +611,21 @@ FREQUENCY_BANDS = {
     # ============================================================================
     'intermediate_100_200': {
         'f1': 1.0e-4, 'f2': 2.0e-4,
-        'name': 'Intermediate 100-200 μHz', 
+        'name': 'Intermediate 100-200 µHz', 
         'expected': 'moderate',
         'bandwidth_microhz': 100,
         'description': 'Mid-range TEP signal assessment'
     },
     'intermediate_200_350': {
         'f1': 2.0e-4, 'f2': 3.5e-4,
-        'name': 'Intermediate 200-350 μHz', 
+        'name': 'Intermediate 200-350 µHz', 
         'expected': 'moderate',
         'bandwidth_microhz': 150,
         'description': 'Upper mid-range TEP signal'
     },
     'intermediate_350_500': {
         'f1': 3.5e-4, 'f2': 5.0e-4,
-        'name': 'Intermediate 350-500 μHz', 
+        'name': 'Intermediate 350-500 µHz', 
         'expected': 'moderate',
         'bandwidth_microhz': 150,
         'description': 'Upper TEP band boundary'
@@ -636,14 +636,14 @@ FREQUENCY_BANDS = {
     # ============================================================================
     'transition_500_750': {
         'f1': 5.0e-4, 'f2': 7.5e-4,
-        'name': 'Transition 500-750 μHz', 
+        'name': 'Transition 500-750 µHz', 
         'expected': 'weak_to_moderate',
         'bandwidth_microhz': 250,
         'description': 'Immediate post-TEP transition'
     },
     'transition_750_1000': {
         'f1': 7.5e-4, 'f2': 1.0e-3,
-        'name': 'Transition 750-1000 μHz', 
+        'name': 'Transition 750-1000 µHz', 
         'expected': 'weak',
         'bandwidth_microhz': 250,
         'description': 'Final transition before control bands'
@@ -654,14 +654,14 @@ FREQUENCY_BANDS = {
     # ============================================================================
     'control_1000_1500': {
         'f1': 1.0e-3, 'f2': 1.5e-3,
-        'name': 'Control 1000-1500 μHz', 
+        'name': 'Control 1000-1500 µHz', 
         'expected': 'weak_systematics_only',
         'bandwidth_microhz': 500,
         'description': 'Primary control band for quantifying systematic instrumental contributions'
     },
     'control_2000_3000': {
         'f1': 2.0e-3, 'f2': 3.0e-3,
-        'name': 'Control 2000-3000 μHz', 
+        'name': 'Control 2000-3000 µHz', 
         'expected': 'weak_systematics_only',
         'bandwidth_microhz': 1000,
         'description': 'High-frequency control band for systematic effect consistency verification'
@@ -670,20 +670,20 @@ FREQUENCY_BANDS = {
 
 # Legacy frequency bands for backward compatibility
 FREQUENCY_BANDS_LEGACY = {
-    'tep_band': {'f1': 1e-5, 'f2': 5e-4, 'name': 'TEP Band (10-500 μHz)', 'expected': 'strong'},
-    'control_1': {'f1': 1e-3, 'f2': 2e-3, 'name': 'Control 1 (1000-2000 μHz)', 'expected': 'weak'},
-    'control_2': {'f1': 2e-3, 'f2': 3e-3, 'name': 'Control 2 (2000-3000 μHz)', 'expected': 'weak'},
-    'intermediate': {'f1': 5e-4, 'f2': 1e-3, 'name': 'Intermediate (500-1000 μHz)', 'expected': 'moderate'},
-    'control_3': {'f1': 3e-3, 'f2': 4e-3, 'name': 'Control 3 (3000-4000 μHz)', 'expected': 'weak'}
+    'tep_band': {'f1': 1e-5, 'f2': 5e-4, 'name': 'TEP Band (10-500 µHz)', 'expected': 'strong'},
+    'control_1': {'f1': 1e-3, 'f2': 2e-3, 'name': 'Control 1 (1000-2000 µHz)', 'expected': 'weak'},
+    'control_2': {'f1': 2e-3, 'f2': 3e-3, 'name': 'Control 2 (2000-3000 µHz)', 'expected': 'weak'},
+    'intermediate': {'f1': 5e-4, 'f2': 1e-3, 'name': 'Intermediate (500-1000 µHz)', 'expected': 'moderate'},
+    'control_3': {'f1': 3e-3, 'f2': 4e-3, 'name': 'Control 3 (3000-4000 µHz)', 'expected': 'weak'}
 }
 
 # Default single band parameters (backward compatibility)
-CONTROL_F1 = 1e-3  # 1000 μHz lower bound
-CONTROL_F2 = 2e-3  # 2000 μHz upper bound
+CONTROL_F1 = 1e-3  # 1000 µHz lower bound
+CONTROL_F2 = 2e-3  # 2000 µHz upper bound
 
 # TEP band parameters for comparison (from Step 2.0)
-TEP_F1 = 1e-5  # 10 μHz lower bound
-TEP_F2 = 5e-4  # 500 μHz upper bound
+TEP_F1 = 1e-5  # 10 µHz lower bound
+TEP_F2 = 5e-4  # 500 µHz upper bound
 
 
 def compute_multi_band_correlations(series1: np.ndarray, series2: np.ndarray, fs: float,
@@ -1508,7 +1508,7 @@ def run_multiband_analysis(ac: str, bands: Dict = None, use_legacy_bands: bool =
     for band_id, config in bands.items():
         f1_micro = config['f1'] * 1e6
         f2_micro = config['f2'] * 1e6
-        print_status(f"  {band_id}: {f1_micro:.0f}-{f2_micro:.0f} μHz ({config['name']})", "INFO")
+        print_status(f"  {band_id}: {f1_micro:.0f}-{f2_micro:.0f} µHz ({config['name']})", "INFO")
     
     # Setup data paths
     data_dir = PROJECT_ROOT / 'data' / 'raw' / ac
@@ -1983,7 +1983,7 @@ def run_control_band_analysis(ac: str, f1: float = CONTROL_F1, f2: float = CONTR
     """
     Run control band analysis with performance optimizations and resume functionality.
     """
-    print_status(f"Running control band analysis for {ac.upper()} ({f1*1e6:.0f}-{f2*1e6:.0f} μHz)", "PROCESS")
+    print_status(f"Running control band analysis for {ac.upper()} ({f1*1e6:.0f}-{f2*1e6:.0f} µHz)", "PROCESS")
     
     # Setup checkpoint system
     checkpoint_dir = PROJECT_ROOT / "results/tmp"
@@ -2057,7 +2057,7 @@ def run_control_band_analysis(ac: str, f1: float = CONTROL_F1, f2: float = CONTR
         n_workers = TEPConfig.get_worker_count()
         
         print_status(f"Using {n_workers} parallel workers ({mp.cpu_count()} CPU cores available)", "INFO")
-        print_status(f"Frequency band: {f1*1e6:.0f}-{f2*1e6:.0f} μHz", "INFO")
+        print_status(f"Frequency band: {f1*1e6:.0f}-{f2*1e6:.0f} µHz", "INFO")
         print_status("Starting optimized parallel processing...", "PROCESS")
         
         # Process files in batches with enhanced memory management and checkpointing
@@ -2323,7 +2323,7 @@ def create_comparison_figure(control_results: Dict, comparison: Dict, ac: str):
     ax1.set_ylabel('Correlation', fontsize=12)
     ax1.set_title(f'Control Band Analysis ({ac.upper()})\n' + 
                   f"{control_results['frequency_band']['f1_microhz']:.0f}-" +
-                  f"{control_results['frequency_band']['f2_microhz']:.0f} μHz", 
+                  f"{control_results['frequency_band']['f2_microhz']:.0f} µHz", 
                   fontsize=14)
     ax1.legend(fontsize=10)
     ax1.grid(True, alpha=0.3)
@@ -2332,7 +2332,7 @@ def create_comparison_figure(control_results: Dict, comparison: Dict, ac: str):
     ax2 = axes[1]
     
     if comparison.get('comparison_available'):
-        bands = ['TEP Band\n(10-500 μHz)', 'Control Band\n(1000-2000 μHz)']
+        bands = ['TEP Band\n(10-500 µHz)', 'Control Band\n(1000-2000 µHz)']
         r_squared_values = [
             comparison['tep_band']['r_squared'],
             comparison['control_band']['r_squared']
@@ -2424,7 +2424,8 @@ def main():
         if args.single_band:
             args.multiband = False
     
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.6: Multi-Band Frequency Validation", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 3.6: Multi-Band Frequency Validation", "TITLE")
     
     if args.multiband:
         print_status("MULTI-BAND FREQUENCY SPECTRUM ANALYSIS", "INFO")
@@ -2444,12 +2445,12 @@ def main():
         for band_id, config in bands_to_analyze.items():
             f1_micro = config['f1'] * 1e6
             f2_micro = config['f2'] * 1e6
-            print_status(f"  {band_id}: {f1_micro:.0f}-{f2_micro:.0f} μHz ({config['name']})", "INFO")
+            print_status(f"  {band_id}: {f1_micro:.0f}-{f2_micro:.0f} µHz ({config['name']})", "INFO")
     else:
         print_status("Validating frequency specificity of TEP correlations", "INFO")
         print_status("METHODOLOGY: Identical to Step 2.0, only frequency band differs", "INFO")
-        print_status(f"  TEP Band (Step 2.0):     {TEP_F1*1e6:.0f}-{TEP_F2*1e6:.0f} μHz (10-500 μHz)", "INFO")
-        print_status(f"  Control Band (Step 3.6): {CONTROL_F1*1e6:.0f}-{CONTROL_F2*1e6:.0f} μHz (1000-2000 μHz)", "INFO")
+        print_status(f"  TEP Band (Step 2.0):     {TEP_F1*1e6:.0f}-{TEP_F2*1e6:.0f} µHz (10-500 µHz)", "INFO")
+        print_status(f"  Control Band (Step 3.6): {CONTROL_F1*1e6:.0f}-{CONTROL_F2*1e6:.0f} µHz (1000-2000 µHz)", "INFO")
         print_status(f"  Same algorithm: cos(phase(CSD)) with circular phase statistics", "INFO")
         print_status(f"  Same binning: Logarithmic, 40 bins, 50-13000 km", "INFO")
         print_status(f"  Same model: C(r) = A*exp(-r/λ) + C₀", "INFO")
@@ -2572,12 +2573,12 @@ def main():
                         bw_norm_r2 = spectral_results.get('bandwidth_normalized_r_squared', {})
                         if raw_r2 and bw_norm_r2:
                             print_status(f"\n  Bandwidth Normalization:", "INFO")
-                            print_status(f"    (R² per μHz - assesses signal density)", "INFO")
+                            print_status(f"    (R² per µHz - assesses signal density)", "INFO")
                             for band_id in ['tep_band', 'tidal_diurnal', 'tidal_semidiurnal', 'control_1']:
                                 raw = raw_r2.get(band_id)
                                 norm = bw_norm_r2.get(band_id)
                                 if raw is not None and norm is not None:
-                                    print_status(f"    {band_id}: R²={raw:.4f} → {norm:.6f} per μHz", "INFO")
+                                    print_status(f"    {band_id}: R²={raw:.4f} → {norm:.6f} per µHz", "INFO")
                     
                     # Scientific interpretation
                     print_status(f"\nSPECTRAL CHARACTERIZATION:", "INFO")
@@ -2617,8 +2618,8 @@ def main():
                     print_status("  Tidal Component Analysis:", "INFO")
                     if tidal_diurnal_r2 > 0:
                         diurnal_diff = abs(tep_r2 - tidal_diurnal_r2)
-                        print_status(f"    Diurnal Tidal Band (10-20 μHz): R² = {tidal_diurnal_r2:.3f}", "INFO")
-                        print_status(f"    TEP Band (10-500 μHz): R² = {tep_r2:.3f}", "INFO")
+                        print_status(f"    Diurnal Tidal Band (10-20 µHz): R² = {tidal_diurnal_r2:.3f}", "INFO")
+                        print_status(f"    TEP Band (10-500 µHz): R² = {tep_r2:.3f}", "INFO")
                         print_status(f"    Absolute Difference: ΔR² = {diurnal_diff:.3f}", "INFO")
                         if diurnal_diff < 0.1:
                             print_status("    Assessment: Diurnal tidal correlations are statistically comparable to TEP band correlations", "INFO")
@@ -2629,8 +2630,8 @@ def main():
                     
                     if tidal_semidiurnal_r2 > 0:
                         semidiurnal_diff = abs(tep_r2 - tidal_semidiurnal_r2)
-                        print_status(f"    Semidiurnal Tides (20-30 μHz): R² = {tidal_semidiurnal_r2:.3f}", "INFO")
-                        print_status(f"    TEP Band (10-500 μHz): R² = {tep_r2:.3f}", "INFO")
+                        print_status(f"    Semidiurnal Tides (20-30 µHz): R² = {tidal_semidiurnal_r2:.3f}", "INFO")
+                        print_status(f"    TEP Band (10-500 µHz): R² = {tep_r2:.3f}", "INFO")
                         print_status(f"    Difference: ΔR² = {semidiurnal_diff:.3f}", "INFO")
                         if semidiurnal_diff < 0.1:
                             print_status("    Interpretation: Semidiurnal tidal correlations are comparable to TEP band", "INFO")
@@ -2642,8 +2643,8 @@ def main():
                     print_status("  Control Band Analysis:", "INFO")
                     if control_r2 > 0:
                         control_diff = abs(tep_r2 - control_r2)
-                        print_status(f"    Control Band (1000-2000 μHz): R² = {control_r2:.3f}", "INFO")
-                        print_status(f"    TEP Band (10-500 μHz): R² = {tep_r2:.3f}", "INFO")
+                        print_status(f"    Control Band (1000-2000 µHz): R² = {control_r2:.3f}", "INFO")
+                        print_status(f"    TEP Band (10-500 µHz): R² = {tep_r2:.3f}", "INFO")
                         print_status(f"    Difference: ΔR² = {control_diff:.3f}", "INFO")
                         if control_r2 < 0.3:
                             print_status("    Interpretation: Control band shows weak correlations", "INFO")

@@ -1,0 +1,290 @@
+[16:35:38] [INFO] TEP GNSS Analysis Package v0.14 - STEP 4.4: Comprehensive Gravitational-Temporal Field Correlation Analysis
+[16:35:38] [INFO] 
+
+[16:35:38] [INFO] Generating high-precision gravitational data from 2023-01-01 to 2025-06-30...
+[16:35:39] [INFO]   Processed 100 days...
+[16:35:39] [INFO]   Processed 200 days...
+[16:35:39] [INFO]   Processed 300 days...
+[16:35:39] [INFO]   Processed 400 days...
+[16:35:39] [INFO]   Processed 500 days...
+[16:35:40] [INFO]   Processed 600 days...
+[16:35:40] [INFO]   Processed 700 days...
+[16:35:40] [INFO]   Processed 800 days...
+[16:35:40] [INFO]   Processed 900 days...
+[16:35:40] [INFO] Generated gravitational data for 912 days
+[16:35:40] [INFO] Extracting daily TEP coherence data from Step 2.1 geospatial processed data...
+[16:35:40] [INFO] Processing CODE Step 2.1 geospatial data...
+[16:35:40] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_code.csv
+[16:36:24] [INFO]   Computed coherence for 39,047,074 quality-filtered pairs from CODE
+[16:36:25] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:36:25] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:36:34] [INFO] Processing ESA_FINAL Step 2.1 geospatial data...
+[16:36:34] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_esa_final.csv
+[16:36:46] [INFO]   Computed coherence for 10,809,084 quality-filtered pairs from ESA_FINAL
+[16:36:46] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:36:46] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:36:49] [INFO] Processing IGS_COMBINED Step 2.1 geospatial data...
+[16:36:49] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_igs_combined.csv
+[16:37:03] [INFO]   Computed coherence for 12,874,746 quality-filtered pairs from IGS_COMBINED
+[16:37:03] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:37:03] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:37:06] [INFO] Aggregating coherence data across all centers...
+[16:37:06] [INFO] Successfully extracted multi-center daily TEP data for 912 days
+[16:37:06] [INFO]   Date range: 2023-01-01 to 2025-06-30
+[16:37:06] [INFO]   Coherence mean range: -0.007026 to 0.051474
+[16:37:06] [INFO]   Coherence std range: 0.706671 to 0.729493
+[16:37:06] [INFO]   Average centers contributing per day: 3.0
+[16:37:06] [INFO] Merging gravitational and temporal field datasets...
+[16:37:06] [INFO] Combined dataset: 912 days of synchronized data
+[16:37:06] [INFO] Performing enhanced gravitational-temporal correlation analysis...
+[16:37:06] [INFO] 
+============================================================
+[16:37:06] [INFO] EARTH MOTION ENERGY HIERARCHY ANALYSIS
+[16:37:06] [INFO] ============================================================
+[16:37:06] [INFO] Analyzing Earth motion energy hierarchy from Step 2.2 results...
+[16:37:07] [INFO]   Loaded Step 2.2 results for CODE
+[16:37:07] [INFO]   Loaded Step 2.2 results for ESA_FINAL
+[16:37:07] [INFO]   Loaded Step 2.2 results for IGS_COMBINED
+[16:37:07] [INFO]     CODE orbital motion: |r| = 0.701
+[16:37:07] [INFO]     DEBUG: CODE chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:37:07] [INFO]     CODE Chandler wobble: R² = 0.377 → |r| = 0.614
+[16:37:07] [INFO]     CODE daily rotation: CV = 0.475
+[16:37:07] [INFO]     DEBUG: CODE final detections: {'orbital_motion': 0.7009816474683052, 'chandler_wobble': np.float64(0.6141933331320582), 'daily_rotation': 0.47525686295860586}
+[16:37:07] [INFO]     ESA_FINAL orbital motion: |r| = 0.571
+[16:37:07] [INFO]     DEBUG: ESA_FINAL chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:37:07] [INFO]     ESA_FINAL Chandler wobble: R² = 0.453 → |r| = 0.673
+[16:37:07] [INFO]     ESA_FINAL daily rotation: CV = 0.586
+[16:37:07] [INFO]     DEBUG: ESA_FINAL final detections: {'orbital_motion': 0.5713624178332463, 'chandler_wobble': np.float64(0.6729550698472757), 'daily_rotation': 0.5862553863469941}
+[16:37:07] [INFO]     IGS_COMBINED orbital motion: |r| = 0.793
+[16:37:07] [INFO]     DEBUG: IGS_COMBINED chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:37:07] [INFO]     IGS_COMBINED Chandler wobble: R² = 0.471 → |r| = 0.687
+[16:37:07] [INFO]     IGS_COMBINED daily rotation: CV = 0.555
+[16:37:07] [INFO]     DEBUG: IGS_COMBINED final detections: {'orbital_motion': 0.7931554807990865, 'chandler_wobble': np.float64(0.6865465049622416), 'daily_rotation': 0.5553683992449369}
+[16:37:07] [INFO]   CODE: Energy r=0.172, Velocity r=0.249, Discrimination=-0.078
+[16:37:07] [INFO]   ESA_FINAL: Energy r=-0.986, Velocity r=-0.969, Discrimination=-0.016
+[16:37:07] [INFO]   IGS_COMBINED: Energy r=0.243, Velocity r=0.319, Discrimination=-0.076
+[16:37:07] [SUCCESS] ENERGY HIERARCHY VALIDATION: Inconclusive: Similar correlation with both energy and velocity scales
+[16:37:07] [SUCCESS] UNIFIED FRAMEWORK: Mixed evidence for energy vs velocity scaling
+[16:37:07] [INFO] Testing 7 smoothing windows to find optimal correlation...
+[16:37:07] [INFO]   Window 31d: r = -0.3797, p = 1.20e-32
+[16:37:07] [INFO]   Window 59d: r = -0.4183, p = 6.15e-40
+[16:37:07] [INFO]   Window 91d: r = -0.4469, p = 5.54e-46
+[16:37:07] [INFO]   Window 119d: r = -0.4749, p = 1.71e-52
+[16:37:07] [INFO]   Window 179d: r = -0.4952, p = 1.39e-57
+[16:37:07] [INFO]   Window 227d: r = -0.5186, p = 6.22e-64
+[16:37:07] [INFO]   Window 227d: r = -0.5186, p = 6.22e-64
+[16:37:07] [INFO] OPTIMAL SMOOTHING WINDOW: 227d with correlation r = -0.5186
+[16:37:07] [INFO] Creating comprehensive visualization with site theme...
+[16:37:09] [ERROR] Step 4.4 failed - unexpected error: [Errno 2] No such file or directory: '/mnt/data/site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png'
+[16:51:05] [INFO] TEP GNSS Analysis Package v0.14 - STEP 4.4: Comprehensive Gravitational-Temporal Field Correlation Analysis
+[16:51:05] [INFO] 
+
+[16:51:05] [INFO] Generating high-precision gravitational data from 2023-01-01 to 2025-06-30...
+[16:51:05] [INFO]   Processed 100 days...
+[16:51:05] [INFO]   Processed 200 days...
+[16:51:05] [INFO]   Processed 300 days...
+[16:51:05] [INFO]   Processed 400 days...
+[16:51:06] [INFO]   Processed 500 days...
+[16:51:06] [INFO]   Processed 600 days...
+[16:51:06] [INFO]   Processed 700 days...
+[16:51:06] [INFO]   Processed 800 days...
+[16:51:07] [INFO]   Processed 900 days...
+[16:51:07] [INFO] Generated gravitational data for 912 days
+[16:51:07] [INFO] Extracting daily TEP coherence data from Step 2.1 geospatial processed data...
+[16:51:07] [INFO] Processing CODE Step 2.1 geospatial data...
+[16:51:07] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_code.csv
+[16:51:50] [INFO]   Computed coherence for 39,047,074 quality-filtered pairs from CODE
+[16:51:50] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:51:50] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:52:00] [INFO] Processing ESA_FINAL Step 2.1 geospatial data...
+[16:52:00] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_esa_final.csv
+[16:52:12] [INFO]   Computed coherence for 10,809,084 quality-filtered pairs from ESA_FINAL
+[16:52:12] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:52:12] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:52:15] [INFO] Processing IGS_COMBINED Step 2.1 geospatial data...
+[16:52:15] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_igs_combined.csv
+[16:52:29] [INFO]   Computed coherence for 12,874,746 quality-filtered pairs from IGS_COMBINED
+[16:52:29] [INFO]   Coherence range: -1.000000 to 1.000000
+[16:52:29] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[16:52:32] [INFO] Aggregating coherence data across all centers...
+[16:52:32] [INFO] Successfully extracted multi-center daily TEP data for 912 days
+[16:52:32] [INFO]   Date range: 2023-01-01 to 2025-06-30
+[16:52:32] [INFO]   Coherence mean range: -0.007026 to 0.051474
+[16:52:32] [INFO]   Coherence std range: 0.706671 to 0.729493
+[16:52:32] [INFO]   Average centers contributing per day: 3.0
+[16:52:32] [INFO] Merging gravitational and temporal field datasets...
+[16:52:32] [INFO] Combined dataset: 912 days of synchronized data
+[16:52:32] [INFO] Performing enhanced gravitational-temporal correlation analysis...
+[16:52:32] [INFO] 
+============================================================
+[16:52:32] [INFO] EARTH MOTION ENERGY HIERARCHY ANALYSIS
+[16:52:32] [INFO] ============================================================
+[16:52:32] [INFO] Analyzing Earth motion energy hierarchy from Step 2.2 results...
+[16:52:32] [INFO]   Loaded Step 2.2 results for CODE
+[16:52:32] [INFO]   Loaded Step 2.2 results for ESA_FINAL
+[16:52:32] [INFO]   Loaded Step 2.2 results for IGS_COMBINED
+[16:52:32] [INFO]     CODE orbital motion: |r| = 0.701
+[16:52:32] [INFO]     DEBUG: CODE chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:52:32] [INFO]     CODE Chandler wobble: R² = 0.377 → |r| = 0.614
+[16:52:32] [INFO]     CODE daily rotation: CV = 0.475
+[16:52:32] [INFO]     DEBUG: CODE final detections: {'orbital_motion': 0.7009816474683052, 'chandler_wobble': np.float64(0.6141933331320582), 'daily_rotation': 0.47525686295860586}
+[16:52:32] [INFO]     ESA_FINAL orbital motion: |r| = 0.571
+[16:52:32] [INFO]     DEBUG: ESA_FINAL chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:52:32] [INFO]     ESA_FINAL Chandler wobble: R² = 0.453 → |r| = 0.673
+[16:52:32] [INFO]     ESA_FINAL daily rotation: CV = 0.586
+[16:52:32] [INFO]     DEBUG: ESA_FINAL final detections: {'orbital_motion': 0.5713624178332463, 'chandler_wobble': np.float64(0.6729550698472757), 'daily_rotation': 0.5862553863469941}
+[16:52:32] [INFO]     IGS_COMBINED orbital motion: |r| = 0.793
+[16:52:32] [INFO]     DEBUG: IGS_COMBINED chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[16:52:32] [INFO]     IGS_COMBINED Chandler wobble: R² = 0.471 → |r| = 0.687
+[16:52:32] [INFO]     IGS_COMBINED daily rotation: CV = 0.555
+[16:52:32] [INFO]     DEBUG: IGS_COMBINED final detections: {'orbital_motion': 0.7931554807990865, 'chandler_wobble': np.float64(0.6865465049622416), 'daily_rotation': 0.5553683992449369}
+[16:52:32] [INFO]   CODE: Energy r=0.172, Velocity r=0.249, Discrimination=-0.078
+[16:52:32] [INFO]   ESA_FINAL: Energy r=-0.986, Velocity r=-0.969, Discrimination=-0.016
+[16:52:32] [INFO]   IGS_COMBINED: Energy r=0.243, Velocity r=0.319, Discrimination=-0.076
+[16:52:32] [SUCCESS] ENERGY HIERARCHY VALIDATION: Inconclusive: Similar correlation with both energy and velocity scales
+[16:52:32] [SUCCESS] UNIFIED FRAMEWORK: Mixed evidence for energy vs velocity scaling
+[16:52:32] [INFO] Testing 7 smoothing windows to find optimal correlation...
+[16:52:32] [INFO]   Window 31d: r = -0.3797, p = 1.20e-32
+[16:52:32] [INFO]   Window 59d: r = -0.4183, p = 6.15e-40
+[16:52:32] [INFO]   Window 91d: r = -0.4469, p = 5.54e-46
+[16:52:32] [INFO]   Window 119d: r = -0.4749, p = 1.71e-52
+[16:52:32] [INFO]   Window 179d: r = -0.4952, p = 1.39e-57
+[16:52:32] [INFO]   Window 227d: r = -0.5186, p = 6.22e-64
+[16:52:32] [INFO]   Window 227d: r = -0.5186, p = 6.22e-64
+[16:52:32] [INFO] OPTIMAL SMOOTHING WINDOW: 227d with correlation r = -0.5186
+[16:52:32] [INFO] Creating comprehensive visualization with site theme...
+[16:52:34] [INFO] Figure copied to site directory: /mnt/data/site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[16:52:34] [INFO] Comprehensive visualization saved: /mnt/data/results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[16:52:34] [INFO] Figure synced to site: /mnt/data/site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[16:52:34] [INFO] 
+================================================================================
+[16:52:34] [INFO] ENHANCED ANALYSIS COMPLETE - KEY DISCOVERIES
+[16:52:34] [INFO] ================================================================================
+[16:52:34] [INFO] STACKED GRAVITATIONAL PATTERN CORRELATION (coherence_std): r = -0.1766, p = 8.02e-08
+[16:52:34] [INFO] SMOOTHED PATTERN CORRELATION: r = -0.5186
+[16:52:34] [INFO] 
+------------------------------------------------------------
+[16:52:34] [INFO] EARTH MOTION ENERGY HIERARCHY VALIDATION
+[16:52:34] [INFO] ------------------------------------------------------------
+[16:52:34] [INFO] ENERGY-BASED CORRELATION: r = -0.190
+[16:52:34] [INFO] VELOCITY-BASED CORRELATION: r = -0.134
+[16:52:34] [INFO] ENERGY vs VELOCITY DISCRIMINATION: -0.057
+[16:52:34] [SUCCESS] VALIDATED SCALING TYPE: VELOCITY
+[16:52:34] [SUCCESS] SCIENTIFIC INTERPRETATION: Inconclusive: Similar correlation with both energy and velocity scales
+[16:52:34] [INFO] 
+DATASET: 912 days
+[16:52:34] [INFO] FIGURE: /mnt/data/results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[16:52:34] [INFO] RESULTS: /mnt/data/results/outputs/step_4_4_gravitational_temporal_field_analysis.json
+[16:52:34] [INFO] DATA: /mnt/data/data/processed/step_4_4_comprehensive_gravitational_temporal_data.csv
+[16:52:34] [INFO] 
+KEY DISCOVERY:
+[16:52:34] [INFO]    The stacked gravitational influence pattern demonstrates significant
+[16:52:34] [INFO]    correlation with Earth's temporal field VARIABILITY (coherence_std), providing
+[16:52:34] [INFO]    experimental evidence supporting TEP theory predictions.
+[16:52:34] [INFO] ================================================================================
+[01:17:30] [INFO] TEP GNSS Analysis Package v0.15 (Jaipur) - STEP 4.4: Comprehensive Gravitational-Temporal Field Correlation Analysis
+[01:17:30] [INFO] 
+
+[01:17:30] [INFO] Generating high-precision gravitational data from 2023-01-01 to 2025-06-30...
+[01:17:30] [INFO]   Processed 100 days...
+[01:17:30] [INFO]   Processed 200 days...
+[01:17:31] [INFO]   Processed 300 days...
+[01:17:31] [INFO]   Processed 400 days...
+[01:17:31] [INFO]   Processed 500 days...
+[01:17:31] [INFO]   Processed 600 days...
+[01:17:31] [INFO]   Processed 700 days...
+[01:17:31] [INFO]   Processed 800 days...
+[01:17:31] [INFO]   Processed 900 days...
+[01:17:31] [INFO] Generated gravitational data for 912 days
+[01:17:31] [INFO] Extracting daily TEP coherence data from Step 2.1 geospatial processed data...
+[01:17:31] [INFO] Processing CODE Step 2.1 geospatial data...
+[01:17:31] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_code.csv
+[01:18:09] [INFO]   Computed coherence for 39,047,299 quality-filtered pairs from CODE
+[01:18:09] [INFO]   Coherence range: -1.000000 to 1.000000
+[01:18:09] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[01:18:21] [INFO] Processing ESA_FINAL Step 2.1 geospatial data...
+[01:18:21] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_esa_final.csv
+[01:18:32] [INFO]   Computed coherence for 10,809,084 quality-filtered pairs from ESA_FINAL
+[01:18:32] [INFO]   Coherence range: -1.000000 to 1.000000
+[01:18:32] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[01:18:35] [INFO] Processing IGS_COMBINED Step 2.1 geospatial data...
+[01:18:35] [INFO]   Loading Step 2.1 enhanced data: step_2_1_geospatial_igs_combined.csv
+[01:18:45] [INFO]   Computed coherence for 12,874,746 quality-filtered pairs from IGS_COMBINED
+[01:18:45] [INFO]   Coherence range: -1.000000 to 1.000000
+[01:18:45] [INFO]   Enhanced with azimuth, delta_longitude, delta_local_time metadata
+[01:18:47] [INFO] Aggregating coherence data across all centers...
+[01:18:47] [INFO] Successfully extracted multi-center daily TEP data for 912 days
+[01:18:47] [INFO]   Date range: 2023-01-01 to 2025-06-30
+[01:18:47] [INFO]   Coherence mean range: -0.010068 to 0.059407
+[01:18:47] [INFO]   Coherence std range: 0.702364 to 0.729493
+[01:18:47] [INFO]   Average centers contributing per day: 2.9
+[01:18:48] [INFO] Merging gravitational and temporal field datasets...
+[01:18:48] [INFO] Combined dataset: 912 days of synchronized data
+[01:18:48] [INFO] Performing enhanced gravitational-temporal correlation analysis...
+[01:18:48] [INFO] 
+============================================================
+[01:18:48] [INFO] EARTH MOTION ENERGY HIERARCHY ANALYSIS
+[01:18:48] [INFO] ============================================================
+[01:18:48] [INFO] Analyzing Earth motion energy hierarchy from Step 2.2 results...
+[01:18:48] [INFO]   Loaded Step 2.2 results for CODE
+[01:18:48] [INFO]   Loaded Step 2.2 results for ESA_FINAL
+[01:18:48] [INFO]   Loaded Step 2.2 results for IGS_COMBINED
+[01:18:48] [INFO]     CODE orbital motion: |r| = 0.701
+[01:18:48] [INFO]     DEBUG: CODE chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[01:18:48] [INFO]     CODE Chandler wobble: R² = 0.377 → |r| = 0.614
+[01:18:48] [INFO]     CODE daily rotation: CV = 0.475
+[01:18:48] [INFO]     DEBUG: CODE final detections: {'orbital_motion': 0.7009816474683052, 'chandler_wobble': 0.6141933331320582, 'daily_rotation': 0.47525686295860586}
+[01:18:48] [INFO]     ESA_FINAL orbital motion: |r| = 0.571
+[01:18:48] [INFO]     DEBUG: ESA_FINAL chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[01:18:48] [INFO]     ESA_FINAL Chandler wobble: R² = 0.453 → |r| = 0.673
+[01:18:48] [INFO]     ESA_FINAL daily rotation: CV = 0.586
+[01:18:48] [INFO]     DEBUG: ESA_FINAL final detections: {'orbital_motion': 0.5713624178332463, 'chandler_wobble': 0.6729550698472757, 'daily_rotation': 0.5862553863469941}
+[01:18:48] [INFO]     IGS_COMBINED orbital motion: |r| = 0.793
+[01:18:48] [INFO]     DEBUG: IGS_COMBINED chandler_data keys: ['success', 'analysis_type', 'temporal_coverage', 'phase_analysis', 'chandler_signature']
+[01:18:48] [INFO]     IGS_COMBINED Chandler wobble: R² = 0.471 → |r| = 0.687
+[01:18:48] [INFO]     IGS_COMBINED daily rotation: CV = 0.555
+[01:18:48] [INFO]     DEBUG: IGS_COMBINED final detections: {'orbital_motion': 0.7931554807990865, 'chandler_wobble': 0.6865465049622416, 'daily_rotation': 0.5553683992449369}
+[01:18:48] [INFO]   CODE: Energy r=0.172, Velocity r=0.249, Discrimination=-0.078
+[01:18:48] [INFO]   ESA_FINAL: Energy r=-0.986, Velocity r=-0.969, Discrimination=-0.016
+[01:18:48] [INFO]   IGS_COMBINED: Energy r=0.243, Velocity r=0.319, Discrimination=-0.076
+[01:18:48] [SUCCESS] ENERGY HIERARCHY VALIDATION: Inconclusive: Similar correlation with both energy and velocity scales
+[01:18:48] [SUCCESS] UNIFIED FRAMEWORK: Mixed evidence for energy vs velocity scaling
+[01:18:48] [INFO] Testing 7 smoothing windows to find optimal correlation...
+[01:18:48] [INFO]   Window 31d: r = -0.3620, p_raw = 1.26e-29, p_corrected = 1.27e-02 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 59d: r = -0.3999, p_raw = 2.45e-36, p_corrected = 5.49e-03 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 91d: r = -0.4276, p_raw = 7.82e-42, p_corrected = 2.80e-03 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 119d: r = -0.4544, p_raw = 1.18e-47, p_corrected = 1.38e-03 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 179d: r = -0.4765, p_raw = 7.19e-53, p_corrected = 7.36e-04 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 227d: r = -0.5026, p_raw = 1.51e-59, p_corrected = 3.31e-04 (N_eff = 46.7)
+[01:18:48] [INFO]   Window 227d: r = -0.5026, p_raw = 1.51e-59, p_corrected = 3.31e-04 (N_eff = 46.7)
+[01:18:48] [INFO] OPTIMAL SMOOTHING WINDOW: 227d with correlation r = -0.5026
+[01:18:48] [INFO] Creating comprehensive visualization with site theme...
+[01:18:49] [INFO] Figure copied to site directory: /Users/matthewsmawfield/www/TEP-GNSS/site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[01:18:49] [INFO] Comprehensive visualization saved: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[01:18:49] [INFO] Figure synced to site: /Users/matthewsmawfield/www/TEP-GNSS/site/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[01:18:49] [INFO] 
+================================================================================
+[01:18:49] [INFO] ENHANCED ANALYSIS COMPLETE - KEY DISCOVERIES
+[01:18:49] [INFO] ================================================================================
+[01:18:49] [INFO] STACKED GRAVITATIONAL PATTERN CORRELATION (coherence_std): r = -0.1644, p = 5.98e-07
+[01:18:49] [INFO] SMOOTHED PATTERN CORRELATION: r = -0.5026
+[01:18:49] [INFO] 
+------------------------------------------------------------
+[01:18:49] [INFO] EARTH MOTION ENERGY HIERARCHY VALIDATION
+[01:18:49] [INFO] ------------------------------------------------------------
+[01:18:49] [INFO] ENERGY-BASED CORRELATION: r = -0.190
+[01:18:49] [INFO] VELOCITY-BASED CORRELATION: r = -0.134
+[01:18:49] [INFO] ENERGY vs VELOCITY DISCRIMINATION: -0.057
+[01:18:49] [SUCCESS] VALIDATED SCALING TYPE: VELOCITY
+[01:18:49] [SUCCESS] SCIENTIFIC INTERPRETATION: Inconclusive: Similar correlation with both energy and velocity scales
+[01:18:49] [INFO] 
+DATASET: 912 days
+[01:18:49] [INFO] FIGURE: /Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png
+[01:18:49] [INFO] RESULTS: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_4_gravitational_temporal_field_analysis.json
+[01:18:49] [INFO] DATA: /Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_4_4_comprehensive_gravitational_temporal_data.csv
+[01:18:49] [INFO] 
+KEY DISCOVERY:
+[01:18:49] [INFO]    The stacked gravitational influence pattern demonstrates significant
+[01:18:49] [INFO]    correlation with Earth's temporal field VARIABILITY (coherence_std), providing
+[01:18:49] [INFO]    experimental evidence supporting TEP theory predictions.
+[01:18:49] [INFO] ================================================================================

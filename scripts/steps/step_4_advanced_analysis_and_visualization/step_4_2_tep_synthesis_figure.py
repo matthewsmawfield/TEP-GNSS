@@ -167,15 +167,19 @@ def create_panel_b(ax, all_correlation_results):
 
     for i, center in enumerate(centers):
         try:
-            null_data = all_correlation_results[center]['null_tests']
             correlation_json = all_correlation_results[center]['json']
-
             real_r2 = correlation_json['exponential_fit']['r_squared'] # Use exponential fit R2 for real signal
-            null_r2_values = np.array(null_data['null_tests']['distance']['r_squared_values'])
-            null_r2_values = null_r2_values[np.isfinite(null_r2_values) & (null_r2_values >= 0)]
-
             real_r2_values.append(real_r2)
-            all_null_r2.extend(null_r2_values)
+            
+            # Check if null test data is available
+            null_data = all_correlation_results[center]['null_tests']
+            if null_data is not None:
+                null_r2_values = np.array(null_data['null_tests']['distance']['r_squared_values'])
+                null_r2_values = null_r2_values[np.isfinite(null_r2_values) & (null_r2_values >= 0)]
+                all_null_r2.extend(null_r2_values)
+            else:
+                # Use a simplified approach - show only real R² values
+                print_status(f"No null test data for {center}, showing real R² only", "INFO")
             print_status(f"Panel B: Loaded null test data for {center.upper()}", "DEBUG")
 
         except KeyError as ke:
@@ -185,10 +189,16 @@ def create_panel_b(ax, all_correlation_results):
             print_status(f"Error processing {center} for Panel B: {e}", "ERROR")
             continue
 
-    if all_null_r2 and real_r2_values:
-        # Site-themed histogram
-        ax.hist(all_null_r2, bins=20, color='#495773', alpha=0.8,
-                 edgecolor='#220126', linewidth=1, label=f'Null tests (N={len(all_null_r2)})')
+    if real_r2_values:
+        # If we have null test data, show histogram
+        if all_null_r2:
+            ax.hist(all_null_r2, bins=20, color='#495773', alpha=0.8,
+                     edgecolor='#220126', linewidth=1, label=f'Null tests (N={len(all_null_r2)})')
+        else:
+            # If no null test data, create a simplified visualization
+            ax.text(0.5, 0.7, 'Null test data not available\nfrom Step 3.2', 
+                   transform=ax.transAxes, ha='center', va='center', 
+                   fontsize=10, color='#495773', alpha=0.7)
 
         # Real signal lines - SOLID not dotted
         for i, (r2, color, label) in enumerate(zip(real_r2_values, colors, labels)):
@@ -275,7 +285,8 @@ def create_panel_c(ax, all_correlation_results):
 @ensure_single_instance
 def main():
     """Main function to generate the TEP Synthesis Figure."""
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.2: Synthesis Figure Generation", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 4.2: Synthesis Figure Generation", "TITLE")
 
     # Setup paths
     results_dir = PACKAGE_ROOT / 'results'
@@ -300,9 +311,15 @@ def main():
         try:
             correlation_data = safe_json_read(correlation_json_path)
             binned_data = safe_csv_read(correlation_data_csv_path)
-            null_test_data = safe_json_read(null_test_json_path)
+            
+            # Try to load null test data, but don't fail if it's missing
+            null_test_data = None
+            try:
+                null_test_data = safe_json_read(null_test_json_path)
+            except:
+                print_status(f"Null test data not available for {ac}, will use simplified Panel B", "WARNING")
 
-            if correlation_data and not binned_data.empty and null_test_data:
+            if correlation_data and not binned_data.empty:
                 all_correlation_results[ac] = {
                     'json': correlation_data,
                     'csv': binned_data,

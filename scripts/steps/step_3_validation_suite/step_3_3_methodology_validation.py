@@ -1015,7 +1015,16 @@ class MethodologyValidator:
         max_artifact_r2 = bias_characterization_results['summary'].get('overall_max_artifact_r2', 0.0)
         
         labels = ['Real TEP Signal R²', 'Max Artifact R²']
-        values = [real_r2, max_artifact_r2]
+        # Handle potential string values like 'N/A'
+        def safe_float(value, default=0.0):
+            try:
+                if isinstance(value, str) and value.upper() in ['N/A', 'NA', 'NULL', '']:
+                    return default
+                return float(value)
+            except (ValueError, TypeError):
+                return default
+        
+        values = [safe_float(real_r2), safe_float(max_artifact_r2)]
         colors = ['#28a745', '#dc3545'] # Green for signal, red for artifact
         
         ax1.bar(labels, values, color=colors)
@@ -1032,7 +1041,8 @@ class MethodologyValidator:
 @ensure_single_instance
 def main():
     """Main function for the methodology validation suite."""
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.3: Methodology Validation", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 3.3: Methodology Validation", "TITLE")
     print_status("Validating core TEP methodology with geometric controls and macro analysis", "INFO")
     print_status("="*80, "INFO")
     

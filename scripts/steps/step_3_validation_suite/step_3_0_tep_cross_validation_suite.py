@@ -1952,7 +1952,8 @@ def main():
     # Set as the current step logger for print_status
     set_step_logger(step_logger)
 
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.0: Cross-Validation Suite (Comprehensive)", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 3.0: Cross-Validation Suite (Comprehensive)", "TITLE")
     print_status("=" * 70, "INFO")
     
     # Validate inputs

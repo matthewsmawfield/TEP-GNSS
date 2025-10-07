@@ -1,0 +1,289 @@
+{
+  "analysis_type": "enhanced_gravitational_temporal_correlation",
+  "version": "2.0_with_earth_motion_energy_hierarchy",
+  "ephemeris_source": "NASA_JPL_DE440_441",
+  "tep_method": "phase_coherent_cross_spectral_density",
+  "success": true,
+  "data_summary": {
+    "total_days": 912,
+    "date_range": [
+      "2023-01-01",
+      "2025-06-30"
+    ]
+  },
+  "correlations": {
+    "sun_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.13455801848367532,
+        "pearson_p": 4.571032748409213e-05,
+        "spearman_rho": -0.15150650343220265,
+        "spearman_p": 4.313511309888406e-06,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.06556638287111888,
+        "pearson_p": 0.047762437584625346,
+        "spearman_rho": -0.06986639091515932,
+        "spearman_p": 0.03489253592316469,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.06473062719391015,
+        "pearson_p": 0.05067865557269816,
+        "spearman_rho": -0.046865627837849956,
+        "spearman_p": 0.15731876720005103,
+        "n_points": 912
+      }
+    },
+    "jupiter_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.1443209611673958,
+        "pearson_p": 1.2124052306777375e-05,
+        "spearman_rho": -0.13955653495446496,
+        "spearman_p": 2.3426527566863932e-05,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.10149250794122,
+        "pearson_p": 0.002149707287662305,
+        "spearman_rho": -0.08424453542930802,
+        "spearman_p": 0.010922592300056997,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.17482297879958947,
+        "pearson_p": 1.0767736379627521e-07,
+        "spearman_rho": -0.18006270535110255,
+        "spearman_p": 4.371971529638995e-08,
+        "n_points": 912
+      }
+    },
+    "saturn_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.031706103470516785,
+        "pearson_p": 0.33885473451256143,
+        "spearman_rho": -0.03912840422557144,
+        "spearman_p": 0.23780802225944,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.06311813981225173,
+        "pearson_p": 0.05672654487555066,
+        "spearman_rho": -0.07376440356671407,
+        "spearman_p": 0.025906112736286995,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.10058088140709634,
+        "pearson_p": 0.0023577437914940203,
+        "spearman_rho": -0.11656592810139922,
+        "spearman_p": 0.000419635039835609,
+        "n_points": 912
+      }
+    },
+    "venus_influence": {
+      "coherence_mean": {
+        "pearson_r": 0.1693472558806608,
+        "pearson_p": 2.68433106496029e-07,
+        "spearman_rho": 0.060734094419474326,
+        "spearman_p": 0.06675699818301796,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": 0.1492053125313274,
+        "pearson_p": 6.037430326633922e-06,
+        "spearman_rho": 0.07123955356402156,
+        "spearman_p": 0.031462752891642576,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.04512372417690539,
+        "pearson_p": 0.173345877793946,
+        "spearman_rho": -0.047717342724223316,
+        "spearman_p": 0.14990246922610934,
+        "n_points": 912
+      }
+    },
+    "mars_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.13634503119042424,
+        "pearson_p": 3.6089150327708194e-05,
+        "spearman_rho": -0.12743058853516046,
+        "spearman_p": 0.00011395303994806829,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.08210799936640609,
+        "pearson_p": 0.013123667284442107,
+        "spearman_rho": -0.08833338068686068,
+        "spearman_p": 0.007603892036264669,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.07152999015901242,
+        "pearson_p": 0.030775534670386535,
+        "spearman_rho": -0.0347613385384668,
+        "spearman_p": 0.29434080450604316,
+        "n_points": 912
+      }
+    },
+    "stacked_planetary_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.02116125610153108,
+        "pearson_p": 0.523310344869374,
+        "spearman_rho": -0.04536309197736117,
+        "spearman_p": 0.17107394915312818,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": 0.0006590596439047512,
+        "pearson_p": 0.9841423941650166,
+        "spearman_rho": -0.0038603776710632457,
+        "spearman_p": 0.9073185801869955,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.16439453331609255,
+        "pearson_p": 5.982023741036584e-07,
+        "spearman_rho": -0.14960577081091023,
+        "spearman_p": 5.696346484685783e-06,
+        "n_points": 912
+      }
+    },
+    "total_gravitational_influence": {
+      "coherence_mean": {
+        "pearson_r": -0.13454433539111493,
+        "pearson_p": 4.5792599991867677e-05,
+        "spearman_rho": -0.15134724687541068,
+        "spearman_p": 4.4157665908105405e-06,
+        "n_points": 912
+      },
+      "coherence_median": {
+        "pearson_r": -0.06555309548961218,
+        "pearson_p": 0.04780767558649336,
+        "spearman_rho": -0.0697443580275967,
+        "spearman_p": 0.03521220760239094,
+        "n_points": 912
+      },
+      "coherence_std": {
+        "pearson_r": -0.06481710468204072,
+        "pearson_p": 0.050370160103519204,
+        "spearman_rho": -0.04705570109997919,
+        "spearman_p": 0.15564010313964813,
+        "n_points": 912
+      }
+    }
+  },
+  "earth_motion_energy_hierarchy": {
+    "success": true,
+    "analysis_type": "earth_motion_energy_hierarchy",
+    "n_analysis_centers": 3,
+    "aggregate_energy_correlation": -0.19036237489503224,
+    "aggregate_velocity_correlation": -0.13362783952415272,
+    "aggregate_discrimination": -0.05673453537087947,
+    "discrimination_std": 0.028498127744801437,
+    "validated_scaling_type": "velocity",
+    "center_results": {
+      "code": {
+        "energy_correlation": 0.17163259383810964,
+        "energy_p_value": 0.8901916101120468,
+        "velocity_correlation": 0.2492272464444369,
+        "velocity_p_value": 0.8396467851787401,
+        "energy_velocity_discrimination": -0.07759465260632725,
+        "preferred_scaling": "velocity",
+        "motion_detections": {
+          "orbital_motion": 0.7009816474683052,
+          "chandler_wobble": 0.6141933331320582,
+          "daily_rotation": 0.47525686295860586
+        },
+        "motion_types_analyzed": [
+          "orbital_motion",
+          "chandler_wobble",
+          "daily_rotation"
+        ],
+        "n_motions_analyzed": 3
+      },
+      "esa_final": {
+        "energy_correlation": -0.9857639468031925,
+        "energy_p_value": 0.10754902852938686,
+        "velocity_correlation": -0.9693234376218627,
+        "velocity_p_value": 0.1580938534626936,
+        "energy_velocity_discrimination": -0.016440509181329777,
+        "preferred_scaling": "energy",
+        "motion_detections": {
+          "orbital_motion": 0.5713624178332463,
+          "chandler_wobble": 0.6729550698472757,
+          "daily_rotation": 0.5862553863469941
+        },
+        "motion_types_analyzed": [
+          "orbital_motion",
+          "chandler_wobble",
+          "daily_rotation"
+        ],
+        "n_motions_analyzed": 3
+      },
+      "igs_combined": {
+        "energy_correlation": 0.24304422827998617,
+        "energy_p_value": 0.84370796547782,
+        "velocity_correlation": 0.31921267260496755,
+        "velocity_p_value": 0.7931631405445131,
+        "energy_velocity_discrimination": -0.07616844432498138,
+        "preferred_scaling": "velocity",
+        "motion_detections": {
+          "orbital_motion": 0.7931554807990865,
+          "chandler_wobble": 0.6865465049622416,
+          "daily_rotation": 0.5553683992449369
+        },
+        "motion_types_analyzed": [
+          "orbital_motion",
+          "chandler_wobble",
+          "daily_rotation"
+        ],
+        "n_motions_analyzed": 3
+      }
+    },
+    "energy_scales_analyzed": {
+      "orbital_motion": 1e+33,
+      "daily_rotation": 1e+29,
+      "chandler_wobble": 1e+20,
+      "external_planetary": 1000000000000000.0
+    },
+    "interpretation": "Inconclusive: Similar correlation with both energy and velocity scales"
+  },
+  "unified_gravitational_framework": {
+    "external_planetary_coupling": "weak_to_moderate",
+    "internal_earth_motion_coupling": "velocity",
+    "energy_hierarchy_validated": false,
+    "energy_velocity_discrimination": -0.05673453537087947,
+    "framework_consistency": "Mixed evidence for energy vs velocity scaling",
+    "scientific_significance": "Requires further investigation of energy vs velocity coupling mechanisms"
+  },
+  "advanced_pattern_analysis": {
+    "smoothed_correlation": -0.5026185765899182,
+    "smoothed_p_value": 0.0003310303176344842,
+    "p_value_raw": 1.5121575099058724e-59,
+    "autocorr_ci_lower": -0.7629821755046495,
+    "autocorr_ci_upper": -0.24225497767518672,
+    "n_effective": 46.73850197109069,
+    "n_original": 912,
+    "autocorr_x": 0.95,
+    "autocorr_y": 0.95,
+    "ljung_box_p": 0.0,
+    "optimal_lag_days": 176,
+    "max_cross_correlation": 514.2075934765985,
+    "smoothing_window": 227,
+    "pattern_relationship": "in_phase",
+    "autocorr_correction_note": "Autocorrelation-corrected p-value accounts for temporal structure in 227-day smoothed data"
+  },
+  "pattern_extremes": {
+    "peak_periods": 92,
+    "valley_periods": 92,
+    "peak_coherence_mean": 0.011540937083589808,
+    "valley_coherence_mean": 0.010342624219520868,
+    "peak_coherence_std": 0.7150883487909298,
+    "valley_coherence_std": 0.7156904503119373,
+    "coherence_mean_difference": 0.0011983128640689397,
+    "coherence_std_difference": -0.000602101521007592
+  },
+  "figure_path": "/Users/matthewsmawfield/www/TEP-GNSS/results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png"
+}

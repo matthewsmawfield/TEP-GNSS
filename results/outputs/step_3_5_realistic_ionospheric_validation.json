@@ -1,0 +1,32 @@
+{
+  "validation_type": "realistic_ionospheric_controls",
+  "data_policy": "available_real_data_with_honest_limitations",
+  "analysis_period": {
+    "start": "2023-01-01",
+    "end": "2023-01-01"
+  },
+  "real_data_analysis": {
+    "available_analyses": []
+  },
+  "realistic_assessment": {
+    "validation_approach": "available_real_data_only",
+    "data_limitations": {
+      "tec_data": "Not accessible (requires institutional access)",
+      "kp_data": "Partial coverage (sample months only)",
+      "f107_data": "Monthly resolution only",
+      "temporal_overlap": "Limited by data availability",
+      "diurnal_analysis": "Insufficient temporal resolution in daily-aggregated data (Step 4.5 provides comprehensive diurnal analysis)"
+    },
+    "completed_analyses": [],
+    "overall_validation_score": 0.0,
+    "confidence_level": "UNKNOWN",
+    "assessment": "Insufficient real data overlap for validation",
+    "component_scores": {},
+    "scientific_honesty": {
+      "acknowledged_limitations": true,
+      "real_data_only": true,
+      "no_synthetic_inflation": true
+    }
+  },
+  "timestamp": "2025-10-06T11:38:53.920292"
+}

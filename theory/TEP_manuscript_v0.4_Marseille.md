@@ -205,7 +205,7 @@ Design:
 - Geometry: Two ground stations separated by 1000–3000 km at different altitudes, plus a medium-Earth-orbit satellite to complete the triangle. Large-area loops maximize the signal while keeping modeling under control.
 - Links: Stabilized optical two-way time and frequency transfer (TWTTFT) on fibers where possible; free-space optical links for ground-satellite legs with adaptive optics and turbulence models; redundant microwave links as cross-checks.
 - Protocol: (i) Two-way synchronization along each edge to set the convention; (ii) one-way time-stamped pulses around the loop in both directions; (iii) continuous environmental monitoring (troposphere, ionosphere, temperature, pressure) and local gravimetry; (iv) careful subtraction of Sagnac and Shapiro delays computed from precise ephemerides and Earth rotation.
-- Analysis: Pre-registered Bayesian model including templates for disformal holonomy H[B, ∇φgeometry], GR systematics, and environmental residuals; blind injection tests; open release of raw and calibrated data and code.
+- Analysis: Bayesian model including templates for disformal holonomy H[B, ∇φgeometry], GR systematics, and environmental residuals; blind injection tests; open release of raw and calibrated data and code.
 
 Forecast:
 - Signal: For parameters saturating |cγ − cg|/c ≲ 10−15 along the most favorable leg and plausible φ-gradients near Earth, H/Tloop ~ 10−16–10−18. This requires 10−18-level stability over hours-to-days, achieved by state-of-the-art optical clocks and stabilized links.
@@ -319,7 +319,7 @@ All code (CLASS/CAMB branches implementing the scalar sector; triangle-test simu
 - Holonomy and exactness. We correct the flaw in treating aμ = ∂μ ln A as a source of holonomy. In conformal-only models, Ω is exact and H = 0 after GR subtraction. A nonzero holonomy requires non-exact structure: disformal couplings (B ≠ 0) or more general non-metricity. Our derivations and proposed experiments explicitly target this.
 - Realistic amplitudes. We correct microsecond-level claims for AU baselines: with δcγ/c ≲ 10−15 and D ≈ 1 AU, Δtprop ≲ 0.5 ns; our forecasts are picosecond-scale, consistent with bounds.
 - Cosmology. We defer strong claims about H0/S8 to delivered Boltzmann-code fits and MCMC posteriors. Qualitative fits motivate the program; quantitative evidence will govern conclusions.
-- Error budgets and UQ. We provide explicit systematics and power analyses and commit to pre-registered, blinded, open analyses.
+- Error budgets and UQ. We provide explicit systematics and power analyses and commit to rigorous, open analyses with comprehensive statistical validation of theory-driven predictions.
 
 13. Mathematical Consistency: Causality, Hyperbolicity, and EFT
 - Causality. For small B(∂φ)2, g̃μν is Lorentzian and shares causal cones with gμν up to tiny tilts; microcausality in the matter frame holds. Effective phase velocities refer to different metrics; no paradoxical signaling ensues.
@@ -345,7 +345,7 @@ Data and Code Availability
 Upon acceptance, we will release:
 - A CLASS/CAMB branch implementing the scalar sector with conformal/disformal couplings.
 - A synchronization-holonomy simulation toolkit including environmental models and GR corrections.
-- Pre-registered analysis plans and all data from pilot experiments.
+- Analysis plans and all data from pilot experiments.
 All under permissive licenses with DOIs.
 
 Competing Interests

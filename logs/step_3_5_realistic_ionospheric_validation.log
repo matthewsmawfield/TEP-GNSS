@@ -1,0 +1,51 @@
+[11:38:51] [INFO] 
+[11:38:51] [INFO] ================================================================================
+[11:38:51] [INFO] TEP GNSS Analysis Package v0.14 - STEP 3.5: Realistic Ionospheric Validation
+[11:38:51] [INFO] ================================================================================
+[11:38:51] [INFO] 
+[11:38:51] [INFO] Using available real data, acknowledging limitations honestly
+[11:38:51] [PROCESS] Extracting REAL TEP coherence time series...
+[11:38:51] [PROCESS] Processing CODE aggregated correlation results...
+[11:38:51] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_code.json for CODE
+[11:38:51] [PROCESS] Processing ESA_FINAL aggregated correlation results...
+[11:38:51] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_esa_final.json for ESA_FINAL
+[11:38:51] [PROCESS] Processing IGS_COMBINED aggregated correlation results...
+[11:38:51] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_igs_combined.json for IGS_COMBINED
+[11:38:51] [SUCCESS] Extracted REAL TEP data for 1 days
+[11:38:51] [INFO] Date range: 2023-01-01 to 2023-01-01
+[11:38:51] [SUCCESS] Total real measurements: 3
+[11:38:51] [PROCESS] Downloading available real ionospheric data...
+[11:38:51] [PROCESS] Downloading REAL Kp sample from GFZ Potsdam...
+[11:38:51] [PROCESS] Downloading kp2301.wdc...
+[11:38:52] [SUCCESS] Parsed 10 days from kp2301.wdc
+[11:38:52] [SUCCESS] Downloaded 10 days of REAL Kp data
+[11:38:52] [PROCESS] Downloading REAL F10.7 sample from NOAA...
+[11:38:53] [SUCCESS] Downloaded 1 days of REAL F10.7 data
+[11:38:53] [PROCESS] Analyzing correlations with available REAL data...
+[11:38:53] [INFO] TEP data: 1 days
+[11:38:53] [INFO] Kp data: 10 days
+[11:38:53] [INFO] F10.7 data: 1 days
+[11:38:53] [INFO] TEP-Kp overlap: 0 days
+[11:38:53] [INFO] TEP-F10.7 overlap: 1 days
+[11:38:53] [WARNING] Local-time analysis skipped: insufficient temporal resolution in daily data
+[11:38:53] [PROCESS] Generating realistic validation assessment...
+[11:38:53] [INFO] 
+[11:38:53] [INFO] ================================================================================
+[11:38:53] [INFO] REALISTIC VALIDATION COMPLETE
+[11:38:53] [INFO] ================================================================================
+[11:38:53] [INFO] 
+[11:38:53] [INFO] ================================================================================
+[11:38:53] [INFO] COMPLETED ANALYSES:
+[11:38:53] [INFO] ACKNOWLEDGED LIMITATIONS:
+[11:38:53] [WARNING] ⚠️  Not accessible (requires institutional access)
+[11:38:53] [WARNING] ⚠️  Partial coverage (sample months only)
+[11:38:53] [WARNING] ⚠️  Monthly resolution only
+[11:38:53] [WARNING] ⚠️  Limited by data availability
+[11:38:53] [WARNING] ⚠️  Insufficient temporal resolution in daily-aggregated data (Step 4.5 provides comprehensive diurnal analysis)
+[11:38:53] [INFO] DIURNAL ANALYSIS:
+[11:38:53] [WARNING] ⚠️  Step 3.5: Insufficient temporal resolution for diurnal analysis
+[11:38:53] [SUCCESS] ✅ Step 4.5: Comprehensive diurnal analysis with hourly windowing
+[11:38:53] [INFO] ================================================================================
+[11:38:53] [INFO] OVERALL ASSESSMENT: UNKNOWN
+[11:38:53] [INFO] CONCLUSION: Insufficient real data overlap for validation
+[11:38:53] [SUCCESS] Results saved to /mnt/data/results/outputs/step_3_5_realistic_ionospheric_validation.json

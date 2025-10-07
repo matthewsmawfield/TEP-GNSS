@@ -40,7 +40,8 @@ def setup_logging():
 def main():
     setup_logging()
     set_step_logger(step_logger)
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 1.0: Provenance Documentation", "INFO")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 1.0: Provenance Documentation", "INFO")
     print_status("="*80, "INFO")
     
     try:

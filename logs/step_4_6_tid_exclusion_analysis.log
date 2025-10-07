@@ -1,0 +1,100 @@
+[18:45:03] [PROCESS] Starting TID Exclusion Analysis...
+[18:45:03] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=72.86 MB, VMS=2676.28 MB
+[18:45:03] [PROCESS] Processing TID exclusion for CODE...
+[18:45:03] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_code.json for CODE
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis file found for code: /mnt/data/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis data loaded for code. Skipping TID exclusion for this metric.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis file found for code: /mnt/data/results/outputs/step_4_3_hilbert-if_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for code. Skipping TID exclusion for this metric.
+[18:45:03] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[18:45:03] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_esa_final.json for ESA_FINAL
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis file found for esa_final: /mnt/data/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis data loaded for esa_final. Skipping TID exclusion for this metric.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis file found for esa_final: /mnt/data/results/outputs/step_4_3_hilbert-if_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for esa_final. Skipping TID exclusion for this metric.
+[18:45:03] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[18:45:03] [INFO] Successfully extracted r_squared from /mnt/data/results/outputs/step_2_0_correlation_igs_combined.json for IGS_COMBINED
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis file found for igs_combined: /mnt/data/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No WAVELET temporal analysis data loaded for igs_combined. Skipping TID exclusion for this metric.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis file found for igs_combined: /mnt/data/results/outputs/step_4_3_hilbert-if_high_res_merged.json. Skipping.
+[18:45:03] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for igs_combined. Skipping TID exclusion for this metric.
+[18:45:03] [SUCCESS] TID Exclusion Analysis results saved to /mnt/data/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[18:45:03] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=72.86 MB, VMS=2676.28 MB
+[18:45:03] [SUCCESS] TID Exclusion Analysis Completed.
+[03:58:21] [PROCESS] Starting TID Exclusion Analysis...
+[03:58:21] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=90.64 MB, VMS=35262.36 MB
+[03:58:21] [PROCESS] Processing TID exclusion for CODE...
+[03:58:21] [INFO] Successfully extracted r_squared from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_2_0_correlation_code.json for CODE
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis file found for code: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis data loaded for code. Skipping TID exclusion for this metric.
+[03:58:21] [WARNING] No dated temporal metrics found in HILBERT-IF data for code
+[03:58:21] [INFO] Successfully loaded 0 temporal data entries for code from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_hilbert-if_high_res_merged.json
+[03:58:21] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for code. Skipping TID exclusion for this metric.
+[03:58:21] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[03:58:21] [INFO] Successfully extracted r_squared from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_2_0_correlation_esa_final.json for ESA_FINAL
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis file found for esa_final: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis data loaded for esa_final. Skipping TID exclusion for this metric.
+[03:58:21] [WARNING] No dated temporal metrics found in HILBERT-IF data for esa_final
+[03:58:21] [INFO] Successfully loaded 0 temporal data entries for esa_final from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_hilbert-if_high_res_merged.json
+[03:58:21] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for esa_final. Skipping TID exclusion for this metric.
+[03:58:21] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[03:58:21] [INFO] Successfully extracted r_squared from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_2_0_correlation_igs_combined.json for IGS_COMBINED
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis file found for igs_combined: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_wavelet-analysis_high_res_merged.json. Skipping.
+[03:58:21] [WARNING] WARNING: No WAVELET temporal analysis data loaded for igs_combined. Skipping TID exclusion for this metric.
+[03:58:21] [WARNING] No dated temporal metrics found in HILBERT-IF data for igs_combined
+[03:58:21] [INFO] Successfully loaded 0 temporal data entries for igs_combined from /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_3_hilbert-if_high_res_merged.json
+[03:58:21] [WARNING] WARNING: No HILBERT-IF temporal analysis data loaded for igs_combined. Skipping TID exclusion for this metric.
+[03:58:21] [SUCCESS] TID Exclusion Analysis results saved to /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[03:58:21] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=91.46 MB, VMS=35262.37 MB
+[03:58:21] [SUCCESS] TID Exclusion Analysis Completed.
+[03:59:36] [PROCESS] Starting TID Exclusion Analysis...
+[03:59:36] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=91.21 MB, VMS=35280.92 MB
+[03:59:36] [PROCESS] Processing TID exclusion for CODE...
+[04:00:12] [WARNING] Required columns not found in /Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_code.csv
+[04:00:12] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[04:00:21] [WARNING] Required columns not found in /Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_esa_final.csv
+[04:00:21] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[04:00:31] [WARNING] Required columns not found in /Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_igs_combined.csv
+[04:00:31] [SUCCESS] TID Exclusion Analysis results saved to /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[04:00:31] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=3700.11 MB, VMS=39180.12 MB
+[04:00:31] [SUCCESS] TID Exclusion Analysis Completed.
+[04:01:20] [PROCESS] Starting TID Exclusion Analysis...
+[04:01:20] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=90.50 MB, VMS=35151.36 MB
+[04:01:20] [PROCESS] Processing TID exclusion for CODE...
+[04:02:12] [INFO] Successfully loaded 912 daily coherence values for CODE
+[04:02:12] [WARNING] WARNING: Wavelet analysis not available for code. Skipping.
+[04:02:12] [WARNING] WARNING: No WAVELET temporal analysis data loaded for code. Skipping TID exclusion for this metric.
+[04:03:09] [PROCESS] Starting TID Exclusion Analysis...
+[04:03:09] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=85.67 MB, VMS=35544.92 MB
+[04:03:09] [PROCESS] Processing TID exclusion for CODE...
+[04:04:01] [INFO] Successfully loaded 912 daily coherence values for CODE
+[04:04:58] [INFO] Loaded 912 daily TID proxy values for code
+[04:04:59] [INFO] TID Exclusion for code (hilbert-if): Original mean coherence=0.0065, Retained mean=0.0080, Change=22.36%
+[04:04:59] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[04:05:14] [INFO] Successfully loaded 912 daily coherence values for ESA_FINAL
+[04:05:26] [INFO] Loaded 912 daily TID proxy values for esa_final
+[04:05:26] [INFO] TID Exclusion for esa_final (hilbert-if): Original mean coherence=0.0103, Retained mean=0.0125, Change=21.28%
+[04:05:26] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[04:05:41] [INFO] Successfully loaded 912 daily coherence values for IGS_COMBINED
+[04:05:55] [INFO] Loaded 912 daily TID proxy values for igs_combined
+[04:05:55] [INFO] TID Exclusion for igs_combined (hilbert-if): Original mean coherence=0.0145, Retained mean=0.0178, Change=22.66%
+[04:05:55] [SUCCESS] TID Exclusion Analysis results saved to /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[04:05:55] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=5817.82 MB, VMS=41368.35 MB
+[04:05:55] [SUCCESS] TID Exclusion Analysis Completed.
+[04:06:28] [PROCESS] Starting TID Exclusion Analysis...
+[04:06:29] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=91.19 MB, VMS=35288.92 MB
+[04:06:29] [PROCESS] Processing TID exclusion for CODE...
+[04:07:19] [INFO] Successfully loaded 912 daily coherence values for CODE
+[04:08:12] [INFO] Loaded 912 daily TID proxy values for code
+[04:08:13] [INFO] TID Exclusion for code (hilbert-if): Original mean coherence=0.0065, Retained mean=0.0080, Change=22.36%
+[04:08:13] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[04:08:26] [INFO] Successfully loaded 912 daily coherence values for ESA_FINAL
+[04:08:37] [INFO] Loaded 912 daily TID proxy values for esa_final
+[04:08:37] [INFO] TID Exclusion for esa_final (hilbert-if): Original mean coherence=0.0103, Retained mean=0.0125, Change=21.28%
+[04:08:37] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[04:08:51] [INFO] Successfully loaded 912 daily coherence values for IGS_COMBINED
+[04:09:04] [INFO] Loaded 912 daily TID proxy values for igs_combined
+[04:09:04] [INFO] TID Exclusion for igs_combined (hilbert-if): Original mean coherence=0.0145, Retained mean=0.0178, Change=22.66%
+[04:09:04] [SUCCESS] TID Exclusion Analysis results saved to /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[04:09:04] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=3850.95 MB, VMS=41496.85 MB
+[04:09:04] [SUCCESS] TID Exclusion Analysis Completed.

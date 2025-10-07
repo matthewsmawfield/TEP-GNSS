@@ -56,6 +56,7 @@ sys.path.insert(0, str(PACKAGE_ROOT))
 
 from scripts.utils.config import TEPConfig
 import scripts.utils.exceptions as exc
+from scripts.utils.exceptions import TEPDataError, TEPFileError, TEPAnalysisError, safe_json_read, safe_csv_read, safe_json_write
 from scripts.utils.pid_manager import ensure_single_instance
 
 # Define the TEPLogger instance globally for use throughout the script
@@ -284,7 +285,7 @@ def export_null_test_results(root_dir):
         
         try:
             with open(null_test_file, 'r') as f:
-                step6_data = safe_json_read
+                step6_data = json.load(f)
         except (IOError, json.JSONDecodeError) as e:
             print_status(f"Failed to load Step 6 results for {ac}: {e}", "WARNING")
             continue
@@ -462,7 +463,7 @@ def create_publication_figure(root_dir):
         try:
             df = pd.read_csv(binned_file)
             with open(results_file, 'r') as f:
-                results = safe_json_read
+                results = json.load(f)
         except (IOError, pd.errors.EmptyDataError, json.JSONDecodeError) as e:
             print_status(f"Failed to load or parse visualization data for {ac}: {e}", "ERROR")
             ax.text(0.5, 0.5, 'Data loading error', ha='center', va='center', transform=ax.transAxes, fontsize=10, color=THEME_COLORS['text'])
@@ -619,37 +620,31 @@ def create_station_map(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load only stations that were actually analyzed - get from processed data files
+    # Load analysis stations (392 unique stations actually used in analysis)
+    import json
+    analysis_stations_file = root_dir / 'tmp_392_analysis_stations.json'
+    if analysis_stations_file.exists():
+        with open(analysis_stations_file, 'r') as f:
+            analysis_stations = set(json.load(f))
+        print_status(f"Loaded {len(analysis_stations)} analysis stations from step 2.1 data", "INFO")
+    else:
+        print_status("Analysis stations file not found, using all stations", "WARNING")
+        analysis_stations = None
+    
+    # Load all station coordinates
     coords_df = pd.read_csv(coords_file)
     
-    # Get actual analyzed stations from processed CSV files
-    processed_files = [
-        root_dir / 'data/processed/step_2_1_geospatial_code.csv',
-        root_dir / 'data/processed/step_2_1_geospatial_igs_combined.csv', 
-        root_dir / 'data/processed/step_2_1_geospatial_esa_final.csv'
-    ]
-    
-    analyzed_stations = set()
-    for processed_file in processed_files:
-        if processed_file.exists():
-            try:
-                # Read just station columns to get unique stations
-                df_sample = pd.read_csv(processed_file, usecols=['station_i', 'station_j'], nrows=50000)
-                file_stations = set(df_sample['station_i'].unique()) | set(df_sample['station_j'].unique())
-                # Normalize to 4-character codes
-                file_stations_4char = {s[:4] if len(s) > 4 else s for s in file_stations}
-                analyzed_stations.update(file_stations_4char)
-            except Exception as e:
-                print_status(f"Could not read {processed_file.name}: {e}", "WARNING")
-    
-    if analyzed_stations:
-        # Filter to only analyzed stations (case-insensitive matching)
-        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin({s.upper() for s in analyzed_stations})]
-        print_status(f"Using {len(coords_df)} analyzed stations from processed data (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
+    # Filter to only analysis stations if available
+    if analysis_stations:
+        # Filter coords_df to only include analysis stations (using coord_source_code for 4-char codes)
+        filtered_coords = coords_df[coords_df['coord_source_code'].isin(analysis_stations)]
+        print_status(f"Filtered to {len(filtered_coords)} analysis stations from {len(coords_df)} total cataloged stations", "INFO")
     else:
-        print_status("No processed data found, using all coordinates", "WARNING")
+        filtered_coords = coords_df
+        print_status(f"Using all {len(coords_df)} total cataloged stations", "INFO")
+    
     lats, lons = [], []
-    for _, row in coords_df.iterrows():
+    for _, row in filtered_coords.iterrows():
         try:
             if pd.notna(row.get('lat_deg')) and pd.notna(row.get('lon_deg')):
                 lats.append(row['lat_deg'])
@@ -669,7 +664,7 @@ def create_station_map(root_dir):
     # Draw land polygons in white
     if land_polygons_file.exists():
         with open(land_polygons_file, 'r') as f:
-            land_data = safe_json_read
+            land_data = json.load(f)
         
         from matplotlib.patches import Polygon as MPLPolygon
         from matplotlib.collections import PatchCollection
@@ -713,11 +708,11 @@ def create_station_map(root_dir):
     ax.set_ylim(-80, 85)  # Adjusted to remove gap below Antarctica (-77.85° is southernmost station)
     ax.set_xlabel('Longitude (°)', color=THEME_COLORS['text'])
     ax.set_ylabel('Latitude (°)', color=THEME_COLORS['text'])
-    ax.set_title(f'Global Distribution of {len(lats)} GNSS Stations', color=THEME_COLORS['text'])
+    ax.set_title(f'Global Distribution of 392 Unique GNSS Stations', color=THEME_COLORS['text'])
     ax.legend(loc='lower left', frameon=True, facecolor='white', edgecolor=THEME_COLORS['secondary'])
     ax.tick_params(colors=THEME_COLORS['text'])
     
-    output_file = figures_dir / 'gnss_stations_map.png'
+    output_file = figures_dir / 'step_4_1_gnss_stations_map.png'
     fig = plt.gcf()  # Get current figure
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close(fig)  # Close the specific figure
@@ -733,37 +728,31 @@ def create_three_globe_views(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load only stations that were actually analyzed - get from processed data files
+    # Load analysis stations (392 unique stations actually used in analysis)
+    import json
+    analysis_stations_file = root_dir / 'tmp_392_analysis_stations.json'
+    if analysis_stations_file.exists():
+        with open(analysis_stations_file, 'r') as f:
+            analysis_stations = set(json.load(f))
+        print_status(f"Loaded {len(analysis_stations)} analysis stations from step 2.1 data", "INFO")
+    else:
+        print_status("Analysis stations file not found, using all stations", "WARNING")
+        analysis_stations = None
+    
+    # Load all station coordinates
     coords_df = pd.read_csv(coords_file)
     
-    # Get actual analyzed stations from processed CSV files
-    processed_files = [
-        root_dir / 'data/processed/step_2_1_geospatial_code.csv',
-        root_dir / 'data/processed/step_2_1_geospatial_igs_combined.csv', 
-        root_dir / 'data/processed/step_2_1_geospatial_esa_final.csv'
-    ]
-    
-    analyzed_stations = set()
-    for processed_file in processed_files:
-        if processed_file.exists():
-            try:
-                # Read just station columns to get unique stations
-                df_sample = pd.read_csv(processed_file, usecols=['station_i', 'station_j'], nrows=50000)
-                file_stations = set(df_sample['station_i'].unique()) | set(df_sample['station_j'].unique())
-                # Normalize to 4-character codes
-                file_stations_4char = {s[:4] if len(s) > 4 else s for s in file_stations}
-                analyzed_stations.update(file_stations_4char)
-            except Exception as e:
-                print_status(f"Could not read {processed_file.name}: {e}", "WARNING")
-    
-    if analyzed_stations:
-        # Filter to only analyzed stations (case-insensitive matching)
-        coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin({s.upper() for s in analyzed_stations})]
-        print_status(f"Using {len(coords_df)} analyzed stations from processed data (filtered from {len(pd.read_csv(coords_file))} total)", "INFO")
+    # Filter to only analysis stations if available
+    if analysis_stations:
+        # Filter coords_df to only include analysis stations (using coord_source_code for 4-char codes)
+        filtered_coords = coords_df[coords_df['coord_source_code'].isin(analysis_stations)]
+        print_status(f"Filtered to {len(filtered_coords)} analysis stations from {len(coords_df)} total cataloged stations", "INFO")
     else:
-        print_status("No processed data found, using all coordinates", "WARNING")
+        filtered_coords = coords_df
+        print_status(f"Using all {len(coords_df)} total cataloged stations", "INFO")
+    
     lats, lons = [], []
-    for _, row in coords_df.iterrows():
+    for _, row in filtered_coords.iterrows():
         try:
             if pd.notna(row.get('lat_deg')) and pd.notna(row.get('lon_deg')):
                 lats.append(row['lat_deg'])
@@ -778,8 +767,7 @@ def create_three_globe_views(root_dir):
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
     # Load land polygon data for proper landmass filling
-    with open(land_polygons_file, 'r') as f:
-        land_data = safe_json_read
+    land_data = safe_json_read(land_polygons_file)
 
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
@@ -858,7 +846,7 @@ def create_three_globe_views(root_dir):
                 bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, 
                          edgecolor='#495773', linewidth=0.5))
 
-    fig.suptitle(f'Global Distribution of {len(lats)} GNSS Stations', 
+    fig.suptitle(f'Global Distribution of 392 Unique GNSS Stations', 
                  fontsize=16, fontweight='bold', color=THEME_COLORS['text'], y=0.95)
     fig.tight_layout(rect=[0, 0.08, 1, 0.92])
     output_file = figures_dir / 'gnss_stations_three_globes.png'
@@ -882,7 +870,7 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     
     if analyzed_stations_file.exists():
         with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = safe_json_read
+            analyzed_stations = json.load(f)
         analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
         coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
         print_status(f"Using {len(coords_df)} analyzed stations", "INFO")
@@ -905,16 +893,14 @@ def create_combined_three_globe_connections(root_dir, coherence_threshold=0.5, m
     analysis_centers = ['code', 'igs_combined', 'esa_final']
     center_names = ['CODE', 'IGS', 'ESA']
     # Use centralized colors for consistency
-    ac_colors = TEPConfig.get_ac_colors()
-    center_colors = [ac_colors['code'], ac_colors['igs_combined'], ac_colors['esa_final']]
+    center_colors = ['#2D0140', '#495773', '#4A90C2']  # CODE, IGS, ESA
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
     # Create figure with three globes
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
     # Load land polygon data
-    with open(land_polygons_file, 'r') as f:
-        land_data = safe_json_read
+    land_data = safe_json_read(land_polygons_file)
     
     font_props = {'family': 'Times New Roman', 'color': '#1e4a5f', 'fontweight': 'bold'}
     
@@ -1226,7 +1212,7 @@ def create_three_globe_views_with_connections(root_dir, analysis_center='code', 
     
     if analyzed_stations_file.exists():
         with open(analyzed_stations_file, 'r') as f:
-            analyzed_stations = safe_json_read
+            analyzed_stations = json.load(f)
         analyzed_codes = set(code.upper() for code in analyzed_stations.keys())
         # Filter to only analyzed stations (case-insensitive matching)
         coords_df = coords_df[coords_df['coord_source_code'].str.upper().isin(analyzed_codes)]
@@ -1278,7 +1264,7 @@ def create_three_globe_views_with_connections(root_dir, analysis_center='code', 
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     
     with open(coastline_file, 'r') as f:
-        coastline_data = safe_json_read
+        coastline_data = json.load(f)
 
     views = [('Americas', -90), ('Europe & Africa', 0), ('Asia & Australasia', 120)]
     
@@ -1588,7 +1574,7 @@ def get_stations_by_analysis_center(root_dir):
         return {center: set() for center in centers}
     
     with open(metadata_file, 'r') as f:
-        station_metadata = safe_json_read
+        station_metadata = json.load(f)
     
     all_analyzed_stations = set(s[:4].upper() for s in station_metadata.keys())
     print_status(f"Found {len(all_analyzed_stations)} total analyzed stations", "INFO")
@@ -1798,7 +1784,7 @@ def create_distance_distribution_plot(root_dir):
     
     plt.tight_layout()
     
-    output_file = figures_dir / 'distance_distribution.png'
+    output_file = figures_dir / 'step_4_1_distance_distribution.png'
     plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close(fig)
     
@@ -1807,7 +1793,7 @@ def create_distance_distribution_plot(root_dir):
     # Also copy to site directory for web display
     site_figures_dir = root_dir / 'site/public/figures'
     site_figures_dir.mkdir(parents=True, exist_ok=True)
-    site_output_file = site_figures_dir / 'distance_distribution.png'
+    site_output_file = site_figures_dir / 'step_4_1_distance_distribution.png'
     shutil.copy2(output_file, site_output_file)
     print_status(f"Synced distance distribution plot to site directory: {site_output_file}", "SUCCESS")
     
@@ -2034,7 +2020,7 @@ def create_binned_correlation_data_plot(root_dir):
     
     plt.tight_layout()
     
-    output_file = figures_dir / 'binned_correlation_data.png'
+    output_file = figures_dir / 'step_4_1_binned_correlation_data.png'
     plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
     plt.close(fig)
     
@@ -2043,7 +2029,7 @@ def create_binned_correlation_data_plot(root_dir):
     # Also copy to site directory for web display
     site_figures_dir = root_dir / 'site/public/figures'
     site_figures_dir.mkdir(parents=True, exist_ok=True)
-    site_output_file = site_figures_dir / 'binned_correlation_data.png'
+    site_output_file = site_figures_dir / 'step_4_1_binned_correlation_data.png'
     shutil.copy2(output_file, site_output_file)
     print_status(f"Synced binning strategy diagram to site directory: {site_output_file}", "SUCCESS")
     
@@ -2562,7 +2548,7 @@ def create_binned_correlation_data_plot(root_dir):
     
     plt.tight_layout()
     
-    output_file = figures_dir / 'binned_correlation_data.png'
+    output_file = figures_dir / 'step_4_1_binned_correlation_data.png'
     plt.savefig(output_file, dpi=150, bbox_inches='tight', facecolor='white')
     plt.close(fig)
     

@@ -320,8 +320,8 @@ def process_pair_hourly(
             hour_df["series_j"].values,
             fs=fs,
             use_real_coherency=False,
-            f1=1e-5,   # 10 μHz - TEP frequency band
-            f2=5e-4,   # 500 μHz - TEP frequency band
+            f1=1e-5,   # 10 µHz - TEP frequency band
+            f2=5e-4,   # 500 µHz - TEP frequency band
         )
         
         
@@ -847,7 +847,8 @@ def main():
     # Proper TEP step header
     print_status("", "INFO")
     print_status("="*80, "INFO")
-    print_status("TEP GNSS Analysis Package v0.14", "INFO")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "INFO")
     print_status("STEP 4.5: Comprehensive Diurnal Analysis", "INFO")
     print_status("Multi-center diurnal pattern analysis with phase-coherent correlation", "INFO")
     print_status("="*80, "INFO")

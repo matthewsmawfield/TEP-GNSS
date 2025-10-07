@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Version:** v0.14 (Jaipur)
-**Date:** 6 October 2025
+**Version:** v0.15 (Jaipur)
+**Date:** 07 October 2025
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Foundation
@@ -34,26 +34,42 @@ We present observations of distance-structured correlations in global GNSS atomi
 
 Professional cloud deployment optimized for Google Cloud Platform high-CPU instances:
 
+**Quick Start:**
 ```bash
-# Configure GCP credentials and run
+# 1. Set your GCP instance details
 export GCP_PROJECT_ID=your-project-id
-export GCP_ZONE=us-central1-a  
-export GCP_INSTANCE_NAME=tep-gnss-analysis
+export GCP_ZONE=us-central1-c  
+export GCP_INSTANCE_NAME=your-instance-name
+
+# 2. Deploy and run the complete pipeline
 ./run_tep_gcp_high_cpu.sh
+
+# 3. Monitor progress (in another terminal)
+gcloud compute ssh $GCP_INSTANCE_NAME --zone=$GCP_ZONE --command='cd /mnt/data && tail -f full_pipeline.log'
+
+# 4. Download results when complete
+./download_gcp_results.sh
 ```
 
 **Recommended Instance Types:**
-- `c2-standard-60`: 60 vCPUs, 240 GB RAM (Maximum performance)
-- `c2-standard-30`: 30 vCPUs, 120 GB RAM (High performance) 
-- `n2-highcpu-80`: 80 vCPUs, 80 GB RAM (Maximum CPU cores)
-- `n2-highcpu-32`: 32 vCPUs, 32 GB RAM (High CPU cores)
+- `n2-highcpu-96`: 96 vCPUs, 96 GB RAM (Maximum performance - recommended)
+- `c2-standard-60`: 60 vCPUs, 240 GB RAM (High performance)
+- `c2-standard-30`: 30 vCPUs, 120 GB RAM (Good performance) 
+- `n2-highcpu-80`: 80 vCPUs, 80 GB RAM (High CPU cores)
 
-**Features:**
-- Automated GCP instance setup and package deployment
-- Optimized for full 911-day analysis window (2023-2025)
-- High-CPU configuration with parallel processing
-- Background execution with comprehensive logging
-- Persistent storage setup for large datasets
+**What the Pipeline Does:**
+- **Automated Setup**: Installs all dependencies (Python packages, system libraries)
+- **Complete Analysis**: Runs Steps 1-4 (Data acquisition → Core analysis → Validation → Advanced analysis)
+- **Full Date Range**: Analyzes 912 days (2023-01-01 to 2025-06-30)
+- **High Performance**: Optimized for 96 vCPUs with parallel processing
+- **Comprehensive Output**: Generates 36 JSON results + 27 figures + 28 logs
+- **Background Execution**: Runs continuously with detailed logging
+- **Easy Download**: Simple script to get all results locally
+
+**Prerequisites:**
+- [Google Cloud Platform](https://cloud.google.com/) account with billing enabled
+- `gcloud` CLI installed and authenticated
+- High-CPU instance created and running
 
 #### Local Pipeline Execution
 
@@ -72,7 +88,7 @@ python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravita
 - **Step 4.4:** Gravitational-temporal field correlation analysis with Earth motion energy hierarchy validation
 
 **Computational Parameters:**
-- **Temporal coverage:** Full 2.5-year dataset (2023-2025) with 62.7M station pair measurements
+- **Temporal coverage:** Full 2.5-year dataset (2023-2025) with 62.7M station pair measurements across 689 ground stations
 - **Expected duration:** 30-45 minutes per major step
 - **Requirements:** Local Python environment with scientific computing libraries
 
@@ -85,19 +101,19 @@ python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravita
 
 ## Principal Results
 
-Our comprehensive analysis of 47.5 million station-pair measurements across 529 high-quality ground stations (selected from 766 cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
+Our comprehensive analysis of 62.7 million station-pair measurements across 392 total unique stations (selected from 766 total cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
 
 *Note: Station inclusion criteria require ≥20 observation epochs per temporal file (TEP_MIN_EPOCHS = 20) to ensure reliable spectral analysis and statistical validity.*
 
 ![Distance-structured correlations in GNSS precision timing networks](site/public/figures/figure_1_TEP_site_themed.png)
 
 **Correlation Structure:**
-- **Characteristic lengths:** \(\lambda = 2,747-2,759\) km across independent analysis centers (0.015-0.033 inter-center variation)
+- **Characteristic lengths:** \(\lambda = 3,330-4,549\) km across independent analysis centers (CV = 12.9% inter-center variation)
 - **Statistical robustness:** Strong exponential model fits (R² = 0.920–0.970)
 - **Theoretical alignment:** Results within predicted range [1,000–10,000 km]
 
 **Validation Framework:**
-- **Multi-center consistency:** Comprehensive null hypothesis testing confirms signal authenticity (8.5–44× signal attenuation under data scrambling)
+- **Multi-center consistency:** Comprehensive null hypothesis testing confirms signal authenticity (15–42× signal enhancement over randomized controls)
 - **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance p < 10⁻⁵
 - **Bias characterization:** Systematic geometric artifact detection and mitigation
 
@@ -216,7 +232,7 @@ python scripts/steps/validation_suite/step_3_5_realistic_ionospheric_validation.
 # Step 3.6: Control band analysis (Frequency specificity validation)
 python scripts/steps/validation_suite/step_3_6_control_band_analysis.py
 
-Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 μHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band, demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
+Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 µHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band, demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
 
 # Step 4.4: Gravitational-temporal field coupling analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py
@@ -235,14 +251,14 @@ Systematic application of multiple comparison correction procedures including Bo
 
 ### Analytical Configuration
 
-#### v0.14 Configuration Framework (Jaipur Release - Established Methodology)
+#### v0.15 Configuration Framework (Jaipur Release - Established Methodology)
 
 **Core Analysis Parameters:**
 | Parameter | Default Value | Description |
 |-----------|---------------|-------------|
 | `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis methodology (v0.6 implementation) |
-| `TEP_COHERENCY_F1` | 1×10⁻⁵ | Lower frequency boundary (10 μHz) |
-| `TEP_COHERENCY_F2` | 5×10⁻⁴ | Upper frequency boundary (500 μHz) |
+| `TEP_COHERENCY_F1` | 1×10⁻⁵ | Lower frequency boundary (10 µHz) |
+| `TEP_COHERENCY_F2` | 5×10⁻⁴ | Upper frequency boundary (500 µHz) |
 | `TEP_BINS` | 40 | Distance binning structure for correlation analysis |
 
 **Computational Processing Parameters:**

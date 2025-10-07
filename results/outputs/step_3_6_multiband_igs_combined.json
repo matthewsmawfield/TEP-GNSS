@@ -1,0 +1,4683 @@
+{
+  "analysis_center": "IGS_COMBINED",
+  "band_results": {
+    "tep_band": {
+      "band_config": {
+        "f1": 1e-05,
+        "f2": 0.0005,
+        "name": "TEP Band (10-500 \u03bcHz)",
+        "expected": "strong",
+        "bandwidth_microhz": 490,
+        "description": "Primary TEP prediction frequency range serving as reference baseline"
+      },
+      "frequency_range_microhz": [
+        10.0,
+        500.0
+      ],
+      "frequency_range_hz": [
+        1e-05,
+        0.0005
+      ],
+      "frequency_bandwidth_microhz": 490.0,
+      "data_summary": {
+        "total_pairs_processed": 12882748,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579758",
+        "pairs_in_bins_after": "9579758",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770379,
+        "count_mean": 342134.21428571426,
+        "count_median": 64253.0,
+        "count_std": 622173.1451455638,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": -0.08075149073405365,
+        "correlation_max": 0.25071658796916435,
+        "correlation_mean": 0.08490241365830782,
+        "correlation_std": 0.0699695678981726
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.19374717337077532,
+        "lambda_km": 3763.5785666460497,
+        "C0": -0.0209323497285687,
+        "r_squared": 0.965707261448048,
+        "A_err": 0.008516910735412105,
+        "lambda_err": 375.9460033376957,
+        "C0_err": 0.004351573964846777,
+        "r_squared_unweighted": 0.15747627199362935,
+        "weighting_impact": 0.8082309894544186,
+        "total_weight": 9579758.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.07539237453286202,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.02245585650506424,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": -0.08075149073405365,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.12785591701603644,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.09162846148197255,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.14312872225343545,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.25071658796916435,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.1251088932684267,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.14607671562016095,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.11848400356978313,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.18304886585311572,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.14531418614375793,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.15035150048427573,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.10785123912971521,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.11393908889701275,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.11302331055487409,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.1215168683214948,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.10769624554398913,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.08842004085902105,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.07646629458800329,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.06175325558449449,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.049852503744067606,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.024390866254092643,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.01719609384384774,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.01220507357253688,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.0037739824588437208,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": -0.008619905632432503,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": -0.011007969250943562,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.07539237453286202,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.02245585650506424,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": -0.08075149073405365,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.12785591701603644,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.09162846148197255,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.14312872225343545,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.25071658796916435,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.1251088932684267,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.14607671562016095,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.11848400356978313,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.18304886585311572,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.14531418614375793,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.15035150048427573,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.10785123912971521,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.11393908889701275,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.11302331055487409,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.1215168683214948,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.10769624554398913,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.08842004085902105,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.07646629458800329,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.06175325558449449,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.049852503744067606,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.024390866254092643,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.01719609384384774,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.01220507357253688,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.0037739824588437208,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": -0.008619905632432503,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": -0.011007969250943562,
+          "count": 1478364
+        }
+      ]
+    },
+    "tidal_diurnal": {
+      "band_config": {
+        "f1": 1e-05,
+        "f2": 2e-05,
+        "name": "Diurnal Tides (10-20 \u03bcHz)",
+        "expected": "strongest_if_tidal_dominated",
+        "bandwidth_microhz": 10,
+        "description": "Principal diurnal constituents: K1 (11.55 \u03bcHz), O1 (13.94 \u03bcHz), P1 (14.96 \u03bcHz)"
+      },
+      "frequency_range_microhz": [
+        10.0,
+        20.0
+      ],
+      "frequency_range_hz": [
+        1e-05,
+        2e-05
+      ],
+      "frequency_bandwidth_microhz": 10.0,
+      "data_summary": {
+        "total_pairs_processed": 12436694,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9239577",
+        "pairs_in_bins_after": "9239577",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 518,
+        "count_max": 2673264,
+        "count_mean": 329984.89285714284,
+        "count_median": 61721.5,
+        "count_std": 600403.4629802011,
+        "distance_min_km": 70.56347801208967,
+        "distance_max_km": 12133.94170458669,
+        "correlation_min": -0.10196557453928742,
+        "correlation_max": 0.2395708104711688,
+        "correlation_mean": 0.07341185769021427,
+        "correlation_std": 0.069388748433291
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.1731068094899548,
+        "lambda_km": 3919.7931222058314,
+        "C0": -0.018272230286735008,
+        "r_squared": 0.9536923940741876,
+        "A_err": 0.008682532435881948,
+        "lambda_err": 470.88323593943005,
+        "C0_err": 0.004887715361250756,
+        "r_squared_unweighted": -0.011916988458870792,
+        "weighting_impact": 0.9656093825330584,
+        "total_weight": 9239577.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.56347801208967,
+          "mean_correlation": 0.038167941038439505,
+          "count": 1013
+        },
+        {
+          "distance_km": 95.34968730926423,
+          "mean_correlation": -0.03348883710444051,
+          "count": 518
+        },
+        {
+          "distance_km": 112.62328548758163,
+          "mean_correlation": -0.10196557453928742,
+          "count": 2386
+        },
+        {
+          "distance_km": 144.3755717783418,
+          "mean_correlation": 0.08254781449307984,
+          "count": 1200
+        },
+        {
+          "distance_km": 162.03383878564395,
+          "mean_correlation": 0.1104804774278028,
+          "count": 829
+        },
+        {
+          "distance_km": 190.0412746559444,
+          "mean_correlation": 0.10784378185170683,
+          "count": 1407
+        },
+        {
+          "distance_km": 224.92561850188054,
+          "mean_correlation": 0.2395708104711688,
+          "count": 3991
+        },
+        {
+          "distance_km": 286.90382528189076,
+          "mean_correlation": 0.1142155464241555,
+          "count": 4704
+        },
+        {
+          "distance_km": 325.49256642625187,
+          "mean_correlation": 0.12672377170928242,
+          "count": 8831
+        },
+        {
+          "distance_km": 405.91304779865175,
+          "mean_correlation": 0.11004130958416189,
+          "count": 12479
+        },
+        {
+          "distance_km": 543.0613210214525,
+          "mean_correlation": 0.17997952769618153,
+          "count": 25285
+        },
+        {
+          "distance_km": 658.2254603274345,
+          "mean_correlation": 0.14201684930632316,
+          "count": 16596
+        },
+        {
+          "distance_km": 748.7808347999394,
+          "mean_correlation": 0.11985144484481726,
+          "count": 22038
+        },
+        {
+          "distance_km": 938.9477617810531,
+          "mean_correlation": 0.09646327041183446,
+          "count": 75605
+        },
+        {
+          "distance_km": 1137.559139969194,
+          "mean_correlation": 0.10954810218514738,
+          "count": 58565
+        },
+        {
+          "distance_km": 1310.9169559101206,
+          "mean_correlation": 0.10023267919932213,
+          "count": 64878
+        },
+        {
+          "distance_km": 1512.9741693131923,
+          "mean_correlation": 0.10811787794508192,
+          "count": 67731
+        },
+        {
+          "distance_km": 1873.2945780138577,
+          "mean_correlation": 0.10069954939711637,
+          "count": 219500
+        },
+        {
+          "distance_km": 2294.1313661008494,
+          "mean_correlation": 0.07591271811845786,
+          "count": 146286
+        },
+        {
+          "distance_km": 2650.5801843607514,
+          "mean_correlation": 0.07722898031612069,
+          "count": 156424
+        },
+        {
+          "distance_km": 3264.9559342912407,
+          "mean_correlation": 0.058369084872510815,
+          "count": 446856
+        },
+        {
+          "distance_km": 3996.6106021402634,
+          "mean_correlation": 0.04717810505012239,
+          "count": 312611
+        },
+        {
+          "distance_km": 4962.947028609871,
+          "mean_correlation": 0.022906236114850997,
+          "count": 910192
+        },
+        {
+          "distance_km": 6089.356794577337,
+          "mean_correlation": 0.017614270421922644,
+          "count": 619476
+        },
+        {
+          "distance_km": 6977.179644916043,
+          "mean_correlation": 0.013870332921789352,
+          "count": 813728
+        },
+        {
+          "distance_km": 8019.164437810356,
+          "mean_correlation": 0.0065423643303137435,
+          "count": 1145905
+        },
+        {
+          "distance_km": 9856.874197809788,
+          "mean_correlation": -0.00489423522987702,
+          "count": 2673264
+        },
+        {
+          "distance_km": 12133.94170458669,
+          "mean_correlation": -0.010242183932106089,
+          "count": 1427279
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.56347801208967,
+          "mean_correlation": 0.038167941038439505,
+          "count": 1013
+        },
+        {
+          "distance_km": 95.34968730926423,
+          "mean_correlation": -0.03348883710444051,
+          "count": 518
+        },
+        {
+          "distance_km": 112.62328548758163,
+          "mean_correlation": -0.10196557453928742,
+          "count": 2386
+        },
+        {
+          "distance_km": 144.3755717783418,
+          "mean_correlation": 0.08254781449307984,
+          "count": 1200
+        },
+        {
+          "distance_km": 162.03383878564395,
+          "mean_correlation": 0.1104804774278028,
+          "count": 829
+        },
+        {
+          "distance_km": 190.0412746559444,
+          "mean_correlation": 0.10784378185170683,
+          "count": 1407
+        },
+        {
+          "distance_km": 224.92561850188054,
+          "mean_correlation": 0.2395708104711688,
+          "count": 3991
+        },
+        {
+          "distance_km": 286.90382528189076,
+          "mean_correlation": 0.1142155464241555,
+          "count": 4704
+        },
+        {
+          "distance_km": 325.49256642625187,
+          "mean_correlation": 0.12672377170928242,
+          "count": 8831
+        },
+        {
+          "distance_km": 405.91304779865175,
+          "mean_correlation": 0.11004130958416189,
+          "count": 12479
+        },
+        {
+          "distance_km": 543.0613210214525,
+          "mean_correlation": 0.17997952769618153,
+          "count": 25285
+        },
+        {
+          "distance_km": 658.2254603274345,
+          "mean_correlation": 0.14201684930632316,
+          "count": 16596
+        },
+        {
+          "distance_km": 748.7808347999394,
+          "mean_correlation": 0.11985144484481726,
+          "count": 22038
+        },
+        {
+          "distance_km": 938.9477617810531,
+          "mean_correlation": 0.09646327041183446,
+          "count": 75605
+        },
+        {
+          "distance_km": 1137.559139969194,
+          "mean_correlation": 0.10954810218514738,
+          "count": 58565
+        },
+        {
+          "distance_km": 1310.9169559101206,
+          "mean_correlation": 0.10023267919932213,
+          "count": 64878
+        },
+        {
+          "distance_km": 1512.9741693131923,
+          "mean_correlation": 0.10811787794508192,
+          "count": 67731
+        },
+        {
+          "distance_km": 1873.2945780138577,
+          "mean_correlation": 0.10069954939711637,
+          "count": 219500
+        },
+        {
+          "distance_km": 2294.1313661008494,
+          "mean_correlation": 0.07591271811845786,
+          "count": 146286
+        },
+        {
+          "distance_km": 2650.5801843607514,
+          "mean_correlation": 0.07722898031612069,
+          "count": 156424
+        },
+        {
+          "distance_km": 3264.9559342912407,
+          "mean_correlation": 0.058369084872510815,
+          "count": 446856
+        },
+        {
+          "distance_km": 3996.6106021402634,
+          "mean_correlation": 0.04717810505012239,
+          "count": 312611
+        },
+        {
+          "distance_km": 4962.947028609871,
+          "mean_correlation": 0.022906236114850997,
+          "count": 910192
+        },
+        {
+          "distance_km": 6089.356794577337,
+          "mean_correlation": 0.017614270421922644,
+          "count": 619476
+        },
+        {
+          "distance_km": 6977.179644916043,
+          "mean_correlation": 0.013870332921789352,
+          "count": 813728
+        },
+        {
+          "distance_km": 8019.164437810356,
+          "mean_correlation": 0.0065423643303137435,
+          "count": 1145905
+        },
+        {
+          "distance_km": 9856.874197809788,
+          "mean_correlation": -0.00489423522987702,
+          "count": 2673264
+        },
+        {
+          "distance_km": 12133.94170458669,
+          "mean_correlation": -0.010242183932106089,
+          "count": 1427279
+        }
+      ]
+    },
+    "tidal_semidiurnal": {
+      "band_config": {
+        "f1": 2e-05,
+        "f2": 3e-05,
+        "name": "Semidiurnal Tides (20-30 \u03bcHz)",
+        "expected": "strongest_if_tidal_dominated",
+        "bandwidth_microhz": 10,
+        "description": "Principal semidiurnal constituents: M2 (22.81 \u03bcHz), S2 (23.15 \u03bcHz), N2 (22.13 \u03bcHz)"
+      },
+      "frequency_range_microhz": [
+        20.0,
+        30.0
+      ],
+      "frequency_range_hz": [
+        2e-05,
+        3e-05
+      ],
+      "frequency_bandwidth_microhz": 10.0,
+      "data_summary": {
+        "total_pairs_processed": 12225292,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9079815",
+        "pairs_in_bins_after": "9079815",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 510,
+        "count_max": 2627184,
+        "count_mean": 324279.10714285716,
+        "count_median": 60385.5,
+        "count_std": 590064.9936546751,
+        "distance_min_km": 70.60272597585602,
+        "distance_max_km": 12133.908216358986,
+        "correlation_min": -0.040639982020671844,
+        "correlation_max": 0.20176628506956074,
+        "correlation_mean": 0.06972962806809699,
+        "correlation_std": 0.05621298101984109
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.1795637711182773,
+        "lambda_km": 4701.291296737712,
+        "C0": -0.03545335543443773,
+        "r_squared": 0.9702714694749015,
+        "A_err": 0.006456126650176451,
+        "lambda_err": 515.8779992494717,
+        "C0_err": 0.005606325549247188,
+        "r_squared_unweighted": 0.15403139242766317,
+        "weighting_impact": 0.8162400770472383,
+        "total_weight": 9079815.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.60272597585602,
+          "mean_correlation": 0.05646885479021304,
+          "count": 972
+        },
+        {
+          "distance_km": 95.45416182556335,
+          "mean_correlation": 0.03115301587863047,
+          "count": 510
+        },
+        {
+          "distance_km": 112.60306380495305,
+          "mean_correlation": -0.040639982020671844,
+          "count": 2350
+        },
+        {
+          "distance_km": 144.2295338157125,
+          "mean_correlation": 0.09248618954298668,
+          "count": 1151
+        },
+        {
+          "distance_km": 162.03383802828455,
+          "mean_correlation": 0.04112006651275106,
+          "count": 832
+        },
+        {
+          "distance_km": 190.0255929881641,
+          "mean_correlation": 0.08748877916597399,
+          "count": 1387
+        },
+        {
+          "distance_km": 224.96154334902664,
+          "mean_correlation": 0.20176628506956074,
+          "count": 3967
+        },
+        {
+          "distance_km": 286.8406608529071,
+          "mean_correlation": 0.11502472640806215,
+          "count": 4603
+        },
+        {
+          "distance_km": 325.4531307624679,
+          "mean_correlation": 0.1328443710331359,
+          "count": 8714
+        },
+        {
+          "distance_km": 405.8801433731323,
+          "mean_correlation": 0.11772852287446357,
+          "count": 12250
+        },
+        {
+          "distance_km": 543.1058613046794,
+          "mean_correlation": 0.1488137954463314,
+          "count": 24917
+        },
+        {
+          "distance_km": 658.2121138830529,
+          "mean_correlation": 0.12725377360988457,
+          "count": 16248
+        },
+        {
+          "distance_km": 748.8015154527117,
+          "mean_correlation": 0.10677006652967849,
+          "count": 21605
+        },
+        {
+          "distance_km": 938.9800593735431,
+          "mean_correlation": 0.09470663522485658,
+          "count": 74330
+        },
+        {
+          "distance_km": 1137.450236464013,
+          "mean_correlation": 0.09878951983925645,
+          "count": 57177
+        },
+        {
+          "distance_km": 1310.8311004332818,
+          "mean_correlation": 0.08454511365400534,
+          "count": 63594
+        },
+        {
+          "distance_km": 1513.1478202260826,
+          "mean_correlation": 0.09559907287928841,
+          "count": 66432
+        },
+        {
+          "distance_km": 1873.320684876157,
+          "mean_correlation": 0.09125892146856289,
+          "count": 215778
+        },
+        {
+          "distance_km": 2294.15526849417,
+          "mean_correlation": 0.08056603136650325,
+          "count": 144236
+        },
+        {
+          "distance_km": 2650.8753532677915,
+          "mean_correlation": 0.07671730682514098,
+          "count": 153751
+        },
+        {
+          "distance_km": 3265.245767244296,
+          "mean_correlation": 0.05714694062715677,
+          "count": 438809
+        },
+        {
+          "distance_km": 3996.5544057786988,
+          "mean_correlation": 0.04688364004445543,
+          "count": 307919
+        },
+        {
+          "distance_km": 4962.988066892093,
+          "mean_correlation": 0.024223536231471728,
+          "count": 894873
+        },
+        {
+          "distance_km": 6089.479452920268,
+          "mean_correlation": 0.013358720475657294,
+          "count": 608689
+        },
+        {
+          "distance_km": 6977.288104654625,
+          "mean_correlation": 0.006794707029033303,
+          "count": 798653
+        },
+        {
+          "distance_km": 8019.348816434302,
+          "mean_correlation": -0.0030565972899966698,
+          "count": 1124714
+        },
+        {
+          "distance_km": 9857.541256011413,
+          "mean_correlation": -0.01729258584315311,
+          "count": 2627184
+        },
+        {
+          "distance_km": 12133.908216358986,
+          "mean_correlation": -0.016089841466522765,
+          "count": 1404170
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.60272597585602,
+          "mean_correlation": 0.05646885479021304,
+          "count": 972
+        },
+        {
+          "distance_km": 95.45416182556335,
+          "mean_correlation": 0.03115301587863047,
+          "count": 510
+        },
+        {
+          "distance_km": 112.60306380495305,
+          "mean_correlation": -0.040639982020671844,
+          "count": 2350
+        },
+        {
+          "distance_km": 144.2295338157125,
+          "mean_correlation": 0.09248618954298668,
+          "count": 1151
+        },
+        {
+          "distance_km": 162.03383802828455,
+          "mean_correlation": 0.04112006651275106,
+          "count": 832
+        },
+        {
+          "distance_km": 190.0255929881641,
+          "mean_correlation": 0.08748877916597399,
+          "count": 1387
+        },
+        {
+          "distance_km": 224.96154334902664,
+          "mean_correlation": 0.20176628506956074,
+          "count": 3967
+        },
+        {
+          "distance_km": 286.8406608529071,
+          "mean_correlation": 0.11502472640806215,
+          "count": 4603
+        },
+        {
+          "distance_km": 325.4531307624679,
+          "mean_correlation": 0.1328443710331359,
+          "count": 8714
+        },
+        {
+          "distance_km": 405.8801433731323,
+          "mean_correlation": 0.11772852287446357,
+          "count": 12250
+        },
+        {
+          "distance_km": 543.1058613046794,
+          "mean_correlation": 0.1488137954463314,
+          "count": 24917
+        },
+        {
+          "distance_km": 658.2121138830529,
+          "mean_correlation": 0.12725377360988457,
+          "count": 16248
+        },
+        {
+          "distance_km": 748.8015154527117,
+          "mean_correlation": 0.10677006652967849,
+          "count": 21605
+        },
+        {
+          "distance_km": 938.9800593735431,
+          "mean_correlation": 0.09470663522485658,
+          "count": 74330
+        },
+        {
+          "distance_km": 1137.450236464013,
+          "mean_correlation": 0.09878951983925645,
+          "count": 57177
+        },
+        {
+          "distance_km": 1310.8311004332818,
+          "mean_correlation": 0.08454511365400534,
+          "count": 63594
+        },
+        {
+          "distance_km": 1513.1478202260826,
+          "mean_correlation": 0.09559907287928841,
+          "count": 66432
+        },
+        {
+          "distance_km": 1873.320684876157,
+          "mean_correlation": 0.09125892146856289,
+          "count": 215778
+        },
+        {
+          "distance_km": 2294.15526849417,
+          "mean_correlation": 0.08056603136650325,
+          "count": 144236
+        },
+        {
+          "distance_km": 2650.8753532677915,
+          "mean_correlation": 0.07671730682514098,
+          "count": 153751
+        },
+        {
+          "distance_km": 3265.245767244296,
+          "mean_correlation": 0.05714694062715677,
+          "count": 438809
+        },
+        {
+          "distance_km": 3996.5544057786988,
+          "mean_correlation": 0.04688364004445543,
+          "count": 307919
+        },
+        {
+          "distance_km": 4962.988066892093,
+          "mean_correlation": 0.024223536231471728,
+          "count": 894873
+        },
+        {
+          "distance_km": 6089.479452920268,
+          "mean_correlation": 0.013358720475657294,
+          "count": 608689
+        },
+        {
+          "distance_km": 6977.288104654625,
+          "mean_correlation": 0.006794707029033303,
+          "count": 798653
+        },
+        {
+          "distance_km": 8019.348816434302,
+          "mean_correlation": -0.0030565972899966698,
+          "count": 1124714
+        },
+        {
+          "distance_km": 9857.541256011413,
+          "mean_correlation": -0.01729258584315311,
+          "count": 2627184
+        },
+        {
+          "distance_km": 12133.908216358986,
+          "mean_correlation": -0.016089841466522765,
+          "count": 1404170
+        }
+      ]
+    },
+    "post_tidal_30_40": {
+      "band_config": {
+        "f1": 3e-05,
+        "f2": 4e-05,
+        "name": "Post-Tidal 30-40 \u03bcHz",
+        "expected": "weak_if_tidal_strong_if_broadband",
+        "bandwidth_microhz": 10,
+        "description": "First transition band beyond primary tidal frequencies"
+      },
+      "frequency_range_microhz": [
+        30.0,
+        40.0
+      ],
+      "frequency_range_hz": [
+        3e-05,
+        4e-05
+      ],
+      "frequency_bandwidth_microhz": 10.000000000000002,
+      "data_summary": {
+        "total_pairs_processed": 12146895,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9023899",
+        "pairs_in_bins_after": "9023899",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 501,
+        "count_max": 2609917,
+        "count_mean": 322282.10714285716,
+        "count_median": 60106.0,
+        "count_std": 586307.8606389839,
+        "distance_min_km": 70.58425395122245,
+        "distance_max_km": 12134.13632902896,
+        "correlation_min": -0.021197008544823644,
+        "correlation_max": 0.19207114537601605,
+        "correlation_mean": 0.052104755277219604,
+        "correlation_std": 0.04923378340231795
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.11838675296442777,
+        "lambda_km": 2453.0773968503604,
+        "C0": -0.004585657865045932,
+        "r_squared": 0.9348262403897987,
+        "A_err": 0.008903241566629137,
+        "lambda_err": 267.1949488823235,
+        "C0_err": 0.00178404934335951,
+        "r_squared_unweighted": 0.21385089217736586,
+        "weighting_impact": 0.7209753482124328,
+        "total_weight": 9023899.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.58425395122245,
+          "mean_correlation": 0.08426701365749072,
+          "count": 993
+        },
+        {
+          "distance_km": 95.41460203064891,
+          "mean_correlation": -0.021197008544823644,
+          "count": 501
+        },
+        {
+          "distance_km": 112.65833681273361,
+          "mean_correlation": 0.025198640349316383,
+          "count": 2354
+        },
+        {
+          "distance_km": 144.2530498606137,
+          "mean_correlation": 0.09771986664693577,
+          "count": 1169
+        },
+        {
+          "distance_km": 162.03383736512794,
+          "mean_correlation": -0.01543957433217131,
+          "count": 831
+        },
+        {
+          "distance_km": 190.07558316953742,
+          "mean_correlation": 0.0945356682385983,
+          "count": 1375
+        },
+        {
+          "distance_km": 224.90339449020513,
+          "mean_correlation": 0.19207114537601605,
+          "count": 3885
+        },
+        {
+          "distance_km": 286.89285685316145,
+          "mean_correlation": 0.06228698564214371,
+          "count": 4566
+        },
+        {
+          "distance_km": 325.47094575359785,
+          "mean_correlation": 0.13274714372290064,
+          "count": 8665
+        },
+        {
+          "distance_km": 406.07439392975067,
+          "mean_correlation": 0.0865407113274406,
+          "count": 12228
+        },
+        {
+          "distance_km": 543.1782716648532,
+          "mean_correlation": 0.09380499950418238,
+          "count": 24773
+        },
+        {
+          "distance_km": 658.2718784421335,
+          "mean_correlation": 0.0689295218590203,
+          "count": 16169
+        },
+        {
+          "distance_km": 748.6156073458149,
+          "mean_correlation": 0.10143137272493322,
+          "count": 21540
+        },
+        {
+          "distance_km": 938.8709598762147,
+          "mean_correlation": 0.060169918700377266,
+          "count": 74067
+        },
+        {
+          "distance_km": 1137.4752477680884,
+          "mean_correlation": 0.06879683966872416,
+          "count": 57005
+        },
+        {
+          "distance_km": 1310.8186917453968,
+          "mean_correlation": 0.06255345514132342,
+          "count": 63207
+        },
+        {
+          "distance_km": 1513.090957743362,
+          "mean_correlation": 0.06825798193305646,
+          "count": 66002
+        },
+        {
+          "distance_km": 1873.2113611828897,
+          "mean_correlation": 0.05207277622970332,
+          "count": 214199
+        },
+        {
+          "distance_km": 2294.009117973966,
+          "mean_correlation": 0.054296371172234584,
+          "count": 142978
+        },
+        {
+          "distance_km": 2650.7230556464615,
+          "mean_correlation": 0.029060734514673416,
+          "count": 152742
+        },
+        {
+          "distance_km": 3264.8237294721653,
+          "mean_correlation": 0.02782854814579915,
+          "count": 435738
+        },
+        {
+          "distance_km": 3996.444417112685,
+          "mean_correlation": 0.020921211491959624,
+          "count": 305861
+        },
+        {
+          "distance_km": 4963.180236298622,
+          "mean_correlation": 0.009929161170954302,
+          "count": 889047
+        },
+        {
+          "distance_km": 6089.412994034274,
+          "mean_correlation": 0.0077404549269923855,
+          "count": 605323
+        },
+        {
+          "distance_km": 6977.118787555346,
+          "mean_correlation": 0.0011716994555972674,
+          "count": 795279
+        },
+        {
+          "distance_km": 8019.242464006282,
+          "mean_correlation": -0.004036945442170783,
+          "count": 1118633
+        },
+        {
+          "distance_km": 9857.038176563983,
+          "mean_correlation": -0.0037988995066302682,
+          "count": 2609917
+        },
+        {
+          "distance_km": 12134.13632902896,
+          "mean_correlation": 0.0010733539875713751,
+          "count": 1394852
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.58425395122245,
+          "mean_correlation": 0.08426701365749072,
+          "count": 993
+        },
+        {
+          "distance_km": 95.41460203064891,
+          "mean_correlation": -0.021197008544823644,
+          "count": 501
+        },
+        {
+          "distance_km": 112.65833681273361,
+          "mean_correlation": 0.025198640349316383,
+          "count": 2354
+        },
+        {
+          "distance_km": 144.2530498606137,
+          "mean_correlation": 0.09771986664693577,
+          "count": 1169
+        },
+        {
+          "distance_km": 162.03383736512794,
+          "mean_correlation": -0.01543957433217131,
+          "count": 831
+        },
+        {
+          "distance_km": 190.07558316953742,
+          "mean_correlation": 0.0945356682385983,
+          "count": 1375
+        },
+        {
+          "distance_km": 224.90339449020513,
+          "mean_correlation": 0.19207114537601605,
+          "count": 3885
+        },
+        {
+          "distance_km": 286.89285685316145,
+          "mean_correlation": 0.06228698564214371,
+          "count": 4566
+        },
+        {
+          "distance_km": 325.47094575359785,
+          "mean_correlation": 0.13274714372290064,
+          "count": 8665
+        },
+        {
+          "distance_km": 406.07439392975067,
+          "mean_correlation": 0.0865407113274406,
+          "count": 12228
+        },
+        {
+          "distance_km": 543.1782716648532,
+          "mean_correlation": 0.09380499950418238,
+          "count": 24773
+        },
+        {
+          "distance_km": 658.2718784421335,
+          "mean_correlation": 0.0689295218590203,
+          "count": 16169
+        },
+        {
+          "distance_km": 748.6156073458149,
+          "mean_correlation": 0.10143137272493322,
+          "count": 21540
+        },
+        {
+          "distance_km": 938.8709598762147,
+          "mean_correlation": 0.060169918700377266,
+          "count": 74067
+        },
+        {
+          "distance_km": 1137.4752477680884,
+          "mean_correlation": 0.06879683966872416,
+          "count": 57005
+        },
+        {
+          "distance_km": 1310.8186917453968,
+          "mean_correlation": 0.06255345514132342,
+          "count": 63207
+        },
+        {
+          "distance_km": 1513.090957743362,
+          "mean_correlation": 0.06825798193305646,
+          "count": 66002
+        },
+        {
+          "distance_km": 1873.2113611828897,
+          "mean_correlation": 0.05207277622970332,
+          "count": 214199
+        },
+        {
+          "distance_km": 2294.009117973966,
+          "mean_correlation": 0.054296371172234584,
+          "count": 142978
+        },
+        {
+          "distance_km": 2650.7230556464615,
+          "mean_correlation": 0.029060734514673416,
+          "count": 152742
+        },
+        {
+          "distance_km": 3264.8237294721653,
+          "mean_correlation": 0.02782854814579915,
+          "count": 435738
+        },
+        {
+          "distance_km": 3996.444417112685,
+          "mean_correlation": 0.020921211491959624,
+          "count": 305861
+        },
+        {
+          "distance_km": 4963.180236298622,
+          "mean_correlation": 0.009929161170954302,
+          "count": 889047
+        },
+        {
+          "distance_km": 6089.412994034274,
+          "mean_correlation": 0.0077404549269923855,
+          "count": 605323
+        },
+        {
+          "distance_km": 6977.118787555346,
+          "mean_correlation": 0.0011716994555972674,
+          "count": 795279
+        },
+        {
+          "distance_km": 8019.242464006282,
+          "mean_correlation": -0.004036945442170783,
+          "count": 1118633
+        },
+        {
+          "distance_km": 9857.038176563983,
+          "mean_correlation": -0.0037988995066302682,
+          "count": 2609917
+        },
+        {
+          "distance_km": 12134.13632902896,
+          "mean_correlation": 0.0010733539875713751,
+          "count": 1394852
+        }
+      ]
+    },
+    "post_tidal_40_50": {
+      "band_config": {
+        "f1": 4e-05,
+        "f2": 5e-05,
+        "name": "Post-Tidal 40-50 \u03bcHz",
+        "expected": "weak_if_tidal_strong_if_broadband",
+        "bandwidth_microhz": 10,
+        "description": "CRITICAL: Confirms post-tidal transition pattern"
+      },
+      "frequency_range_microhz": [
+        40.0,
+        50.0
+      ],
+      "frequency_range_hz": [
+        4e-05,
+        5e-05
+      ],
+      "frequency_bandwidth_microhz": 10.0,
+      "data_summary": {
+        "total_pairs_processed": 11976359,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "8897209",
+        "pairs_in_bins_after": "8897209",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 500,
+        "count_max": 2571994,
+        "count_mean": 317757.46428571426,
+        "count_median": 59296.5,
+        "count_std": 577902.0614995616,
+        "distance_min_km": 70.64690517925133,
+        "distance_max_km": 12134.199024963347,
+        "correlation_min": -0.04552907381979102,
+        "correlation_max": 0.1458006974856572,
+        "correlation_mean": 0.03919456419370883,
+        "correlation_std": 0.04591090891013701
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.09796052113518042,
+        "lambda_km": 1409.4510017244445,
+        "C0": 0.004436226549812969,
+        "r_squared": 0.8321841412731232,
+        "A_err": 0.014207024065183628,
+        "lambda_err": 221.76208550955695,
+        "C0_err": 0.0012003610470540636,
+        "r_squared_unweighted": 0.030607143202397546,
+        "weighting_impact": 0.8015769980707257,
+        "total_weight": 8897209.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.64690517925133,
+          "mean_correlation": 0.05983154858411808,
+          "count": 947
+        },
+        {
+          "distance_km": 95.54910533335797,
+          "mean_correlation": -0.04552907381979102,
+          "count": 500
+        },
+        {
+          "distance_km": 112.57837363651193,
+          "mean_correlation": -0.024248153327379143,
+          "count": 2324
+        },
+        {
+          "distance_km": 144.23511087872114,
+          "mean_correlation": 0.1436915229878476,
+          "count": 1139
+        },
+        {
+          "distance_km": 162.03383740982952,
+          "mean_correlation": 0.004419021513340467,
+          "count": 829
+        },
+        {
+          "distance_km": 190.06351162554137,
+          "mean_correlation": 0.051516568333271236,
+          "count": 1336
+        },
+        {
+          "distance_km": 224.83730814120335,
+          "mean_correlation": 0.1458006974856572,
+          "count": 3843
+        },
+        {
+          "distance_km": 286.8277790444524,
+          "mean_correlation": 0.0530925244011842,
+          "count": 4471
+        },
+        {
+          "distance_km": 325.43017580064344,
+          "mean_correlation": 0.12054829096853574,
+          "count": 8546
+        },
+        {
+          "distance_km": 406.09017051526064,
+          "mean_correlation": 0.07296015035348065,
+          "count": 11976
+        },
+        {
+          "distance_km": 543.2312901213528,
+          "mean_correlation": 0.0887270951294437,
+          "count": 24436
+        },
+        {
+          "distance_km": 658.1743425926109,
+          "mean_correlation": 0.03783108497700552,
+          "count": 15954
+        },
+        {
+          "distance_km": 748.5970355349708,
+          "mean_correlation": 0.07793673887411508,
+          "count": 21232
+        },
+        {
+          "distance_km": 938.9612641259642,
+          "mean_correlation": 0.03520230046755544,
+          "count": 72750
+        },
+        {
+          "distance_km": 1137.3714547513478,
+          "mean_correlation": 0.04724374243083672,
+          "count": 56197
+        },
+        {
+          "distance_km": 1310.8729492831517,
+          "mean_correlation": 0.04815303725674449,
+          "count": 62396
+        },
+        {
+          "distance_km": 1513.123647770778,
+          "mean_correlation": 0.048075754183734394,
+          "count": 65255
+        },
+        {
+          "distance_km": 1873.2770681922625,
+          "mean_correlation": 0.037437665005772884,
+          "count": 211543
+        },
+        {
+          "distance_km": 2293.885112535908,
+          "mean_correlation": 0.029677352670238577,
+          "count": 141366
+        },
+        {
+          "distance_km": 2650.840341534328,
+          "mean_correlation": 0.016486031775328057,
+          "count": 150685
+        },
+        {
+          "distance_km": 3265.0562231186004,
+          "mean_correlation": 0.014463603841806902,
+          "count": 430246
+        },
+        {
+          "distance_km": 3996.4384769458015,
+          "mean_correlation": 0.005906622086642685,
+          "count": 301672
+        },
+        {
+          "distance_km": 4963.262100676405,
+          "mean_correlation": 0.0029677558694583424,
+          "count": 876690
+        },
+        {
+          "distance_km": 6089.521652764162,
+          "mean_correlation": 0.006349340484915857,
+          "count": 597075
+        },
+        {
+          "distance_km": 6977.044562778564,
+          "mean_correlation": 0.0030523875924261456,
+          "count": 783320
+        },
+        {
+          "distance_km": 8019.400187208997,
+          "mean_correlation": 0.0027160701526914065,
+          "count": 1102559
+        },
+        {
+          "distance_km": 9857.034237889498,
+          "mean_correlation": 0.005465318025193941,
+          "count": 2571994
+        },
+        {
+          "distance_km": 12134.199024963347,
+          "mean_correlation": 0.007672799119671797,
+          "count": 1375928
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.64690517925133,
+          "mean_correlation": 0.05983154858411808,
+          "count": 947
+        },
+        {
+          "distance_km": 95.54910533335797,
+          "mean_correlation": -0.04552907381979102,
+          "count": 500
+        },
+        {
+          "distance_km": 112.57837363651193,
+          "mean_correlation": -0.024248153327379143,
+          "count": 2324
+        },
+        {
+          "distance_km": 144.23511087872114,
+          "mean_correlation": 0.1436915229878476,
+          "count": 1139
+        },
+        {
+          "distance_km": 162.03383740982952,
+          "mean_correlation": 0.004419021513340467,
+          "count": 829
+        },
+        {
+          "distance_km": 190.06351162554137,
+          "mean_correlation": 0.051516568333271236,
+          "count": 1336
+        },
+        {
+          "distance_km": 224.83730814120335,
+          "mean_correlation": 0.1458006974856572,
+          "count": 3843
+        },
+        {
+          "distance_km": 286.8277790444524,
+          "mean_correlation": 0.0530925244011842,
+          "count": 4471
+        },
+        {
+          "distance_km": 325.43017580064344,
+          "mean_correlation": 0.12054829096853574,
+          "count": 8546
+        },
+        {
+          "distance_km": 406.09017051526064,
+          "mean_correlation": 0.07296015035348065,
+          "count": 11976
+        },
+        {
+          "distance_km": 543.2312901213528,
+          "mean_correlation": 0.0887270951294437,
+          "count": 24436
+        },
+        {
+          "distance_km": 658.1743425926109,
+          "mean_correlation": 0.03783108497700552,
+          "count": 15954
+        },
+        {
+          "distance_km": 748.5970355349708,
+          "mean_correlation": 0.07793673887411508,
+          "count": 21232
+        },
+        {
+          "distance_km": 938.9612641259642,
+          "mean_correlation": 0.03520230046755544,
+          "count": 72750
+        },
+        {
+          "distance_km": 1137.3714547513478,
+          "mean_correlation": 0.04724374243083672,
+          "count": 56197
+        },
+        {
+          "distance_km": 1310.8729492831517,
+          "mean_correlation": 0.04815303725674449,
+          "count": 62396
+        },
+        {
+          "distance_km": 1513.123647770778,
+          "mean_correlation": 0.048075754183734394,
+          "count": 65255
+        },
+        {
+          "distance_km": 1873.2770681922625,
+          "mean_correlation": 0.037437665005772884,
+          "count": 211543
+        },
+        {
+          "distance_km": 2293.885112535908,
+          "mean_correlation": 0.029677352670238577,
+          "count": 141366
+        },
+        {
+          "distance_km": 2650.840341534328,
+          "mean_correlation": 0.016486031775328057,
+          "count": 150685
+        },
+        {
+          "distance_km": 3265.0562231186004,
+          "mean_correlation": 0.014463603841806902,
+          "count": 430246
+        },
+        {
+          "distance_km": 3996.4384769458015,
+          "mean_correlation": 0.005906622086642685,
+          "count": 301672
+        },
+        {
+          "distance_km": 4963.262100676405,
+          "mean_correlation": 0.0029677558694583424,
+          "count": 876690
+        },
+        {
+          "distance_km": 6089.521652764162,
+          "mean_correlation": 0.006349340484915857,
+          "count": 597075
+        },
+        {
+          "distance_km": 6977.044562778564,
+          "mean_correlation": 0.0030523875924261456,
+          "count": 783320
+        },
+        {
+          "distance_km": 8019.400187208997,
+          "mean_correlation": 0.0027160701526914065,
+          "count": 1102559
+        },
+        {
+          "distance_km": 9857.034237889498,
+          "mean_correlation": 0.005465318025193941,
+          "count": 2571994
+        },
+        {
+          "distance_km": 12134.199024963347,
+          "mean_correlation": 0.007672799119671797,
+          "count": 1375928
+        }
+      ]
+    },
+    "post_tidal_50_75": {
+      "band_config": {
+        "f1": 5e-05,
+        "f2": 7.5e-05,
+        "name": "Post-Tidal 50-75 \u03bcHz",
+        "expected": "weak_if_tidal_moderate_if_broadband",
+        "bandwidth_microhz": 25,
+        "description": "Extended post-tidal region"
+      },
+      "frequency_range_microhz": [
+        50.0,
+        75.0
+      ],
+      "frequency_range_hz": [
+        5e-05,
+        7.5e-05
+      ],
+      "frequency_bandwidth_microhz": 24.99999999999999,
+      "data_summary": {
+        "total_pairs_processed": 12799993,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9515859",
+        "pairs_in_bins_after": "9515859",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2752484,
+        "count_mean": 339852.10714285716,
+        "count_median": 63759.5,
+        "count_std": 618136.3323026869,
+        "distance_min_km": 70.57131965439238,
+        "distance_max_km": 12133.977079738568,
+        "correlation_min": -0.022501069771210407,
+        "correlation_max": 0.1861095843653863,
+        "correlation_mean": 0.041969769627046696,
+        "correlation_std": 0.04896621337956813
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.11524374180719751,
+        "lambda_km": 1191.8849051092607,
+        "C0": 0.004223913081260964,
+        "r_squared": 0.8255432019133624,
+        "A_err": 0.017492218426525097,
+        "lambda_err": 186.6038522183426,
+        "C0_err": 0.0012064608573994855,
+        "r_squared_unweighted": 0.011216156086863438,
+        "weighting_impact": 0.814327045826499,
+        "total_weight": 9515859.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.57131965439238,
+          "mean_correlation": 0.027514033271841026,
+          "count": 1045
+        },
+        {
+          "distance_km": 95.44614595717543,
+          "mean_correlation": 0.003520354307935815,
+          "count": 533
+        },
+        {
+          "distance_km": 112.63922128832492,
+          "mean_correlation": -0.004002528248990635,
+          "count": 2415
+        },
+        {
+          "distance_km": 144.49825458852632,
+          "mean_correlation": 0.1861095843653863,
+          "count": 1297
+        },
+        {
+          "distance_km": 162.03384164733805,
+          "mean_correlation": -0.022501069771210407,
+          "count": 850
+        },
+        {
+          "distance_km": 190.07915282139672,
+          "mean_correlation": 0.036349261736669906,
+          "count": 1441
+        },
+        {
+          "distance_km": 225.2701249179237,
+          "mean_correlation": 0.15193011850023377,
+          "count": 4116
+        },
+        {
+          "distance_km": 286.93279569266423,
+          "mean_correlation": 0.06811576214298516,
+          "count": 4853
+        },
+        {
+          "distance_km": 325.47383067321954,
+          "mean_correlation": 0.11852187246095532,
+          "count": 9026
+        },
+        {
+          "distance_km": 406.2204516948643,
+          "mean_correlation": 0.07561095982042224,
+          "count": 12991
+        },
+        {
+          "distance_km": 542.8584991967235,
+          "mean_correlation": 0.08648518335939286,
+          "count": 25994
+        },
+        {
+          "distance_km": 658.3239153627519,
+          "mean_correlation": 0.05353390277413906,
+          "count": 16995
+        },
+        {
+          "distance_km": 748.8336681850831,
+          "mean_correlation": 0.08630518851735285,
+          "count": 22714
+        },
+        {
+          "distance_km": 939.0512104135129,
+          "mean_correlation": 0.04841619301914605,
+          "count": 78308
+        },
+        {
+          "distance_km": 1137.7210678165277,
+          "mean_correlation": 0.050086476146224385,
+          "count": 60468
+        },
+        {
+          "distance_km": 1311.0200390370594,
+          "mean_correlation": 0.0432436730960212,
+          "count": 67051
+        },
+        {
+          "distance_km": 1512.7072901137624,
+          "mean_correlation": 0.05048403891872599,
+          "count": 70359
+        },
+        {
+          "distance_km": 1873.4000582021438,
+          "mean_correlation": 0.03463016170208389,
+          "count": 226553
+        },
+        {
+          "distance_km": 2294.462680317944,
+          "mean_correlation": 0.023676840817115442,
+          "count": 150716
+        },
+        {
+          "distance_km": 2650.3318179992943,
+          "mean_correlation": 0.013714919806856761,
+          "count": 161381
+        },
+        {
+          "distance_km": 3264.677504785863,
+          "mean_correlation": 0.004798594431965514,
+          "count": 462418
+        },
+        {
+          "distance_km": 3996.5345784555393,
+          "mean_correlation": 0.005410949835219366,
+          "count": 320865
+        },
+        {
+          "distance_km": 4963.040906015966,
+          "mean_correlation": 0.0018859936473933456,
+          "count": 936361
+        },
+        {
+          "distance_km": 6089.1946971705465,
+          "mean_correlation": 0.008945448013805759,
+          "count": 637527
+        },
+        {
+          "distance_km": 6977.378783867487,
+          "mean_correlation": 0.006976005261511682,
+          "count": 837434
+        },
+        {
+          "distance_km": 8018.941041802052,
+          "mean_correlation": 0.0103838873639569,
+          "count": 1180681
+        },
+        {
+          "distance_km": 9856.28842562782,
+          "mean_correlation": 0.003801433474808086,
+          "count": 2752484
+        },
+        {
+          "distance_km": 12133.977079738568,
+          "mean_correlation": 0.0012063107853595996,
+          "count": 1468983
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.57131965439238,
+          "mean_correlation": 0.027514033271841026,
+          "count": 1045
+        },
+        {
+          "distance_km": 95.44614595717543,
+          "mean_correlation": 0.003520354307935815,
+          "count": 533
+        },
+        {
+          "distance_km": 112.63922128832492,
+          "mean_correlation": -0.004002528248990635,
+          "count": 2415
+        },
+        {
+          "distance_km": 144.49825458852632,
+          "mean_correlation": 0.1861095843653863,
+          "count": 1297
+        },
+        {
+          "distance_km": 162.03384164733805,
+          "mean_correlation": -0.022501069771210407,
+          "count": 850
+        },
+        {
+          "distance_km": 190.07915282139672,
+          "mean_correlation": 0.036349261736669906,
+          "count": 1441
+        },
+        {
+          "distance_km": 225.2701249179237,
+          "mean_correlation": 0.15193011850023377,
+          "count": 4116
+        },
+        {
+          "distance_km": 286.93279569266423,
+          "mean_correlation": 0.06811576214298516,
+          "count": 4853
+        },
+        {
+          "distance_km": 325.47383067321954,
+          "mean_correlation": 0.11852187246095532,
+          "count": 9026
+        },
+        {
+          "distance_km": 406.2204516948643,
+          "mean_correlation": 0.07561095982042224,
+          "count": 12991
+        },
+        {
+          "distance_km": 542.8584991967235,
+          "mean_correlation": 0.08648518335939286,
+          "count": 25994
+        },
+        {
+          "distance_km": 658.3239153627519,
+          "mean_correlation": 0.05353390277413906,
+          "count": 16995
+        },
+        {
+          "distance_km": 748.8336681850831,
+          "mean_correlation": 0.08630518851735285,
+          "count": 22714
+        },
+        {
+          "distance_km": 939.0512104135129,
+          "mean_correlation": 0.04841619301914605,
+          "count": 78308
+        },
+        {
+          "distance_km": 1137.7210678165277,
+          "mean_correlation": 0.050086476146224385,
+          "count": 60468
+        },
+        {
+          "distance_km": 1311.0200390370594,
+          "mean_correlation": 0.0432436730960212,
+          "count": 67051
+        },
+        {
+          "distance_km": 1512.7072901137624,
+          "mean_correlation": 0.05048403891872599,
+          "count": 70359
+        },
+        {
+          "distance_km": 1873.4000582021438,
+          "mean_correlation": 0.03463016170208389,
+          "count": 226553
+        },
+        {
+          "distance_km": 2294.462680317944,
+          "mean_correlation": 0.023676840817115442,
+          "count": 150716
+        },
+        {
+          "distance_km": 2650.3318179992943,
+          "mean_correlation": 0.013714919806856761,
+          "count": 161381
+        },
+        {
+          "distance_km": 3264.677504785863,
+          "mean_correlation": 0.004798594431965514,
+          "count": 462418
+        },
+        {
+          "distance_km": 3996.5345784555393,
+          "mean_correlation": 0.005410949835219366,
+          "count": 320865
+        },
+        {
+          "distance_km": 4963.040906015966,
+          "mean_correlation": 0.0018859936473933456,
+          "count": 936361
+        },
+        {
+          "distance_km": 6089.1946971705465,
+          "mean_correlation": 0.008945448013805759,
+          "count": 637527
+        },
+        {
+          "distance_km": 6977.378783867487,
+          "mean_correlation": 0.006976005261511682,
+          "count": 837434
+        },
+        {
+          "distance_km": 8018.941041802052,
+          "mean_correlation": 0.0103838873639569,
+          "count": 1180681
+        },
+        {
+          "distance_km": 9856.28842562782,
+          "mean_correlation": 0.003801433474808086,
+          "count": 2752484
+        },
+        {
+          "distance_km": 12133.977079738568,
+          "mean_correlation": 0.0012063107853595996,
+          "count": 1468983
+        }
+      ]
+    },
+    "post_tidal_75_100": {
+      "band_config": {
+        "f1": 7.5e-05,
+        "f2": 0.0001,
+        "name": "Post-Tidal 75-100 \u03bcHz",
+        "expected": "weak_if_tidal_moderate_if_broadband",
+        "bandwidth_microhz": 25,
+        "description": "Final post-tidal transition test"
+      },
+      "frequency_range_microhz": [
+        75.0,
+        100.0
+      ],
+      "frequency_range_hz": [
+        7.5e-05,
+        0.0001
+      ],
+      "frequency_bandwidth_microhz": 25.00000000000001,
+      "data_summary": {
+        "total_pairs_processed": 12784178,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9504072",
+        "pairs_in_bins_after": "9504072",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 531,
+        "count_max": 2748602,
+        "count_mean": 339431.14285714284,
+        "count_median": 63702.5,
+        "count_std": 617325.0350494412,
+        "distance_min_km": 70.56637464412319,
+        "distance_max_km": 12134.08114152139,
+        "correlation_min": -0.016106689694010523,
+        "correlation_max": 0.1649226449186237,
+        "correlation_mean": 0.03415603394681294,
+        "correlation_std": 0.04064083803818787
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.09016911460012589,
+        "lambda_km": 1067.1515913024825,
+        "C0": 0.004536793591007085,
+        "r_squared": 0.8576765967341754,
+        "A_err": 0.012260399109002377,
+        "lambda_err": 145.4554492120882,
+        "C0_err": 0.0007460228108353004,
+        "r_squared_unweighted": 0.12850167469474827,
+        "weighting_impact": 0.7291749220394271,
+        "total_weight": 9504072.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.56637464412319,
+          "mean_correlation": 0.013356410365050505,
+          "count": 1041
+        },
+        {
+          "distance_km": 95.43359967227448,
+          "mean_correlation": 0.037740723087544094,
+          "count": 531
+        },
+        {
+          "distance_km": 112.6305869379295,
+          "mean_correlation": 0.02711885992337741,
+          "count": 2411
+        },
+        {
+          "distance_km": 144.56997424122324,
+          "mean_correlation": 0.1649226449186237,
+          "count": 1297
+        },
+        {
+          "distance_km": 162.03384175519147,
+          "mean_correlation": -0.016106689694010523,
+          "count": 846
+        },
+        {
+          "distance_km": 190.1182054306145,
+          "mean_correlation": 0.0009904956572108512,
+          "count": 1438
+        },
+        {
+          "distance_km": 225.22560073904586,
+          "mean_correlation": 0.12345816863420508,
+          "count": 4106
+        },
+        {
+          "distance_km": 286.95525828835156,
+          "mean_correlation": 0.03680074362392433,
+          "count": 4833
+        },
+        {
+          "distance_km": 325.47762229802925,
+          "mean_correlation": 0.09910043105150605,
+          "count": 9016
+        },
+        {
+          "distance_km": 406.22374671340003,
+          "mean_correlation": 0.06163216270809698,
+          "count": 12963
+        },
+        {
+          "distance_km": 542.8946491254648,
+          "mean_correlation": 0.06775655837060063,
+          "count": 25997
+        },
+        {
+          "distance_km": 658.3379734016881,
+          "mean_correlation": 0.058648193976477164,
+          "count": 16981
+        },
+        {
+          "distance_km": 748.849699250179,
+          "mean_correlation": 0.06205537508869212,
+          "count": 22722
+        },
+        {
+          "distance_km": 939.0278245711472,
+          "mean_correlation": 0.034070551940721436,
+          "count": 78080
+        },
+        {
+          "distance_km": 1137.7030388405647,
+          "mean_correlation": 0.033403341206640264,
+          "count": 60440
+        },
+        {
+          "distance_km": 1311.0188865896052,
+          "mean_correlation": 0.02909602744501632,
+          "count": 66965
+        },
+        {
+          "distance_km": 1512.729640036658,
+          "mean_correlation": 0.03515378769273372,
+          "count": 70373
+        },
+        {
+          "distance_km": 1873.3708248757475,
+          "mean_correlation": 0.02410627327293412,
+          "count": 226324
+        },
+        {
+          "distance_km": 2294.4079788685754,
+          "mean_correlation": 0.00861133122618128,
+          "count": 150520
+        },
+        {
+          "distance_km": 2650.3400016086534,
+          "mean_correlation": 0.007868969321629057,
+          "count": 161229
+        },
+        {
+          "distance_km": 3264.7035184834513,
+          "mean_correlation": 0.008655451935315594,
+          "count": 461833
+        },
+        {
+          "distance_km": 3996.5940177205293,
+          "mean_correlation": 0.006703150715914704,
+          "count": 320393
+        },
+        {
+          "distance_km": 4963.085623746615,
+          "mean_correlation": 0.00497462030169159,
+          "count": 935146
+        },
+        {
+          "distance_km": 6089.2140233112705,
+          "mean_correlation": 0.006744437549436998,
+          "count": 636715
+        },
+        {
+          "distance_km": 6977.3989102368605,
+          "mean_correlation": 0.004936368795131149,
+          "count": 836408
+        },
+        {
+          "distance_km": 8018.998559213659,
+          "mean_correlation": 0.006516947860435127,
+          "count": 1179563
+        },
+        {
+          "distance_km": 9856.216644853734,
+          "mean_correlation": 0.0035594034665693873,
+          "count": 2748602
+        },
+        {
+          "distance_km": 12134.08114152139,
+          "mean_correlation": 0.004494210069113329,
+          "count": 1467299
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.56637464412319,
+          "mean_correlation": 0.013356410365050505,
+          "count": 1041
+        },
+        {
+          "distance_km": 95.43359967227448,
+          "mean_correlation": 0.037740723087544094,
+          "count": 531
+        },
+        {
+          "distance_km": 112.6305869379295,
+          "mean_correlation": 0.02711885992337741,
+          "count": 2411
+        },
+        {
+          "distance_km": 144.56997424122324,
+          "mean_correlation": 0.1649226449186237,
+          "count": 1297
+        },
+        {
+          "distance_km": 162.03384175519147,
+          "mean_correlation": -0.016106689694010523,
+          "count": 846
+        },
+        {
+          "distance_km": 190.1182054306145,
+          "mean_correlation": 0.0009904956572108512,
+          "count": 1438
+        },
+        {
+          "distance_km": 225.22560073904586,
+          "mean_correlation": 0.12345816863420508,
+          "count": 4106
+        },
+        {
+          "distance_km": 286.95525828835156,
+          "mean_correlation": 0.03680074362392433,
+          "count": 4833
+        },
+        {
+          "distance_km": 325.47762229802925,
+          "mean_correlation": 0.09910043105150605,
+          "count": 9016
+        },
+        {
+          "distance_km": 406.22374671340003,
+          "mean_correlation": 0.06163216270809698,
+          "count": 12963
+        },
+        {
+          "distance_km": 542.8946491254648,
+          "mean_correlation": 0.06775655837060063,
+          "count": 25997
+        },
+        {
+          "distance_km": 658.3379734016881,
+          "mean_correlation": 0.058648193976477164,
+          "count": 16981
+        },
+        {
+          "distance_km": 748.849699250179,
+          "mean_correlation": 0.06205537508869212,
+          "count": 22722
+        },
+        {
+          "distance_km": 939.0278245711472,
+          "mean_correlation": 0.034070551940721436,
+          "count": 78080
+        },
+        {
+          "distance_km": 1137.7030388405647,
+          "mean_correlation": 0.033403341206640264,
+          "count": 60440
+        },
+        {
+          "distance_km": 1311.0188865896052,
+          "mean_correlation": 0.02909602744501632,
+          "count": 66965
+        },
+        {
+          "distance_km": 1512.729640036658,
+          "mean_correlation": 0.03515378769273372,
+          "count": 70373
+        },
+        {
+          "distance_km": 1873.3708248757475,
+          "mean_correlation": 0.02410627327293412,
+          "count": 226324
+        },
+        {
+          "distance_km": 2294.4079788685754,
+          "mean_correlation": 0.00861133122618128,
+          "count": 150520
+        },
+        {
+          "distance_km": 2650.3400016086534,
+          "mean_correlation": 0.007868969321629057,
+          "count": 161229
+        },
+        {
+          "distance_km": 3264.7035184834513,
+          "mean_correlation": 0.008655451935315594,
+          "count": 461833
+        },
+        {
+          "distance_km": 3996.5940177205293,
+          "mean_correlation": 0.006703150715914704,
+          "count": 320393
+        },
+        {
+          "distance_km": 4963.085623746615,
+          "mean_correlation": 0.00497462030169159,
+          "count": 935146
+        },
+        {
+          "distance_km": 6089.2140233112705,
+          "mean_correlation": 0.006744437549436998,
+          "count": 636715
+        },
+        {
+          "distance_km": 6977.3989102368605,
+          "mean_correlation": 0.004936368795131149,
+          "count": 836408
+        },
+        {
+          "distance_km": 8018.998559213659,
+          "mean_correlation": 0.006516947860435127,
+          "count": 1179563
+        },
+        {
+          "distance_km": 9856.216644853734,
+          "mean_correlation": 0.0035594034665693873,
+          "count": 2748602
+        },
+        {
+          "distance_km": 12134.08114152139,
+          "mean_correlation": 0.004494210069113329,
+          "count": 1467299
+        }
+      ]
+    },
+    "intermediate_100_200": {
+      "band_config": {
+        "f1": 0.0001,
+        "f2": 0.0002,
+        "name": "Intermediate 100-200 \u03bcHz",
+        "expected": "moderate",
+        "bandwidth_microhz": 100,
+        "description": "Mid-range TEP signal assessment"
+      },
+      "frequency_range_microhz": [
+        100.0,
+        200.0
+      ],
+      "frequency_range_hz": [
+        0.0001,
+        0.0002
+      ],
+      "frequency_bandwidth_microhz": 100.0,
+      "data_summary": {
+        "total_pairs_processed": 12882748,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579758",
+        "pairs_in_bins_after": "9579758",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770379,
+        "count_mean": 342134.21428571426,
+        "count_median": 64253.0,
+        "count_std": 622173.1451455638,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": -0.006430257305625191,
+        "correlation_max": 0.22676994864531227,
+        "correlation_mean": 0.04442644741780055,
+        "correlation_std": 0.048165333437701185
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.09418717924334839,
+        "lambda_km": 1260.2286962389558,
+        "C0": 0.005705352733601613,
+        "r_squared": 0.8644662448460229,
+        "A_err": 0.012237998638374756,
+        "lambda_err": 171.5487194737991,
+        "C0_err": 0.0009013652379778983,
+        "r_squared_unweighted": 0.3256793322491677,
+        "weighting_impact": 0.5387869125968552,
+        "total_weight": 9579758.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06405696500752531,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.02001415998538261,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.03918295513478893,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.22676994864531227,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": -0.006430257305625191,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.04926373313258449,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.1194539228125193,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.05559164628573027,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.09525060225934119,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.060637988760819585,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.0887930644357626,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.08034299403098454,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.07969782008013475,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.036561405274678334,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.0354968556736325,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.03353064322159867,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.03822620013614581,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.028178781344904858,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.016670945821737487,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.017296441041273317,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.014593251776901954,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.01055834984133152,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.007679720625270786,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.008336688763661011,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.006509373434548209,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.009143564287526601,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.004489369718290683,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.004043393471653163,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06405696500752531,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.02001415998538261,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.03918295513478893,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.22676994864531227,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": -0.006430257305625191,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.04926373313258449,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.1194539228125193,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.05559164628573027,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.09525060225934119,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.060637988760819585,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.0887930644357626,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.08034299403098454,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.07969782008013475,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.036561405274678334,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.0354968556736325,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.03353064322159867,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.03822620013614581,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.028178781344904858,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.016670945821737487,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.017296441041273317,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.014593251776901954,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.01055834984133152,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.007679720625270786,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.008336688763661011,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.006509373434548209,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.009143564287526601,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.004489369718290683,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.004043393471653163,
+          "count": 1478364
+        }
+      ]
+    },
+    "intermediate_200_350": {
+      "band_config": {
+        "f1": 0.0002,
+        "f2": 0.00035,
+        "name": "Intermediate 200-350 \u03bcHz",
+        "expected": "moderate",
+        "bandwidth_microhz": 150,
+        "description": "Upper mid-range TEP signal"
+      },
+      "frequency_range_microhz": [
+        200.0,
+        350.0
+      ],
+      "frequency_range_hz": [
+        0.0002,
+        0.00035
+      ],
+      "frequency_bandwidth_microhz": 150.0,
+      "data_summary": {
+        "total_pairs_processed": 12882748,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579758",
+        "pairs_in_bins_after": "9579758",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770379,
+        "count_mean": 342134.21428571426,
+        "count_median": 64253.0,
+        "count_std": 622173.1451455638,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": -0.02303563971213444,
+        "correlation_max": 0.2616713622288166,
+        "correlation_mean": 0.03345524598921792,
+        "correlation_std": 0.050432988883399435
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.05448521050231661,
+        "lambda_km": 1382.8254193011062,
+        "C0": 0.008052204563491367,
+        "r_squared": 0.6254220213419579,
+        "A_err": 0.01366645471019624,
+        "lambda_err": 373.9597182876302,
+        "C0_err": 0.0011279345921546,
+        "r_squared_unweighted": 0.14223273091033406,
+        "weighting_impact": 0.48318929043162384,
+        "total_weight": 9579758.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.012937192585375545,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": -0.02303563971213444,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.016143587666959305,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.2616713622288166,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.039336873415742366,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.00451756348635704,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.07514381331058796,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.03969439408628398,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.07171316468394646,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.027008617342019547,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.07306752953142762,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.06721032327163419,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.04333576702946102,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.02654996969320119,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.018365424381261024,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.015949854181279335,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.026678036830167333,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.026587726191674037,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.021274600443735463,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.010387363693183136,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.014732466087665309,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011792518934058492,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.008515156176031182,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.012315365082411538,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009360343282693325,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.012634425579650263,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.005973925423373808,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.006885162791239218,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.012937192585375545,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": -0.02303563971213444,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.016143587666959305,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.2616713622288166,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.039336873415742366,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.00451756348635704,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.07514381331058796,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.03969439408628398,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.07171316468394646,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.027008617342019547,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.07306752953142762,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.06721032327163419,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.04333576702946102,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.02654996969320119,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.018365424381261024,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.015949854181279335,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.026678036830167333,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.026587726191674037,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.021274600443735463,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.010387363693183136,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.014732466087665309,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011792518934058492,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.008515156176031182,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.012315365082411538,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009360343282693325,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.012634425579650263,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.005973925423373808,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.006885162791239218,
+          "count": 1478364
+        }
+      ]
+    },
+    "intermediate_350_500": {
+      "band_config": {
+        "f1": 0.00035,
+        "f2": 0.0005,
+        "name": "Intermediate 350-500 \u03bcHz",
+        "expected": "moderate",
+        "bandwidth_microhz": 150,
+        "description": "Upper TEP band boundary"
+      },
+      "frequency_range_microhz": [
+        350.0,
+        500.0
+      ],
+      "frequency_range_hz": [
+        0.00035,
+        0.0005
+      ],
+      "frequency_bandwidth_microhz": 150.0,
+      "data_summary": {
+        "total_pairs_processed": 12882748,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579758",
+        "pairs_in_bins_after": "9579758",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770379,
+        "count_mean": 342134.21428571426,
+        "count_median": 64253.0,
+        "count_std": 622173.1451455638,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": -0.006243652193024468,
+        "correlation_max": 0.22016192549929878,
+        "correlation_mean": 0.03439511849803366,
+        "correlation_std": 0.042195500261365856
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.048508651908337454,
+        "lambda_km": 1431.9241623667326,
+        "C0": 0.007232009268258384,
+        "r_squared": 0.6902827769115802,
+        "A_err": 0.01047690203301571,
+        "lambda_err": 337.35827691020893,
+        "C0_err": 0.0009039484531107317,
+        "r_squared_unweighted": 0.2633438160830587,
+        "weighting_impact": 0.42693896082852156,
+        "total_weight": 9579758.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06147401164876092,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.05998236202599896,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": -0.006243652193024468,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.22016192549929878,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.017736904775379838,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.032734626405935836,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.06748900399332647,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.06451517774090541,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.052525872115787284,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.03426347555378533,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.054553254143298174,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.05875578424616437,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.030998082794848333,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.02726048015032132,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.01308192788468863,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.016989149819538998,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.03120021623252615,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.023534220166464993,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.01757852762161856,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.01068405281141777,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.013437242242489272,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011107470612432656,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.008065067151833175,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.010274666920860364,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.007912921033597987,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.01111932518008357,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.005854461100197777,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.0060167602664060555,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06147401164876092,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.05998236202599896,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": -0.006243652193024468,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.22016192549929878,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.017736904775379838,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.032734626405935836,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.06748900399332647,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.06451517774090541,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.052525872115787284,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.03426347555378533,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.054553254143298174,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.05875578424616437,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.030998082794848333,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.02726048015032132,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.01308192788468863,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.016989149819538998,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.03120021623252615,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.023534220166464993,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.01757852762161856,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.01068405281141777,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.013437242242489272,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011107470612432656,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.008065067151833175,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.010274666920860364,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.007912921033597987,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.01111932518008357,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.005854461100197777,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.0060167602664060555,
+          "count": 1478364
+        }
+      ]
+    },
+    "transition_500_750": {
+      "band_config": {
+        "f1": 0.0005,
+        "f2": 0.00075,
+        "name": "Transition 500-750 \u03bcHz",
+        "expected": "weak_to_moderate",
+        "bandwidth_microhz": 250,
+        "description": "Immediate post-TEP transition"
+      },
+      "frequency_range_microhz": [
+        500.0,
+        750.0
+      ],
+      "frequency_range_hz": [
+        0.0005,
+        0.00075
+      ],
+      "frequency_bandwidth_microhz": 250.0,
+      "data_summary": {
+        "total_pairs_processed": 12882748,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579758",
+        "pairs_in_bins_after": "9579758",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770379,
+        "count_mean": 342134.21428571426,
+        "count_median": 64253.0,
+        "count_std": 622173.1451455638,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": -0.026063971196939498,
+        "correlation_max": 0.2918479351507857,
+        "correlation_mean": 0.031494504319219956,
+        "correlation_std": 0.05435550767750302
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.0340478486183,
+        "lambda_km": 2731.91059115427,
+        "C0": 0.007333686263151705,
+        "r_squared": 0.6088615374545695,
+        "A_err": 0.007481412815113726,
+        "lambda_err": 952.8401220011393,
+        "C0_err": 0.0018565717167313828,
+        "r_squared_unweighted": 0.07538579045565019,
+        "weighting_impact": 0.5334757469989193,
+        "total_weight": 9579758.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.028672532995679557,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.030373518848593864,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.0009806536183339786,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.2918479351507857,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": -0.026063971196939498,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.005105409727282175,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.0384083371206527,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.06976934538181892,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.03585027325563344,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.005871898571734637,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.05709829598766052,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.04948126668039955,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.030544227367479915,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.029588619316275093,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.02119070683725149,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.02500461009948509,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.033659819472225586,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.027070324191938056,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.020019868504332804,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.013048236482455502,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.01859135034766012,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011676353911216244,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.011279850606304485,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.01620913953944771,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009591358509407127,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.012793531738348428,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.00686087411435724,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.00732175375833833,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.028672532995679557,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.030373518848593864,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.0009806536183339786,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.2918479351507857,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": -0.026063971196939498,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.005105409727282175,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.0384083371206527,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.06976934538181892,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.03585027325563344,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.005871898571734637,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.05709829598766052,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.04948126668039955,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.030544227367479915,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.029588619316275093,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.02119070683725149,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.02500461009948509,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.033659819472225586,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.027070324191938056,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.020019868504332804,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.013048236482455502,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.01859135034766012,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.011676353911216244,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.011279850606304485,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.01620913953944771,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009591358509407127,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.012793531738348428,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984158232472,
+          "mean_correlation": 0.00686087411435724,
+          "count": 2770379
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.00732175375833833,
+          "count": 1478364
+        }
+      ]
+    },
+    "transition_750_1000": {
+      "band_config": {
+        "f1": 0.00075,
+        "f2": 0.001,
+        "name": "Transition 750-1000 \u03bcHz",
+        "expected": "weak",
+        "bandwidth_microhz": 250,
+        "description": "Final transition before control bands"
+      },
+      "frequency_range_microhz": [
+        750.0,
+        1000.0
+      ],
+      "frequency_range_hz": [
+        0.00075,
+        0.001
+      ],
+      "frequency_bandwidth_microhz": 250.0,
+      "data_summary": {
+        "total_pairs_processed": 12882746,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579756",
+        "pairs_in_bins_after": "9579756",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770377,
+        "count_mean": 342134.14285714284,
+        "count_median": 64253.0,
+        "count_std": 622172.8560460488,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.986586644256,
+        "correlation_min": 0.00867710607617616,
+        "correlation_max": 0.268417257274054,
+        "correlation_mean": 0.035827935854164515,
+        "correlation_std": 0.04889884093496915
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.0378110272847091,
+        "lambda_km": 1953.5394400158625,
+        "C0": 0.010497219545886498,
+        "r_squared": 0.5435727694602847,
+        "A_err": 0.010525459344636022,
+        "lambda_err": 678.7407938925016,
+        "C0_err": 0.0014171610105312296,
+        "r_squared_unweighted": 0.13486943837006005,
+        "weighting_impact": 0.4087033310902246,
+        "total_weight": 9579756.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06159249241144831,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.019443825358202077,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.041112326384118554,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.268417257274054,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.010474613543204659,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.0168561552814583,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.056218817281056106,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.054497236388096545,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.01111261132344616,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.02660253142672948,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.07022251301317194,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.054842325882920755,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.0352648782393848,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.031141594043681445,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.017045802200033704,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.022763825669320805,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.0384304160539256,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.02451983292920011,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.020060856797787602,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.014160044310612973,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.019668254971958083,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.014209525262970797,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.01181593060841866,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.018189512514254262,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009968803497851227,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.016511778282684256,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984011501187,
+          "mean_correlation": 0.009361336890439017,
+          "count": 2770377
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.00867710607617616,
+          "count": 1478364
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.06159249241144831,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.019443825358202077,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.041112326384118554,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.5703383053414,
+          "mean_correlation": 0.268417257274054,
+          "count": 1320
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.010474613543204659,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.0168561552814583,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.056218817281056106,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.054497236388096545,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.4729598573373,
+          "mean_correlation": 0.01111261132344616,
+          "count": 9072
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.02660253142672948,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8239702728455,
+          "mean_correlation": 0.07022251301317194,
+          "count": 26186
+        },
+        {
+          "distance_km": 658.3405373769109,
+          "mean_correlation": 0.054842325882920755,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8470903371142,
+          "mean_correlation": 0.0352648782393848,
+          "count": 22874
+        },
+        {
+          "distance_km": 939.0468690576288,
+          "mean_correlation": 0.031141594043681445,
+          "count": 78911
+        },
+        {
+          "distance_km": 1137.7362725191779,
+          "mean_correlation": 0.017045802200033704,
+          "count": 60935
+        },
+        {
+          "distance_km": 1311.011436359349,
+          "mean_correlation": 0.022763825669320805,
+          "count": 67571
+        },
+        {
+          "distance_km": 1512.6276230999797,
+          "mean_correlation": 0.0384304160539256,
+          "count": 71096
+        },
+        {
+          "distance_km": 1873.4837136332762,
+          "mean_correlation": 0.02451983292920011,
+          "count": 228303
+        },
+        {
+          "distance_km": 2294.5525450632763,
+          "mean_correlation": 0.020060856797787602,
+          "count": 151775
+        },
+        {
+          "distance_km": 2650.259169326819,
+          "mean_correlation": 0.014160044310612973,
+          "count": 162568
+        },
+        {
+          "distance_km": 3264.6411923215182,
+          "mean_correlation": 0.019668254971958083,
+          "count": 466081
+        },
+        {
+          "distance_km": 3996.562393280921,
+          "mean_correlation": 0.014209525262970797,
+          "count": 322725
+        },
+        {
+          "distance_km": 4963.087214161643,
+          "mean_correlation": 0.01181593060841866,
+          "count": 942282
+        },
+        {
+          "distance_km": 6089.170433425209,
+          "mean_correlation": 0.018189512514254262,
+          "count": 641605
+        },
+        {
+          "distance_km": 6977.419012819026,
+          "mean_correlation": 0.009968803497851227,
+          "count": 843059
+        },
+        {
+          "distance_km": 8018.89937231136,
+          "mean_correlation": 0.016511778282684256,
+          "count": 1189138
+        },
+        {
+          "distance_km": 9855.984011501187,
+          "mean_correlation": 0.009361336890439017,
+          "count": 2770377
+        },
+        {
+          "distance_km": 12133.986586644256,
+          "mean_correlation": 0.00867710607617616,
+          "count": 1478364
+        }
+      ]
+    },
+    "control_1000_1500": {
+      "band_config": {
+        "f1": 0.001,
+        "f2": 0.0015,
+        "name": "Control 1000-1500 \u03bcHz",
+        "expected": "weak_systematics_only",
+        "bandwidth_microhz": 500,
+        "description": "Primary control band for quantifying systematic instrumental contributions"
+      },
+      "frequency_range_microhz": [
+        1000.0,
+        1500.0
+      ],
+      "frequency_range_hz": [
+        0.001,
+        0.0015
+      ],
+      "frequency_bandwidth_microhz": 500.0,
+      "data_summary": {
+        "total_pairs_processed": 12882066,
+        "bins_before_filter": 28,
+        "bins_after_filter": 28,
+        "bins_removed": 0,
+        "pairs_in_bins_before": "9579183",
+        "pairs_in_bins_after": "9579183",
+        "pairs_removed_by_filter": "0",
+        "filter_removal_percent": 0.0,
+        "min_bin_count_threshold": 50,
+        "binning_config": {
+          "num_bins": 40,
+          "max_distance_km": 13000.0,
+          "bin_type": "logarithmic",
+          "bin_edges_formula": "logspace(log10(50), log10(13000.0), 41)"
+        }
+      },
+      "bin_statistics": {
+        "count_min": 533,
+        "count_max": 2770233,
+        "count_mean": 342113.6785714286,
+        "count_median": 64247.5,
+        "count_std": 622138.3955457984,
+        "distance_min_km": 70.55727196087653,
+        "distance_max_km": 12133.979296799695,
+        "correlation_min": 0.005496114379122442,
+        "correlation_max": 0.25951772951882784,
+        "correlation_mean": 0.0367773704599595,
+        "correlation_std": 0.048809467504599593
+      },
+      "exponential_fit": {
+        "success": true,
+        "A": 0.04167357198987909,
+        "lambda_km": 2385.6079133069734,
+        "C0": 0.010490281147730178,
+        "r_squared": 0.6125779357235378,
+        "A_err": 0.009532365319051782,
+        "lambda_err": 774.2376832479393,
+        "C0_err": 0.0018137154955221255,
+        "r_squared_unweighted": 0.12306239571667044,
+        "weighting_impact": 0.48951554000686737,
+        "total_weight": 9579183.0
+      },
+      "binned_data": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.058288222460875776,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.01110498867415201,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.010472474135670436,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.56546966589562,
+          "mean_correlation": 0.25951772951882784,
+          "count": 1319
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.010750925865890056,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.026168084571692053,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.048606552195400866,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.0697642651090906,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.47513284884195,
+          "mean_correlation": 0.007581944728669159,
+          "count": 9071
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.005496114379122442,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8244061189737,
+          "mean_correlation": 0.08720913579904764,
+          "count": 26183
+        },
+        {
+          "distance_km": 658.3405373769107,
+          "mean_correlation": 0.0769689705889127,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8448813893536,
+          "mean_correlation": 0.03837898883720821,
+          "count": 22873
+        },
+        {
+          "distance_km": 939.0448301581066,
+          "mean_correlation": 0.03345719324950263,
+          "count": 78908
+        },
+        {
+          "distance_km": 1137.7371689735576,
+          "mean_correlation": 0.023613423989769598,
+          "count": 60930
+        },
+        {
+          "distance_km": 1311.0084392256704,
+          "mean_correlation": 0.029838534006696272,
+          "count": 67565
+        },
+        {
+          "distance_km": 1512.6290714878362,
+          "mean_correlation": 0.042960826212857586,
+          "count": 71089
+        },
+        {
+          "distance_km": 1873.4858436268557,
+          "mean_correlation": 0.030363811473544722,
+          "count": 228285
+        },
+        {
+          "distance_km": 2294.5504016210753,
+          "mean_correlation": 0.023424114275374927,
+          "count": 151766
+        },
+        {
+          "distance_km": 2650.2603210219786,
+          "mean_correlation": 0.01886488446929602,
+          "count": 162558
+        },
+        {
+          "distance_km": 3264.6412328947217,
+          "mean_correlation": 0.02313085400550768,
+          "count": 466050
+        },
+        {
+          "distance_km": 3996.560578701639,
+          "mean_correlation": 0.01469436427464289,
+          "count": 322712
+        },
+        {
+          "distance_km": 4963.088548009492,
+          "mean_correlation": 0.015056427710222869,
+          "count": 942225
+        },
+        {
+          "distance_km": 6089.174769139248,
+          "mean_correlation": 0.017275754963301453,
+          "count": 641555
+        },
+        {
+          "distance_km": 6977.418962777389,
+          "mean_correlation": 0.010326039609733113,
+          "count": 843014
+        },
+        {
+          "distance_km": 8018.902334734645,
+          "mean_correlation": 0.01663433115839959,
+          "count": 1189052
+        },
+        {
+          "distance_km": 9855.992406195128,
+          "mean_correlation": 0.010349168330399502,
+          "count": 2770233
+        },
+        {
+          "distance_km": 12133.979296799695,
+          "mean_correlation": 0.009468248285057176,
+          "count": 1478281
+        }
+      ],
+      "binned_data_raw": [
+        {
+          "distance_km": 70.55727196087653,
+          "mean_correlation": 0.058288222460875776,
+          "count": 1053
+        },
+        {
+          "distance_km": 95.44614595717542,
+          "mean_correlation": 0.01110498867415201,
+          "count": 533
+        },
+        {
+          "distance_km": 112.65532440303143,
+          "mean_correlation": 0.010472474135670436,
+          "count": 2420
+        },
+        {
+          "distance_km": 144.56546966589562,
+          "mean_correlation": 0.25951772951882784,
+          "count": 1319
+        },
+        {
+          "distance_km": 162.03384159379107,
+          "mean_correlation": 0.010750925865890056,
+          "count": 852
+        },
+        {
+          "distance_km": 190.08945588157218,
+          "mean_correlation": 0.026168084571692053,
+          "count": 1448
+        },
+        {
+          "distance_km": 225.30512838755848,
+          "mean_correlation": 0.048606552195400866,
+          "count": 4134
+        },
+        {
+          "distance_km": 286.95243834654696,
+          "mean_correlation": 0.0697642651090906,
+          "count": 4878
+        },
+        {
+          "distance_km": 325.47513284884195,
+          "mean_correlation": 0.007581944728669159,
+          "count": 9071
+        },
+        {
+          "distance_km": 406.2913521120018,
+          "mean_correlation": 0.005496114379122442,
+          "count": 13105
+        },
+        {
+          "distance_km": 542.8244061189737,
+          "mean_correlation": 0.08720913579904764,
+          "count": 26183
+        },
+        {
+          "distance_km": 658.3405373769107,
+          "mean_correlation": 0.0769689705889127,
+          "count": 17091
+        },
+        {
+          "distance_km": 748.8448813893536,
+          "mean_correlation": 0.03837898883720821,
+          "count": 22873
+        },
+        {
+          "distance_km": 939.0448301581066,
+          "mean_correlation": 0.03345719324950263,
+          "count": 78908
+        },
+        {
+          "distance_km": 1137.7371689735576,
+          "mean_correlation": 0.023613423989769598,
+          "count": 60930
+        },
+        {
+          "distance_km": 1311.0084392256704,
+          "mean_correlation": 0.029838534006696272,
+          "count": 67565
+        },
+        {
+          "distance_km": 1512.6290714878362,
+          "mean_correlation": 0.042960826212857586,
+          "count": 71089
+        },
+        {
+          "distance_km": 1873.4858436268557,
+          "mean_correlation": 0.030363811473544722,
+          "count": 228285
+        },
+        {
+          "distance_km": 2294.5504016210753,
+          "mean_correlation": 0.023424114275374927,
+          "count": 151766
+        },
+        {
+          "distance_km": 2650.2603210219786,
+          "mean_correlation": 0.01886488446929602,
+          "count": 162558
+        },
+        {
+          "distance_km": 3264.6412328947217,
+          "mean_correlation": 0.02313085400550768,
+          "count": 466050
+        },
+        {
+          "distance_km": 3996.560578701639,
+          "mean_correlation": 0.01469436427464289,
+          "count": 322712
+        },
+        {
+          "distance_km": 4963.088548009492,
+          "mean_correlation": 0.015056427710222869,
+          "count": 942225
+        },
+        {
+          "distance_km": 6089.174769139248,
+          "mean_correlation": 0.017275754963301453,
+          "count": 641555
+        },
+        {
+          "distance_km": 6977.418962777389,
+          "mean_correlation": 0.010326039609733113,
+          "count": 843014
+        },
+        {
+          "distance_km": 8018.902334734645,
+          "mean_correlation": 0.01663433115839959,
+          "count": 1189052
+        },
+        {
+          "distance_km": 9855.992406195128,
+          "mean_correlation": 0.010349168330399502,
+          "count": 2770233
+        },
+        {
+          "distance_km": 12133.979296799695,
+          "mean_correlation": 0.009468248285057176,
+          "count": 1478281
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "r_squared_summary": {
+      "tep_band": 0.965707261448048,
+      "tidal_diurnal": 0.9536923940741876,
+      "tidal_semidiurnal": 0.9702714694749015,
+      "post_tidal_30_40": 0.9348262403897987,
+      "post_tidal_40_50": 0.8321841412731232,
+      "post_tidal_50_75": 0.8255432019133624,
+      "post_tidal_75_100": 0.8576765967341754,
+      "intermediate_100_200": 0.8644662448460229,
+      "intermediate_200_350": 0.6254220213419579,
+      "intermediate_350_500": 0.6902827769115802,
+      "transition_500_750": 0.6088615374545695,
+      "transition_750_1000": 0.5435727694602847,
+      "control_1000_1500": 0.6125779357235378
+    },
+    "r_squared_unweighted_summary": {
+      "tep_band": 0.15747627199362935,
+      "tidal_diurnal": -0.011916988458870792,
+      "tidal_semidiurnal": 0.15403139242766317,
+      "post_tidal_30_40": 0.21385089217736586,
+      "post_tidal_40_50": 0.030607143202397546,
+      "post_tidal_50_75": 0.011216156086863438,
+      "post_tidal_75_100": 0.12850167469474827,
+      "intermediate_100_200": 0.3256793322491677,
+      "intermediate_200_350": 0.14223273091033406,
+      "intermediate_350_500": 0.2633438160830587,
+      "transition_500_750": 0.07538579045565019,
+      "transition_750_1000": 0.13486943837006005,
+      "control_1000_1500": 0.12306239571667044
+    },
+    "lambda_summary": {
+      "tep_band": 3763.5785666460497,
+      "tidal_diurnal": 3919.7931222058314,
+      "tidal_semidiurnal": 4701.291296737712,
+      "post_tidal_30_40": 2453.0773968503604,
+      "post_tidal_40_50": 1409.4510017244445,
+      "post_tidal_50_75": 1191.8849051092607,
+      "post_tidal_75_100": 1067.1515913024825,
+      "intermediate_100_200": 1260.2286962389558,
+      "intermediate_200_350": 1382.8254193011062,
+      "intermediate_350_500": 1431.9241623667326,
+      "transition_500_750": 2731.91059115427,
+      "transition_750_1000": 1953.5394400158625,
+      "control_1000_1500": 2385.6079133069734
+    },
+    "lambda_error_summary": {
+      "tep_band": 375.9460033376957,
+      "tidal_diurnal": 470.88323593943005,
+      "tidal_semidiurnal": 515.8779992494717,
+      "post_tidal_30_40": 267.1949488823235,
+      "post_tidal_40_50": 221.76208550955695,
+      "post_tidal_50_75": 186.6038522183426,
+      "post_tidal_75_100": 145.4554492120882,
+      "intermediate_100_200": 171.5487194737991,
+      "intermediate_200_350": 373.9597182876302,
+      "intermediate_350_500": 337.35827691020893,
+      "transition_500_750": 952.8401220011393,
+      "transition_750_1000": 678.7407938925016,
+      "control_1000_1500": 774.2376832479393
+    },
+    "amplitude_summary": {
+      "tep_band": 0.19374717337077532,
+      "tidal_diurnal": 0.1731068094899548,
+      "tidal_semidiurnal": 0.1795637711182773,
+      "post_tidal_30_40": 0.11838675296442777,
+      "post_tidal_40_50": 0.09796052113518042,
+      "post_tidal_50_75": 0.11524374180719751,
+      "post_tidal_75_100": 0.09016911460012589,
+      "intermediate_100_200": 0.09418717924334839,
+      "intermediate_200_350": 0.05448521050231661,
+      "intermediate_350_500": 0.048508651908337454,
+      "transition_500_750": 0.0340478486183,
+      "transition_750_1000": 0.0378110272847091,
+      "control_1000_1500": 0.04167357198987909
+    },
+    "offset_summary": {
+      "tep_band": -0.0209323497285687,
+      "tidal_diurnal": -0.018272230286735008,
+      "tidal_semidiurnal": -0.03545335543443773,
+      "post_tidal_30_40": -0.004585657865045932,
+      "post_tidal_40_50": 0.004436226549812969,
+      "post_tidal_50_75": 0.004223913081260964,
+      "post_tidal_75_100": 0.004536793591007085,
+      "intermediate_100_200": 0.005705352733601613,
+      "intermediate_200_350": 0.008052204563491367,
+      "intermediate_350_500": 0.007232009268258384,
+      "transition_500_750": 0.007333686263151705,
+      "transition_750_1000": 0.010497219545886498,
+      "control_1000_1500": 0.010490281147730178
+    },
+    "bin_count_summary": {
+      "tep_band": 28,
+      "tidal_diurnal": 28,
+      "tidal_semidiurnal": 28,
+      "post_tidal_30_40": 28,
+      "post_tidal_40_50": 28,
+      "post_tidal_50_75": 28,
+      "post_tidal_75_100": 28,
+      "intermediate_100_200": 28,
+      "intermediate_200_350": 28,
+      "intermediate_350_500": 28,
+      "transition_500_750": 28,
+      "transition_750_1000": 28,
+      "control_1000_1500": 28
+    },
+    "pair_count_summary": {
+      "tep_band": "9579758",
+      "tidal_diurnal": "9239577",
+      "tidal_semidiurnal": "9079815",
+      "post_tidal_30_40": "9023899",
+      "post_tidal_40_50": "8897209",
+      "post_tidal_50_75": "9515859",
+      "post_tidal_75_100": "9504072",
+      "intermediate_100_200": "9579758",
+      "intermediate_200_350": "9579758",
+      "intermediate_350_500": "9579758",
+      "transition_500_750": "9579758",
+      "transition_750_1000": "9579756",
+      "control_1000_1500": "9579183"
+    },
+    "bandwidth_summary_microhz": {
+      "tep_band": 490.0,
+      "tidal_diurnal": 10.0,
+      "tidal_semidiurnal": 10.0,
+      "post_tidal_30_40": 10.000000000000002,
+      "post_tidal_40_50": 10.0,
+      "post_tidal_50_75": 24.99999999999999,
+      "post_tidal_75_100": 25.00000000000001,
+      "intermediate_100_200": 100.0,
+      "intermediate_200_350": 150.0,
+      "intermediate_350_500": 150.0,
+      "transition_500_750": 250.0,
+      "transition_750_1000": 250.0,
+      "control_1000_1500": 500.0
+    },
+    "r_squared_statistics": {
+      "mean": 0.79116035315735,
+      "std": 0.1484113027530875,
+      "cv_percent": 18.758688066307933,
+      "min": 0.5435727694602847,
+      "max": 0.9702714694749015,
+      "range": 0.42669870001461685
+    },
+    "lambda_statistics": {
+      "mean_km": 2280.943392535388,
+      "std_km": 1146.2787607104892,
+      "cv_percent": 50.254590467339064,
+      "min_km": 1067.1515913024825,
+      "max_km": 4701.291296737712
+    },
+    "strongest_band": {
+      "band_id": "tidal_semidiurnal",
+      "name": "Semidiurnal Tides (20-30 \u03bcHz)",
+      "r_squared": 0.9702714694749015,
+      "r_squared_unweighted": 0.15403139242766317,
+      "lambda_km": 4701.291296737712,
+      "lambda_err_km": 515.8779992494717,
+      "n_bins": 28,
+      "n_pairs": "9079815",
+      "bandwidth_microhz": 10.0
+    },
+    "weakest_band": {
+      "band_id": "transition_750_1000",
+      "name": "Transition 750-1000 \u03bcHz",
+      "r_squared": 0.5435727694602847,
+      "r_squared_unweighted": 0.13486943837006005,
+      "lambda_km": 1953.5394400158625,
+      "lambda_err_km": 678.7407938925016,
+      "n_bins": 28,
+      "n_pairs": "9579756",
+      "bandwidth_microhz": 250.0
+    },
+    "specificity_metrics": {
+      "r_squared_ratio": 1.7849891017136261,
+      "r_squared_range": 0.42669870001461685,
+      "frequency_specificity_classification": "NONE"
+    },
+    "summary": "Analysis of 13 frequency bands completed successfully. R\u00b2 values range from 0.544 to 0.970 (ratio: 1.8\u00d7). Correlation lengths range from 1067 km to 4701 km. Frequency specificity classification: NONE."
+  }
+}

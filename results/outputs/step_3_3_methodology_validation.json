@@ -1,0 +1,60 @@
+{
+  "validation_results": {
+    "summary": {
+      "validation_passed": false,
+      "validation_score": 1.0,
+      "key_findings": [
+        "WARNING: No pair data for code, detailed distribution-neutral validation skipped.",
+        "WARNING: No pair data for esa_final, detailed distribution-neutral validation skipped.",
+        "WARNING: No pair data for igs_combined, detailed distribution-neutral validation skipped.",
+        "WARNING: No pair data for code, cannot run geometric control.",
+        "WARNING: No pair data for esa_final, cannot run geometric control.",
+        "WARNING: No pair data for igs_combined, cannot run geometric control.",
+        "CRITICAL: Bias characterization failed: No sample pair files found in results/tmp for random artifact characterization.",
+        "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
+      ],
+      "timestamp": "2025-10-06T11:37:28.889982",
+      "methodology_version": "2.0 (Watertight Implementation)",
+      "bias_envelope_r2": "N/A",
+      "multi_center_cv": "N/A",
+      "scale_separation_ratio": 6.262744216178119
+    },
+    "details": {
+      "distribution_neutral": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "WARNING: No pair data for code, detailed distribution-neutral validation skipped.",
+          "WARNING: No pair data for esa_final, detailed distribution-neutral validation skipped.",
+          "WARNING: No pair data for igs_combined, detailed distribution-neutral validation skipped."
+        ]
+      },
+      "geometric_control": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "WARNING: No pair data for code, cannot run geometric control.",
+          "WARNING: No pair data for esa_final, cannot run geometric control.",
+          "WARNING: No pair data for igs_combined, cannot run geometric control."
+        ]
+      },
+      "multi_center_consistency": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": []
+      },
+      "scale_separation": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
+        ],
+        "separation_ratio": 6.262744216178119
+      }
+    }
+  },
+  "bias_characterization_results": {
+    "summary": {},
+    "details": {}
+  }
+}

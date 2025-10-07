@@ -7,7 +7,7 @@ Analyzes rapid transient astronomical events at sub-daily temporal resolution
 by processing original GPS CLK files directly, bypassing the daily aggregation
 used in previous steps.
 
-METHODOLOGICAL CORRECTION (v0.14.0):
+METHODOLOGICAL CORRECTION (v0.15.0):
 ===================================
 This version implements proper TEP cos(phase(CSD)) methodology for eclipse analysis,
 replacing the previously flawed approach that used simple bias differences.
@@ -21,7 +21,7 @@ PREVIOUS ISSUES (FIXED):
 CORRECTED APPROACH:
 - Identical cos(phase(CSD)) methodology as Step 2.0
 - Proper cross-spectral density computation
-- TEP frequency band (10-500 μHz) analysis
+- TEP frequency band (10-500 µHz) analysis
 - Magnitude-weighted circular statistics for phase averaging
 - Enables valid scale consistency comparisons
 
@@ -51,7 +51,7 @@ Algorithm Overview:
 
 Author: Matthew Lukin Smawfield
 Date: October 2025
-Methodological Fix: October 2025 (v0.14.0)
+Methodological Fix: October 2025 (v0.15.0)
 """
 
 import os
@@ -244,7 +244,7 @@ def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int
     2. For each time window, create time series for each station
     3. Compute cross-spectral density for all station pairs
     4. Extract phase-coherent correlation using cos(phase(CSD))
-    5. Apply TEP frequency band (10-500 μHz) with magnitude-weighted phase averaging
+    5. Apply TEP frequency band (10-500 µHz) with magnitude-weighted phase averaging
     
     Args:
         df: Clock data with datetime, station, clock_bias columns
@@ -260,8 +260,8 @@ def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int
         print_status("Using proper TEP cos(phase(CSD)) methodology for eclipse analysis", "INFO")
         
         # TEP frequency band configuration (same as main analysis)
-        f1 = float(os.getenv('TEP_COHERENCY_F1', 1e-5))  # 10 μHz
-        f2 = float(os.getenv('TEP_COHERENCY_F2', 5e-4))  # 500 μHz
+        f1 = float(os.getenv('TEP_COHERENCY_F1', 1e-5))  # 10 µHz
+        f2 = float(os.getenv('TEP_COHERENCY_F2', 5e-4))  # 500 µHz
         
         # ADAPTIVE APPROACH: Use full dataset for TEP analysis instead of time binning
         # GPS CLK data is sparse for most stations, so we need longer time series
@@ -348,7 +348,7 @@ def compute_high_resolution_coherence(df: pd.DataFrame, time_window_minutes: int
         
         result_df = pd.DataFrame(coherence_data)
         print_status(f"Computed TEP coherence: {len(result_df)} station pairs", "SUCCESS")
-        print_status(f"Frequency band: {f1*1e6:.1f}-{f2*1e6:.1f} μHz (TEP standard)", "INFO")
+        print_status(f"Frequency band: {f1*1e6:.1f}-{f2*1e6:.1f} µHz (TEP standard)", "INFO")
         
         return result_df
         
@@ -2626,7 +2626,7 @@ def analyze_hilbert_instantaneous_frequency(analysis_center: str = 'merged') -> 
             'solar_rotation_27d': 27.27,
             'lunar_month_29d': 29.53,
             'dominant_112d': 112.0,
-            'js_beat_19d': 19.86,
+            'lunar_harmonic_20d': 19.86,  # ~2/3 lunar month (19.69d), previously misnamed as Jupiter-Saturn beat
         }
         
         fs = 1.0  # samples per day
@@ -3075,8 +3075,9 @@ def main():
     args = parser.parse_args()
     
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.14")
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 4.3: High-Resolution Astronomical Event Analysis", "TITLE")
+    print("TEP GNSS Analysis Package v0.15")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 4.3: High-Resolution Astronomical Event Analysis", "TITLE")
     print("=" * 80)
     print(f"Event: {args.event.upper()}")
     print(f"Center: {args.center.upper()}")

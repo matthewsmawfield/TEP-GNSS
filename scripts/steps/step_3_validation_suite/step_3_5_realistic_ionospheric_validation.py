@@ -440,7 +440,8 @@ def generate_realistic_validation_assessment(analysis_results: Dict) -> Dict:
 @ensure_single_instance
 def main():
     """Main function - realistic validation with available real data"""
-    print_status("TEP GNSS Analysis Package v0.14 - STEP 3.5: Realistic Ionospheric Validation", "TITLE")
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 3.5: Realistic Ionospheric Validation", "TITLE")
     print_status("Using available real data, acknowledging limitations honestly", "INFO")
     
     try:

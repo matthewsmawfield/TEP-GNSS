@@ -221,8 +221,10 @@ echo "  Installing Python dependencies..."
 pip install --upgrade pip setuptools wheel
 echo "  Installing scientific computing packages..."
 pip install numpy pandas scipy matplotlib psutil seaborn pyproj PyWavelets python-dateutil statsmodels scikit-learn cartopy
+echo "  Installing visualization and data packages..."
+pip install cmasher h5py plotly kaleido adjustText
 echo "  Installing specialized GNSS packages..."
-pip install pyIGRF apexpy jplephem skyfield
+pip install pyIGRF apexpy jplephem skyfield ephem astropy
 echo "  ✅ All dependencies installed successfully"
 
 # Set optimal environment for high-CPU GCP instance

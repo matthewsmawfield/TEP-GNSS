@@ -1,0 +1,828 @@
+{
+  "bonferroni": {
+    "method": "bonferroni",
+    "n_total_tests": 21,
+    "corrected_alpha": 0.002380952380952381,
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_p_value": 1.7985612998927536e-14,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_1_code",
+        "p_value": 7.192679397638457e-07,
+        "test_statistic": 38.87903348382501,
+        "description": "Elevation quintile_1 exponential fit for CODE",
+        "corrected_p_value": 7.192679397638457e-07,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 2.8738076973677806e-06,
+        "test_statistic": 31.426005125326128,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_p_value": 2.8738076973677806e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_3_code",
+        "p_value": 5.607826739439936e-05,
+        "test_statistic": 20.162323236097208,
+        "description": "Elevation quintile_3 exponential fit for CODE",
+        "corrected_p_value": 5.607826739439936e-05,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_4_code",
+        "p_value": 9.308600295021563e-07,
+        "test_statistic": 37.392012619948815,
+        "description": "Elevation quintile_4 exponential fit for CODE",
+        "corrected_p_value": 9.308600295021563e-07,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_5_code",
+        "p_value": 2.5177810082377405e-06,
+        "test_statistic": 32.08323296251132,
+        "description": "Elevation quintile_5 exponential fit for CODE",
+        "corrected_p_value": 2.5177810082377405e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 1.4282605271809246e-06,
+        "test_statistic": 37.62531766833415,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 1.4282605271809246e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.755881357037083e-07,
+        "test_statistic": 46.42204419844347,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 3.755881357037083e-07,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 0.00012681298576111555,
+        "test_statistic": 17.310723738530353,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 0.00012681298576111555,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 5.547870568611835e-06,
+        "test_statistic": 30.156887479475223,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 5.547870568611835e-06,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 7.561253012600133e-08,
+        "test_statistic": 54.12490901141833,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 7.561253012600133e-08,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 1.0603576459988773e-05,
+        "test_statistic": 31.364164328965018,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.0603576459988773e-05,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 4.0377980181638407e-08,
+        "test_statistic": 72.68252699491539,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_p_value": 4.0377980181638407e-08,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 2.4416501628099496e-05,
+        "test_statistic": 26.804316100406034,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.4416501628099496e-05,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 2.0086099613014774e-05,
+        "test_statistic": 27.81980415749837,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.0086099613014774e-05,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 4.64224959584314e-07,
+        "test_statistic": 49.214857394637164,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_p_value": 4.64224959584314e-07,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_p_value": 1.7985612998927536e-14,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_p_value": 1.1102230246251565e-16,
+        "is_significant": true,
+        "correction_method": "bonferroni"
+      }
+    ]
+  },
+  "fdr_bh": {
+    "method": "fdr_bh",
+    "n_total_tests": 21,
+    "n_rejected": 21,
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_p_value": 6.294964549624638e-14,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_p_value": 5.828670879282072e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_p_value": 5.828670879282072e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_code",
+        "p_value": 7.192679397638457e-07,
+        "test_statistic": 38.87903348382501,
+        "description": "Elevation quintile_1 exponential fit for CODE",
+        "corrected_p_value": 1.3731478850037055e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 2.8738076973677806e-06,
+        "test_statistic": 31.426005125326128,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_p_value": 4.023330776314893e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_code",
+        "p_value": 5.607826739439936e-05,
+        "test_statistic": 20.162323236097208,
+        "description": "Elevation quintile_3 exponential fit for CODE",
+        "corrected_p_value": 5.8882180764119334e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_code",
+        "p_value": 9.308600295021563e-07,
+        "test_statistic": 37.392012619948815,
+        "description": "Elevation quintile_4 exponential fit for CODE",
+        "corrected_p_value": 1.6290050516287735e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_code",
+        "p_value": 2.5177810082377405e-06,
+        "test_statistic": 32.08323296251132,
+        "description": "Elevation quintile_5 exponential fit for CODE",
+        "corrected_p_value": 3.776671512356611e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 1.4282605271809246e-06,
+        "test_statistic": 37.62531766833415,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 2.307190082369186e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.755881357037083e-07,
+        "test_statistic": 46.42204419844347,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 8.763723166419861e-07,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 0.00012681298576111555,
+        "test_statistic": 17.310723738530353,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 0.00012681298576111555,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 5.547870568611835e-06,
+        "test_statistic": 30.156887479475223,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 7.281580121303033e-06,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 7.561253012600133e-08,
+        "test_statistic": 54.12490901141833,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_p_value": 1.984828915807535e-07,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 1.0603576459988773e-05,
+        "test_statistic": 31.364164328965018,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.3098535627044954e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 4.0377980181638407e-08,
+        "test_statistic": 72.68252699491539,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_p_value": 1.2113394054491522e-07,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 2.4416501628099496e-05,
+        "test_statistic": 26.804316100406034,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.6986659694215235e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 2.0086099613014774e-05,
+        "test_statistic": 27.81980415749837,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_p_value": 2.3433782881850572e-05,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 4.64224959584314e-07,
+        "test_statistic": 49.214857394637164,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_p_value": 9.748724151270594e-07,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_p_value": 6.294964549624638e-14,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_p_value": 5.828670879282072e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_p_value": 5.828670879282072e-16,
+        "is_significant": true,
+        "correction_method": "fdr_bh"
+      }
+    ]
+  },
+  "family_wise": {
+    "method": "family_wise",
+    "family_alpha": 0.05,
+    "family_results": {
+      "primary_tep": [
+        {
+          "test_name": "exponential_fit_code",
+          "p_value": 1.7985612998927536e-14,
+          "test_statistic": 144.69959523575443,
+          "description": "Primary exponential fit significance for CODE",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "exponential_fit_esa_final",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 357.45976100361474,
+          "description": "Primary exponential fit significance for ESA_FINAL",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "exponential_fit_igs_combined",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 379.94537796282935,
+          "description": "Primary exponential fit significance for IGS_COMBINED",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        }
+      ],
+      "advanced_analysis": [
+        {
+          "test_name": "elevation_quintile_1_code",
+          "p_value": 7.192679397638457e-07,
+          "test_statistic": 38.87903348382501,
+          "description": "Elevation quintile_1 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_code",
+          "p_value": 2.8738076973677806e-06,
+          "test_statistic": 31.426005125326128,
+          "description": "Elevation quintile_2 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_code",
+          "p_value": 5.607826739439936e-05,
+          "test_statistic": 20.162323236097208,
+          "description": "Elevation quintile_3 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_4_code",
+          "p_value": 9.308600295021563e-07,
+          "test_statistic": 37.392012619948815,
+          "description": "Elevation quintile_4 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_5_code",
+          "p_value": 2.5177810082377405e-06,
+          "test_statistic": 32.08323296251132,
+          "description": "Elevation quintile_5 exponential fit for CODE",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_1_igs_combined",
+          "p_value": 1.4282605271809246e-06,
+          "test_statistic": 37.62531766833415,
+          "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_igs_combined",
+          "p_value": 3.755881357037083e-07,
+          "test_statistic": 46.42204419844347,
+          "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_igs_combined",
+          "p_value": 0.00012681298576111555,
+          "test_statistic": 17.310723738530353,
+          "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_4_igs_combined",
+          "p_value": 5.547870568611835e-06,
+          "test_statistic": 30.156887479475223,
+          "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_5_igs_combined",
+          "p_value": 7.561253012600133e-08,
+          "test_statistic": 54.12490901141833,
+          "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_1_esa_final",
+          "p_value": 1.0603576459988773e-05,
+          "test_statistic": 31.364164328965018,
+          "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_2_esa_final",
+          "p_value": 4.0377980181638407e-08,
+          "test_statistic": 72.68252699491539,
+          "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_3_esa_final",
+          "p_value": 2.4416501628099496e-05,
+          "test_statistic": 26.804316100406034,
+          "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_4_esa_final",
+          "p_value": 2.0086099613014774e-05,
+          "test_statistic": 27.81980415749837,
+          "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        },
+        {
+          "test_name": "elevation_quintile_5_esa_final",
+          "p_value": 4.64224959584314e-07,
+          "test_statistic": 49.214857394637164,
+          "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.0033333333333333335,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 15
+        }
+      ],
+      "geographic_validation": [
+        {
+          "test_name": "baseline_fit_code",
+          "p_value": 1.7985612998927536e-14,
+          "test_statistic": 144.69959523575443,
+          "description": "Baseline exponential fit for CODE",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "baseline_fit_esa_final",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 357.45976100361474,
+          "description": "Baseline exponential fit for ESA_FINAL",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        },
+        {
+          "test_name": "baseline_fit_igs_combined",
+          "p_value": 1.1102230246251565e-16,
+          "test_statistic": 379.94537796282935,
+          "description": "Baseline exponential fit for IGS_COMBINED",
+          "corrected_alpha": 0.016666666666666666,
+          "is_significant": true,
+          "correction_method": "family_wise",
+          "family_size": 3
+        }
+      ]
+    },
+    "significant_tests": [
+      {
+        "test_name": "exponential_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Primary exponential fit significance for CODE",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "exponential_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Primary exponential fit significance for ESA_FINAL",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "exponential_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Primary exponential fit significance for IGS_COMBINED",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "elevation_quintile_1_code",
+        "p_value": 7.192679397638457e-07,
+        "test_statistic": 38.87903348382501,
+        "description": "Elevation quintile_1 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_code",
+        "p_value": 2.8738076973677806e-06,
+        "test_statistic": 31.426005125326128,
+        "description": "Elevation quintile_2 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_code",
+        "p_value": 5.607826739439936e-05,
+        "test_statistic": 20.162323236097208,
+        "description": "Elevation quintile_3 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_4_code",
+        "p_value": 9.308600295021563e-07,
+        "test_statistic": 37.392012619948815,
+        "description": "Elevation quintile_4 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_5_code",
+        "p_value": 2.5177810082377405e-06,
+        "test_statistic": 32.08323296251132,
+        "description": "Elevation quintile_5 exponential fit for CODE",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_1_igs_combined",
+        "p_value": 1.4282605271809246e-06,
+        "test_statistic": 37.62531766833415,
+        "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_igs_combined",
+        "p_value": 3.755881357037083e-07,
+        "test_statistic": 46.42204419844347,
+        "description": "Elevation quintile_2 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_igs_combined",
+        "p_value": 0.00012681298576111555,
+        "test_statistic": 17.310723738530353,
+        "description": "Elevation quintile_3 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_4_igs_combined",
+        "p_value": 5.547870568611835e-06,
+        "test_statistic": 30.156887479475223,
+        "description": "Elevation quintile_4 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_5_igs_combined",
+        "p_value": 7.561253012600133e-08,
+        "test_statistic": 54.12490901141833,
+        "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_1_esa_final",
+        "p_value": 1.0603576459988773e-05,
+        "test_statistic": 31.364164328965018,
+        "description": "Elevation quintile_1 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_2_esa_final",
+        "p_value": 4.0377980181638407e-08,
+        "test_statistic": 72.68252699491539,
+        "description": "Elevation quintile_2 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_3_esa_final",
+        "p_value": 2.4416501628099496e-05,
+        "test_statistic": 26.804316100406034,
+        "description": "Elevation quintile_3 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_4_esa_final",
+        "p_value": 2.0086099613014774e-05,
+        "test_statistic": 27.81980415749837,
+        "description": "Elevation quintile_4 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "elevation_quintile_5_esa_final",
+        "p_value": 4.64224959584314e-07,
+        "test_statistic": 49.214857394637164,
+        "description": "Elevation quintile_5 exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.0033333333333333335,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 15
+      },
+      {
+        "test_name": "baseline_fit_code",
+        "p_value": 1.7985612998927536e-14,
+        "test_statistic": 144.69959523575443,
+        "description": "Baseline exponential fit for CODE",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "baseline_fit_esa_final",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 357.45976100361474,
+        "description": "Baseline exponential fit for ESA_FINAL",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      },
+      {
+        "test_name": "baseline_fit_igs_combined",
+        "p_value": 1.1102230246251565e-16,
+        "test_statistic": 379.94537796282935,
+        "description": "Baseline exponential fit for IGS_COMBINED",
+        "corrected_alpha": 0.016666666666666666,
+        "is_significant": true,
+        "correction_method": "family_wise",
+        "family_size": 3
+      }
+    ]
+  }
+}
