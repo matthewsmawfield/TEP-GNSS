@@ -1,6 +1,6 @@
 [build]
-  publish = "."
-  command = ""
+  publish = "dist"
+  command = "node build.js"
 
 [build.environment]
   NODE_VERSION = "18"

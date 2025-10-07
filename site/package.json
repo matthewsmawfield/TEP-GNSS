@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "lsof -ti:8347 | xargs kill -9 2>/dev/null || true && python3 -m http.server 8347",
     "start": "python3 -m http.server 8000",
-    "build": "echo 'No build step required for static site'",
+    "build": "node build.js",
+    "build:dev": "npm run build && cd dist && python3 -m http.server 8348",
     "serve": "python3 -m http.server",
+    "serve:dist": "cd dist && python3 -m http.server 8349",
+    "deploy": "../deploy.sh",
     "sync-figures": "../sync_figures.sh"
   },
   "keywords": [
