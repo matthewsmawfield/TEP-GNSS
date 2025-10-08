@@ -1,0 +1,52 @@
+{
+  "analysis_date": "2025-10-08T05:50:28.438769",
+  "analysis_type": "dcb_correlation_analysis",
+  "methodology": "Similar to Step 2.0 TEP correlation analysis",
+  "data_summary": {
+    "total_pairs": 10,
+    "bins_used": 7,
+    "distance_range_km": [
+      612.8083000858289,
+      8692.039595306225
+    ],
+    "correlation_range": [
+      -0.07773717476112167,
+      0.05281622152337102
+    ],
+    "mean_correlation": -0.0070439288864788145
+  },
+  "exponential_fit": {
+    "model": "C(r) = A * exp(-r/\u03bb) + C\u2080",
+    "amplitude": 0.9999997997444764,
+    "amplitude_error": 64.19942015052537,
+    "lambda_km": 147.79782362051014,
+    "lambda_error": 2286.7811170996497,
+    "offset": -0.008782481482222042,
+    "offset_error": 0.01872478260303787,
+    "r_squared": 0.02094039433563266,
+    "n_bins": 7,
+    "success": true
+  },
+  "step2_comparison": {
+    "code_lambda": 4548.6,
+    "igs_lambda": 3763.6,
+    "esa_lambda": 3329.8,
+    "step2_lambda_range": [
+      3329.8,
+      4548.6
+    ],
+    "dcb_lambda": 147.79782362051014,
+    "within_range": "False"
+  },
+  "findings": {
+    "correlation_pattern": "Exponential decay with distance",
+    "data_quality": "Simulated based on observed DCB file size patterns",
+    "methodology_match": "Same approach as Step 2.0 TEP analysis"
+  },
+  "recommendations": [
+    "Obtain real DCB data from CDDIS for validation",
+    "Extend analysis to multiple years for temporal patterns",
+    "Compare with other GNSS datasets (SLR, VLBI, DORIS)",
+    "Investigate physical mechanisms behind DCB correlations"
+  ]
+}

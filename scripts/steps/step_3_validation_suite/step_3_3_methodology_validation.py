@@ -183,36 +183,56 @@ def run_distribution_neutral_validation(analysis_centers, equal_count_bins=40):
         original_lambda_km = correlation_data['best_fit']['lambda_km']
         
         # Re-binning with equal counts
-        pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
-        pair_files = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
+        # First try consolidated pair files (preferred)
+        consolidated_pair_file = PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac}.csv"
         
-        if not pair_files:
-            # Fallback: if no pair files, skip detailed re-binning but log a warning
-            print_status(f"WARNING: No pair-level data found for {ac} in {pair_data_pattern.parent}. Skipping detailed distribution-neutral validation. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
-            results['key_findings'].append(f"WARNING: No pair data for {ac}, detailed distribution-neutral validation skipped.")
-            continue
-
-        # Load and combine all pair data for this AC
-        all_pair_dfs = []
-        for f_path in pair_files:
+        if consolidated_pair_file.exists():
+            print_status(f"Loading consolidated pair data for {ac} from {consolidated_pair_file.name}", "INFO")
             try:
-                df_chunk = pd.read_csv(f_path)
-                if not df_chunk.empty and 'dist_km' in df_chunk.columns and 'plateau_phase' in df_chunk.columns:
+                combined_pairs = pd.read_csv(consolidated_pair_file)
+                if 'plateau_phase' in combined_pairs.columns:
                     # Convert plateau_phase to coherence using cos() for compatibility
-                    df_chunk['coherence'] = np.cos(df_chunk['plateau_phase'])
-                    all_pair_dfs.append(df_chunk)
-                else:
-                    print_status(f"WARNING: Skipping empty or unreadable chunk file: {f_path.name}", "WARNING")
+                    combined_pairs['coherence'] = np.cos(combined_pairs['plateau_phase'])
+                elif 'coherence' not in combined_pairs.columns:
+                    print_status(f"WARNING: No coherence or plateau_phase column found in consolidated file for {ac}", "WARNING")
+                    results['key_findings'].append(f"WARNING: No coherence data for {ac}, detailed distribution-neutral validation skipped.")
+                    continue
             except Exception as e:
-                print_status(f"WARNING: Error reading chunk file {f_path.name}: {e}. Skipping.", "WARNING")
+                print_status(f"WARNING: Error reading consolidated pair file for {ac}: {e}", "WARNING")
+                results['key_findings'].append(f"WARNING: Error loading consolidated pair data for {ac}, detailed distribution-neutral validation skipped.")
                 continue
-        
-        if not all_pair_dfs:
-            print_status(f"WARNING: No valid pair data could be loaded for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
-            results['key_findings'].append(f"WARNING: No valid pair data for {ac}, detailed distribution-neutral validation skipped.")
-            continue
-        
-        combined_pairs = pd.concat(all_pair_dfs, ignore_index=True)
+        else:
+            # Fallback to individual pair files in tmp directory
+            pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
+            pair_files = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
+            
+            if not pair_files:
+                # Fallback: if no pair files, skip detailed re-binning but log a warning
+                print_status(f"WARNING: No pair-level data found for {ac} in consolidated or individual files. Skipping detailed distribution-neutral validation. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
+                results['key_findings'].append(f"WARNING: No pair data for {ac}, detailed distribution-neutral validation skipped.")
+                continue
+
+            # Load and combine all pair data for this AC
+            all_pair_dfs = []
+            for f_path in pair_files:
+                try:
+                    df_chunk = pd.read_csv(f_path)
+                    if not df_chunk.empty and 'dist_km' in df_chunk.columns and 'plateau_phase' in df_chunk.columns:
+                        # Convert plateau_phase to coherence using cos() for compatibility
+                        df_chunk['coherence'] = np.cos(df_chunk['plateau_phase'])
+                        all_pair_dfs.append(df_chunk)
+                    else:
+                        print_status(f"WARNING: Skipping empty or unreadable chunk file: {f_path.name}", "WARNING")
+                except Exception as e:
+                    print_status(f"WARNING: Error reading chunk file {f_path.name}: {e}. Skipping.", "WARNING")
+                    continue
+            
+            if not all_pair_dfs:
+                print_status(f"WARNING: No valid pair data could be loaded for {ac.upper()}. Skipping detailed distribution-neutral validation.", "WARNING")
+                results['key_findings'].append(f"WARNING: No valid pair data for {ac}, detailed distribution-neutral validation skipped.")
+                continue
+            
+            combined_pairs = pd.concat(all_pair_dfs, ignore_index=True)
         
         # Equal-count binning for distance and coherence
         if len(combined_pairs) < equal_count_bins * 2: # Need at least 2 pairs per bin
@@ -533,15 +553,28 @@ class MethodologyValidator:
             real_r_squared = real_correlation_data['best_fit']['r_squared']
             
             # Dynamically load pair data for the specific AC
-            pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
-            pair_files_for_ac = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
+            # First try consolidated pair files (preferred)
+            consolidated_pair_file = PACKAGE_ROOT / "results" / "outputs" / f"step_2_0_pairs_consolidated_{ac}.csv"
+            
+            if consolidated_pair_file.exists():
+                print_status(f"  Loading consolidated pair data for {ac} from {consolidated_pair_file.name}", "INFO")
+                try:
+                    all_pairs_df = pd.read_csv(consolidated_pair_file)
+                except Exception as e:
+                    print_status(f"  WARNING: Error reading consolidated pair file for {ac}: {e}", "WARNING")
+                    results['key_findings'].append(f"WARNING: Error loading consolidated pair data for {ac}, cannot run geometric control.")
+                    continue
+            else:
+                # Fallback to individual pair files in tmp directory
+                pair_data_pattern = PACKAGE_ROOT / "results" / "tmp" / f"step_2_0_pairs_{ac}_*.csv"
+                pair_files_for_ac = list(pair_data_pattern.parent.glob(pair_data_pattern.name))
 
-            if not pair_files_for_ac:
-                print_status(f"  WARNING: No pair-level data found for {ac} in {pair_data_pattern.parent}. Cannot run geometric control. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
-                results['key_findings'].append(f"WARNING: No pair data for {ac}, cannot run geometric control.")
-                continue
-                
-            all_pairs_df = pd.concat([pd.read_csv(f) for f in pair_files_for_ac], ignore_index=True)
+                if not pair_files_for_ac:
+                    print_status(f"  WARNING: No pair-level data found for {ac} in consolidated or individual files. Cannot run geometric control. This is acceptable if TEP_WRITE_PAIR_LEVEL is not enabled in Step 2.0.", "WARNING")
+                    results['key_findings'].append(f"WARNING: No pair data for {ac}, cannot run geometric control.")
+                    continue
+                    
+                all_pairs_df = pd.concat([pd.read_csv(f) for f in pair_files_for_ac], ignore_index=True)
             
             if all_pairs_df.empty or 'dist_km' not in all_pairs_df.columns:
                 print_status(f"  WARNING: Pair data for {ac} is empty or missing 'dist_km'. Cannot run geometric control.", "WARNING")
@@ -765,12 +798,23 @@ class MethodologyValidator:
         num_random_simulations = self.config.get_int('validation.num_random_simulations', 50)
         
         # Load sample pair distances (from any AC, just need distance distribution)
-        sample_pair_files = list((PACKAGE_ROOT / "results" / "tmp").glob("step_2_0_pairs_code_*.csv"))
-        if not sample_pair_files:
-            raise TEPFileError("No sample pair files found in results/tmp for random artifact characterization.")
+        # First try consolidated pair files (preferred)
+        consolidated_sample_file = PACKAGE_ROOT / "results" / "outputs" / "step_2_0_pairs_consolidated_code.csv"
         
-        # Load only a subset for efficiency if many exist
-        sample_df_chunk = pd.read_csv(sample_pair_files[0])
+        if consolidated_sample_file.exists():
+            print_status("  Loading sample distances from consolidated pair file", "INFO")
+            try:
+                sample_df_chunk = pd.read_csv(consolidated_sample_file)
+            except Exception as e:
+                raise TEPFileError(f"Error reading consolidated sample pair file: {e}")
+        else:
+            # Fallback to individual pair files in tmp directory
+            sample_pair_files = list((PACKAGE_ROOT / "results" / "tmp").glob("step_2_0_pairs_code_*.csv"))
+            if not sample_pair_files:
+                raise TEPFileError("No sample pair files found in results/tmp or results/outputs for random artifact characterization.")
+            
+            # Load only a subset for efficiency if many exist
+            sample_df_chunk = pd.read_csv(sample_pair_files[0])
         sample_distances = sample_df_chunk['dist_km'].values
         num_sample_pairs = len(sample_distances)
 

@@ -63,6 +63,16 @@ gcloud compute scp $INSTANCE_NAME:/mnt/data/pipeline_fixed_gravitational_final.l
 echo "📋 Downloading all log files..."
 gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/logs/*.log logs/ --zone=$ZONE 2>/dev/null || echo "   No log files found"
 
+# Download TID/Hilbert/Wavelet analysis files
+echo "🌊 Downloading TID/Hilbert/Wavelet analysis files..."
+mkdir -p results/tmp/streaming
+gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/results/tmp/streaming/*.csv results/tmp/streaming/ --zone=$ZONE 2>/dev/null || echo "   No streaming files found"
+
+# Download any additional processed data with Hilbert/wavelet analysis
+echo "📊 Downloading additional processed data..."
+mkdir -p data/processed
+gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/data/processed/*.csv data/processed/ --zone=$ZONE 2>/dev/null || echo "   No additional processed data found"
+
 # Download site figures if they exist
 echo "🌐 Downloading site figures..."
 gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/site/figures/*.png site/figures/ --zone=$ZONE 2>/dev/null || echo "   No site figures found"
@@ -81,6 +91,8 @@ echo "📊 Download Summary:"
 echo "   JSON files: $(find results/outputs -name "*.json" 2>/dev/null | wc -l)"
 echo "   PNG files: $(find results/figures -name "*.png" 2>/dev/null | wc -l)"
 echo "   Log files: $(find logs -name "*.log" 2>/dev/null | wc -l)"
+echo "   TID/Streaming files: $(find results/tmp/streaming -name "*.csv" 2>/dev/null | wc -l)"
+echo "   Processed data files: $(find data/processed -name "*.csv" 2>/dev/null | wc -l)"
 echo "   Site figures: $(find site/figures -name "*.png" 2>/dev/null | wc -l)"
 echo "   Synced to site: $(find site/figures -name "*.png" 2>/dev/null | wc -l)"
 
@@ -93,3 +105,6 @@ echo "   - results/outputs/step_4_0_advanced_analysis.json (main results)"
 echo "   - results/figures/step_4_2_tep_synthesis_figure.png (synthesis figure)"
 echo "   - results/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png (gravitational analysis)"
 echo "   - results/outputs/step_3_1_robust_block_bootstrap_*.json (bootstrap results)"
+echo "   - results/outputs/step_4_6_tid_exclusion_analysis_results.json (TID/Hilbert analysis)"
+echo "   - results/tmp/streaming/*.csv (TID streaming analysis files)"
+echo "   - data/processed/*.csv (processed data with Hilbert/wavelet analysis)"

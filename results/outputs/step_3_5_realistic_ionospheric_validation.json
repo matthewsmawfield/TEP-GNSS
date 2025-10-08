@@ -3,10 +3,51 @@
   "data_policy": "available_real_data_with_honest_limitations",
   "analysis_period": {
     "start": "2023-01-01",
-    "end": "2023-01-01"
+    "end": "2025-06-30"
   },
   "real_data_analysis": {
-    "available_analyses": []
+    "available_analyses": [
+      "Real Kp-TEP correlation analysis"
+    ],
+    "kp_analysis": {
+      "correlations": {
+        "kp_coherence_mean": {
+          "r": -0.004710884784745856,
+          "p": 0.9438531549107814
+        },
+        "kp_coherence_std": {
+          "r": 0.129658031894313,
+          "p": 0.051582241456818265
+        }
+      },
+      "geomagnetic_stratification": {
+        "unsettled": {
+          "n_days": 34,
+          "coherence_mean": 0.00900971235382978,
+          "kp_mean": 3.4509803921568625
+        },
+        "active": {
+          "n_days": 80,
+          "coherence_mean": 0.0113129405727605,
+          "kp_mean": 5.06875
+        },
+        "storm": {
+          "n_days": 110,
+          "coherence_mean": 0.010482593767867046,
+          "kp_mean": 7.204166666666666
+        }
+      },
+      "n_days": 226,
+      "max_correlation": 0.129658031894313
+    },
+    "data_coverage": {
+      "kp_days": 226,
+      "f107_days": 0,
+      "tec_days": 0,
+      "solar_wind_days": 0,
+      "total_tep_days": 912,
+      "coverage_improvement": "226 Kp days (vs 226 previous), 0 F10.7 days (vs 30 previous)"
+    }
   },
   "realistic_assessment": {
     "validation_approach": "available_real_data_only",
@@ -17,16 +58,20 @@
       "temporal_overlap": "Limited by data availability",
       "diurnal_analysis": "Insufficient temporal resolution in daily-aggregated data (Step 4.5 provides comprehensive diurnal analysis)"
     },
-    "completed_analyses": [],
-    "overall_validation_score": 0.0,
-    "confidence_level": "UNKNOWN",
-    "assessment": "Insufficient real data overlap for validation",
-    "component_scores": {},
+    "completed_analyses": [
+      "Real Kp-TEP correlation analysis"
+    ],
+    "overall_validation_score": 0.5678065603522899,
+    "confidence_level": "LOW",
+    "assessment": "Available real data suggests potential ionospheric contamination",
+    "component_scores": {
+      "kp_independence": 0.5678065603522899
+    },
     "scientific_honesty": {
       "acknowledged_limitations": true,
       "real_data_only": true,
       "no_synthetic_inflation": true
     }
   },
-  "timestamp": "2025-10-06T11:38:53.920292"
+  "timestamp": "2025-10-07T20:59:32.580007"
 }

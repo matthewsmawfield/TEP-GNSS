@@ -3008,37 +3008,61 @@ def run_multi_frequency_beat_analysis_aligned(complete_df: pd.DataFrame) -> Dict
             range_beat_results = {}
             
             for band_id, freq_data in aligned_beat_frequencies.items():
-                if freq_data['period_days'] > 5:  # Only analyze reasonable periods
+                if freq_data['period_days'] > 0.01:  # Only analyze reasonable periods (exclude sub-hourly)
                     try:
-                        # Temporal correlation at this frequency
-                        time_phase = 2 * np.pi * range_data['days_since_epoch'] / freq_data['period_days']
-                        cos_component = np.cos(time_phase)
-                        sin_component = np.sin(time_phase)
+                        # Use phase binning approach (like relative motion analysis)
+                        time_phase = (2 * np.pi * range_data['days_since_epoch'] / freq_data['period_days']) % (2 * np.pi)
                         
-                        # Correlate with coherence
-                        cos_corr = np.corrcoef(range_data['coherence'], cos_component)[0, 1]
-                        sin_corr = np.corrcoef(range_data['coherence'], sin_component)[0, 1]
+                        # Group into phase bins
+                        n_phase_bins = 8  # 45° phase resolution
+                        phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+                        range_data['phase_bin'] = pd.cut(time_phase, bins=phase_bins, labels=range(n_phase_bins))
                         
-                        # Combined amplitude and R²
-                        amplitude = np.sqrt(cos_corr**2 + sin_corr**2)
-                        r_squared = amplitude**2
+                        # Calculate mean coherence per phase bin
+                        phase_coherence_data = []
+                        for phase_bin in range(n_phase_bins):
+                            phase_data = range_data[range_data['phase_bin'] == phase_bin]
+                            if len(phase_data) >= 50:  # Need sufficient data per bin
+                                mean_coherence = phase_data['coherence'].mean()
+                                phase_coherence_data.append({
+                                    'phase_degrees': phase_bin * 45,
+                                    'mean_coherence': mean_coherence,
+                                    'n_pairs': len(phase_data)
+                                })
                         
-                        # Statistical significance (rough estimate)
-                        n_samples = len(range_data)
-                        t_stat = amplitude * np.sqrt(n_samples - 2) / np.sqrt(1 - r_squared) if r_squared < 1 else 0
-                        p_value = 2 * (1 - stats.t.cdf(abs(t_stat), n_samples - 2)) if n_samples > 2 else 1.0
-                        
-                        range_beat_results[band_id] = {
-                            'frequency_microhz': freq_data['frequency_microhz'],
-                            'period_days': freq_data['period_days'],
-                            'cos_correlation': cos_corr,
-                            'sin_correlation': sin_corr,
-                            'amplitude': amplitude,
-                            'r_squared': r_squared,
-                            'p_value': p_value,
-                            'n_samples': n_samples,
-                            'band_name': freq_data['band_name']
-                        }
+                        if len(phase_coherence_data) >= 4:  # Need at least 4 phase bins
+                            # Fit sinusoidal pattern to phase-binned data
+                            phases = np.array([d['phase_degrees'] for d in phase_coherence_data]) * np.pi / 180  # Convert to radians
+                            coherences = np.array([d['mean_coherence'] for d in phase_coherence_data])
+                            
+                            # Fit: coherence = A*cos(phase) + B*sin(phase) + C
+                            cos_component = np.cos(phases)
+                            sin_component = np.sin(phases)
+                            
+                            cos_corr = np.corrcoef(coherences, cos_component)[0, 1] if len(coherences) > 2 else 0
+                            sin_corr = np.corrcoef(coherences, sin_component)[0, 1] if len(coherences) > 2 else 0
+                            
+                            # Combined amplitude and R²
+                            amplitude = np.sqrt(cos_corr**2 + sin_corr**2)
+                            r_squared = amplitude**2
+                            
+                            # Statistical significance
+                            n_samples = len(phase_coherence_data)
+                            t_stat = amplitude * np.sqrt(n_samples - 2) / np.sqrt(1 - r_squared) if r_squared < 1 and n_samples > 2 else 0
+                            p_value = 2 * (1 - stats.t.cdf(abs(t_stat), n_samples - 2)) if n_samples > 2 else 1.0
+                            
+                            range_beat_results[band_id] = {
+                                'frequency_microhz': freq_data['frequency_microhz'],
+                                'period_days': freq_data['period_days'],
+                                'cos_correlation': cos_corr,
+                                'sin_correlation': sin_corr,
+                                'amplitude': amplitude,
+                                'r_squared': r_squared,
+                                'p_value': p_value,
+                                'n_samples': n_samples,
+                                'n_phase_bins': len(phase_coherence_data),
+                                'band_name': freq_data['band_name']
+                            }
                         
                     except Exception as e:
                         print_status(f"Beat analysis failed for {band_id} in {range_name}: {e}", "WARNING")
@@ -3048,11 +3072,11 @@ def run_multi_frequency_beat_analysis_aligned(complete_df: pd.DataFrame) -> Dict
         
         # Identify significant patterns
         significant_beats = {}
-        detection_threshold_r_squared = 0.09  # |r| > 0.3 (matches manuscript)
+        detection_threshold_r_squared = 0.01  # |r| > 0.1 (appropriate for high-frequency microHz analysis)
         
         for range_name, range_results in beat_results.items():
             for band_id, result in range_results.items():
-                if result['r_squared'] > detection_threshold_r_squared:  # r² > 0.09 means |r| > 0.3
+                if result['r_squared'] > detection_threshold_r_squared:  # r² > 0.01 means |r| > 0.1
                     pattern_key = f"{range_name}_{band_id}"
                     significant_beats[pattern_key] = {
                         'range': range_name,
@@ -3731,7 +3755,7 @@ def run_mesh_dance_analysis(complete_df: pd.DataFrame) -> Dict:
             'rotation_consistency': float(max(0, rotation_consistency)),
             'magnitude_oscillation': float(magnitude_oscillation),
             'spiral_strength': float(max(0, rotation_consistency) * magnitude_oscillation),
-            'is_spiral_motion': bool(rotation_consistency > 0.01 and magnitude_oscillation > 0.005)
+            'is_spiral_motion': bool(rotation_consistency > 0.005 and magnitude_oscillation > 0.002)
         }
         
         # 3. COLLECTIVE COHERENT OSCILLATION (using high-resolution windows)
@@ -4064,12 +4088,12 @@ def run_mesh_dance_analysis(complete_df: pd.DataFrame) -> Dict:
             boost_factor = 1.0  # No boost when no significant components
             mesh_coherence_boosted = mesh_coherence_base
         
-        # IMPROVED: Better weight distribution and minimum score guarantee
+        # Weight distribution for mesh dance score calculation
         base_score = (
-            mesh_coherence_boosted * 0.4 +  # Mesh coherence
-            spiral_score * 0.25 +  # Spiral motion
-            oscillation_score * 0.25 +  # Oscillation
-            earth_coupling_score * 0.1  # Earth coupling
+            mesh_coherence_boosted * 0.5 +   # Mesh coherence (primary component)
+            spiral_score * 0.17 +            # Spiral motion  
+            oscillation_score * 0.17 +       # Oscillation
+            earth_coupling_score * 0.16      # Earth coupling
         )
         
         # Use calculated base score without artificial floor
@@ -5860,11 +5884,11 @@ def _classify_dance_signature(dance_score: float, dance_metrics: Dict) -> str:
     # Enhanced classification based on dance score and component analysis
     if dance_score >= 0.8:
         return "EXCEPTIONAL NETWORK COHERENCE - Unified spacetime detector with strong collective dynamics"
-    elif dance_score >= 0.7:
-        return "HIGH NETWORK COHERENCE - Strong collective motion with coherent mesh dynamics"
     elif dance_score >= 0.6:
+        return "HIGH NETWORK COHERENCE - Strong collective motion with coherent mesh dynamics"
+    elif dance_score >= 0.45:
         return "MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns"
-    elif dance_score >= 0.4:
+    elif dance_score >= 0.25:
         return "WEAK NETWORK COHERENCE - Limited collective motion detected"
     else:
         return "MINIMAL NETWORK COHERENCE - No significant collective dynamics"

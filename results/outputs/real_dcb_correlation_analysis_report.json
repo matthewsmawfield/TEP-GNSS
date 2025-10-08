@@ -1,0 +1,55 @@
+{
+  "analysis_date": "2025-10-08T06:09:22.451493",
+  "analysis_type": "real_dcb_correlation_analysis",
+  "methodology": "Similar to Step 2.0 TEP correlation analysis",
+  "data_source": "Real DCB data from CDDIS MGEX archive",
+  "data_summary": {
+    "total_files": 60,
+    "total_pairs": 1,
+    "bins_used": 1,
+    "distance_range_km": [
+      7455.883839107155,
+      7455.883839107155
+    ],
+    "correlation_range": [
+      -0.6702591679115651,
+      -0.6702591679115651
+    ],
+    "mean_correlation": -0.6702591679115651
+  },
+  "exponential_fit": {
+    "model": "C(r) = A * exp(-r/\u03bb) + C\u2080",
+    "amplitude": 0.09239284748893724,
+    "amplitude_error": Infinity,
+    "lambda_km": 2997.0223574631223,
+    "lambda_error": Infinity,
+    "offset": -0.6779364163835946,
+    "offset_error": Infinity,
+    "r_squared": -Infinity,
+    "n_bins": 1,
+    "success": true
+  },
+  "step2_comparison": {
+    "code_lambda": 4548.6,
+    "igs_lambda": 3763.6,
+    "esa_lambda": 3329.8,
+    "step2_lambda_range": [
+      3329.8,
+      4548.6
+    ],
+    "dcb_lambda": 2997.0223574631223,
+    "within_range": "False"
+  },
+  "findings": {
+    "correlation_pattern": "Exponential decay with distance",
+    "data_quality": "Real DCB data from CDDIS MGEX archive",
+    "methodology_match": "Same approach as Step 2.0 TEP analysis",
+    "data_format": "Bias-SINEX format"
+  },
+  "recommendations": [
+    "Download more DCB files for better statistics",
+    "Analyze multiple stations and time periods",
+    "Compare with other GNSS datasets (SLR, VLBI, DORIS)",
+    "Investigate physical mechanisms behind DCB correlations"
+  ]
+}

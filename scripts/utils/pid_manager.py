@@ -67,9 +67,20 @@ class PIDManager:
             unique_pids = list(set(existing_pids))
             other_pids = [pid for pid in unique_pids if pid != our_pid]
             
-            # **CRITICAL FIX**: Verify processes exist FIRST, then show message only if needed
+            # **CRITICAL FIX**: Check if we have a PID file to identify ourselves
+            our_pid_from_file = None
+            if self.pid_file.exists():
+                try:
+                    with open(self.pid_file, 'r') as f:
+                        our_pid_from_file = int(f.read().strip())
+                except:
+                    pass
+            
+            # **DOUBLE CHECK**: Re-verify processes exist and are NOT our current process
             verified_pids = []
             for pid in other_pids:
+                if pid == our_pid or pid == our_pid_from_file:  # Extra safety check
+                    continue
                 try:
                     os.kill(pid, 0)  # Signal 0 just checks if process exists
                     verified_pids.append(pid)
@@ -89,7 +100,11 @@ class PIDManager:
                         os.kill(pid, signal.SIGTERM)
                         time.sleep(0.5)
                         # Force kill if still running
-                        os.kill(pid, signal.SIGKILL)
+                        try:
+                            os.kill(pid, 0)  # Check if still alive
+                            os.kill(pid, signal.SIGKILL)
+                        except OSError:
+                            pass  # Already dead from SIGTERM
                         print(f"  Killed PID {pid}")
                         killed_count += 1
                     except OSError:
@@ -102,14 +117,15 @@ class PIDManager:
             # pgrep not available or timed out - continue anyway
             pass
         
-        # Clean up any stale PID files
+        # Clean up any stale PID files (but not our own)
         tmp_dir = self.root_dir / "results/tmp"
         if tmp_dir.exists():
             for pid_file in tmp_dir.glob("*.pid"):
-                try:
-                    pid_file.unlink()
-                except Exception:
-                    pass  # Best effort cleanup
+                if pid_file != self.pid_file:  # Don't delete our own PID file
+                    try:
+                        pid_file.unlink()
+                    except Exception:
+                        pass  # Best effort cleanup
         
         return killed_count
     
@@ -172,11 +188,14 @@ def ensure_single_instance(func):
         # Create PID manager
         pid_manager = PIDManager(script_name, root_dir)
         
-        # Kill existing instances
-        pid_manager.kill_existing_instances()
-        
-        # Acquire lock
+        # **CRITICAL FIX**: Acquire lock FIRST to mark ourselves as the current instance
         pid_manager.acquire_lock()
+        
+        # Small delay to ensure our PID file is written before checking for others
+        time.sleep(0.1)
+        
+        # Kill existing instances (but not us, since we have the lock)
+        pid_manager.kill_existing_instances()
         
         try:
             # Run the actual function

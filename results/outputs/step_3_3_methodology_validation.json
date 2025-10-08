@@ -1,41 +1,42 @@
 {
   "validation_results": {
     "summary": {
-      "validation_passed": false,
+      "validation_passed": true,
       "validation_score": 1.0,
       "key_findings": [
-        "WARNING: No pair data for code, detailed distribution-neutral validation skipped.",
-        "WARNING: No pair data for esa_final, detailed distribution-neutral validation skipped.",
-        "WARNING: No pair data for igs_combined, detailed distribution-neutral validation skipped.",
-        "WARNING: No pair data for code, cannot run geometric control.",
-        "WARNING: No pair data for esa_final, cannot run geometric control.",
-        "WARNING: No pair data for igs_combined, cannot run geometric control.",
-        "CRITICAL: Bias characterization failed: No sample pair files found in results/tmp for random artifact characterization.",
+        "\u2705 CODE: Distribution-neutral validation passed. R\u00b2 changed by 0.059.",
+        "\u2705 ESA_FINAL: Distribution-neutral validation passed. R\u00b2 changed by 0.092.",
+        "\u2705 IGS_COMBINED: Distribution-neutral validation passed. R\u00b2 changed by 0.095.",
+        "\u2705 CODE: Geometric control passed. Real R\u00b2 (0.920) is significantly higher than synthetic artifacts (max 0.065).",
+        "\u2705 ESA_FINAL: Geometric control passed. Real R\u00b2 (0.970) is significantly higher than synthetic artifacts (max 0.057).",
+        "\u2705 IGS_COMBINED: Geometric control passed. Real R\u00b2 (0.968) is significantly higher than synthetic artifacts (max 0.273).",
+        "\u2705 TEP signal R\u00b2 (0.953) significantly exceeds max artifact R\u00b2 (0.050).",
+        "\u2705 Strong signal-to-bias ratio of 19.1x confirms robust discrimination.",
         "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
       ],
-      "timestamp": "2025-10-06T11:37:28.889982",
+      "timestamp": "2025-10-07T20:21:24.719858",
       "methodology_version": "2.0 (Watertight Implementation)",
-      "bias_envelope_r2": "N/A",
+      "bias_envelope_r2": -152030.40736667986,
       "multi_center_cv": "N/A",
-      "scale_separation_ratio": 6.262744216178119
+      "scale_separation_ratio": 6.26274421271165
     },
     "details": {
       "distribution_neutral": {
         "passed": true,
         "validation_score": 1.0,
         "key_findings": [
-          "WARNING: No pair data for code, detailed distribution-neutral validation skipped.",
-          "WARNING: No pair data for esa_final, detailed distribution-neutral validation skipped.",
-          "WARNING: No pair data for igs_combined, detailed distribution-neutral validation skipped."
+          "\u2705 CODE: Distribution-neutral validation passed. R\u00b2 changed by 0.059.",
+          "\u2705 ESA_FINAL: Distribution-neutral validation passed. R\u00b2 changed by 0.092.",
+          "\u2705 IGS_COMBINED: Distribution-neutral validation passed. R\u00b2 changed by 0.095."
         ]
       },
       "geometric_control": {
         "passed": true,
         "validation_score": 1.0,
         "key_findings": [
-          "WARNING: No pair data for code, cannot run geometric control.",
-          "WARNING: No pair data for esa_final, cannot run geometric control.",
-          "WARNING: No pair data for igs_combined, cannot run geometric control."
+          "\u2705 CODE: Geometric control passed. Real R\u00b2 (0.920) is significantly higher than synthetic artifacts (max 0.065).",
+          "\u2705 ESA_FINAL: Geometric control passed. Real R\u00b2 (0.970) is significantly higher than synthetic artifacts (max 0.057).",
+          "\u2705 IGS_COMBINED: Geometric control passed. Real R\u00b2 (0.968) is significantly higher than synthetic artifacts (max 0.273)."
         ]
       },
       "multi_center_consistency": {
@@ -49,12 +50,23 @@
         "key_findings": [
           "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
         ],
-        "separation_ratio": 6.262744216178119
+        "separation_ratio": 6.26274421271165
       }
     }
   },
   "bias_characterization_results": {
-    "summary": {},
-    "details": {}
+    "summary": {
+      "max_artifact_r2": -152030.40736667986,
+      "overall_max_artifact_r2": 0.05,
+      "signal_to_bias_ratio": 19.05813672543663
+    },
+    "details": {
+      "passed": true,
+      "validation_score": 1.0,
+      "key_findings": [
+        "\u2705 TEP signal R\u00b2 (0.953) significantly exceeds max artifact R\u00b2 (0.050).",
+        "\u2705 Strong signal-to-bias ratio of 19.1x confirms robust discrimination."
+      ]
+    }
   }
 }

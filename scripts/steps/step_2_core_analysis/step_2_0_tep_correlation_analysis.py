@@ -443,7 +443,7 @@ def load_station_coordinates():
 
 def correlation_model(r, amplitude, lambda_km, offset):
     """
-    PRIMARY TEP CORRELATION MODEL: Exponential decay with screening length
+    TEP BAND CORRELATION MODEL: Exponential decay with screening length
     ====================================================================
     
     This is the fundamental prediction of TEP theory for scalar field correlations:
@@ -1711,7 +1711,7 @@ def compute_cross_power_plateau(series1: np.ndarray, series2: np.ndarray, fs: fl
         # Return coherency as "magnitude" and 0 as "phase" for compatibility
         return float(real_coherency), 0.0
     else:
-        # STEP 2: PRIMARY TEP METHOD - Phase-coherent cross-spectral analysis
+        # STEP 2: TEP BAND METHOD - Phase-coherent cross-spectral analysis
         # ===================================================================
         # Compute complex cross-power spectral density using Welch's method.
         # This preserves both magnitude AND phase information, which is crucial

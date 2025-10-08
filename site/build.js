@@ -49,7 +49,7 @@ async function buildStaticSite() {
         // Replace the dynamic content with static content
         // Remove the loading div and script, insert the content directly
         const staticContent = indexContent
-            // Replace the loading div and manuscript-content div with our built content
+            // Replace the loading div and manuscript-content div with the built content
             .replace(
                 /<div id="loading".*?<\/div>\s*<div id="manuscript-content".*?<\/div>/s,
                 `<div id="manuscript-content">${componentsHtml}</div>`

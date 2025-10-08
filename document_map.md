@@ -36,12 +36,12 @@ This document outlines the sections and subsections of the manuscript.
 ## Section 2: Methods
 *   2. Methods
     *   **Summary:** This section details the methodology for detecting and validating TEP signals in GNSS clock networks. It provides a conceptual overview, explaining the search for distance-dependent patterns, the suitability of GPS clocks, and the challenge of isolating tiny TEP signals. The four-step process—Data Collection, Pattern Detection, Validation, and Advanced Analysis—is introduced. It highlights phase coherence as a robust, amplitude-invariant metric. The section elaborates on the analysis pipeline, data architecture (sources, quality assurance), and the phase-coherent method. It covers the statistical framework (model comparison, exponential fitting, uncertainty, null tests, independence) and advanced analysis methods (dynamic events, Earth motion, gravitational correlations, network coherence, temporal modulation), all designed to test TEP predictions.
-    *   Conceptual Overview: What We're Looking For and How
+    *   Conceptual Overview: What This Study Is Looking For and How
         *   The Basic Idea
         *   Why GPS Clocks?
         *   The Challenge: Finding a Needle in a Haystack
         *   The Four-Step Process
-        *   What We're Measuring: Phase Coherence
+        *   What This Study Is Measuring: Phase Coherence
         *   Why This Approach Works
         *   The Bottom Line
     *   2.1 Analysis Pipeline Overview
@@ -330,7 +330,7 @@ This document outlines the sections and subsections of the manuscript.
         *   Step 3.6: Multi-Band Frequency Analysis: Spectral characterization across 13 frequency bands (10-1500 µHz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands
             *   **Summary:** This step conducts comprehensive multi-band frequency analysis (10-1500 µHz) to assess systematic effects, fit exponential models, evaluate frequency specificity, and quantify systematic effects through control bands, providing insights into the TEP signal's nature.
         *   Step 3.7: Multiple Comparison Corrections
-            *   **Summary:** This step systematically applies formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 120 statistical tests, confirming that all primary TEP findings survive conservative corrections.
+            *   **Summary:** This step systematically applies formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 120 statistical tests, confirming that all TEP band findings survive conservative corrections.
     *   Group 4: Advanced Analysis & Visualization (step_4_advanced_analysis_and_visualization/)
         *   **Summary:** This group performs advanced analyses, astronomical correlations, and generates publication-quality visualizations. It includes specialized analyses, visualization creation, synthesis figures, high-resolution astronomical event studies, gravitational-temporal field analysis, comprehensive diurnal analysis, and TID exclusion analysis.
         *   Step 4.0: Advanced Analysis

@@ -1,13 +1,13 @@
     <h2>2. Methods</h2>
     
     <div class="conceptual-overview" style="background: linear-gradient(135deg, rgba(73, 87, 115, 0.08) 0%, rgba(107, 115, 161, 0.08) 100%); padding: 25px; margin: 25px 0; border-radius: 5px;">
-        <h2 style="color: #495773; margin-top: 0;">Conceptual Overview: What We're Looking For and How</h2>
+        <h2 style="color: #495773; margin-top: 0;">Conceptual Overview: What This Study Is Looking For and How</h2>
         
         <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 5px; margin-bottom: 20px;">
             <h3 style="color: #220126; margin-top: 0;">The Basic Idea</h3>
             <p>Imagine you have hundreds of ultra-precise clocks scattered around the world. If time flows uniformly everywhere, these clocks should tick independently—what happens at one clock shouldn't affect any other. But if there's a subtle "field" that influences how time flows (like the Temporal Equivalence Principle predicts), then clocks might show coordinated patterns in their tiny timing variations.</p>
             
-            <p>Our approach: We analyze whether the tiny fluctuations in GPS atomic clocks show patterns that depend on how far apart the clocks are. If we find that closer clocks fluctuate more similarly than distant ones, and this pattern has a specific distance scale, that would be evidence for a field affecting time.</p>
+            <p>The approach: This study analyzes whether the tiny fluctuations in GPS atomic clocks show patterns that depend on how far apart the clocks are. If closer clocks fluctuate more similarly than distant ones, and this pattern has a specific distance scale, that would be evidence for a field affecting time.</p>
         </div>
         
         <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 5px; margin-bottom: 20px;">
@@ -24,9 +24,9 @@
         
         <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 5px; margin-bottom: 20px;">
             <h3 style="color: #220126; margin-top: 0;">The Challenge: Finding a Needle in a Haystack</h3>
-            <p>GPS clocks have many sources of variation—temperature changes, aging, radiation, atmospheric effects. The TEP signal we're looking for is tiny compared to these effects. Standard analysis methods average out or remove correlated signals (which is exactly what we're looking for!). We need a special approach.</p>
+            <p>GPS clocks have many sources of variation—temperature changes, aging, radiation, atmospheric effects. The TEP signal being sought is tiny compared to these effects. Standard analysis methods average out or remove correlated signals (which is exactly what this study is looking for!). A special approach is needed.</p>
             
-            <p>Our solution: Instead of looking at the strength of clock variations, we look at their <em>phase relationships</em>—whether clocks "wiggle" in sync or out of sync. This phase information survives the standard GPS processing that removes amplitude information.</p>
+            <p>The solution: Instead of looking at the strength of clock variations, this study looks at their <em>phase relationships</em>—whether clocks "wiggle" in sync or out of sync. This phase information survives the standard GPS processing that removes amplitude information.</p>
         </div>
         
         <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 5px; margin-bottom: 20px;">
@@ -53,13 +53,13 @@
         </div>
         
         <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 5px; margin-bottom: 20px;">
-            <h3 style="color: #220126; margin-top: 0;">What We're Measuring: Phase Coherence</h3>
-            <p>Think of each clock's fluctuations as a wave. When we compare two clocks, we can ask: "Are these waves in phase (peaks align with peaks) or out of phase (peaks align with troughs)?"</p>
+            <h3 style="color: #220126; margin-top: 0;">What This Study Is Measuring: Phase Coherence</h3>
+            <p>Think of each clock's fluctuations as a wave. When comparing two clocks, one can ask: "Are these waves in phase (peaks align with peaks) or out of phase (peaks align with troughs)?"</p>
             
             <p>Key insight: If a field is influencing both clocks, their waves should tend to be in phase more often than random chance would predict. The strength of this tendency should decrease with distance according to the field's properties.</p>
             
             <p style="margin-top: 15px; padding: 12px; background-color: rgba(73, 87, 115, 0.05); border-left: 3px solid rgba(73, 87, 115, 0.3); border-radius: 3px; font-size: 14px; color: #666; font-style: italic;">
-                <em>Technical note:</em> We use the cosine of the phase angle from cross-spectral density analysis. This metric is amplitude-invariant (doesn't depend on signal strength) and survives GPS processing that removes amplitude information. See Section 2.3 for mathematical details.
+                <em>Technical note:</em> The cosine of the phase angle from cross-spectral density analysis is used. This metric is amplitude-invariant (doesn't depend on signal strength) and survives GPS processing that removes amplitude information. See Section 2.3 for mathematical details.
             </p>
         </div>
         
@@ -67,16 +67,16 @@
             <h3 style="color: #220126; margin-top: 0;">Why This Approach Works</h3>
             <ul style="line-height: 1.8;">
                 <li>Survives processing: GPS centers remove amplitude correlations but preserve phase relationships</li>
-                <li>Robust to noise: Random noise averages out when we look at millions of measurements</li>
-                <li>Testable predictions: Theory predicts specific distance scales and patterns we can check</li>
+                <li>Robust to noise: Random noise averages out when looking at millions of measurements</li>
+                <li>Testable predictions: Theory predicts specific distance scales and patterns that can be checked</li>
                 <li>Multiple confirmations: Three independent data sources provide cross-validation</li>
-                <li>Falsifiable: If we randomize distances or phases, patterns should disappear (they do)</li>
+                <li>Falsifiable: If distances or phases are randomized, patterns should disappear (they do)</li>
             </ul>
         </div>
         
         <div style="background-color: rgba(128, 128, 128, 0.05); border: 1px solid #999; padding: 20px; border-radius: 5px;">
             <h3 style="color: #666; margin-top: 0;">The Bottom Line</h3>
-            <p style="margin-bottom: 0;">We're measuring whether GPS atomic clocks around the world show coordinated timing patterns that depend on distance. We find clear exponential decay patterns with characteristic lengths of 3.33–4.55 thousand km, consistent across three independent data sources, surviving rigorous validation tests, and matching theoretical predictions. The detailed technical methods below explain exactly how we do this.</p>
+            <p style="margin-bottom: 0;">This study measures whether GPS atomic clocks around the world show coordinated timing patterns that depend on distance. Clear exponential decay patterns are found with characteristic lengths of 3.33–4.55 thousand km, consistent across three independent data sources, surviving rigorous validation tests, and matching theoretical predictions. The detailed technical methods below explain exactly how this is accomplished.</p>
         </div>
     </div>
     
@@ -160,7 +160,7 @@ Implementation Details: For complete usage instructions, configuration options, 
                     <li>ESA: 912 files processed (complete coverage)</li>
         </ul>
             </li>
-            <li>Spatial coverage: Our analysis is based on data from 392 unique GNSS stations. These stations are sourced from the overlapping networks of three analysis centers: CODE (345 stations), IGS (316 stations), and ESA (289 stations). After combining the lists from these centers and filtering for stations with continuous data in our analysis period, we arrive at the final set of 392 unique stations. Hemisphere distribution for the 392 analyzed stations is 252 Northern / 115 Southern (68.7%/31.3%, ratio = 2.19), with 367 stations successfully matched to coordinate data. For reference, our master station catalog contains 766 unique stations globally, with hemisphere distribution of 559 Northern / 207 Southern (73%/27%).</li>
+            <li>Spatial coverage: The analysis is based on data from 392 unique GNSS stations. These stations are sourced from the overlapping networks of three analysis centers: CODE (345 stations), IGS (316 stations), and ESA (289 stations). After combining the lists from these centers and filtering for stations with continuous data in the analysis period, the final set of 392 unique stations is obtained. Hemisphere distribution for the 392 analyzed stations is 252 Northern / 115 Southern (68.7%/31.3%, ratio = 2.19), with 367 stations successfully matched to coordinate data. For reference, the master station catalog contains 766 unique stations globally, with hemisphere distribution of 559 Northern / 207 Southern (73%/27%).</li>
             <li>Data volume: 62.7 million station pair cross-spectral measurements</li>
             <li>Analysis centers: CODE (39.0M pairs), ESA (10.8M pairs), IGS (12.9M pairs). Station pair counts vary across centers due to different station network sizes and center-specific data availability and quality criteria.</li>
         </ul>
@@ -218,13 +218,13 @@ Implementation Details: For complete usage instructions, configuration options, 
         <p style="margin-bottom: 15px; font-size: 14px;">The analysis employs logarithmic distance binning with 40 bins attempted spanning 50 to 13,000 km. Bins with insufficient data (below minimum count threshold) are excluded, yielding an effective sample size of N<sub>eff</sub> ≈ 25–28 bins used for analysis. This approach provides uniform spatial sampling while ensuring robust statistical power for exponential model fitting.</p>
         
         <h4 style="margin-top: 20px; color: #220126;">Autocorrelation Correction for Smoothed Time Series</h4>
-        <p style="margin-bottom: 15px; font-size: 14px;">For analyses involving smoothed time series (e.g., gravitational-temporal correlations with long-window averaging), we apply autocorrelation-robust statistical corrections to prevent inflated significance. Following Bretherton et al. (1999), effective sample sizes are calculated as N<sub>eff</sub> = N × (1 - r₁ₓr₁ᵧ)/(1 + r₁ₓr₁ᵧ), where r₁ₓ and r₁ᵧ are first-order autocorrelations of the two series. This correction accounts for temporal dependence introduced by smoothing, with corrected p-values calculated using t-distribution with degrees of freedom df = N<sub>eff</sub> - 2. For heavily smoothed data (e.g., 227-day windows), typical corrections reduce effective sample sizes from N ≈ 900 to N<sub>eff</sub> ≈ 45-50, substantially modifying statistical inference.</p>
+        <p style="margin-bottom: 15px; font-size: 14px;">For analyses involving smoothed time series (e.g., gravitational-temporal correlations with long-window averaging), autocorrelation-robust statistical corrections are applied to prevent inflated significance. Following Bretherton et al. (1999), effective sample sizes are calculated as N<sub>eff</sub> = N × (1 - r₁ₓr₁ᵧ)/(1 + r₁ₓr₁ᵧ), where r₁ₓ and r₁ᵧ are first-order autocorrelations of the two series. This correction accounts for temporal dependence introduced by smoothing, with corrected p-values calculated using t-distribution with degrees of freedom df = N<sub>eff</sub> - 2. For heavily smoothed data (e.g., 227-day windows), typical corrections reduce effective sample sizes from N ≈ 900 to N<sub>eff</sub> ≈ 45-50, substantially modifying statistical inference.</p>
         
         <h3 style="margin-top: 0; color: #220126;">Key Terminology</h3>
         <ul style="margin: 0; padding-left: 20px;">
             <li><strong>Phase-alignment index:</strong> The primary metric quantifying phase synchronization between station pairs, computed as the cosine of the magnitude-weighted circular mean phase from cross-spectral density analysis (also termed "coherence" in TEP context or "cos(phase(CSD))" in implementation)</li>
             <li>cos(phase(CSD)): compute_cross_power_plateau() returns (avg_magnitude, weighted_phase) where magnitudes serve as weights in circular averaging: weighted_phase = np.angle(np.average(exp(i*phases), weights=magnitudes)). Final phase-alignment index = np.cos(weighted_phase)</li>
-            <li>Network coherence score = 0.636: Mean of (coherence_uniformity + phase_synchronization + oscillation_synchronization) / 3 across 120-day temporal windows</li>
+            <li>Network coherence score: Composite metric combining mesh coherence strength (50% weight), spiral motion (17%), collective oscillation (17%), and Earth coupling (16%) across optimized temporal windows (90-day for coherence, 30-day for dynamics)</li>
         </ul>
     </div>
     
@@ -242,25 +242,25 @@ Implementation Details: For complete usage instructions, configuration options, 
         <p>The TEP signal manifests as correlated fluctuations with consistent phase relationships. Standard coherency normalizes by amplitude, but GNSS processing suppresses spatially correlated amplitudes precisely when phases are aligned, causing coherency to collapse toward zero even for genuine TEP signals.</p>
         
         <h4>Magnitude-weighting preserves signal quality</h4>
-        <p>Our approach uses both magnitude and phase information optimally:</p>
+        <p>The approach uses both magnitude and phase information optimally:</p>
         <ul>
             <li>Magnitude weighting: Stronger frequency components (higher |CSD|) get more influence in determining the representative phase through weighted circular averaging</li>
             <li>Phase preservation: Circular statistics correctly handle phase wrapping while incorporating magnitude-based quality weighting</li>
             <li>Amplitude invariance: Final phase-alignment index cos(weighted_phase) is normalized, making it robust to amplitude suppression from GNSS processing</li>
         </ul>
-        <p>Key insight: We use magnitudes as quality weights for phase calculation, then extract amplitude-invariant phase-alignment index from the weighted phase. This preserves both pieces of CSD information while being robust to processing artifacts.</p>
+        <p>Key insight: Magnitudes are used as quality weights for phase calculation, then amplitude-invariant phase-alignment index is extracted from the weighted phase. This preserves both pieces of CSD information while being robust to processing artifacts.</p>
         
         <div class="experimental-section" style="margin-top: 20px; padding: 15px; background-color: rgba(230, 230, 250, 0.7); border-left: 4px solid #6A5ACD;">
             <h4 style="margin-top: 0; color: #483D8B;">In Practice: A Simplified Example</h4>
             <p style="font-size: 14px; line-height: 1.6;">
-                Imagine two stations, A and B. We compute the complex cross-spectral density (CSD) of their clock signals in a specific frequency band, which gives us a series of complex numbers (phasors). Each phasor has a magnitude and a phase angle.
+                Imagine two stations, A and B. The complex cross-spectral density (CSD) of their clock signals in a specific frequency band is computed, which gives a series of complex numbers (phasors). Each phasor has a magnitude and a phase angle.
             </p>
             <ul style="font-size: 14px; line-height: 1.6; margin: 10px 0;">
-                <li>If the signals are physically correlated, the phase angles will tend to cluster around 0. Let's say we get angles like: <code>[0.1, -0.2, 0.05, 0.3, -0.15]</code> radians. The cosine of these angles are all close to 1: <code>[0.995, 0.980, 0.998, 0.955, 0.988]</code>. Their average is high (≈0.983), indicating strong phase alignment.</li>
+                <li>If the signals are physically correlated, the phase angles will tend to cluster around 0. For example, angles like: <code>[0.1, -0.2, 0.05, 0.3, -0.15]</code> radians. The cosine of these angles are all close to 1: <code>[0.995, 0.980, 0.998, 0.955, 0.988]</code>. Their average is high (≈0.983), indicating strong phase alignment.</li>
                 <li>If the signals are uncorrelated, the phase angles will be random: <code>[1.5, -2.8, 0.5, -0.9, 3.1]</code>. The cosines will be scattered between -1 and 1: <code>[0.07, -0.94, 0.87, 0.62, -0.99]</code>. Their average will be close to 0, indicating no preferred phase alignment.</li>
             </ul>
             <p style="font-size: 14px; line-height: 1.6;">
-                GNSS processing might suppress the CSD <em>magnitudes</em>, but it largely preserves the <em>phase angles</em>. By averaging <code>cos(phase)</code>, we isolate the phase alignment, which is the core of the TEP signature, making the method robust to standard processing suppression.
+                GNSS processing might suppress the CSD <em>magnitudes</em>, but it largely preserves the <em>phase angles</em>. By averaging <code>cos(phase)</code>, the phase alignment is isolated, which is the core of the TEP signature, making the method robust to standard processing suppression.
             </p>
         </div>
         
@@ -295,7 +295,7 @@ Implementation Details: For complete usage instructions, configuration options, 
             </thead>
             <tbody>
                 <tr style="background-color: rgba(138, 43, 226, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 8px; font-weight: bold;">TEP Band</td>
+                    <td style="border: 1px solid #495773; padding: 8px; font-weight: bold;">TEP Band (10-500 µHz)</td>
                     <td style="border: 1px solid #495773; padding: 8px; text-align: center;">10-500</td>
                     <td style="border: 1px solid #495773; padding: 8px; text-align: center;">490</td>
                     <td style="border: 1px solid #495773; padding: 8px; text-align: center;">33 min - 28 h</td>
@@ -434,7 +434,7 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
             </li>
             <li>Distance metric: Geodesic distance on WGS-84 (Karney), computed via GeographicLib</li>
             <li>Rationale: For ground-to-ground baselines, geodesic separation tracks propagation-relevant geometry; results are unchanged ($\leq 1$–$2\%$) versus ECEF-chord distances at continental scales</li>
-            <li>Distance binning: N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted (50 to 13,000 km)</li>
+            <li>Distance binning: Logarithmic bins spanning 50 to 13,000 km</li>
             <li>Fitting method: Weighted nonlinear least squares with physical bounds</li>
             <li>Weights: Number of station pairs per distance bin</li>
         </ul>
@@ -449,7 +449,7 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
             <li><strong>Bin-level bootstrap resampling:</strong> 1000 iterations with replacement at distance-bin level, quantifying correlation function fitting uncertainty while preserving network topology</li>
             <li><strong>Station-block bootstrap:</strong> 50 iterations systematically removing ~30% of stations per resample, testing robustness to network structure and high-connectivity station bias (yields shifted point estimates due to reduced long-distance coverage)</li>
             <li>Resampling unit: Distance bins for correlation uncertainty; station blocks for structural robustness</li>
-            <li>Effective sample size: N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted (accounting for spatial correlations between overlapping pairs)</li>
+            <li>Effective sample size: Accounting for spatial correlations between overlapping pairs</li>
             <li>Independence validation: Station pair non-independence addressed through LOSO cross-validation and block-wise validation (Step 5.5)</li>
             <li>R² interpretation: All reported R² values refer to fits on distance-bin means (N<sub>eff</sub> ≈ 25–28), not the 62.7 million individual station pairs</li>
             <li>Random seeds: Sequential 0-999 for reproducibility</li>
@@ -511,8 +511,8 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
                     </tr>
                     <tr style="background-color: rgba(138, 43, 226, 0.03);">
                         <td style="border: 1px solid #495773; padding: 8px; font-weight: bold;">IGS Combined</td>
-                        <td style="border: 1px solid #495773; padding: 8px; text-align: center;">3,760</td>
-                        <td style="border: 1px solid #495773; padding: 8px; text-align: center;">3,390–4,140</td>
+                        <td style="border: 1px solid #495773; padding: 8px; text-align: center;">3,764</td>
+                        <td style="border: 1px solid #495773; padding: 8px; text-align: center;">3,205–4,871</td>
                         <td style="border: 1px solid #495773; padding: 8px; text-align: center;">2,620–2,880</td>
                         <td style="border: 1px solid #495773; padding: 8px; text-align: center;">0.966</td>
                     </tr>
@@ -537,7 +537,7 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
             <h4>Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)</h4>
             <p>Critical Methodological Point: This analysis performs <em>spatial correlation analysis</em>, not multiple pairwise comparisons. Station pairs are aggregated into distance bins for fitting a single exponential correlation model—standard practice in spatial statistics, geostatistics, and variogram analysis.</p>
             
-            <p>Statistical Unit: The analysis operates on independent distance bins (N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted), not individual station pair comparisons. Each bin aggregates thousands of pairs, providing robust statistics while controlling effective sample size.</p>
+            <p>Statistical Unit: The analysis operates on independent distance bins, not individual station pair comparisons. Each bin aggregates thousands of pairs, providing robust statistics while controlling effective sample size.</p>
             
             <h5>Why Multiple Comparison Corrections Are Not Applied to Primary Analysis:</h5>
             <ul style="margin-bottom: 10px;">
@@ -564,7 +564,7 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
                 <li>Distance-bin aggregation: Primary analysis operates on binned means rather than individual pairs, reducing dependency effects</li>
                 <li>LOSO validation: Leave-one-station-out removes all pairs involving each station, testing robustness to network structure</li>
                 <li>Block-wise cross-validation: Leave-N-stations-out blocks provide additional independence testing</li>
-                <li>Effective N estimation: Bootstrap confidence intervals reflect ~25-28 bins used (from 40 attempted), not 62.8M individual pairs</li>
+                <li>Effective N estimation: Bootstrap confidence intervals reflect bin-level uncertainty, not 62.8M individual pairs</li>
             </ul>
             <p>Interpretation: The confidence intervals appropriately reflect the statistical precision of distance-binned correlations rather than claiming precision from nominally large pair counts.</p>
         </div>
@@ -617,9 +617,7 @@ Key Finding: The analysis reveals uniform statistical support across all frequen
 A<sub>aniso</sub>(t) = λ<sub>EW</sub>(t) / λ<sub>NS</sub>(t)            </div>
             <p>from 8-sector fits with matched distance distributions (KS p > 0.05).</p>
             
-            <p>Statistical Results: Robust negative correlation with Earth's orbital velocity across analysis centers: CODE (r = -0.701, p = 3.9×10⁻⁶), ESA Final (r = -0.571, p = 4.2×10⁻⁴), IGS Combined (r = -0.793, p = 2.2×10⁻⁸). Fisher's combined p = 2.7×10⁻¹⁴ (unadjusted, df=6) or 1.4×10⁻¹⁰ (dependence-adjusted for shared network stations). Q = 1.85, I² = 0%.</p>
-            
-            <p>Caveats: Shared-network dependence between centers limits statistical independence, requiring adjustment of the standard Fisher p-value by 5,147× (from 2.7×10⁻¹⁴ to 1.4×10⁻¹⁰). Low heterogeneity metrics (Q/I² ≈ 0%) and consistent directional effects under block-jackknife validation support robust conclusions despite network overlap.</p>
+            <p>Statistical Analysis: Fisher's meta-analysis combines results across analysis centers, accounting for shared-network dependence through dependence-adjusted p-values. Low heterogeneity metrics (Q/I² ≈ 0%) and consistent directional effects under block-jackknife validation support robust conclusions despite network overlap.</p>
         </div>
         
         <h3>Gravitational Correlation Analysis</h3>
@@ -688,105 +686,20 @@ E ≡ A<sub>obs</sub> / A<sub>exp</sub>            </div>
     </div>
     
     <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0; border-radius: 5px;">
-        <h3 style="margin-top: 0; color: #220126;">Event Windows: 21 Astronomical Events Analysis Parameters</h3>
-        <p style="margin-bottom: 15px; font-size: 14px;">Complete specification of temporal windows, detrending methods, and multi-center combination rules for all astronomical events analyzed in the TEP study.</p>
-        
-        <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin: 15px 0;">
-            <thead>
-                <tr style="background-color: rgba(73, 87, 115, 0.05);">
-                    <th style="border: 1px solid #495773; padding: 6px; text-align: left;">Event Type</th>
-                    <th style="border: 1px solid #495773; padding: 6px; text-align: center;">Events (n)</th>
-                    <th style="border: 1px solid #495773; padding: 6px; text-align: center;">±Window (days)</th>
-                    <th style="border: 1px solid #495773; padding: 6px; text-align: center;">Detrending</th>
-                    <th style="border: 1px solid #495773; padding: 6px; text-align: center;">Multi-Center Rule</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="background-color: rgba(255, 165, 0, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Jupiter Opposition</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">2</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±120</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-                <tr style="background-color: rgba(255, 165, 0, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Saturn Opposition</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">3</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±120</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-                <tr style="background-color: rgba(255, 165, 0, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Mars Opposition</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">1</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±120</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-                <tr style="background-color: rgba(255, 165, 0, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Venus Conjunction</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">2</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±120</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-                <tr style="background-color: rgba(255, 165, 0, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Mercury Conjunction</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">8</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±120</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-                <tr style="background-color: rgba(138, 43, 226, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Solar Eclipses</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">5</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±1 (high-res)</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Mean averaging</td>
-                </tr>
-                <tr style="background-color: rgba(0, 128, 255, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Supermoon Perigee</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">11</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±7</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Mean averaging</td>
-                </tr>
-                <tr style="background-color: rgba(0, 128, 255, 0.03);">
-                    <td style="border: 1px solid #495773; padding: 6px; font-weight: bold;">Lunar Standstill</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">1</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">±180</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Linear polyfit</td>
-                    <td style="border: 1px solid #495773; padding: 6px; text-align: center;">Weighted average</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
-            <h4 style="margin-top: 0; color: #495773;">Key Parameters:</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.6;">
-                <li>Detrending: Linear polynomial fitting (np.polyfit, degree=1) applied to time series before cross-spectral density computation</li>
-                <li>Multi-Center Combination: Weighted averaging by sample size for planetary events; simple mean averaging for high-resolution events</li>
-                <li>Window Rationale: ±120 days for planetary events (optimal gravitational coupling timescale); ±1-7 days for rapid events; ±180 days for lunar standstill (18.6-year cycle)</li>
-                <li>Total Events: 21 astronomical events across 8 categories, spanning 2023-2025 analysis period</li>
-            </ul>
-        </div>
-        
-        <p style="margin-top: 15px; font-size: 13px; color: #666;">
-Event Dates: Jupiter (3 November 2023, 7 December 2024), Saturn (27 August 2023, 8 September 2024, 21 September 2025), Mars (16 January 2025), Venus (13 August 2023, 23 March 2025), Mercury (8 conjunctions 2023-2025), Eclipses (20 April 2023, 14 October 2023, 8 April 2024, 2 October 2024, 29 March 2025), Supermoons (11 events 2023-2025), Lunar Standstill (1 June 2025).
-        </p>
+        <h3 style="margin-top: 0; color: #220126;">Event Windows: Astronomical Events Analysis</h3>
+        <p style="margin-bottom: 15px; font-size: 14px;">Analysis of 21 astronomical events across 8 categories (planetary oppositions/conjunctions, solar eclipses, supermoons, lunar standstill) spanning 2023-2025. Temporal windows range from ±1 day (high-resolution events) to ±180 days (lunar standstill), with linear detrending applied before cross-spectral analysis. Multi-center combination uses weighted averaging for planetary events and mean averaging for high-resolution events.</p>
+        <p style="font-size: 13px; color: #666;"><em>Complete event specifications, dates, and implementation details: See Appendix 7.1.</em></p>
     </div>
 
     <div class="experimental-section" id="methods-tid-exclusion" style="margin: 20px 0; padding: 16px; background-color: rgba(73, 87, 115, 0.06); border: 2px solid #495773; border-radius: 5px;">
-        <h3 style="margin-top: 0; color: #220126;">TID Exclusion: Operational Definition</h3>
+        <h3 style="margin-top: 0; color: #220126;">TID Exclusion: Ionospheric Contamination Control</h3>
         <p>Goal: Bound ionospheric contamination by excluding time periods with elevated Traveling Ionospheric Disturbance (TID) activity and quantifying the change in fitted correlation quality.</p>
         <ul style="margin: 10px 0 10px 20px; line-height: 1.6;">
             <li>Proxy for TIDs: High-resolution temporal metrics (Step 4.3 wavelet and Hilbert instantaneous frequency summaries) aggregated to daily <em>TID activity indices</em>.</li>
             <li>Exclusion rule: Remove days whose TID index exceeds the 75th percentile threshold; retain the remaining days for recomputing mean coherence.</li>
             <li>Effect size: Report percentage change in mean coherence relative to the original (unfiltered) series: Δ% = 100 · (coherence<sub>retained</sub> − coherence<sub>original</sub>) / coherence<sub>original</sub>.</li>
             <li>Operational band context: Assessment pertains to the primary analysis band (10–500 µHz), overlapping canonical TID periods (10–180 minutes), so exclusion uses external temporal structure rather than frequency separation.</li>
-            <li>Implementation: See `scripts/steps/step_4_advanced_analysis_and_visualization/step_4_6_tid_exclusion_analysis.py`, function `_perform_tid_exclusion` for date alignment, thresholding, and Δ% computation.</li>
-            <li>Results location: `results/outputs/step_4_6_tid_exclusion_analysis_results.json` and narrative summary in Section 3.5.2 (Ionospheric Interference Assessment).</li>
         </ul>
-        <p style="margin-top: 10px; font-size: 13px; color: #555;">For auditability, the methods above directly correspond to the code: date alignment (common days), percentile-based thresholding on the TID proxy, exclusion of high-activity samples, and percent change reporting.</p>
+        <p style="margin-top: 10px; font-size: 13px; color: #666;"><em>Implementation details and file paths: See Appendix 7.2.</em></p>
     </div>
     

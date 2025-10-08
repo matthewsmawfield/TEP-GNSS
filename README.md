@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Version:** v0.15 (Jaipur)
-**Date:** 07 October 2025
+**Version:** v0.16 (Jaipur)
+**Date:** 08 October 2025
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Foundation
@@ -23,7 +23,7 @@ with characteristic correlation lengths \(\lambda = 1,000-10,000\) km for screen
 
 This repository implements a comprehensive experimental framework for testing Temporal Equivalence Principle predictions through analysis of Global Navigation Satellite System (GNSS) precision timing networks. The analysis systematically examines distance-structured correlations across three independent analysis centers (CODE, IGS, ESA), providing rigorous experimental validation of theoretical predictions regarding screened scalar field dynamics and gravitational-temporal coupling.
 
-We present observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, we identify exponential correlation decay patterns with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 15-42x signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
+This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns with characteristic lengths (λ) of 3,330–4,549 km are identified, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 15-42x signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
 ## Cloud-Based Analysis Execution (Recommended)
 
 **For optimal computational performance and scientific output quality:**
@@ -232,7 +232,7 @@ python scripts/steps/validation_suite/step_3_5_realistic_ionospheric_validation.
 # Step 3.6: Control band analysis (Frequency specificity validation)
 python scripts/steps/validation_suite/step_3_6_control_band_analysis.py
 
-Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 µHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band, demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
+Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 µHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band (10-500 µHz), demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
 
 # Step 4.4: Gravitational-temporal field coupling analysis
 python scripts/steps/advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py

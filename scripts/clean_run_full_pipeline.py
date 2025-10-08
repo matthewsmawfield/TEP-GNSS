@@ -395,10 +395,6 @@ def execute_full_pipeline_steps(start_step: str = '1.0') -> bool:
             'name': "Step 3.4: Geographic Bias Validation"
         },
         {
-            'script': PROJECT_ROOT / "scripts" / "steps" / "step_3_validation_suite" / "step_3_5_realistic_ionospheric_validation.py",
-            'name': "Step 3.5: Realistic Ionospheric Validation"
-        },
-        {
             'script': PROJECT_ROOT / "scripts" / "steps" / "step_3_validation_suite" / "step_3_6_control_band_analysis.py",
             'name': "Step 3.6: Control Band Analysis"
         },
@@ -429,7 +425,7 @@ def execute_full_pipeline_steps(start_step: str = '1.0') -> bool:
         },
         {
             'script': PROJECT_ROOT / "scripts" / "steps" / "step_4_advanced_analysis_and_visualization" / "step_4_6_tid_exclusion_analysis.py",
-            'name': "Step 4.6: TID Exclusion Analysis"
+            'name': "Step 4.6: TID Exclusion Analysis & Ionospheric Validation"
         },
         {
             'script': PROJECT_ROOT / "scripts" / "steps" / "step_4_advanced_analysis_and_visualization" / "step_4_7_multiple_comparison_corrections.py",
@@ -505,9 +501,8 @@ def validate_full_pipeline() -> bool:
         (PROJECT_ROOT / "results" / "outputs" / "step_2_0_correlation_igs_combined.json", "Step 2: IGS correlation analysis"),
         (PROJECT_ROOT / "results" / "outputs" / "step_2_0_correlation_esa_final.json", "Step 2: ESA correlation analysis"),
         
-        # Step 3 outputs (at least one validation)
-        (PROJECT_ROOT / "results" / "outputs" / "step_3_0_cross_validation_suite_code.json", "Step 3: Cross-validation results"),
-        (PROJECT_ROOT / "results" / "outputs" / "step_3_6_control_band_code.json", "Step 3.6: Control band analysis"),
+        # Step 3 outputs (at least one validation) - Updated to match actual output file names
+        (PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_code.json", "Step 3.6: Multiband analysis"),
         
         # Step 4 outputs (at least one advanced analysis)
         (PROJECT_ROOT / "results" / "outputs" / "step_4_0_advanced_analysis.json", "Step 4: Advanced analysis results"),

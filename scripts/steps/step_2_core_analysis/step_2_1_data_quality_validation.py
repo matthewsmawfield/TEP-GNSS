@@ -609,9 +609,9 @@ def analyze_station_overlap_across_centers(log_data: dict, coords_df: pd.DataFra
     
     # Read station lists directly from the processed CSV files
     processed_files = {
-        'code': '/Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_code.csv',
-        'igs_combined': '/Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_igs_combined.csv',
-        'esa_final': '/Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_geospatial_esa_final.csv'
+        'code': str(ROOT / 'data/processed/step_2_1_geospatial_code.csv'),
+        'igs_combined': str(ROOT / 'data/processed/step_2_1_geospatial_igs_combined.csv'),
+        'esa_final': str(ROOT / 'data/processed/step_2_1_geospatial_esa_final.csv')
     }
     
     for ac in ['code', 'igs_combined', 'esa_final']:

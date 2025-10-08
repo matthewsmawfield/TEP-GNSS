@@ -5,15 +5,15 @@
 ![TEP-GNSS Analysis Overview](./public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.15 (Jaipur)  
-**Date:** 7 October 2025  
+**Version:** v0.16 (Jaipur)  
+**Date:** 08 October 2025  
 **Status:** Preprint (Analysis Package)  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)
 
 ## Abstract
 
-We report distance-structured correlations in GNSS clock products testing predictions of the Temporal Equivalence Principle (TEP) theoretical framework. Using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers, we observe exponential correlation lengths of 3,330–4,549 km across 62.7M station-pair measurements, consistent with theory-predicted characteristic decay patterns. Primary pooled fits: R² = 0.92–0.97 (distance-bin means, N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted). Sensitivity subsets (elevation/geomagnetic): R² = 0.70–0.91. Results are validated by comprehensive null tests (ΔR² = 0.85-0.93 separation from controls) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Bootstrap validation shows center-specific ranges: 3,685–5,413 km (CODE), 3,021–3,639 km (ESA Final), and 3,388–4,140 km (IGS Combined). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
+This study reports distance-structured correlations in GNSS clock products testing predictions of the Temporal Equivalence Principle (TEP) theoretical framework. Using a phase-coherent analysis across IGS Combined, ESA Final, and CODE centers, exponential correlation lengths of 3,330–4,549 km are observed across 62.7M station-pair measurements, consistent with theory-predicted characteristic decay patterns. Primary pooled fits: R² = 0.92–0.97 (distance-bin means, N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted). Sensitivity subsets (elevation/geomagnetic): R² = 0.70–0.91. Results are validated by comprehensive null tests (ΔR² = 0.85-0.93 separation from controls) and circular statistics (PLV 0.1–0.4, Rayleigh p < 1e-5). Bootstrap validation shows center-specific ranges: 3,685–5,413 km (CODE), 3,021–3,639 km (ESA Final), and 3,388–4,140 km (IGS Combined). Results are consistent with screened scalar-field models coupling to atomic transition frequencies and are robust across centers, geographies, and elevation ranges.
 
 ## Analysis Package
 

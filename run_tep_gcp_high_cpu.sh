@@ -29,8 +29,8 @@ PACKAGE_NAME="tep-gnss-gcp-optimized.tar.gz"
 # n2-highcpu-80 (80 vCPUs, 80 GB RAM) - Maximum CPU cores
 # n2-highcpu-32 (32 vCPUs, 32 GB RAM) - High CPU cores
 
-echo "🚀 TEP-GNSS Google Cloud Platform High-CPU Analysis"
-echo "===================================================="
+echo "🚀 TEP-GNSS Google Cloud Platform Analysis"
+echo "==========================================="
 
 # Check if gcloud CLI is available
 if ! command -v gcloud &> /dev/null; then
@@ -81,11 +81,11 @@ EXTERNAL_IP=$(gcloud compute instances describe $INSTANCE_NAME \
 
 echo "   External IP: $EXTERNAL_IP"
 
-# Create optimized package
-echo "📦 Creating GCP-optimized analysis package..."
+# Create analysis package
+echo "📦 Creating TEP-GNSS analysis package..."
 rm -f $PACKAGE_NAME
 
-# Create lightweight package optimized for GCP
+# Create TEP-GNSS analysis package
 tar --exclude='*.pyc' --exclude='__pycache__' --exclude='.git' \
     --exclude='*.log' --exclude='*.pid' --exclude='*.parquet' \
     --exclude='data/raw/*' --exclude='data/processed/*' \
@@ -117,17 +117,13 @@ echo "✅ SSH connection established"
 echo "📤 Transferring analysis package to GCP..."
 gcloud compute scp $PACKAGE_NAME $INSTANCE_NAME:~/ --zone=$ZONE
 
-# Transfer the fixed Step 3.3 script
-echo "🔧 Transferring fixed Step 3.3 script..."
-gcloud compute scp scripts/steps/step_3_validation_suite/step_3_3_methodology_validation.py $INSTANCE_NAME:~/tep_3_3_fixed.py --zone=$ZONE
-
 # Create the setup script that will run on GCP
 echo "🚀 Creating GCP setup and execution script..."
 cat > /tmp/gcp_run_tep.sh << 'REMOTE_SCRIPT_EOF'
 #!/bin/bash
 set -e
 
-echo "🔧 Setting up GCP environment for TEP-GNSS high-CPU analysis..."
+echo "🔧 Setting up GCP environment for TEP-GNSS analysis..."
 
 # Update system
 sudo apt update >/dev/null 2>&1
@@ -138,7 +134,7 @@ CORES=$(nproc)
 MEMORY_GB=$(free -g | awk "/^Mem:/{print int(\$2*0.8)}")
 
 echo ""
-echo "⚡ GCP High-CPU System Configuration:"
+echo "⚡ GCP Analysis System Configuration:"
 echo "  CPU cores: $CORES"
 echo "  Memory: ${MEMORY_GB}GB"
 echo "  Analysis: Full 911-day window (2023-01-01 to 2025-06-30)"
@@ -243,7 +239,7 @@ export MKL_NUM_THREADS=$CORES
 export NUMEXPR_NUM_THREADS=$CORES
 
 echo ""
-echo "🚀 Starting TEP-GNSS high-CPU analysis on GCP (FRESH DEPLOYMENT)..."
+echo "🚀 Starting TEP-GNSS analysis on GCP (COMPLETE DEPLOYMENT)..."
 echo "   This includes:"
 echo "     - COMPLETE DATA CLEANUP (fresh start)"
 echo "     - Data acquisition (Step 1) - Full date range"
@@ -281,7 +277,7 @@ echo "  Monitor progress with: tail -f /mnt/data/full_pipeline.log"
 echo "  Check status with: ps aux | grep $ANALYSIS_PID"
 
 echo ""
-echo "✅ TEP-GNSS high-CPU analysis is now running on GCP!"
+echo "✅ TEP-GNSS analysis is now running on GCP!"
 echo "   The analysis will continue in the background."
 echo "   You can disconnect safely - the process will keep running."
 REMOTE_SCRIPT_EOF
@@ -295,7 +291,7 @@ echo "▶️  Executing setup and analysis script on GCP..."
 gcloud compute ssh $INSTANCE_NAME --zone=$ZONE --command="chmod +x ~/gcp_run_tep.sh && nohup ~/gcp_run_tep.sh > ~/gcp_setup.log 2>&1 &"
 
 echo ""
-echo "✅ GCP high-CPU analysis setup complete!"
+echo "✅ GCP analysis setup complete!"
 echo ""
 echo "📊 Monitor progress:"
 echo "gcloud compute ssh $INSTANCE_NAME --zone=$ZONE --command='cd /mnt/data && tail -f full_pipeline.log'"
@@ -304,7 +300,7 @@ echo "📊 Connect to instance:"
 echo "gcloud compute ssh $INSTANCE_NAME --zone=$ZONE"
 echo ""
 echo "📥 Download results when complete:"
-echo "gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/results/ ./gcp_high_cpu_results/ --zone=$ZONE"
+echo "gcloud compute scp --recurse $INSTANCE_NAME:/mnt/data/results/ ./gcp_results/ --zone=$ZONE"
 echo ""
 echo "💰 To stop instance:"
 echo "gcloud compute instances stop $INSTANCE_NAME --zone=$ZONE"

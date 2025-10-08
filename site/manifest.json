@@ -52,10 +52,16 @@
       "order": 8
     },
     {
+      "id": "section_7",
+      "file": "section_7_appendix.html",
+      "title": "7. Appendix",
+      "order": 9
+    },
+    {
       "id": "references",
       "file": "references.html",
       "title": "References & Contact",
-      "order": 9
+      "order": 10
     }
   ]
 }

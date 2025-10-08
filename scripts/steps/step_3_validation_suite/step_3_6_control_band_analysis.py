@@ -92,7 +92,7 @@ Algorithm (IDENTICAL TO STEP 2.0):
 
 Frequency Bands (Default Analysis):
 ===================================
-- Primary TEP Band:      10-500 µHz    (periods: 28 hours - 33 minutes)
+- TEP Band:              10-500 µHz    (periods: 28 hours - 33 minutes)
 - Diurnal Tides:         10-15 µHz     (periods: 18.5-27.8 hours)
 - Semidiurnal Tides:     20-30 µHz     (periods: 9.3-13.9 hours)
 - Intermediate 1:        500-1000 µHz  (periods: 17-33 minutes)
@@ -104,7 +104,7 @@ EXPECTED VALIDATION OUTCOMES:
 ============================
 **OBSERVED PATTERN** (IGS Combined analysis):
 - Tidal Semidiurnal (20-30 µHz):  R² = 0.970, λ = 4701 km  (strongest correlation)
-- TEP Full Band (10-500 µHz):     R² = 0.966, λ = 3764 km  
+- TEP Band (10-500 µHz):          R² = 0.966, λ = 3764 km  
 - Tidal Diurnal (10-20 µHz):      R² = 0.954, λ = 3920 km
 - Post-Tidal (30-40 µHz):         R² = 0.935, λ = 2453 km  (gradual rolloff begins)
 - Post-Tidal (40-50 µHz):         R² = 0.832, λ = 1409 km  (continued rolloff)
@@ -551,7 +551,7 @@ FREQUENCY_BANDS = {
         'name': 'TEP Band (10-500 µHz)', 
         'expected': 'strong',
         'bandwidth_microhz': 490,
-        'description': 'Primary TEP prediction frequency range serving as reference baseline'
+        'description': 'TEP band prediction frequency range serving as reference baseline'
     },
     
     # ============================================================================

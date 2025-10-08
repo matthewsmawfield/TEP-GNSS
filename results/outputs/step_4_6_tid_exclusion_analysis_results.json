@@ -5,14 +5,14 @@
         "status": "SUCCESS",
         "details": "TID exclusion analysis completed.",
         "analysis_type": "temporal_exclusion",
-        "original_mean_coherence": 0.006519445713918925,
-        "retained_mean_coherence": 0.007977313619556175,
-        "coherence_change": 0.00145786790563725,
-        "percentage_change": 22.361838254511763,
+        "original_mean_coherence": 0.006519445713918921,
+        "retained_mean_coherence": 0.00797731361955617,
+        "coherence_change": 0.001457867905637249,
+        "percentage_change": 22.361838254511767,
         "num_original_data_points": 912,
         "num_retained_data_points": 684,
         "num_excluded_data_points": 228,
-        "exclusion_threshold": 169.7400946296742
+        "exclusion_threshold": 169.7400946296744
     },
     "esa_final_hilbert-if": {
         "analysis_center": "esa_final",
@@ -20,14 +20,14 @@
         "status": "SUCCESS",
         "details": "TID exclusion analysis completed.",
         "analysis_type": "temporal_exclusion",
-        "original_mean_coherence": 0.010330335184174986,
-        "retained_mean_coherence": 0.012528677195635949,
+        "original_mean_coherence": 0.010330335184174982,
+        "retained_mean_coherence": 0.012528677195635945,
         "coherence_change": 0.002198342011460963,
-        "percentage_change": 21.280451914363802,
+        "percentage_change": 21.28045191436381,
         "num_original_data_points": 912,
         "num_retained_data_points": 684,
         "num_excluded_data_points": 228,
-        "exclusion_threshold": 100.0813456589499
+        "exclusion_threshold": 100.08134565894997
     },
     "igs_combined_hilbert-if": {
         "analysis_center": "igs_combined",
@@ -35,13 +35,13 @@
         "status": "SUCCESS",
         "details": "TID exclusion analysis completed.",
         "analysis_type": "temporal_exclusion",
-        "original_mean_coherence": 0.014546225228287973,
-        "retained_mean_coherence": 0.01784211944142,
-        "coherence_change": 0.0032958942131320283,
-        "percentage_change": 22.658072189907514,
+        "original_mean_coherence": 0.01454622522828797,
+        "retained_mean_coherence": 0.017842119441419994,
+        "coherence_change": 0.0032958942131320248,
+        "percentage_change": 22.658072189907497,
         "num_original_data_points": 912,
         "num_retained_data_points": 684,
         "num_excluded_data_points": 228,
-        "exclusion_threshold": 78.94444928431794
+        "exclusion_threshold": 78.94444928431798
     }
 }

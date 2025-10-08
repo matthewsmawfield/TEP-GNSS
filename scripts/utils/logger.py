@@ -83,7 +83,7 @@ class TEPFileFormatter(logging.Formatter):
         return f"[{timestamp}] [{level_name}] {message}"
 
 class TEPLogger:
-    def __init__(self, name: str = "tep_gnss", level: str = "INFO", log_file_path: Optional[Path] = None):
+    def __init__(self, name: str = "tep_gnss", level: str = "INFO", log_file_path: Optional[Path] = None, reset_log: bool = True):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(self._get_log_level(level))
         
@@ -111,9 +111,19 @@ class TEPLogger:
             default_log_dir = PACKAGE_ROOT / "logs"
             default_log_dir.mkdir(parents=True, exist_ok=True)
             log_file_path = default_log_dir / "general_tep_gnss.log"
+            reset_log = False  # Don't reset the general log file
 
         log_file_path.parent.mkdir(parents=True, exist_ok=True) # Ensure directory exists
-        fh = logging.FileHandler(log_file_path, mode='a', encoding='utf-8')  # Explicit append mode
+        
+        # Reset log file if requested (default for step-specific loggers)
+        if reset_log:
+            try:
+                with open(log_file_path, 'w') as f:
+                    f.write("")  # Clear the log file
+            except Exception as e:
+                print(f"Warning: Could not reset log file {log_file_path}: {e}")
+        
+        fh = logging.FileHandler(log_file_path, mode='a', encoding='utf-8')  # Use append mode after reset
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(file_formatter)  # Use clean formatter for file
         self.logger.addHandler(fh)

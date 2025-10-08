@@ -5,7 +5,7 @@
     
     <div class="experimental-section">
         <h2>Pipeline Overview</h2>
-        <p style="font-size: 13px; color: #666; margin: 8px 0 16px 0; font-style: italic;">*Time estimates based on Apple MacBook Pro M4 performance</p>
+        <p style="font-size: 13px; color: #666; margin: 8px 0 16px 0; font-style: italic;">*Actual timings from n2-highcpu-96 (96 vCPUs, 96GB RAM) GCP instance</p>
         <div style="border: 1px solid rgba(73, 87, 115, 0.25); background: rgba(73, 87, 115, 0.05); border-radius: 8px; padding: 12px 14px; margin: 12px 0;">
             <div style="display: flex; align-items: center; gap: 10px;">
                 <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: #2D0140;">
@@ -66,8 +66,8 @@ What It Does:                <ul style="margin: 8px 0; padding-left: 20px; font-
                     <li>Automated Setup: Installs all dependencies (Python packages, system libraries)</li>
                     <li>Complete Analysis: Runs Steps 1-4 (Data acquisition to Core analysis to Validation to Advanced analysis)</li>
                     <li>Full Date Range: Analyzes 911 days (1 January 2023 to 30 June 2025)</li>
-                    <li>High Performance: Optimized for 96 vCPUs with parallel processing</li>
-                    <li>Comprehensive Output: Generates 36 JSON results + 27 figures + 28 logs</li>
+                    <li>High Performance: Optimized for 96 vCPUs with parallel processing - Total runtime: 9.2 hours</li>
+                    <li>Comprehensive Output: Generates 31 JSON results + 27 figures + 28 logs</li>
                     <li>Easy Download: <code style="background: rgba(45, 1, 64, 0.08); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 12px;">./download_gcp_results.sh</code></li>
                 </ul>
             </div>
@@ -101,9 +101,9 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
             <p style="margin: 10px 0; font-size: 14px;">What it does:</p>
             <ul style="margin: 5px 0; padding-left: 20px; font-size: 14px;">
                 <li>Cleans all previous data, outputs, logs, and figures for a fresh start</li>
-                <li>Executes all 23 pipeline steps in correct order (Steps 1.0-4.6)</li>
+                <li>Executes all 21 pipeline steps in correct order (Steps 1.0-4.7)</li>
                 <li>Validates outputs and ensures data integrity</li>
-                <li>Total runtime: ~1-3 days depending on hardware and network speed</li>
+                    <li>Total runtime: ~9.2 hours on n2-highcpu-96 (96 vCPUs, 96GB RAM)</li>
             </ul>
 
             <p style="margin: 10px 0; font-size: 14px;">Optional arguments:</p>
@@ -116,14 +116,68 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
 
         <h3 style="margin-top: 30px;">Pipeline Structure</h3>
-        <p>The pipeline is organized into 4 main groups with 23 individual steps:</p>
+        <p>The pipeline is organized into 4 main groups with 21 individual steps:</p>
+        
+        <div style="background-color: rgba(45, 1, 64, 0.05); border: 1px solid rgba(45, 1, 64, 0.2); border-radius: 8px; padding: 15px; margin: 20px 0;">
+            <h4 style="margin-top: 0; color: #2D0140;">Performance Summary (n2-highcpu-96: 96 vCPUs, 96GB RAM)</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; font-size: 13px;">
+                <div>
+                    <strong>Data Acquisition (Steps 1.0-1.2):</strong><br>
+                    • Step 1.0: 0.1 seconds<br>
+                    • Step 1.1: 5.2 minutes<br>
+                    • Step 1.2: 0.4 seconds<br>
+                    <em>Total: ~5.3 minutes</em>
+                </div>
+                <div>
+                    <strong>Core Analysis (Steps 2.0-2.2):</strong><br>
+                    • Step 2.0: 59.3 minutes<br>
+                    • Step 2.1: 23.2 minutes<br>
+                    • Step 2.2: 19.2 minutes<br>
+                    <em>Total: ~1.7 hours</em>
+                </div>
+                <div>
+                    <strong>Validation Suite (Steps 3.0-3.6):</strong><br>
+                    • Step 3.0: 0.8 seconds<br>
+                    • Step 3.1: 2.3 hours<br>
+                    • Step 3.2: 31.0 seconds<br>
+                    • Step 3.3: 6.0 minutes<br>
+                    • Step 3.4: 52.4 seconds<br>
+                    • Step 3.5: 2.4 seconds<br>
+                    • Step 3.6: 2.9 hours<br>
+                    <em>Total: ~5.3 hours</em>
+                </div>
+            </div>
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(45, 1, 64, 0.2);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
+                    <div>
+                        <strong>Advanced Analysis (Steps 4.0-4.7):</strong><br>
+                        • Step 4.0: 4.7 minutes<br>
+                        • Step 4.1: 6.0 minutes<br>
+                        • Step 4.2: 43.7 seconds<br>
+                        • Step 4.3: 3.5 minutes<br>
+                        • Step 4.4: 1.5 minutes<br>
+                        • Step 4.5: 1.8 hours<br>
+                        • Step 4.6: 2.8 minutes<br>
+                        • Step 4.7: 2.8 seconds<br>
+                        <em>Total: ~2.0 hours</em>
+                    </div>
+                    <div style="background-color: rgba(45, 1, 64, 0.1); padding: 10px; border-radius: 6px;">
+                        <strong style="color: #2D0140;">Total Pipeline Runtime:</strong><br>
+                        <span style="font-size: 16px; font-weight: bold; color: #2D0140;">9.2 hours</span><br>
+                        <em>100% success rate (21/21 steps completed)</em><br>
+                        <em>2,736 raw data files processed</em><br>
+                        <em>31 JSON outputs + 27 figures generated</em>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #495773;">
             <h4 style="margin-top: 0; color: #495773;">Group 1: Data Acquisition (step_1_data_acquisition/)</h4>
             <p style="font-size: 14px; margin: 5px 0;">Downloads raw GNSS data and validates station coordinates</p>
         </div>
 
-        <h4>Step 1.0: Provenance Snapshot <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">&lt;1 minute</span></h4>
+        <h4>Step 1.0: Provenance Snapshot <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">0.1 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_1_data_acquisition/step_1_0_provenance_snapshot.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_1_data_acquisition/step_1_0_provenance_snapshot.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -134,7 +188,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Creates comprehensive provenance snapshot documenting computational environment, software versions, and system configuration for full reproducibility.</p>
 
-        <h4>Step 1.1: Data Acquisition <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1-2 hours</span></h4>
+        <h4>Step 1.1: Data Acquisition <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">5.2 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_1_data_acquisition/step_1_1_tep_data_acquisition.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_1_data_acquisition/step_1_1_tep_data_acquisition.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -145,7 +199,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Downloads raw GNSS clock product files from official analysis centers (CODE, ESA, IGS) covering the full analysis period (1 January 2023 to 30 June 2025). Retrieves precise clock corrections in 30-second intervals from authoritative FTP servers, ensuring data integrity through checksum validation and automatic retry mechanisms.</p>
         
-        <h4>Step 1.2: Coordinate Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">&lt;1 minute</span></h4>
+        <h4>Step 1.2: Coordinate Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">0.4 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_1_data_acquisition/step_1_2_tep_coordinate_validation.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_1_data_acquisition/step_1_2_tep_coordinate_validation.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -161,7 +215,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
             <p style="font-size: 14px; margin: 5px 0;">Computes TEP correlations and performs geospatial-temporal analysis</p>
         </div>
 
-        <h4>Step 2.0: TEP Correlation Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~3-4 hours</span></h4>
+        <h4>Step 2.0: TEP Correlation Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">59.3 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_2_core_analysis/step_2_0_tep_correlation_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_2_core_analysis/step_2_0_tep_correlation_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -172,7 +226,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Core TEP signal detection using phase-coherent cross-spectral density analysis. Computes complex CSD between all station pairs in the 10-500 µHz frequency band, extracts phase-coherent correlations as phase-alignment index, and fits exponential decay models to correlation vs. distance relationships. Implements the band-limited methodology that preserves essential phase information for TEP detection.</p>
         
-        <h4>Step 2.1: Data Quality Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~5-10 minutes</span></h4>
+        <h4>Step 2.1: Data Quality Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">23.2 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_2_core_analysis/step_2_1_data_quality_validation.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_2_core_analysis/step_2_1_data_quality_validation.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -183,7 +237,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive data quality validation and transparency analysis. Analyzes quality-filtered correlation data from Step 2.0, adds geospatial enrichments (azimuth, local time differences), and performs extensive validation including station coverage analysis, temporal gap detection, duplicate detection, outlier validation, plateau phase boundary clustering analysis, and inter-AC comparison. Generates transparency reports with red flags and analyst recommendations.</p>
         
-        <h4>Step 2.2: Geospatial Temporal Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1-2 hours</span></h4>
+        <h4>Step 2.2: Geospatial Temporal Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">19.2 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -199,7 +253,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
             <p style="font-size: 14px; margin: 5px 0;">Rigorous statistical validation including cross-validation, null tests, and methodology validation</p>
         </div>
 
-        <h4>Step 3.0: Cross-Validation Suite <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1-2 hours</span></h4>
+        <h4>Step 3.0: Cross-Validation Suite <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">0.8 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_0_tep_cross_validation_suite.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_0_tep_cross_validation_suite.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -210,7 +264,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive cross-validation framework including block-wise (monthly/spatial), Leave-One-Station-Out (LOSO), Leave-One-Day-Out (LODO), and block bootstrap analyses. Provides rigorous validation of TEP correlation parameters using multiple complementary approaches to ensure robustness and statistical validity. Tests whether fitted parameters have genuine predictive power and distinguishes real physics from curve-fitting artifacts.</p>
         
-        <h4>Step 3.1: Robust Block Bootstrap <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~30-45 minutes</span></h4>
+        <h4>Step 3.1: Robust Block Bootstrap <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.3 hours</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_1_robust_block_bootstrap.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_1_robust_block_bootstrap.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -221,7 +275,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Advanced bootstrap validation with temporal block structure preservation. Implements stationary block bootstrap to account for temporal dependencies while generating confidence intervals for TEP parameters.</p>
 
-        <h4>Step 3.2: Null Tests <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1-3 hours</span></h4>
+        <h4>Step 3.2: Null Tests <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">31.0 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_2_tep_null_tests.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_2_tep_null_tests.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -232,7 +286,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Critical validation step that establishes signal authenticity through comprehensive randomization testing. Implements three independent scrambling approaches—distance randomization (100 iterations), phase randomization (20 iterations), and station identity randomization (20 iterations)—to verify that observed correlations depend on genuine physical relationships rather than analysis artifacts. Quantifies signal enhancement over null distributions and establishes statistical significance through permutation testing and z-score analysis.</p>
 
-        <h4>Step 3.3: Methodology Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~10-15 minutes</span></h4>
+        <h4>Step 3.3: Methodology Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">6.0 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_3_methodology_validation.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_3_methodology_validation.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -243,7 +297,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive methodology validation framework achieving 100% validation score with rigorous bias characterization, distribution-neutral validation, geometric control analysis, and zero-lag leakage immunity validation.</p>
 
-        <h4>Step 3.4: Geographic Bias Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~20-30 minutes</span></h4>
+        <h4>Step 3.4: Geographic Bias Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">52.4 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_4_geographic_bias_validation.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_4_geographic_bias_validation.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -254,7 +308,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive geographic bias validation using statistical resampling to assess geographic consistency, hemisphere balance, elevation quintile independence, and ocean vs land baseline characteristics.</p>
 
-        <h4>Step 3.5: Realistic Ionospheric Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~15-20 minutes</span></h4>
+        <h4>Step 3.5: Realistic Ionospheric Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.4 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_5_realistic_ionospheric_validation.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_5_realistic_ionospheric_validation.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -265,7 +319,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Ionospheric independence validation using real space weather data correlating with authentic geomagnetic indices and solar activity to demonstrate non-ionospheric origin.</p>
 
-        <h4>Step 3.6: Multi-Band Frequency Analysis: Spectral characterization across 13 frequency bands (10-1500 &micro;Hz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1-3 hours</span></h4>
+        <h4>Step 3.6: Multi-Band Frequency Analysis: Spectral characterization across 13 frequency bands (10-1500 &micro;Hz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.9 hours</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_6_multi_band_frequency_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_6_multi_band_frequency_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -276,7 +330,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive multi-band frequency analysis to assess systematic effects across a wide range of frequencies. This analysis involves fitting exponential models to the data, assessing frequency specificity, and quantifying systematic effects through control bands. The results provide insights into the nature of the TEP signal and help in understanding potential systematic influences.</p>
 
-        <h4>Step 3.7: Multiple Comparison Corrections <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~2-4 hours</span></h4>
+        <h4>Step 3.7: Multiple Comparison Corrections <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.8 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections_fixed.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections_fixed.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -292,7 +346,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
             <p style="font-size: 14px; margin: 5px 0;">Advanced analyses, astronomical correlations, and publication-quality visualizations</p>
         </div>
 
-        <h4>Step 4.0: Advanced Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~2-3 hours</span></h4>
+        <h4>Step 4.0: Advanced Analysis <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">4.7 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_0_tep_advanced_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_0_tep_advanced_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -303,7 +357,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Conducts specialized analyses including circular statistics validation (Phase-Locking Value, Rayleigh tests), elevation-dependent screening analysis, geomagnetic stratification studies, and temporal orbital tracking analysis. Investigates directional anisotropy patterns and their correlation with Earth's orbital motion to test velocity-dependent spacetime coupling predictions.</p>
         
-        <h4>Step 4.1: Visualization <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~20-30 minutes</span></h4>
+        <h4>Step 4.1: Visualization <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">6.0 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_1_tep_visualization.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_1_tep_visualization.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -314,7 +368,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Generates comprehensive publication-quality figures including correlation vs. distance plots, global station network maps, residual analysis plots, anisotropy heatmaps, and temporal tracking visualizations. Creates both individual analysis center plots and multi-center comparison figures with consistent styling and statistical annotations.</p>
         
-        <h4>Step 4.2: Synthesis Figure <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~5-10 minutes</span></h4>
+        <h4>Step 4.2: Synthesis Figure <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">43.7 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_2_tep_synthesis_figure.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_2_tep_synthesis_figure.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -325,7 +379,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Creates the comprehensive synthesis figure combining key results from all analysis centers. Produces the main publication figure showing correlation decay curves, statistical fits, and multi-center consistency in a unified presentation suitable for manuscript submission.</p>
         
-        <h4>Step 4.3: High Resolution Astronomical Events <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~60-90 minutes</span></h4>
+        <h4>Step 4.3: High Resolution Astronomical Events <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">3.5 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_3_high_resolution_astronomical_events.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -336,7 +390,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive high-resolution astronomical analysis including: (1) Complete 5-eclipse study (2023-2025) using 30-second CLK data revealing substantial coherence modulations (18-87% of baseline TEP signal) with observed eclipse type hierarchy where partial eclipses produce strongest network responses (mean: 4.54×10⁻², 87% of baseline) through ionospheric gradient mechanisms; (2) Cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness - Venus (4.05 orbits) shows strong correlations (ESA: +17.7%, IGS: +10.6%, CODE: +4.8%) while outer planets show incomplete cycles and weaker effects; (3) Advanced sham controls confirming robust statistical significance beyond GPS processing artifacts; (4) Instantaneous frequency analysis detecting event-locked solar rotation modulations. This analysis demonstrates how the global GPS network acts as a sensitive detector of both transient (eclipse) and persistent (orbital periodicity) field modulations, providing comprehensive validation of TEP astronomical coupling predictions using 30-second CLK file data.</p>
         
-        <h4>Step 4.4: Gravitational Temporal Field Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~30-45 minutes</span></h4>
+        <h4>Step 4.4: Gravitational Temporal Field Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">1.5 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -347,7 +401,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive gravitational-temporal field correlation analysis using NASA/JPL DE440/441 ephemeris to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, p = 1.51×10<sup>-59</sup>) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination analysis (-0.057, 95% CI: [-0.143, +0.030], n.s.) reveals no significant preference between scaling mechanisms, supporting complex multi-mechanism coupling and validating TEP's core predictions of non-integrable time transport and synchronization holonomy.</p>
 
-        <h4>Step 4.5: Comprehensive Diurnal Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~2-4 hours</span></h4>
+        <h4>Step 4.5: Comprehensive Diurnal Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">1.8 hours</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_5_comprehensive_diurnal_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_5_comprehensive_diurnal_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -358,7 +412,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive diurnal and seasonal TEP modulation analysis using high-resolution hourly windowing methodology on raw CLK files. Processes 72.4M hourly records to reveal complex seasonal diurnal patterns with multi-center validation, systematic day-night effects, and peak hours that shift across seasons and centers.</p>
 
-        <h4>Step 4.6: TID Exclusion Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~5-10 minutes</span></h4>
+        <h4>Step 4.6: TID Exclusion Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.8 minutes</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_6_tid_exclusion_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_6_tid_exclusion_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">

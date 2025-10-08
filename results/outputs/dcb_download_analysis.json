@@ -1,0 +1,402 @@
+[
+  {
+    "filename": "CAS0OPSRAP_20240010000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 63472,
+      "content_preview": "%=BIA 1.00 CAS 24:003:49385   CAS 2024:001:00000 2024:002:00000 R 00005823      \n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)                        \n*-------------------------------------------------------------------------------\n+FILE/REFERENCE                                                                 \n*INFO_TYPE_________ INFO________________________________________________________\n  DESCRIPTION ..."
+    }
+  },
+  {
+    "filename": "CAS0OPSRAP_20240020000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 62077,
+      "content_preview": "%=BIA 1.00 CAS 24:004:48724   CAS 2024:002:00000 2024:003:00000 R 00005729      \n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)                        \n*-------------------------------------------------------------------------------\n+FILE/REFERENCE                                                                 \n*INFO_TYPE_________ INFO________________________________________________________\n  DESCRIPTION ..."
+    }
+  },
+  {
+    "filename": "CAS0OPSRAP_20240030000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 63996,
+      "content_preview": "%=BIA 1.00 CAS 24:005:50499   CAS 2024:003:00000 2024:004:00000 R 00005884      \n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)                        \n*-------------------------------------------------------------------------------\n+FILE/REFERENCE                                                                 \n*INFO_TYPE_________ INFO________________________________________________________\n  DESCRIPTION ..."
+    }
+  },
+  {
+    "filename": "CAS0OPSRAP_20240040000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 64801,
+      "content_preview": "%=BIA 1.00 CAS 24:006:49570   CAS 2024:004:00000 2024:005:00000 R 00005962      \n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)                        \n*-------------------------------------------------------------------------------\n+FILE/REFERENCE                                                                 \n*INFO_TYPE_________ INFO________________________________________________________\n  DESCRIPTION ..."
+    }
+  },
+  {
+    "filename": "CAS0OPSRAP_20240050000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 63310,
+      "content_preview": "%=BIA 1.00 CAS 24:007:48046   CAS 2024:005:00000 2024:006:00000 R 00005833      \n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)                        \n*-------------------------------------------------------------------------------\n+FILE/REFERENCE                                                                 \n*INFO_TYPE_________ INFO________________________________________________________\n  DESCRIPTION ..."
+    }
+  },
+  {
+    "filename": "CAS1OPSRAP_20240010000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "CAS1OPSRAP_20240020000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "CAS1OPSRAP_20240030000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "CAS1OPSRAP_20240040000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "CAS1OPSRAP_20240050000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "GFZ0OPSRAP_20240010000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 46949,
+      "content_preview": "%=BIA 1.00 GFZ 2024:002:65072 IGS 2024:001:00000 2024:001:86399 R 00003490\n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n REFERENCE FRAME    IGS20\n DESCRIPTION        GeoForschungsZentrum Potsdam (GFZ) & IONOSPHERE_DCB_ANALYSIS\n DESCRIPTION        DCB estimated based on 'Brack, A., Maennel, B., Wickert, J., \n ..."
+    }
+  },
+  {
+    "filename": "GFZ0OPSRAP_20240020000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 46549,
+      "content_preview": "%=BIA 1.00 GFZ 2024:003:72749 IGS 2024:002:00000 2024:002:86399 R 00003451\n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n REFERENCE FRAME    IGS20\n DESCRIPTION        GeoForschungsZentrum Potsdam (GFZ) & IONOSPHERE_DCB_ANALYSIS\n DESCRIPTION        DCB estimated based on 'Brack, A., Maennel, B., Wickert, J., \n ..."
+    }
+  },
+  {
+    "filename": "GFZ0OPSRAP_20240030000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 47137,
+      "content_preview": "%=BIA 1.00 GFZ 2024:004:61278 IGS 2024:003:00000 2024:003:86399 R 00003500\n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n REFERENCE FRAME    IGS20\n DESCRIPTION        GeoForschungsZentrum Potsdam (GFZ) & IONOSPHERE_DCB_ANALYSIS\n DESCRIPTION        DCB estimated based on 'Brack, A., Maennel, B., Wickert, J., \n ..."
+    }
+  },
+  {
+    "filename": "GFZ0OPSRAP_20240040000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 48297,
+      "content_preview": "%=BIA 1.00 GFZ 2024:005:62092 IGS 2024:004:00000 2024:004:86399 R 00003608\n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n REFERENCE FRAME    IGS20\n DESCRIPTION        GeoForschungsZentrum Potsdam (GFZ) & IONOSPHERE_DCB_ANALYSIS\n DESCRIPTION        DCB estimated based on 'Brack, A., Maennel, B., Wickert, J., \n ..."
+    }
+  },
+  {
+    "filename": "GFZ0OPSRAP_20240050000_01D_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 47633,
+      "content_preview": "%=BIA 1.00 GFZ 2024:006:60773 IGS 2024:005:00000 2024:005:86399 R 00003526\n*-------------------------------------------------------------------------------\n* Bias Solution INdependent EXchange Format (Bias-SINEX)\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n REFERENCE FRAME    IGS20\n DESCRIPTION        GeoForschungsZentrum Potsdam (GFZ) & IONOSPHERE_DCB_ANALYSIS\n DESCRIPTION        DCB estimated based on 'Brack, A., Maennel, B., Wickert, J., \n ..."
+    }
+  },
+  {
+    "filename": "GFZ0MGXRAP_20240010000_01D_01D_DCB.BSX.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "GFZ0MGXRAP_20240020000_01D_01D_DCB.BSX.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "GFZ0MGXRAP_20240030000_01D_01D_DCB.BSX.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "GFZ0MGXRAP_20240040000_01D_01D_DCB.BSX.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "GFZ0MGXRAP_20240050000_01D_01D_DCB.BSX.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "DLR0OPSFIN_20240010000_03L_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 2712100,
+      "content_preview": "%=BIA 1.00 DLR 2024:128:21625 DLR 2024:001:00000 2024:092:00000 R 00247091\n*-------------------------------------------------------------------------------\n+FILE/REFERENCE\n*INFO_TYPE_________ INFO________________________________________________________\n DESCRIPTION        German Space Operations Center (DLR/GSOC)\n INPUT              Daily DCB solutions in bias SINEX format\n OUTPUT             Daily operational DLR IGS DCB solution for sat + rec\n HARDWARE           RFT179 Linux x86_64 5.14.21-150..."
+    }
+  },
+  {
+    "filename": "DLR0OPSFIN_20240020000_03L_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "DLR0OPSFIN_20240030000_03L_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "DLR0OPSFIN_20240040000_03L_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  },
+  {
+    "filename": "DLR0OPSFIN_20240050000_03L_01D_DCB.BIA.gz",
+    "year": "2024",
+    "analysis": {
+      "total_dcbs": 0,
+      "satellite_dcbs": 0,
+      "receiver_dcbs": 0,
+      "dcb_values": [],
+      "satellite_values": [],
+      "receiver_values": [],
+      "mean_dcb": 0,
+      "std_dcb": 0,
+      "file_size": 0,
+      "content_preview": ""
+    }
+  }
+]

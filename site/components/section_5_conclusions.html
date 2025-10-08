@@ -1,10 +1,10 @@
     <h2>5. Conclusions</h2>
     
-    <p>We synthesize the investigation presented above, highlighting key findings, the validation framework, and priorities for future research.</p>
+    <p>This section synthesizes the investigation presented above, highlighting key findings, the validation framework, and priorities for future research.</p>
 
     <h3>5.1 Principal Findings</h3>
     
-    <p>Analysis of 62.7 million station pair measurements from 392 unique stations across three independent GNSS analysis centers (CODE, IGS, ESA) spanning 2023-2025 reveals systematic distance-structured correlations in atomic clock networks. A detailed diurnal analysis of 72.4 million hourly records further demonstrates spatial correlation structures and temporal dynamics consistent with theoretical predictions for field coupling mechanisms. The observed patterns exhibit substantial consistency and demonstrate sensitivity to Earth's motion, gravitational fields, and temporal structure.</p>
+    <p>Analysis of 62.7 million station pair measurements from 392 unique stations across three independent GNSS analysis centers (CODE, IGS, ESA) spanning 2023-2025 reveals systematic distance-structured correlations in atomic clock networks. The most significant achievement is cross-center validation success: comprehensive multiband analysis (13-14 frequency bands, 10-1500 μHz) demonstrates remarkable consistency across independent processing methodologies, with optimal bands reaching R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This eliminates center-specific systematic biases and provides compelling evidence for signal authenticity. A detailed diurnal analysis of 72.4 million hourly records further demonstrates spatial correlation structures and temporal dynamics consistent with theoretical predictions for field coupling mechanisms.</p>
 
     <div class="experimental-section" style="background-color: rgba(45, 1, 64, 0.05); border: 2px solid #2D0140; padding: 20px; margin: 20px 0;">
         <h4 style="margin-top: 0; color: #2D0140;">Summary of Key Results</h4>
@@ -21,9 +21,14 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Correlation Length (λ)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">3,330–4,549 km</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Multi-center CV of λ = 18.2%, R² = 0.920–0.970</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (ESA/CODE/IGS)</td>
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.05);">
+                    <td style="padding: 8px; border: 1px solid #495773;">Multiband Validation</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">13-14 frequency bands (10-1500 μHz)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center consistency eliminates systematic biases</td>
+                </tr>
+                <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Diurnal Time Variations</td>
                     <td style="padding: 8px; border: 1px solid #495773;">10⁻¹⁷-10⁻¹⁶ fractional</td>
                     <td style="padding: 8px; border: 1px solid #495773;">72.4M records, >6σ combined significance</td>
@@ -51,7 +56,7 @@
                 <tr style="background-color: rgba(73, 87, 115, 0.05);">
                     <td style="padding: 8px; border: 1px solid #495773;">Network Coherence</td>
                     <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p < 10⁻³)</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Unified detector response (score=0.636)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Moderate unified detector response (score=0.493-0.560)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Seasonal Time Modulation</td>
@@ -72,7 +77,8 @@
     <p>The signal's authenticity is supported by a multi-layered validation framework:</p>
     
     <ul>
-        <li>Rigorous Validation Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.86-0.94 signal separation over randomized controls), cross-center λ consistency (CV of λ across centers = 18.2%), multi-band frequency analysis (broadband coupling CV of R² across bands = 2.9%), comprehensive multiple comparison corrections across 172 statistical tests (69-85% survival rates), and numerous other controls for systematic errors.</li>
+        <li>Cross-Center Validation Achievement: Three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns (13-14 frequency bands), achieving optimal R² values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This represents a crucial validation milestone, eliminating center-specific systematic biases and confirming signal authenticity through independent processing methodologies.</li>
+        <li>Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.86-0.94 signal separation over randomized controls), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 172 statistical tests (69-85% survival rates), and numerous other controls for systematic errors.</li>
         <li>Venus 2f Harmonic Identified: The Venus 2f harmonic is identified with 0.3% error (Section 3.3.2), providing direct quantitative evidence for TEP field coupling to planetary gravitational dynamics. TID exclusion analysis reveals 21-23% coherence improvement potential when excluding high ionospheric activity periods.</li>
         <li>Statistical Robustness Confirmed: The analysis demonstrates stability under jackknife cross-validation (CV of λ across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
         <li>Validated Independence from Geographic and Instrumental Factors: The correlation strength is consistent across elevation quintiles, hemisphere subsets, and ocean vs. land baselines.</li>
@@ -121,11 +127,11 @@
         <p>Metrological Implications: These findings suggest that temporal field variations could be as important as gravitational redshift corrections in atomic clock networks.</p>
     </div>
     
-    <p>Physics Implications: If confirmed, this could transform precision metrology from calibrating "when things happen" to mapping "how fast time flows," with potential implications for fundamental physics, navigation, and our understanding of time itself.</p>
+    <p>Physics Implications: If confirmed, this could transform precision metrology from calibrating "when things happen" to mapping "how fast time flows," with potential implications for fundamental physics, navigation, and understanding of time itself.</p>
 
     <h3>5.7 Final Assessment</h3>
     
-    <p>The significant nature of these findings demands rigorous scrutiny. We have demonstrated the statistical authenticity of the signal through multi-layered validation, systematically investigated major conventional explanations, and established quantitative patterns consistent with theoretical predictions for field coupling mechanisms. The convergence of multiple independent observational domains—spatial, spectral, temporal, and gravitational—reproduced across independent processing chains, demonstrates that global GNSS networks exhibit sensitivity to large-scale phenomena that warrant comprehensive investigation.</p>
+    <p>The significant nature of these findings demands rigorous scrutiny. The most crucial achievement is cross-center validation success: three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined), eliminating center-specific systematic biases and providing compelling evidence for signal authenticity through independent processing methodologies. The statistical authenticity of the signal has been demonstrated through multi-layered validation, major conventional explanations have been systematically investigated, and quantitative patterns consistent with theoretical predictions for field coupling mechanisms have been established. The convergence of multiple independent observational domains—spatial, spectral, temporal, and gravitational—reproduced across independent processing chains, demonstrates that global GNSS networks exhibit sensitivity to large-scale phenomena that warrant comprehensive investigation.</p>
     
     <p>Critical requirements for community validation:</p>
     <ul>

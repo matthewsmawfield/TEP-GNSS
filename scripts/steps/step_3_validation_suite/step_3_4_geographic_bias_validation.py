@@ -76,7 +76,24 @@ def load_existing_data():
         raise TEPFileError(f"Station coordinates file not found: {coords_file}. Ensure Step 1.1 is complete and file is in data/coordinates/.")
     
     station_coords = pd.read_csv(coords_file)
-    print_status(f"Loaded {len(station_coords)} station coordinates", "INFO")
+    print_status(f"Loaded {len(station_coords)} total station coordinates", "INFO")
+    
+    # Load the 392 analysis stations (actual stations used in TEP analysis)
+    analysis_stations_file = PACKAGE_ROOT / "tmp_392_analysis_stations.json"
+    if analysis_stations_file.exists():
+        with open(analysis_stations_file, 'r') as f:
+            analysis_stations = set(json.load(f))
+        print_status(f"Loaded {len(analysis_stations)} analysis stations from Step 2.1", "INFO")
+        
+        # Filter station_coords to only include the 392 analysis stations
+        # Use coord_source_code (4-char) for matching
+        station_coords = station_coords[station_coords['coord_source_code'].isin(analysis_stations)]
+        print_status(f"Filtered to {len(station_coords)} analysis stations for geographic bias validation", "SUCCESS")
+    else:
+        print_status("WARNING: Analysis stations file not found, using all stations", "WARNING")
+        print_status("This may lead to inaccurate geographic bias validation", "WARNING")
+    
+    print_status(f"Using {len(station_coords)} stations for geographic bias validation", "INFO")
     
     # Load existing correlation results
     correlation_results = {}

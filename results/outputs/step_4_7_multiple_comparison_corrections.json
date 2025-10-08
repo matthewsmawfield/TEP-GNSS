@@ -7,7 +7,7 @@
       {
         "test_name": "exponential_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Primary exponential fit significance for CODE",
         "corrected_p_value": 1.7985612998927536e-14,
         "is_significant": true,
@@ -16,7 +16,7 @@
       {
         "test_name": "exponential_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Primary exponential fit significance for ESA_FINAL",
         "corrected_p_value": 1.1102230246251565e-16,
         "is_significant": true,
@@ -25,7 +25,7 @@
       {
         "test_name": "exponential_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Primary exponential fit significance for IGS_COMBINED",
         "corrected_p_value": 1.1102230246251565e-16,
         "is_significant": true,
@@ -79,7 +79,7 @@
       {
         "test_name": "elevation_quintile_1_igs_combined",
         "p_value": 1.4282605271809246e-06,
-        "test_statistic": 37.62531766833415,
+        "test_statistic": 37.62531766833093,
         "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
         "corrected_p_value": 1.4282605271809246e-06,
         "is_significant": true,
@@ -115,7 +115,7 @@
       {
         "test_name": "elevation_quintile_5_igs_combined",
         "p_value": 7.561253012600133e-08,
-        "test_statistic": 54.12490901141833,
+        "test_statistic": 54.12490901139991,
         "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
         "corrected_p_value": 7.561253012600133e-08,
         "is_significant": true,
@@ -169,7 +169,7 @@
       {
         "test_name": "baseline_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Baseline exponential fit for CODE",
         "corrected_p_value": 1.7985612998927536e-14,
         "is_significant": true,
@@ -178,7 +178,7 @@
       {
         "test_name": "baseline_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Baseline exponential fit for ESA_FINAL",
         "corrected_p_value": 1.1102230246251565e-16,
         "is_significant": true,
@@ -187,7 +187,7 @@
       {
         "test_name": "baseline_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Baseline exponential fit for IGS_COMBINED",
         "corrected_p_value": 1.1102230246251565e-16,
         "is_significant": true,
@@ -203,7 +203,7 @@
       {
         "test_name": "exponential_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Primary exponential fit significance for CODE",
         "corrected_p_value": 6.294964549624638e-14,
         "is_significant": true,
@@ -212,7 +212,7 @@
       {
         "test_name": "exponential_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Primary exponential fit significance for ESA_FINAL",
         "corrected_p_value": 5.828670879282072e-16,
         "is_significant": true,
@@ -221,7 +221,7 @@
       {
         "test_name": "exponential_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Primary exponential fit significance for IGS_COMBINED",
         "corrected_p_value": 5.828670879282072e-16,
         "is_significant": true,
@@ -275,7 +275,7 @@
       {
         "test_name": "elevation_quintile_1_igs_combined",
         "p_value": 1.4282605271809246e-06,
-        "test_statistic": 37.62531766833415,
+        "test_statistic": 37.62531766833093,
         "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
         "corrected_p_value": 2.307190082369186e-06,
         "is_significant": true,
@@ -311,7 +311,7 @@
       {
         "test_name": "elevation_quintile_5_igs_combined",
         "p_value": 7.561253012600133e-08,
-        "test_statistic": 54.12490901141833,
+        "test_statistic": 54.12490901139991,
         "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
         "corrected_p_value": 1.984828915807535e-07,
         "is_significant": true,
@@ -365,7 +365,7 @@
       {
         "test_name": "baseline_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Baseline exponential fit for CODE",
         "corrected_p_value": 6.294964549624638e-14,
         "is_significant": true,
@@ -374,7 +374,7 @@
       {
         "test_name": "baseline_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Baseline exponential fit for ESA_FINAL",
         "corrected_p_value": 5.828670879282072e-16,
         "is_significant": true,
@@ -383,7 +383,7 @@
       {
         "test_name": "baseline_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Baseline exponential fit for IGS_COMBINED",
         "corrected_p_value": 5.828670879282072e-16,
         "is_significant": true,
@@ -399,7 +399,7 @@
         {
           "test_name": "exponential_fit_code",
           "p_value": 1.7985612998927536e-14,
-          "test_statistic": 144.69959523575443,
+          "test_statistic": 144.699595235754,
           "description": "Primary exponential fit significance for CODE",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -409,7 +409,7 @@
         {
           "test_name": "exponential_fit_esa_final",
           "p_value": 1.1102230246251565e-16,
-          "test_statistic": 357.45976100361474,
+          "test_statistic": 357.4597610035955,
           "description": "Primary exponential fit significance for ESA_FINAL",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -419,7 +419,7 @@
         {
           "test_name": "exponential_fit_igs_combined",
           "p_value": 1.1102230246251565e-16,
-          "test_statistic": 379.94537796282935,
+          "test_statistic": 379.94537796283623,
           "description": "Primary exponential fit significance for IGS_COMBINED",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -481,7 +481,7 @@
         {
           "test_name": "elevation_quintile_1_igs_combined",
           "p_value": 1.4282605271809246e-06,
-          "test_statistic": 37.62531766833415,
+          "test_statistic": 37.62531766833093,
           "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
           "corrected_alpha": 0.0033333333333333335,
           "is_significant": true,
@@ -521,7 +521,7 @@
         {
           "test_name": "elevation_quintile_5_igs_combined",
           "p_value": 7.561253012600133e-08,
-          "test_statistic": 54.12490901141833,
+          "test_statistic": 54.12490901139991,
           "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
           "corrected_alpha": 0.0033333333333333335,
           "is_significant": true,
@@ -583,7 +583,7 @@
         {
           "test_name": "baseline_fit_code",
           "p_value": 1.7985612998927536e-14,
-          "test_statistic": 144.69959523575443,
+          "test_statistic": 144.699595235754,
           "description": "Baseline exponential fit for CODE",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -593,7 +593,7 @@
         {
           "test_name": "baseline_fit_esa_final",
           "p_value": 1.1102230246251565e-16,
-          "test_statistic": 357.45976100361474,
+          "test_statistic": 357.4597610035955,
           "description": "Baseline exponential fit for ESA_FINAL",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -603,7 +603,7 @@
         {
           "test_name": "baseline_fit_igs_combined",
           "p_value": 1.1102230246251565e-16,
-          "test_statistic": 379.94537796282935,
+          "test_statistic": 379.94537796283623,
           "description": "Baseline exponential fit for IGS_COMBINED",
           "corrected_alpha": 0.016666666666666666,
           "is_significant": true,
@@ -616,7 +616,7 @@
       {
         "test_name": "exponential_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Primary exponential fit significance for CODE",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,
@@ -626,7 +626,7 @@
       {
         "test_name": "exponential_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Primary exponential fit significance for ESA_FINAL",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,
@@ -636,7 +636,7 @@
       {
         "test_name": "exponential_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Primary exponential fit significance for IGS_COMBINED",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,
@@ -696,7 +696,7 @@
       {
         "test_name": "elevation_quintile_1_igs_combined",
         "p_value": 1.4282605271809246e-06,
-        "test_statistic": 37.62531766833415,
+        "test_statistic": 37.62531766833093,
         "description": "Elevation quintile_1 exponential fit for IGS_COMBINED",
         "corrected_alpha": 0.0033333333333333335,
         "is_significant": true,
@@ -736,7 +736,7 @@
       {
         "test_name": "elevation_quintile_5_igs_combined",
         "p_value": 7.561253012600133e-08,
-        "test_statistic": 54.12490901141833,
+        "test_statistic": 54.12490901139991,
         "description": "Elevation quintile_5 exponential fit for IGS_COMBINED",
         "corrected_alpha": 0.0033333333333333335,
         "is_significant": true,
@@ -796,7 +796,7 @@
       {
         "test_name": "baseline_fit_code",
         "p_value": 1.7985612998927536e-14,
-        "test_statistic": 144.69959523575443,
+        "test_statistic": 144.699595235754,
         "description": "Baseline exponential fit for CODE",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,
@@ -806,7 +806,7 @@
       {
         "test_name": "baseline_fit_esa_final",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 357.45976100361474,
+        "test_statistic": 357.4597610035955,
         "description": "Baseline exponential fit for ESA_FINAL",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,
@@ -816,7 +816,7 @@
       {
         "test_name": "baseline_fit_igs_combined",
         "p_value": 1.1102230246251565e-16,
-        "test_statistic": 379.94537796282935,
+        "test_statistic": 379.94537796283623,
         "description": "Baseline exponential fit for IGS_COMBINED",
         "corrected_alpha": 0.016666666666666666,
         "is_significant": true,

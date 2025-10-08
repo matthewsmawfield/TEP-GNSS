@@ -57,11 +57,9 @@ def get_cleanup_targets() -> Dict[str, List[Path]]:
         # Step 3 log files only
         'step3_log_files': [
             PROJECT_ROOT / "logs" / "step_3_0_cross_validation_suite.json",
-            PROJECT_ROOT / "logs" / "step_3_1_robust_block_bootstrap.json",
             PROJECT_ROOT / "logs" / "step_3_2_tep_null_tests.json",
             PROJECT_ROOT / "logs" / "step_3_3_methodology_validation.json",
             PROJECT_ROOT / "logs" / "step_3_4_geographic_bias_validation.json",
-            PROJECT_ROOT / "logs" / "step_3_5_realistic_ionospheric_validation.json",
             PROJECT_ROOT / "logs" / "step_3_6_control_band_analysis.log",
             # PROJECT_ROOT / "logs" / "step_3_7_multiple_comparison_corrections.json" # Moved to step_4_7
         ],
@@ -83,9 +81,6 @@ def get_cleanup_targets() -> Dict[str, List[Path]]:
             PROJECT_ROOT / "results" / "outputs" / "step_3_0_cross_validation_suite_code.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_0_cross_validation_suite_igs_combined.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_0_cross_validation_suite_esa_final.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_1_robust_block_bootstrap_code.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_1_robust_block_bootstrap_igs_combined.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_1_robust_block_bootstrap_esa_final.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_2_tep_null_tests_code.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_2_tep_null_tests_igs_combined.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_2_tep_null_tests_esa_final.json",
@@ -99,15 +94,9 @@ def get_cleanup_targets() -> Dict[str, List[Path]]:
             PROJECT_ROOT / "results" / "outputs" / "step_3_4_geographic_bias_validation_code.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_4_geographic_bias_validation_igs_combined.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_4_geographic_bias_validation_esa_final.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_5_realistic_ionospheric_validation_code.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_5_realistic_ionospheric_validation_igs_combined.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_5_realistic_ionospheric_validation_esa_final.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_control_band_code.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_control_band_igs_combined.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_control_band_esa_final.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_band_comparison_code.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_band_comparison_igs_combined.json",
-            PROJECT_ROOT / "results" / "outputs" / "step_3_6_band_comparison_esa_final.json",
+            PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_code.json",
+            PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_igs_combined.json",
+            PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_esa_final.json",
             # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_code.json", # Moved to step_4_7
             # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_igs_combined.json", # Moved to step_4_7
             # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_esa_final.json" # Moved to step_4_7

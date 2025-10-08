@@ -196,9 +196,16 @@ def _cleanup_processes():
         # Get current process PID to avoid killing ourselves
         current_pid = os.getpid()
         
-        # Kill by script name but exclude current process
-        subprocess.run(['pkill', '-f', 'step_3_0_tep_cross_validation_suite.py'],
-                      capture_output=True, timeout=5)
+        # Kill by script name but exclude current process (FIXED)
+        result = subprocess.run(['pgrep', '-f', 'step_3_0_tep_cross_validation_suite.py'],
+                              capture_output=True, text=True, timeout=5)
+        if result.returncode == 0 and result.stdout.strip():
+            pids = [int(p) for p in result.stdout.strip().split() if p and int(p) != current_pid]
+            for pid in pids:
+                try:
+                    subprocess.run(['kill', str(pid)], timeout=5)
+                except Exception:
+                    pass
         # Kill multiprocessing processes
         subprocess.run(['pkill', '-f', 'multiprocessing.spawn'],
                       capture_output=True, timeout=5)
@@ -1915,15 +1922,22 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
-    # Kill any existing instances of this script
+    # Kill any existing instances of this script (FIXED: exclude current process)
     print("Killing any existing instances of step_3_0_tep_cross_validation_suite...")
     import subprocess
     import os
     try:
         current_pid = os.getpid()
-        # Kill by script name but exclude current process
-        subprocess.run(['pkill', '-f', 'step_3_0_tep_cross_validation_suite.py'],
-                      capture_output=True, timeout=10)
+        # Find PIDs first, then kill only other processes
+        result = subprocess.run(['pgrep', '-f', 'step_3_0_tep_cross_validation_suite.py'],
+                              capture_output=True, text=True, timeout=5)
+        if result.returncode == 0 and result.stdout.strip():
+            pids = [int(p) for p in result.stdout.strip().split() if p and int(p) != current_pid]
+            for pid in pids:
+                try:
+                    subprocess.run(['kill', str(pid)], timeout=5)
+                except Exception:
+                    pass
         # Kill multiprocessing processes
         subprocess.run(['pkill', '-f', 'multiprocessing.spawn'],
                       capture_output=True, timeout=10)
@@ -1932,16 +1946,7 @@ def main():
         print(f"Warning: Could not kill all existing processes: {e}")
 
     # Set up step-specific logger
-    # Initialize step-specific logger (reset log file on start)
     log_file_path = Path(__file__).resolve().parents[3] / "logs" / "step_3_0_cross_validation_suite.log"
-
-    # Reset log file when starting (remove old content)
-    try:
-        with open(log_file_path, 'w') as f:
-            f.write("")  # Clear the log file
-        print(f"Log file reset: {log_file_path}")
-    except Exception as e:
-        print(f"Warning: Could not reset log file: {e}")
 
     step_logger = TEPLogger(
         name="step_3_0_cross_validation_suite",
