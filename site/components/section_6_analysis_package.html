@@ -66,7 +66,7 @@ What It Does:                <ul style="margin: 8px 0; padding-left: 20px; font-
                     <li>Automated Setup: Installs all dependencies (Python packages, system libraries)</li>
                     <li>Complete Analysis: Runs Steps 1-4 (Data acquisition to Core analysis to Validation to Advanced analysis)</li>
                     <li>Full Date Range: Analyzes 911 days (1 January 2023 to 30 June 2025)</li>
-                    <li>High Performance: Optimized for 96 vCPUs with parallel processing - Total runtime: 9.2 hours</li>
+                    <li>High Performance: Optimized for 96 vCPUs with parallel processing - Total runtime: 6.8 hours</li>
                     <li>Comprehensive Output: Generates 31 JSON results + 27 figures + 28 logs</li>
                     <li>Easy Download: <code style="background: rgba(45, 1, 64, 0.08); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 12px;">./download_gcp_results.sh</code></li>
                 </ul>
@@ -103,7 +103,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 <li>Cleans all previous data, outputs, logs, and figures for a fresh start</li>
                 <li>Executes all 21 pipeline steps in correct order (Steps 1.0-4.7)</li>
                 <li>Validates outputs and ensures data integrity</li>
-                    <li>Total runtime: ~9.2 hours on n2-highcpu-96 (96 vCPUs, 96GB RAM)</li>
+                    <li>Total runtime: ~6.8 hours on n2-highcpu-96 (96 vCPUs, 96GB RAM)</li>
             </ul>
 
             <p style="margin: 10px 0; font-size: 14px;">Optional arguments:</p>
@@ -124,16 +124,16 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 <div>
                     <strong>Data Acquisition (Steps 1.0-1.2):</strong><br>
                     • Step 1.0: 0.1 seconds<br>
-                    • Step 1.1: 5.2 minutes<br>
+                    • Step 1.1: 4.9 minutes<br>
                     • Step 1.2: 0.4 seconds<br>
                     <em>Total: ~5.3 minutes</em>
                 </div>
                 <div>
                     <strong>Core Analysis (Steps 2.0-2.2):</strong><br>
-                    • Step 2.0: 59.3 minutes<br>
-                    • Step 2.1: 23.2 minutes<br>
-                    • Step 2.2: 19.2 minutes<br>
-                    <em>Total: ~1.7 hours</em>
+                    • Step 2.0: 59.0 minutes<br>
+                    • Step 2.1: 24.0 minutes<br>
+                    • Step 2.2: 11.9 minutes<br>
+                    <em>Total: ~1.6 hours</em>
                 </div>
                 <div>
                     <strong>Validation Suite (Steps 3.0-3.6):</strong><br>
@@ -157,13 +157,13 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                         • Step 4.3: 3.5 minutes<br>
                         • Step 4.4: 1.5 minutes<br>
                         • Step 4.5: 1.8 hours<br>
-                        • Step 4.6: 2.8 minutes<br>
+                        • Step 4.6: 0.4 seconds<br>
                         • Step 4.7: 2.8 seconds<br>
                         <em>Total: ~2.0 hours</em>
                     </div>
                     <div style="background-color: rgba(45, 1, 64, 0.1); padding: 10px; border-radius: 6px;">
                         <strong style="color: #2D0140;">Total Pipeline Runtime:</strong><br>
-                        <span style="font-size: 16px; font-weight: bold; color: #2D0140;">9.2 hours</span><br>
+                        <span style="font-size: 16px; font-weight: bold; color: #2D0140;">6.8 hours</span><br>
                         <em>100% success rate (21/21 steps completed)</em><br>
                         <em>2,736 raw data files processed</em><br>
                         <em>31 JSON outputs + 27 figures generated</em>
@@ -339,7 +339,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Comprehensive application of formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 172 statistical tests across 19 analysis families, including data quality validation, band diagnostics, Hilbert-IF astronomical analysis, coordinate validation, eclipse events, bootstrap cross-methods, multiband frequency validation, and astronomical events, confirming that core TEP findings survive ultra-conservative corrections.</p>
+        <p>Purpose: Comprehensive application of formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 231 statistical tests across 18 analysis families, including data quality validation, null hypothesis testing, bootstrap validation, band diagnostics, Hilbert-IF astronomical analysis, coordinate validation, eclipse events, bootstrap cross-methods, multiband frequency validation, and astronomical events, confirming that core TEP findings survive ultra-conservative corrections.</p>
 
         <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #495773;">
             <h4 style="margin-top: 0; color: #495773;">Group 4: Advanced Analysis & Visualization (step_4_advanced_analysis_and_visualization/)</h4>

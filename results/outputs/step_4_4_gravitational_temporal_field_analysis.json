@@ -178,28 +178,28 @@
     "success": true,
     "analysis_type": "earth_motion_energy_hierarchy",
     "n_analysis_centers": 3,
-    "aggregate_energy_correlation": 0.06689203261240174,
-    "aggregate_velocity_correlation": 0.07540840611150675,
-    "aggregate_discrimination": -0.008516373499105001,
-    "discrimination_std": 0.0509780756042196,
+    "aggregate_energy_correlation": 0.2170543746074848,
+    "aggregate_velocity_correlation": 0.19448545545504423,
+    "aggregate_discrimination": 0.02256891915244059,
+    "discrimination_std": 0.070657979488146,
     "discrimination_95_ci": [
-      -0.13515293357843708,
-      0.11812018658022708
+      -0.15295523232796904,
+      0.1980930706328502
     ],
-    "discrimination_sem": 0.029432205672865284,
+    "discrimination_sem": 0.040794403477876155,
     "validated_scaling_type": "velocity",
     "center_results": {
       "code": {
-        "energy_correlation": 0.7429877161782837,
-        "energy_p_value": 0.4668161230639139,
-        "velocity_correlation": 0.6875630916641017,
-        "velocity_p_value": 0.5173609479972207,
-        "energy_velocity_discrimination": 0.055424624514182064,
+        "energy_correlation": 0.5782087286055244,
+        "energy_p_value": 0.6075038607912467,
+        "velocity_correlation": 0.51167729568798,
+        "velocity_p_value": 0.6580486857245533,
+        "energy_velocity_discrimination": 0.06653143291754438,
         "preferred_scaling": "energy",
         "motion_detections": {
-          "orbital_motion": 0.700981650266319,
-          "chandler_wobble": 0.614193333106789,
-          "daily_rotation": 0.7630887411860372
+          "orbital_motion": 0.7009816489937951,
+          "chandler_wobble": 0.6141933268386635,
+          "daily_rotation": 0.8363460629819698
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -209,16 +209,16 @@
         "n_motions_analyzed": 3
       },
       "esa_final": {
-        "energy_correlation": -0.9942217693389002,
-        "energy_p_value": 0.06847024802553156,
-        "velocity_correlation": -0.9825759763598079,
-        "velocity_p_value": 0.11901507295883776,
-        "energy_velocity_discrimination": -0.011645792979092295,
-        "preferred_scaling": "energy",
+        "energy_correlation": -0.12468130301759484,
+        "energy_p_value": 0.9204183132056798,
+        "velocity_correlation": -0.2029818865786735,
+        "velocity_p_value": 0.8698734882723731,
+        "energy_velocity_discrimination": 0.07830058356107866,
+        "preferred_scaling": "velocity",
         "motion_detections": {
-          "orbital_motion": 0.5713624142672753,
-          "chandler_wobble": 0.6729550745295018,
-          "daily_rotation": 0.5924090832283356
+          "orbital_motion": 0.5713624162550027,
+          "chandler_wobble": 0.6729550734796195,
+          "daily_rotation": 0.8681234406775925
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -228,16 +228,16 @@
         "n_motions_analyzed": 3
       },
       "igs_combined": {
-        "energy_correlation": 0.45191015099782167,
-        "energy_p_value": 0.7014855171740031,
-        "velocity_correlation": 0.5212381030302264,
-        "velocity_p_value": 0.6509406922406962,
-        "energy_velocity_discrimination": -0.06932795203240477,
+        "energy_correlation": 0.19763569823452484,
+        "energy_p_value": 0.8733473884099903,
+        "velocity_correlation": 0.2747609572558261,
+        "velocity_p_value": 0.8228025634766836,
+        "energy_velocity_discrimination": -0.07712525902130127,
         "preferred_scaling": "velocity",
         "motion_detections": {
-          "orbital_motion": 0.7931554847101138,
-          "chandler_wobble": 0.6865465241596231,
-          "daily_rotation": 0.6273959309533117
+          "orbital_motion": 0.7931554864063588,
+          "chandler_wobble": 0.6865465249337266,
+          "daily_rotation": 0.5316875109361865
         },
         "motion_types_analyzed": [
           "orbital_motion",
@@ -260,7 +260,7 @@
     "external_planetary_coupling": "weak_to_moderate",
     "internal_earth_motion_coupling": "velocity",
     "energy_hierarchy_validated": false,
-    "energy_velocity_discrimination": -0.008516373499105001,
+    "energy_velocity_discrimination": 0.02256891915244059,
     "framework_consistency": "Mixed evidence for energy vs velocity scaling",
     "scientific_significance": "Requires further investigation of energy vs velocity coupling mechanisms"
   },

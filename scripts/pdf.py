@@ -134,7 +134,7 @@ async def main():
     
     # Clean up temporary image folders
     temp_dirs = [
-        project_root / 'results' / 'figures',
+        # project_root / 'results' / 'figures',  # Keep figures - don't delete analysis outputs
         project_root / 'results' / 'og-image.jpg',
         project_root / 'results' / 'twitter-image.jpg'
     ]

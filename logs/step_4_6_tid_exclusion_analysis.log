@@ -1,17 +1,31 @@
-[11:04:38] [PROCESS] Starting TID Exclusion Analysis...
-[11:04:38] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=72.41 MB, VMS=2676.21 MB
-[11:04:38] [PROCESS] Processing TID exclusion for CODE...
-[11:05:31] [INFO] Successfully loaded 912 daily coherence values for CODE
-[11:06:23] [INFO] Loaded 912 daily TID proxy values for code
-[11:06:23] [INFO] TID Exclusion for code (hilbert-if): Original mean coherence=0.0065, Retained mean=0.0080, Change=22.36%
-[11:06:23] [PROCESS] Processing TID exclusion for ESA_FINAL...
-[11:06:38] [INFO] Successfully loaded 912 daily coherence values for ESA_FINAL
-[11:06:52] [INFO] Loaded 912 daily TID proxy values for esa_final
-[11:06:52] [INFO] TID Exclusion for esa_final (hilbert-if): Original mean coherence=0.0103, Retained mean=0.0125, Change=21.28%
-[11:06:52] [PROCESS] Processing TID exclusion for IGS_COMBINED...
-[11:07:10] [INFO] Successfully loaded 912 daily coherence values for IGS_COMBINED
-[11:07:27] [INFO] Loaded 912 daily TID proxy values for igs_combined
-[11:07:27] [INFO] TID Exclusion for igs_combined (hilbert-if): Original mean coherence=0.0145, Retained mean=0.0178, Change=22.66%
-[11:07:27] [SUCCESS] TID Exclusion Analysis results saved to /mnt/data/results/outputs/step_4_6_tid_exclusion_analysis_results.json
-[11:07:27] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=3710.31 MB, VMS=6309.80 MB
-[11:07:27] [SUCCESS] TID Exclusion Analysis Completed.
+[10:05:08] [INFO] 
+[10:05:08] [INFO] ================================================================================
+[10:05:08] [INFO] Starting Step 4.6: TID Exclusion Analysis & Ionospheric Validation
+[10:05:08] [INFO] ================================================================================
+[10:05:08] [INFO] 
+[10:05:08] [PROCESS] Phase 1/2: TID Exclusion Analysis
+[10:05:08] [PROCESS] Starting TID Exclusion Analysis...
+[10:05:08] [DEBUG] Memory usage in TID Exclusion Analysis Start: RSS=72.87 MB, VMS=2676.48 MB
+[10:05:08] [PROCESS] Processing TID exclusion for CODE...
+[10:06:01] [INFO] Successfully loaded 912 daily coherence values for CODE
+[10:06:55] [INFO] Loaded 912 daily TID proxy values for code
+[10:06:55] [INFO] TID Exclusion for code (hilbert-if): Original mean coherence=0.0065, Retained mean=0.0080, Change=22.36%
+[10:06:55] [PROCESS] Processing TID exclusion for ESA_FINAL...
+[10:07:10] [INFO] Successfully loaded 912 daily coherence values for ESA_FINAL
+[10:07:24] [INFO] Loaded 912 daily TID proxy values for esa_final
+[10:07:24] [INFO] TID Exclusion for esa_final (hilbert-if): Original mean coherence=0.0103, Retained mean=0.0125, Change=21.28%
+[10:07:24] [PROCESS] Processing TID exclusion for IGS_COMBINED...
+[10:07:41] [INFO] Successfully loaded 912 daily coherence values for IGS_COMBINED
+[10:07:58] [INFO] Loaded 912 daily TID proxy values for igs_combined
+[10:07:58] [INFO] TID Exclusion for igs_combined (hilbert-if): Original mean coherence=0.0145, Retained mean=0.0178, Change=22.66%
+[10:07:58] [SUCCESS] TID Exclusion Analysis results saved to /mnt/data/results/outputs/step_4_6_tid_exclusion_analysis_results.json
+[10:07:58] [DEBUG] Memory usage in TID Exclusion Analysis End: RSS=3698.94 MB, VMS=6298.04 MB
+[10:07:58] [SUCCESS] TID Exclusion Analysis Completed.
+[10:07:59] [PROCESS] Phase 2/2: Ionospheric Validation
+[10:07:59] [PROCESS] Starting realistic ionospheric validation with available real data
+[10:07:59] [PROCESS] Extracting REAL TEP coherence time series from Step 4.4 data...
+[10:07:59] [SUCCESS] Loaded 912 records from Step 4.4 comprehensive data
+[10:07:59] [SUCCESS] Extracted 912 days of TEP coherence time series
+[10:07:59] [SUCCESS] Ionospheric validation completed with available data
+[10:07:59] [SUCCESS] Combined results saved to /mnt/data/results/outputs/step_4_6_tid_exclusion_and_ionospheric_validation.json
+[10:07:59] [SUCCESS] Step 4.6: TID Exclusion Analysis & Ionospheric Validation completed successfully

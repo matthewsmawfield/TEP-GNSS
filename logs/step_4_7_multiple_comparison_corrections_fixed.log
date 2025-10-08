@@ -1,287 +1,67 @@
-[01:06:58] [INFO] 
-[01:06:58] [INFO] 
-[01:06:58] [INFO] ================================================================================
-[01:06:58] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:06:58] [INFO] ================================================================================
-[01:06:58] [INFO] 
-[01:06:58] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:06:58] [INFO] 
-[01:06:58] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:06:58] [SUCCESS] Collected 47 statistical tests across 10 analysis families
-[01:06:58] [INFO]   primary_tep: 3 tests
-[01:06:58] [INFO]   model_comparison: 18 tests
-[01:06:58] [INFO]   astronomical_events: 8 tests
-[01:06:58] [INFO]   advanced_analysis: 15 tests
-[01:06:58] [INFO]   geographic_validation: 3 tests
-[01:06:58] [PROCESS] Applying multiple comparison corrections...
-[01:06:58] [INFO] Applying bonferroni correction...
-[01:06:58] [INFO] Applying fdr_bh correction...
-[01:06:58] [ERROR] ERROR in comprehensive multiple comparison corrections: false_discovery_control() got an unexpected keyword argument 'alpha'
-[01:07:10] [INFO] 
-[01:07:10] [INFO] 
-[01:07:10] [INFO] ================================================================================
-[01:07:10] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:07:10] [INFO] ================================================================================
-[01:07:10] [INFO] 
-[01:07:10] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:07:10] [INFO] 
-[01:07:10] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:07:10] [SUCCESS] Collected 47 statistical tests across 10 analysis families
-[01:07:10] [INFO]   primary_tep: 3 tests
-[01:07:10] [INFO]   model_comparison: 18 tests
-[01:07:10] [INFO]   astronomical_events: 8 tests
-[01:07:10] [INFO]   advanced_analysis: 15 tests
-[01:07:10] [INFO]   geographic_validation: 3 tests
-[01:07:10] [PROCESS] Applying multiple comparison corrections...
-[01:07:10] [INFO] Applying bonferroni correction...
-[01:07:10] [INFO] Applying fdr_bh correction...
-[01:07:10] [INFO] Applying family_wise correction...
-[01:07:10] [PROCESS] Generating correction summary report...
-[01:07:10] [ERROR] ERROR in comprehensive multiple comparison corrections: Object of type int64 is not JSON serializable
-[01:07:21] [INFO] 
-[01:07:21] [INFO] 
-[01:07:21] [INFO] ================================================================================
-[01:07:21] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:07:21] [INFO] ================================================================================
-[01:07:21] [INFO] 
-[01:07:21] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:07:21] [INFO] 
-[01:07:21] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:07:21] [SUCCESS] Collected 47 statistical tests across 10 analysis families
-[01:07:21] [INFO]   primary_tep: 3 tests
-[01:07:21] [INFO]   model_comparison: 18 tests
-[01:07:21] [INFO]   astronomical_events: 8 tests
-[01:07:21] [INFO]   advanced_analysis: 15 tests
-[01:07:21] [INFO]   geographic_validation: 3 tests
-[01:07:21] [PROCESS] Applying multiple comparison corrections...
-[01:07:21] [INFO] Applying bonferroni correction...
-[01:07:21] [INFO] Applying fdr_bh correction...
-[01:07:21] [INFO] Applying family_wise correction...
-[01:07:21] [PROCESS] Generating correction summary report...
-[01:07:21] [INFO] 
-[01:07:21] [INFO] ================================================================================
-[01:07:21] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
-[01:07:21] [INFO] ================================================================================
-[01:07:21] [INFO] 
-[01:07:21] [INFO] Total statistical tests analyzed: 47
-[01:07:21] [INFO] Uncorrected significant tests: 47 (100.0%)
-[01:07:21] [SUCCESS] BONFERRONI: 32 significant (68.1%), 31.9% reduction
-[01:07:21] [SUCCESS] FDR_BH: 38 significant (80.9%), 19.1% reduction
-[01:07:21] [SUCCESS] FAMILY_WISE: 33 significant (70.2%), 29.8% reduction
-[01:07:21] [INFO] 
-[01:07:21] [INFO] FAMILY BREAKDOWN:
-[01:07:21] [INFO]   primary_tep: 3 tests
-[01:07:21] [INFO]   model_comparison: 18 tests
-[01:07:21] [INFO]   astronomical_events: 8 tests
-[01:07:21] [INFO]   advanced_analysis: 15 tests
-[01:07:21] [INFO]   geographic_validation: 3 tests
-[01:07:21] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.0 seconds
-[01:16:22] [INFO] 
-[01:16:22] [INFO] 
-[01:16:22] [INFO] ================================================================================
-[01:16:22] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:16:22] [INFO] ================================================================================
-[01:16:22] [INFO] 
-[01:16:22] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:16:22] [INFO] 
-[01:16:22] [PROCESS] Running comprehensive meta-analysis across analysis centers...
-[01:16:22] [SUCCESS] Meta-analysis complete: pooled r = 0.1692 (95% CI: -0.0601 to 0.3815)
-[01:16:22] [INFO] Heterogeneity: Q = 0.24, p = 0.8852, I² = 0.0%
-[01:16:22] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:16:22] [SUCCESS] Collected 49 statistical tests across 11 analysis families
-[01:16:22] [INFO]   primary_tep: 3 tests
-[01:16:22] [INFO]   model_comparison: 18 tests
-[01:16:22] [INFO]   astronomical_events: 8 tests
-[01:16:22] [INFO]   advanced_analysis: 15 tests
-[01:16:22] [INFO]   geographic_validation: 3 tests
-[01:16:22] [INFO]   meta_analysis: 2 tests
-[01:16:22] [PROCESS] Applying multiple comparison corrections...
-[01:16:22] [INFO] Applying bonferroni correction...
-[01:16:22] [INFO] Applying fdr_bh correction...
-[01:16:22] [INFO] Applying family_wise correction...
-[01:16:22] [PROCESS] Generating correction summary report...
-[01:16:22] [ERROR] ERROR in comprehensive multiple comparison corrections: Object of type bool_ is not JSON serializable
-[01:16:43] [INFO] 
-[01:16:43] [INFO] 
-[01:16:43] [INFO] ================================================================================
-[01:16:43] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:16:43] [INFO] ================================================================================
-[01:16:43] [INFO] 
-[01:16:43] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:16:43] [INFO] 
-[01:16:43] [PROCESS] Running comprehensive meta-analysis across analysis centers...
-[01:16:43] [SUCCESS] Meta-analysis complete: pooled r = 0.1692 (95% CI: -0.0601 to 0.3815)
-[01:16:43] [INFO] Heterogeneity: Q = 0.24, p = 0.8852, I² = 0.0%
-[01:16:43] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:16:43] [SUCCESS] Collected 49 statistical tests across 11 analysis families
-[01:16:43] [INFO]   primary_tep: 3 tests
-[01:16:43] [INFO]   model_comparison: 18 tests
-[01:16:43] [INFO]   astronomical_events: 8 tests
-[01:16:43] [INFO]   advanced_analysis: 15 tests
-[01:16:43] [INFO]   geographic_validation: 3 tests
-[01:16:43] [INFO]   meta_analysis: 2 tests
-[01:16:43] [PROCESS] Applying multiple comparison corrections...
-[01:16:43] [INFO] Applying bonferroni correction...
-[01:16:43] [INFO] Applying fdr_bh correction...
-[01:16:43] [INFO] Applying family_wise correction...
-[01:16:43] [PROCESS] Generating correction summary report...
-[01:16:43] [INFO] 
-[01:16:43] [INFO] ================================================================================
-[01:16:43] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION + META-ANALYSIS SUMMARY
-[01:16:43] [INFO] ================================================================================
-[01:16:43] [INFO] 
-[01:16:43] [SUCCESS] META-ANALYSIS RESULTS:
-[01:16:43] [INFO]   Pooled correlation coefficient: r = 0.1692 (95% CI: -0.0601 to 0.3815)
-[01:16:43] [INFO]   Q = 0.24, p = 0.8852
-[01:16:43] [INFO]   I² = 0.0% (low heterogeneity)
-[01:16:43] [INFO]   Recommended model: fixed_effects
-[01:16:43] [INFO] 
-[01:16:43] [SUCCESS] MULTIPLE COMPARISON CORRECTIONS:
-[01:16:43] [INFO] Total statistical tests analyzed: 49
-[01:16:43] [INFO] Uncorrected significant tests: 49 (100.0%)
-[01:16:43] [SUCCESS] BONFERRONI: 32 significant (65.3%), 34.7% reduction
-[01:16:43] [SUCCESS] FDR_BH: 38 significant (77.6%), 22.4% reduction
-[01:16:43] [SUCCESS] FAMILY_WISE: 33 significant (67.3%), 32.7% reduction
-[01:16:43] [INFO] 
-[01:16:43] [INFO] FAMILY BREAKDOWN:
-[01:16:43] [INFO]   primary_tep: 3 tests
-[01:16:43] [INFO]   model_comparison: 18 tests
-[01:16:43] [INFO]   astronomical_events: 8 tests
-[01:16:43] [INFO]   advanced_analysis: 15 tests
-[01:16:43] [INFO]   geographic_validation: 3 tests
-[01:16:43] [INFO]   meta_analysis: 2 tests
-[01:16:43] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.0 seconds
-[01:21:39] [INFO] 
-[01:21:39] [INFO] 
-[01:21:39] [INFO] ================================================================================
-[01:21:39] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:21:39] [INFO] ================================================================================
-[01:21:39] [INFO] 
-[01:21:39] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:21:39] [INFO] 
-[01:21:39] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:21:39] [SUCCESS] Collected 87 statistical tests across 13 analysis families
-[01:21:39] [INFO]   primary_tep: 3 tests
-[01:21:39] [INFO]   model_comparison: 18 tests
-[01:21:39] [INFO]   astronomical_events: 8 tests
-[01:21:39] [INFO]   advanced_analysis: 15 tests
-[01:21:39] [INFO]   geographic_validation: 3 tests
-[01:21:39] [INFO]   multiband_analysis: 40 tests
-[01:21:39] [PROCESS] Applying multiple comparison corrections...
-[01:21:39] [INFO] Applying bonferroni correction...
-[01:21:39] [INFO] Applying fdr_bh correction...
-[01:21:39] [INFO] Applying family_wise correction...
-[01:21:39] [PROCESS] Generating correction summary report...
-[01:21:39] [INFO] 
-[01:21:39] [INFO] ================================================================================
-[01:21:39] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
-[01:21:39] [INFO] ================================================================================
-[01:21:39] [INFO] 
-[01:21:39] [INFO] Total statistical tests analyzed: 87
-[01:21:39] [INFO] Uncorrected significant tests: 87 (100.0%)
-[01:21:39] [SUCCESS] BONFERRONI: 70 significant (80.5%), 19.5% reduction
-[01:21:39] [SUCCESS] FDR_BH: 78 significant (89.7%), 10.3% reduction
-[01:21:39] [SUCCESS] FAMILY_WISE: 73 significant (83.9%), 16.1% reduction
-[01:21:39] [INFO] 
-[01:21:39] [INFO] FAMILY BREAKDOWN:
-[01:21:39] [INFO]   primary_tep: 3 tests
-[01:21:39] [INFO]   model_comparison: 18 tests
-[01:21:39] [INFO]   astronomical_events: 8 tests
-[01:21:39] [INFO]   advanced_analysis: 15 tests
-[01:21:39] [INFO]   geographic_validation: 3 tests
-[01:21:39] [INFO]   multiband_analysis: 40 tests
-[01:21:39] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.0 seconds
-[01:23:51] [INFO] 
-[01:23:51] [INFO] 
-[01:23:51] [INFO] ================================================================================
-[01:23:51] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:23:51] [INFO] ================================================================================
-[01:23:51] [INFO] 
-[01:23:51] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:23:51] [INFO] 
-[01:23:51] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:23:51] [SUCCESS] Collected 114 statistical tests across 16 analysis families
-[01:23:51] [INFO]   primary_tep: 3 tests
-[01:23:51] [INFO]   model_comparison: 18 tests
-[01:23:51] [INFO]   astronomical_events: 8 tests
-[01:23:51] [INFO]   advanced_analysis: 15 tests
-[01:23:51] [INFO]   geographic_validation: 3 tests
-[01:23:51] [INFO]   multiband_analysis: 40 tests
-[01:23:51] [INFO]   eclipse_analysis: 15 tests
-[01:23:51] [INFO]   bootstrap_cross_method: 12 tests
-[01:23:51] [PROCESS] Applying multiple comparison corrections...
-[01:23:51] [INFO] Applying bonferroni correction...
-[01:23:51] [INFO] Applying fdr_bh correction...
-[01:23:51] [INFO] Applying family_wise correction...
-[01:23:51] [PROCESS] Generating correction summary report...
-[01:23:51] [INFO] 
-[01:23:51] [INFO] ================================================================================
-[01:23:51] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
-[01:23:51] [INFO] ================================================================================
-[01:23:51] [INFO] 
-[01:23:51] [INFO] Total statistical tests analyzed: 114
-[01:23:51] [INFO] Uncorrected significant tests: 114 (100.0%)
-[01:23:51] [SUCCESS] BONFERRONI: 77 significant (67.5%), 32.5% reduction
-[01:23:51] [SUCCESS] FDR_BH: 99 significant (86.8%), 13.2% reduction
-[01:23:51] [SUCCESS] FAMILY_WISE: 83 significant (72.8%), 27.2% reduction
-[01:23:51] [INFO] 
-[01:23:51] [INFO] FAMILY BREAKDOWN:
-[01:23:51] [INFO]   primary_tep: 3 tests
-[01:23:51] [INFO]   model_comparison: 18 tests
-[01:23:51] [INFO]   astronomical_events: 8 tests
-[01:23:51] [INFO]   advanced_analysis: 15 tests
-[01:23:51] [INFO]   geographic_validation: 3 tests
-[01:23:51] [INFO]   multiband_analysis: 40 tests
-[01:23:51] [INFO]   eclipse_analysis: 15 tests
-[01:23:51] [INFO]   bootstrap_cross_method: 12 tests
-[01:23:51] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.0 seconds
-[01:28:16] [INFO] 
-[01:28:16] [INFO] 
-[01:28:16] [INFO] ================================================================================
-[01:28:16] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[01:28:16] [INFO] ================================================================================
-[01:28:16] [INFO] 
-[01:28:16] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[01:28:16] [INFO] 
-[01:28:16] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[01:28:17] [SUCCESS] Collected 172 statistical tests across 19 analysis families
-[01:28:17] [INFO]   primary_tep: 3 tests
-[01:28:17] [INFO]   model_comparison: 18 tests
-[01:28:17] [INFO]   astronomical_events: 8 tests
-[01:28:17] [INFO]   advanced_analysis: 15 tests
-[01:28:17] [INFO]   geographic_validation: 3 tests
-[01:28:17] [INFO]   multiband_analysis: 40 tests
-[01:28:17] [INFO]   eclipse_analysis: 15 tests
-[01:28:17] [INFO]   bootstrap_cross_method: 12 tests
-[01:28:17] [INFO]   data_quality_validation: 6 tests
-[01:28:17] [INFO]   hilbert_if_astronomical: 12 tests
-[01:28:17] [INFO]   band_diagnostics: 40 tests
-[01:28:17] [PROCESS] Applying multiple comparison corrections...
-[01:28:17] [INFO] Applying bonferroni correction...
-[01:28:17] [INFO] Applying fdr_bh correction...
-[01:28:17] [INFO] Applying family_wise correction...
-[01:28:17] [PROCESS] Generating correction summary report...
-[01:28:17] [INFO] 
-[01:28:17] [INFO] ================================================================================
-[01:28:17] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
-[01:28:17] [INFO] ================================================================================
-[01:28:17] [INFO] 
-[01:28:17] [INFO] Total statistical tests analyzed: 172
-[01:28:17] [INFO] Uncorrected significant tests: 172 (100.0%)
-[01:28:17] [SUCCESS] BONFERRONI: 118 significant (68.6%), 31.4% reduction
-[01:28:17] [SUCCESS] FDR_BH: 146 significant (84.9%), 15.1% reduction
-[01:28:17] [SUCCESS] FAMILY_WISE: 129 significant (75.0%), 25.0% reduction
-[01:28:17] [INFO] 
-[01:28:17] [INFO] FAMILY BREAKDOWN:
-[01:28:17] [INFO]   primary_tep: 3 tests
-[01:28:17] [INFO]   model_comparison: 18 tests
-[01:28:17] [INFO]   astronomical_events: 8 tests
-[01:28:17] [INFO]   advanced_analysis: 15 tests
-[01:28:17] [INFO]   geographic_validation: 3 tests
-[01:28:17] [INFO]   multiband_analysis: 40 tests
-[01:28:17] [INFO]   eclipse_analysis: 15 tests
-[01:28:17] [INFO]   bootstrap_cross_method: 12 tests
-[01:28:17] [INFO]   data_quality_validation: 6 tests
-[01:28:17] [INFO]   hilbert_if_astronomical: 12 tests
-[01:28:17] [INFO]   band_diagnostics: 40 tests
-[01:28:17] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.1 seconds
+[21:35:25] [INFO] 
+[21:35:25] [INFO] 
+[21:35:25] [INFO] ================================================================================
+[21:35:25] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
+[21:35:25] [INFO] ================================================================================
+[21:35:25] [INFO] 
+[21:35:25] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
+[21:35:25] [INFO] 
+[21:35:25] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
+[21:35:25] [WARNING] Warning: No explicit p_value for hemisphere_ratio in geographic_subsets. Skipping this test.
+[21:35:25] [SUCCESS] Collected 231 statistical tests across 19 analysis families
+[21:35:25] [INFO]   primary_tep: 3 tests
+[21:35:25] [INFO]   model_comparison: 18 tests
+[21:35:25] [INFO]   null_validation: 9 tests
+[21:35:25] [INFO]   astronomical_events: 8 tests
+[21:35:25] [INFO]   anisotropy_orbital: 24 tests
+[21:35:25] [INFO]   cross_validation: 3 tests
+[21:35:25] [INFO]   advanced_analysis: 15 tests
+[21:35:25] [INFO]   geographic_validation: 2 tests
+[21:35:25] [INFO]   chandler_wobble: 3 tests
+[21:35:25] [INFO]   bootstrap_validation: 9 tests
+[21:35:25] [INFO]   multiband_analysis: 40 tests
+[21:35:25] [INFO]   gravitational_field: 9 tests
+[21:35:25] [INFO]   diurnal_validation: 2 tests
+[21:35:25] [INFO]   eclipse_analysis: 15 tests
+[21:35:25] [INFO]   bootstrap_cross_method: 12 tests
+[21:35:25] [INFO]   coordinate_validation: 1 tests
+[21:35:25] [INFO]   data_quality_validation: 6 tests
+[21:35:25] [INFO]   hilbert_if_astronomical: 12 tests
+[21:35:25] [INFO]   band_diagnostics: 40 tests
+[21:35:25] [PROCESS] Applying multiple comparison corrections...
+[21:35:25] [INFO] Applying bonferroni correction...
+[21:35:25] [INFO] Applying fdr_bh correction...
+[21:35:25] [INFO] Applying family_wise correction...
+[21:35:25] [PROCESS] Generating correction summary report...
+[21:35:25] [INFO] 
+[21:35:25] [INFO] ================================================================================
+[21:35:25] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
+[21:35:25] [INFO] ================================================================================
+[21:35:25] [INFO] 
+[21:35:25] [INFO] Total statistical tests analyzed: 231
+[21:35:25] [INFO] Uncorrected significant tests: 231 (100.0%)
+[21:35:25] [SUCCESS] BONFERRONI: 137 significant (59.3%), 40.7% reduction
+[21:35:25] [SUCCESS] FDR_BH: 168 significant (72.7%), 27.3% reduction
+[21:35:25] [SUCCESS] FAMILY_WISE: 154 significant (66.7%), 33.3% reduction
+[21:35:25] [INFO] 
+[21:35:25] [INFO] FAMILY BREAKDOWN:
+[21:35:25] [INFO]   primary_tep: 3 tests
+[21:35:25] [INFO]   model_comparison: 18 tests
+[21:35:25] [INFO]   null_validation: 9 tests
+[21:35:25] [INFO]   astronomical_events: 8 tests
+[21:35:25] [INFO]   anisotropy_orbital: 24 tests
+[21:35:25] [INFO]   cross_validation: 3 tests
+[21:35:25] [INFO]   advanced_analysis: 15 tests
+[21:35:25] [INFO]   geographic_validation: 2 tests
+[21:35:25] [INFO]   chandler_wobble: 3 tests
+[21:35:25] [INFO]   bootstrap_validation: 9 tests
+[21:35:25] [INFO]   multiband_analysis: 40 tests
+[21:35:25] [INFO]   gravitational_field: 9 tests
+[21:35:25] [INFO]   diurnal_validation: 2 tests
+[21:35:25] [INFO]   eclipse_analysis: 15 tests
+[21:35:25] [INFO]   bootstrap_cross_method: 12 tests
+[21:35:25] [INFO]   coordinate_validation: 1 tests
+[21:35:25] [INFO]   data_quality_validation: 6 tests
+[21:35:25] [INFO]   hilbert_if_astronomical: 12 tests
+[21:35:25] [INFO]   band_diagnostics: 40 tests
+[21:35:25] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.3 seconds

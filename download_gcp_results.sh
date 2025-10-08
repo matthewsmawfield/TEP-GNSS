@@ -5,13 +5,40 @@
 
 set -e
 
-# GCP Configuration
-PROJECT_ID="tvp-bbpm"
-ZONE="us-central1-c"
-INSTANCE_NAME="instance-20251006-195418"
+# Load environment variables from .env file if it exists
+if [[ -f ".env" ]]; then
+    echo "📋 Loading environment variables from .env file..."
+    set -a  # automatically export all variables
+    source .env
+    set +a  # turn off automatic export
+fi
+
+# GCP Configuration - Load from environment variables
+PROJECT_ID="${GCP_PROJECT_ID:-}"
+ZONE="${GCP_ZONE:-}"
+INSTANCE_NAME="${GCP_INSTANCE_NAME:-}"
 
 echo "📥 TEP-GNSS GCP Results Download"
 echo "================================="
+
+# Validate required environment variables
+if [[ -z "$PROJECT_ID" || -z "$ZONE" || -z "$INSTANCE_NAME" ]]; then
+    echo "❌ Missing required environment variables!"
+    echo "   Please set the following environment variables:"
+    echo "   - GCP_PROJECT_ID"
+    echo "   - GCP_ZONE" 
+    echo "   - GCP_INSTANCE_NAME"
+    echo ""
+    echo "   Option A: Create a .env file (recommended):"
+    echo "   cp env.example .env"
+    echo "   # Then edit .env with your values"
+    echo ""
+    echo "   Option B: Export directly:"
+    echo "   export GCP_PROJECT_ID='your-project-id'"
+    echo "   export GCP_ZONE='us-central1-c'"
+    echo "   export GCP_INSTANCE_NAME='your-instance-name'"
+    exit 1
+fi
 
 # Check if gcloud CLI is available
 if ! command -v gcloud &> /dev/null; then

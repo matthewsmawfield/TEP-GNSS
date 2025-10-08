@@ -1,339 +1,339 @@
-[09:14:43] [INFO] 
-[09:14:43] [INFO] Configuration:
-[09:14:43] [INFO]   Date range: 2023-01-01 to 2025-06-30
-[09:14:43] [INFO]   Analysis centers: CODE, IGS_COMBINED, ESA_FINAL
-[09:14:43] [INFO]   Parallel workers: 14
-[09:14:43] [INFO]   Analysis scope: Comprehensive (all stations and pairs)
-[09:14:43] [INFO] 
+[07:10:28] [INFO] 
+[07:10:28] [INFO] Configuration:
+[07:10:28] [INFO]   Date range: 2023-01-01 to 2025-06-30
+[07:10:28] [INFO]   Analysis centers: CODE, IGS_COMBINED, ESA_FINAL
+[07:10:28] [INFO]   Parallel workers: 14
+[07:10:28] [INFO]   Analysis scope: Comprehensive (all stations and pairs)
+[07:10:28] [INFO] 
 ============================================================
-[09:14:43] [INFO] PROCESSING CODE
-[09:14:43] [INFO] ============================================================
-[09:14:43] [INFO] Starting analysis for CODE
-[09:14:43] [INFO] Found 912 CLK files for CODE
-[09:15:15] [INFO] Progress: 10/912 files (1.1%) - 262,798 hourly records
-[09:15:46] [INFO] Progress: 20/912 files (2.2%) - 526,723 hourly records
-[09:16:17] [INFO] Progress: 30/912 files (3.3%) - 790,625 hourly records
-[09:16:20] [INFO] Progress: 40/912 files (4.4%) - 1,053,423 hourly records
-[09:16:49] [INFO] Progress: 50/912 files (5.5%) - 1,309,689 hourly records
-[09:17:18] [INFO] Progress: 60/912 files (6.6%) - 1,559,469 hourly records
-[09:17:25] [INFO] Progress: 70/912 files (7.7%) - 1,822,313 hourly records
-[09:17:53] [INFO] Progress: 80/912 files (8.8%) - 2,082,972 hourly records
-[09:18:23] [INFO] Progress: 90/912 files (9.9%) - 2,349,082 hourly records
-[09:18:52] [INFO] Progress: 100/912 files (11.0%) - 2,605,348 hourly records
-[09:18:58] [INFO] Progress: 110/912 files (12.1%) - 2,863,845 hourly records
-[09:19:26] [INFO] Progress: 120/912 files (13.2%) - 3,126,666 hourly records
-[09:19:56] [INFO] Progress: 130/912 files (14.3%) - 3,391,649 hourly records
-[09:20:06] [INFO] Progress: 140/912 files (15.4%) - 3,653,343 hourly records
-[09:20:30] [INFO] Progress: 150/912 files (16.4%) - 3,912,967 hourly records
-[09:21:00] [INFO] Progress: 160/912 files (17.5%) - 4,176,892 hourly records
-[09:21:29] [INFO] Progress: 170/912 files (18.6%) - 4,437,505 hourly records
-[09:21:36] [INFO] Progress: 180/912 files (19.7%) - 4,699,245 hourly records
-[09:22:03] [INFO] Progress: 190/912 files (20.8%) - 4,948,013 hourly records
-[09:22:31] [INFO] Progress: 200/912 files (21.9%) - 5,200,047 hourly records
-[09:22:46] [INFO] Progress: 210/912 files (23.0%) - 5,458,475 hourly records
-[09:23:08] [INFO] Progress: 220/912 files (24.1%) - 5,724,585 hourly records
-[09:23:36] [INFO] Progress: 230/912 files (25.2%) - 5,987,337 hourly records
-[09:24:06] [INFO] Progress: 240/912 files (26.3%) - 6,251,216 hourly records
-[09:24:12] [INFO] Progress: 250/912 files (27.4%) - 6,510,771 hourly records
-[09:24:41] [INFO] Progress: 260/912 files (28.5%) - 6,765,979 hourly records
-[09:25:08] [INFO] Progress: 270/912 files (29.6%) - 7,016,909 hourly records
-[09:25:21] [INFO] Progress: 280/912 files (30.7%) - 7,269,863 hourly records
-[09:25:43] [INFO] Progress: 290/912 files (31.8%) - 7,514,284 hourly records
-[09:26:10] [INFO] Progress: 300/912 files (32.9%) - 7,763,052 hourly records
-[09:26:36] [INFO] Progress: 310/912 files (34.0%) - 8,007,496 hourly records
-[09:26:43] [INFO] Progress: 320/912 files (35.1%) - 8,254,148 hourly records
-[09:27:10] [INFO] Progress: 330/912 files (36.2%) - 8,506,136 hourly records
-[09:27:38] [INFO] Progress: 340/912 files (37.3%) - 8,752,834 hourly records
-[09:27:52] [INFO] Progress: 350/912 files (38.4%) - 9,002,729 hourly records
-[09:28:14] [INFO] Progress: 360/912 files (39.5%) - 9,251,428 hourly records
-[09:28:39] [INFO] Progress: 370/912 files (40.6%) - 9,504,635 hourly records
-[09:29:06] [INFO] Progress: 380/912 files (41.7%) - 9,759,866 hourly records
-[09:29:15] [INFO] Progress: 390/912 files (42.8%) - 10,009,692 hourly records
-[09:29:43] [INFO] Progress: 400/912 files (43.9%) - 10,253,147 hourly records
-[09:30:06] [INFO] Progress: 410/912 files (45.0%) - 10,496,533 hourly records
-[09:30:28] [INFO] Progress: 420/912 files (46.1%) - 10,746,313 hourly records
-[09:30:44] [INFO] Progress: 430/912 files (47.1%) - 10,995,058 hourly records
-[09:31:07] [INFO] Progress: 440/912 files (48.2%) - 11,238,467 hourly records
-[09:31:32] [INFO] Progress: 450/912 files (49.3%) - 11,486,338 hourly records
-[09:31:52] [INFO] Progress: 460/912 files (50.4%) - 11,733,151 hourly records
-[09:32:12] [INFO] Progress: 470/912 files (51.5%) - 11,989,394 hourly records
-[09:32:38] [INFO] Progress: 480/912 files (52.6%) - 12,252,146 hourly records
-[09:33:05] [INFO] Progress: 490/912 files (53.7%) - 12,512,782 hourly records
-[09:33:17] [INFO] Progress: 500/912 files (54.8%) - 12,769,094 hourly records
-[09:33:44] [INFO] Progress: 510/912 files (55.9%) - 13,008,340 hourly records
-[09:34:08] [INFO] Progress: 520/912 files (57.0%) - 13,266,745 hourly records
-[09:34:25] [INFO] Progress: 530/912 files (58.1%) - 13,513,351 hourly records
-[09:34:46] [INFO] Progress: 540/912 files (59.2%) - 13,764,281 hourly records
-[09:35:11] [INFO] Progress: 550/912 files (60.3%) - 14,015,211 hourly records
-[09:35:31] [INFO] Progress: 560/912 files (61.4%) - 14,265,014 hourly records
-[09:35:49] [INFO] Progress: 570/912 files (62.5%) - 14,521,349 hourly records
-[09:36:15] [INFO] Progress: 580/912 files (63.6%) - 14,769,036 hourly records
-[09:36:41] [INFO] Progress: 590/912 files (64.7%) - 15,024,290 hourly records
-[09:36:57] [INFO] Progress: 600/912 files (65.8%) - 15,275,289 hourly records
-[09:37:19] [INFO] Progress: 610/912 files (66.9%) - 15,527,277 hourly records
-[09:37:46] [INFO] Progress: 620/912 files (68.0%) - 15,779,403 hourly records
-[09:38:03] [INFO] Progress: 630/912 files (69.1%) - 16,029,298 hourly records
-[09:38:22] [INFO] Progress: 640/912 files (70.2%) - 16,289,888 hourly records
-[09:38:51] [INFO] Progress: 650/912 files (71.3%) - 16,553,813 hourly records
-[09:39:12] [INFO] Progress: 660/912 files (72.4%) - 16,819,923 hourly records
-[09:39:33] [INFO] Progress: 670/912 files (73.5%) - 17,080,536 hourly records
-[09:39:55] [INFO] Progress: 680/912 files (74.6%) - 17,334,686 hourly records
-[09:40:20] [INFO] Progress: 690/912 files (75.7%) - 17,592,125 hourly records
-[09:40:44] [INFO] Progress: 700/912 files (76.8%) - 17,853,865 hourly records
-[09:41:00] [INFO] Progress: 710/912 files (77.9%) - 18,114,455 hourly records
-[09:41:30] [INFO] Progress: 720/912 files (78.9%) - 18,375,114 hourly records
-[09:41:50] [INFO] Progress: 730/912 files (80.0%) - 18,643,432 hourly records
-[09:42:13] [INFO] Progress: 740/912 files (81.1%) - 18,897,720 hourly records
-[09:42:32] [INFO] Progress: 750/912 files (82.2%) - 19,160,518 hourly records
-[09:42:56] [INFO] Progress: 760/912 files (83.3%) - 19,424,374 hourly records
-[09:43:25] [INFO] Progress: 770/912 files (84.4%) - 19,683,906 hourly records
-[09:43:39] [INFO] Progress: 780/912 files (85.5%) - 19,949,993 hourly records
-[09:44:02] [INFO] Progress: 790/912 files (86.6%) - 20,210,629 hourly records
-[09:44:29] [INFO] Progress: 800/912 files (87.7%) - 20,474,508 hourly records
-[09:44:51] [INFO] Progress: 810/912 files (88.8%) - 20,742,803 hourly records
-[09:45:12] [INFO] Progress: 820/912 files (89.9%) - 21,004,520 hourly records
-[09:45:37] [INFO] Progress: 830/912 files (91.0%) - 21,272,815 hourly records
-[09:46:02] [INFO] Progress: 840/912 files (92.1%) - 21,534,509 hourly records
-[09:46:21] [INFO] Progress: 850/912 files (93.2%) - 21,802,850 hourly records
-[09:46:44] [INFO] Progress: 860/912 files (94.3%) - 22,065,671 hourly records
-[09:47:07] [INFO] Progress: 870/912 files (95.4%) - 22,328,469 hourly records
-[09:47:27] [INFO] Progress: 880/912 files (96.5%) - 22,595,660 hourly records
-[09:47:52] [INFO] Progress: 890/912 files (97.6%) - 22,856,273 hourly records
-[09:48:17] [INFO] Progress: 900/912 files (98.7%) - 23,115,828 hourly records
-[09:48:40] [INFO] Progress: 910/912 files (99.8%) - 23,377,499 hourly records
-[09:48:42] [INFO] Generated 23430491 hourly records for CODE
-[09:49:53] [SUCCESS] Results for CODE:
-[09:49:53] [INFO]   Annual CV: 0.0986
-[09:49:53] [INFO]   Day/Night ratio: 0.936
-[09:49:53] [INFO]   Day mean: 0.011276
-[09:49:53] [INFO]   Night mean: 0.012045
-[09:49:53] [INFO]   Seasonal peaks:
-[09:49:53] [INFO]     DJF: Hour 18, Ratio 0.824
-[09:49:53] [INFO]     MAM: Hour 8, Ratio 1.018
-[09:49:53] [INFO]     JJA: Hour 20, Ratio 0.902
-[09:49:53] [INFO]     SON: Hour 10, Ratio 1.043
-[09:49:53] [INFO] 
+[07:10:28] [INFO] PROCESSING CODE
+[07:10:28] [INFO] ============================================================
+[07:10:28] [INFO] Starting analysis for CODE
+[07:10:28] [INFO] Found 912 CLK files for CODE
+[07:11:01] [INFO] Progress: 10/912 files (1.1%) - 262,798 hourly records
+[07:11:33] [INFO] Progress: 20/912 files (2.2%) - 525,619 hourly records
+[07:12:03] [INFO] Progress: 30/912 files (3.3%) - 790,625 hourly records
+[07:12:06] [INFO] Progress: 40/912 files (4.4%) - 1,053,423 hourly records
+[07:12:36] [INFO] Progress: 50/912 files (5.5%) - 1,307,504 hourly records
+[07:13:05] [INFO] Progress: 60/912 files (6.6%) - 1,560,527 hourly records
+[07:13:11] [INFO] Progress: 70/912 files (7.7%) - 1,822,313 hourly records
+[07:13:40] [INFO] Progress: 80/912 files (8.8%) - 2,082,972 hourly records
+[07:14:10] [INFO] Progress: 90/912 files (9.9%) - 2,349,082 hourly records
+[07:14:39] [INFO] Progress: 100/912 files (11.0%) - 2,605,348 hourly records
+[07:14:46] [INFO] Progress: 110/912 files (12.1%) - 2,863,845 hourly records
+[07:15:14] [INFO] Progress: 120/912 files (13.2%) - 3,126,666 hourly records
+[07:15:44] [INFO] Progress: 130/912 files (14.3%) - 3,390,568 hourly records
+[07:15:55] [INFO] Progress: 140/912 files (15.4%) - 3,653,343 hourly records
+[07:16:18] [INFO] Progress: 150/912 files (16.4%) - 3,915,198 hourly records
+[07:16:49] [INFO] Progress: 160/912 files (17.5%) - 4,176,892 hourly records
+[07:17:17] [INFO] Progress: 170/912 files (18.6%) - 4,437,505 hourly records
+[07:17:25] [INFO] Progress: 180/912 files (19.7%) - 4,699,245 hourly records
+[07:17:52] [INFO] Progress: 190/912 files (20.8%) - 4,948,013 hourly records
+[07:18:21] [INFO] Progress: 200/912 files (21.9%) - 5,200,047 hourly records
+[07:18:38] [INFO] Progress: 210/912 files (23.0%) - 5,458,475 hourly records
+[07:18:58] [INFO] Progress: 220/912 files (24.1%) - 5,724,585 hourly records
+[07:19:25] [INFO] Progress: 230/912 files (25.2%) - 5,986,233 hourly records
+[07:19:54] [INFO] Progress: 240/912 files (26.3%) - 6,251,216 hourly records
+[07:20:03] [INFO] Progress: 250/912 files (27.4%) - 6,510,771 hourly records
+[07:20:32] [INFO] Progress: 260/912 files (28.5%) - 6,767,060 hourly records
+[07:20:58] [INFO] Progress: 270/912 files (29.6%) - 7,019,048 hourly records
+[07:21:17] [INFO] Progress: 280/912 files (30.7%) - 7,269,863 hourly records
+[07:21:34] [INFO] Progress: 290/912 files (31.8%) - 7,514,284 hourly records
+[07:22:00] [INFO] Progress: 300/912 files (32.9%) - 7,764,110 hourly records
+[07:22:25] [INFO] Progress: 310/912 files (34.0%) - 8,007,496 hourly records
+[07:22:34] [INFO] Progress: 320/912 files (35.1%) - 8,254,148 hourly records
+[07:23:01] [INFO] Progress: 330/912 files (36.2%) - 8,506,136 hourly records
+[07:23:29] [INFO] Progress: 340/912 files (37.3%) - 8,754,973 hourly records
+[07:23:50] [INFO] Progress: 350/912 files (38.4%) - 9,002,729 hourly records
+[07:24:04] [INFO] Progress: 360/912 files (39.5%) - 9,251,428 hourly records
+[07:24:30] [INFO] Progress: 370/912 files (40.6%) - 9,504,635 hourly records
+[07:24:58] [INFO] Progress: 380/912 files (41.7%) - 9,759,866 hourly records
+[07:25:07] [INFO] Progress: 390/912 files (42.8%) - 10,009,692 hourly records
+[07:25:35] [INFO] Progress: 400/912 files (43.9%) - 10,251,008 hourly records
+[07:25:58] [INFO] Progress: 410/912 files (45.0%) - 10,496,533 hourly records
+[07:26:26] [INFO] Progress: 420/912 files (46.1%) - 10,746,313 hourly records
+[07:26:37] [INFO] Progress: 430/912 files (47.1%) - 10,995,058 hourly records
+[07:27:00] [INFO] Progress: 440/912 files (48.2%) - 11,238,467 hourly records
+[07:27:26] [INFO] Progress: 450/912 files (49.3%) - 11,481,968 hourly records
+[07:27:46] [INFO] Progress: 460/912 files (50.4%) - 11,733,151 hourly records
+[07:28:05] [INFO] Progress: 470/912 files (51.5%) - 11,989,394 hourly records
+[07:28:32] [INFO] Progress: 480/912 files (52.6%) - 12,252,146 hourly records
+[07:28:59] [INFO] Progress: 490/912 files (53.7%) - 12,512,782 hourly records
+[07:29:10] [INFO] Progress: 500/912 files (54.8%) - 12,769,094 hourly records
+[07:29:38] [INFO] Progress: 510/912 files (55.9%) - 13,008,340 hourly records
+[07:30:03] [INFO] Progress: 520/912 files (57.0%) - 13,264,560 hourly records
+[07:30:21] [INFO] Progress: 530/912 files (58.1%) - 13,513,351 hourly records
+[07:30:40] [INFO] Progress: 540/912 files (59.2%) - 13,765,339 hourly records
+[07:31:06] [INFO] Progress: 550/912 files (60.3%) - 14,015,211 hourly records
+[07:31:29] [INFO] Progress: 560/912 files (61.4%) - 14,265,014 hourly records
+[07:31:44] [INFO] Progress: 570/912 files (62.5%) - 14,521,349 hourly records
+[07:32:11] [INFO] Progress: 580/912 files (63.6%) - 14,769,036 hourly records
+[07:32:35] [INFO] Progress: 590/912 files (64.7%) - 15,021,116 hourly records
+[07:32:55] [INFO] Progress: 600/912 files (65.8%) - 15,275,289 hourly records
+[07:33:14] [INFO] Progress: 610/912 files (66.9%) - 15,527,277 hourly records
+[07:33:41] [INFO] Progress: 620/912 files (68.0%) - 15,779,403 hourly records
+[07:34:03] [INFO] Progress: 630/912 files (69.1%) - 16,029,298 hourly records
+[07:34:19] [INFO] Progress: 640/912 files (70.2%) - 16,289,888 hourly records
+[07:34:48] [INFO] Progress: 650/912 files (71.3%) - 16,553,813 hourly records
+[07:35:11] [INFO] Progress: 660/912 files (72.4%) - 16,819,923 hourly records
+[07:35:33] [INFO] Progress: 670/912 files (73.5%) - 17,080,536 hourly records
+[07:35:51] [INFO] Progress: 680/912 files (74.6%) - 17,334,686 hourly records
+[07:36:18] [INFO] Progress: 690/912 files (75.7%) - 17,592,125 hourly records
+[07:36:43] [INFO] Progress: 700/912 files (76.8%) - 17,853,865 hourly records
+[07:36:57] [INFO] Progress: 710/912 files (77.9%) - 18,114,455 hourly records
+[07:37:27] [INFO] Progress: 720/912 files (78.9%) - 18,375,114 hourly records
+[07:37:49] [INFO] Progress: 730/912 files (80.0%) - 18,639,062 hourly records
+[07:38:14] [INFO] Progress: 740/912 files (81.1%) - 18,897,720 hourly records
+[07:38:30] [INFO] Progress: 750/912 files (82.2%) - 19,160,518 hourly records
+[07:38:56] [INFO] Progress: 760/912 files (83.3%) - 19,424,374 hourly records
+[07:39:25] [INFO] Progress: 770/912 files (84.4%) - 19,683,906 hourly records
+[07:39:36] [INFO] Progress: 780/912 files (85.5%) - 19,949,993 hourly records
+[07:40:01] [INFO] Progress: 790/912 files (86.6%) - 20,210,629 hourly records
+[07:40:30] [INFO] Progress: 800/912 files (87.7%) - 20,474,508 hourly records
+[07:40:55] [INFO] Progress: 810/912 files (88.8%) - 20,742,803 hourly records
+[07:41:11] [INFO] Progress: 820/912 files (89.9%) - 21,005,601 hourly records
+[07:41:38] [INFO] Progress: 830/912 files (91.0%) - 21,272,815 hourly records
+[07:42:05] [INFO] Progress: 840/912 files (92.1%) - 21,534,509 hourly records
+[07:42:20] [INFO] Progress: 850/912 files (93.2%) - 21,802,850 hourly records
+[07:42:44] [INFO] Progress: 860/912 files (94.3%) - 22,065,671 hourly records
+[07:43:09] [INFO] Progress: 870/912 files (95.4%) - 22,328,469 hourly records
+[07:43:32] [INFO] Progress: 880/912 files (96.5%) - 22,595,660 hourly records
+[07:43:52] [INFO] Progress: 890/912 files (97.6%) - 22,856,273 hourly records
+[07:44:19] [INFO] Progress: 900/912 files (98.7%) - 23,115,828 hourly records
+[07:44:43] [INFO] Progress: 910/912 files (99.8%) - 23,377,499 hourly records
+[07:44:46] [INFO] Generated 23430491 hourly records for CODE
+[07:46:00] [SUCCESS] Results for CODE:
+[07:46:00] [INFO]   Annual CV: 0.0986
+[07:46:00] [INFO]   Day/Night ratio: 0.936
+[07:46:00] [INFO]   Day mean: 0.011276
+[07:46:00] [INFO]   Night mean: 0.012045
+[07:46:00] [INFO]   Seasonal peaks:
+[07:46:00] [INFO]     DJF: Hour 18, Ratio 0.824
+[07:46:00] [INFO]     MAM: Hour 8, Ratio 1.018
+[07:46:00] [INFO]     JJA: Hour 20, Ratio 0.902
+[07:46:00] [INFO]     SON: Hour 10, Ratio 1.043
+[07:46:00] [INFO] 
 ============================================================
-[09:49:53] [INFO] PROCESSING IGS_COMBINED
-[09:49:53] [INFO] ============================================================
-[09:49:53] [INFO] Starting analysis for IGS_COMBINED
-[09:49:53] [INFO] Found 912 CLK files for IGS_COMBINED
-[09:50:27] [INFO] Progress: 10/912 files (1.1%) - 270,480 hourly records
-[09:51:00] [INFO] Progress: 20/912 files (2.2%) - 540,960 hourly records
-[09:51:32] [INFO] Progress: 30/912 files (3.3%) - 811,440 hourly records
-[09:51:33] [INFO] Progress: 40/912 files (4.4%) - 1,081,920 hourly records
-[09:52:05] [INFO] Progress: 50/912 files (5.5%) - 1,352,400 hourly records
-[09:52:38] [INFO] Progress: 60/912 files (6.6%) - 1,622,880 hourly records
-[09:52:40] [INFO] Progress: 70/912 files (7.7%) - 1,893,360 hourly records
-[09:53:12] [INFO] Progress: 80/912 files (8.8%) - 2,163,840 hourly records
-[09:53:44] [INFO] Progress: 90/912 files (9.9%) - 2,434,320 hourly records
-[09:54:17] [INFO] Progress: 100/912 files (11.0%) - 2,704,800 hourly records
-[09:54:17] [INFO] Progress: 110/912 files (12.1%) - 2,975,280 hourly records
-[09:54:50] [INFO] Progress: 120/912 files (13.2%) - 3,245,760 hourly records
-[09:55:23] [INFO] Progress: 130/912 files (14.3%) - 3,516,240 hourly records
-[09:55:26] [INFO] Progress: 140/912 files (15.4%) - 3,786,720 hourly records
-[09:55:56] [INFO] Progress: 150/912 files (16.4%) - 4,057,200 hourly records
-[09:56:29] [INFO] Progress: 160/912 files (17.5%) - 4,327,680 hourly records
-[09:57:01] [INFO] Progress: 170/912 files (18.6%) - 4,598,160 hourly records
-[09:57:02] [INFO] Progress: 180/912 files (19.7%) - 4,868,640 hourly records
-[09:57:35] [INFO] Progress: 190/912 files (20.8%) - 5,139,120 hourly records
-[09:58:07] [INFO] Progress: 200/912 files (21.9%) - 5,409,600 hourly records
-[09:58:12] [INFO] Progress: 210/912 files (23.0%) - 5,680,080 hourly records
-[09:58:41] [INFO] Progress: 220/912 files (24.1%) - 5,950,560 hourly records
-[09:59:14] [INFO] Progress: 230/912 files (25.2%) - 6,221,040 hourly records
-[09:59:46] [INFO] Progress: 240/912 files (26.3%) - 6,491,520 hourly records
-[09:59:47] [INFO] Progress: 250/912 files (27.4%) - 6,762,000 hourly records
-[10:00:19] [INFO] Progress: 260/912 files (28.5%) - 7,032,480 hourly records
-[10:00:52] [INFO] Progress: 270/912 files (29.6%) - 7,302,960 hourly records
-[10:00:58] [INFO] Progress: 280/912 files (30.7%) - 7,573,440 hourly records
-[10:01:25] [INFO] Progress: 290/912 files (31.8%) - 7,843,920 hourly records
-[10:01:58] [INFO] Progress: 300/912 files (32.9%) - 8,114,400 hourly records
-[10:02:30] [INFO] Progress: 310/912 files (34.0%) - 8,384,880 hourly records
-[10:02:32] [INFO] Progress: 320/912 files (35.1%) - 8,655,360 hourly records
-[10:03:04] [INFO] Progress: 330/912 files (36.2%) - 8,925,840 hourly records
-[10:03:36] [INFO] Progress: 340/912 files (37.3%) - 9,196,320 hourly records
-[10:03:44] [INFO] Progress: 350/912 files (38.4%) - 9,466,800 hourly records
-[10:04:10] [INFO] Progress: 360/912 files (39.5%) - 9,737,280 hourly records
-[10:04:43] [INFO] Progress: 370/912 files (40.6%) - 10,007,760 hourly records
-[10:05:14] [INFO] Progress: 380/912 files (41.7%) - 10,278,240 hourly records
-[10:05:17] [INFO] Progress: 390/912 files (42.8%) - 10,548,720 hourly records
-[10:05:49] [INFO] Progress: 400/912 files (43.9%) - 10,819,200 hourly records
-[10:06:21] [INFO] Progress: 410/912 files (45.0%) - 11,089,680 hourly records
-[10:06:30] [INFO] Progress: 420/912 files (46.1%) - 11,360,160 hourly records
-[10:06:55] [INFO] Progress: 430/912 files (47.1%) - 11,630,640 hourly records
-[10:07:27] [INFO] Progress: 440/912 files (48.2%) - 11,895,797 hourly records
-[10:07:58] [INFO] Progress: 450/912 files (49.3%) - 12,166,277 hourly records
-[10:08:01] [INFO] Progress: 460/912 files (50.4%) - 12,436,757 hourly records
-[10:08:34] [INFO] Progress: 470/912 files (51.5%) - 12,707,237 hourly records
-[10:09:06] [INFO] Progress: 480/912 files (52.6%) - 12,977,717 hourly records
-[10:09:15] [INFO] Progress: 490/912 files (53.7%) - 13,248,197 hourly records
-[10:09:40] [INFO] Progress: 500/912 files (54.8%) - 13,518,677 hourly records
-[10:10:13] [INFO] Progress: 510/912 files (55.9%) - 13,789,157 hourly records
-[10:10:43] [INFO] Progress: 520/912 files (57.0%) - 14,059,637 hourly records
-[10:10:46] [INFO] Progress: 530/912 files (58.1%) - 14,330,117 hourly records
-[10:11:19] [INFO] Progress: 540/912 files (59.2%) - 14,600,597 hourly records
-[10:11:50] [INFO] Progress: 550/912 files (60.3%) - 14,871,077 hourly records
-[10:12:00] [INFO] Progress: 560/912 files (61.4%) - 15,141,557 hourly records
-[10:12:25] [INFO] Progress: 570/912 files (62.5%) - 15,412,037 hourly records
-[10:12:57] [INFO] Progress: 580/912 files (63.6%) - 15,682,517 hourly records
-[10:13:28] [INFO] Progress: 590/912 files (64.7%) - 15,952,997 hourly records
-[10:13:32] [INFO] Progress: 600/912 files (65.8%) - 16,223,477 hourly records
-[10:14:03] [INFO] Progress: 610/912 files (66.9%) - 16,493,957 hourly records
-[10:14:35] [INFO] Progress: 620/912 files (68.0%) - 16,764,437 hourly records
-[10:14:45] [INFO] Progress: 630/912 files (69.1%) - 17,034,917 hourly records
-[10:15:10] [INFO] Progress: 640/912 files (70.2%) - 17,305,397 hourly records
-[10:15:42] [INFO] Progress: 650/912 files (71.3%) - 17,575,877 hourly records
-[10:16:11] [INFO] Progress: 660/912 files (72.4%) - 17,846,357 hourly records
-[10:16:17] [INFO] Progress: 670/912 files (73.5%) - 18,116,837 hourly records
-[10:16:48] [INFO] Progress: 680/912 files (74.6%) - 18,387,317 hourly records
-[10:17:19] [INFO] Progress: 690/912 files (75.7%) - 18,657,797 hourly records
-[10:17:29] [INFO] Progress: 700/912 files (76.8%) - 18,928,277 hourly records
-[10:17:55] [INFO] Progress: 710/912 files (77.9%) - 19,198,757 hourly records
-[10:18:26] [INFO] Progress: 720/912 files (78.9%) - 19,469,237 hourly records
-[10:18:55] [INFO] Progress: 730/912 files (80.0%) - 19,739,717 hourly records
-[10:19:02] [INFO] Progress: 740/912 files (81.1%) - 20,010,197 hourly records
-[10:19:33] [INFO] Progress: 750/912 files (82.2%) - 20,280,677 hourly records
-[10:20:04] [INFO] Progress: 760/912 files (83.3%) - 20,551,157 hourly records
-[10:20:13] [INFO] Progress: 770/912 files (84.4%) - 20,821,637 hourly records
-[10:20:41] [INFO] Progress: 780/912 files (85.5%) - 21,092,117 hourly records
-[10:21:11] [INFO] Progress: 790/912 files (86.6%) - 21,362,597 hourly records
-[10:21:36] [INFO] Progress: 800/912 files (87.7%) - 21,633,077 hourly records
-[10:21:47] [INFO] Progress: 810/912 files (88.8%) - 21,903,557 hourly records
-[10:22:17] [INFO] Progress: 820/912 files (89.9%) - 22,174,037 hourly records
-[10:22:48] [INFO] Progress: 830/912 files (91.0%) - 22,444,517 hourly records
-[10:22:59] [INFO] Progress: 840/912 files (92.1%) - 22,714,997 hourly records
-[10:23:25] [INFO] Progress: 850/912 files (93.2%) - 22,985,477 hourly records
-[10:23:56] [INFO] Progress: 860/912 files (94.3%) - 23,255,957 hourly records
-[10:24:21] [INFO] Progress: 870/912 files (95.4%) - 23,526,437 hourly records
-[10:24:32] [INFO] Progress: 880/912 files (96.5%) - 23,796,917 hourly records
-[10:25:03] [INFO] Progress: 890/912 files (97.6%) - 24,067,397 hourly records
-[10:25:33] [INFO] Progress: 900/912 files (98.7%) - 24,337,877 hourly records
-[10:25:46] [INFO] Progress: 910/912 files (99.8%) - 24,608,357 hourly records
-[10:26:00] [INFO] Generated 24662453 hourly records for IGS_COMBINED
-[10:27:15] [SUCCESS] Results for IGS_COMBINED:
-[10:27:15] [INFO]   Annual CV: 0.1399
-[10:27:15] [INFO]   Day/Night ratio: 1.013
-[10:27:15] [INFO]   Day mean: 0.006971
-[10:27:15] [INFO]   Night mean: 0.006880
-[10:27:15] [INFO]   Seasonal peaks:
-[10:27:15] [INFO]     DJF: Hour 22, Ratio 1.084
-[10:27:15] [INFO]     MAM: Hour 4, Ratio 0.908
-[10:27:15] [INFO]     JJA: Hour 3, Ratio 0.982
-[10:27:15] [INFO]     SON: Hour 13, Ratio 1.180
-[10:27:15] [INFO] 
+[07:46:00] [INFO] PROCESSING IGS_COMBINED
+[07:46:00] [INFO] ============================================================
+[07:46:00] [INFO] Starting analysis for IGS_COMBINED
+[07:46:00] [INFO] Found 912 CLK files for IGS_COMBINED
+[07:46:33] [INFO] Progress: 10/912 files (1.1%) - 270,480 hourly records
+[07:47:06] [INFO] Progress: 20/912 files (2.2%) - 540,960 hourly records
+[07:47:39] [INFO] Progress: 30/912 files (3.3%) - 811,440 hourly records
+[07:47:40] [INFO] Progress: 40/912 files (4.4%) - 1,081,920 hourly records
+[07:48:12] [INFO] Progress: 50/912 files (5.5%) - 1,352,400 hourly records
+[07:48:45] [INFO] Progress: 60/912 files (6.6%) - 1,622,880 hourly records
+[07:48:47] [INFO] Progress: 70/912 files (7.7%) - 1,893,360 hourly records
+[07:49:19] [INFO] Progress: 80/912 files (8.8%) - 2,163,840 hourly records
+[07:49:51] [INFO] Progress: 90/912 files (9.9%) - 2,434,320 hourly records
+[07:50:24] [INFO] Progress: 100/912 files (11.0%) - 2,704,800 hourly records
+[07:50:26] [INFO] Progress: 110/912 files (12.1%) - 2,975,280 hourly records
+[07:50:59] [INFO] Progress: 120/912 files (13.2%) - 3,245,760 hourly records
+[07:51:30] [INFO] Progress: 130/912 files (14.3%) - 3,516,240 hourly records
+[07:51:35] [INFO] Progress: 140/912 files (15.4%) - 3,786,720 hourly records
+[07:52:05] [INFO] Progress: 150/912 files (16.4%) - 4,057,200 hourly records
+[07:52:37] [INFO] Progress: 160/912 files (17.5%) - 4,327,680 hourly records
+[07:53:08] [INFO] Progress: 170/912 files (18.6%) - 4,598,160 hourly records
+[07:53:12] [INFO] Progress: 180/912 files (19.7%) - 4,868,640 hourly records
+[07:53:45] [INFO] Progress: 190/912 files (20.8%) - 5,139,120 hourly records
+[07:54:16] [INFO] Progress: 200/912 files (21.9%) - 5,409,600 hourly records
+[07:54:23] [INFO] Progress: 210/912 files (23.0%) - 5,680,080 hourly records
+[07:54:52] [INFO] Progress: 220/912 files (24.1%) - 5,950,560 hourly records
+[07:55:22] [INFO] Progress: 230/912 files (25.2%) - 6,221,040 hourly records
+[07:55:53] [INFO] Progress: 240/912 files (26.3%) - 6,491,520 hourly records
+[07:55:59] [INFO] Progress: 250/912 files (27.4%) - 6,762,000 hourly records
+[07:56:30] [INFO] Progress: 260/912 files (28.5%) - 7,032,480 hourly records
+[07:57:01] [INFO] Progress: 270/912 files (29.6%) - 7,302,960 hourly records
+[07:57:10] [INFO] Progress: 280/912 files (30.7%) - 7,573,440 hourly records
+[07:57:38] [INFO] Progress: 290/912 files (31.8%) - 7,843,920 hourly records
+[07:58:08] [INFO] Progress: 300/912 files (32.9%) - 8,114,400 hourly records
+[07:58:39] [INFO] Progress: 310/912 files (34.0%) - 8,384,880 hourly records
+[07:58:45] [INFO] Progress: 320/912 files (35.1%) - 8,655,360 hourly records
+[07:59:15] [INFO] Progress: 330/912 files (36.2%) - 8,925,840 hourly records
+[07:59:46] [INFO] Progress: 340/912 files (37.3%) - 9,196,320 hourly records
+[07:59:57] [INFO] Progress: 350/912 files (38.4%) - 9,466,800 hourly records
+[08:00:24] [INFO] Progress: 360/912 files (39.5%) - 9,737,280 hourly records
+[08:00:53] [INFO] Progress: 370/912 files (40.6%) - 10,007,760 hourly records
+[08:01:24] [INFO] Progress: 380/912 files (41.7%) - 10,278,240 hourly records
+[08:01:32] [INFO] Progress: 390/912 files (42.8%) - 10,548,720 hourly records
+[08:02:00] [INFO] Progress: 400/912 files (43.9%) - 10,819,200 hourly records
+[08:02:31] [INFO] Progress: 410/912 files (45.0%) - 11,089,680 hourly records
+[08:02:43] [INFO] Progress: 420/912 files (46.1%) - 11,360,160 hourly records
+[08:03:10] [INFO] Progress: 430/912 files (47.1%) - 11,630,640 hourly records
+[08:03:38] [INFO] Progress: 440/912 files (48.2%) - 11,895,797 hourly records
+[08:04:01] [INFO] Progress: 450/912 files (49.3%) - 12,166,277 hourly records
+[08:04:18] [INFO] Progress: 460/912 files (50.4%) - 12,436,757 hourly records
+[08:04:45] [INFO] Progress: 470/912 files (51.5%) - 12,707,237 hourly records
+[08:05:15] [INFO] Progress: 480/912 files (52.6%) - 12,977,717 hourly records
+[08:05:29] [INFO] Progress: 490/912 files (53.7%) - 13,248,197 hourly records
+[08:05:54] [INFO] Progress: 500/912 files (54.8%) - 13,518,677 hourly records
+[08:06:24] [INFO] Progress: 510/912 files (55.9%) - 13,789,157 hourly records
+[08:06:46] [INFO] Progress: 520/912 files (57.0%) - 14,059,637 hourly records
+[08:07:05] [INFO] Progress: 530/912 files (58.1%) - 14,330,117 hourly records
+[08:07:31] [INFO] Progress: 540/912 files (59.2%) - 14,600,597 hourly records
+[08:07:59] [INFO] Progress: 550/912 files (60.3%) - 14,871,077 hourly records
+[08:08:16] [INFO] Progress: 560/912 files (61.4%) - 15,141,557 hourly records
+[08:08:39] [INFO] Progress: 570/912 files (62.5%) - 15,412,037 hourly records
+[08:09:09] [INFO] Progress: 580/912 files (63.6%) - 15,682,517 hourly records
+[08:09:30] [INFO] Progress: 590/912 files (64.7%) - 15,952,997 hourly records
+[08:09:51] [INFO] Progress: 600/912 files (65.8%) - 16,223,477 hourly records
+[08:10:17] [INFO] Progress: 610/912 files (66.9%) - 16,493,957 hourly records
+[08:10:44] [INFO] Progress: 620/912 files (68.0%) - 16,764,437 hourly records
+[08:11:03] [INFO] Progress: 630/912 files (69.1%) - 17,034,917 hourly records
+[08:11:25] [INFO] Progress: 640/912 files (70.2%) - 17,305,397 hourly records
+[08:11:55] [INFO] Progress: 650/912 files (71.3%) - 17,575,877 hourly records
+[08:12:14] [INFO] Progress: 660/912 files (72.4%) - 17,846,357 hourly records
+[08:12:37] [INFO] Progress: 670/912 files (73.5%) - 18,116,837 hourly records
+[08:13:01] [INFO] Progress: 680/912 files (74.6%) - 18,387,317 hourly records
+[08:13:28] [INFO] Progress: 690/912 files (75.7%) - 18,657,797 hourly records
+[08:13:50] [INFO] Progress: 700/912 files (76.8%) - 18,928,277 hourly records
+[08:14:12] [INFO] Progress: 710/912 files (77.9%) - 19,198,757 hourly records
+[08:14:39] [INFO] Progress: 720/912 files (78.9%) - 19,469,237 hourly records
+[08:14:58] [INFO] Progress: 730/912 files (80.0%) - 19,739,717 hourly records
+[08:15:24] [INFO] Progress: 740/912 files (81.1%) - 20,010,197 hourly records
+[08:15:46] [INFO] Progress: 750/912 files (82.2%) - 20,280,677 hourly records
+[08:16:12] [INFO] Progress: 760/912 files (83.3%) - 20,551,157 hourly records
+[08:16:33] [INFO] Progress: 770/912 files (84.4%) - 20,821,637 hourly records
+[08:16:58] [INFO] Progress: 780/912 files (85.5%) - 21,092,117 hourly records
+[08:17:23] [INFO] Progress: 790/912 files (86.6%) - 21,362,597 hourly records
+[08:17:45] [INFO] Progress: 800/912 files (87.7%) - 21,633,077 hourly records
+[08:18:10] [INFO] Progress: 810/912 files (88.8%) - 21,903,557 hourly records
+[08:18:32] [INFO] Progress: 820/912 files (89.9%) - 22,174,037 hourly records
+[08:18:56] [INFO] Progress: 830/912 files (91.0%) - 22,444,517 hourly records
+[08:19:18] [INFO] Progress: 840/912 files (92.1%) - 22,714,997 hourly records
+[08:19:45] [INFO] Progress: 850/912 files (93.2%) - 22,985,477 hourly records
+[08:20:07] [INFO] Progress: 860/912 files (94.3%) - 23,255,957 hourly records
+[08:20:31] [INFO] Progress: 870/912 files (95.4%) - 23,526,437 hourly records
+[08:20:54] [INFO] Progress: 880/912 files (96.5%) - 23,796,917 hourly records
+[08:21:18] [INFO] Progress: 890/912 files (97.6%) - 24,067,397 hourly records
+[08:21:41] [INFO] Progress: 900/912 files (98.7%) - 24,337,877 hourly records
+[08:22:04] [INFO] Progress: 910/912 files (99.8%) - 24,608,357 hourly records
+[08:22:08] [INFO] Generated 24662453 hourly records for IGS_COMBINED
+[08:23:27] [SUCCESS] Results for IGS_COMBINED:
+[08:23:27] [INFO]   Annual CV: 0.1399
+[08:23:27] [INFO]   Day/Night ratio: 1.013
+[08:23:27] [INFO]   Day mean: 0.006971
+[08:23:27] [INFO]   Night mean: 0.006880
+[08:23:27] [INFO]   Seasonal peaks:
+[08:23:27] [INFO]     DJF: Hour 22, Ratio 1.084
+[08:23:27] [INFO]     MAM: Hour 4, Ratio 0.908
+[08:23:27] [INFO]     JJA: Hour 3, Ratio 0.982
+[08:23:27] [INFO]     SON: Hour 13, Ratio 1.180
+[08:23:27] [INFO] 
 ============================================================
-[10:27:15] [INFO] PROCESSING ESA_FINAL
-[10:27:15] [INFO] ============================================================
-[10:27:15] [INFO] Starting analysis for ESA_FINAL
-[10:27:15] [INFO] Found 912 CLK files for ESA_FINAL
-[10:27:50] [INFO] Progress: 10/912 files (1.1%) - 281,750 hourly records
-[10:28:24] [INFO] Progress: 20/912 files (2.2%) - 563,500 hourly records
-[10:28:58] [INFO] Progress: 30/912 files (3.3%) - 845,250 hourly records
-[10:28:59] [INFO] Progress: 40/912 files (4.4%) - 1,127,000 hourly records
-[10:29:33] [INFO] Progress: 50/912 files (5.5%) - 1,408,750 hourly records
-[10:30:07] [INFO] Progress: 60/912 files (6.6%) - 1,690,500 hourly records
-[10:30:09] [INFO] Progress: 70/912 files (7.7%) - 1,972,250 hourly records
-[10:30:42] [INFO] Progress: 80/912 files (8.8%) - 2,254,000 hourly records
-[10:31:15] [INFO] Progress: 90/912 files (9.9%) - 2,535,750 hourly records
-[10:31:49] [INFO] Progress: 100/912 files (11.0%) - 2,817,500 hourly records
-[10:31:51] [INFO] Progress: 110/912 files (12.1%) - 3,099,250 hourly records
-[10:32:24] [INFO] Progress: 120/912 files (13.2%) - 3,381,000 hourly records
-[10:32:58] [INFO] Progress: 130/912 files (14.3%) - 3,662,750 hourly records
-[10:33:01] [INFO] Progress: 140/912 files (15.4%) - 3,944,500 hourly records
-[10:33:34] [INFO] Progress: 150/912 files (16.4%) - 4,226,250 hourly records
-[10:34:07] [INFO] Progress: 160/912 files (17.5%) - 4,508,000 hourly records
-[10:34:40] [INFO] Progress: 170/912 files (18.6%) - 4,789,750 hourly records
-[10:34:43] [INFO] Progress: 180/912 files (19.7%) - 5,071,500 hourly records
-[10:35:16] [INFO] Progress: 190/912 files (20.8%) - 5,353,250 hourly records
-[10:35:49] [INFO] Progress: 200/912 files (21.9%) - 5,635,000 hourly records
-[10:35:54] [INFO] Progress: 210/912 files (23.0%) - 5,916,750 hourly records
-[10:36:25] [INFO] Progress: 220/912 files (24.1%) - 6,198,500 hourly records
-[10:36:58] [INFO] Progress: 230/912 files (25.2%) - 6,480,250 hourly records
-[10:37:31] [INFO] Progress: 240/912 files (26.3%) - 6,762,000 hourly records
-[10:37:34] [INFO] Progress: 250/912 files (27.4%) - 7,043,750 hourly records
-[10:38:07] [INFO] Progress: 260/912 files (28.5%) - 7,325,500 hourly records
-[10:38:40] [INFO] Progress: 270/912 files (29.6%) - 7,607,250 hourly records
-[10:38:46] [INFO] Progress: 280/912 files (30.7%) - 7,889,000 hourly records
-[10:39:17] [INFO] Progress: 290/912 files (31.8%) - 8,167,392 hourly records
-[10:39:50] [INFO] Progress: 300/912 files (32.9%) - 8,449,142 hourly records
-[10:40:20] [INFO] Progress: 310/912 files (34.0%) - 8,729,765 hourly records
-[10:40:26] [INFO] Progress: 320/912 files (35.1%) - 9,007,030 hourly records
-[10:40:58] [INFO] Progress: 330/912 files (36.2%) - 9,288,780 hourly records
-[10:41:30] [INFO] Progress: 340/912 files (37.3%) - 9,570,530 hourly records
-[10:41:37] [INFO] Progress: 350/912 files (38.4%) - 9,851,153 hourly records
-[10:42:07] [INFO] Progress: 360/912 files (39.5%) - 10,130,649 hourly records
-[10:42:39] [INFO] Progress: 370/912 files (40.6%) - 10,412,399 hourly records
-[10:43:11] [INFO] Progress: 380/912 files (41.7%) - 10,694,149 hourly records
-[10:43:18] [INFO] Progress: 390/912 files (42.8%) - 10,973,645 hourly records
-[10:43:48] [INFO] Progress: 400/912 files (43.9%) - 11,255,395 hourly records
-[10:44:21] [INFO] Progress: 410/912 files (45.0%) - 11,537,145 hourly records
-[10:44:29] [INFO] Progress: 420/912 files (46.1%) - 11,818,895 hourly records
-[10:44:58] [INFO] Progress: 430/912 files (47.1%) - 12,099,518 hourly records
-[10:45:30] [INFO] Progress: 440/912 files (48.2%) - 12,380,141 hourly records
-[10:46:03] [INFO] Progress: 450/912 files (49.3%) - 12,659,637 hourly records
-[10:46:10] [INFO] Progress: 460/912 files (50.4%) - 12,941,387 hourly records
-[10:46:40] [INFO] Progress: 470/912 files (51.5%) - 13,219,756 hourly records
-[10:47:11] [INFO] Progress: 480/912 files (52.6%) - 13,498,125 hourly records
-[10:47:19] [INFO] Progress: 490/912 files (53.7%) - 13,776,494 hourly records
-[10:47:50] [INFO] Progress: 500/912 files (54.8%) - 14,057,117 hourly records
-[10:48:20] [INFO] Progress: 510/912 files (55.9%) - 14,338,867 hourly records
-[10:48:52] [INFO] Progress: 520/912 files (57.0%) - 14,619,490 hourly records
-[10:49:00] [INFO] Progress: 530/912 files (58.1%) - 14,901,240 hourly records
-[10:49:31] [INFO] Progress: 540/912 files (59.2%) - 15,182,990 hourly records
-[10:50:02] [INFO] Progress: 550/912 files (60.3%) - 15,464,740 hourly records
-[10:50:10] [INFO] Progress: 560/912 files (61.4%) - 15,746,490 hourly records
-[10:50:41] [INFO] Progress: 570/912 files (62.5%) - 16,027,113 hourly records
-[10:51:12] [INFO] Progress: 580/912 files (63.6%) - 16,308,863 hourly records
-[10:51:44] [INFO] Progress: 590/912 files (64.7%) - 16,590,613 hourly records
-[10:51:51] [INFO] Progress: 600/912 files (65.8%) - 16,871,236 hourly records
-[10:52:21] [INFO] Progress: 610/912 files (66.9%) - 17,152,986 hourly records
-[10:52:54] [INFO] Progress: 620/912 files (68.0%) - 17,434,736 hourly records
-[10:53:01] [INFO] Progress: 630/912 files (69.1%) - 17,714,232 hourly records
-[10:53:31] [INFO] Progress: 640/912 files (70.2%) - 17,994,855 hourly records
-[10:54:03] [INFO] Progress: 650/912 files (71.3%) - 18,275,478 hourly records
-[10:54:34] [INFO] Progress: 660/912 files (72.4%) - 18,557,228 hourly records
-[10:54:43] [INFO] Progress: 670/912 files (73.5%) - 18,838,978 hourly records
-[10:55:12] [INFO] Progress: 680/912 files (74.6%) - 19,119,601 hourly records
-[10:55:45] [INFO] Progress: 690/912 files (75.7%) - 19,400,224 hourly records
-[10:55:53] [INFO] Progress: 700/912 files (76.8%) - 19,681,974 hourly records
-[10:56:23] [INFO] Progress: 710/912 files (77.9%) - 19,963,724 hourly records
-[10:56:54] [INFO] Progress: 720/912 files (78.9%) - 20,243,220 hourly records
-[10:57:25] [INFO] Progress: 730/912 files (80.0%) - 20,524,970 hourly records
-[10:57:34] [INFO] Progress: 740/912 files (81.1%) - 20,806,720 hourly records
-[10:58:01] [INFO] Progress: 750/912 files (82.2%) - 21,073,957 hourly records
-[10:58:26] [INFO] Progress: 760/912 files (83.3%) - 21,306,004 hourly records
-[10:58:38] [INFO] Progress: 770/912 files (84.4%) - 21,501,274 hourly records
-[10:59:00] [INFO] Progress: 780/912 files (85.5%) - 21,702,386 hourly records
-[10:59:24] [INFO] Progress: 790/912 files (86.6%) - 21,918,149 hourly records
-[10:59:51] [INFO] Progress: 800/912 files (87.7%) - 22,129,956 hourly records
-[11:00:01] [INFO] Progress: 810/912 files (88.8%) - 22,350,664 hourly records
-[11:00:26] [INFO] Progress: 820/912 files (89.9%) - 22,563,414 hourly records
-[11:00:49] [INFO] Progress: 830/912 files (91.0%) - 22,768,413 hourly records
-[11:01:02] [INFO] Progress: 840/912 files (92.1%) - 22,962,694 hourly records
-[11:01:21] [INFO] Progress: 850/912 files (93.2%) - 23,152,237 hourly records
-[11:01:43] [INFO] Progress: 860/912 files (94.3%) - 23,341,780 hourly records
-[11:02:05] [INFO] Progress: 870/912 files (95.4%) - 23,536,107 hourly records
-[11:02:19] [INFO] Progress: 880/912 files (96.5%) - 23,726,593 hourly records
-[11:02:39] [INFO] Progress: 890/912 files (97.6%) - 23,914,273 hourly records
-[11:03:00] [INFO] Progress: 900/912 files (98.7%) - 24,115,477 hourly records
-[11:03:19] [INFO] Progress: 910/912 files (99.8%) - 24,306,906 hourly records
-[11:03:25] [INFO] Generated 24344626 hourly records for ESA_FINAL
-[11:04:38] [SUCCESS] Results for ESA_FINAL:
-[11:04:38] [INFO]   Annual CV: 0.1485
-[11:04:38] [INFO]   Day/Night ratio: 1.014
-[11:04:38] [INFO]   Day mean: 0.009258
-[11:04:38] [INFO]   Night mean: 0.009129
-[11:04:38] [INFO]   Seasonal peaks:
-[11:04:38] [INFO]     DJF: Hour 8, Ratio 0.989
-[11:04:38] [INFO]     MAM: Hour 11, Ratio 0.983
-[11:04:38] [INFO]     JJA: Hour 3, Ratio 0.972
-[11:04:38] [INFO]     SON: Hour 8, Ratio 1.161
-[11:04:38] [SUCCESS] 
+[08:23:27] [INFO] PROCESSING ESA_FINAL
+[08:23:27] [INFO] ============================================================
+[08:23:27] [INFO] Starting analysis for ESA_FINAL
+[08:23:27] [INFO] Found 912 CLK files for ESA_FINAL
+[08:24:02] [INFO] Progress: 10/912 files (1.1%) - 281,750 hourly records
+[08:24:36] [INFO] Progress: 20/912 files (2.2%) - 563,500 hourly records
+[08:25:10] [INFO] Progress: 30/912 files (3.3%) - 845,250 hourly records
+[08:25:11] [INFO] Progress: 40/912 files (4.4%) - 1,127,000 hourly records
+[08:25:45] [INFO] Progress: 50/912 files (5.5%) - 1,408,750 hourly records
+[08:26:19] [INFO] Progress: 60/912 files (6.6%) - 1,690,500 hourly records
+[08:26:22] [INFO] Progress: 70/912 files (7.7%) - 1,972,250 hourly records
+[08:26:55] [INFO] Progress: 80/912 files (8.8%) - 2,254,000 hourly records
+[08:27:28] [INFO] Progress: 90/912 files (9.9%) - 2,535,750 hourly records
+[08:28:02] [INFO] Progress: 100/912 files (11.0%) - 2,817,500 hourly records
+[08:28:05] [INFO] Progress: 110/912 files (12.1%) - 3,099,250 hourly records
+[08:28:38] [INFO] Progress: 120/912 files (13.2%) - 3,381,000 hourly records
+[08:29:11] [INFO] Progress: 130/912 files (14.3%) - 3,662,750 hourly records
+[08:29:15] [INFO] Progress: 140/912 files (15.4%) - 3,944,500 hourly records
+[08:29:48] [INFO] Progress: 150/912 files (16.4%) - 4,226,250 hourly records
+[08:30:21] [INFO] Progress: 160/912 files (17.5%) - 4,508,000 hourly records
+[08:30:54] [INFO] Progress: 170/912 files (18.6%) - 4,789,750 hourly records
+[08:30:58] [INFO] Progress: 180/912 files (19.7%) - 5,071,500 hourly records
+[08:31:30] [INFO] Progress: 190/912 files (20.8%) - 5,353,250 hourly records
+[08:32:03] [INFO] Progress: 200/912 files (21.9%) - 5,635,000 hourly records
+[08:32:10] [INFO] Progress: 210/912 files (23.0%) - 5,916,750 hourly records
+[08:32:42] [INFO] Progress: 220/912 files (24.1%) - 6,198,500 hourly records
+[08:33:13] [INFO] Progress: 230/912 files (25.2%) - 6,480,250 hourly records
+[08:33:45] [INFO] Progress: 240/912 files (26.3%) - 6,762,000 hourly records
+[08:33:51] [INFO] Progress: 250/912 files (27.4%) - 7,043,750 hourly records
+[08:34:23] [INFO] Progress: 260/912 files (28.5%) - 7,325,500 hourly records
+[08:34:55] [INFO] Progress: 270/912 files (29.6%) - 7,607,250 hourly records
+[08:35:04] [INFO] Progress: 280/912 files (30.7%) - 7,889,000 hourly records
+[08:35:35] [INFO] Progress: 290/912 files (31.8%) - 8,167,392 hourly records
+[08:36:06] [INFO] Progress: 300/912 files (32.9%) - 8,449,142 hourly records
+[08:36:36] [INFO] Progress: 310/912 files (34.0%) - 8,729,765 hourly records
+[08:36:45] [INFO] Progress: 320/912 files (35.1%) - 9,007,030 hourly records
+[08:37:15] [INFO] Progress: 330/912 files (36.2%) - 9,288,780 hourly records
+[08:37:45] [INFO] Progress: 340/912 files (37.3%) - 9,570,530 hourly records
+[08:37:59] [INFO] Progress: 350/912 files (38.4%) - 9,851,153 hourly records
+[08:38:27] [INFO] Progress: 360/912 files (39.5%) - 10,130,649 hourly records
+[08:38:56] [INFO] Progress: 370/912 files (40.6%) - 10,412,399 hourly records
+[08:39:27] [INFO] Progress: 380/912 files (41.7%) - 10,694,149 hourly records
+[08:39:37] [INFO] Progress: 390/912 files (42.8%) - 10,973,645 hourly records
+[08:40:07] [INFO] Progress: 400/912 files (43.9%) - 11,255,395 hourly records
+[08:40:37] [INFO] Progress: 410/912 files (45.0%) - 11,537,145 hourly records
+[08:40:53] [INFO] Progress: 420/912 files (46.1%) - 11,818,895 hourly records
+[08:41:19] [INFO] Progress: 430/912 files (47.1%) - 12,098,391 hourly records
+[08:41:47] [INFO] Progress: 440/912 files (48.2%) - 12,380,141 hourly records
+[08:42:19] [INFO] Progress: 450/912 files (49.3%) - 12,660,764 hourly records
+[08:42:30] [INFO] Progress: 460/912 files (50.4%) - 12,941,387 hourly records
+[08:42:58] [INFO] Progress: 470/912 files (51.5%) - 13,219,756 hourly records
+[08:43:28] [INFO] Progress: 480/912 files (52.6%) - 13,498,125 hourly records
+[08:43:44] [INFO] Progress: 490/912 files (53.7%) - 13,776,494 hourly records
+[08:44:12] [INFO] Progress: 500/912 files (54.8%) - 14,057,117 hourly records
+[08:44:38] [INFO] Progress: 510/912 files (55.9%) - 14,338,867 hourly records
+[08:45:09] [INFO] Progress: 520/912 files (57.0%) - 14,619,490 hourly records
+[08:45:22] [INFO] Progress: 530/912 files (58.1%) - 14,901,240 hourly records
+[08:45:51] [INFO] Progress: 540/912 files (59.2%) - 15,182,990 hourly records
+[08:46:21] [INFO] Progress: 550/912 files (60.3%) - 15,464,740 hourly records
+[08:46:35] [INFO] Progress: 560/912 files (61.4%) - 15,746,490 hourly records
+[08:47:06] [INFO] Progress: 570/912 files (62.5%) - 16,027,113 hourly records
+[08:47:30] [INFO] Progress: 580/912 files (63.6%) - 16,308,863 hourly records
+[08:48:01] [INFO] Progress: 590/912 files (64.7%) - 16,590,613 hourly records
+[08:48:15] [INFO] Progress: 600/912 files (65.8%) - 16,871,236 hourly records
+[08:48:42] [INFO] Progress: 610/912 files (66.9%) - 17,152,986 hourly records
+[08:49:12] [INFO] Progress: 620/912 files (68.0%) - 17,434,736 hourly records
+[08:49:29] [INFO] Progress: 630/912 files (69.1%) - 17,714,232 hourly records
+[08:49:56] [INFO] Progress: 640/912 files (70.2%) - 17,994,855 hourly records
+[08:50:22] [INFO] Progress: 650/912 files (71.3%) - 18,275,478 hourly records
+[08:50:53] [INFO] Progress: 660/912 files (72.4%) - 18,557,228 hourly records
+[08:51:08] [INFO] Progress: 670/912 files (73.5%) - 18,838,978 hourly records
+[08:51:34] [INFO] Progress: 680/912 files (74.6%) - 19,119,601 hourly records
+[08:52:04] [INFO] Progress: 690/912 files (75.7%) - 19,400,224 hourly records
+[08:52:22] [INFO] Progress: 700/912 files (76.8%) - 19,681,974 hourly records
+[08:52:49] [INFO] Progress: 710/912 files (77.9%) - 19,963,724 hourly records
+[08:53:14] [INFO] Progress: 720/912 files (78.9%) - 20,243,220 hourly records
+[08:53:45] [INFO] Progress: 730/912 files (80.0%) - 20,524,970 hourly records
+[08:54:00] [INFO] Progress: 740/912 files (81.1%) - 20,806,720 hourly records
+[08:54:25] [INFO] Progress: 750/912 files (82.2%) - 21,073,957 hourly records
+[08:54:46] [INFO] Progress: 760/912 files (83.3%) - 21,306,004 hourly records
+[08:55:06] [INFO] Progress: 770/912 files (84.4%) - 21,501,274 hourly records
+[08:55:27] [INFO] Progress: 780/912 files (85.5%) - 21,702,386 hourly records
+[08:55:46] [INFO] Progress: 790/912 files (86.6%) - 21,920,150 hourly records
+[08:56:10] [INFO] Progress: 800/912 files (87.7%) - 22,131,957 hourly records
+[08:56:29] [INFO] Progress: 810/912 files (88.8%) - 22,350,664 hourly records
+[08:56:49] [INFO] Progress: 820/912 files (89.9%) - 22,563,414 hourly records
+[08:57:10] [INFO] Progress: 830/912 files (91.0%) - 22,768,413 hourly records
+[08:57:29] [INFO] Progress: 840/912 files (92.1%) - 22,962,694 hourly records
+[08:57:47] [INFO] Progress: 850/912 files (93.2%) - 23,152,237 hourly records
+[08:58:04] [INFO] Progress: 860/912 files (94.3%) - 23,341,780 hourly records
+[08:58:26] [INFO] Progress: 870/912 files (95.4%) - 23,536,107 hourly records
+[08:58:47] [INFO] Progress: 880/912 files (96.5%) - 23,726,593 hourly records
+[08:59:04] [INFO] Progress: 890/912 files (97.6%) - 23,915,216 hourly records
+[08:59:22] [INFO] Progress: 900/912 files (98.7%) - 24,115,477 hourly records
+[08:59:46] [INFO] Progress: 910/912 files (99.8%) - 24,306,906 hourly records
+[08:59:47] [INFO] Generated 24344626 hourly records for ESA_FINAL
+[09:01:02] [SUCCESS] Results for ESA_FINAL:
+[09:01:02] [INFO]   Annual CV: 0.1485
+[09:01:02] [INFO]   Day/Night ratio: 1.014
+[09:01:02] [INFO]   Day mean: 0.009258
+[09:01:02] [INFO]   Night mean: 0.009129
+[09:01:02] [INFO]   Seasonal peaks:
+[09:01:02] [INFO]     DJF: Hour 8, Ratio 0.989
+[09:01:02] [INFO]     MAM: Hour 11, Ratio 0.983
+[09:01:02] [INFO]     JJA: Hour 3, Ratio 0.972
+[09:01:02] [INFO]     SON: Hour 8, Ratio 1.161
+[09:01:02] [SUCCESS] 
 Combined results saved: step_4_5_comprehensive_analysis.json
-[11:04:38] [INFO] 
-[11:04:38] [INFO] ================================================================================
-[11:04:38] [SUCCESS] STEP 4.5 COMPREHENSIVE DIURNAL ANALYSIS COMPLETE
-[11:04:38] [INFO] Processed 3 analysis centers
-[11:04:38] [INFO] Date range: 2023-01-01 00:00:00 to 2025-06-30 00:00:00
-[11:04:38] [INFO] Results saved to results/outputs/
-[11:04:38] [INFO] ================================================================================
+[09:01:02] [INFO] 
+[09:01:02] [INFO] ================================================================================
+[09:01:02] [SUCCESS] STEP 4.5 COMPREHENSIVE DIURNAL ANALYSIS COMPLETE
+[09:01:02] [INFO] Processed 3 analysis centers
+[09:01:02] [INFO] Date range: 2023-01-01 00:00:00 to 2025-06-30 00:00:00
+[09:01:02] [INFO] Results saved to results/outputs/
+[09:01:02] [INFO] ================================================================================

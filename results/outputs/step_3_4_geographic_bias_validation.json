@@ -3,142 +3,151 @@
   "baseline_correlations": {
     "code": {
       "model_name": "Exponential",
-      "amplitude": 0.11380125716582931,
-      "amplitude_error": 0.006691684058980719,
-      "lambda_km": 4548.557683790337,
-      "lambda_error": 863.8767144651335,
-      "offset": -0.021332829378772053,
-      "offset_error": 0.006422060185576064,
-      "r_squared": 0.9204832558172074,
+      "amplitude": 0.11380125717162318,
+      "amplitude_error": 0.006691684063571828,
+      "lambda_km": 4548.55765832057,
+      "lambda_error": 863.876687188717,
+      "offset": -0.021332829202422424,
+      "offset_error": 0.006422059980225948,
+      "r_squared": 0.9204832558172055,
       "n_bins": 28
     },
     "esa_final": {
       "model_name": "Exponential",
-      "amplitude": 0.24970196462039412,
-      "amplitude_error": 0.012211217518856324,
-      "lambda_km": 3329.772851366301,
-      "lambda_error": 309.0622737407548,
-      "offset": -0.024730318905330638,
-      "offset_error": 0.004399036012155412,
-      "r_squared": 0.9701459937713723,
+      "amplitude": 0.24970196461411343,
+      "amplitude_error": 0.012211217617236312,
+      "lambda_km": 3329.7728523222195,
+      "lambda_error": 309.0622772501141,
+      "offset": -0.024730318920077772,
+      "offset_error": 0.004399036046277994,
+      "r_squared": 0.9701459937713726,
       "n_bins": 25
     },
     "igs_combined": {
       "model_name": "Mat\u00e9rn (\u03bd=1.5)",
-      "amplitude": 0.15206455559337112,
-      "amplitude_error": 0.00629859599786635,
-      "lambda_km": 3394.60904772433,
-      "lambda_error": 209.63271590604808,
-      "offset": -0.012830942110946769,
-      "offset_error": 0.00263158402469071,
-      "r_squared": 0.9681484336370915,
+      "amplitude": 0.15206455554245182,
+      "amplitude_error": 0.0062985959716813375,
+      "lambda_km": 3394.6090517380208,
+      "lambda_error": 209.632714379818,
+      "offset": -0.012830942151481802,
+      "offset_error": 0.0026315840155782225,
+      "r_squared": 0.9681484336370918,
       "n_bins": 28
     }
   },
   "geographic_subsets": {
     "n_balanced_subsets": 10,
-    "n_elevation_bands": 3,
+    "n_elevation_bands": 4,
     "hemisphere_stats": {
-      "north_count": 272,
-      "south_count": 120,
-      "hemisphere_ratio": 2.2666666666666666
+      "north_count": 559,
+      "south_count": 208,
+      "hemisphere_ratio": 2.6875
     }
   },
   "validation_results": {
     "geographic_consistency": {
       "code": {
-        "lambda_mean": 4538.567909086281,
-        "lambda_std": 295.6939702506645,
-        "lambda_cv": 0.06515138170758242,
+        "lambda_mean": 4538.567912538242,
+        "lambda_std": 295.6939714297486,
+        "lambda_cv": 0.06515138191782144,
         "n_samples": 20,
         "consistency_rating": "excellent"
       },
       "esa_final": {
-        "lambda_mean": 3296.042972553315,
-        "lambda_std": 116.71365062456171,
-        "lambda_cv": 0.03541023329988572,
+        "lambda_mean": 3296.042975131621,
+        "lambda_std": 116.71364899362021,
+        "lambda_cv": 0.03541023277736829,
         "n_samples": 20,
         "consistency_rating": "excellent"
       },
       "igs_combined": {
-        "lambda_mean": 3778.5742061163123,
-        "lambda_std": 151.83739357764247,
-        "lambda_cv": 0.040183779726190354,
+        "lambda_mean": 3778.5742104723663,
+        "lambda_std": 151.83738992784225,
+        "lambda_cv": 0.04018377871394533,
         "n_samples": 20,
         "consistency_rating": "excellent"
       }
     },
     "hemisphere_validation": {
       "expected_balance": 0.5,
-      "observed_balance": 0.6938775510204082,
-      "hemisphere_bias": 0.19387755102040816,
+      "observed_balance": 0.7288135593220338,
+      "hemisphere_bias": 0.22881355932203384,
       "bias_severity": "moderate",
-      "north_stations": 272,
-      "south_stations": 120,
-      "hemisphere_ratio": 2.2666666666666666
+      "north_stations": 559,
+      "south_stations": 208,
+      "hemisphere_ratio": 2.6875
     },
     "elevation_validation": {
       "sea_level": {
         "elevation_range": "-100-100m",
-        "n_stations": 172,
-        "hemisphere_balance": 0.6627906976744186,
-        "estimated_correlation_strength": 0.9023255813953489,
+        "n_stations": 347,
+        "hemisphere_balance": 0.7031700288184438,
+        "estimated_correlation_strength": 0.8780979827089337,
         "representativeness": "high"
       },
       "low_elevation": {
         "elevation_range": "100-500m",
-        "n_stations": 110,
-        "hemisphere_balance": 0.7181818181818181,
-        "estimated_correlation_strength": 0.8690909090909091,
+        "n_stations": 219,
+        "hemisphere_balance": 0.7945205479452054,
+        "estimated_correlation_strength": 0.8232876712328767,
         "representativeness": "high"
       },
       "medium_elevation": {
         "elevation_range": "500-1000m",
-        "n_stations": 53,
-        "hemisphere_balance": 0.7547169811320755,
-        "estimated_correlation_strength": 0.44899999999999995,
-        "representativeness": "low"
+        "n_stations": 96,
+        "hemisphere_balance": 0.75,
+        "estimated_correlation_strength": 0.816,
+        "representativeness": "high"
+      },
+      "high_elevation": {
+        "elevation_range": "1000-2000m",
+        "n_stations": 81,
+        "hemisphere_balance": 0.654320987654321,
+        "estimated_correlation_strength": 0.7350000000000001,
+        "representativeness": "medium"
       }
     }
   },
   "sample_analysis": {
     "distance_analysis": {
       "n_pairs": 62757219,
-      "distance_mean": 9350.340509041202,
-      "distance_std": 4614.779209598345,
+      "distance_mean": 9350.34069558425,
+      "distance_std": 4614.779190176916,
       "distance_range": [
         0.0545945359733036,
         19937.31652345648
       ],
-      "coherence_mean": 0.008747290189178587,
-      "coherence_std": 0.7158267960856652
+      "coherence_mean": 0.008747247439907617,
+      "coherence_std": 0.7158268003497991
     },
     "ocean_land_analysis": {
-      "ocean_pairs": 50392328,
-      "land_pairs": 12364891,
-      "ocean_fraction": 0.8029726110075082,
-      "ocean_coherence_mean": -0.0026796572495301585,
-      "land_coherence_mean": 0.0553170887721318,
-      "coherence_difference": -0.05799674602166196,
+      "ocean_pairs": 50392329,
+      "land_pairs": 12364890,
+      "ocean_fraction": 0.80297262694193,
+      "ocean_coherence_mean": -0.0026796909499491725,
+      "land_coherence_mean": 0.055317013835273335,
+      "coherence_difference": -0.05799670478522251,
       "ocean_advantage": false
     }
   },
   "validation_summary": {
-    "overall_validation_score": 0.8133796100540286,
-    "confidence_level": "HIGH",
-    "assessment": "Strong evidence for genuine geographic independence",
+    "overall_validation_score": 0.7376988044951508,
+    "confidence_level": "MODERATE",
+    "assessment": "Reasonable evidence with some geographic concerns",
     "validation_components": [
       1.0,
-      0.7,
-      0.740138830162086
+      0.4,
+      0.8130964134854526
     ],
     "key_findings": [
       "CODE: Geographic consistency CV = 6.5% (excellent)",
       "ESA_FINAL: Geographic consistency CV = 3.5% (excellent)",
       "IGS_COMBINED: Geographic consistency CV = 4.0% (excellent)",
-      "Hemisphere bias: 19.4% (moderate)"
+      "Hemisphere bias: 22.9% (moderate)"
     ],
-    "recommendations": []
+    "recommendations": [
+      "Create hemisphere-balanced subsets for validation"
+    ]
   },
-  "timestamp": "2025-10-07T20:21:22.256616"
+  "timestamp": "2025-10-08T03:57:31.629281"
 }

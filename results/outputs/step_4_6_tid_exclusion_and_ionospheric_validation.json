@@ -1,0 +1,25 @@
+{
+  "step": "4.6",
+  "title": "TID Exclusion Analysis & Ionospheric Validation",
+  "timestamp": "2025-10-08T10:07:59.063480",
+  "ionospheric_validation": {
+    "data_availability": {
+      "tep_coherence_days": 912,
+      "date_range": {
+        "start": "2023-01-01T00:00:00",
+        "end": "2025-06-30T00:00:00"
+      }
+    },
+    "correlations": {},
+    "status": "completed_with_available_data",
+    "tep_statistics": {
+      "mean_daily_coherence": 0.010465335375460584,
+      "std_daily_coherence": 0.008528706324259573,
+      "coherence_range": [
+        -0.007026215911784,
+        0.0514735882439385
+      ]
+    }
+  },
+  "tid_exclusion": "completed"
+}

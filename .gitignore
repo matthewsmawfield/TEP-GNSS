@@ -97,3 +97,6 @@ results/validation/
 Dockerfile
 .cursor/rules/general.mdc
 
+# Private directory
+private/
+

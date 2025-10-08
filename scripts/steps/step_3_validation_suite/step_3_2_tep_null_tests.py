@@ -277,8 +277,8 @@ def load_pair_data_once(ac: str, null_type: str = 'distance'):
     print_status(f"    Loading consolidated pair data: {consolidated_file.name}", "INFO")
     
     try:
-        # Load the consolidated pair data with proper dtype specification
-        df = pd.read_csv(consolidated_file, dtype={'date': str}, low_memory=False)
+        # Load the consolidated pair data
+        df = pd.read_csv(consolidated_file)
         total_rows = len(df)
         
         if null_type == 'station':
@@ -354,7 +354,7 @@ def run_null_test_from_file(ac: str, null_type: str, random_seed: int = 42, coor
                 raise TEPDataError(f"Station scramble requires 'date', 'station_i', 'station_j' columns, but one or more are missing for {ac}.")
             unique_days = df['date'].nunique()
             print_status(f"    Station scrambling: Processing {unique_days} unique days...", "PROCESS")
-            df['date'] = pd.to_datetime(df['date'], errors='coerce') # Convert with error handling
+            df['date'] = pd.to_datetime(df['date']) # Convert once before grouping
             scrambled_parts = []
             processed_days = 0
             for date, group in df.groupby(df['date'].dt.date):
@@ -565,7 +565,7 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42, coords_map: di
                 raise TEPDataError(f"Station scramble requires 'date', 'station_i', 'station_j' columns, but one or more are missing for {ac}.")
             unique_days = df['date'].nunique()
             print_status(f"    Station scrambling: Processing {unique_days} unique days...", "PROCESS")
-            df['date'] = pd.to_datetime(df['date'], errors='coerce') # Convert with error handling
+            df['date'] = pd.to_datetime(df['date']) # Convert once before grouping
             scrambled_parts = []
             processed_days = 0
             for date, group in df.groupby(df['date'].dt.date):

@@ -215,6 +215,11 @@ def analyze_elevation_dependence_fixed(root_dir):
     """
     print_status("Starting FIXED elevation dependence analysis", "INFO")
     
+    # Check memory before starting
+    import psutil
+    memory = psutil.virtual_memory()
+    print_status(f"Available memory: {memory.available / (1024**3):.1f} GB", "INFO")
+    
     # Load station coordinates
     coords_df = load_station_coordinates()
     
@@ -281,17 +286,41 @@ def analyze_elevation_dependence_fixed(root_dir):
     for ac in analysis_centers:
         print_status(f"Processing elevation analysis for {ac.upper()}", "INFO")
         
+        # Check memory before each analysis center
+        memory = psutil.virtual_memory()
+        print_status(f"Memory before {ac}: {memory.available / (1024**3):.1f} GB available", "INFO")
+        
+        if memory.available < 2 * (1024**3):  # Less than 2GB available
+            print_status(f"Insufficient memory for {ac} analysis, skipping", "WARNING")
+            continue
+        
         # Use processed data from Step 2.1 (includes azimuth, quality filtering, and geospatial enhancements)
         geospatial_file = root_dir / 'data' / 'processed' / f'step_2_1_geospatial_{ac}.csv'
         
         if geospatial_file.exists():
             print_status(f"Using Step 2.1 processed data: {geospatial_file.name}", "INFO")
             try:
-                df_all = pd.read_csv(geospatial_file, parse_dates=['date'])
-                # Ensure coherence column exists
-                if 'plateau_phase' in df_all.columns and 'coherence' not in df_all.columns:
-                    df_all['coherence'] = np.cos(df_all['plateau_phase'])
-                print_status(f"Loaded Step 2.1 processed dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
+                # Load data in chunks to reduce memory usage
+                chunk_size = 5000000  # 5M rows per chunk
+                df_chunks = []
+                for chunk in pd.read_csv(geospatial_file, parse_dates=['date'], chunksize=chunk_size):
+                    # Ensure coherence column exists
+                    if 'plateau_phase' in chunk.columns and 'coherence' not in chunk.columns:
+                        chunk['coherence'] = np.cos(chunk['plateau_phase'])
+                    df_chunks.append(chunk)
+                    
+                    # Check memory after each chunk
+                    memory = psutil.virtual_memory()
+                    if memory.available < 1 * (1024**3):  # Less than 1GB available
+                        print_status(f"Memory pressure detected, stopping chunk loading", "WARNING")
+                        break
+                
+                if df_chunks:
+                    df_all = pd.concat(df_chunks, ignore_index=True)
+                    print_status(f"Loaded Step 2.1 processed dataset: {len(df_all):,} pairs for {ac}", "SUCCESS")
+                else:
+                    print_status(f"No data loaded for {ac}, skipping", "WARNING")
+                    continue
             except Exception as e:
                 print_status(f"Failed to load Step 2.1 processed data: {e}", "WARNING")
                 continue
@@ -299,6 +328,15 @@ def analyze_elevation_dependence_fixed(root_dir):
             print_status(f"Step 2.1 processed file not found for {ac}: {geospatial_file}", "ERROR")
             continue
         print_status(f"Loaded {len(df_all)} station pairs for {ac.upper()}", "SUCCESS")
+        
+        # Check memory after loading data
+        memory = psutil.virtual_memory()
+        print_status(f"Memory after loading {ac}: {memory.available / (1024**3):.1f} GB available", "INFO")
+        
+        if memory.available < 1 * (1024**3):  # Less than 1GB available
+            print_status(f"Insufficient memory for {ac} processing, skipping", "WARNING")
+            del df_all  # Explicitly delete large dataframe
+            continue
         
         # FIXED: Better station code mapping with geomagnetic data
         def extract_short_code(full_code):
@@ -912,9 +950,14 @@ def analyze_binning_sensitivity(root_dir):
     for ac in analysis_centers:
         print_status(f"Processing {ac.upper()} binning sensitivity", "INFO")
         
-        # Load pair-level data
+        # Load pair-level data - check both locations
         pair_data_dir = root_dir / "results" / "tmp"  
         pair_files = list(pair_data_dir.glob(f"step_2_0_pairs_{ac}_tep_band.csv"))
+        
+        # If not found, check streaming directory
+        if not pair_files:
+            streaming_dir = root_dir / "results" / "tmp" / "streaming"
+            pair_files = list(streaming_dir.glob(f"streaming_pairs_{ac}_tep_band.csv"))
         
         if not pair_files:
             print_status(f"No pair-level data found for {ac}, skipping", "WARNING")
@@ -1079,6 +1122,21 @@ def main():
         print_status("-"*60, "INFO")
         all_results['elevation_dependence'] = analyze_elevation_dependence_fixed(root_dir)
         
+        # Force aggressive garbage collection between analyses
+        import gc
+        gc.collect()
+        
+        # Check memory after elevation analysis
+        import psutil
+        memory = psutil.virtual_memory()
+        print_status(f"Memory after elevation analysis: {memory.available / (1024**3):.1f} GB available", "INFO")
+        
+        if memory.available < 2 * (1024**3):  # Less than 2GB available
+            print_status("Low memory detected, forcing additional cleanup", "WARNING")
+            gc.collect()
+            memory = psutil.virtual_memory()
+            print_status(f"Memory after additional cleanup: {memory.available / (1024**3):.1f} GB available", "INFO")
+        
         # 2. Regional jackknife analysis (SIMPLIFIED for memory efficiency)
         print_status("\n" + "-"*60, "INFO")
         print_status("2. REGIONAL JACKKNIFE ANALYSIS (SIMPLIFIED)", "INFO")
@@ -1086,17 +1144,26 @@ def main():
         print_status("Running simplified regional jackknife analysis with reduced memory usage", "INFO")
         all_results['regional_jackknife'] = analyze_regional_jackknife_simplified(root_dir)
         
+        # Force garbage collection between analyses
+        gc.collect()
+        
         # 3. Circular statistics (unique to Step 4.0)
         print_status("\n" + "-"*60, "INFO")
         print_status("3. CIRCULAR STATISTICS ANALYSIS", "INFO")
         print_status("-"*60, "INFO")
         all_results['circular_statistics'] = analyze_circular_statistics(root_dir)
         
+        # Force garbage collection between analyses
+        gc.collect()
+        
         # 4. Model comparison (unique to Step 4.0)
         print_status("\n" + "-"*60, "INFO")
         print_status("4. RIGOROUS MODEL COMPARISON", "INFO")
         print_status("-"*60, "INFO")
         all_results['model_comparison'] = analyze_model_comparison(root_dir)
+        
+        # Force garbage collection between analyses
+        gc.collect()
         
         # 5. Binning sensitivity analysis (addresses reviewer concerns)
         print_status("\n" + "-"*60, "INFO")
