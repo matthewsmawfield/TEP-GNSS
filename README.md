@@ -9,13 +9,13 @@
 
 The Temporal Equivalence Principle (TEP) represents a fundamental extension of General Relativity, wherein proper time is treated as a dynamical scalar field rather than a fixed kinematic parameter. The theoretical framework employs a two-metric geometric structure where matter fields couple to an effective causal metric:
 
-\[\tilde{g}_{\mu\nu} = A(\phi) g_{\mu\nu} + B(\phi) \nabla_\mu\phi \nabla_\nu\phi\]
+$$\tilde{g}_{\mu\nu} = A(\phi) g_{\mu\nu} + B(\phi) \nabla_\mu\phi \nabla_\nu\phi$$
 
-with a universal conformal coupling \(A(\phi) = \exp(2\beta\phi/M_{Pl})\).
+with a universal conformal coupling $A(\phi) = \exp(2\beta\phi/M_{Pl})$.
 
 **Core Prediction:** Precision timing networks exhibit distance-structured correlations following exponential decay:
-\[C(r) = A\cdot\exp(-r/\lambda) + C_0\]
-with characteristic correlation lengths \(\lambda = 1,000-10,000\) km for screened scalar field configurations.
+$$C(r) = A\cdot\exp(-r/\lambda) + C_0$$
+with characteristic correlation lengths $\lambda = 1,000-10,000$ km for screened scalar field configurations.
 
 **Fundamental Consequence:** Clock synchronization procedures exhibit non-integrable properties, yielding measurable synchronization holonomy in closed-loop time transfer protocols.
 
@@ -130,17 +130,17 @@ Our comprehensive analysis of 62.7 million station-pair measurements across 364 
 ![Distance-structured correlations in GNSS precision timing networks](site/public/figures/figure_1_TEP_site_themed.png)
 
 **Correlation Structure:**
-- **Characteristic lengths:** \(\lambda = 3,330-4,549\) km across independent analysis centers (CV = 12.9% inter-center variation)
-- **Statistical robustness:** Strong exponential model fits (R² = 0.920–0.970)
+- **Characteristic lengths:** $\lambda = 3,330-4,549$ km across independent analysis centers (CV = 12.9% inter-center variation)
+- **Statistical robustness:** Strong exponential model fits ($R^2 = 0.920$–$0.970$)
 - **Theoretical alignment:** Results within predicted range [1,000–10,000 km]
 
 **Validation Framework:**
 - **Multi-center consistency:** Comprehensive null hypothesis testing is consistent with a genuine physical signal (24–61× signal enhancement over randomized controls)
-- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance p < 10⁻⁵
+- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance $p < 10^{-5}$
 - **Bias characterization:** Systematic geometric artifact detection and mitigation
 
 **Advanced Correlations:**
-- **Gravitational coupling:** Direct evidence of temporal field correlations with planetary gravitational patterns (r = -0.458, p < 10⁻⁴⁸)
+- **Gravitational coupling:** Direct evidence of temporal field correlations with planetary gravitational patterns ($r = -0.458$, $p < 10^{-48}$)
 - **Temporal dynamics:** Seasonal correlation patterns identified with optimal coupling windows of 240 days
 - **Enhanced validation:** Comprehensive framework with exploratory analysis capabilities
 
@@ -254,7 +254,7 @@ python scripts/steps/step_3_validation_suite/step_3_5_realistic_ionospheric_vali
 # Step 3.6: Control band analysis (Frequency specificity validation)
 python scripts/steps/step_3_validation_suite/step_3_6_control_band_analysis.py
 
-Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 µHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: R² ≈ 0.05 in control band versus R² ≈ 0.85 in TEP band (10-500 µHz), demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
+Validates frequency specificity of TEP correlations through analysis of theoretically unmotivated control band (1000-2000 µHz) where no signal is predicted. Implements identical phase-coherent analysis methodology as Step 2.0 but within higher frequency range dominated by white noise processes. Expected outcome: $R^2 \approx 0.05$ in control band versus $R^2 \approx 0.85$ in TEP band (10-500 µHz), demonstrating that observed correlations are not broadband statistical artifacts. Addresses multiple testing concerns and "look-elsewhere effect" criticisms.
 
 # Step 3.7: Bootstrap convergence validation
 python scripts/steps/step_3_validation_suite/step_3_7_bootstrap_convergence_validation.py
@@ -289,8 +289,8 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 | Parameter | Default Value | Description |
 |-----------|---------------|-------------|
 | `TEP_USE_PHASE_BAND` | 1 | Band-limited phase analysis methodology (v0.6 implementation) |
-| `TEP_COHERENCY_F1` | 1×10⁻⁵ | Lower frequency boundary (10 µHz) |
-| `TEP_COHERENCY_F2` | 5×10⁻⁴ | Upper frequency boundary (500 µHz) |
+| `TEP_COHERENCY_F1` | $1 \times 10^{-5}$ | Lower frequency boundary (10 µHz) |
+| `TEP_COHERENCY_F2` | $5 \times 10^{-4}$ | Upper frequency boundary (500 µHz) |
 | `TEP_BINS` | 40 | Distance binning structure for correlation analysis |
 
 **Computational Processing Parameters:**
@@ -370,10 +370,10 @@ results/
 **Validation Results:**
 - Multi-center consistency metrics (CV = 12.9% inter-center variation)
 - Null test enhancement factors (24-61× signal over randomized controls)
-- Cross-validation stability assessments (R² = 0.920-0.970)
+- Cross-validation stability assessments ($R^2 = 0.920$-$0.970$)
 
 **Advanced Analysis:**
-- Gravitational-temporal field correlations (r = -0.458, p < 10⁻⁴⁸)
+- Gravitational-temporal field correlations ($r = -0.458$, $p < 10^{-48}$)
 - Astronomical event coherence modulations (11 planetary events identified)
 - Multiband frequency analysis validating TEP predictions
 
