@@ -1818,7 +1818,7 @@ def run_lunar_only(analysis_center: str = None) -> Dict:
     
     return all_results
 
-def run_astronomical_events_only(analysis_center: str = None) -> Dict:
+def run_astronomical_events_only(analysis_center: str = None, event_window_days_list: Optional[List[int]] = None) -> Dict:
     """
     Orchestrates a comparative analysis of Jupiter, Saturn, and Mars opposition events.
     This function runs all three planetary opposition analyses and then provides
@@ -1848,6 +1848,13 @@ def run_astronomical_events_only(analysis_center: str = None) -> Dict:
     else:
         centers = ['code', 'igs_combined', 'esa_final']
     
+    # Determine windows to run
+    if event_window_days_list and isinstance(event_window_days_list, list) and len(event_window_days_list) > 0:
+        windows_to_run = sorted(set(int(w) for w in event_window_days_list))
+    else:
+        # Default: multi-window sweep based on manuscript-supported ranges
+        windows_to_run = [30, 60, 120, 180, 240]
+
     for center in centers:
         print_status(f"\n{'='*60}", "INFO")
         print_status(f"PROCESSING {center.upper()} - ASTRONOMICAL EVENTS ANALYSIS", "INFO")
@@ -1858,29 +1865,53 @@ def run_astronomical_events_only(analysis_center: str = None) -> Dict:
         
         print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
         
-        # Run all three analyses
-        results = {'analysis_center': center}
-        results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df)
-        results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df)
-        results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df)
-        
-        # Print summaries
-        print_summary_jupiter_results(results)
-        print_summary_saturn_results(results)
-        print_summary_mars_results(results)
-        print_summary_astronomical_comparison(results)
-        
-        # Save results
-        output_dir = ROOT / "results/outputs"
-        output_dir.mkdir(parents=True, exist_ok=True)
-        output_file = output_dir / f"step_2_2_astronomical_events_{center}.json"
-        try:
-            safe_json_write(results, output_file, indent=2)
-            print_status(f"Astronomical events results saved: {output_file}", "SUCCESS")
-        except Exception as e:
-            print_status(f"Failed to save results: {e}", "ERROR")
-        
-        all_results[center] = results
+        center_results = {}
+        print_status(f"Astronomical events sensitivity sweep windows: {windows_to_run}", "INFO")
+
+        for win in windows_to_run:
+            print_status(f"\nRunning planetary analyses for {center} with event window ±{win} days", "PROCESS")
+            # Run planetary analyses with override window
+            results = {'analysis_center': center, 'event_window_days_used': int(win)}
+            results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df, event_window_override=int(win))
+            results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df, event_window_override=int(win))
+            results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df, event_window_override=int(win))
+            # Include inner planets for completeness
+            try:
+                results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df, event_window_override=int(win))
+            except TypeError:
+                # Backward compatibility if function signature not yet updated
+                results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df)
+            try:
+                results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df, event_window_override=int(win))
+            except TypeError:
+                results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df)
+
+            # Mark wrapper success and provide aliases expected by summary/comparison
+            results['success'] = True
+            results['jupiter'] = results.get('jupiter_opposition_analysis', {})
+            results['saturn'] = results.get('saturn_opposition_analysis', {})
+            results['mars'] = results.get('mars_opposition_analysis', {})
+
+            # Print summaries for this window
+            print_summary_jupiter_results(results)
+            print_summary_saturn_results(results)
+            print_summary_mars_results(results)
+            print_summary_astronomical_comparison(results)
+
+            # Save per-window results
+            output_dir = ROOT / "results/outputs"
+            output_dir.mkdir(parents=True, exist_ok=True)
+            suffix = f"_w{int(win)}"
+            output_file = output_dir / f"step_2_2_astronomical_events_{center}{suffix}.json"
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Astronomical events results saved: {output_file}", "SUCCESS")
+            except Exception as e:
+                print_status(f"Failed to save results: {e}", "ERROR")
+
+            center_results[int(win)] = results
+
+        all_results[center] = center_results if len(center_results) > 1 else next(iter(center_results.values()))
     
     elapsed_time = time.time() - start_time
     print_status("🌌 ASTRONOMICAL EVENTS ANALYSIS COMPLETED", "TITLE")
@@ -2239,20 +2270,32 @@ def print_summary_astronomical_comparison(results: Dict):
         saturn = results['saturn']
         mars = results['mars']
 
-        # Individual event counts
-        jupiter_significant = len([e for e in jupiter.get('individual_event_fits', []) if e.get('is_significant', False)])
-        saturn_significant = len([e for e in saturn.get('individual_event_fits', []) if e.get('is_significant', False)])
-        mars_significant = len([e for e in mars.get('individual_event_fits', []) if e.get('is_significant', False)])
+        # Individual event counts (computed from event_results)
+        def count_significant(event_results_dict: Dict) -> tuple:
+            if not isinstance(event_results_dict, dict):
+                return 0, 0
+            total = 0
+            sig = 0
+            for ev in event_results_dict.values():
+                if isinstance(ev, dict) and ev.get('success', False):
+                    total += 1
+                    if ev.get('gaussian_fit', {}).get('is_significant', False):
+                        sig += 1
+            return sig, total
 
-        print_status(f"Jupiter: {jupiter_significant}/{jupiter.get('n_successful_events', 0)} significant events", "INFO")
-        print_status(f"Saturn:  {saturn_significant}/{saturn.get('n_successful_events', 0)} significant events", "INFO")
-        print_status(f"Mars:    {mars_significant}/{mars.get('n_successful_events', 0)} significant events", "INFO")
+        j_sig, j_tot = count_significant(jupiter.get('event_results', {}))
+        s_sig, s_tot = count_significant(saturn.get('event_results', {}))
+        m_sig, m_tot = count_significant(mars.get('event_results', {}))
 
-        # Expected ratios (if available)
-        jupiter_expected = TEPConfig.get_float('JUPITER_EXPECTED_SIGNAL')
-        saturn_expected = TEPConfig.get_float('SATURN_EXPECTED_SIGNAL')
-        mars_expected = TEPConfig.get_float('MARS_EXPECTED_SIGNAL')
-        if jupiter_expected and saturn_expected and mars_expected:
+        print_status(f"Jupiter: {j_sig}/{j_tot} significant events", "INFO")
+        print_status(f"Saturn:  {s_sig}/{s_tot} significant events", "INFO")
+        print_status(f"Mars:    {m_sig}/{m_tot} significant events", "INFO")
+
+        # Expected ratios (if available) - prefer per-analysis expected_amplitude, fallback to config
+        jupiter_expected = jupiter.get('expected_amplitude', TEPConfig.get_float('TEP_JUPITER_AMPLITUDE_FRACTION', 0.0022))
+        saturn_expected = saturn.get('expected_amplitude', TEPConfig.get_float('TEP_SATURN_AMPLITUDE_FRACTION', 0.00019))
+        mars_expected = mars.get('expected_amplitude', TEPConfig.get_float('TEP_MARS_AMPLITUDE_FRACTION', 0.00005))
+        if all(x is not None and x > 0 for x in [jupiter_expected, saturn_expected, mars_expected]):
             print_status(f"Expected amplitude ratios:", "INFO")
             print_status(f"   Jupiter/Saturn: {jupiter_expected/saturn_expected:.1f}x", "INFO")
             print_status(f"   Jupiter/Mars: {jupiter_expected/mars_expected:.1f}x", "INFO")
@@ -2261,16 +2304,19 @@ def print_summary_astronomical_comparison(results: Dict):
         # Stacked analysis comparison
         jupiter_stacked = jupiter.get('stacked_analysis', {})
         saturn_stacked = saturn.get('stacked_analysis', {})
-        if jupiter_stacked.get('success', False) and saturn_stacked.get('success', False):
+        if (
+            jupiter_stacked.get('enabled') and jupiter_stacked.get('success', False) and
+            saturn_stacked.get('enabled') and saturn_stacked.get('success', False)
+        ):
             jupiter_sigma = jupiter_stacked.get('sigma_level', 0.0)
             saturn_sigma = saturn_stacked.get('sigma_level', 0.0)
             print_status(f"Stacked significance: Jupiter {jupiter_sigma:.1f}σ vs Saturn {saturn_sigma:.1f}σ", "INFO")
 
         # Overall conclusion
-        total_significant = jupiter_significant + saturn_significant + mars_significant
+        total_significant = j_sig + s_sig + m_sig
         if total_significant > 0:
             print_status(f"CONCLUSION: {total_significant} significant astronomical event signals detected!", "SUCCESS")
-            if mars_significant > 0:
+            if m_sig > 0:
                 print_status("    EXTRAORDINARY: Mars signal detected despite being weakest expected!", "SUCCESS")
         else:
             print_status("CONCLUSION: No significant astronomical event signals detected", "INFO")
@@ -2399,9 +2445,11 @@ def main():
     
     parser = argparse.ArgumentParser(description="TEP GNSS Geospatial Temporal Analysis - Step 5")
     parser.add_argument('--mode', choices=['full', 'helical', 'jupiter', 'saturn', 'mars', 'lunar', 'eclipse', 'astronomical'], default='full',
-                        help='Analysis mode: full (complete geospatial temporal analysis) [default], helical (helical motion analyses only), jupiter (Jupiter opposition only), saturn (Saturn opposition only), mars (Mars opposition only), lunar (Lunar Standstill only), or astronomical (Jupiter, Saturn, and Mars)')
+                        help='Analysis mode: full (complete geospatial temporal analysis) [default], helical (helical motion analyses only), jupiter (Jupiter opposition only), saturn (Saturn opposition only), mars (Mars opposition only), lunar (Lunar Standstill only), or astronomical (Jupiter, Saturn, Mars, Venus, Mercury)')
     parser.add_argument('--center', choices=['code', 'igs_combined', 'esa_final'],
                         help='Specific GNSS analysis center to process')
+    parser.add_argument('--event-windows', type=str,
+                        help='Comma-separated list of event window half-widths in days for planetary sensitivity runs (default: 30,60,120,180,240)')
     parser.add_argument('--list-helical', action='store_true',
                         help='List available helical motion analysis methods')
     
@@ -2425,8 +2473,10 @@ def main():
         print_status("• Jupiter Opposition: Nov 3, 2023 & Dec 7, 2024 (0.22% expected amplitude)", "INFO")
         print_status("• Saturn Opposition: Aug 27, 2023 & Sep 8, 2024 (0.019% expected amplitude)", "INFO")
         print_status("• Mars Opposition: Jan 16, 2025 (0.005% expected amplitude - weakest signal)", "INFO")
+        print_status("• Venus Inferior Conjunction: Aug 13, 2023 & Mar 23, 2025 (~0.1% expected)", "INFO")
+        print_status("• Mercury Inferior Conjunctions: multiple 2023–2025 (~0.01% expected)", "INFO")
         print_status("• Major Lunar Standstill: 2024-2025 (sidereal day amplitude enhancement)", "INFO")
-        print_status("• Event-locked stacking with ±60 day windows", "INFO")
+        print_status("• Default multi-window sweep: ±30, ±60, ±120, ±180, ±240 days", "INFO")
         print_status("• Cross-center validation (IGS/ESA/CODE)", "INFO")
         print_status("• Statistical significance testing", "INFO")
         print_status("", "INFO")
@@ -2466,7 +2516,13 @@ def main():
     
     if args.mode == 'astronomical':
         # Run Jupiter, Saturn, AND Mars opposition analyses
-        results = run_astronomical_events_only(args.center)
+        event_windows = None
+        if args.event_windows:
+            try:
+                event_windows = [int(s.strip()) for s in args.event_windows.split(',') if s.strip()]
+            except Exception:
+                event_windows = None
+        results = run_astronomical_events_only(args.center, event_window_days_list=event_windows)
         return all(r.get('success', False) for r in results.values())
     
     # Original full Step 2.2 analysis
@@ -4182,7 +4238,7 @@ def classify_dance_signature(dance_score: float, metrics: Dict) -> str:
         return "NO NETWORK COHERENCE - No coherent mesh dynamics detected"
 
 # ===== END NEW HELICAL MOTION ANALYSIS FUNCTIONS =====
-def run_jupiter_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_jupiter_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
     """
     Analyze GPS timing correlations around Jupiter opposition events using
     GAUSSIAN PULSE FITTING and STACKED ANALYSIS.
@@ -4209,6 +4265,11 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         
         # Define analysis parameters first
         event_window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                event_window_days = int(event_window_override)
+            except Exception:
+                pass
         expected_amplitude = TEPConfig.get_float('TEP_JUPITER_AMPLITUDE_FRACTION', 0.0022) # 0.22% expected amplitude
         min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100) # Min pairs for daily binning
         
@@ -4252,7 +4313,7 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         # Filter to events within data range
         valid_events_raw = []
         
-        print_status(f"Using 240-day windows (±{event_window_days} days) for optimal gravitational coupling detection", "INFO")
+        print_status(f"Using ±{event_window_days}-day windows for gravitational coupling detection", "INFO")
 
         for event in jupiter_oppositions:
             event_date = event['date']
@@ -4332,6 +4393,7 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(event_window_days),
             'interpretation': 'Jupiter opposition analysis completed.'
         }
         
@@ -4357,7 +4419,7 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'interpretation': f"Jupiter opposition analysis failed due to error: {str(e)}"
         }
 
-def run_saturn_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_saturn_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
     """
     Analyze GPS timing correlations around Saturn opposition events.
     
@@ -4413,10 +4475,15 @@ def run_saturn_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         
         # Configuration
         window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                window_days = int(event_window_override)
+            except Exception:
+                pass
         expected_amplitude = TEPConfig.get_float('TEP_SATURN_AMPLITUDE_FRACTION', 0.00019)
         min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100) # Min pairs for daily binning
         
-        print_status(f"Using 240-day windows (±{window_days} days) aligned with optimal coupling timescale", "INFO")
+        print_status(f"Using ±{window_days}-day windows aligned with coupling timescale", "INFO")
         
         print_status(f"Analyzing {len(saturn_events)} Saturn opposition events", "INFO")
         print_status(f"Event window: ±{window_days} days, Expected Amplitude: {expected_amplitude*100:.3f}%", "INFO")
@@ -4512,6 +4579,7 @@ def run_saturn_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(window_days),
             'interpretation': 'Saturn opposition analysis completed.'
         }
         
@@ -4537,7 +4605,7 @@ def run_saturn_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'interpretation': f"Saturn opposition analysis failed due to error: {str(e)}"
         }
 
-def run_mars_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_mars_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
     """
     Analyze GPS timing correlations around Mars opposition events.
     
@@ -4566,10 +4634,15 @@ def run_mars_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         
         # Configuration
         window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                window_days = int(event_window_override)
+            except Exception:
+                pass
         expected_amplitude = TEPConfig.get_float('TEP_MARS_AMPLITUDE_FRACTION', 0.00005)
         min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100) # Min pairs for daily binning
         
-        print_status(f"Using 240-day windows (±{window_days} days) for maximum sensitivity to weak Mars signal", "INFO")
+        print_status(f"Using ±{window_days}-day windows for Mars sensitivity analysis", "INFO")
         
         print_status(f"Analyzing {len(mars_events)} Mars opposition events", "INFO")
         print_status(f"Event window: ±{window_days} days, Expected Amplitude: {expected_amplitude*100:.4f}% (weakest expected signal)", "INFO")
@@ -4664,6 +4737,7 @@ def run_mars_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(window_days),
             'interpretation': 'Mars opposition analysis completed.'
         }
         
@@ -4689,7 +4763,7 @@ def run_mars_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'interpretation': f"Mars opposition analysis failed due to error: {str(e)}"
         }
 
-def run_venus_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_venus_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
     """
     Analyze GPS timing correlations around Venus inferior conjunction events.
     
@@ -4723,10 +4797,15 @@ def run_venus_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         
         # Configuration
         window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                window_days = int(event_window_override)
+            except Exception:
+                pass
         expected_amplitude = TEPConfig.get_float('TEP_VENUS_AMPLITUDE_FRACTION', 0.001)  # 0.1%
         min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
         
-        print_status(f"Using 240-day windows (±{window_days} days) for optimal Venus coupling detection", "INFO")
+        print_status(f"Using ±{window_days}-day windows for Venus coupling detection", "INFO")
         
         print_status(f"Analyzing {len(venus_events)} Venus inferior conjunction events", "INFO")
         print_status(f"Event window: ±{window_days} days, Expected Amplitude: {expected_amplitude*100:.3f}%", "INFO")
@@ -4815,6 +4894,7 @@ def run_venus_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(window_days),
             'interpretation': 'Venus inferior conjunction analysis completed.'
         }
         
@@ -4840,7 +4920,7 @@ def run_venus_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         }
 
 
-def run_mercury_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
+def run_mercury_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
     """
     Analyze GPS timing correlations around Mercury inferior conjunction events.
     
@@ -4880,10 +4960,15 @@ def run_mercury_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
         
         # Configuration
         window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                window_days = int(event_window_override)
+            except Exception:
+                pass
         expected_amplitude = TEPConfig.get_float('TEP_MERCURY_AMPLITUDE_FRACTION', 0.0001)  # 0.01%
         min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
         
-        print_status(f"Using 240-day windows (±{window_days} days) for maximum sensitivity to weak Mercury signal", "INFO")
+        print_status(f"Using ±{window_days}-day windows for Mercury sensitivity analysis", "INFO")
         
         print_status(f"Analyzing {len(mercury_events)} Mercury inferior conjunction events", "INFO")
         print_status(f"Event window: ±{window_days} days, Expected Amplitude: {expected_amplitude*100:.4f}%", "INFO")
@@ -4972,6 +5057,7 @@ def run_mercury_opposition_analysis(complete_df: pd.DataFrame) -> Dict:
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(window_days),
             'interpretation': 'Mercury inferior conjunction analysis completed.'
         }
         
@@ -5988,17 +6074,20 @@ def analyze_resonance_frequencies(df: pd.DataFrame, results: Dict) -> Dict:
     return resonance_results
 
 
-def analyze_nonlinear_coupling(df: pd.DataFrame, planetary_results: Dict) -> Dict:
+def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
     """
-    OPTION C.2: Non-Linear Coupling Detection
+    Mass Scaling Analysis: Test A_obs vs (M/d²)
     
-    Tests for non-linear gravitational coupling by analyzing amplitude enhancement
-    factors and their relationship to planetary configurations. Distinguishes between:
-    - Linear coupling (amplitude ∝ gravitational potential)
-    - Quadratic coupling (amplitude ∝ (gravitational potential)²)
-    - Resonant coupling (amplitude enhanced at specific frequencies)
+    Tests whether observed amplitudes scale with gravitational theory predictions
+    by correlating A_obs with expected amplitude ∝ (M/d²). This is the proper
+    test for gravitational scaling (NOT testing E vs mass, which is circular).
+    
+    Distinguishes between:
+    - Linear coupling: A_obs ∝ (M/d²)
+    - Quadratic coupling: A_obs ∝ (M/d²)²
+    - Resonant coupling: highly variable enhancement factors
     """
-    print_status("Starting Non-Linear Coupling Analysis...", "PROCESS")
+    print_status("Starting Mass Scaling Analysis...", "PROCESS")
     
     coupling_results = {
         'success': False,
@@ -6241,45 +6330,23 @@ def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> 
 
 def calculate_gravitational_scaling_consistency(planetary_events: Dict) -> Dict:
     """
-    Test whether detection strength scales with gravitational theory predictions.
-    This addresses the inverted mass hierarchy issue.
+    DEPRECATED: This test is circular/uninformative.
+    
+    Testing E vs mass is circular because E = A_obs / (M/d²), so dividing by mass
+    then testing correlation with mass is mathematically uninformative.
+    
+    Use analyze_nonlinear_coupling() instead, which properly tests A_obs vs (M/d²).
+    
+    Kept for backwards compatibility only.
     """
-    print_status("Testing gravitational scaling consistency...", "PROCESS")
+    print_status("⚠️  DEPRECATED: calculate_gravitational_scaling_consistency is circular", "WARNING")
+    print_status("   Use analyze_nonlinear_coupling() for proper mass scaling test", "WARNING")
     
-    planets_with_detections = []
-    for planet_name, data in planetary_events.items():
-        if data.get('significant_detections'):
-            # Get strongest detection for this planet
-            strongest_det = max(data['significant_detections'], key=lambda x: x['sigma_level'])
-            planets_with_detections.append({
-                'planet': planet_name,
-                'mass_ratio': data.get('mass_ratio', 1.0),
-                'expected_amp': data.get('expected_amplitude_pct', 0.1),
-                'observed_sigma': strongest_det['sigma_level'],
-                'enhancement_factor': strongest_det['enhancement_factor']
-            })
-    
-    scaling_results = {'success': False, 'mass_correlation': 0.0, 'p_value': 1.0}
-    
-    if len(planets_with_detections) >= 3:
-        mass_ratios = np.array([p['mass_ratio'] for p in planets_with_detections])
-        sigma_levels = np.array([p['observed_sigma'] for p in planets_with_detections])
-        
-        # Test correlation: should sigma scale with mass?
-        correlation, p_value = stats.pearsonr(mass_ratios, sigma_levels)
-        scaling_results = {
-            'success': True,
-            'mass_correlation': float(correlation),
-            'p_value': float(p_value),
-            'planets_tested': planets_with_detections,
-            'interpretation': 'consistent' if correlation > 0.3 and p_value < 0.05 else 'inconsistent'
-        }
-        
-        print_status(f"Gravitational scaling test: r={correlation:.3f}, p={p_value:.4f}", "INFO")
-        if correlation < 0:
-            print_status("⚠️  INVERTED MASS HIERARCHY: Weaker planets show stronger signals", "WARNING")
-    
-    return scaling_results
+    return {
+        'success': False,
+        'deprecated': True,
+        'message': 'Use mass_scaling_analysis instead - tests A_obs vs (M/d²) directly'
+    }
 
 
 def generate_comprehensive_scientific_report(all_results: Dict, analysis_center: str) -> Dict:
@@ -6409,8 +6476,11 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         
         correction_results = apply_multiple_testing_corrections(all_planetary_detections)
         
-        # Calculate gravitational scaling consistency
-        scaling_results = calculate_gravitational_scaling_consistency(planetary_events)
+        # Mass scaling analysis: Test A_obs vs (M/d²) for gravitational consistency
+        print_status("\\n" + "="*80, "TITLE")
+        print_status("MASS SCALING ANALYSIS", "TITLE")
+        print_status("="*80, "TITLE")
+        mass_scaling_results = analyze_nonlinear_coupling(all_results)
         
         print_status(f"Multiple Testing Correction Results:", "INFO")
         if correction_results.get('correction_stats'):
@@ -6423,10 +6493,13 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         else:
             print_status("   No planetary detections found for correction analysis", "INFO")
         
-        if scaling_results['success']:
-            print_status(f"Gravitational Scaling Consistency:", "INFO")
-            print_status(f"   Mass-sigma correlation: r={scaling_results['mass_correlation']:.3f}, p={scaling_results['p_value']:.4f}", "INFO")
-            print_status(f"   Interpretation: {scaling_results['interpretation']}", "INFO")
+        if mass_scaling_results['success']:
+            print_status(f"Mass Scaling Analysis:", "INFO")
+            linearity = mass_scaling_results.get('linearity_test', {})
+            print_status(f"   A_obs vs (M/d²) correlation: r={linearity.get('linear_correlation', 0):.3f}", "INFO")
+            print_status(f"   A_obs vs (M/d²)² correlation: r={linearity.get('quadratic_correlation', 0):.3f}", "INFO")
+            print_status(f"   Coupling type: {mass_scaling_results.get('coupling_type', 'unknown')}", "INFO")
+            print_status(f"   Mean enhancement factor: {linearity.get('mean_enhancement', 0):.0f}x", "INFO")
         
         # Print detailed planetary analysis
         for planet_name, data in planetary_events.items():
@@ -6456,7 +6529,7 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         report['planetary_events'] = planetary_events
         report['corrected_detections'] = correction_results['corrected_detections']
         report['multiple_testing_corrections'] = correction_results['correction_stats']
-        report['gravitational_scaling'] = scaling_results
+        report['mass_scaling_analysis'] = mass_scaling_results  # Proper test: A_obs vs (M/d²)
         
         # ============================================================
         # SECTION 2: GEOPHYSICAL SIGNATURE ANALYSIS

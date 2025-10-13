@@ -677,7 +677,7 @@ def analyze_station_overlap_across_centers(log_data: dict, coords_df: pd.DataFra
             "percentage_of_unique_total": (len(station_sets[ac]) / total_unique_stations) * 100 if total_unique_stations > 0 else 0
         }
     
-    # Calculate hemisphere distribution for the 392 analyzed stations
+    # Calculate hemisphere distribution for the analyzed stations
     hemisphere_distribution = {"north_count": 0, "south_count": 0, "hemisphere_ratio": 0.0}
     if total_unique_stations > 0:
         # Get coordinates for all analyzed stations
@@ -1787,7 +1787,7 @@ def create_station_distances_file(root_dir: Path):
 @ensure_single_instance
 def main():
     """Main function to perform comprehensive geospatial data quality analysis and validation."""
-    print_status("TEP-GNSS Analysis Framework v0.15", "TITLE")
+    print_status("TEP-GNSS Analysis Framework v0.18", "TITLE")
     print_status("STEP 2.1: Comprehensive Geospatial Data Quality Assessment", "TITLE")
     print_status("Performing rigorous quality validation of multi-center GNSS timing correlations", "INFO")
     print_status("Analysis scope: Quality assurance, statistical validation, and methodological transparency", "INFO")

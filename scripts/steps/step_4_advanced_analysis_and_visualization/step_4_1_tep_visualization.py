@@ -620,9 +620,9 @@ def create_station_map(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load analysis stations (392 unique stations actually used in analysis)
+    # Load analysis stations (364 unique stations actually used in analysis)
     import json
-    analysis_stations_file = root_dir / 'tmp_392_analysis_stations.json'
+    analysis_stations_file = root_dir / 'tmp_364_analysis_stations.json'
     if analysis_stations_file.exists():
         with open(analysis_stations_file, 'r') as f:
             analysis_stations = set(json.load(f))
@@ -708,7 +708,7 @@ def create_station_map(root_dir):
     ax.set_ylim(-80, 85)  # Adjusted to remove gap below Antarctica (-77.85° is southernmost station)
     ax.set_xlabel('Longitude (°)', color=THEME_COLORS['text'])
     ax.set_ylabel('Latitude (°)', color=THEME_COLORS['text'])
-    ax.set_title(f'Global Distribution of 392 Unique GNSS Stations', color=THEME_COLORS['text'])
+    ax.set_title(f'Global Distribution of 364 Unique GNSS Stations', color=THEME_COLORS['text'])
     ax.legend(loc='lower left', frameon=True, facecolor='white', edgecolor=THEME_COLORS['secondary'])
     ax.tick_params(colors=THEME_COLORS['text'])
     
@@ -728,9 +728,9 @@ def create_three_globe_views(root_dir):
     coastline_file = root_dir / 'data/world_coastlines.json'
     land_polygons_file = root_dir / 'data/world_land_polygons.json'
     
-    # Load analysis stations (392 unique stations actually used in analysis)
+    # Load analysis stations (364 unique stations actually used in analysis)
     import json
-    analysis_stations_file = root_dir / 'tmp_392_analysis_stations.json'
+    analysis_stations_file = root_dir / 'tmp_364_analysis_stations.json'
     if analysis_stations_file.exists():
         with open(analysis_stations_file, 'r') as f:
             analysis_stations = set(json.load(f))
@@ -846,7 +846,7 @@ def create_three_globe_views(root_dir):
                 bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, 
                          edgecolor='#495773', linewidth=0.5))
 
-    fig.suptitle(f'Global Distribution of 392 Unique GNSS Stations', 
+    fig.suptitle(f'Global Distribution of 364 Unique GNSS Stations', 
                  fontsize=16, fontweight='bold', color=THEME_COLORS['text'], y=0.95)
     fig.tight_layout(rect=[0, 0.08, 1, 0.92])
     output_file = figures_dir / 'gnss_stations_three_globes.png'
@@ -2626,7 +2626,7 @@ def generate_summary_report(all_results, output_file):
         'key_insights': {
             'model_quality': 'Residuals show good fit with minimal systematic patterns',
             'method_robustness': 'Both coherency methods detect strong correlations',
-            'null_validation': 'Comprehensive export confirms signal authenticity',
+            'null_validation': 'Comprehensive export is consistent with a genuine physical signal',
             'publication_ready': 'High-quality figures generated for publication'
         }
     }

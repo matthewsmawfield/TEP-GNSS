@@ -3,23 +3,24 @@
     <div class="experimental-section" style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0;">
         <h3 style="margin-top:0; color: #220126;">Principal Findings</h3>
         
-        <p style="margin-bottom:15px;">Phase-coherent cross-spectral analysis of 62.7 million quality-filtered station pair measurements from 392 unique GNSS stations reveals systematic distance-dependent correlations in atomic clock residuals. The patterns exhibit substantial multi-center consistency and demonstrate sensitivity to Earth's motion, gravitational fields, and temporal structure. For a detailed breakdown of station counts, see Section 2.2.</p>
+        
+        <p style="margin-bottom:15px;">Phase-coherent cross-spectral analysis of 62.7 million quality-filtered station pair measurements from 364 unique GNSS stations (249 N / 115 S = 68.4% / 31.6%) reveals systematic distance-dependent correlations in atomic clock residuals. The patterns exhibit substantial multi-center consistency and demonstrate sensitivity to Earth's motion, gravitational fields, and temporal structure. For a detailed breakdown, see Section 2.2.</p>
         
         <div style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
             <h4 style="margin-top: 0; color: #495773;">Core Observational Evidence</h4>
             <ol style="margin-bottom:10px;">
-                <li>Primary Finding: Correlation Length: A primary correlation length (λ) of 3,330–4,549 km, with bootstrap validation ranges of 2,986–3,438 km (CODE), 2,346–2,757 km (ESA Final), and 2,616–2,851 km (IGS Combined), is observed. Sensitivity analyses show a broader range of 1,600–7,500 km, reflecting environmental dependencies.</li>
+                <li>Primary Finding: Correlation Length: A primary correlation length (λ) of 3,330–4,549 km, with bootstrap validation ranges of 1,198–5,918 km (CODE), 2,532–3,984 km (ESA Final), and 3,197–4,871 km (IGS Combined), is observed. Bootstrap analysis with 5000 iterations achieves 3,555/5,000 (71.1%) success rates, demonstrating robust statistical convergence. Sensitivity analyses show a broader range of 1,600–7,500 km, reflecting environmental dependencies.</li>
                 <li>Elevation dependence: Systematic quintile stratification from Q1 (-81 to 79m: λ = 3,174 km, R² = 0.83) through Q2 (79 to 189m: λ = 4,470 km), Q3 (189 to 379m: λ = 5,287 km), Q4 (379 to 713m: λ = 7,688 km, R² = 0.82), to Q5 (>713m: λ = 4,980 km), showing systematic elevation effects with complex high-altitude patterns.</li>
                 <li>Geomagnetic stratification: Three distinct correlation regimes - equatorial (λ = 1,760–2,080 km, R² > 0.89), transition zones (λ = 3,200–15,000 km with high uncertainty), and polar regions (λ = 1,300–3,400 km)</li>
                 <li>Multi-center consistency: Robust patterns across CODE (39.0M pairs, N<sub>eff</sub>=28 bins used), IGS Combined (12.9M pairs, N<sub>eff</sub>=28 bins used), and ESA Final (10.8M pairs, N<sub>eff</sub>=25 bins used) with 100% elevation and geomagnetic coverage</li>
-                <li>Spectral characterization: Broadband coupling (R² > 0.85 from 10-200 µHz, CV of R² across bands = 2.9%) with gravitational enhancement (λ = 4,677 km at tidal frequencies) and persistent post-tidal signals (30-40 µHz: R² = 0.946), excluding classical tidal contamination</li>
+                <li>Spectral characterization: Broadband coupling (R² > 0.85 from 10-100 μHz; 100-200 μHz averages ~0.75, CV of R² across bands = 2.9%) with gravitational enhancement (λ = 4,677 km at tidal frequencies) and persistent post-tidal signals (30-40 μHz: R² = 0.946), excluding classical tidal contamination</li>
                 <li>Ionospheric interference quantified: TID exclusion analysis reveals 21-23% phase-alignment index improvement potential from excluding high ionospheric activity periods, with IGS Combined showing highest sensitivity (22.66% improvement) and systematic temporal patterns across Venus 2f harmonic, solar rotation, and lunar cycles</li>
                 <li>Earth motion signatures: Orbital velocity coupling (r = -0.571 to -0.793), Chandler wobble (R² = 0.377–0.471), interference patterns (r up to 0.962)</li>
-                <li>Gravitational energy hierarchy validation: Comprehensive gravitational-temporal analysis reveals sophisticated TEP coupling mechanisms - orbital motion (strongest: |r| = 0.571-0.793), Chandler wobble with lunar gravitational modulation (moderate-strong: |r| = 0.61–0.69), and daily rotation (moderate: CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination (-0.057, 95% CI: [-0.143, +0.030], n.s.) indicates complex multi-mechanism coupling rather than simple proportional relationships</li>
+                <li>Gravitational energy hierarchy validation: Comprehensive gravitational-temporal analysis shows patterns consistent with TEP coupling mechanisms—orbital motion (strongest: |r| = 0.571-0.793), Chandler wobble with lunar gravitational modulation (moderate-strong: |r| = 0.61–0.69), and daily rotation (moderate: CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination (-0.057, 95% CI: [-0.143, +0.030], n.s.) indicates complex multi-mechanism coupling rather than simple proportional relationships</li>
                 <li>Network coherence: Moderate unified detector response (0.493-0.560) across all analysis centers, indicating coordinated network dynamics with multi-frequency beat patterns (35 significant patterns detected) and relative motion coupling (9-11 patterns per center)</li>
-                <li>Gravitational coupling: Strong planetary correlations with timescale strengthening (r = -0.503 at 227 days, p = 3.3×10⁻⁴ autocorr-corrected) and Moon-Chandler coupling mechanism discovered - Earth's 433-day polar wobble modulates Earth-Moon gravitational geometry, creating stronger TEP signatures than predicted from mechanical energy alone</li>
-                <li>Temporal structure: Diurnal (1.9-7.6% day-night variation) and seasonal modulation with systematic early morning peaks; seasonal peaks occur near spring equinox; global means are 1.019/1.076/1.060</li>
-                <li>Comprehensive diurnal dynamics: Analysis of 72.4 million hourly records reveals synchronized temporal variations across all centers, with time rate fluctuations of ~10⁻¹⁷-10⁻¹⁶ fractional amplitude indicating dynamical time flow consistent with TEP predictions</li>
+                <li>Gravitational coupling: Strong planetary correlations with timescale strengthening (r = -0.503 at 227 days, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p = 3.3×10⁻⁴) and Moon-Chandler coupling mechanism discovered - Earth's 433-day polar wobble modulates Earth-Moon gravitational geometry, creating stronger TEP signatures than predicted from mechanical energy alone (note: this energetic comparison is heuristic—the detection is in correlation space on binned means)</li>
+                <li>Temporal structure: Diurnal (1.9-7.6% day-night variation) and seasonal modulation with systematic early morning peaks; seasonal peaks occur near spring equinox; global means are 1.019/1.076/1.060 (CODE/IGS/ESA)</li>
+                <li>Comprehensive diurnal dynamics: Analysis of 72.4 million hourly records reveals synchronized temporal variations across all centers with systematic early morning coherence peaks and seasonal modulation patterns consistent with dynamical time flow</li>
                 <li>Dynamic responses: Major phase-alignment index modulations during eclipses (18-87% of baseline) and supermoon events</li>
             </ol>
         </div>
@@ -35,12 +36,12 @@
     
     <h2>3.1.1 Multi-Center Correlation Analysis</h2>
     
-        <p>Cross-spectral analysis reveals a primary correlation length of 3,330–4,549 km across three independent GNSS analysis centers. This finding is supported by bootstrap validation ranges of 2,986–3,438 km (CODE), 2,346–2,757 km (ESA Final), and 2,616–2,851 km (IGS Combined) and is robust across different analysis strategies. Primary pooled fits on bin means show R² = 0.92–0.97 (distance-bin means, N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted). Sensitivity subset analyses (elevation/geomagnetic): R² = 0.70–0.91. Sensitivity analyses, which account for environmental factors like elevation and geomagnetic latitude, show a broader range of 1,600–7,500 km.</p>
+        <p>Cross-spectral analysis reveals a primary correlation length of 3,330–4,549 km across three independent GNSS analysis centers. This finding is supported by bootstrap validation ranges of 1,198–5,918 km (CODE), 2,532–3,984 km (ESA Final), and 3,197–4,871 km (IGS Combined) and is robust across different analysis strategies. Primary pooled fits on bin means show R² = 0.92–0.97 (distance-bin means, N<sub>eff</sub> ≈ 25–28 bins used from 40 attempted). Sensitivity subset analyses (elevation/geomagnetic): R² = 0.70–0.91. Sensitivity analyses, which account for environmental factors like elevation and geomagnetic latitude, show a broader range of 1,600–7,500 km.</p>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/figure_1_TEP_site_themed.png" alt="Three-panel figure showing TEP evidence with multi-center data and confidence intervals" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">
-            <b>Figure 5. Continental-scale correlations in GNSS atomic clock networks.</b>
+            <b>Figure 4. Continental-scale correlations in GNSS atomic clock networks.</b>
             <b>(a) Multi-center reproducibility:</b> Exponential decay with 95% confidence intervals. The primary correlation length (λ) of 3,330–4,549 km is consistent across centers. 
             <b>(b) Statistical significance:</b> Permutation tests demonstrate real R² values as extreme outliers. 
             <b>(c) Signal structure:</b> Distance-scrambled comparison confirms spatial organization of correlations.
@@ -55,7 +56,7 @@
                     <tr style="background-color: rgba(45, 1, 64, 0.1); border: 1px solid #495773;">
                         <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Center</th>
                         <th style="padding: 8px; border: 1px solid #495773; text-align: left;">λ Range (km)</th>
-                        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">R² Range</th>
+                        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">R² Range (subset fits; not the primary pooled fit)</th>
                         <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Geomag</th>
                         <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Pairs</th>
                     </tr>
@@ -84,9 +85,9 @@
                     </tr>
                 </tbody>
             </table>
-            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Table 1. Correlation Parameters by Analysis Center (Sensitivity Subset Analysis).</b> This table shows the range of correlation lengths and R² values observed in sensitivity subset analyses, which systematically vary with environmental factors such as elevation and geomagnetic latitude. The R² ranges shown (e.g., 0.78–0.88 for IGS) represent sensitivity subset fits, distinct from the primary pooled fit on bin means (R² = 0.966 for IGS). The primary finding of a 3,330–4,549 km correlation length is derived from the pooled analysis.</figcaption>
+            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Table 1. Correlation Parameters by Analysis Center (Sensitivity Subset Analysis).</b> This table shows the range of correlation lengths and R² values observed in sensitivity subset analyses, which systematically vary with environmental factors such as elevation and geomagnetic latitude. The R² ranges shown (e.g., 0.78–0.88 for IGS Combined) represent sensitivity subset fits, distinct from the primary pooled fit on bin means (R² = 0.966 for IGS Combined). The primary finding of a 3,330–4,549 km correlation length is derived from the pooled analysis.</figcaption>
         </div>
-        <p style="font-size: 13px; color: #666; margin-top: 10px;"><em>Note: λ values are derived from Leave-One-Station-Out (LOSO) cross-validation for maximum robustness. R² values in this table refer to sensitivity subset fits on distance-bin means (N<sub>eff</sub> ≈ 25–28), not individual pairs from the 62.7 million station pair measurements. These sensitivity subset R² values (e.g., 0.78–0.88 for IGS) are distinct from the primary pooled fit R² values (e.g., 0.966 for IGS) reported elsewhere. R² (Binned Fit) reflects the goodness of fit for the exponential model to the binned data, while R² (LOSO CV) represents the model's predictive power on unseen data subsets, providing a more conservative measure of explained variance.</em></p>
+        <p style="font-size: 13px; color: #666; margin-top: 10px;"><em>Note: λ values are derived from Leave-One-Station-Out (LOSO) cross-validation for maximum robustness. R² values in this table refer to sensitivity subset fits on distance-bin means (N<sub>eff</sub> ≈ 25–28), not individual pairs from the 62.7 million station pair measurements. These sensitivity subset R² values (e.g., 0.78–0.88 for IGS Combined) are distinct from the primary pooled fit R² values (e.g., 0.966 for IGS Combined) reported elsewhere. R² (Binned Fit) reflects the goodness of fit for the exponential model to the binned data, while R² (LOSO CV) represents the model's predictive power on unseen data subsets, providing a more conservative measure of explained variance.</em></p>
         
         <h3>Multi-Center Consistency</h3>
         <ul>
@@ -100,7 +101,7 @@
     </div>
 
     <h2>3.1.2 Model Comparison and Selection</h2>
-    <p>Comparison of seven correlation models shows that exponential family models (Exponential/Matérn) are preferred across analysis centers. Exponential is best for CODE and ESA (ΔAIC = 0.0). For IGS, Matérn(1.5) is best (ΔAIC = 0.0) with Exponential close behind (ΔAIC = 2.1); Exponential is adopted as the simpler, interpretable baseline and conclusions are confirmed under Matérn.</p>
+    <p>Comprehensive comparison of seven correlation models demonstrates systematic preference for exponential family models (Exponential/Matérn(ν=1.5)) across all analysis centers. Matérn (ν=1.5) achieves optimal performance (lowest AIC) for IGS Combined and remains competitive across all centers (ΔAIC ≤ 4.4), confirming the exponential family's superiority over alternatives. Both exponential and Matérn(ν=1.5) models support screened scalar field interpretation, with exponential adopted as the more interpretable baseline while conclusions are validated under both frameworks.</p>
     
     <div class="experimental-section">
         <h3>Model Performance (Akaike Information Criterion)</h3>
@@ -111,7 +112,7 @@
                         <th style="padding: 8px; border: 1px solid #495773;">Model</th>
                         <th style="padding: 8px; border: 1px solid #495773;">CODE ΔAIC</th>
                         <th style="padding: 8px; border: 1px solid #495773;">ESA ΔAIC</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">IGS ΔAIC</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">IGS Combined ΔAIC</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,7 +156,7 @@
             </table>
         </div>
         
-        <p>Key findings: Exponential family models (exponential, Matérn) consistently outperform alternatives. Systematic preference for exponential over squared exponential models (ΔAIC = 5.5-16.6) supports screened scalar field interpretation. All best-fit models achieve R² > 0.92, confirming robust exponential decay characteristics.</p>
+        <p>Key findings: Exponential family models (exponential, Matérn(ν=1.5)) consistently outperform alternatives across all model comparison criteria. Matérn (ν=1.5) demonstrates optimal AIC performance for IGS Combined, while systematic preference for exponential family over squared exponential models (ΔAIC = 5.5-16.6) supports screened scalar field interpretation over Gaussian processes. All best-fit models achieve R² > 0.92, with Matérn(ν=1.5) achieving the highest individual R² values, confirming robust exponential decay characteristics consistent with field screening mechanisms.</p>
     </div>
 
     <h2>3.2 Environmental and Geometric Dependencies</h2>
@@ -222,7 +223,7 @@
         
         <p>Elevation dependence: Correlation length shows systematic variation with elevation quintile (Q1: 3,174 km, Q4: 7,688 km, 2.4× increase), with Q5 showing intermediate values (4,980 km), indicating complex environmental screening effects. The R² values remain consistently high (0.73-0.83) across all quintiles, suggesting robust exponential decay patterns at all elevation ranges. This pattern is consistent with TEP predictions for φ-field coupling through matter density variations.</p>
         
-        <p>Geomagnetic-elevation stratification: Combined analysis reveals enhanced correlation structure when both elevation and geomagnetic latitude effects are considered simultaneously, with equatorial high-elevation stations showing the strongest correlations (λ > 5,000 km) and polar sea-level stations showing the shortest (λ < 2,000 km).</p>
+        <p>Geomagnetic-elevation stratification: Combined analysis reveals enhanced correlation structure when both elevation and geomagnetic latitude effects are considered simultaneously, with equatorial high-elevation stations showing the strongest correlations (λ > 5,000 km) and polar sea-level stations showing the shortest (λ ≈ 1,300–3,400 km).</p>
     </div>
 
     <h2>3.2.2 Directional Anisotropy Patterns</h2>
@@ -230,21 +231,21 @@
     
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/gnss_three_globes_connections_combined.png" alt="Global station correlation network" style="max-width:100%; height:auto;" loading="lazy">
-        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 6. Global Station Correlation Network:</b> Visualization of high-coherence connections across the global GNSS network, revealing directional patterns and spatial anisotropy in timing correlations across intercontinental distances.</figcaption>
+        <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 5. Global Station Correlation Network:</b> Visualization of high-coherence connections across the global GNSS network, revealing directional patterns and spatial anisotropy in timing correlations across intercontinental distances.</figcaption>
     </figure>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
         <figure role="img" style="margin: 0;">
             <img src="public/figures/anisotropy_heatmap_code.png" alt="CODE anisotropy heatmap" style="max-width:100%; height:auto;" loading="lazy">
-            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 6a. CODE:</b> Coherence vs distance and longitude difference.</figcaption>
+            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 5a. CODE:</b> Coherence vs distance and longitude difference.</figcaption>
         </figure>
         <figure role="img" style="margin: 0;">
             <img src="public/figures/anisotropy_heatmap_esa_final.png" alt="ESA anisotropy heatmap" style="max-width:100%; height:auto;" loading="lazy">
-            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 6b. ESA Final:</b> Consistent patterns across independent processing.</figcaption>
+            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 5b. ESA Final:</b> Consistent patterns across independent processing.</figcaption>
         </figure>
         <figure role="img" style="margin: 0;">
             <img src="public/figures/anisotropy_heatmap_igs_combined.png" alt="IGS anisotropy heatmap" style="max-width:100%; height:auto;" loading="lazy">
-            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 6c. IGS Combined:</b> Three-center consistency validates robustness.</figcaption>
+            <figcaption style="font-style:italic; font-size:12px; color:#495773;"><b>Figure 5c. IGS Combined:</b> Three-center consistency validates robustness.</figcaption>
         </figure>
     </div>
 
@@ -261,7 +262,7 @@
 
     <div class="experimental-section" style="margin-top: 15px;">
         <h3>Independence safeguards for directionality</h3>
-        <p>Distance-distribution matching is enforced across azimuth sectors. Sector-level Kolmogorov–Smirnov tests require p &gt; 0.05; all 8/8 sectors pass for each analysis center. Minimum KS p across sectors: CODE 0.563, ESA Final 0.766, IGS Combined 0.705. See Table S1.</p>
+        <p>Distance-distribution matching is enforced across azimuth sectors. Sector-level Kolmogorov–Smirnov (KS) tests require p &gt; 0.05; all 8/8 sectors pass for each analysis center. Minimum KS p across sectors: CODE 0.563, ESA Final 0.766, IGS Combined 0.705. See Table S1.</p>
         <div style="overflow-x: auto; margin: 12px 0;">
             <table style="border-collapse: collapse; width: 100%; font-size: 14px;">
                 <thead>
@@ -304,7 +305,7 @@
     </div>
     
     <h2>3.3.1 Orbital Motion Coupling</h2>
-    <p>Temporal tracking analysis reveals systematic correlation between GPS timing anisotropy and Earth's orbital velocity, providing evidence for velocity-dependent spacetime coupling.</p>
+    <p>Temporal tracking analysis reveals systematic correlation between GPS timing anisotropy and Earth's orbital velocity, consistent with velocity-dependent spacetime coupling.</p>
     
     <div class="experimental-section">
         <h3>Orbital Velocity Correlations</h3>
@@ -315,7 +316,7 @@
                         <th style="padding: 8px; border: 1px solid #495773;">Analysis Center</th>
                         <th style="padding: 8px; border: 1px solid #495773;">Correlation (r)</th>
                         <th style="padding: 8px; border: 1px solid #495773;">P-value</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">Significance</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">Significance (BH q=0.05): ✓</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -344,13 +345,11 @@
         <p>Physical pattern: Negative correlation indicates that higher orbital velocities (perihelion, ~30.3 km/s) correspond to more isotropic correlations, while lower velocities (aphelion, ~29.3 km/s) show stronger directional anisotropy. Individual center significance levels vary, with anisotropy measured as East-West/North-South correlation length ratios from 8-sector directional analysis. Analysis centers use independent processing algorithms and partially overlapping station networks.</p>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 15px; margin: 15px 0; border-radius: 5px;">
-            <h4 style="margin-top: 0; color: #220126;">Fisher Meta-Analysis Results</h4>
-            <p>Combined statistical analysis across all three analysis centers:</p>
+            <h4 style="margin-top: 0; color: #220126;">Meta-Analysis Context</h4>
             <ul>
-                <li><strong>Fisher's combined p-value:</strong> 2.7×10⁻¹⁴ (unadjusted, df=6) or 1.4×10⁻¹⁰ (dependence-adjusted for shared network stations)</li>
-                <li><strong>Heterogeneity metrics:</strong> Q = 1.85, I² = 0% (low heterogeneity indicates consistent effects across centers)</li>
-                <li><strong>Dependence adjustment:</strong> Shared-network dependence between centers requires adjustment by 5,147× (from 2.7×10⁻¹⁴ to 1.4×10⁻¹⁰)</li>
-                <li><strong>Validation:</strong> Consistent directional effects under block-jackknife validation support robust conclusions despite network overlap</li>
+                <li><strong>Network overlap:</strong> Station overlap 83–90% across center pairs (CODE: 322 stations, IGS: 278, ESA: 201)</li>
+                <li><strong>Heterogeneity metrics:</strong> Cochran's Q = 0.24 (p = 0.885), I² = 0% (low heterogeneity indicates consistent effects across centers)</li>
+                <li><strong>Interpretation:</strong> High overlap implies center-specific results are not fully independent; evidence should be treated as corroboration across independent processing of overlapping networks.</li>
             </ul>
         </div>
         
@@ -379,7 +378,7 @@
                         <th style="padding: 8px; border: 1px solid #495773;">Analysis Center</th>
                         <th style="padding: 8px; border: 1px solid #495773;">Dataset Size</th>
                         <th style="padding: 8px; border: 1px solid #495773;">Network Coherence</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">3D Anisotropy (CV)</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">Anisotropy CV (λEW/λNS)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -428,7 +427,7 @@
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
                         <td style="padding: 8px; border: 1px solid #495773;">Chandler Wobble</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">~10²⁰ J (mechanical)<br/>~10²⁸ J (gravitational modulation) *</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">~10²⁰ J (mechanical), ~10²⁸ J (gravitational modulation)<sup>†</sup></td>
                         <td style="padding: 8px; border: 1px solid #495773;">|r| = 0.614-0.687</td>
                         <td style="padding: 8px; border: 1px solid #495773;">Earth-Moon gravitational modulation</td>
                     </tr>
@@ -442,11 +441,11 @@
             </table>
         </div>
         
-        <p style="font-size: 13px; color: #666; margin-top: 10px;"><em>*The ~10²⁸ J gravitational modulation scale represents the effective energy scale of Earth-Moon gravitational field variations induced by Chandler wobble. As Earth's polar axis shifts ~9 meters during the 433-day cycle, the changing Earth-Moon gravitational geometry modulates tidal force patterns and gravitational field gradients. This gravitational field modulation, rather than the mechanical wobble energy (~10²⁰ J), appears to drive the observed TEP coupling strength, consistent with the hypothesis that TEP signatures scale with gravitational field variations rather than mechanical energy alone.</em></p>
+        <p style="font-size: 13px; color: #666; margin-top: 10px;"><em><sup>†</sup>The ~10²⁸ J gravitational modulation scale represents the effective energy scale of Earth-Moon gravitational field variations induced by Chandler wobble. As Earth's polar axis shifts ~9 meters during the 433-day cycle, the changing Earth-Moon gravitational geometry modulates tidal force patterns and gravitational field gradients. This gravitational field modulation, rather than the mechanical wobble energy (~10²⁰ J), appears to drive the observed TEP coupling strength, consistent with the hypothesis that TEP signatures scale with gravitational field variations rather than mechanical energy alone. <strong>Note:</strong> This energetic comparison is heuristic and qualitative—the detection is made in correlation space on binned means (R² = 0.377–0.471), not through direct energy measurements.</em></p>
         
         <h3>Key Discovery: Moon-Chandler Coupling Association</h3>
         
-        <p>The unexpectedly strong Chandler wobble TEP signature (R² = 0.377–0.471, |r| = 0.61–0.69) compared to its mechanical energy (~10²⁰ J) shows patterns consistent with Earth-Moon gravitational field modulation. During the 433-day Chandler cycle:</p>
+        <p>The unexpectedly strong Chandler wobble TEP signature (R² = 0.377–0.471, |r| = 0.61–0.69) compared to its mechanical energy (~10²⁰ J) shows patterns consistent with Earth-Moon gravitational field modulation. <em>Note: This energetic comparison is heuristic—the detection is made in correlation space on binned means, not through direct energy measurements. The inference is made in correlation space on bin means, not from absolute energetics, to avoid misreads.</em> During the 433-day Chandler cycle:</p>
         
         <ul>
             <li>Polar axis shifts ~9 meters from geographic poles</li>
@@ -470,19 +469,19 @@
                 <tbody>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">CODE</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.377 (p<0.01)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.377 (p=0.029)</td>
                         <td style="padding: 8px; border: 1px solid #495773;">4 detected</td>
                         <td style="padding: 8px; border: 1px solid #495773;">Moderate-Strong</td>
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
                         <td style="padding: 8px; border: 1px solid #495773;">IGS Combined</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.471 (p<0.01)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.471 (p=0.008)</td>
                         <td style="padding: 8px; border: 1px solid #495773;">4 detected</td>
                         <td style="padding: 8px; border: 1px solid #495773;">Strong</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">ESA Final</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.453 (p<0.01)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">R²=0.453 (p=0.011)</td>
                         <td style="padding: 8px; border: 1px solid #495773;">4 detected</td>
                         <td style="padding: 8px; border: 1px solid #495773;">Strong</td>
                     </tr>
@@ -499,9 +498,9 @@
                 <thead>
                     <tr style="background-color: rgba(45, 1, 64, 0.1); border: 1px solid #495773;">
                         <th style="padding: 8px; border: 1px solid #495773;">Frequency Type</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">Period (days)</th>
+                        <th style="padding: 8px; border: 1px solid #495773; text-align: center;">Interference Period (days) <sup>a</sup></th>
                         <th style="padding: 8px; border: 1px solid #495773;">CODE (r)</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">IGS (r)</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">IGS Combined (r)</th>
                         <th style="padding: 8px; border: 1px solid #495773;">ESA (r)</th>
                     </tr>
                 </thead>
@@ -515,7 +514,7 @@
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
                         <td style="padding: 8px; border: 1px solid #495773;">Chandler + Annual (combination/sum)</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">196.9</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">198.13</td>
                         <td style="padding: 8px; border: 1px solid #495773;">0.919</td>
                         <td style="padding: 8px; border: 1px solid #495773;">0.717</td>
                         <td style="padding: 8px; border: 1px solid #495773;">0.864</td>
@@ -540,7 +539,7 @@
         
         <figure role="img" style="text-align:center; margin: 30px 0;">
             <img src="public/figures/figure_10_orbital_dance_visualization.png" alt="Earth's orbital dance visualization" style="max-width:100%; height:auto;" loading="lazy">
-            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 10. Earth Motion Interference Patterns.</b> Four interference patterns detected consistently across all analysis centers (r = 0.598–0.962): one beat frequency (M2–S2 difference) and three combination frequencies (Chandler+Annual, Chandler+Semiannual, Annual+Semiannual sums), demonstrating network sensitivity to the complex interplay of terrestrial rotation, orbital motion, and polar axis wandering.</figcaption>
+            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 6. Earth Motion Interference Patterns.</b> Four interference patterns detected consistently across all analysis centers (r = 0.598–0.962): one beat frequency (M2–S2 difference) and three combination frequencies (Chandler+Annual, Chandler+Semiannual, Annual+Semiannual sums), demonstrating network sensitivity to the complex interplay of terrestrial rotation, orbital motion, and polar axis wandering. <sup>a</sup>Combination periods are calculated as 1/T = 1/T1 + 1/T2, using T1 = 433 days (Chandler wobble) and T2 = 365.25 days (Annual cycle).</figcaption>
         </figure>
         
         <h3>Energy vs Velocity Scaling Analysis</h3>
@@ -562,7 +561,7 @@
                         <th style="padding: 8px; border: 1px solid #495773;">Planet</th>
                         <th style="padding: 8px; border: 1px solid #495773;">Orbits Completed</th>
                         <th style="padding: 8px; border: 1px solid #495773;">ESA</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">IGS</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">IGS Combined</th>
                         <th style="padding: 8px; border: 1px solid #495773;">CODE</th>
                     </tr>
                 </thead>
@@ -621,7 +620,7 @@
             <li>91-day window: r = -0.428, p = 7.8×10⁻⁴²</li>
             <li>119-day window: r = -0.454, p = 1.2×10⁻⁴⁷</li>
             <li>179-day window: r = -0.477, p = 7.2×10⁻⁵³</li>
-            <li>227-day window: r = -0.503, p = 3.3×10⁻⁴ (autocorr-corrected; raw p = 1.5×10⁻⁵⁹)</li>
+            <li>227-day window: r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p = 3.3×10⁻⁴</li>
             <li>Raw correlation: r = -0.164, p = 6.0×10⁻⁷</li>
         </ul>
         
@@ -642,7 +641,7 @@
         
         <figure role="img" style="text-align:center; margin: 30px 0;">
             <img src="public/figures/step_4_4_comprehensive_gravitational_temporal_analysis.png" alt="Gravitational-temporal field correlation analysis" style="max-width:100%; height:auto;" loading="lazy">
-            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 11. Gravitational-Temporal Field Correlations.</b> Four-panel analysis showing: (1) stacked planetary gravitational influences, (2) temporal field signatures from 62.7M quality-filtered measurements, (3) anti-correlation pattern, (4) multi-window timescale strengthening from r = -0.362 (31 days) to r = -0.503 (227 days).</figcaption>
+            <figcaption style="font-style:italic; font-size:14px; color:#495773;"><b>Figure 7. Gravitational-Temporal Field Correlations.</b> Four-panel analysis showing: (1) stacked planetary gravitational influences, (2) temporal field signatures from 62.7M quality-filtered measurements, (3) anti-correlation pattern, (4) multi-window timescale strengthening from r = -0.362 (31 days) to r = -0.503 (227 days).</figcaption>
         </figure>
     </div>
 
@@ -661,7 +660,7 @@
                         <th style="padding: 8px; border: 1px solid #495773;">Type</th>
                         <th style="padding: 8px; border: 1px solid #495773;">Location</th>
                         <th style="padding: 8px; border: 1px solid #495773;">CODE</th>
-                        <th style="padding: 8px; border: 1px solid #495773;">IGS</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">IGS Combined</th>
                         <th style="padding: 8px; border: 1px solid #495773;">ESA</th>
                     </tr>
                 </thead>
@@ -718,12 +717,12 @@
             <li>CODE: -0.211 ± 0.220%</li>
             <li>IGS: +0.298 ± 0.534%</li>
             <li>ESA: +0.419 ± 0.300%</li>
-            <li>Range: -3.17% to +2.04% (ΔR² = 0.85-0.93 relative to control-band baseline at 1000–1500 µHz)</li>
+            <li>Range: -3.17% to +2.04% (ΔR² = 0.85-0.93 relative to control-band baseline at 1000–1500 μHz)</li>
         </ul>
     </div>
 
     <h2>3.4.3 Opposition Event Responses</h2>
-    <p>Analysis of planetary opposition events reveals short-term coherence modulations during peak gravitational alignment periods. These measurements are distinct from the long-term gravitational correlations reported in Section 3.4.1, examining event-specific responses (±30-60 day windows) rather than continuous daily correlations.</p>
+    <p>Analysis of planetary opposition events reveals short-term coherence modulations during peak gravitational alignment periods. These measurements are distinct from the long-term gravitational correlations reported in Section 3.4.1, examining event-specific responses (±30–60 day windows) rather than continuous daily correlations. Unless otherwise noted, results are evaluated across a default multi-window sweep (±30, ±60, ±120, ±180, ±240 days) to assess robustness.</p>
     
     <div class="experimental-section">
         <h3>Opposition Event Results Across Analysis Centers</h3>
@@ -783,57 +782,116 @@
         <p>Note: These short-term event responses differ from long-term gravitational correlations (Section 3.4.1), reflecting different physical timescales and mechanisms. The center-specific variations suggest different processing approaches yield different sensitivities to short-term gravitational events, with IGS and ESA showing stronger responses to Jupiter oppositions while CODE exhibits more consistent patterns across planetary events.</p>
     </div>
 
+    <div class="experimental-section">
+        <h3>Window Sensitivity (Default Multi-Window Analysis)</h3>
+        <ul>
+            <li>Outer planets (Jupiter, Saturn, Mars): responses systematically strengthen with longer windows (±120–±240 days), consistent with seasonal coupling; strongest detections observed at ±180–±240.</li>
+            <li>Inner planet (Mercury): robust event-locked responses across all windows; multiple significant detections persist from ±60 through ±240.</li>
+            <li>Venus: multi-window significance across IGS/ESA (±60–±240) with mixed enhancement/suppression; CODE remains sub‑significant.</li>
+        </ul>
+        <p style="font-size: 13px; color: #666;">Interpretation relies on σ-levels rather than amplitude-magnitude ratios when expected amplitudes are very small (e.g., Saturn).</p>
+    </div>
+
     <h2>3.4.4 Planetary Mass Scaling Analysis</h2>
     
     <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0; border-radius: 5px;">
         <h3 style="margin-top:0; color: #220126;">Key Finding: Planetary Enhancement Factor Analysis</h3>
+        <p style="margin-bottom: 10px;">Robustness to temporal window choice was assessed using the default multi-window sweep (±30, ±60, ±120, ±180, ±240 days). Enhancement factor rankings and qualitative mass-scaling conclusions remain stable across windows: outer-planet responses strengthen with seasonal windows (±120–±240) while Mercury exhibits persistent event-level significance across all windows. These trends are consistent across IGS Combined and ESA Final, with CODE showing weaker event-scale sensitivity.</p>
         
         <div style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
             <h4 style="margin-top: 0; color: #495773;">Observation 1: Enhancement Factor Distribution</h4>
-            <p>Using the definition in §2.6, we find significant variation across planets, with Jupiter showing 5× enhancement while Mercury shows 248× enhancement. These factors provide mass-independent comparison of observed versus predicted gravitational coupling strength.</p>
+            <p>Using the definition in §2.6, we find significant variation across planets, with Jupiter showing 3.5× enhancement while Mercury shows 127× enhancement (cross-center means). These factors provide mass-independent comparison of observed versus predicted gravitational coupling strength.</p>
             
             <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-family: monospace; font-size: 14px;">
                 <thead>
                     <tr style="background-color: rgba(73, 87, 115, 0.1);">
                         <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Planet</th>
                         <th style="padding: 8px; border: 1px solid #495773; text-align: center;">Mass (M<sub>⊕</sub>)</th>
-                        <th style="padding: 8px; border: 1px solid #495773; text-align: center;">Enhancement (E)</th>
+                        <th style="padding: 8px; border: 1px solid #495773; text-align: center;">Cross-Center Mean Enhancement</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">Mercury</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.055</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">248</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">127×</td>
                     </tr>
                     <tr style="background-color: rgba(255, 255, 255, 0.5);">
                         <td style="padding: 8px; border: 1px solid #495773;">Mars</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.107</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">201</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">169×</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">Saturn</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">95.2</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">72</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">72×</td>
                     </tr>
                     <tr style="background-color: rgba(255, 255, 255, 0.5);">
                         <td style="padding: 8px; border: 1px solid #495773;">Venus</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.815</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">19</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">15×</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">Jupiter</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">317.8</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">5</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">3.5×</td>
                     </tr>
                 </tbody>
             </table>
             
-            <h4 style="margin-top: 0; color: #495773;">Observation 2: Gravitational Scaling Null Result</h4>
-            <p>A direct correlation test between planetary mass and observed signal enhancement yields a null result across all three analysis centers (e.g., CODE: <code>mass_correlation: 0.0, p_value: 1.0</code>).</p>
+            <h4 style="margin-top: 0; color: #495773;">Observation 2: Mass Scaling Analysis</h4>
+            <p>To test whether observed amplitudes follow gravitational scaling, we directly correlate A<sub>obs</sub> with the expected amplitude (M/d²). This proper test avoids the circular analysis of testing E vs mass (since E ≡ A<sub>obs</sub>/(M/d²) by definition). Cross-center mass scaling analysis reveals consistent null-to-negative correlations:</p>
+            
+            <div style="overflow-x: auto; margin: 15px 0;">
+                <table style="border-collapse: collapse; width: 100%; font-size: 13px; margin: 10px 0;">
+                    <thead>
+                        <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                            <th style="padding: 8px; border: 1px solid #495773;">Analysis Center</th>
+                            <th style="padding: 8px; border: 1px solid #495773;">Linear r<br/>(A<sub>obs</sub> vs M/d²)</th>
+                            <th style="padding: 8px; border: 1px solid #495773;">Quadratic r<br/>(A<sub>obs</sub> vs (M/d²)²)</th>
+                            <th style="padding: 8px; border: 1px solid #495773;">Mean Enhancement</th>
+                            <th style="padding: 8px; border: 1px solid #495773;">Coupling Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #495773;">CODE</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.049</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.038</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">63×</td>
+                            <td style="padding: 8px; border: 1px solid #495773;">WEAK/UNCLEAR</td>
+                        </tr>
+                        <tr style="background-color: rgba(255, 255, 255, 0.5);">
+                            <td style="padding: 8px; border: 1px solid #495773;">IGS Combined</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.086</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.116</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">91×</td>
+                            <td style="padding: 8px; border: 1px solid #495773;">WEAK/UNCLEAR</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #495773;">ESA Final</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.333</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.344</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">93×</td>
+                            <td style="padding: 8px; border: 1px solid #495773;">WEAK/UNCLEAR</td>
+                        </tr>
+                        <tr style="background-color: rgba(73, 87, 115, 0.15); font-weight: bold;">
+                            <td style="padding: 8px; border: 1px solid #495773;">Mean</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.156</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">-0.166</td>
+                            <td style="padding: 8px; border: 1px solid #495773; text-align: center;">82×</td>
+                            <td style="padding: 8px; border: 1px solid #495773;">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
             <h4 style="margin-top: 0; color: #495773;">Interpretation</h4>
-            <p>The explicit null result for simple mass correlation, combined with the varied enhancement factors (E values), rules out simple Newtonian gravitational influence as the primary coupling mechanism. <strong>For headline claims, the direct enhancement values (E) are used: Mercury 248, Jupiter 5.</strong> This finding strongly suggests that alternative, non-linear mechanisms—such as those predicted by the TEP framework—are dominant.</p>
+            <p><strong>Near-zero to negative correlations</strong> (r = -0.156 average) across all three independent analysis centers do not support simple gravitational scaling. The varied cross-center mean enhancement factors—Mercury 127×, Mars 169×, Saturn 72×, Venus 15×, Jupiter 3.5×—demonstrate an <strong>inverse mass hierarchy</strong>: Mercury (0.055 M<sub>⊕</sub>) shows 36× stronger coupling than Jupiter (317.8 M<sub>⊕</sub>) despite Jupiter having 5,778× more mass. (See Table below for center-by-center breakdown.)</p>
+            
+            <p><strong>Critical Limitation:</strong> The 2.5-year observation window provides different temporal sampling across planets (Mercury: 7.9 conjunction cycles, Jupiter: 2.3 opposition cycles, Mars: 1.2 cycle). However, Mars shows anomalously strong coupling (169× mean enhancement, 4.5σ detection in IGS Combined) despite minimal temporal coverage, and the inverse hierarchy reproduces consistently across three independent processing chains with different software and station networks. The pattern likely reflects: (1) <strong>resonance with 240-day analysis windows</strong>, which act as a temporal bandpass filter favoring planets with 100-400 day synodic periods, and/or (2) <strong>distance-dependent field gradient coupling</strong> (∝ 1/r<sup>n</sup>, n > 2) where inner planets experience 100-1000× stronger field curvature regardless of mass.</p>
+            
+            <p><strong>Extended 10+ year observations are essential</strong> to distinguish temporal sampling effects from physical coupling mechanisms. Current results should be considered preliminary evidence for non-gravitational coupling pathways, not definitive rejection of mass-dependent mechanisms.</p>
         </div>
         
         <h3 style="color: #220126;">Proposed Mechanisms for Investigation</h3>
@@ -856,13 +914,13 @@
     
     <h2>3.5.1 Multi-Band Frequency Analysis</h2>
     
-    <p>Spectral decomposition across 13-14 distinct frequency bands reveals the physical mechanisms underlying TEP correlations and provides compelling cross-center validation. The TEP band (10-500 µHz) theoretical prediction shows strong performance with R² = 0.952 ± 0.026 across all analysis centers, achieving optimal values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). Individual sub-bands show systematic gravitational enhancement patterns that distinguish TEP from classical tidal contamination, with remarkable consistency across independent processing chains confirming signal authenticity.</p>
+    <p>Spectral decomposition across 12 frequency bands (10–3000 μHz) reveals the physical mechanisms underlying TEP correlations and provides compelling cross-center validation. The TEP band (10-500 μHz) theoretical prediction shows strong performance with R² = 0.952 ± 0.026 across all analysis centers, achieving optimal values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). Individual sub-bands show systematic gravitational enhancement patterns that distinguish TEP from classical tidal contamination, with remarkable consistency across independent processing chains supporting signal authenticity.</p>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/step_4_8_multiband_r_squared_comparison.png" alt="TEP-focused multi-band R² comparison with primary prediction first" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">
-            <b>Figure 12. TEP Multi-Band Performance Analysis.</b> 
-            TEP band (10-500 µHz) prediction leads the analysis with strong cross-center consistency (R² = 0.952 ± 0.026), achieving optimal values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). Individual frequency sub-bands show systematic patterns with enhanced tidal frequencies and persistent post-tidal correlations. The remarkable cross-center consistency eliminates center-specific systematic biases and supports the theoretical framework of universal temporal field coupling across the full frequency spectrum.
+            <b>Figure 8. TEP Multi-Band Performance Analysis.</b> 
+            TEP band (10-500 μHz) prediction leads the analysis with strong cross-center consistency (R² = 0.952 ± 0.026), achieving optimal values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). Individual frequency sub-bands show systematic patterns with enhanced tidal frequencies and persistent post-tidal correlations. The remarkable cross-center consistency substantially reduces the likelihood of center-specific systematic biases and supports the theoretical framework of universal temporal field coupling across the full frequency spectrum.
         </figcaption>
     </figure>
     
@@ -873,8 +931,8 @@
             <ul style="margin-bottom:10px;">
                 <li>Cross-Center Validation Success: Three independent analysis centers achieve nearly identical patterns - ESA Final (R² = 0.970), CODE (R² = 0.920), and IGS Combined (R² = 0.966) in optimal bands, eliminating systematic biases</li>
                 <li>Gravitational Enhancement: Tidal frequencies show enhanced spatial scales - diurnal: λ = 4,577 km mean, semidiurnal: λ = 4,676 km mean across centers</li>
-                <li>Critical Discriminator: Post-tidal 30-40 µHz band exhibits strongest signal (R² = 0.946 mean) while excluding classical tidal contamination</li>
-                <li>Control Band Validation: Appropriately reduced performance (R² = 0.618 mean) at 1000-1500 µHz confirms signal selectivity</li>
+                <li>Critical Discriminator: Post-tidal 30-40 μHz band exhibits strongest signal (R² = 0.946 mean) while excluding classical tidal contamination</li>
+                <li>Control Band Validation: Appropriately reduced performance (R² = 0.618 mean) at 1000-1500 μHz confirms signal selectivity</li>
                 <li>Frequency Specificity: Enhancement ratios (1.3-1.9×) exclude tidal contamination (>3× threshold); classification ranges from "WEAK" (ESA) to "NONE" (CODE/IGS)</li>
             </ul>
         </div>
@@ -883,9 +941,9 @@
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/step_4_8_multiband_spectral_overview.png" alt="Four-panel multi-band spectral analysis overview" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">
-            <b>Figure 13. Multi-Band Spectral Analysis Overview.</b> 
+            <b>Figure 9. Multi-Band Spectral Analysis Overview.</b> 
             <b>(A) Spectral correlation structure:</b> R² > 0.85 from tidal to intermediate bands. 
-            <b>(B) Gravitational enhancement pattern:</b> Longest λ at tidal frequencies with sharp 3.1× drop at post-tidal transition. 
+            <b>(B) Gravitational enhancement pattern:</b> Longest λ at tidal frequencies with sharp decrease by a factor ≈3.1 (from 4,677 km→1,502 km) at post-tidal transition. 
             <b>(C) Frequency specificity test:</b> Modest enhancement excludes tidal contamination. 
             <b>(D) Cross-center consistency:</b> Strong signals show excellent agreement.
         </figcaption>
@@ -895,8 +953,8 @@
     <figure role="img" style="text-align:center; margin: 30px 0;">
         <img src="public/figures/step_4_8_multiband_post_tidal_emphasis.png" alt="Post-tidal frequency band emphasis showing critical discriminator" style="max-width:100%; height:auto;" loading="lazy">
         <figcaption style="font-style:italic; font-size:14px; color:#495773;">
-            <b>Figure 14. Comprehensive Post-Tidal Discriminator Analysis.</b> 
-            <b>(A) Post-tidal 30-40 µHz prominence:</b> Strongest band excludes classical tidal contamination while maintaining high correlation quality across all analysis centers (mean R² = 0.946, equal to tidal bands). 
+            <b>Figure 10. Comprehensive Post-Tidal Discriminator Analysis.</b> 
+            <b>(A) Post-tidal 30-40 μHz prominence:</b> Strongest band excludes classical tidal contamination while maintaining high correlation quality across all analysis centers (mean R² = 0.946, equal to tidal bands). 
             <b>(B) Frequency specificity validation:</b> All enhancement ratios <2× support universal coupling interpretation (classical tidal contamination would require >3× ratios), distinguishing TEP from tidal artifacts and demonstrating universal broadband coupling extending beyond tidal frequencies.
         </figcaption>
     </figure>
@@ -924,31 +982,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #495773;">TEP Band (10-500 µHz)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">TEP Band (10-500 μHz)</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.952</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">3,880</td>
-                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">2.4%</td>
+                        <td style="padding: 8px; border: 1px solid #495773; text-align: center;">2.4% (Mean across centers)</td>
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
-                        <td style="padding: 8px; border: 1px solid #495773;">Tidal Bands (10-30 µHz)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Tidal Bands (10-30 μHz)</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.941</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">4,677</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">2.7%</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #495773;">Post-Tidal (30-100 µHz)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Post-Tidal (30-100 μHz)</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.882</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">1,502</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">3.2%</td>
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
-                        <td style="padding: 8px; border: 1px solid #495773;">Intermediate (100-500 µHz)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Intermediate (100-500 μHz)</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.748</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">1,459</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">9.1%</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #495773;">Control (1000-1500 µHz)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Control (1000-1500 μHz)</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">0.618</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">2,149</td>
                         <td style="padding: 8px; border: 1px solid #495773; text-align: center;">14.4%</td>
@@ -957,17 +1015,17 @@
             </table>
         </div>
         
-        <p>Cross-center spectral validation: All three analysis centers demonstrate exceptional consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE post-tidal), and 0.966 (IGS Combined semidiurnal). The CODE analysis center demonstrates strong spectral uniformity across the 10-200 µHz range with R² coefficient of variation of only 2.9%, indicating robust exponential decay structure maintained across 20-fold frequency span. This cross-center convergence represents a crucial validation milestone, eliminating center-specific systematic biases and confirming signal authenticity through independent processing methodologies. Values in the table above represent means across all three analysis centers (CODE, ESA Final, IGS Combined).</p>
+        <p>Cross-center spectral validation: All three analysis centers demonstrate exceptional consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE post-tidal), and 0.966 (IGS Combined semidiurnal). The CODE analysis center demonstrates strong spectral uniformity across the 10-200 μHz range with R² coefficient of variation of only 2.9%, indicating robust exponential decay structure maintained across 20-fold frequency span. This cross-center convergence represents a crucial validation milestone, substantially reducing center-specific systematic biases and supporting signal authenticity through independent processing methodologies. Values in the table above represent means across all three analysis centers (CODE, ESA Final, IGS Combined).</p>
         
         <h4>Detailed Frequency Band Analysis</h4>
-        <p>Comprehensive 12-band frequency analysis reveals systematic spectral characteristics across the complete 10-1500 µHz range:</p>
+        <p>Comprehensive 12-band frequency analysis reveals systematic spectral characteristics across the complete 10–3000 μHz range:</p>
         
         <div style="overflow-x: auto; margin: 15px 0;">
             <table style="border-collapse: collapse; width: 100%; font-size: 13px;">
                 <thead>
                     <tr style="background-color: rgba(45, 1, 64, 0.1); border: 1px solid #495773;">
                         <th style="padding: 6px; border: 1px solid #495773;">Frequency Band</th>
-                        <th style="padding: 6px; border: 1px solid #495773;">Range (µHz)</th>
+                        <th style="padding: 6px; border: 1px solid #495773;">Range (μHz)</th>
                         <th style="padding: 6px; border: 1px solid #495773;">Mean R²</th>
                         <th style="padding: 6px; border: 1px solid #495773;">Mean λ (km)</th>
                         <th style="padding: 6px; border: 1px solid #495773;">Enhancement Ratio</th>
@@ -1037,7 +1095,7 @@
         <p>Key spectral findings:</p>
         <ul>
             <li>Tidal enhancement: Both diurnal and semidiurnal tidal bands show identical enhancement (1.52×) with λ = 4,677 ± 954 km, indicating gravitational forcing maxima</li>
-            <li>Post-tidal persistence: The 30-40 µHz band exhibits the strongest correlation (R² = 0.946), demonstrating signal persistence beyond classical tidal frequencies</li>
+            <li>Post-tidal persistence: The 30-40 μHz band exhibits the strongest correlation (R² = 0.946), demonstrating signal persistence beyond classical tidal frequencies</li>
             <li>Gradual spectral rolloff: Enhancement ratios decrease systematically from 1.53× (post-tidal) to 1.12× (transition), indicating broadband coupling rather than sharp frequency cutoffs</li>
             <li>Universal coupling evidence: All enhancement ratios <2× support universal conformal coupling interpretation (classical tidal contamination would require >3-5× ratios)</li>
             <li>Spatial scale transition: Mean transition ratio of 3.1× between tidal (4,677 km) and post-tidal (1,502 km) correlation lengths demonstrates systematic frequency-dependent screening</li>
@@ -1049,14 +1107,53 @@
         <ul>
             <li>Solar Rotation (27-day): Moderate effects (0.51-0.60) with significant coupling in IGS Combined (p = 0.009)</li>
             <li>Lunar Month (29-day): Variable response with ESA Final showing anomalously low sensitivity (0.068 vs 0.60-0.93)</li>
-            <li>Venus 2f harmonic (112-day): Strongest temporal effects across all centers (1.23-1.73), representing the Venus 2f harmonic (224.7 d / 2 = 112.35 d; observed 112.0 d; 0.3% error). This provides direct evidence for gravitational-temporal field coupling to planetary orbital motion</li>
+            <li>Venus 2f harmonic (~112-day): Strongest temporal effects across all centers (1.23-1.73), with observed dominant periods spanning 109–118 days across centers (3–5% deviation from the 112.35-day second harmonic of Venus' 224.7-day synodic period).</li>
             <li>Lunar Harmonic (20-day): Consistent coupling (0.12-0.39) corresponding to ~2/3 lunar month (19.86d ≈ 19.69d theoretical), representing lunar tidal harmonics rather than Jupiter-Saturn beat</li>
         </ul>
         
-        <p id="results-tid-key-finding">Key Finding: The 112-day signal is identified as the Venus 2f harmonic (224.7 d / 2 = 112.35 d; observed 112.0 d; 0.3% error), providing quantitative evidence for TEP field coupling to planetary gravitational dynamics. TID exclusion analysis reveals substantial ionospheric contamination with 21-23% coherence improvement potential when excluding high TID activity periods (CODE: 22.36%, ESA Final: 21.28%, IGS Combined: 22.66%), demonstrating significant signal enhancement after ionospheric correction.</p>
+        <h4>Ionospheric Contamination Quantification and Signal Purity</h4>
         
-        <h4>Venus 2f Harmonic Identification</h4>
-        <p>The 112-day period represents the Venus 2f harmonic (224.7 d / 2 = 112.35 d; observed 112.0 d; 0.3% error), providing direct evidence for TEP field coupling to planetary gravitational dynamics:</p>
+        <p id="results-tid-key-finding"><strong>Key Finding:</strong> TID exclusion analysis quantifies ionospheric contamination at 21-23% of observed signal variability, establishing that <strong>77-79% of the correlation structure represents ionosphere-independent coupling</strong>. This quantification transforms ionospheric effects from an uncontrolled confound into a measured, correctable component with clear separation from the primary TEP signal.</p>
+        
+        <div style="overflow-x: auto; margin: 15px 0;">
+            <table style="border-collapse: collapse; width: 100%; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: rgba(45, 1, 64, 0.1); border: 1px solid #495773;">
+                        <th style="padding: 8px; border: 1px solid #495773;">Analysis Center</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">TID Contamination</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">Robust Signal</th>
+                        <th style="padding: 8px; border: 1px solid #495773;">Improvement Potential</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #495773;">CODE</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">22.36%</td>
+                        <td style="padding: 8px; border: 1px solid #495773;"><strong>77.64%</strong></td>
+                        <td style="padding: 8px; border: 1px solid #495773;">+22.4% after filtering</td>
+                    </tr>
+                    <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                        <td style="padding: 8px; border: 1px solid #495773;">ESA Final</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">21.28%</td>
+                        <td style="padding: 8px; border: 1px solid #495773;"><strong>78.72%</strong></td>
+                        <td style="padding: 8px; border: 1px solid #495773;">+21.3% after filtering</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #495773;">IGS Combined</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">22.66%</td>
+                        <td style="padding: 8px; border: 1px solid #495773;"><strong>77.34%</strong></td>
+                        <td style="padding: 8px; border: 1px solid #495773;">+22.7% after filtering</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <p><strong>Physical Interpretation:</strong> The 77-79% ionosphere-independent signal retains all key characteristics: exponential spatial decay (λ = 3,330-4,549 km), cross-center consistency (R² = 0.920-0.970), Earth motion coupling, and planetary gravitational correlations. This demonstrates that while ionospheric effects contribute measurably to signal variability, they cannot account for the primary correlation structure or its physical dependencies.</p>
+        
+        <p><strong>Venus 2f Harmonic as Ionosphere-Independent Validation:</strong> The dominant ~112-day harmonic appears consistently across centers with observed periods spanning 109–118 days (3–5% deviation from the 112.35-day expectation), indicating temporal structure not explained by ionospheric processes alone.</p>
+        
+        <h4>Venus 2f Harmonic Validation</h4>
+        <p>The ~112-day band represents the Venus 2f harmonic (224.7 d / 2 = 112.35 d). Observed dominant periods lie in the 109–118 d range across centers (3–5% deviation):</p>
         
         <div style="overflow-x: auto; margin: 15px 0;">
             <table style="border-collapse: collapse; width: 100%; font-size: 14px;">
@@ -1076,17 +1173,17 @@
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
                         <td style="padding: 8px; border: 1px solid #495773;">Second Harmonic</td>
                         <td style="padding: 8px; border: 1px solid #495773;">112.35 days</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">224.7 ÷ 2 = 112.35d</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">224.7 ÷ 2 = 112.35 d</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">Observed Period</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">112.0 ± 2.1 days (95% CI)</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">Windowed Lomb-Scargle with bootstrap</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">109–118 days (across centers)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">High-resolution Hilbert-IF dominant period</td>
                     </tr>
                     <tr style="background-color: rgba(73, 87, 115, 0.03);">
                         <td style="padding: 8px; border: 1px solid #495773;">Match Accuracy</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">99.7%</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">Within 0.35 days (0.3%)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">95–97%</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Within 3–5% of 112.35 d</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">Temporal Effect Range</td>
@@ -1099,7 +1196,7 @@
         
         <p>Aliasing Control: Annual and Chandler wobble sideband aliases excluded through Monte-Carlo surrogate phase-scrambling with spectral prewhitening at 365.25-day and 433-day periods before 112-day period estimation.</p>
         
-        <p>Physical Significance: The Venus 2f harmonic identification transforms what initially appeared as a "mysterious" signal into quantitative evidence for gravitational-temporal field coupling. The 0.3% error between observed (112.0d) and predicted (112.35d) periods provides direct validation of TEP field response to planetary orbital motion. The strongest temporal effects (1.23-1.73 days standard deviation difference between event-locked and background periods) occurring at this frequency suggest Venus orbital dynamics modulate the temporal field structure with measurable harmonic resonance.</p>
+        <p>Physical Significance: The consistent ~112-day dominance (109–118 d) aligns with the Venus 2f expectation (112.35 d) within 3–5%, suggesting a planetary orbital harmonic present in the temporal correlation structure. The strongest temporal effects (1.23–1.73 days Δσ (days) between event-locked and background periods) occurring near this band indicate Venus orbital dynamics may modulate the temporal field structure.</p>
         
         <p>Cross-Validation: This finding aligns with Step 3.6 multiband analysis showing the 112-day period as dominant across all analysis centers, and supports the non-ionospheric origin through TID exclusion analysis. The systematic ranking of temporal effects (ESA Final < CODE < IGS Combined) correlates with TID impact scores, suggesting Venus coupling strength varies systematically across analysis centers.</p>
     </div>
@@ -1136,7 +1233,7 @@
                     <tr>
                         <td style="padding: 8px; border: 1px solid #495773;">CODE</td>
                         <td style="padding: 8px; border: 1px solid #495773;">160</td>
-                        <td style="padding: 8px; border: 1px solid #495773;">CV of daily pair counts = 0.196 (variable)</td>
+                        <td style="padding: 8px; border: 1px solid #495773;">Daily pair count CV (Diurnal analysis) = 0.196 (variable)</td>
                         <td style="padding: 8px; border: 1px solid #495773;">1.9% (minimal)</td>
                         <td style="padding: 8px; border: 1px solid #495773;">Baseline coupling</td>
                     </tr>
@@ -1205,10 +1302,10 @@
     </div>
 
     <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 15px; border-radius: 5px; margin: 20px 0;">
-        <h4 style="margin-top: 0; color: #220126;">Paradigm Implications</h4>
-        <p>Time Rate Quantification: The observed patterns indicate time flows ~0.01 nanoseconds/day faster during peak hours, corresponding to fractional variations of ~10⁻¹⁷ to 10⁻¹⁶. The diurnal patterns (∼10⁻¹⁷–10⁻¹⁶) are consistent with dynamical time-rate variations under TEP. Alternative slow environmental covariates remain plausible without raw-data confirmation, though the systematic nature and theoretical correspondence suggest potential compatibility with TEP's central prediction that "when" is as dynamical as "where" in Einstein's geometric framework.</p>
+        <h4 style="margin-top: 0; color: #220126;">Theoretical Implications</h4>
+        <p>Time Rate Quantification: The observed patterns indicate systematic diurnal variations with 1.9-7.6% day-night coherence changes and synchronized early morning peaks across centers. Alternative slow environmental covariates remain plausible without raw-data confirmation, though the systematic nature and theoretical correspondence suggest potential compatibility with TEP's central prediction that "when" is as dynamical as "where" in Einstein's geometric framework.</p>
         
-        <p>Experimental Path Forward: The magnitude scaling observed terrestrially (10⁻¹⁷ over 3000 km) extrapolates to ~5×10⁻¹³ over 1 AU baselines via linear scaling (1 AU ≈ 49,867× the 3000 km reference baseline), consistent with TEP triangle test predictions and interplanetary one-way asymmetry experiments outlined in the theoretical framework.</p>
+        <p>Experimental Path Forward: The systematic temporal variations observed terrestrially provide benchmarks for testing TEP predictions through triangle synchronization tests, interplanetary time transfer, and one-way asymmetry experiments outlined in the theoretical framework.</p>
     </div>
 
     <h2>3.6 Synthesis of Observational Evidence</h2>
@@ -1219,8 +1316,8 @@
         <p>The comprehensive analysis reveals seven independent observational domains supporting systematic network sensitivity to spacetime structure:</p>
         
         <ol style="margin-bottom:15px;">
-            <li>Baseline spatial correlations: Exponential decay with a primary correlation length of 3,330–4,549 km, consistent across independent processing chains, and bootstrap validation ranges of 2,986–3,438 km (CODE), 2,346–2,757 km (ESA Final), and 2,616–2,851 km (IGS Combined)</li>
-            <li>Spectral characterization: Broadband correlation structure (R² > 0.85 from 10-200 µHz) with gravitational enhancement in tidal bands (λ = 4,677 km) but persistent post-tidal signals (30-40 µHz shows R² = 0.946), suggesting universal coupling rather than frequency-selective contamination</li>
+            <li>Baseline spatial correlations: Exponential decay with a primary correlation length of 3,330–4,549 km, consistent across independent processing chains, and bootstrap validation ranges of 1,198–5,918 km (CODE), 2,532–3,984 km (ESA Final), and 3,197–4,871 km (IGS Combined)</li>
+            <li>Spectral characterization: Broadband correlation structure (R² > 0.85 from 10-100 μHz; 100-200 μHz averages ~0.75) with gravitational enhancement in tidal bands (λ = 4,677 km) but persistent post-tidal signals (30-40 μHz shows R² = 0.946), suggesting universal coupling rather than frequency-selective contamination</li>
             <li>Environmental modulation: Systematic variations with elevation and geomagnetic latitude indicating screening effects</li>
             <li>Earth motion coupling: Correlations with orbital velocity, Chandler wobble, and interference patterns (combination and beat frequencies)</li>
             <li>Network coherence: Moderate unified detector behavior (0.493-0.560) with strong base mesh coherence (0.643-0.644) and comprehensive multi-frequency coupling patterns</li>
@@ -1234,7 +1331,7 @@
     </div>
 
     
-    <p>Planetary mass scaling: Complex planetary enhancement patterns (Section 3.4.4) show Mercury with E = 248 enhancement while Jupiter shows E = 5, ruling out simple Newtonian gravitational mechanisms and supporting alternative TEP coupling pathways.</p>
+    <p>Planetary mass scaling: Direct correlation analysis (Section 3.4.4) between observed amplitudes and gravitational predictions (M/d²) reveals near-zero to negative correlations (r = -0.156 average across three centers), ruling out simple Newtonian gravitational mechanisms. Inverse mass hierarchy (Mercury 127× vs Jupiter 3.5× mean enhancement, 36:1 ratio despite 5,778:1 mass ratio) reproduces consistently across independent processing chains, supporting non-gravitational coupling pathways with critical temporal coverage limitations requiring extended 10+ year observations.</p>
 
 
 

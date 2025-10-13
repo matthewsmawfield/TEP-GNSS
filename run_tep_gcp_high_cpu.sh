@@ -22,12 +22,8 @@ ZONE="${GCP_ZONE:-}"
 INSTANCE_NAME="${GCP_INSTANCE_NAME:-}"
 PACKAGE_NAME="tep-gnss-gcp-optimized.tar.gz"
 
-# High-CPU Instance recommendations:
-# c2-standard-60 (60 vCPUs, 240 GB RAM) - Maximum performance
-# c2-standard-30 (30 vCPUs, 120 GB RAM) - High performance
-# c2-standard-16 (16 vCPUs, 64 GB RAM) - Good performance
-# n2-highcpu-80 (80 vCPUs, 80 GB RAM) - Maximum CPU cores
-# n2-highcpu-32 (32 vCPUs, 32 GB RAM) - High CPU cores
+# High-CPU Instance recommendation:
+# n2-highcpu-96 (96 vCPUs, 96 GB RAM) - Maximum performance (recommended)
 
 echo "🚀 TEP-GNSS Google Cloud Platform Analysis"
 echo "==========================================="
@@ -58,11 +54,8 @@ if [ -z "$PROJECT_ID" ] || [ -z "$ZONE" ] || [ -z "$INSTANCE_NAME" ]; then
     echo "   export GCP_ZONE=us-central1-a"
     echo "   export GCP_INSTANCE_NAME=your-instance-name"
     echo ""
-    echo "Recommended high-CPU instance types:"
-    echo "  - c2-standard-60 (60 vCPUs, 240 GB RAM)"
-    echo "  - c2-standard-30 (30 vCPUs, 120 GB RAM)"
-    echo "  - n2-highcpu-80 (80 vCPUs, 80 GB RAM)"
-    echo "  - n2-highcpu-32 (32 vCPUs, 32 GB RAM)"
+    echo "Recommended high-CPU instance type:"
+    echo "  - n2-highcpu-96 (96 vCPUs, 96 GB RAM) - Maximum performance (recommended)"
     exit 1
 fi
 
@@ -137,7 +130,7 @@ echo ""
 echo "⚡ GCP Analysis System Configuration:"
 echo "  CPU cores: $CORES"
 echo "  Memory: ${MEMORY_GB}GB"
-echo "  Analysis: Full 911-day window (2023-01-01 to 2025-06-30)"
+echo "  Analysis: Full 912-day window (2023-01-01 to 2025-06-30)"
 
 # Setup additional storage disk for high-CPU instances
 echo "💾 Setting up additional storage disk..."
@@ -215,12 +208,10 @@ python3 -m venv venv
 source venv/bin/activate
 echo "  Installing Python dependencies..."
 pip install --upgrade pip setuptools wheel
-echo "  Installing scientific computing packages..."
-pip install numpy pandas scipy matplotlib psutil seaborn pyproj PyWavelets python-dateutil statsmodels scikit-learn cartopy
-echo "  Installing visualization and data packages..."
-pip install cmasher h5py plotly kaleido adjustText
-echo "  Installing specialized GNSS packages..."
-pip install pyIGRF apexpy jplephem skyfield ephem astropy
+echo "  Installing from requirements.txt..."
+pip install -r requirements/requirements.txt
+echo "  Installing additional specialized GNSS packages..."
+pip install pyIGRF jplephem skyfield
 echo "  ✅ All dependencies installed successfully"
 
 # Set optimal environment for high-CPU GCP instance
@@ -259,7 +250,7 @@ echo ""
 echo "   Starting full pipeline execution..."
 
 # Run the complete TEP-GNSS analysis pipeline with error handling
-echo "🚀 Starting TEP-GNSS FRESH 911-day analysis pipeline..."
+echo "🚀 Starting TEP-GNSS FRESH 912-day analysis pipeline..."
 echo "   Start time: $(date)"
 echo "   Working directory: $(pwd)"
 echo "   Available disk space:"
@@ -311,8 +302,5 @@ echo ""
 echo "Instance: $INSTANCE_NAME"
 echo "External IP: $EXTERNAL_IP"
 echo ""
-echo "💡 High-CPU Instance Recommendations:"
-echo "   - c2-standard-60: 60 vCPUs, 240 GB RAM (Maximum performance)"
-echo "   - c2-standard-30: 30 vCPUs, 120 GB RAM (High performance)"
-echo "   - n2-highcpu-80: 80 vCPUs, 80 GB RAM (Maximum CPU cores)"
-echo "   - n2-highcpu-32: 32 vCPUs, 32 GB RAM (High CPU cores)"
+echo "💡 High-CPU Instance Recommendation:"
+echo "   - n2-highcpu-96: 96 vCPUs, 96 GB RAM (Maximum performance - recommended)"

@@ -42,65 +42,67 @@ class VersionManager:
         self.patterns = {
             '*.py': [
                 # Python version assignments - very specific patterns to avoid changing numerical values
-                (r'version\s*=\s*["\']v?0\.1[0-6]["\']', f'version = "v{self.version}"'),
-                (r'VERSION\s*=\s*["\']v?0\.1[0-6]["\']', f'VERSION = "v{self.version}"'),
-                (r'["\']version["\']:\s*["\']v?0\.1[0-6]["\']', f'"version": "v{self.version}"'),
+                (r'version\s*=\s*["\']v?0\.1[0-9]["\']', f'version = "v{self.version}"'),
+                (r'VERSION\s*=\s*["\']v?0\.1[0-9]["\']', f'VERSION = "v{self.version}"'),
+                (r'["\']version["\']:\s*["\']v?0\.1[0-9]["\']', f'"version": "v{self.version}"'),
                 # Python comments - more specific
-                (r'# Version: v?0\.1[0-6](?![0-9])', f'# Version: v{self.version}'),
-                (r'# v?0\.1[0-6](?![0-9])\s*\([^)]*\)', f'# v{self.version} ({self.codename})'),
+                (r'# Version: v?0\.1[0-9](?![0-9])', f'# Version: v{self.version}'),
+                (r'# v?0\.1[0-9](?![0-9])\s*\([^)]*\)', f'# v{self.version} ({self.codename})'),
                 # Python print statements with hardcoded versions - more specific
-                (r'print_status\("TEP GNSS Analysis Package v?0\.1[0-6](?![0-9])', f'print_status("TEP GNSS Analysis Package v{self.version}'),
-                (r'"TEP GNSS Analysis Package v?0\.1[0-6](?![0-9])', f'"TEP GNSS Analysis Package v{self.version}'),
-                (r'f"TEP GNSS Analysis Package v?0\.1[0-6](?![0-9])', f'f"TEP GNSS Analysis Package v{self.version}'),
+                (r'print_status\("TEP GNSS Analysis Package v?0\.1[0-9](?![0-9])', f'print_status("TEP GNSS Analysis Package v{self.version}'),
+                (r'"TEP GNSS Analysis Package v?0\.1[0-9](?![0-9])', f'"TEP GNSS Analysis Package v{self.version}'),
+                (r'f"TEP GNSS Analysis Package v?0\.1[0-9](?![0-9])', f'f"TEP GNSS Analysis Package v{self.version}'),
+                # Log messages and other version references
+                (r'TEP GNSS Analysis Package v?0\.1[0-9](?![0-9])', f'TEP GNSS Analysis Package v{self.version}'),
             ],
             '*.html': [
                 # HTML version references - more specific patterns
-                (r'Version\s+v?0\.1[0-6](?![0-9])', f'Version v{self.version}'),
-                (r'v?0\.1[0-6](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
-                (r'<title>[^<]*v?0\.1[0-6](?![0-9])[^<]*</title>', f'<title>TEP-GNSS v{self.version} ({self.codename})</title>'),
+                (r'Version\s+v?0\.1[0-9](?![0-9])', f'Version v{self.version}'),
+                (r'v?0\.1[0-9](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
+                (r'<title>[^<]*v?0\.1[0-9](?![0-9])[^<]*</title>', f'<title>TEP-GNSS v{self.version} ({self.codename})</title>'),
                 # HTML comments - more specific
-                (r'<!-- Version: v?0\.1[0-6](?![0-9]) -->', f'<!-- Version: v{self.version} -->'),
+                (r'<!-- Version: v?0\.1[0-9](?![0-9]) -->', f'<!-- Version: v{self.version} -->'),
                 # PDF URLs and DOI links
                 (r'https://zenodo\.org/records/\d+/files/[^"]*\.pdf(?:\?download=1)?', self._get_pdf_url()),
                 (r'content="https://zenodo\.org/records/\d+/files/[^"]*\.pdf(?:\?download=1)?"', f'content="{self._get_pdf_url()}"'),
                 (r'https://doi\.org/10\.5281/zenodo\.\d+', self._get_doi_url()),
                 (r'<a href="https://doi\.org/10\.5281/zenodo\.\d+"', f'<a href="{self._get_doi_url()}"'),
                 # Version update lists - replace hardcoded lists with dynamic ones
-                (r'<h2>Version v?0\.1[0-6](?![0-9]) Updates</h2>', f'<h2>Version v{self.version} Updates</h2>'),
-                (r'<strong>Version v?0\.1[0-6](?![0-9]) \([^)]*\)</strong>', f'<strong>Version v{self.version} ({self.codename})</strong>'),
+                (r'<h2>Version v?0\.1[0-9](?![0-9]) Updates</h2>', f'<h2>Version v{self.version} Updates</h2>'),
+                (r'<strong>Version v?0\.1[0-9](?![0-9]) \([^)]*\)</strong>', f'<strong>Version v{self.version} ({self.codename})</strong>'),
                 # Date modifications
                 (r'"dateModified":\s*"[^"]*"', f'"dateModified": "{self.date}"'),
                 (r'Last updated:\s*[^<]*', f'Last updated: {self._format_date_for_display()}'),
             ],
             '*.md': [
                 # Markdown version references - more specific patterns
-                (r'\*\*Version:\*\*\s*v?0\.1[0-5](?![0-9])', f'**Version:** v{self.version}'),
-                (r'Version:\s*v?0\.1[0-5](?![0-9])', f'Version: v{self.version}'),
-                (r'v?0\.1[0-5](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
-                (r'# v?0\.1[0-5](?![0-9])\s*\([^)]*\)', f'# v{self.version} ({self.codename})'),
+                (r'\*\*Version:\*\*\s*v?0\.1[0-9](?![0-9])', f'**Version:** v{self.version}'),
+                (r'Version:\s*v?0\.1[0-9](?![0-9])', f'Version: v{self.version}'),
+                (r'v?0\.1[0-9](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
+                (r'# v?0\.1[0-9](?![0-9])\s*\([^)]*\)', f'# v{self.version} ({self.codename})'),
                 # Date references
                 (r'\*\*Date:\*\*\s*\d{1,2}\s+\w+\s+\d{4}', f'**Date:** {self._format_date(self.date)}'),
             ],
             '*.json': [
                 # JSON version fields - more specific patterns
-                (r'"version":\s*"0\.1[0-5](?![0-9])"', f'"version": "{self.version}"'),
+                (r'"version":\s*"0\.1[0-9](?![0-9])"', f'"version": "{self.version}"'),
                 (r'"date-released":\s*"[^"]*"', f'"date-released": "{self.date}"'),
                 (r'"date":\s*"[^"]*"', f'"date": "{self.date}"'),
             ],
             '*.cff': [
                 # CFF version fields - more specific patterns
-                (r'version:\s*0\.1[0-5](?![0-9])', f'version: {self.version}'),
+                (r'version:\s*0\.1[0-9](?![0-9])', f'version: {self.version}'),
                 (r'date-released:\s*[^\n]*', f'date-released: {self.date}'),
             ],
             '*.toml': [
                 # TOML version references - more specific patterns
-                (r'version\s*=\s*"0\.1[0-5](?![0-9])"', f'version = "{self.version}"'),
+                (r'version\s*=\s*"0\.1[0-9](?![0-9])"', f'version = "{self.version}"'),
                 (r'date\s*=\s*"[^"]*"', f'date = "{self.date}"'),
             ],
             '*.txt': [
                 # Text file version references - more specific patterns
-                (r'Version\s+v?0\.1[0-5](?![0-9])', f'Version v{self.version}'),
-                (r'v?0\.1[0-5](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
+                (r'Version\s+v?0\.1[0-9](?![0-9])', f'Version v{self.version}'),
+                (r'v?0\.1[0-9](?![0-9])\s*\([^)]*\)', f'v{self.version} ({self.codename})'),
             ]
         }
         
@@ -116,6 +118,7 @@ class VersionManager:
             '**/site-packages/**',  # Exclude all site-packages
             '**/theory/**',  # Exclude theoretical manuscripts
             '**/results/outputs/**',  # Exclude output data files
+            '**/logs/**',  # Exclude log files
         ]
     
     def _load_version_data(self):

@@ -15,14 +15,14 @@ This document outlines the sections and subsections of the manuscript.
     *   Critical Requirements for Confirmation
     *   Conclusion
     *   Technical Details
-    *   Version v0.15 Updates
+    *   Version v0.18 Updates
 
 ## References
 *   References
     *   **Summary:** This section lists all academic and scientific references cited, providing foundational literature for the research. It includes works on varying constants theories, scalar-tensor gravity, optical clocks, and GNSS timing. It also provides citation information for this work (BibTeX) and author contact details.
     *   How to cite
     *   Contact
-    *   Version v0.15 Updates
+    *   Version v0.18 Updates
 
 ## Section 1: Introduction
 *   1. Introduction
@@ -61,7 +61,7 @@ This document outlines the sections and subsections of the manuscript.
         *   Authoritative data sources
             *   **Summary:** This describes the authoritative data sources used: ITRF2014 for station coordinates (with ECEF validation) and official .CLK files from CODE, ESA, and IGS for clock products. A hard-fail policy ensures data quality, prohibiting synthetic or interpolated data.
         *   Dataset characteristics
-            *   **Summary:** This outlines the dataset: ground station atomic clock correlations from 2023-01-01 to 2025-06-30 (912 days), covering 766 unique stations globally. It details data volume (62.7 million pairs) across CODE, ESA, and IGS, noting station overlap for cross-validation.
+            *   **Summary:** This outlines the dataset: ground station atomic clock correlations from 2023-01-01 to 2025-06-30 (912 days), covering 767 unique stations globally. It details data volume (62.7 million pairs) across CODE, ESA, and IGS, noting station overlap for cross-validation.
         *   Data Quality Assurance
             *   **Summary:** This section details robust data quality validation across 62.73 million station pairs, ensuring high integrity for phase-coherent analysis. Key metrics include high filtering efficiency (99.958% retention), healthy phase boundary clustering (1.62-1.67%), zero missing dates, no duplicates or outliers, and uniform phase distribution.
         *   Distance Quality Filtering
@@ -90,7 +90,7 @@ This document outlines the sections and subsections of the manuscript.
         *   Uncertainty quantification and independence
             *   **Summary:** This section quantifies uncertainty using 1000-iteration bootstrap resampling at the distance-bin level, reflecting ~28-35 independent bins. Pair non-independence is addressed via LOSO and block-wise cross-validation; 95% confidence intervals reflect bin-level uncertainty.
         *   Null test validation
-            *   **Summary:** This critical step establishes signal authenticity using three scrambling approaches: distance randomization (100 iterations), phase randomization (20 iterations), and station identity randomization (20 iterations). Statistical significance is assessed via permutation p-values and z-scores.
+            *   **Summary:** This critical step establishes signal authenticity using three scrambling approaches: distance scrambling (20 iterations per center, 60 total), phase scrambling (20 iterations per center, 60 total), and station scrambling (20 iterations per center, 60 total). Distance scrambling randomizes both distances and coherences independently. Statistical significance is assessed via z-scores (z = 15.8-31.9, all p < 0.05) with 24-61× signal-to-null ratios.
         *   Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)
             *   **Summary:** This section clarifies that the primary analysis is spatial correlation, not multiple pairwise comparisons. Data is aggregated into distance bins, testing one exponential model. Multiple comparison corrections are applied only to secondary tests (e.g., astronomical events), not the primary correlation analysis.
         *   Statistical Independence Considerations
@@ -198,13 +198,13 @@ This document outlines the sections and subsections of the manuscript.
     *   **Summary:** This section discusses the authenticity of observed signals through multi-layered validation, addressing biases and alternative explanations. It presents statistical validation, cross-center consistency, multi-band frequency specificity, and geometric controls supporting the correlations. It systematically excludes methodological artifacts, tidal effects, TIDs, TEQ, and large-scale geophysical phenomena. It explores spectral coupling, theoretical insights (inverse mass-scaling, Saturn's enhanced signal), and consistency with multi-messenger astronomy. The section emphasizes signal robustness despite GNSS processing, interpreting temporal dynamics as evidence for dynamical time, and outlines a research roadmap with open questions and priorities, including a falsifiable optical clock prediction.
     *   4.1 Signal Authenticity: A Multi-Layered Validation
         *   Statistical Robustness Validation
-            *   **Summary:** This validates signal authenticity through extensive statistical tests, including null hypothesis testing (15-42× signal enhancement over randomized controls) and multiple comparison corrections, ensuring robust statistical significance.
+            *   **Summary:** This validates signal authenticity through extensive statistical tests, including null hypothesis testing (24-61× signal enhancement over randomized controls, z = 15.8-31.9 across 180 scrambling iterations, ΔR² = 0.89-0.95) and multiple comparison corrections, ensuring robust statistical significance.
         *   Geographic Independence Validation
             *   **Summary:** This demonstrates the signal's independence from geographic factors, showing consistent correlation strength across elevation quintiles, hemisphere subsets, and ocean vs. land baselines.
         *   Dynamic Event Scale Consistency
             *   **Summary:** This confirms that the observed scales of dynamic events (e.g., eclipse and opposition effects) match the baseline correlation lengths, providing independent validation of the TEP signal.
         *   Multi-Center Convergence
-            *   **Summary:** This highlights the convergence of results from three independent analysis centers (CODE, IGS, ESA), with a low coefficient of variation (CV = 12.3%), reinforcing signal authenticity and ruling out processing-specific artifacts.
+            *   **Summary:** This highlights the convergence of results from three independent analysis centers (CODE, IGS, ESA), with a low coefficient of variation (CV = 18.2%), reinforcing signal authenticity and ruling out processing-specific artifacts.
     *   4.2 Alternative Explanations: Systematic Exclusion
         *   4.2.1 Methodological Artifacts
             *   **Summary:** This systematically excludes methodological artifacts by quantifying and showing they are 19.1x smaller than the observed signal, achieving a 100% validation score for geometric controls and distribution-neutral validation.
@@ -217,7 +217,7 @@ This document outlines the sections and subsections of the manuscript.
         *   4.2.6 Trans-equatorial Propagation (TEQ)
             *   **Summary:** This excludes trans-equatorial propagation (TEQ) as an alternative explanation by showing its characteristic spatial and temporal signatures are fundamentally incompatible with the observed TEP correlation patterns.
         *   4.2.7 Large-Scale Geophysical Phenomena
-            *   **Summary:** This systematically rules out other known large-scale geophysical phenomena (e.g., atmospheric effects) by demonstrating that the TEP correlations are independent of their characteristic signatures and scales.
+            *   **Summary:** This does not support simple Newtonian mass-distance scaling within current power (n≈5 planets, 2.5 y) for other known large-scale geophysical phenomena (e.g., atmospheric effects) by demonstrating that the TEP correlations are independent of their characteristic signatures and scales.
     *   4.3 Spectral Coupling and Theoretical Constraints
         *   Conformal vs. Disformal Coupling Evidence
             *   **Summary:** This discusses the evidence for different coupling mechanisms, comparing conformal and disformal metric modifications in the context of the observed spectral characteristics of the TEP signal.
@@ -266,7 +266,7 @@ This document outlines the sections and subsections of the manuscript.
         *   Summary of Key Results
             *   **Summary:** This summarizes key observed TEP phenomena including correlation length (3,330–4,549 km), diurnal time variations (~10⁻¹⁷-10⁻¹⁶ fractional amplitude), orbital velocity coupling (r = -0.701 to -0.796), 11 significant planetary coupling events, Chandler wobble modulation (R² = 0.524–0.577), 11 of 12 Earth motion beat frequency detections, annual network coherence, seasonal time modulation, and bounded TID contamination.
     *   5.2 Validation Framework Summary
-        *   **Summary:** This summarizes the multi-layered validation framework, establishing signal authenticity through null hypothesis testing (15-42× enhancement), cross-center consistency (CV = 12.3%), multi-band frequency analysis (R² CV = 2.9%), independence from geographic/instrumental factors, and dynamic event consistency.
+        *   **Summary:** This summarizes the multi-layered validation framework, establishing signal authenticity through null hypothesis testing (24-61× enhancement, z = 15.8-31.9, ΔR² = 0.89-0.95 across 180 scrambling iterations), cross-center consistency (CV = 18.2%), multi-band frequency analysis (R² CV = 2.9%), independence from geographic/instrumental factors, and dynamic event consistency.
     *   5.3 Signal Robustness and Processing Effects
         *   **Summary:** This highlights that standard GNSS processing systematically removes spatially correlated signals, making the survival of these TEP correlations demonstrate their robustness and provide strong evidence for a genuine physical phenomenon, representing a conservative lower bound.
     *   5.4 Alternative Explanations and Research Frontier
@@ -292,7 +292,7 @@ This document outlines the sections and subsections of the manuscript.
     *   Setup: Clone Repository
         *   **Summary:** This provides the `git clone` command and purpose for obtaining the full analysis code locally, noting an estimated setup time of ~1 minute.
     *   GCP High-CPU Analysis (Recommended for Large-Scale)
-        *   **Summary:** This describes the recommended GCP deployment for large-scale analysis, optimized for high-CPU instances with automated setup, persistent storage, and full 911-day analysis. It lists recommended instance types and features.
+        *   **Summary:** This describes the recommended GCP deployment for large-scale analysis, optimized for high-CPU instances with automated setup, persistent storage, and full 912-day analysis. It lists recommended instance types and features.
     *   Local Pipeline Execution
         *   **Summary:** This outlines how to run specific pipeline steps locally using `python scripts/clean_run_full_pipeline.py`, detailing its functions (cleans data, executes 23 steps, validates outputs) and optional arguments (`--dry-run`, `--skip-cleanup`).
     *   Pipeline Structure

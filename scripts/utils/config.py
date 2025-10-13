@@ -35,8 +35,8 @@ class TEPConfig:
         'TEP_BINS': 40,  # Total number of distance bins for correlation analysis
         'TEP_MAX_DISTANCE_KM': 13000.0,  # Maximum distance in km for binning and correlation analysis
         'TEP_MIN_BIN_COUNT': 50,  # Minimum number of pairs required per distance bin for correlation fitting
-        'TEP_BOOTSTRAP_ITER': 1000,  # Number of bootstrap iterations for uncertainty estimation
-        'TEP_NULL_ITERATIONS': 20,  # Number of null hypothesis iterations for significance testing (reduced for memory)
+        'TEP_BOOTSTRAP_ITER': 5000,  # Number of bootstrap iterations for uncertainty estimation (enhanced)
+        'TEP_NULL_ITERATIONS': 20,  # Number of null hypothesis iterations per analysis center (20 × 3 centers = 60 per scrambling type, 180 total tests)
         'TEP_MIN_BINS_FOR_FIT': 5, # Minimum number of valid bins required for fitting a correlation model
         'TEP_CORRELATION_LENGTH_INITIAL_GUESS': 3000,  # Initial guess for the correlation length (λ) in km during model fitting
         'TEP_MIN_DISTANCE_FOR_FIT': 100.0,  # Minimum distance in km to include pairs in model fitting

@@ -1,0 +1,6565 @@
+{
+  "analysis_center": "esa_final",
+  "event_window_days_used": 30,
+  "jupiter_opposition_analysis": {
+    "success": true,
+    "analysis_type": "jupiter_opposition_analysis",
+    "n_opposition_events_total": 2,
+    "n_opposition_events_analyzed": 2,
+    "event_results": {
+      "Jupiter_Opposition_2023": {
+        "success": true,
+        "event_date": "2023-11-03T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 675872,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.017360689586949602,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.00032555988721097293,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.00818208952820628,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.013273879851408335,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.006208450572732934,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.0002729583727495343,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": -0.0036476211357146827,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.017614568788486124,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": -0.005003527225665481,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.029576053163804857,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.010975358197745859,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.005920772724301641,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.03201581519865627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.0187355104724797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.005139207019062332,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.016522758034040814,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.01543956843716012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.01154316072967053,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.013083299475386969,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.010450619077404234,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.002067628911525332,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.003422057412455255,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.006143213154844632,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.014114788587428007,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": -0.0028036595558023603,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.010187070336052262,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.005810380941160762,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.0035421911162736674,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.0037978916259288893,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.015149329104877183,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.0031960415945487207,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.016130417786044165,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.00017450394165420365,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.0025271543169171876,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.00598153001678,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.00993406338424159,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.0049242052953431485,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.031546993086709434,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.011855725095038403,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.006704727235157085,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.005269342268786609,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.008848446735045389,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.0003533274295527293,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.004610021677654446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.014786224792845366,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.003496085271625321,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.014885355271203585,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.033864402183994405,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.013135685165665241,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.019973726066967436,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0025450214731132736,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.007427107304036949,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.00064149532104939,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.037344554756624744,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.05699826673066998,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.006277513846532068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.010293807828951378,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0030565793832529717,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.024935566040703544,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": -0.0013028495773644278,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.0021947364480513014,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.0070295730892108365,
+          "sigma_days": 4.946796522719393,
+          "baseline": 0.011401055916673102,
+          "center_days": -3.1271940660590247,
+          "r_squared": 0.03727864973141304,
+          "amplitude_std_err": 0.005093538242157312,
+          "sigma_level": 1.3800962621679538,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -0.6165721088106118,
+          "fit_success": true
+        }
+      },
+      "Jupiter_Opposition_2024": {
+        "success": true,
+        "event_date": "2024-12-07T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 671851,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": -0.009829822988452343,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.0004194375693627035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.002606654916671151,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": -0.0021515408804136716,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.016652674972448354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.011335503109331523,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.006652736255658637,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.01289442947644671,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.01603032620766404,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.004685949483141274,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.041697776792096145,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.012022537999288267,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.04663582846488208,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.010304364421550461,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": -0.0023882876179766198,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.013770736593823562,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.014902886954422405,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": -0.000259802017378067,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.0037438323516442162,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": -0.004594299655261903,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.007037456415436165,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.007420916344179387,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": -0.002578130550746175,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": -0.001241474090543928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": -0.010509978423074972,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0045076662213473185,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.003412807233851213,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": -0.004173603979030947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.005392515891682703,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.012090432681973446,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.017570761590940474,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.005154818839551706,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.003834331224536705,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.0009075066610145358,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": -0.011385775358611709,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.006182370464641582,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.029140795960171068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": -0.00045128056634571466,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.007637133236498016,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.004516929662131008,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.014114373051973227,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": -0.004744821554567392,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.00025302916718385584,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 3.0293947027224984e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": -0.005186622681849983,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.001574758311914845,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.01485305303653711,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.02431140653671797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.021031708766130627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.0064445866561226315,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.012607973351342044,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.0014282009223903428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.04837966843934307,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": -0.0037081838074328514,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.009039968794184975,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.018195429885075158,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.0070905080066670095,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.004293222034217528,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.026889002142111786,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0034934455817499984,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.0330222164903718,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.007755705378965645,
+          "sigma_days": 9.992364664288743,
+          "baseline": 0.00980415926882606,
+          "center_days": 2.2763978310752537,
+          "r_squared": 0.040184135751806904,
+          "amplitude_std_err": 0.005139133316369722,
+          "sigma_level": 1.5091465625655858,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -0.7910627690052107,
+          "fit_success": true
+        }
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.0022,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Jupiter opposition signals detected."
+  },
+  "saturn_opposition_analysis": {
+    "success": true,
+    "analysis_type": "saturn_opposition",
+    "n_opposition_events_total": 3,
+    "n_opposition_events_analyzed": 3,
+    "event_results": {
+      "saturn_2023": {
+        "success": true,
+        "event_date": "2023-08-27T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 681079,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.013058143544264432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.02593782737026234,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.006366091348649856,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.020023145410044428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.031330520811833455,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.00514529547619967,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.01827977043330298,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.027637074547643588,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.025966061892341685,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.03654537543201779,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.0068361336571695725,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.00019781353050579432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.012572521009632163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": -0.0033534154008283707,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.006417344568420821,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.0015018564237824729,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.021496993463979264,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.014981374790118726,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.015714641155039486,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.014821559186130163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.00534617341486839,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.023477486820306374,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.009598675796669131,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.04475677067058303,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.0020495080357111387,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.01161976680504012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.0052819896044592985,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.004902460743271905,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.02558341280930799,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.02657433857379941,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.021723218399230353,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.027871867669046514,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.00953540818184592,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": -0.009522897129037786,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.008842872540728656,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.023100157241102575,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.0353896829667613,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.003146769251296446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.0035258204967346276,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.0057431496066823835,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.0030260038385501024,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.013187951796497392,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.012457369476629468,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.0047919045157384845,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.0012438249006365247,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.0029137033362061746,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.00036430837286328553,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.004797746135685513,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.0053289666026775295,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.022378729763157267,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0019300149517733282,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.015290801877864281,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.013143730242103935,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.05260714325645354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.005390969470943572,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.007574333157168527,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.004778079130130581,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.022400484705008265,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.03183768182711278,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0009209857618341579,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.004055603561215528,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.005916322811740691,
+          "sigma_days": 5.267461172949121,
+          "baseline": 0.0111585312858056,
+          "center_days": -3.682086166058122,
+          "r_squared": 0.02120288810184079,
+          "amplitude_std_err": 0.00568236709561936,
+          "sigma_level": 1.0411722284365774,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 0.5302062305696673,
+          "fit_success": true
+        },
+        "description": "Saturn Opposition August 2023"
+      },
+      "saturn_2024": {
+        "success": true,
+        "event_date": "2024-09-08T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 670220,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": -0.0005735037066170679,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.0001467527759154466,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.010279743646759876,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.02304960195670417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": -0.0010624877052853201,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.0020282426354747713,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.02356018845389097,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.008414776148744417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.0024159548530223503,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": -0.0004924693817694023,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.005342386613784,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.0038148487011402284,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": -1.7213672700730236e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.02592615171917928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.017524914900200854,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.008114127351472591,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.029207548731066527,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.004812777465550981,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.043493831427457746,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": -0.0022069515682081,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.00026231460756596264,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.02017056054557238,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.006523206871769733,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.0035707424823663947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.0019255612381311555,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0010473208461531929,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": -0.0072201904414064795,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 6.355834398516185e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.0018912598895917884,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.003944226223415598,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": -0.0012475284783541425,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": -0.003486944851233031,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.002006937976038709,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.015088549823330034,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.031742966751597046,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.013094109213759142,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.00493699672903145,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.010935166276785667,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.002220537780582486,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.004816874503411577,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.003963620994594107,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.008208340094055473,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.010260433213595039,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.02299563145076035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.031061555779922565,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.01873377748958743,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.006789873042524666,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.007082891119368863,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.003067831621020854,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.004624625532053037,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0004281882176096204,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.00014063091561372393,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.01683448266603473,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.015053427793801007,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.013207687592873774,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.010890061602997431,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.026199098740599388,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.023788458999490794,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": -0.010940980270935641,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.013333397317740959,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": -0.001440848818437412,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.012770181860742422,
+          "sigma_days": 2.7587756825059864,
+          "baseline": 0.009252431709426724,
+          "center_days": -2.744985056032286,
+          "r_squared": 0.08297317920967173,
+          "amplitude_std_err": 0.00642084296430345,
+          "sigma_level": 1.9888637569456218,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -1.3801973645189602,
+          "fit_success": true
+        },
+        "description": "Saturn Opposition September 2024"
+      },
+      "saturn_2025": {
+        "success": false,
+        "error": "Event outside data range"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.00019,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Saturn opposition signals detected."
+  },
+  "mars_opposition_analysis": {
+    "success": true,
+    "analysis_type": "mars_opposition_analysis",
+    "n_opposition_events_total": 1,
+    "n_opposition_events_analyzed": 1,
+    "event_results": {
+      "mars_2025": {
+        "success": true,
+        "event_date": "2025-01-16T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 763061,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.014114373051973227,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.004744821554567392,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.00025302916718385584,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 3.0293947027224984e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": -0.005186622681849983,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.001574758311914845,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.01485305303653711,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.02431140653671797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.021031708766130627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.0064445866561226315,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.012607973351342044,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.0014282009223903428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.04837966843934307,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": -0.0037081838074328514,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": -0.009039968794184975,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.018195429885075158,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.0070905080066670095,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.004293222034217528,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.026889002142111786,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.0034934455817499984,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.0330222164903718,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.010400868663516145,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.012071136270556405,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": -0.006415746564907986,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.01032812064906035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.005022395484981414,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.012578845560964107,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.009511221889931275,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.0032487664951894512,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.008454882516646047,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.004843478234399168,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.01030896837362474,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.008083593075201427,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.009225925466490034,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.0017366195699203728,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.003501788145017901,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": -0.006187660955168788,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": -0.0023919634487086453,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.01329487083733823,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.003753202206635167,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": -0.0011358100023683684,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.003781011605095342,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.006063350018492435,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.01662234009384469,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.007712607870779926,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.0030581579609800192,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.017851174409081145,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.0003818209669466808,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.034819983630153914,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.009665992454575455,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.009394386498981461,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.02524276409192839,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.019324509489552343,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.01603183599439733,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.014323955626278164,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.01846388839098069,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.008739284790169657,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": -0.0046629534421131266,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.016691394853740646,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.01147108269576958,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.008484339825764705,
+            "n_pairs": 15225
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.00976282381416516,
+          "sigma_days": 4.55528483197672,
+          "baseline": 0.009551014570438844,
+          "center_days": 6.383634544299877,
+          "r_squared": 0.0663908318440557,
+          "amplitude_std_err": 0.005275624276623415,
+          "sigma_level": 1.8505532809500433,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -1.0221766224063653,
+          "fit_success": true
+        },
+        "description": "Mars Opposition January 2025"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 5e-05,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Mars opposition signals detected."
+  },
+  "venus_conjunction_analysis": {
+    "success": true,
+    "analysis_type": "venus_inferior_conjunction_analysis",
+    "n_conjunction_events_total": 2,
+    "n_conjunction_events_analyzed": 2,
+    "event_results": {
+      "venus_2023": {
+        "success": true,
+        "event_date": "2023-08-13T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 680930,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.008997684079807935,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.0022542640148073335,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.0025126237730109984,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.0235648524278341,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.003631937733263402,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.0024872710644934263,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.002811817622289947,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.008159459137090578,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.02192984092322437,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.04254865510895762,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.008145205293432906,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.04166529098478671,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.01333107944494488,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.0029192217888850797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.013058143544264432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.02593782737026234,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.006366091348649856,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.020023145410044428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.031330520811833455,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.00514529547619967,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.01827977043330298,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.027637074547643588,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.025966061892341685,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.03654537543201779,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": -0.0068361336571695725,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": -0.00019781353050579432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.012572521009632163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": -0.0033534154008283707,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.006417344568420821,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.0015018564237824729,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.021496993463979264,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.014981374790118726,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.015714641155039486,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.014821559186130163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.00534617341486839,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.023477486820306374,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.009598675796669131,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.04475677067058303,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.0020495080357111387,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.01161976680504012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.0052819896044592985,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.004902460743271905,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.02558341280930799,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.02657433857379941,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.021723218399230353,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.027871867669046514,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.00953540818184592,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.009522897129037786,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.008842872540728656,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.023100157241102575,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.0353896829667613,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.003146769251296446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.0035258204967346276,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.0057431496066823835,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.0030260038385501024,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.013187951796497392,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.012457369476629468,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0047919045157384845,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.0012438249006365247,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0029137033362061746,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.00036430837286328553,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.07879418455230823,
+          "sigma_days": 59.999999999999986,
+          "baseline": -0.06261609786136915,
+          "center_days": -3.3433970530068478,
+          "r_squared": 0.05983583490964506,
+          "amplitude_std_err": 1.9566834727839337,
+          "sigma_level": 0.04026925440332017,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -1.2583694488078299,
+          "fit_success": true
+        },
+        "description": "Venus Inferior Conjunction August 2023"
+      },
+      "venus_2025": {
+        "success": true,
+        "event_date": "2025-03-23T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 958191,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.02741553868071042,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.014259191699511018,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.00025681943486084724,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.0208757196738138,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.022067865061644248,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.01164327955782253,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.013614628651743213,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.026341598846261676,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": -0.00257436613544491,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.009169423985336338,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.01604388386635605,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.017611585543761278,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.010309219104519462,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.030378143473291423,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.02180168683886945,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.011108901392836702,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.02149455377007249,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.010482676202812275,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.03347442631743525,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.026124325226997973,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.006339652314755832,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.027447763773548326,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.003828227287623653,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.02560268689812305,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.010356058363686254,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.004964619247352439,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.0038327932028778774,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.016361393057399812,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.05367199225891726,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.02067283503912936,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.014796972944898883,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.05728142308117562,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.006256795808876993,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.04417621210427946,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.02120286769518214,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.057098423197087134,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.027904367329010193,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.007902952280839152,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.03590870424211645,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.030178396581766086,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.014065996049648465,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.02530150440998548,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.013167663315408402,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.0014296175799904272,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.005367640780415473,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.013794236853845733,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.01765536708378994,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.016777362866474337,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.003834058718996792,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.0152943123426779,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.018637146899807184,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.025591287421282777,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.008611202019708292,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.007999759196722477,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.002756378703684765,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.0008118493521871307,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.007401273378360532,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": -0.0024474186438298413,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": -0.000417868738439363,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.008442794772902856,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.01770859998505537,
+            "n_pairs": 15225
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.0218155290106799,
+          "sigma_days": 4.110990491547308,
+          "baseline": 0.01325635363660426,
+          "center_days": 3.3526945156329426,
+          "r_squared": 0.23687670103724068,
+          "amplitude_std_err": 0.005710887646671907,
+          "sigma_level": 3.819989178633759,
+          "is_significant": true,
+          "amplitude_fraction_of_baseline": 1.6456658903879509,
+          "fit_success": true
+        },
+        "description": "Venus Inferior Conjunction March 2025"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.001,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "Significant Venus conjunction signal(s) detected: 1"
+  },
+  "mercury_conjunction_analysis": {
+    "success": true,
+    "analysis_type": "mercury_inferior_conjunction_analysis",
+    "n_conjunction_events_total": 8,
+    "n_conjunction_events_analyzed": 8,
+    "event_results": {
+      "mercury_2023_01": {
+        "success": true,
+        "event_date": "2023-01-07T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 412432,
+        "n_daily_bins": 37,
+        "daily_data": [
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.021683714906792113,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.030883675703966773,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.005823826647835894,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": -0.010568223278358485,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.007047135275300253,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.010684820717970563,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.0013397542417731142,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.009621233968774902,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.0024471572526741604,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.036743737137701564,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.02861371733904064,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.004419931081130947,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.015645691313409642,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.014625322957920493,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.012053948369557938,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.006255897514693786,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.01351714369813441,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.01411305075673669,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.01691551343145966,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": -0.002388629140553884,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.007504269393296113,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": -0.0013881667018335133,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.008860763612778067,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.0048917729723089946,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.004262590316662,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.03135209244952365,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.00286178564695947,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.002358605302560223,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.004119784383003275,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.014599785249338922,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.00514723571237905,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.003908501098117444,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.007044150311980424,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.007771456648896322,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": -4.6761364033418774e-05,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.003120729164189896,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.007446974403659365,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.025005955006406202,
+          "sigma_days": 1.0000000000000002,
+          "baseline": 0.006696636374538612,
+          "center_days": 3.4460690870983868,
+          "r_squared": 0.2299932114514146,
+          "amplitude_std_err": 0.009388843317855725,
+          "sigma_level": 2.663369081774942,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 3.7341067377469894,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction January 2023"
+      },
+      "mercury_2023_05": {
+        "success": true,
+        "event_date": "2023-05-01T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 681675,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.0010641837498093672,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.0013821783333863658,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.011353452838929854,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.006365004151566032,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.012571942742115974,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.007905087960198696,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.025799818305311407,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.009394726240918281,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": -0.003851766172081288,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.03286989777161932,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.0033898252951801567,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.008399064090355624,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.03332649708409816,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": -0.0019281033520192623,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.001345877192573214,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.005125838731029216,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.011296831245476103,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.009145811181266502,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.024909971372135152,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.014364950424995051,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.007244332128720925,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.0007220314181497405,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": -0.010620385869845005,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": -1.0456439793955178e-05,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.047394341627310696,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.013001953077929788,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.01563582836918428,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.019789567455820018,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.001241473783187715,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.02852924767070452,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": -0.009730555161160307,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": -0.0023847042515665463,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.0053673320288932305,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.006856654398082867,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.016226116794447357,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.04391052096060095,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.011750448044232245,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.01691337553623886,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.025931544658097837,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.0017015652210188483,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": -0.005441610838743902,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.017425380071596958,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.00015853666357049475,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.0020847302945358717,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.018951641540872338,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": -0.002527208736012049,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.008839763924047808,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.012901060639440892,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.0021648060849725555,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.031198606979310574,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.0040439246509747714,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.017225172515356595,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.013328045017369134,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.004326883746217916,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.000659658964910909,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.004053649374842708,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.045289509199865255,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.005289275253635547,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.009293771615813087,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": -0.008203702219097924,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.020160394261712518,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.022880294285535462,
+          "sigma_days": 1.0000000000000002,
+          "baseline": 0.009531868319721368,
+          "center_days": 5.022509160698081,
+          "r_squared": 0.08399396624269972,
+          "amplitude_std_err": 0.011921976225103466,
+          "sigma_level": 1.919169595168094,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 2.4003997451576513,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction May 2023"
+      },
+      "mercury_2023_09": {
+        "success": true,
+        "event_date": "2023-08-28T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 681079,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.02593782737026234,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.006366091348649856,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.020023145410044428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.031330520811833455,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.00514529547619967,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.01827977043330298,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.027637074547643588,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.025966061892341685,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.03654537543201779,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": -0.0068361336571695725,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.00019781353050579432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.012572521009632163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": -0.0033534154008283707,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.006417344568420821,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.0015018564237824729,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.021496993463979264,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.014981374790118726,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.015714641155039486,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.014821559186130163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.00534617341486839,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.023477486820306374,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.009598675796669131,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.04475677067058303,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.0020495080357111387,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.01161976680504012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0052819896044592985,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.004902460743271905,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.02558341280930799,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.02657433857379941,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.021723218399230353,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.027871867669046514,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.00953540818184592,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.009522897129037786,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.008842872540728656,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.023100157241102575,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.0353896829667613,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.003146769251296446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.0035258204967346276,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.0057431496066823835,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.0030260038385501024,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.013187951796497392,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.012457369476629468,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.0047919045157384845,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.0012438249006365247,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.0029137033362061746,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.00036430837286328553,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.004797746135685513,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.0053289666026775295,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.022378729763157267,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.0019300149517733282,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.015290801877864281,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.013143730242103935,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.05260714325645354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": -0.005390969470943572,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.007574333157168527,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": -0.004778079130130581,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.022400484705008265,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.03183768182711278,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.0009209857618341579,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.004055603561215528,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": -0.0010583563699979213,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.006342730772413699,
+          "sigma_days": 5.420441653116502,
+          "baseline": 0.010794945137300128,
+          "center_days": -4.707293554688311,
+          "r_squared": 0.02434935429901941,
+          "amplitude_std_err": 0.00565245968457417,
+          "sigma_level": 1.1221187105010781,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 0.5875648918767965,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction August 2023"
+      },
+      "mercury_2023_12": {
+        "success": true,
+        "event_date": "2023-12-22T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 674679,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.019973726066967436,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.0025450214731132736,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.007427107304036949,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.00064149532104939,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.037344554756624744,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.05699826673066998,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.006277513846532068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.010293807828951378,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.0030565793832529717,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.024935566040703544,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.0013028495773644278,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.0021947364480513014,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.006605532390478914,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.017770730313835286,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.020103680881544905,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.0051658272571605945,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.028810615679660426,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.036339753207435994,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.02994020886701002,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.004687897577502176,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.004295676418138294,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.00947283881535712,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.005804474844631145,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.03395389096671433,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.010208882169931979,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": -0.007516316138568945,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": -0.013398986448760798,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.013031708921751506,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.010260156749526784,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.007302965814743208,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.008644798927554095,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": -0.01202753944537071,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.009605940310131018,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": -0.00017768098704965327,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": -0.0027378259634403953,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.06416180751889004,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.006393478879456139,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.01111824790264097,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.007162488489413659,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.001672049622168445,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.011107121459354854,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.0057089134904436765,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.0013062255421459744,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.00670011036311381,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": -0.0003172081218235217,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": -0.001761006119037542,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.004146033291225419,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.0010669394047785534,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.009305838434046197,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.007993951895428657,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.009412664523078084,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.0006387000833095498,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.022227784399670568,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.005669516881695588,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.003548899706334909,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.010751482726397883,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.006151583793688723,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0037593417263959467,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": -0.008459602552824519,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": -0.004441539874382263,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.003965872708781142,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.01405856217601173,
+          "sigma_days": 21.053975435655246,
+          "baseline": 0.014502590755772956,
+          "center_days": 29.99999999988723,
+          "r_squared": 0.10908766091496036,
+          "amplitude_std_err": 0.01128733618057561,
+          "sigma_level": 1.2455163867808885,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -0.9693828097862808,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction December 2023"
+      },
+      "mercury_2024_04": {
+        "success": true,
+        "event_date": "2024-04-11T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 678109,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.032683748324242624,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.001893065303981459,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.014292225610079545,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 3.1496065675103015e-05,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.02006845566667388,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.014010776562090122,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": -0.0031111090307879164,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.019519696295224563,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.01899840165170019,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.001215169660575788,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.00937878795109769,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.0005733499904295166,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.007371768943265925,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.024834906348110718,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.01313377699593408,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.006759159153568512,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.016194655097575856,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.034215643119682934,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.016994954757201437,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": -0.0038421459119760853,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.022118615430129957,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.01474473669204747,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": -0.007249526713397485,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.02412361294300666,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.016225494947644855,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0066724965228003065,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": -0.0034027464669306754,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.01760688315207402,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.011005379624747449,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.007759801238452664,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.030313253509040565,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.00634872371235042,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.013375627694656672,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.03629495747079316,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.010744340372873726,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": -0.0016801771388515365,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.01922680794873888,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.01548778611456074,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.004714328749748469,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.0010150256298674476,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.002172268725208122,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.015057923298219053,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.009861489642442028,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": -0.008539616158616446,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.01053190596829506,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.011831884835358185,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.009032306035938248,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.008644837884182896,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.00612224373396789,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.0010436584848947453,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.00026320514226990844,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.0008308512836089578,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": -0.00030361987672319186,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.018426233353542144,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.013370457368401343,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.02321856611516173,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.029637555643360212,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": -0.008995412030758716,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.005473758981677278,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.003519083744656923,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.006124499107656285,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.01719016361353848,
+          "sigma_days": 1.0000000000000002,
+          "baseline": 0.00874907736300311,
+          "center_days": 2.8596571072311003,
+          "r_squared": 0.060225900739088845,
+          "amplitude_std_err": 0.010726000555475271,
+          "sigma_level": 1.6026629426905505,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 1.9647973037968403,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction April 2024"
+      },
+      "mercury_2024_08": {
+        "success": true,
+        "event_date": "2024-08-05T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 672301,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.010206839476129295,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.011272039598768165,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.01205546029807224,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.06418760923734988,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.007378745116690322,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.008458448674354937,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.01131368688438008,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.0013478376271208296,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.01009466873579496,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.007812771452517612,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.015119807414088483,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.008944925451530757,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.020957909989562224,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.00044391447947690887,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.023865958847273543,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.009654277986355984,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.0042310349774152016,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": -0.006292382803137809,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.015412717931128708,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.007647773613493296,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": -0.0003106380291182888,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.006115432806003384,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.01302285112803263,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.022543631587300682,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.006296456222127926,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.00998219401539475,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.03872458090853656,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.0351446418884395,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.0029170828894068577,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": -0.006530325987188666,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.03026935386164329,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.021935247752944694,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.02616901487805532,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.006237022491107485,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": -0.0005735037066170679,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": -0.0001467527759154466,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.010279743646759876,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.02304960195670417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.0010624877052853201,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.0020282426354747713,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.02356018845389097,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.008414776148744417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.0024159548530223503,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": -0.0004924693817694023,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.005342386613784,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": -0.0038148487011402284,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": -1.7213672700730236e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.02592615171917928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.017524914900200854,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.008114127351472591,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.029207548731066527,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.004812777465550981,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.043493831427457746,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": -0.0022069515682081,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.00026231460756596264,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.02017056054557238,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.006523206871769733,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0035707424823663947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.0019255612381311555,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0010473208461531929,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": -0.0072201904414064795,
+            "n_pairs": 10878
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.025509932631729182,
+          "sigma_days": 1.0000000000000002,
+          "baseline": 0.009873830368826324,
+          "center_days": -3.6502105595477885,
+          "r_squared": 0.10040769156990148,
+          "amplitude_std_err": 0.012107661811761683,
+          "sigma_level": 2.106924774438959,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 2.583590327039564,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction August 2024"
+      },
+      "mercury_2024_11": {
+        "success": true,
+        "event_date": "2024-11-26T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 673341,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": -0.005571964796455416,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.009575874844541985,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.01419104476970362,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.01674830793005902,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": -0.009346590133410132,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.010251420604270447,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.0017421876649681947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.0013364406532786035,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": -0.0026106591485661563,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.0015246745285903763,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.004594756517454134,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.009829822988452343,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": -0.0004194375693627035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.002606654916671151,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": -0.0021515408804136716,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.016652674972448354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.011335503109331523,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.006652736255658637,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.01289442947644671,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.01603032620766404,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.004685949483141274,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.041697776792096145,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.012022537999288267,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.04663582846488208,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.010304364421550461,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": -0.0023882876179766198,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.013770736593823562,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.014902886954422405,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.000259802017378067,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.0037438323516442162,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": -0.004594299655261903,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.007037456415436165,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.007420916344179387,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": -0.002578130550746175,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": -0.001241474090543928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": -0.010509978423074972,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.0045076662213473185,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.003412807233851213,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.004173603979030947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.005392515891682703,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.012090432681973446,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.017570761590940474,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.005154818839551706,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.003834331224536705,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.0009075066610145358,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": -0.011385775358611709,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.006182370464641582,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.029140795960171068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.00045128056634571466,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.007637133236498016,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.004516929662131008,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.014114373051973227,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": -0.004744821554567392,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": -0.00025302916718385584,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 3.0293947027224984e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": -0.005186622681849983,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.001574758311914845,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.01485305303653711,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.02431140653671797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.021031708766130627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.0064445866561226315,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.027884549079262036,
+          "sigma_days": 1.7410734589994714,
+          "baseline": 0.0031967957805005436,
+          "center_days": -8.03392813960097,
+          "r_squared": 0.26142759770409596,
+          "amplitude_std_err": 0.007279537693049943,
+          "sigma_level": 3.8305384565677154,
+          "is_significant": true,
+          "amplitude_fraction_of_baseline": 8.722655744651904,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction November 2024"
+      },
+      "mercury_2025_03": {
+        "success": true,
+        "event_date": "2025-03-15T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 959971,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.016691394853740646,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.01147108269576958,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.008484339825764705,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.002132059611048376,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.0038417131861665675,
+            "n_pairs": 15051
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.007750003728025272,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.028729980058287977,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.015305897395512703,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.02741553868071042,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.014259191699511018,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.00025681943486084724,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.0208757196738138,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.022067865061644248,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.01164327955782253,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.013614628651743213,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.026341598846261676,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.00257436613544491,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.009169423985336338,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.01604388386635605,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.017611585543761278,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.010309219104519462,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.030378143473291423,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.02180168683886945,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.011108901392836702,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.02149455377007249,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.010482676202812275,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.03347442631743525,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.026124325226997973,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.006339652314755832,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.027447763773548326,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.003828227287623653,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.02560268689812305,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.010356058363686254,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.004964619247352439,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.0038327932028778774,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.016361393057399812,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.05367199225891726,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.02067283503912936,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.014796972944898883,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.05728142308117562,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.006256795808876993,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.04417621210427946,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.02120286769518214,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.057098423197087134,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.027904367329010193,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.007902952280839152,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.03590870424211645,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.030178396581766086,
+            "n_pairs": 16110
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.014065996049648465,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.02530150440998548,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.013167663315408402,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.0014296175799904272,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.005367640780415473,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.013794236853845733,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.01765536708378994,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.016777362866474337,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.003834058718996792,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0152943123426779,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.018637146899807184,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.025591287421282777,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.008611202019708292,
+            "n_pairs": 15400
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.020516751217556927,
+          "sigma_days": 3.8727056366134636,
+          "baseline": 0.014621959526434913,
+          "center_days": 11.35636924555971,
+          "r_squared": 0.2187283599847737,
+          "amplitude_std_err": 0.005691954271214102,
+          "sigma_level": 3.604517928282771,
+          "is_significant": true,
+          "amplitude_fraction_of_baseline": 1.4031464921281496,
+          "fit_success": true
+        },
+        "description": "Mercury Inferior Conjunction March 2025"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.0001,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "Significant Mercury conjunction signal(s) detected: 2"
+  },
+  "success": true,
+  "jupiter": {
+    "success": true,
+    "analysis_type": "jupiter_opposition_analysis",
+    "n_opposition_events_total": 2,
+    "n_opposition_events_analyzed": 2,
+    "event_results": {
+      "Jupiter_Opposition_2023": {
+        "success": true,
+        "event_date": "2023-11-03T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 675872,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.017360689586949602,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.00032555988721097293,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.00818208952820628,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.013273879851408335,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.006208450572732934,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.0002729583727495343,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": -0.0036476211357146827,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.017614568788486124,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": -0.005003527225665481,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.029576053163804857,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.010975358197745859,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.005920772724301641,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.03201581519865627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.0187355104724797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.005139207019062332,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.016522758034040814,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.01543956843716012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.01154316072967053,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.013083299475386969,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.010450619077404234,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.002067628911525332,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.003422057412455255,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.006143213154844632,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.014114788587428007,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": -0.0028036595558023603,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.010187070336052262,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.005810380941160762,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.0035421911162736674,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.0037978916259288893,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.015149329104877183,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.0031960415945487207,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.016130417786044165,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.00017450394165420365,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.0025271543169171876,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.00598153001678,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.00993406338424159,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.0049242052953431485,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.031546993086709434,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.011855725095038403,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.006704727235157085,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.005269342268786609,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.008848446735045389,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.0003533274295527293,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.004610021677654446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.014786224792845366,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.003496085271625321,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.014885355271203585,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.033864402183994405,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.013135685165665241,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.019973726066967436,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0025450214731132736,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.007427107304036949,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.00064149532104939,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.037344554756624744,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.05699826673066998,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.006277513846532068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.010293807828951378,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.0030565793832529717,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.024935566040703544,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": -0.0013028495773644278,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.0021947364480513014,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.0070295730892108365,
+          "sigma_days": 4.946796522719393,
+          "baseline": 0.011401055916673102,
+          "center_days": -3.1271940660590247,
+          "r_squared": 0.03727864973141304,
+          "amplitude_std_err": 0.005093538242157312,
+          "sigma_level": 1.3800962621679538,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -0.6165721088106118,
+          "fit_success": true
+        }
+      },
+      "Jupiter_Opposition_2024": {
+        "success": true,
+        "event_date": "2024-12-07T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 671851,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": -0.009829822988452343,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.0004194375693627035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.002606654916671151,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": -0.0021515408804136716,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.016652674972448354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.011335503109331523,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.006652736255658637,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.01289442947644671,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.01603032620766404,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.004685949483141274,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.041697776792096145,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": 0.012022537999288267,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.04663582846488208,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.010304364421550461,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": -0.0023882876179766198,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.013770736593823562,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.014902886954422405,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": -0.000259802017378067,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.0037438323516442162,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": -0.004594299655261903,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.007037456415436165,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.007420916344179387,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": -0.002578130550746175,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": -0.001241474090543928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": -0.010509978423074972,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0045076662213473185,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.003412807233851213,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": -0.004173603979030947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.005392515891682703,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.012090432681973446,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.017570761590940474,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.005154818839551706,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.003834331224536705,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.0009075066610145358,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": -0.011385775358611709,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.006182370464641582,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.029140795960171068,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": -0.00045128056634571466,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.007637133236498016,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.004516929662131008,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.014114373051973227,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": -0.004744821554567392,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.00025302916718385584,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 3.0293947027224984e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": -0.005186622681849983,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.001574758311914845,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.01485305303653711,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.02431140653671797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.021031708766130627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.0064445866561226315,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.012607973351342044,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": -0.0014282009223903428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.04837966843934307,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": -0.0037081838074328514,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.009039968794184975,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.018195429885075158,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.0070905080066670095,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.004293222034217528,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.026889002142111786,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0034934455817499984,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.0330222164903718,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.007755705378965645,
+          "sigma_days": 9.992364664288743,
+          "baseline": 0.00980415926882606,
+          "center_days": 2.2763978310752537,
+          "r_squared": 0.040184135751806904,
+          "amplitude_std_err": 0.005139133316369722,
+          "sigma_level": 1.5091465625655858,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -0.7910627690052107,
+          "fit_success": true
+        }
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.0022,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Jupiter opposition signals detected."
+  },
+  "saturn": {
+    "success": true,
+    "analysis_type": "saturn_opposition",
+    "n_opposition_events_total": 3,
+    "n_opposition_events_analyzed": 3,
+    "event_results": {
+      "saturn_2023": {
+        "success": true,
+        "event_date": "2023-08-27T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 681079,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.013058143544264432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": 0.02593782737026234,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.006366091348649856,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.020023145410044428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": 0.031330520811833455,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.00514529547619967,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.01827977043330298,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.027637074547643588,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.025966061892341685,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.03654537543201779,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.0068361336571695725,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.00019781353050579432,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.012572521009632163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": -0.0033534154008283707,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.006417344568420821,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.0015018564237824729,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.021496993463979264,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.014981374790118726,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.015714641155039486,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.014821559186130163,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.00534617341486839,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.023477486820306374,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.009598675796669131,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.04475677067058303,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.0020495080357111387,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.01161976680504012,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.0052819896044592985,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.004902460743271905,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.02558341280930799,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.02657433857379941,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.021723218399230353,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.027871867669046514,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": 0.00953540818184592,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": -0.009522897129037786,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.008842872540728656,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.023100157241102575,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.0353896829667613,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.003146769251296446,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.0035258204967346276,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": 0.0057431496066823835,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.0030260038385501024,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.013187951796497392,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.012457369476629468,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.0047919045157384845,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.0012438249006365247,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.0029137033362061746,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.00036430837286328553,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.004797746135685513,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.0053289666026775295,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": 0.022378729763157267,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0019300149517733282,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.015290801877864281,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.013143730242103935,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.05260714325645354,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": -0.005390969470943572,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.007574333157168527,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": -0.004778079130130581,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.022400484705008265,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.03183768182711278,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.0009209857618341579,
+            "n_pairs": 11175
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.004055603561215528,
+            "n_pairs": 11175
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": 0.005916322811740691,
+          "sigma_days": 5.267461172949121,
+          "baseline": 0.0111585312858056,
+          "center_days": -3.682086166058122,
+          "r_squared": 0.02120288810184079,
+          "amplitude_std_err": 0.00568236709561936,
+          "sigma_level": 1.0411722284365774,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": 0.5302062305696673,
+          "fit_success": true
+        },
+        "description": "Saturn Opposition August 2023"
+      },
+      "saturn_2024": {
+        "success": true,
+        "event_date": "2024-09-08T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 670220,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": -0.0005735037066170679,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.0001467527759154466,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": 0.010279743646759876,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 0.02304960195670417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": -0.0010624877052853201,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": -0.0020282426354747713,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.02356018845389097,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.008414776148744417,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.0024159548530223503,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": -0.0004924693817694023,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": 0.005342386613784,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.0038148487011402284,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": -1.7213672700730236e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": 0.02592615171917928,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": 0.017524914900200854,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.008114127351472591,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": 0.029207548731066527,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.004812777465550981,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.043493831427457746,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": -0.0022069515682081,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.00026231460756596264,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.02017056054557238,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.006523206871769733,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": 0.0035707424823663947,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.0019255612381311555,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.0010473208461531929,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": -0.0072201904414064795,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 6.355834398516185e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": -0.0018912598895917884,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.003944226223415598,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": -0.0012475284783541425,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": -0.003486944851233031,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.002006937976038709,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.015088549823330034,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.031742966751597046,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.013094109213759142,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": 0.00493699672903145,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": 0.010935166276785667,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": -0.002220537780582486,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.004816874503411577,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": 0.003963620994594107,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.008208340094055473,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": 0.010260433213595039,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.02299563145076035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.031061555779922565,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.01873377748958743,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.006789873042524666,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": -0.007082891119368863,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": -0.003067831621020854,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.004624625532053037,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": -0.0004281882176096204,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.00014063091561372393,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.01683448266603473,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.015053427793801007,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.013207687592873774,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.010890061602997431,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.026199098740599388,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": 0.023788458999490794,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": -0.010940980270935641,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.013333397317740959,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": -0.001440848818437412,
+            "n_pairs": 11026
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.012770181860742422,
+          "sigma_days": 2.7587756825059864,
+          "baseline": 0.009252431709426724,
+          "center_days": -2.744985056032286,
+          "r_squared": 0.08297317920967173,
+          "amplitude_std_err": 0.00642084296430345,
+          "sigma_level": 1.9888637569456218,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -1.3801973645189602,
+          "fit_success": true
+        },
+        "description": "Saturn Opposition September 2024"
+      },
+      "saturn_2025": {
+        "success": false,
+        "error": "Event outside data range"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 0.00019,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Saturn opposition signals detected."
+  },
+  "mars": {
+    "success": true,
+    "analysis_type": "mars_opposition_analysis",
+    "n_opposition_events_total": 1,
+    "n_opposition_events_analyzed": 1,
+    "event_results": {
+      "mars_2025": {
+        "success": true,
+        "event_date": "2025-01-16T00:00:00",
+        "window_days": 30,
+        "n_pairs_in_window": 763061,
+        "n_daily_bins": 61,
+        "daily_data": [
+          {
+            "days_from_event": -30,
+            "mean_coherence": 0.014114373051973227,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -29,
+            "mean_coherence": -0.004744821554567392,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -28,
+            "mean_coherence": -0.00025302916718385584,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -27,
+            "mean_coherence": 3.0293947027224984e-05,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -26,
+            "mean_coherence": -0.005186622681849983,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -25,
+            "mean_coherence": 0.001574758311914845,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -24,
+            "mean_coherence": 0.01485305303653711,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -23,
+            "mean_coherence": 0.02431140653671797,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -22,
+            "mean_coherence": 0.021031708766130627,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -21,
+            "mean_coherence": 0.0064445866561226315,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -20,
+            "mean_coherence": -0.012607973351342044,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -19,
+            "mean_coherence": -0.0014282009223903428,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -18,
+            "mean_coherence": 0.04837966843934307,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -17,
+            "mean_coherence": -0.0037081838074328514,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -16,
+            "mean_coherence": -0.009039968794184975,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -15,
+            "mean_coherence": 0.018195429885075158,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -14,
+            "mean_coherence": -0.0070905080066670095,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -13,
+            "mean_coherence": 0.004293222034217528,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -12,
+            "mean_coherence": 0.026889002142111786,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -11,
+            "mean_coherence": 0.0034934455817499984,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -10,
+            "mean_coherence": 0.0330222164903718,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -9,
+            "mean_coherence": 0.010400868663516145,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -8,
+            "mean_coherence": 0.012071136270556405,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -7,
+            "mean_coherence": -0.006415746564907986,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -6,
+            "mean_coherence": 0.01032812064906035,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -5,
+            "mean_coherence": 0.005022395484981414,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -4,
+            "mean_coherence": 0.012578845560964107,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -3,
+            "mean_coherence": 0.009511221889931275,
+            "n_pairs": 11026
+          },
+          {
+            "days_from_event": -2,
+            "mean_coherence": 0.0032487664951894512,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": -1,
+            "mean_coherence": 0.008454882516646047,
+            "n_pairs": 10878
+          },
+          {
+            "days_from_event": 0,
+            "mean_coherence": 0.004843478234399168,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 1,
+            "mean_coherence": 0.01030896837362474,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 2,
+            "mean_coherence": -0.008083593075201427,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 3,
+            "mean_coherence": 0.009225925466490034,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 4,
+            "mean_coherence": 0.0017366195699203728,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 5,
+            "mean_coherence": 0.003501788145017901,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 6,
+            "mean_coherence": -0.006187660955168788,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 7,
+            "mean_coherence": -0.0023919634487086453,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 8,
+            "mean_coherence": 0.01329487083733823,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 9,
+            "mean_coherence": -0.003753202206635167,
+            "n_pairs": 10731
+          },
+          {
+            "days_from_event": 10,
+            "mean_coherence": -0.0011358100023683684,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 11,
+            "mean_coherence": 0.003781011605095342,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 12,
+            "mean_coherence": -0.006063350018492435,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 13,
+            "mean_coherence": 0.01662234009384469,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 14,
+            "mean_coherence": 0.007712607870779926,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 15,
+            "mean_coherence": 0.0030581579609800192,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 16,
+            "mean_coherence": 0.017851174409081145,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 17,
+            "mean_coherence": 0.0003818209669466808,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 18,
+            "mean_coherence": 0.034819983630153914,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 19,
+            "mean_coherence": -0.009665992454575455,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 20,
+            "mean_coherence": 0.009394386498981461,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 21,
+            "mean_coherence": 0.02524276409192839,
+            "n_pairs": 15576
+          },
+          {
+            "days_from_event": 22,
+            "mean_coherence": 0.019324509489552343,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 23,
+            "mean_coherence": 0.01603183599439733,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 24,
+            "mean_coherence": 0.014323955626278164,
+            "n_pairs": 15931
+          },
+          {
+            "days_from_event": 25,
+            "mean_coherence": 0.01846388839098069,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 26,
+            "mean_coherence": 0.008739284790169657,
+            "n_pairs": 15753
+          },
+          {
+            "days_from_event": 27,
+            "mean_coherence": -0.0046629534421131266,
+            "n_pairs": 15400
+          },
+          {
+            "days_from_event": 28,
+            "mean_coherence": 0.016691394853740646,
+            "n_pairs": 16290
+          },
+          {
+            "days_from_event": 29,
+            "mean_coherence": 0.01147108269576958,
+            "n_pairs": 15225
+          },
+          {
+            "days_from_event": 30,
+            "mean_coherence": 0.008484339825764705,
+            "n_pairs": 15225
+          }
+        ],
+        "gaussian_fit": {
+          "amplitude": -0.00976282381416516,
+          "sigma_days": 4.55528483197672,
+          "baseline": 0.009551014570438844,
+          "center_days": 6.383634544299877,
+          "r_squared": 0.0663908318440557,
+          "amplitude_std_err": 0.005275624276623415,
+          "sigma_level": 1.8505532809500433,
+          "is_significant": false,
+          "amplitude_fraction_of_baseline": -1.0221766224063653,
+          "fit_success": true
+        },
+        "description": "Mars Opposition January 2025"
+      }
+    },
+    "stacked_analysis": {
+      "enabled": false,
+      "deferred_to": "step_4.4_gravitational_temporal_field_analysis",
+      "reason": "More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation"
+    },
+    "expected_amplitude": 5e-05,
+    "detection_threshold": 3.0,
+    "event_window_days_used": 30,
+    "interpretation": "No significant Mars opposition signals detected."
+  }
+}

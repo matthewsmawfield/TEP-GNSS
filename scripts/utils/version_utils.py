@@ -21,19 +21,19 @@ def get_version_info():
     
     # Fallback if VERSION.json not found
     return {
-        "version": "0.17",
+        "version": "v0.18",
         'codename': 'Jaipur',
-        'date': '2025-10-08',
+        'date': '2025-10-13',
         'description': 'Fallback version - VERSION.json not found'
     }
 
 def get_version_string():
-    """Get formatted version string (e.g., 'v0.15 (Jaipur)')"""
+    """Get formatted version string (e.g., 'v0.18 (Jaipur)')"""
     version_data = get_version_info()
     return f"v{version_data['version']} ({version_data['codename']})"
 
 def get_version_number():
-    """Get version number only (e.g., '0.15')"""
+    """Get version number only (e.g., '0.18')"""
     version_data = get_version_info()
     return version_data['version']
 
@@ -58,7 +58,7 @@ def get_zenodo_record():
     return version_data.get('zenodo_record', '17216517')
 
 def get_pdf_filename():
-    """Get PDF filename (e.g., 'Smawfield_2025_GlobalTimeEchoes_Preprint_v0.15_Jaipur.pdf')"""
+    """Get PDF filename (e.g., 'Smawfield_2025_GlobalTimeEchoes_Preprint_v0.18_Jaipur.pdf')"""
     version_data = get_version_info()
     return version_data.get('pdf_filename', f'Smawfield_2025_GlobalTimeEchoes_Preprint_v{get_version_number()}_{get_codename()}.pdf')
 

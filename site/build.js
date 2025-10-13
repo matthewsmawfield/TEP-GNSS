@@ -90,8 +90,15 @@ async function buildStaticSite() {
         // Copy manifest.json for reference
         fs.copyFileSync(manifestPath, path.join(distDir, 'manifest.json'));
         
+        // Generate markdown version
+        console.log('📝 Generating markdown version...');
+        const { HTMLToMarkdownConverter } = require('./html-to-markdown.js');
+        const converter = new HTMLToMarkdownConverter();
+        await converter.convertSiteToMarkdown();
+        
         console.log('✅ Static site built successfully!');
         console.log(`📁 Output: ${outputPath}`);
+        console.log(`📄 Markdown: ${path.join(distDir, 'manuscript.md')}`);
         console.log(`📊 Generated ${manifest.sections.length} sections`);
         console.log('🚀 Ready for deployment');
         

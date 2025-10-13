@@ -34,7 +34,41 @@ export GCP_ZONE=us-central1-a
 export GCP_INSTANCE_NAME=your-instance-name-here
 ```
 
-### 3. Run Analysis
+### 3. Create GCP Instance (For GCP deployment)
+
+Before running the GCP deployment script, you need to create a high-CPU instance through the GCP Console:
+
+#### GCP Console Instance Creation Steps:
+
+1. **Open GCP Console**: Go to [Google Cloud Console](https://console.cloud.google.com)
+
+2. **Navigate to Compute Engine**: Go to Compute Engine → VM instances
+
+3. **Create Instance**: Click "CREATE INSTANCE"
+
+4. **Configure Instance**:
+   - **Name**: Enter your instance name (same as `GCP_INSTANCE_NAME` in your .env.local)
+   - **Region/Zone**: Select your preferred zone (same as `GCP_ZONE` in your .env.local)
+   - **Machine Configuration**:
+     - **Machine family**: General-purpose
+     - **Series**: N2
+     - **Machine type**: `n2-highcpu-96` (96 vCPUs, 96 GB memory)
+
+5. **Configure Boot Disk**:
+   - **Operating System**: Ubuntu
+   - **Version**: Ubuntu 20.04 LTS
+   - **Boot disk type**: Standard persistent disk
+   - **Size (GB)**: 100 GB ⚠️ **Important: Change from default 10 GB to 100 GB**
+
+6. **Configure Firewall**:
+   - ✅ Allow HTTP traffic
+   - ✅ Allow HTTPS traffic
+
+7. **Click "CREATE"** to create the instance
+
+8. **Wait for instance to start** (Status should show green checkmark)
+
+### 4. Run Analysis
 
 #### Local Analysis (No GCP required)
 ```bash
@@ -51,7 +85,7 @@ python scripts/clean_run_full_pipeline.py
 ./run_tep_gcp_high_cpu.sh
 ```
 
-## Configuration Options
+## 5. Configuration Options
 
 ### Environment Variables
 
@@ -70,7 +104,7 @@ python scripts/clean_run_full_pipeline.py
 
 All analysis parameters can be overridden via environment variables. See `scripts/utils/config.py` for complete documentation.
 
-## Security Notes
+## 6. Security Notes
 
 - `.env.local` files are gitignored and never committed
 - GCP credentials are loaded securely from environment variables

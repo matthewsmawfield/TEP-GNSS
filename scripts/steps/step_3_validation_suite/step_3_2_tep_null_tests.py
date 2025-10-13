@@ -18,14 +18,14 @@ Outputs:
 Next: Step 4.0 (Advanced Analysis)
 
 Null Tests Performed:
-1. Distance scrambling: Randomize station distances while preserving phase data
+1. Distance scrambling: Randomize distances and coherences independently
 2. Phase scrambling: Randomize phases while preserving distance structure  
 3. Station scrambling: Randomize station assignments within each day
 
 Expected Results:
-- Null tests should show NO significant correlations (R² < 0.1)
+- Null tests should show minimal correlations (R² < 0.06 random baseline)
 - Real data should show strong correlations (R² > 0.8)
-- This validates that our TEP signal is genuine
+- Statistical significance testing distinguishes genuine signals from artifacts
 
 Author: Matthew Lukin Smawfield
 Date: October 2025
@@ -330,18 +330,32 @@ def run_null_test_from_file(ac: str, null_type: str, random_seed: int = 42, coor
     try:
         # Load data from file
         if data_file_path and Path(data_file_path).exists():
-            df = pd.read_parquet(data_file_path)
-            print_status(f"    Loaded {len(df):,} rows from {Path(data_file_path).name}", "DEBUG")
+            try:
+                df = pd.read_parquet(data_file_path)
+                print_status(f"    Loaded {len(df):,} rows from {Path(data_file_path).name}", "DEBUG")
+            except ImportError as e:
+                # Fallback to CSV if parquet support is missing
+                csv_file_path = str(data_file_path).replace('.parquet', '.csv')
+                if Path(csv_file_path).exists():
+                    df = pd.read_csv(csv_file_path)
+                    print_status(f"    Loaded {len(df):,} rows from {Path(csv_file_path).name} (CSV fallback)", "DEBUG")
+                else:
+                    raise TEPDataError(f"Parquet support missing and CSV fallback not found: {e}")
         else:
             raise TEPDataError(f"Data file not found: {data_file_path}")
         
         # Apply null hypothesis scrambling
         print_status(f"    Applying {null_type} scrambling to {len(df)} station pairs...", "INFO")
         if null_type == 'distance':
-            # Scramble distances while preserving phases
+            # Distance scrambling: Randomize both distances and coherences independently
+            # Destroys distance-coherence relationships and systematic patterns
             original_distances = df['dist_km'].copy()
+            original_coherences = df['coherence'].copy()
             df['dist_km'] = np.random.permutation(df['dist_km'].values)
+            df['coherence'] = np.random.permutation(df['coherence'].values)
+            df['plateau_phase'] = np.arccos(np.clip(df['coherence'], -1, 1))
             print_status(f"    Distance scrambling: {original_distances.mean():.1f} km → {df['dist_km'].mean():.1f} km (mean)", "INFO")
+            print_status(f"    Coherence scrambling: {original_coherences.mean():.3f} → {df['coherence'].mean():.3f} (mean)", "INFO")
         elif null_type == 'phase':
             # Scramble phases while preserving distances
             original_phases = df['plateau_phase'].copy()
@@ -480,6 +494,11 @@ def run_null_test_from_file(ac: str, null_type: str, random_seed: int = 42, coor
             ss_tot = np.sum(weights * (coherences - np.average(coherences, weights=weights))**2)
             r_squared = 1 - ss_res/ss_tot if ss_tot > 0 else 0
             
+            # Statistical significance test against random baseline
+            # Binning and fitting can produce spurious R² up to 0.06 with random data
+            random_baseline_r2 = 0.06
+            is_significant = r_squared > random_baseline_r2
+            
             return {
                 'null_type': null_type,
                 'analysis_center': ac,
@@ -493,7 +512,9 @@ def run_null_test_from_file(ac: str, null_type: str, random_seed: int = 42, coor
                     'lambda_error': float(param_errors[1]),
                     'offset': float(offset),
                     'offset_error': float(param_errors[2]),
-                    'r_squared': float(r_squared)
+                    'r_squared': float(r_squared),
+                    'is_significant': bool(is_significant),
+                    'random_baseline_r2': float(random_baseline_r2)
                 }
             }
             
@@ -549,10 +570,15 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42, coords_map: di
         # Apply null hypothesis scrambling
         print_status(f"    Applying {null_type} scrambling to {len(df)} station pairs...", "INFO")
         if null_type == 'distance':
-            # Scramble distances while preserving phases
+            # Distance scrambling: Randomize both distances and coherences independently
+            # Destroys distance-coherence relationships and systematic patterns
             original_distances = df['dist_km'].copy()
+            original_coherences = df['coherence'].copy()
             df['dist_km'] = np.random.permutation(df['dist_km'].values)
+            df['coherence'] = np.random.permutation(df['coherence'].values)
+            df['plateau_phase'] = np.arccos(np.clip(df['coherence'], -1, 1))
             print_status(f"    Distance scrambling: {original_distances.mean():.1f} km → {df['dist_km'].mean():.1f} km (mean)", "INFO")
+            print_status(f"    Coherence scrambling: {original_coherences.mean():.3f} → {df['coherence'].mean():.3f} (mean)", "INFO")
         elif null_type == 'phase':
             # Scramble phases while preserving distances
             original_phases = df['plateau_phase'].copy()
@@ -691,6 +717,11 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42, coords_map: di
             ss_tot = np.sum(weights * (coherences - np.average(coherences, weights=weights))**2)
             r_squared = 1 - ss_res/ss_tot if ss_tot > 0 else 0
             
+            # Statistical significance test against random baseline
+            # Binning and fitting can produce spurious R² up to 0.06 with random data
+            random_baseline_r2 = 0.06
+            is_significant = r_squared > random_baseline_r2
+            
             return {
                 'null_type': null_type,
                 'analysis_center': ac,
@@ -704,7 +735,9 @@ def run_null_test(ac: str, null_type: str, random_seed: int = 42, coords_map: di
                     'lambda_error': float(param_errors[1]),
                     'offset': float(offset),
                     'offset_error': float(param_errors[2]),
-                    'r_squared': float(r_squared)
+                    'r_squared': float(r_squared),
+                    'is_significant': bool(is_significant),
+                    'random_baseline_r2': float(random_baseline_r2)
                 }
             }
             
@@ -804,8 +837,14 @@ def validate_tep_signal(ac: str):
         # Save to temporary file for shared access
         temp_data_file = PACKAGE_ROOT / f"results/tmp/step_3_2_temp_data_{ac}_{null_type}.parquet"
         temp_data_file.parent.mkdir(exist_ok=True)
-        preloaded_data.to_parquet(temp_data_file, compression='snappy')
-        print_status(f"    Saved preprocessed data to {temp_data_file} for memory-efficient processing", "INFO")
+        try:
+            preloaded_data.to_parquet(temp_data_file, compression='snappy')
+            print_status(f"    Saved preprocessed data to {temp_data_file} for memory-efficient processing", "INFO")
+        except ImportError as e:
+            # Fallback to CSV if parquet support is missing
+            temp_data_file = PACKAGE_ROOT / f"results/tmp/step_3_2_temp_data_{ac}_{null_type}.csv"
+            preloaded_data.to_csv(temp_data_file, index=False)
+            print_status(f"    Saved preprocessed data to {temp_data_file} (CSV fallback) for memory-efficient processing", "INFO")
         
         # Clean up the large DataFrame from memory
         del preloaded_data
@@ -813,13 +852,13 @@ def validate_tep_signal(ac: str):
         gc.collect()
         
         # Run multiple iterations for robust statistics
-        n_iterations = TEPConfig.get_int('TEP_NULL_ITERATIONS')  # Statistical validation (100 iterations for permutation p-values)
+        n_iterations = TEPConfig.get_int('TEP_NULL_ITERATIONS')  # Default: 20 iterations
         null_lambdas = []
         null_r_squareds = []
         
-        # Process in smaller batches to reduce memory pressure
-        batch_size = 1  # Force single iteration processing to prevent memory exhaustion
-        print_status(f"    Processing {n_iterations} iterations one at a time to prevent memory exhaustion", "INFO")
+        # Process in parallel batches for efficiency
+        batch_size = 1  # Conservative: single process to prevent system overload
+        print_status(f"    Processing {n_iterations} iterations in batches of {batch_size} using {max_processes} max processes", "INFO")
         
         for batch_start in range(0, n_iterations, batch_size):
             batch_end = min(batch_start + batch_size, n_iterations)
@@ -839,7 +878,9 @@ def validate_tep_signal(ac: str):
                             null_lambdas.append(result['fit_results']['lambda_km'])
                             null_r_squareds.append(result['fit_results']['r_squared'])
                             iteration_num = batch_start + i + 1
-                            print_status(f"        Iteration {iteration_num}: λ = {result['fit_results']['lambda_km']:.1f} km, R² = {result['fit_results']['r_squared']:.3f}", "INFO")
+                            is_sig = result['fit_results'].get('is_significant', False)
+                            sig_marker = "[HIGH]" if is_sig else "[OK]"
+                            print_status(f"        Iteration {iteration_num}: λ = {result['fit_results']['lambda_km']:.1f} km, R² = {result['fit_results']['r_squared']:.3f} {sig_marker}", "INFO")
                         else:
                             # This branch should ideally not be hit if run_null_test raises exceptions
                             iteration_num = batch_start + i + 1
@@ -868,7 +909,12 @@ def validate_tep_signal(ac: str):
                 'r_squared_values': [float(r2) for r2 in null_r_squareds],  # Store individual values for permutation p-values
                 'n_iterations': len(null_lambdas)
             }
+            # Count results above random baseline
+            significant_count = sum(1 for r2 in null_r_squareds if r2 > 0.06)
+            total_count = len(null_r_squareds)
+            
             print_status(f"{null_type.capitalize()} null: λ = {np.mean(null_lambdas):.1f} ± {np.std(null_lambdas):.1f} km, R² = {np.mean(null_r_squareds):.3f} ± {np.std(null_r_squareds):.3f}", "SUCCESS")
+            print_status(f"    Above baseline: {significant_count}/{total_count} ({100*significant_count/total_count:.1f}%) exceed R² > 0.06", "INFO")
             
             # Clean up temporary file and memory after each null test type
             if temp_data_file.exists():

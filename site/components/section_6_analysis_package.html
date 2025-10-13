@@ -46,10 +46,17 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
 
         <div style="background-color: rgba(45, 1, 64, 0.08); border-left: 4px solid #2D0140; padding: 15px; margin: 20px 0; border-radius: 4px;">
             <h3 style="margin-top: 0; color: #2D0140;">GCP High-CPU Analysis (Recommended for Large-Scale)</h3>
-            <p style="margin: 10px 0;">Professional cloud deployment: Optimized for Google Cloud Platform high-CPU instances with full 911-day analysis window and automated deployment.</p>
+            <p style="margin: 10px 0;">Professional cloud deployment: Optimized for Google Cloud Platform high-CPU instances with full 912-day analysis window and automated deployment.</p>
             
+            <h4 style="color: #2D0140; margin: 15px 0 10px 0;">Setup Instructions</h4>
+            <ol style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>Create GCP Instance:</strong> Launch n2-highcpu-96 (96 vCPUs, 96GB RAM) with a 100GB additional disk</li>
+                <li><strong>Configure Environment:</strong> Either set environment variables or edit the .env file with your instance details</li>
+                <li><strong>Run Analysis:</strong> Execute the automated pipeline script</li>
+            </ol>
+            
+            <h4 style="color: #2D0140; margin: 15px 0 10px 0;">Option A: Environment Variables</h4>
             <div class="error-budget" style="margin: 15px 0;">
-Quick Start (4 commands):<br>
                 <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">export GCP_PROJECT_ID=your-project-id</code><br>
                 <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">export GCP_ZONE=us-central1-c</code><br>
                 <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">export GCP_INSTANCE_NAME=your-instance-name</code><br>
@@ -61,20 +68,35 @@ Quick Start (4 commands):<br>
                 </button><br>
             </div>
             
+            <h4 style="color: #2D0140; margin: 15px 0 10px 0;">Option B: .env File (Recommended)</h4>
+            <div class="error-budget" style="margin: 15px 0;">
+                <p style="margin: 5px 0; font-size: 14px;">Edit <code style="background: rgba(45, 1, 64, 0.08); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 12px;">.env</code> file with your instance details:</p>
+                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">GCP_PROJECT_ID=your-project-id</code><br>
+                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">GCP_ZONE=us-central1-c</code><br>
+                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">GCP_INSTANCE_NAME=your-instance-name</code><br>
+                <br>
+                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">./run_tep_gcp_high_cpu.sh</code>
+                <button type="button" aria-label="Copy command" onclick="copyToClipboard('GCP_PROJECT_ID=your-project-id\nGCP_ZONE=us-central1-c\nGCP_INSTANCE_NAME=your-instance-name\n\n./run_tep_gcp_high_cpu.sh', this)" title="Copy commands" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                </button><br>
+            </div>
+            
             <div style="margin: 15px 0; padding: 10px; background: rgba(45, 1, 64, 0.05); border-radius: 6px;">
 What It Does:                <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
                     <li>Automated Setup: Installs all dependencies (Python packages, system libraries)</li>
                     <li>Complete Analysis: Runs Steps 1-4 (Data acquisition to Core analysis to Validation to Advanced analysis)</li>
-                    <li>Full Date Range: Analyzes 911 days (1 January 2023 to 30 June 2025)</li>
-                    <li>High Performance: Optimized for 96 vCPUs with parallel processing - Total runtime: 6.8 hours</li>
+                    <li>Full Date Range: Analyzes 912 days (1 January 2023 to 30 June 2025)</li>
+                    <li>High Performance: Optimized for 96 vCPUs with parallel processing - Total runtime: 6.8 hours (wall-clock with parallelism)</li>
                     <li>Comprehensive Output: Generates 31 JSON results + 27 figures + 28 logs</li>
                     <li>Easy Download: <code style="background: rgba(45, 1, 64, 0.08); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 12px;">./download_gcp_results.sh</code></li>
                 </ul>
             </div>
             
             <div style="margin: 15px 0; padding: 10px; background: rgba(45, 1, 64, 0.05); border-radius: 6px;">
-Monitor Progress:<br>
-                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">gcloud compute ssh $GCP_INSTANCE_NAME --zone=$GCP_ZONE --command='cd /mnt/data && tail -f full_pipeline.log'</code>
+                <h4 style="margin: 0 0 10px 0; color: #2D0140;">Monitor Progress</h4>
+                <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">gcloud compute ssh [INSTANCE_NAME] --zone=[ZONE] --command='cd /mnt/data && tail -f full_pipeline.log'</code>
                 <button type="button" aria-label="Copy command" onclick="copyToClipboard('gcloud compute ssh $GCP_INSTANCE_NAME --zone=$GCP_ZONE --command=\'cd /mnt/data && tail -f full_pipeline.log\'', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
@@ -82,7 +104,7 @@ Monitor Progress:<br>
                 </button>
             </div>
             
-            <p style="margin: 10px 0; font-size: 13px; color: #666;">Recommended instances: n2-highcpu-96 (96 vCPUs, 96GB RAM - recommended), c2-standard-60 (60 vCPUs, 240GB RAM), c2-standard-30 (30 vCPUs, 120GB RAM)</p>
+            <p style="margin: 10px 0; font-size: 13px; color: #666;">Recommended instance: n2-highcpu-96 (96 vCPUs, 96GB RAM - recommended)</p>
         </div>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border-left: 4px solid #495773; padding: 15px; margin: 20px 0; border-radius: 4px;">
@@ -103,7 +125,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 <li>Cleans all previous data, outputs, logs, and figures for a fresh start</li>
                 <li>Executes all 21 pipeline steps in correct order (Steps 1.0-4.7)</li>
                 <li>Validates outputs and ensures data integrity</li>
-                    <li>Total runtime: ~6.8 hours on n2-highcpu-96 (96 vCPUs, 96GB RAM)</li>
+                    <li>Total runtime: ~6.8 hours (wall-clock with parallelism) on n2-highcpu-96 (96 vCPUs, 96GB RAM)</li>
             </ul>
 
             <p style="margin: 10px 0; font-size: 14px;">Optional arguments:</p>
@@ -118,59 +140,6 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         <h3 style="margin-top: 30px;">Pipeline Structure</h3>
         <p>The pipeline is organized into 4 main groups with 21 individual steps:</p>
         
-        <div style="background-color: rgba(45, 1, 64, 0.05); border: 1px solid rgba(45, 1, 64, 0.2); border-radius: 8px; padding: 15px; margin: 20px 0;">
-            <h4 style="margin-top: 0; color: #2D0140;">Performance Summary (n2-highcpu-96: 96 vCPUs, 96GB RAM)</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; font-size: 13px;">
-                <div>
-                    <strong>Data Acquisition (Steps 1.0-1.2):</strong><br>
-                    • Step 1.0: 0.1 seconds<br>
-                    • Step 1.1: 4.9 minutes<br>
-                    • Step 1.2: 0.4 seconds<br>
-                    <em>Total: ~5.3 minutes</em>
-                </div>
-                <div>
-                    <strong>Core Analysis (Steps 2.0-2.2):</strong><br>
-                    • Step 2.0: 59.0 minutes<br>
-                    • Step 2.1: 24.0 minutes<br>
-                    • Step 2.2: 11.9 minutes<br>
-                    <em>Total: ~1.6 hours</em>
-                </div>
-                <div>
-                    <strong>Validation Suite (Steps 3.0-3.6):</strong><br>
-                    • Step 3.0: 0.8 seconds<br>
-                    • Step 3.1: 2.3 hours<br>
-                    • Step 3.2: 31.0 seconds<br>
-                    • Step 3.3: 6.0 minutes<br>
-                    • Step 3.4: 52.4 seconds<br>
-                    • Step 3.5: 2.4 seconds<br>
-                    • Step 3.6: 2.9 hours<br>
-                    <em>Total: ~5.3 hours</em>
-                </div>
-            </div>
-            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(45, 1, 64, 0.2);">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
-                    <div>
-                        <strong>Advanced Analysis (Steps 4.0-4.7):</strong><br>
-                        • Step 4.0: 4.7 minutes<br>
-                        • Step 4.1: 6.0 minutes<br>
-                        • Step 4.2: 43.7 seconds<br>
-                        • Step 4.3: 3.5 minutes<br>
-                        • Step 4.4: 1.5 minutes<br>
-                        • Step 4.5: 1.8 hours<br>
-                        • Step 4.6: 0.4 seconds<br>
-                        • Step 4.7: 2.8 seconds<br>
-                        <em>Total: ~2.0 hours</em>
-                    </div>
-                    <div style="background-color: rgba(45, 1, 64, 0.1); padding: 10px; border-radius: 6px;">
-                        <strong style="color: #2D0140;">Total Pipeline Runtime:</strong><br>
-                        <span style="font-size: 16px; font-weight: bold; color: #2D0140;">6.8 hours</span><br>
-                        <em>100% success rate (21/21 steps completed)</em><br>
-                        <em>2,736 raw data files processed</em><br>
-                        <em>31 JSON outputs + 27 figures generated</em>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #495773;">
             <h4 style="margin-top: 0; color: #495773;">Group 1: Data Acquisition (step_1_data_acquisition/)</h4>
@@ -197,7 +166,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Downloads raw GNSS clock product files from official analysis centers (CODE, ESA, IGS) covering the full analysis period (1 January 2023 to 30 June 2025). Retrieves precise clock corrections in 30-second intervals from authoritative FTP servers, ensuring data integrity through checksum validation and automatic retry mechanisms.</p>
+        <p>Purpose: Downloads raw GNSS clock product files from official analysis centers (CODE, ESA, IGS Combined) covering the full analysis period (1 January 2023 to 30 June 2025). Retrieves precise clock corrections in 30-second intervals from authoritative FTP servers, ensuring data integrity through checksum validation and automatic retry mechanisms.</p>
         
         <h4>Step 1.2: Coordinate Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">0.4 seconds</span></h4>
         <div class="error-budget">
@@ -284,7 +253,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Critical validation step that establishes signal authenticity through comprehensive randomization testing. Implements three independent scrambling approaches—distance randomization (100 iterations), phase randomization (20 iterations), and station identity randomization (20 iterations)—to verify that observed correlations depend on genuine physical relationships rather than analysis artifacts. Quantifies signal enhancement over null distributions and establishes statistical significance through permutation testing and z-score analysis.</p>
+        <p>Purpose: Critical validation step that establishes signal authenticity through comprehensive randomization testing. Implements three independent scrambling approaches—distance scrambling (20 iterations per center), phase scrambling (20 iterations per center), and station scrambling (20 iterations per center)—to verify that observed correlations depend on genuine physical relationships rather than analysis artifacts. Distance scrambling randomizes both distances and coherences independently to destroy distance-coherence relationships. Quantifies signal enhancement over null distributions (24-61× signal-to-null ratios) and establishes statistical significance through permutation testing and z-score analysis (z = 15.8-31.9, all p < 0.05).</p>
 
         <h4>Step 3.3: Methodology Validation <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">6.0 minutes</span></h4>
         <div class="error-budget">
@@ -319,7 +288,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Ionospheric independence validation using real space weather data correlating with authentic geomagnetic indices and solar activity to demonstrate non-ionospheric origin.</p>
 
-        <h4>Step 3.6: Multi-Band Frequency Analysis: Spectral characterization across 13 frequency bands (10-1500 &micro;Hz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.9 hours</span></h4>
+        <h4>Step 3.6: Multi-Band Frequency Analysis: Spectral characterization across 12 frequency bands (10-3000 µHz) with exponential model fitting, frequency specificity assessment, and systematic effects quantification through control bands <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.9 hours</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_3_validation_suite/step_3_6_multi_band_frequency_analysis.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_3_validation_suite/step_3_6_multi_band_frequency_analysis.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -330,7 +299,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
         </div>
         <p>Purpose: Comprehensive multi-band frequency analysis to assess systematic effects across a wide range of frequencies. This analysis involves fitting exponential models to the data, assessing frequency specificity, and quantifying systematic effects through control bands. The results provide insights into the nature of the TEP signal and help in understanding potential systematic influences.</p>
 
-        <h4>Step 3.7: Multiple Comparison Corrections <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.8 seconds</span></h4>
+        <h4>Step 4.7: Multiple Comparison Corrections <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">2.8 seconds</span></h4>
         <div class="error-budget">
 Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections_fixed.py</code>
             <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_7_multiple_comparison_corrections_fixed.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
@@ -339,7 +308,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Comprehensive application of formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 231 statistical tests across 18 analysis families, including data quality validation, null hypothesis testing, bootstrap validation, band diagnostics, Hilbert-IF astronomical analysis, coordinate validation, eclipse events, bootstrap cross-methods, multiband frequency validation, and astronomical events, confirming that core TEP findings survive ultra-conservative corrections.</p>
+        <p>Purpose: Comprehensive application of formal multiple comparison corrections (Bonferroni, FDR, FWER) to all 231 statistical tests across 18 analysis families, including data quality validation, null hypothesis testing, bootstrap validation, band diagnostics, Hilbert-IF astronomical analysis, coordinate validation, eclipse events, bootstrap cross-methods, multiband frequency validation, and astronomical events, showing that core TEP findings survive ultra-conservative corrections.</p>
 
         <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #495773;">
             <h4 style="margin-top: 0; color: #495773;">Group 4: Advanced Analysis & Visualization (step_4_advanced_analysis_and_visualization/)</h4>
@@ -388,7 +357,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Comprehensive high-resolution astronomical analysis including: (1) Complete 5-eclipse study (2023-2025) using 30-second CLK data revealing substantial coherence modulations (18-87% of baseline TEP signal) with observed eclipse type hierarchy where partial eclipses produce strongest network responses (mean: 4.54×10⁻², 87% of baseline) through ionospheric gradient mechanisms; (2) Cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness - Venus (4.05 orbits) shows strong correlations (ESA: +17.7%, IGS: +10.6%, CODE: +4.8%) while outer planets show incomplete cycles and weaker effects; (3) Advanced sham controls confirming robust statistical significance beyond GPS processing artifacts; (4) Instantaneous frequency analysis detecting event-locked solar rotation modulations. This analysis demonstrates how the global GPS network acts as a sensitive detector of both transient (eclipse) and persistent (orbital periodicity) field modulations, providing comprehensive validation of TEP astronomical coupling predictions using 30-second CLK file data.</p>
+        <p>Purpose: Comprehensive high-resolution astronomical analysis including: (1) Complete 5-eclipse study (2023-2025) using 30-second CLK data revealing substantial coherence modulations (18-87% of baseline TEP signal) with observed eclipse type hierarchy where partial eclipses produce strongest network responses (mean: 4.54×10⁻², 87% of baseline) through ionospheric gradient mechanisms; (2) Cross-planetary orbital periodicity analysis revealing systematic TEP signals correlated with orbital completeness - Venus (4.05 orbits) shows strong correlations (ESA: +17.7%, IGS Combined: +10.6%, CODE: +4.8%) while outer planets show incomplete cycles and weaker effects; (3) Advanced sham controls confirming robust statistical significance beyond GPS processing artifacts; (4) Instantaneous frequency analysis detecting event-locked solar rotation modulations. This analysis demonstrates how the global GPS network acts as a sensitive detector of both transient (eclipse) and persistent (orbital periodicity) field modulations, providing comprehensive validation of TEP astronomical coupling predictions using 30-second CLK file data.</p>
         
         <h4>Step 4.4: Gravitational Temporal Field Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">1.5 minutes</span></h4>
         <div class="error-budget">
@@ -399,7 +368,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Comprehensive gravitational-temporal field correlation analysis using NASA/JPL DE440/441 ephemeris to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, p = 1.51×10<sup>-59</sup>) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination analysis (-0.057, 95% CI: [-0.143, +0.030], n.s.) reveals no significant preference between scaling mechanisms, supporting complex multi-mechanism coupling and validating TEP's core predictions of non-integrable time transport and synchronization holonomy.</p>
+        <p>Purpose: Comprehensive gravitational-temporal field correlation analysis using NASA/JPL planetary ephemeris (DE-series) to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p = 3.3×10⁻⁴) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination analysis (-0.057, 95% CI: [-0.143, +0.030], n.s.) reveals no significant preference between scaling mechanisms, supporting complex multi-mechanism coupling and validating TEP's core predictions of non-integrable time transport and synchronization holonomy.</p>
 
         <h4>Step 4.5: Comprehensive Diurnal Analysis <span style="background-color: rgba(45, 1, 64, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">1.8 hours</span></h4>
         <div class="error-budget">
@@ -421,7 +390,7 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
                 </svg>
             </button><br>
         </div>
-        <p>Purpose: Comprehensive exclusion analysis for alternative explanations including Traveling Ionospheric Disturbances (TIDs) and trans-equatorial propagation (TEQ). Performs quantitative temporal band separation analysis, spatial structure comparison (exponential vs plane-wave models), ionospheric independence verification, and frequency band analysis. Provides HIGH confidence (65/100) exclusion of TIDs through temporal separation factor and power distribution analysis, strengthening the case for TEP field coupling as the underlying mechanism.</p>
+        <p>Purpose: Comprehensive exclusion analysis for alternative explanations including Traveling Ionospheric Disturbances (TIDs) and trans-equatorial propagation (TEQ). Performs quantitative temporal band separation analysis, spatial structure comparison (exponential vs plane-wave models), ionospheric independence verification, and frequency band analysis. Provides high confidence exclusion of TIDs through temporal separation factor and power distribution analysis, strengthening the case for TEP field coupling as the underlying mechanism.</p>
         
         </div>
         
@@ -439,12 +408,12 @@ Command: <code style="background: rgba(45, 1, 64, 0.08); padding: 2px 6px; borde
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div>
                     <p style="margin: 5px 0;">Code Repository: Complete analysis pipeline in <code>scripts/steps/</code></p>
-                    <p style="margin: 5px 0;">Data Sources: Official GNSS FTP servers (CODE, ESA, IGS)</p>
+                    <p style="margin: 5px 0;">Data Sources: Official GNSS FTP servers (CODE, ESA, IGS Combined)</p>
                     <p style="margin: 5px 0;">Dependencies: Listed in <code>requirements/requirements.txt</code></p>
                     <p style="margin: 5px 0;">Configuration: Centralized in <code>scripts/utils/config.py</code></p>
                 </div>
                 <div>
-                    <p style="margin: 5px 0;">Binning Method: 40 logarithmic distance bins attempted, 100km-15,000km range</p>
+                    <p style="margin: 5px 0;">Binning Method: 40 logarithmic distance bins attempted, 50km-13,000km range</p>
                     <p style="margin: 5px 0;">Phase Computation: <code>cos(np.angle(CSD))</code> with magnitude-weighted circular averaging</p>
                     <p style="margin: 5px 0;">Cross-Validation: LOSO/LODO with complete model re-fitting</p>
                     <p style="margin: 5px 0;">Statistical Tests: Weighted least squares with uncertainty propagation</p>
