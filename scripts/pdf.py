@@ -34,8 +34,8 @@ async def main():
     public_path = project_root / 'site' / 'public' / 'docs' / filename
     
     options = {
-        'scale': 0.65,  # Back to previous better setting
-        'device_scale_factor': 1.5,  # Back to previous better setting
+        'scale': 0.75,  # Balanced scale for good quality
+        'device_scale_factor': 1.8,  # Balanced device scale for sharp rendering
         'format': 'A4',
         'margin_top': '1.5cm',
         'margin_bottom': '1.5cm', 

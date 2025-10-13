@@ -68,14 +68,13 @@ import psutil
 from datetime import datetime
 
 # Ensure the directory containing 'scripts' is on the path
-script_dir = Path(__file__).resolve()
-project_root = script_dir.parents[3] # Point to project root
+PACKAGE_ROOT = Path(__file__).resolve().parents[3]
 
-if str(project_root) not in sys.path:
-    sys.path.insert(0, str(project_root))
+if str(PACKAGE_ROOT) not in sys.path:
+    sys.path.insert(0, str(PACKAGE_ROOT))
 
 # Define PACKAGE_ROOT for consistent usage throughout the script
-PACKAGE_ROOT = project_root
+# PACKAGE_ROOT already defined above
 
 # Import project utilities
 from scripts.utils.config import TEPConfig

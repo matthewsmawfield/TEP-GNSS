@@ -37,19 +37,25 @@ Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
+# Standard library imports
 import sys
 import json
-import numpy as np
-import pandas as pd
+import warnings
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
-import warnings
+
+# Third-party imports
+import numpy as np
+import pandas as pd
+
+# Suppress warnings
 warnings.filterwarnings('ignore')
 
 # Add project root to path
 PACKAGE_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PACKAGE_ROOT))
 
+# Local imports
 from scripts.utils.config import TEPConfig
 from scripts.utils.logger import TEPLogger, print_status, set_step_logger
 from scripts.utils.pid_manager import ensure_single_instance

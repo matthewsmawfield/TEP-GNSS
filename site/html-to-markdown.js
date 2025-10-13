@@ -242,7 +242,7 @@ class HTMLToMarkdownConverter {
             const markdown = this.buildMarkdownDocument(metadata, markdownContent);
             
             // Write to file
-            const outputPath = path.join(__dirname, 'dist', 'manuscript.md');
+            const outputPath = path.join(__dirname, '..', 'manuscript.md');
             fs.writeFileSync(outputPath, markdown, 'utf8');
             
             console.log('✅ Markdown conversion complete!');

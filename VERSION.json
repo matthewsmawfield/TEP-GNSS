@@ -1,19 +1,19 @@
 {
-  "version": "0.18",
+  "version": "0.19",
   "codename": "Jaipur",
   "date": "2025-10-13",
   "changes": [
-    "Version bump to v0.18 for updated analysis",
-    "Fresh pipeline run with latest improvements"
+    "Version bump to v0.19",
+    "Updated analysis and documentation improvements"
   ],
-  "previous_version": "0.17",
-  "previous_date": "2025-10-08",
-  "description": "Work in progress: Fresh pipeline run with bug fixes and cleanup",
-  "impact": "Codebase cleanup and pipeline improvements",
+  "previous_version": "0.18",
+  "previous_date": "2025-10-13",
+  "description": "Latest version with analysis updates and improvements",
+  "impact": "Analysis refinements and documentation updates",
   "short_description": "Global Time Echoes: Distance-structured correlations in GNSS atomic clock networks. Analysis of 62.7M measurements reveals exponential correlation decay patterns (λ = 3,330–4,549 km) with coherent network dynamics coupled to Earth's orbital motion and planetary gravitational fields.",
   "long_description": "This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.69) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 24–61× signal enhancement over null tests (z = 15.8–31.9 across 180 scrambling iterations), temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.\n\nWebsite: https://matthewsmawfield.github.io/TEP-GNSS/",
   "doi": "10.5281/zenodo.17127229",
-  "zenodo_record": "17298023",
-  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_v0.18_Jaipur.pdf",
-  "pdf_download_url": "https://zenodo.org/records/17298023/files/Smawfield_2025_GlobalTimeEchoes_v0.18_Jaipur.pdf?download=1"
+  "zenodo_record": "17338095",
+  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_v0.19_Jaipur.pdf",
+  "pdf_download_url": "https://zenodo.org/records/17338095/files/Smawfield_2025_GlobalTimeEchoes_v0.19_Jaipur.pdf?download=1"
 }

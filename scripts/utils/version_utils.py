@@ -21,7 +21,7 @@ def get_version_info():
     
     # Fallback if VERSION.json not found
     return {
-        "version": "v0.18",
+        "version": "v0.19",
         'codename': 'Jaipur',
         'date': '2025-10-13',
         'description': 'Fallback version - VERSION.json not found'

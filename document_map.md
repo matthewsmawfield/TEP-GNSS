@@ -43,7 +43,7 @@ This document outlines the sections and subsections of the manuscript.
         *   The Four-Step Process
         *   What This Study Is Measuring: Phase Coherence
         *   Why This Approach Works
-        *   The Bottom Line
+        *   Research Synopsis
     *   2.1 Analysis Pipeline Overview
         *   Four-Step Analysis Pipeline
             *   **Summary:** This outlines the systematic four-step pipeline (Data Acquisition, Core Analysis, Validation Suite, Advanced Analysis) ensuring rigorous validation and reproducibility for TEP-GNSS analysis.
