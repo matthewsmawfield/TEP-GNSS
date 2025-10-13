@@ -66,25 +66,28 @@ Date: October 2025
 Theory: Temporal Equivalence Principle (TEP)
 """
 
+# Standard library imports
 import os
 import sys
 import time
 import json
 import gc
+import warnings
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Tuple, Optional, Union
-import pandas as pd
-import numpy as np
-from scipy.optimize import curve_fit
-from scipy import stats
-from scipy.stats import norm
 import multiprocessing as mp
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from glob import glob
-import psutil  # For memory monitoring
 from functools import lru_cache, partial
-import warnings
+
+# Third-party imports
+import pandas as pd
+import numpy as np
+import psutil  # For memory monitoring
+from scipy.optimize import curve_fit
+from scipy import stats
+from scipy.stats import norm
 
 # Suppress scipy optimization warnings
 warnings.filterwarnings('ignore', 'Covariance of the parameters could not be estimated')
@@ -92,10 +95,12 @@ warnings.filterwarnings('ignore', 'An input array is constant')
 warnings.filterwarnings('ignore', category=UserWarning, module='scipy')
 
 # Anchor to package root
-ROOT = Path(__file__).resolve().parents[3]
+PACKAGE_ROOT = Path(__file__).resolve().parents[3]
 
 # Import TEP utilities for better configuration and error handling
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(PACKAGE_ROOT))
+
+# Local imports
 from scripts.utils.config import TEPConfig
 from scripts.utils.exceptions import (
     SafeErrorHandler, TEPDataError, TEPFileError, 
@@ -104,13 +109,13 @@ from scripts.utils.exceptions import (
 )
 from scripts.utils.geospatial import compute_azimuth, classify_ew_ns
 from scripts.utils.pid_manager import ensure_single_instance
-from scripts.utils.logger import print_status, TEPLogger, set_step_logger # Import logger functions
+from scripts.utils.logger import print_status, TEPLogger, set_step_logger
 
 # Initialize step-specific logger
 step_logger = TEPLogger(
     name="step_2_2_geospatial_temporal_analysis",
     level="DEBUG",
-    log_file_path=ROOT / "logs" / "step_2_2_geospatial_temporal_analysis.log"
+    log_file_path=PACKAGE_ROOT / "logs" / "step_2_2_geospatial_temporal_analysis.log"
 )
 
 # Register step logger so print_status uses it

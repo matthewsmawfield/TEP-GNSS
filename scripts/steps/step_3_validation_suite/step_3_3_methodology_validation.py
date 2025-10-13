@@ -98,28 +98,30 @@ DATE: 2025-10-06
 STATUS: Peer-Review Ready
 """
 
+# Standard library imports
+import sys
+import os
+import json
+import time
+from datetime import datetime
+from pathlib import Path
+from typing import Tuple, Dict, List, Optional
+import concurrent.futures
+
+# Third-party imports
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.optimize import curve_fit
 from scipy.stats import pearsonr
-from datetime import datetime
-import sys
-import os
-import json
-from pathlib import Path
-from typing import Tuple, Dict, List, Optional
-import time
-import concurrent.futures
 
 # Add utils to path (consistent with other steps)
 PACKAGE_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PACKAGE_ROOT))
 
+# Local imports
 from scripts.utils.logger import TEPLogger, print_status, set_step_logger, check_memory_usage
-
-# Import TEP utilities
 from scripts.utils.config import TEPConfig
 from scripts.utils.exceptions import (
     TEPDataError, TEPFileError, TEPAnalysisError, 

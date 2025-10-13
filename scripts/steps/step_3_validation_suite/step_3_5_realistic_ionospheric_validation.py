@@ -204,7 +204,6 @@ def main():
         return True
 
     except Exception as e:
-        step_logger.error(f"Step 3.5 failed: {e}")
         print_status(f"Step 3.5 failed: {e}", "ERROR")
         return False
 
