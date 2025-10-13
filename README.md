@@ -416,7 +416,7 @@ This repository is distributed under the **Creative Commons Attribution 4.0 Inte
 **Under the following terms:**
 - **Attribution:** You must give appropriate credit, provide a link to the license, and indicate if changes were made
 
-For complete license terms, see [LICENSE](site/LICENSE).
+For complete license terms, see [LICENSE](LICENSE).
 
 ## Contact and Collaboration
 
