@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Version:** v0.19 (Jaipur)
-**Date:** 13 October 2025
+**Version:** v0.20 (Jaipur)
+**Date:** 14 October 2025
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Foundation
@@ -283,7 +283,7 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 
 ### Analytical Configuration
 
-#### v0.19 Configuration Framework (Jaipur Release - Established Methodology)
+#### v0.20 Configuration Framework (Jaipur Release - Established Methodology)
 
 **Core Analysis Parameters:**
 | Parameter | Default Value | Description |
@@ -383,7 +383,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
-  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.19)},
+  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.20)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -457,4 +457,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Version:** v0.19 (Jaipur) | **Date:** 13 October 2025 | **Status:** Active Research
+**Version:** v0.20 (Jaipur) | **Date:** 14 October 2025 | **Status:** Active Research
