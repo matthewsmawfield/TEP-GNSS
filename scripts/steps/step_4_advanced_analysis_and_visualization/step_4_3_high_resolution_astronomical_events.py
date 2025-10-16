@@ -3075,7 +3075,7 @@ def main():
     args = parser.parse_args()
     
     print("=" * 80)
-    print("TEP GNSS Analysis Package v0.19")
+    print("TEP GNSS Analysis Package v0.21")
     from scripts.utils.version_utils import VERSION_STRING
     print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 4.3: High-Resolution Astronomical Event Analysis", "TITLE")
     print("=" * 80)

@@ -100,3 +100,4 @@ Dockerfile
 # Private directory
 private/
 
+.windsurf/rules/general.md

@@ -1,67 +1,69 @@
-[21:35:25] [INFO] 
-[21:35:25] [INFO] 
-[21:35:25] [INFO] ================================================================================
-[21:35:25] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
-[21:35:25] [INFO] ================================================================================
-[21:35:25] [INFO] 
-[21:35:25] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
-[21:35:25] [INFO] 
-[21:35:25] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
-[21:35:25] [WARNING] Warning: No explicit p_value for hemisphere_ratio in geographic_subsets. Skipping this test.
-[21:35:25] [SUCCESS] Collected 231 statistical tests across 19 analysis families
-[21:35:25] [INFO]   primary_tep: 3 tests
-[21:35:25] [INFO]   model_comparison: 18 tests
-[21:35:25] [INFO]   null_validation: 9 tests
-[21:35:25] [INFO]   astronomical_events: 8 tests
-[21:35:25] [INFO]   anisotropy_orbital: 24 tests
-[21:35:25] [INFO]   cross_validation: 3 tests
-[21:35:25] [INFO]   advanced_analysis: 15 tests
-[21:35:25] [INFO]   geographic_validation: 2 tests
-[21:35:25] [INFO]   chandler_wobble: 3 tests
-[21:35:25] [INFO]   bootstrap_validation: 9 tests
-[21:35:25] [INFO]   multiband_analysis: 40 tests
-[21:35:25] [INFO]   gravitational_field: 9 tests
-[21:35:25] [INFO]   diurnal_validation: 2 tests
-[21:35:25] [INFO]   eclipse_analysis: 15 tests
-[21:35:25] [INFO]   bootstrap_cross_method: 12 tests
-[21:35:25] [INFO]   coordinate_validation: 1 tests
-[21:35:25] [INFO]   data_quality_validation: 6 tests
-[21:35:25] [INFO]   hilbert_if_astronomical: 12 tests
-[21:35:25] [INFO]   band_diagnostics: 40 tests
-[21:35:25] [PROCESS] Applying multiple comparison corrections...
-[21:35:25] [INFO] Applying bonferroni correction...
-[21:35:25] [INFO] Applying fdr_bh correction...
-[21:35:25] [INFO] Applying family_wise correction...
-[21:35:25] [PROCESS] Generating correction summary report...
-[21:35:25] [INFO] 
-[21:35:25] [INFO] ================================================================================
-[21:35:25] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
-[21:35:25] [INFO] ================================================================================
-[21:35:25] [INFO] 
-[21:35:25] [INFO] Total statistical tests analyzed: 231
-[21:35:25] [INFO] Uncorrected significant tests: 231 (100.0%)
-[21:35:25] [SUCCESS] BONFERRONI: 137 significant (59.3%), 40.7% reduction
-[21:35:25] [SUCCESS] FDR_BH: 168 significant (72.7%), 27.3% reduction
-[21:35:25] [SUCCESS] FAMILY_WISE: 154 significant (66.7%), 33.3% reduction
-[21:35:25] [INFO] 
-[21:35:25] [INFO] FAMILY BREAKDOWN:
-[21:35:25] [INFO]   primary_tep: 3 tests
-[21:35:25] [INFO]   model_comparison: 18 tests
-[21:35:25] [INFO]   null_validation: 9 tests
-[21:35:25] [INFO]   astronomical_events: 8 tests
-[21:35:25] [INFO]   anisotropy_orbital: 24 tests
-[21:35:25] [INFO]   cross_validation: 3 tests
-[21:35:25] [INFO]   advanced_analysis: 15 tests
-[21:35:25] [INFO]   geographic_validation: 2 tests
-[21:35:25] [INFO]   chandler_wobble: 3 tests
-[21:35:25] [INFO]   bootstrap_validation: 9 tests
-[21:35:25] [INFO]   multiband_analysis: 40 tests
-[21:35:25] [INFO]   gravitational_field: 9 tests
-[21:35:25] [INFO]   diurnal_validation: 2 tests
-[21:35:25] [INFO]   eclipse_analysis: 15 tests
-[21:35:25] [INFO]   bootstrap_cross_method: 12 tests
-[21:35:25] [INFO]   coordinate_validation: 1 tests
-[21:35:25] [INFO]   data_quality_validation: 6 tests
-[21:35:25] [INFO]   hilbert_if_astronomical: 12 tests
-[21:35:25] [INFO]   band_diagnostics: 40 tests
-[21:35:25] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.3 seconds
+[04:21:17] [INFO] 
+[04:21:17] [INFO] 
+[04:21:17] [INFO] ================================================================================
+[04:21:17] [INFO] TEP GNSS Analysis Package - STEP 4.7: Comprehensive Multiple Comparison Corrections (FIXED)
+[04:21:17] [INFO] ================================================================================
+[04:21:17] [INFO] 
+[04:21:17] [INFO] Systematic statistical validation with COMPREHENSIVE test collection
+[04:21:17] [INFO] 
+[04:21:17] [PROCESS] Collecting ALL statistical tests from analysis pipeline...
+[04:21:17] [WARNING] Warning: No explicit p_value for hemisphere_ratio in geographic_subsets. Skipping this test.
+[04:21:17] [SUCCESS] Collected 388 statistical tests across 19 analysis families
+[04:21:17] [INFO]   primary_tep: 3 tests
+[04:21:17] [INFO]   model_comparison: 18 tests
+[04:21:17] [INFO]   null_validation: 9 tests
+[04:21:17] [INFO]   astronomical_events: 8 tests
+[04:21:17] [INFO]   anisotropy_orbital: 22 tests
+[04:21:17] [INFO]   cross_validation: 3 tests
+[04:21:17] [INFO]   advanced_analysis: 174 tests
+[04:21:17] [INFO]   geographic_validation: 2 tests
+[04:21:17] [INFO]   chandler_wobble: 3 tests
+[04:21:17] [INFO]   bootstrap_validation: 9 tests
+[04:21:17] [INFO]   multiband_analysis: 40 tests
+[04:21:17] [INFO]   gravitational_field: 9 tests
+[04:21:17] [INFO]   diurnal_validation: 2 tests
+[04:21:17] [INFO]   eclipse_analysis: 15 tests
+[04:21:17] [INFO]   bootstrap_cross_method: 12 tests
+[04:21:17] [INFO]   coordinate_validation: 1 tests
+[04:21:17] [INFO]   data_quality_validation: 6 tests
+[04:21:17] [INFO]   hilbert_if_astronomical: 12 tests
+[04:21:17] [INFO]   band_diagnostics: 40 tests
+[04:21:17] [PROCESS] Applying multiple comparison corrections...
+[04:21:17] [INFO] Applying bonferroni correction...
+[04:21:17] [INFO] Applying fdr_bh correction...
+[04:21:17] [INFO] Applying family_wise correction...
+[04:21:17] [INFO] Applying hierarchical_eb correction...
+[04:21:17] [PROCESS] Generating correction summary report...
+[04:21:17] [INFO] 
+[04:21:17] [INFO] ================================================================================
+[04:21:17] [INFO] COMPREHENSIVE MULTIPLE COMPARISON CORRECTION SUMMARY
+[04:21:17] [INFO] ================================================================================
+[04:21:17] [INFO] 
+[04:21:17] [INFO] Total statistical tests analyzed: 388
+[04:21:17] [INFO] Uncorrected significant tests: 388 (100.0%)
+[04:21:17] [SUCCESS] BONFERRONI: 155 significant (39.9%), 60.1% reduction
+[04:21:17] [SUCCESS] FDR_BH: 203 significant (52.3%), 47.7% reduction
+[04:21:17] [SUCCESS] FAMILY_WISE: 178 significant (45.9%), 54.1% reduction
+[04:21:17] [SUCCESS] HIERARCHICAL_EB: 154 significant (39.7%), 60.3% reduction
+[04:21:17] [INFO] 
+[04:21:17] [INFO] FAMILY BREAKDOWN:
+[04:21:17] [INFO]   primary_tep: 3 tests
+[04:21:17] [INFO]   model_comparison: 18 tests
+[04:21:17] [INFO]   null_validation: 9 tests
+[04:21:17] [INFO]   astronomical_events: 8 tests
+[04:21:17] [INFO]   anisotropy_orbital: 22 tests
+[04:21:17] [INFO]   cross_validation: 3 tests
+[04:21:17] [INFO]   advanced_analysis: 174 tests
+[04:21:17] [INFO]   geographic_validation: 2 tests
+[04:21:17] [INFO]   chandler_wobble: 3 tests
+[04:21:17] [INFO]   bootstrap_validation: 9 tests
+[04:21:17] [INFO]   multiband_analysis: 40 tests
+[04:21:17] [INFO]   gravitational_field: 9 tests
+[04:21:17] [INFO]   diurnal_validation: 2 tests
+[04:21:17] [INFO]   eclipse_analysis: 15 tests
+[04:21:17] [INFO]   bootstrap_cross_method: 12 tests
+[04:21:17] [INFO]   coordinate_validation: 1 tests
+[04:21:17] [INFO]   data_quality_validation: 6 tests
+[04:21:17] [INFO]   hilbert_if_astronomical: 12 tests
+[04:21:17] [INFO]   band_diagnostics: 40 tests
+[04:21:17] [SUCCESS] Comprehensive multiple comparison corrections completed in 0.2 seconds

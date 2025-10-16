@@ -1,6 +1,6 @@
 {
   "analysis_center": "IGS_COMBINED",
-  "timestamp": "2025-10-13T01:56:56.884313",
+  "timestamp": "2025-10-15T11:48:29.054523",
   "data_summary": {
     "total_pairs": 12874746,
     "unique_stations": 316,
@@ -4796,6 +4796,7 @@
     },
     "expected_amplitude": 0.0022,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "No significant Jupiter opposition signals detected."
   },
   "saturn_opposition_analysis": {
@@ -7478,6 +7479,7 @@
     },
     "expected_amplitude": 0.00019,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "Significant Saturn opposition signal(s) detected (individual: 1, stacked: False)"
   },
   "mars_opposition_analysis": {
@@ -8721,6 +8723,7 @@
     },
     "expected_amplitude": 5e-05,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "Significant Mars opposition signal(s) detected (individual: 1, stacked: False)"
   },
   "venus_conjunction_analysis": {
@@ -11086,6 +11089,7 @@
     },
     "expected_amplitude": 0.001,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "Significant Venus conjunction signal(s) detected: 2"
   },
   "mercury_conjunction_analysis": {
@@ -20283,6 +20287,7 @@
     },
     "expected_amplitude": 0.0001,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "Significant Mercury conjunction signal(s) detected: 1"
   },
   "solar_rotation_analysis": {
@@ -21389,7 +21394,7 @@
   "nutation_analysis": {
     "enabled": false
   },
-  "execution_time_seconds": 176.52262592315674,
+  "execution_time_seconds": 5093.4718499183655,
   "success": true,
   "temporal_coherence": {
     "success": true,
@@ -21441,7 +21446,7 @@
   },
   "comprehensive_report": {
     "analysis_center": "igs_combined",
-    "timestamp": "2025-10-13T01:59:55.479979",
+    "timestamp": "2025-10-15T12:57:57.077304",
     "planetary_events": {
       "Jupiter": {
         "planet_name": "Jupiter",

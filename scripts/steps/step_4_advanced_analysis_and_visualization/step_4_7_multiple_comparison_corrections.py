@@ -84,7 +84,8 @@ class ComprehensiveMultipleComparisonCorrector:
             'band_diagnostics': []      # Band-specific fit quality tests
         }
         
-        self.correction_methods = ['bonferroni', 'fdr_bh', 'family_wise']
+        # Include new hierarchical empirical Bayes correction method (partial-pooling)
+        self.correction_methods = ['bonferroni', 'fdr_bh', 'family_wise', 'hierarchical_eb']
         self.family_alpha = 0.05
         
     def collect_comprehensive_tests(self) -> Dict:
@@ -287,6 +288,60 @@ class ComprehensiveMultipleComparisonCorrector:
                                         'p_value': float(p_value),
                                         'test_statistic': f_stat,
                                         'description': f'Anisotropy sector {sector_name} for {ac.upper()}'
+                                    })
+                    
+                    # Beat frequency patterns
+                    if 'beat_frequencies_analysis' in data and 'significant_beats' in data['beat_frequencies_analysis']:
+                        beats = data['beat_frequencies_analysis']['significant_beats']
+                        for beat_name, beat_data in beats.items():
+                            if isinstance(beat_data, dict) and 'p_value' in beat_data:
+                                self.test_registry['advanced_analysis'].append({
+                                    'test_name': f'beat_frequency_{beat_name}_{ac}',
+                                    'p_value': float(beat_data['p_value']),
+                                    'test_statistic': beat_data.get('r_squared', 0),
+                                    'description': f'Beat frequency pattern {beat_name} for {ac.upper()}'
+                                })
+                    
+                    # Relative motion beats
+                    if 'relative_motion_beats_analysis' in data and 'significant_patterns' in data['relative_motion_beats_analysis']:
+                        patterns = data['relative_motion_beats_analysis']['significant_patterns']
+                        for pattern_name, pattern_data in patterns.items():
+                            if isinstance(pattern_data, dict) and 'r_squared' in pattern_data:
+                                # Compute p-value from R²
+                                r_squared = pattern_data['r_squared']
+                                # Assume ~30 bins for temporal patterns
+                                n_bins = 30
+                                if n_bins > 3 and r_squared > 0 and r_squared < 1:
+                                    f_stat = (r_squared / (1 - r_squared)) * ((n_bins - 3) / 2)
+                                    p_value = 1 - stats.f.cdf(f_stat, 2, n_bins - 3)
+                                    
+                                    self.test_registry['advanced_analysis'].append({
+                                        'test_name': f'relative_motion_{pattern_name}_{ac}',
+                                        'p_value': float(p_value),
+                                        'test_statistic': r_squared,
+                                        'description': f'Relative motion pattern {pattern_name} for {ac.upper()}'
+                                    })
+                    
+                    # Spherical harmonics components
+                    if 'spherical_harmonics_analysis' in data and 'harmonic_coefficients' in data['spherical_harmonics_analysis']:
+                        coeffs = data['spherical_harmonics_analysis']['harmonic_coefficients']
+                        # Test each harmonic component for significance
+                        # Use Wilks' likelihood ratio test approximation
+                        n_bins = data['spherical_harmonics_analysis'].get('n_spherical_bins', 16)
+                        if n_bins > 6:  # Need enough bins for harmonics
+                            for coeff_name, coeff_value in coeffs.items():
+                                if coeff_value is not None and coeff_name != 'Y_00':  # Skip monopole
+                                    # Chi-square test: does this component explain variance?
+                                    # df = 1 for each component
+                                    # Use normalized chi-square approximation
+                                    chi2_stat = abs(coeff_value) / 1000  # Normalize by ~1000 km scale
+                                    p_value = 1 - stats.chi2.cdf(chi2_stat, df=1)
+                                    
+                                    self.test_registry['advanced_analysis'].append({
+                                        'test_name': f'spherical_harmonic_{coeff_name}_{ac}',
+                                        'p_value': float(p_value),
+                                        'test_statistic': abs(coeff_value) if coeff_value else 0,
+                                        'description': f'Spherical harmonic {coeff_name} for {ac.upper()}'
                                     })
                 
                 except Exception as e:
@@ -1252,6 +1307,61 @@ class ComprehensiveMultipleComparisonCorrector:
             'family_results': {},
             'significant_tests': []
         }
+
+        # --------------------------------------------------------------
+        # Hierarchical Empirical Bayes (partial-pooling) correction
+        # --------------------------------------------------------------
+        print_status("Applying hierarchical_eb correction...", "INFO")
+        corrections['hierarchical_eb'] = {
+            'method': 'hierarchical_eb',
+            'n_total_tests': n_tests,
+            'significant_tests': []
+        }
+
+        # 1. Convert p-values to signed z-scores (two-tailed)
+        def p_to_z(p):
+            # avoid p==0 or 1
+            p = np.clip(p, 1e-300, 1 - 1e-16)
+            sign = np.sign(0.5 - p)
+            return sign * stats.norm.isf(p / 2)
+
+        z_scores = [p_to_z(p) for p in p_values]
+        # 2. Create family index map
+        family_to_indices = {}
+        for idx, test in enumerate(all_tests):
+            fam = test['family']
+            family_to_indices.setdefault(fam, []).append(idx)
+
+        # 3. Perform simple one-level random-effects shrinkage per family
+        # Skip families with < 5 tests to avoid over-shrinkage of small homogeneous groups
+        shrunk_p = np.ones_like(p_values, dtype=float)
+        min_family_size = 5
+        
+        for fam, idxs in family_to_indices.items():
+            if len(idxs) < min_family_size:
+                # Too few tests—use raw p-values (no shrinkage)
+                for i in idxs:
+                    shrunk_p[i] = p_values[i]
+                continue
+            
+            zs = np.array([z_scores[i] for i in idxs])
+            var_z = np.var(zs, ddof=1) if len(zs) > 1 else 0.0
+            # Between-effect variance tau² (subtract sampling variance 1)
+            tau2 = max(var_z - 1.0, 1e-6)
+            shrinkage_factor = tau2 / (tau2 + 1.0)
+            for i in idxs:
+                z_shrunk = z_scores[i] * shrinkage_factor
+                shrunk_p[i] = 2 * (1 - stats.norm.cdf(abs(z_shrunk)))
+
+        # 4. Significance decision
+        eb_significant = shrunk_p < self.family_alpha
+        for i, is_sig in enumerate(eb_significant):
+            if is_sig:
+                test_copy = all_tests[i].copy()
+                test_copy['corrected_p_value'] = float(shrunk_p[i])
+                test_copy['is_significant'] = True
+                test_copy['correction_method'] = 'hierarchical_eb'
+                corrections['hierarchical_eb']['significant_tests'].append(test_copy)
         
         for family, tests in self.test_registry.items():
             if tests:

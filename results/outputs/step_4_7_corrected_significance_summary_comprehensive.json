@@ -1,32 +1,41 @@
 {
-  "timestamp": "2025-10-08T21:35:25.790093",
-  "total_tests_analyzed": 231,
+  "timestamp": "2025-10-16T04:21:17.393760",
+  "total_tests_analyzed": 388,
   "correction_methods_applied": [
     "bonferroni",
     "fdr_bh",
-    "family_wise"
+    "family_wise",
+    "hierarchical_eb"
   ],
   "family_alpha": 0.05,
   "method_comparison": {
     "bonferroni": {
-      "n_significant_tests": 137,
-      "significance_rate": 0.5930735930735931,
+      "n_significant_tests": 155,
+      "significance_rate": 0.39948453608247425,
       "method_details": {
-        "corrected_alpha": 0.00021645021645021645,
+        "corrected_alpha": 0.0001288659793814433,
         "n_rejected": null
       }
     },
     "fdr_bh": {
-      "n_significant_tests": 168,
-      "significance_rate": 0.7272727272727273,
+      "n_significant_tests": 203,
+      "significance_rate": 0.5231958762886598,
       "method_details": {
         "corrected_alpha": null,
-        "n_rejected": 168
+        "n_rejected": 203
       }
     },
     "family_wise": {
+      "n_significant_tests": 178,
+      "significance_rate": 0.4587628865979381,
+      "method_details": {
+        "corrected_alpha": null,
+        "n_rejected": null
+      }
+    },
+    "hierarchical_eb": {
       "n_significant_tests": 154,
-      "significance_rate": 0.6666666666666666,
+      "significance_rate": 0.39690721649484534,
       "method_details": {
         "corrected_alpha": null,
         "n_rejected": null
@@ -49,6 +58,11 @@
         "n_tests": 3,
         "n_significant": 3,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
       }
     },
     "model_comparison": {
@@ -65,6 +79,11 @@
       "family_wise": {
         "n_tests": 18,
         "n_significant": 4,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 18,
+        "n_significant": 0,
         "all_significant": false
       }
     },
@@ -83,12 +102,17 @@
         "n_tests": 9,
         "n_significant": 9,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 9,
+        "n_significant": 0,
+        "all_significant": false
       }
     },
     "astronomical_events": {
       "bonferroni": {
         "n_tests": 8,
-        "n_significant": 6,
+        "n_significant": 5,
         "all_significant": false
       },
       "fdr_bh": {
@@ -100,21 +124,31 @@
         "n_tests": 8,
         "n_significant": 8,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 8,
+        "n_significant": 0,
+        "all_significant": false
       }
     },
     "anisotropy_orbital": {
       "bonferroni": {
-        "n_tests": 24,
+        "n_tests": 22,
         "n_significant": 0,
         "all_significant": false
       },
       "fdr_bh": {
-        "n_tests": 24,
-        "n_significant": 5,
+        "n_tests": 22,
+        "n_significant": 4,
         "all_significant": false
       },
       "family_wise": {
-        "n_tests": 24,
+        "n_tests": 22,
+        "n_significant": 2,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 22,
         "n_significant": 0,
         "all_significant": false
       }
@@ -134,23 +168,33 @@
         "n_tests": 3,
         "n_significant": 0,
         "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 3,
+        "n_significant": 0,
+        "all_significant": false
       }
     },
     "advanced_analysis": {
       "bonferroni": {
-        "n_tests": 15,
-        "n_significant": 15,
-        "all_significant": true
+        "n_tests": 174,
+        "n_significant": 35,
+        "all_significant": false
       },
       "fdr_bh": {
-        "n_tests": 15,
-        "n_significant": 15,
-        "all_significant": true
+        "n_tests": 174,
+        "n_significant": 54,
+        "all_significant": false
       },
       "family_wise": {
-        "n_tests": 15,
-        "n_significant": 15,
-        "all_significant": true
+        "n_tests": 174,
+        "n_significant": 37,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 174,
+        "n_significant": 48,
+        "all_significant": false
       }
     },
     "geographic_validation": {
@@ -168,6 +212,11 @@
         "n_tests": 2,
         "n_significant": 2,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 2,
+        "n_significant": 2,
+        "all_significant": true
       }
     },
     "chandler_wobble": {
@@ -178,13 +227,18 @@
       },
       "fdr_bh": {
         "n_tests": 3,
-        "n_significant": 3,
-        "all_significant": true
+        "n_significant": 2,
+        "all_significant": false
       },
       "family_wise": {
         "n_tests": 3,
         "n_significant": 2,
         "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 3,
+        "n_significant": 3,
+        "all_significant": true
       }
     },
     "bootstrap_validation": {
@@ -202,6 +256,11 @@
         "n_tests": 9,
         "n_significant": 9,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 9,
+        "n_significant": 0,
+        "all_significant": false
       }
     },
     "multiband_analysis": {
@@ -219,12 +278,17 @@
         "n_tests": 40,
         "n_significant": 40,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
       }
     },
     "gravitational_field": {
       "bonferroni": {
         "n_tests": 9,
-        "n_significant": 3,
+        "n_significant": 2,
         "all_significant": false
       },
       "fdr_bh": {
@@ -233,6 +297,11 @@
         "all_significant": false
       },
       "family_wise": {
+        "n_tests": 9,
+        "n_significant": 3,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
         "n_tests": 9,
         "n_significant": 3,
         "all_significant": false
@@ -253,6 +322,11 @@
         "n_tests": 2,
         "n_significant": 2,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 2,
+        "n_significant": 2,
+        "all_significant": true
       }
     },
     "eclipse_analysis": {
@@ -263,12 +337,17 @@
       },
       "fdr_bh": {
         "n_tests": 15,
-        "n_significant": 9,
+        "n_significant": 7,
         "all_significant": false
       },
       "family_wise": {
         "n_tests": 15,
         "n_significant": 7,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
+        "n_tests": 15,
+        "n_significant": 9,
         "all_significant": false
       }
     },
@@ -284,6 +363,11 @@
         "all_significant": false
       },
       "family_wise": {
+        "n_tests": 12,
+        "n_significant": 3,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
         "n_tests": 12,
         "n_significant": 3,
         "all_significant": false
@@ -304,6 +388,11 @@
         "n_tests": 1,
         "n_significant": 1,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 1,
+        "n_significant": 1,
+        "all_significant": true
       }
     },
     "data_quality_validation": {
@@ -321,6 +410,11 @@
         "n_tests": 6,
         "n_significant": 6,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 6,
+        "n_significant": 0,
+        "all_significant": false
       }
     },
     "hilbert_if_astronomical": {
@@ -335,6 +429,11 @@
         "all_significant": false
       },
       "family_wise": {
+        "n_tests": 12,
+        "n_significant": 0,
+        "all_significant": false
+      },
+      "hierarchical_eb": {
         "n_tests": 12,
         "n_significant": 0,
         "all_significant": false
@@ -355,23 +454,32 @@
         "n_tests": 40,
         "n_significant": 40,
         "all_significant": true
+      },
+      "hierarchical_eb": {
+        "n_tests": 40,
+        "n_significant": 40,
+        "all_significant": true
       }
     }
   },
   "impact_analysis": {
-    "uncorrected_significant": 231,
+    "uncorrected_significant": 388,
     "uncorrected_rate": 1.0,
     "bonferroni_reduction": {
-      "absolute": 94,
-      "relative": 0.4069264069264069
+      "absolute": 233,
+      "relative": 0.6005154639175257
     },
     "fdr_bh_reduction": {
-      "absolute": 63,
-      "relative": 0.2727272727272727
+      "absolute": 185,
+      "relative": 0.47680412371134023
     },
     "family_wise_reduction": {
-      "absolute": 77,
-      "relative": 0.3333333333333333
+      "absolute": 210,
+      "relative": 0.5412371134020618
+    },
+    "hierarchical_eb_reduction": {
+      "absolute": 234,
+      "relative": 0.6030927835051546
     }
   }
 }

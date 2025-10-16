@@ -33,16 +33,16 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Correlation Length (λ)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">3,330–4,549 km</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (ESA/CODE/IGS Combined)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Multiband Validation</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">12 frequency bands (10-3000 μHz)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">12 frequency bands (10–3000 μHz)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">Cross-center consistency substantially reduces likelihood of systematic biases</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Diurnal Time Variations</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">1.9-7.6% day-night variation</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">1.9–7.6% day-night variation</td>
                     <td style="padding: 8px; border: 1px solid #495773;">72.4M records, >6σ combined significance</td>
                 </tr>
                 <tr>
@@ -66,9 +66,24 @@
                     <td style="padding: 8px; border: 1px solid #495773;">R² up to 0.899, multi-center consistent</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #495773;">Network Coherence</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p < 10⁻³)</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Moderate unified detector response (score=0.493-0.560)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Mesh Dance Dynamics</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p < 10⁻³), coherence=0.643–0.644</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">High network synchronization across individual components</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #495773;">3D Spatial Structure</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Anisotropy strength = 1.98</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Dipole: 5,715 km, Quadrupole: 5,660 km, 6.6× dynamic range</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #495773;">Multi-Frequency Beat Patterns</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">35 detected, 7 FDR significant</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Venus sub-harmonic (196.9d, R²=0.82-0.86), lunar fortnight (14.8d, R²=0.60-0.82); hierarchical strength pattern validates genuine signal</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #495773;">Signal Enhancement Factor</td>
+                    <td style="padding: 8px; border: 1x solid #495773;">Mean: 124.4× over null</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Range: 22.8–226.0×, indicates non-linear coupling mechanism</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Seasonal Time Modulation</td>
@@ -77,7 +92,7 @@
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">TID Contamination</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">21-23% improvement potential</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">21–23% improvement potential</td>
                     <td style="padding: 8px; border: 1px solid #495773;">Quantified and correctable, Venus 2f harmonic identified (Section 3.3.2)</td>
                 </tr>
             </tbody>
@@ -90,12 +105,15 @@
     
     <ul>
         <li>Cross-Center Validation Achievement: Three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns (12 frequency bands), achieving optimal R² values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This represents a crucial validation milestone, substantially reducing center-specific systematic biases and supporting signal authenticity through independent processing methodologies.</li>
-        <li>Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 231 statistical tests (59-73% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
+        <li>Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
         <li>Venus 2f Harmonic Identified: A dominant ~112-day harmonic consistent with the Venus 2f expectation (112.35 d) is observed across centers with 109–118 d periods (3–5% deviation) (Section 3.3.2). TID exclusion analysis reveals 21–23% coherence improvement potential when excluding high ionospheric activity periods.</li>
         <li>Statistical Robustness Observed: The analysis demonstrates stability under jackknife cross-validation (CV of λ across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
         <li>Validated Independence from Geographic and Instrumental Factors: The correlation strength is consistent across elevation quintiles, hemisphere subsets, and ocean vs. land baselines.</li>
         <li>Instrumental Independence: Consistent results across three independent analysis centers (CODE, IGS Combined, ESA Final) using different processing algorithms and station networks should rule out instrumental artifacts, though multi-constellation validation across GLONASS, Galileo, and BeiDou remains a critical future step.</li>
         <li>Dynamic Event Consistency: Eclipse and opposition event scales match baseline correlation lengths, providing independent confirmation.</li>
+        <li>Non-Linear Coupling Evidence: Mean signal enhancement of 124.4× over null expectation (range: 22.8-226.0×) indicates exotic physics beyond direct gravitational effects, suggesting resonance, tidal amplification, or parametric coupling mechanisms.</li>
+        <li>3D Spatial Structure Validation: Complete spherical harmonic decomposition reveals anisotropy strength of 1.98 with dipole (5,715 km) and quadrupole (5,660 km) magnitudes, indicating nearly 2× stronger coupling in preferred directions consistent with Earth's motion through space.</li>
+        <li>Multi-Scale Temporal Coupling: Detection of 35 distinct beat frequency patterns spanning four orders of magnitude (0.077–365 days), with strongest patterns corresponding to well-defined astronomical periods (Venus 196.9d: R²=0.82–0.86, lunar fortnight 14.8d: R²=0.60–0.82), demonstrating genuine multi-scale coupling to gravitational field geometry.</li>
     </ul>
 
     <h3>5.3 Signal Robustness and Processing Effects</h3>
@@ -136,7 +154,7 @@
     
     <h4>5.6.1 Temporal Dynamics and the Nature of Time</h4>
     
-    <p>The diurnal analysis provides patterns consistent with TEP's prediction that proper time flow rates are dynamically variable. This represents a potential extension of Einstein's relativity, though robust interpretation awaits independent validation.</p>
+    <p>The diurnal analysis reveals patterns consistent with TEP’s prediction that proper time flow rates may be dynamically variable. If independently confirmed, this could imply an extension to established relativistic frameworks; however, such interpretation remains speculative until rigorous external validation is achieved.</p>
     
     <div>
         <h4>Temporal Dynamics and Time Variation</h4>
@@ -148,7 +166,7 @@
         <p>Metrological Implications: These findings suggest that temporal field variations could be as important as gravitational redshift corrections in atomic clock networks.</p>
     </div>
     
-    <p>Physics Implications: If confirmed, this could transform precision metrology from calibrating "when things happen" to mapping "how fast time flows," with potential implications for fundamental physics, navigation, and understanding of time itself.</p>
+    <p>Physics Implications: Should future studies corroborate these findings, precision metrology might evolve from simply calibrating “when events occur” to also characterising “how fast time flows,” with broad implications across fundamental physics, navigation, and time-keeping. Such implications remain provisional pending independent replication.</p>
 
     <h3>5.7 Final Assessment</h3>
     

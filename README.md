@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Version:** v0.20 (Jaipur)
-**Date:** 14 October 2025
+**Version:** v0.21 (Jaipur)
+**Date:** 16 October 2025
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 ## Theoretical Foundation
@@ -131,8 +131,8 @@ Our comprehensive analysis of 62.7 million station-pair measurements across 364 
 
 **Correlation Structure:**
 - **Characteristic lengths:** $\lambda = 3,330-4,549$ km across independent analysis centers (CV = 12.9% inter-center variation)
-- **Statistical robustness:** Strong exponential model fits ($R^2 = 0.920$–$0.970$)
-- **Theoretical alignment:** Results within predicted range [1,000–10,000 km]
+- **Statistical robustness:** Strong exponential model fits ($R^2 = 0.920$–$0.970$ on distance-bin means, Neff ≈ 25–28 bins)
+- **Theoretical alignment:** Results within predicted range [1,000–10,000 km], established before data analysis
 
 **Validation Framework:**
 - **Multi-center consistency:** Comprehensive null hypothesis testing is consistent with a genuine physical signal (24–61× signal enhancement over randomized controls)
@@ -143,6 +143,13 @@ Our comprehensive analysis of 62.7 million station-pair measurements across 364 
 - **Gravitational coupling:** Direct evidence of temporal field correlations with planetary gravitational patterns ($r = -0.458$, $p < 10^{-48}$)
 - **Temporal dynamics:** Seasonal correlation patterns identified with optimal coupling windows of 240 days
 - **Enhanced validation:** Comprehensive framework with exploratory analysis capabilities
+
+### Key Methodological Notes
+
+- R² values are computed on distance-bin means (Neff ≈ 25–28 bins), not individual station pairs—standard practice in spatial correlation analysis
+- Tidal frequency enhancement is a TEP prediction (gravitational forcing modulates φ field), not contamination; post-tidal band shows R² = 0.946
+- Signal strengthens by 21-23% when high-ionosphere days are excluded, demonstrating the ionosphere suppresses rather than creates the correlation
+- Validation framework includes 11 independent criteria with null tests showing 24-61× signal enhancement over randomized controls
 
 ## Experimental Setup and Configuration
 
@@ -283,7 +290,7 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 
 ### Analytical Configuration
 
-#### v0.20 Configuration Framework (Jaipur Release - Established Methodology)
+#### v0.21 Configuration Framework (Jaipur Release - Established Methodology)
 
 **Core Analysis Parameters:**
 | Parameter | Default Value | Description |
@@ -383,7 +390,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
-  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.20)},
+  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.21)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -457,4 +464,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Version:** v0.20 (Jaipur) | **Date:** 14 October 2025 | **Status:** Active Research
+**Version:** v0.21 (Jaipur) | **Date:** 16 October 2025 | **Status:** Active Research

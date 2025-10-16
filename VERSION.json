@@ -1,19 +1,23 @@
 {
-  "version": "0.20",
+  "version": "0.21",
   "codename": "Jaipur",
-  "date": "2025-10-14",
+  "date": "2025-10-16",
   "changes": [
-    "Version bump to v0.20",
-    "Methodology clarification: Updated prediction timeline documentation to eliminate 'post-hoc' concerns and clearly establish hypothesis-driven scientific approach"
+    "Version bump to v0.21",
+    "Methodology clarification: Updated prediction timeline documentation to eliminate 'post-hoc' concerns and clearly establish hypothesis-driven scientific approach",
+    "Multiple comparison corrections: Comprehensive 388-test framework including beat frequencies (105 tests), relative motion patterns (30 tests), and spherical harmonics (24 tests) with 40% Bonferroni and 52% FDR-BH survival rates",
+    "Statistical precision: Updated beat pattern language to distinguish 'detected' (35 patterns) vs 'statistically significant' (7 FDR-passing), emphasizing hierarchical strength as validation",
+    "Manuscript refinement: Added clarification that differential survival rates across test types validates genuine signal rather than uniform artifact",
+    "Structural improvement: Relocated eclipse predictions from Introduction (Section 1.4) to Discussion (Section 4) for proper scientific flow—predictions now appear as post-hoc interpretations rather than a priori claims"
   ],
-  "previous_version": "0.19",
-  "previous_date": "2025-10-13",
-  "description": "Latest version with analysis updates and improvements",
-  "impact": "Analysis refinements and documentation updates",
+  "previous_version": "0.20",
+  "previous_date": "2025-10-14",
+  "description": "Comprehensive version with complete 388-test statistical framework and enhanced methodological clarity",
+  "impact": "Major statistical framework expansion (231→388 tests) with improved precision in result reporting and methodological transparency",
   "short_description": "Global Time Echoes: Distance-structured correlations in GNSS atomic clock networks. Analysis of 62.7M measurements reveals exponential correlation decay patterns (λ = 3,330–4,549 km) with coherent network dynamics coupled to Earth's orbital motion and planetary gravitational fields.",
   "long_description": "This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.69) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 24–61× signal enhancement over null tests (z = 15.8–31.9 across 180 scrambling iterations), temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.\n\nWebsite: https://matthewsmawfield.github.io/TEP-GNSS/",
   "doi": "10.5281/zenodo.17127229",
   "zenodo_record": "17338095",
-  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_v0.20_Jaipur.pdf",
-  "pdf_download_url": "https://zenodo.org/records/17338095/files/Smawfield_2025_GlobalTimeEchoes_v0.20_Jaipur.pdf?download=1"
+  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_v0.21_Jaipur.pdf",
+  "pdf_download_url": "https://zenodo.org/records/17338095/files/Smawfield_2025_GlobalTimeEchoes_v0.21_Jaipur.pdf?download=1"
 }

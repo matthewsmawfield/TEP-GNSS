@@ -1,6 +1,6 @@
 {
   "analysis_center": "CODE",
-  "timestamp": "2025-10-13T01:45:36.058668",
+  "timestamp": "2025-10-15T10:26:03.094858",
   "data_summary": {
     "total_pairs": 39047074,
     "unique_stations": 345,
@@ -4810,6 +4810,7 @@
     },
     "expected_amplitude": 0.0022,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "No significant Jupiter opposition signals detected."
   },
   "saturn_opposition_analysis": {
@@ -7492,6 +7493,7 @@
     },
     "expected_amplitude": 0.00019,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "No significant Saturn opposition signals detected."
   },
   "mars_opposition_analysis": {
@@ -8735,6 +8737,7 @@
     },
     "expected_amplitude": 5e-05,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "No significant Mars opposition signals detected."
   },
   "venus_conjunction_analysis": {
@@ -11100,6 +11103,7 @@
     },
     "expected_amplitude": 0.001,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "No significant Venus conjunction signals detected."
   },
   "mercury_conjunction_analysis": {
@@ -20297,6 +20301,7 @@
     },
     "expected_amplitude": 0.0001,
     "detection_threshold": 3.0,
+    "event_window_days_used": 120,
     "interpretation": "Significant Mercury conjunction signal(s) detected: 1"
   },
   "solar_rotation_analysis": {
@@ -21403,7 +21408,7 @@
   "nutation_analysis": {
     "enabled": false
   },
-  "execution_time_seconds": 655.7843091487885,
+  "execution_time_seconds": 714.242931842804,
   "success": true,
   "temporal_coherence": {
     "success": true,
@@ -21455,7 +21460,7 @@
   },
   "comprehensive_report": {
     "analysis_center": "code",
-    "timestamp": "2025-10-13T01:56:41.149089",
+    "timestamp": "2025-10-15T11:32:43.738848",
     "planetary_events": {
       "Jupiter": {
         "planet_name": "Jupiter",

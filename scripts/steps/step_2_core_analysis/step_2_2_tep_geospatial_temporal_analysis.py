@@ -108,6 +108,7 @@ warnings.filterwarnings('ignore', category=UserWarning, module='scipy')
 
 # Anchor to package root
 PACKAGE_ROOT = Path(__file__).resolve().parents[3]
+ROOT = PACKAGE_ROOT
 
 # Import TEP utilities for better configuration and error handling
 sys.path.insert(0, str(PACKAGE_ROOT))
