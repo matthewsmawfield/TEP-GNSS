@@ -277,9 +277,13 @@ def load_pair_data_once(ac: str, null_type: str = 'distance'):
     print_status(f"    Loading consolidated pair data: {consolidated_file.name}", "INFO")
     
     try:
-        # Load the consolidated pair data
-        df = pd.read_csv(consolidated_file)
+        # Load the consolidated pair data with proper dtype handling
+        df = pd.read_csv(consolidated_file, low_memory=False)
         total_rows = len(df)
+        
+        # Convert date column to string to avoid parquet serialization issues
+        if 'date' in df.columns:
+            df['date'] = df['date'].astype(str)
         
         if null_type == 'station':
             # For station scrambling, use a representative sample to avoid excessive computation

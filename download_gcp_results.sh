@@ -72,7 +72,7 @@ echo "📁 Creating local results directory structure..."
 mkdir -p results/outputs
 mkdir -p results/figures
 mkdir -p results/tmp
-mkdir -p results/exploratory
+mkdir -p results/code_longspan
 
 # Download all JSON result files
 echo "📄 Downloading JSON result files..."

@@ -1,0 +1,167 @@
+{
+  "analysis_center": "CODE",
+  "timestamp": "2025-10-19T05:26:19.937441",
+  "method": {
+    "type": "phase_alignment_index",
+    "formula": "cos(phase(CSD))"
+  },
+  "data_summary": {
+    "total_pairs": 165274076,
+    "files_processed": 9221,
+    "files_total": 9221,
+    "bins_used": 29,
+    "distance_range_km": [
+      55.27352385883782,
+      12142.64190773794
+    ],
+    "coherence_range": [
+      -0.006643788635600223,
+      0.1365830856663225
+    ],
+    "mean_coherence": 0.06096218873759169
+  },
+  "model_comparison": {
+    "models_tested": [
+      "Exponential",
+      "Gaussian",
+      "Squared Exponential",
+      "Power Law",
+      "Power Law w/ Cutoff",
+      "Mat\u00e9rn (\u03bd=1.5)",
+      "Mat\u00e9rn (\u03bd=2.5)"
+    ],
+    "best_model_aic": "Gaussian",
+    "model_results": [
+      {
+        "name": "Exponential",
+        "aic": 155.54765166011646,
+        "bic": 159.64953915007587,
+        "r_squared": 0.945571747399497,
+        "delta_aic": 12.787037697350172
+      },
+      {
+        "name": "Gaussian",
+        "aic": 142.76061396276629,
+        "bic": 146.8625014527257,
+        "r_squared": 0.9649788896007488,
+        "delta_aic": 0.0
+      },
+      {
+        "name": "Squared Exponential",
+        "aic": 142.7606139627665,
+        "bic": 146.86250145272592,
+        "r_squared": 0.9649788896007486,
+        "delta_aic": 2.2737367544323206e-13
+      },
+      {
+        "name": "Power Law",
+        "aic": 175.75345147546753,
+        "bic": 179.85533896542694,
+        "r_squared": 0.8907504094555906,
+        "delta_aic": 32.99283751270124
+      },
+      {
+        "name": "Power Law w/ Cutoff",
+        "aic": 163.0444117267642,
+        "bic": 168.5135950467101,
+        "r_squared": 0.934212699453263,
+        "delta_aic": 20.28379776399791
+      },
+      {
+        "name": "Mat\u00e9rn (\u03bd=1.5)",
+        "aic": 147.30811988546685,
+        "bic": 151.41000737542626,
+        "r_squared": 0.9590332163698891,
+        "delta_aic": 4.547505922700566
+      },
+      {
+        "name": "Mat\u00e9rn (\u03bd=2.5)",
+        "aic": 145.07289031626465,
+        "bic": 149.17477780622406,
+        "r_squared": 0.962072186768713,
+        "delta_aic": 2.312276353498362
+      }
+    ]
+  },
+  "best_fit": {
+    "model_name": "Gaussian",
+    "amplitude": 0.09109532292261274,
+    "amplitude_error": 0.003725322625957837,
+    "lambda_km": 3768.4704316332572,
+    "lambda_error": 178.0937326938805,
+    "offset": -0.0032958617718743246,
+    "offset_error": 0.0013652969757215667,
+    "r_squared": 0.9649788896007488,
+    "n_bins": 29
+  },
+  "exponential_fit": {
+    "model": "C(r) = A * exp(-r/lambda) + C0",
+    "amplitude": 0.12607777551265117,
+    "amplitude_error": 0.00676696941435617,
+    "lambda_km": 3210.567621526167,
+    "lambda_error": 389.1803778073286,
+    "offset": -0.010350566698621784,
+    "offset_error": 0.0032121228211935073,
+    "r_squared": 0.945571747399497,
+    "n_bins": 29
+  },
+  "jackknife_analysis": {
+    "enabled": true,
+    "lambda_mean": 3175.3922324666955,
+    "lambda_std": 82.66351342049494,
+    "n_samples": 20,
+    "lambda_values": [
+      3303.6618283365137,
+      3154.6603189327493,
+      3320.2744476437642,
+      3219.778137251795,
+      3118.8023075052806,
+      3288.7127306965917,
+      3057.2944267131393,
+      3272.3813327540915,
+      3099.1153137332903,
+      3057.2944267131393,
+      3156.6411217117984,
+      3208.805473448579,
+      3187.9444113636823,
+      3183.37178163689,
+      3110.63412911706,
+      3179.0581598372673,
+      3278.354561766218,
+      3091.47750594905,
+      3057.2944267131393,
+      3162.287807509869
+    ]
+  },
+  "advanced_analyses_note": "LOSO/LODO, anisotropy, and temporal analyses moved to Step 5",
+  "bootstrap_ci": {
+    "enabled": true,
+    "n_iterations": 5000,
+    "n_successful": 3553,
+    "success_rate_percent": 71.06,
+    "confidence_level": 95.0,
+    "amplitude": {
+      "lower": 0.09514289917247323,
+      "upper": 0.16086740654955478,
+      "median": 0.13661921687956363
+    },
+    "lambda": {
+      "lower": 2839.87428229091,
+      "upper": 5582.945150881422,
+      "median": 3970.381381859831
+    },
+    "offset": {
+      "lower": -0.048169939426944815,
+      "upper": 0.009205790604290378,
+      "median": -0.02113103827558879
+    }
+  },
+  "tep_interpretation": {
+    "tep_consistent": true,
+    "correlation_length_assessment": "TEP-consistent",
+    "signal_strength": "Strong",
+    "best_model_vs_exponential": "Best model: Gaussian (\u0394AIC = -12.79)"
+  },
+  "loso_analysis": null,
+  "lodo_analysis": null
+}

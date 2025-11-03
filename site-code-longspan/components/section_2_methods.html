@@ -1,0 +1,198 @@
+<h2>2. Data and Methods</h2>
+<h3>2.1 Data Sources</h3>
+<h4>2.1.1 GNSS Clock Products</h4>
+<p>Thirty-second clock solutions from the Center for Orbit Determination in Europe (CODE) were utilized, processed as part of the International GNSS Service (IGS) final products. The dataset spans:</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+    <thead>
+      <tr style="background-color: rgba(73, 87, 115, 0.1);">
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Parameter</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Analysis Center</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">CODE (Center for Orbit Determination in Europe)</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Temporal Coverage</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">February 27, 2000 to June 30, 2025 (9,221 days)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Sampling Rate</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">30-second epochs (2,880 samples per day)</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Station Count</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">814 unique receivers</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Total Station-Days</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">1,825,509</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Total Station Pairs</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">165,198,849</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>Clock Solution Precision</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">~0.1 nanoseconds RMS</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h4>2.1.2 Station Distribution</h4>
+<p>The 814 GNSS receivers provide global coverage across all continents with concentrations in:</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+    <thead>
+      <tr style="background-color: rgba(73, 87, 115, 0.1);">
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Region</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: right;">Station Count</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: right;">Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;">North America</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">287</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">35.3%</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;">Europe</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">198</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">24.3%</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;">Asia-Pacific</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">156</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">19.2%</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;">South America</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">89</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">10.9%</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;">Africa</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">48</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">5.9%</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;">Antarctica</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">36</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">4.4%</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.05); font-weight: bold;">
+        <td style="padding: 8px; border: 1px solid #495773;">Total</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">814</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">100%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="margin-top: 15px;"><strong>Spatial Coverage:</strong> Station separations range from 1.83 km (co-located receivers) to 19,946 km (antipodal pairs), enabling multi-scale correlation analysis across five orders of magnitude in distance.</p>
+<h3>2.2 Data Processing Pipeline</h3>
+<h4>2.2.1 Clock Preprocessing</h4>
+<ol>
+  <li><strong>Outlier Removal:</strong> 3σ filtering based on modified Z-scores</li>
+  <li><strong>Detrending:</strong> Removal of linear and quadratic trends per day</li>
+  <li><strong>Normalization:</strong> Zero-mean, unit-variance normalization per station</li>
+  <li><strong>Gap Handling:</strong> Linear interpolation for gaps < 5 minutes, exclusion otherwise</li>
+</ol>
+<h4>2.2.2 Phase-Coherent Correlation Analysis</h4>
+<p>For each station pair (i,j) with common observation epochs, phase-coherent correlations were computed using cross-power spectral density analysis (identical to the method used in the multi-center study):</p>
+
+<ol>
+<li><strong>Detrending:</strong> Linear trends removed from both time series</li>
+<li><strong>Cross-Power Spectral Density:</strong> Complex CSD computed using Welch's method</li>
+<li><strong>Frequency Band Selection:</strong> Analysis focused on 10-500 µHz (periods: 33 minutes to 28 hours)</li>
+<li><strong>Phase-Coherent Extraction:</strong> Magnitude-weighted circular averaging of complex phases</li>
+<li><strong>Correlation Metric:</strong> Band-averaged magnitude with representative phase</li>
+</ol>
+
+<p>This frequency-domain approach preserves phase relationships between station pairs while extracting correlation strength, enabling detection of field-mediated timing correlations predicted by TEP theory. The method is identical to that validated across three independent analysis centers (CODE, IGS, ESA) in the original multi-center study.</p>
+<h4>2.2.3 Spatial Binning</h4>
+<p>Station pairs were categorized by:</p>
+<ul>
+  <li><strong>Distance:</strong> 40 logarithmically-spaced bins from 1-20,000 km</li>
+  <li><strong>Azimuth:</strong> 8 compass sectors (N, NE, E, SE, S, SW, W, NW)</li>
+  <li><strong>3D Orientation:</strong> 16 spherical harmonic bins for full 3D analysis</li>
+</ul>
+<h3>2.3 Analysis Methods</h3>
+<h4>2.3.1 Exponential Decay Fitting</h4>
+<p>For each spatial sector, the distance-correlation relationship was fit:</p>
+<pre><code>C(d) = A × exp(-d/λ) + B</code></pre>
+<p>where:</p>
+<ul>
+  <li>C(d) = mean coherence at distance d</li>
+  <li>λ = correlation decay length (km)</li>
+  <li>A = amplitude</li>
+  <li>B = baseline offset</li>
+</ul>
+<p>Fitting employed weighted least squares with weights proportional to pair counts per bin.</p>
+<h4>2.3.2 Temporal Orbital Tracking</h4>
+<p>The East-West to North-South anisotropy ratio was tracked across the year:</p>
+<pre><code>R(t) = λ_EW(t) / λ_NS(t)</code></pre>
+<p>Using 30-day sliding windows centered on each day of year, R(t) was correlated with:</p>
+<ul>
+  <li>Earth's orbital velocity (29.3-30.3 km/s)</li>
+  <li>Earth-Sun distance (0.983-1.017 AU)</li>
+  <li>Orbital phase (0-2π)</li>
+</ul>
+<h4>2.3.3 Planetary Event Analysis</h4>
+<p>For each planetary alignment (opposition/conjunction), multiple analysis windows were tested (60-240 days) to find optimal detection windows:</p>
+<ol>
+<li><strong>Window Selection:</strong> Test multiple window sizes (±60, ±90, ±120, ±180, ±240 days)</li>
+<li><strong>Gaussian Pulse Fitting:</strong> Fit Gaussian model to event-locked coherence changes</li>
+<li><strong>Significance Testing:</strong> Amplitude/standard error ratio (σ level)</li>
+<li><strong>Multiple Testing Correction:</strong> Bonferroni and FDR corrections applied</li>
+<li><strong>Mass-Scaled Enhancement:</strong> Enhancement / (Planet Mass / Earth Mass)</li>
+</ol>
+
+<p>The mass-scaled enhancement metric normalizes the observed response by the planet's gravitational influence, allowing empirical assessment of mass-dependence patterns.</p>
+
+<h4>2.3.4 Geophysical Coupling Analysis</h4>
+<p><strong>Chandler Wobble:</strong></p>
+<ul>
+<li>Period search: 420-440 days (2-day increments)</li>
+<li>Method: Sinusoidal curve fitting to EW/NS ratio vs phase</li>
+<li>Phase resolution: 36 bins (10° increments)</li>
+<li>Coverage: 21+ complete cycles (25.3 years / 433 days)</li>
+</ul>
+
+<p><strong>Nutation:</strong></p>
+<ul>
+<li>Tested periods: 18.6 years (main), 1 year (annual), 0.5 years (semiannual)</li>
+<li>Method: Sinusoidal curve fitting to coherence vs nutation phase</li>
+<li>Phase resolution: 12 bins (30° increments)</li>
+</ul>
+<p><strong>Network Coherence:</strong></p>
+<ul>
+  <li>Compute mean field coherence in 90-day windows</li>
+  <li>Analyze collective motion patterns via PCA</li>
+  <li>Quantify phase synchronization index</li>
+</ul>
+<h3>2.4 Statistical Validation</h3>
+<h4>2.4.1 Null Hypothesis Testing</h4>
+<ul>
+  <li><strong>Temporal Shuffle:</strong> Randomize date labels while preserving spatial structure</li>
+  <li><strong>Spatial Shuffle:</strong> Randomize station positions while preserving temporal structure</li>
+  <li><strong>Phase Randomization:</strong> Destroy correlations while preserving power spectra</li>
+</ul>
+<h4>2.4.2 Multiple Comparison Corrections</h4>
+<ul>
+  <li><strong>Bonferroni:</strong> α_corrected = 0.05/N_tests</li>
+  <li><strong>False Discovery Rate:</strong> Benjamini-Hochberg procedure</li>
+  <li><strong>Permutation Testing:</strong> Empirical p-values from 10,000 iterations</li>
+</ul>
+<h4>2.4.3 Cross-Validation</h4>
+<ul>
+  <li><strong>Leave-One-Station-Out (LOSO):</strong> Verify robustness to single station removal</li>
+  <li><strong>Temporal Holdout:</strong> Train on 2000-2020, test on 2021-2025</li>
+  <li><strong>Bootstrap Resampling:</strong> 1,000 iterations for confidence intervals</li>
+</ul>

@@ -1,0 +1,42 @@
+[15:25:34] [INFO] 
+[15:25:34] [INFO] ================================================================================
+[15:25:34] [INFO] TEP GNSS Analysis Package v0.21 (Jaipur) - STEP 1.1: Data Acquisition
+[15:25:34] [INFO] ================================================================================
+[15:25:34] [INFO] 
+[15:25:34] [PROCESS] Building comprehensive station catalogue from authoritative sources
+[15:25:34] [PROCESS] Fetching coordinates from authoritative sources...
+[15:25:34] [PROCESS] Building comprehensive coordinate catalogue...
+[15:25:34] [PROCESS] Fetching IGS network coordinates...
+[15:25:37] [SUCCESS] Retrieved 767 stations from IGS network
+[15:25:37] [PROCESS] Calculating geomagnetic coordinates for all stations...
+[15:25:37] [SUCCESS] Geomagnetic coordinate calculation complete: 767 successful, 0 failed
+[15:25:37] [SUCCESS] Built coordinate catalogue: 767 unique stations
+[15:25:37] [SUCCESS] Stations with valid coordinates: 767/767 (100.0%)
+[15:25:37] [SUCCESS] Geomagnetic coordinates: 767/767 stations (100.0%)
+[15:25:37] [SUCCESS] Station catalogue built: 767 stations saved to step_1_1_station_coords_global.csv
+[15:25:37] [INFO] Coordinate verification summary:
+[15:25:37] [INFO]   Total stations in catalogue: 767
+[15:25:37] [SUCCESS]   Stations with valid coordinates: 767
+[15:25:37] [SUCCESS]   Verified stations for analysis: 767
+[15:25:37] [SUCCESS] Final station catalogue: 767 stations (767 with valid coordinates)
+[15:25:37] [INFO] Existing clock files (CODE only): CODE:912
+[15:25:37] [PROCESS] Generating download tasks...
+[15:25:37] [INFO] Using date filter 2023-01-01 → 2025-06-30 (912 days)
+[15:25:37] [SUCCESS] Tasks generated (CODE only): CODE:912
+[15:25:37] [INFO] 
+[15:25:37] [INFO] ================================================================================
+[15:25:37] [INFO] PARALLEL CLOCK FILE ACQUISITION
+[15:25:37] [INFO] ================================================================================
+[15:25:37] [INFO] 
+[15:25:37] [PROCESS] Processing CODE: 912 files with 14 workers
+[15:25:37] [SUCCESS] CODE: 912 files already exist
+[15:25:37] [SUCCESS] CODE: All files already exist
+[15:25:37] [INFO] ACQUISITION COMPLETE (CODE only)
+[15:25:37] [SUCCESS] Final clock files: CODE:912
+[15:25:37] [SUCCESS] Total time: 0.0 minutes
+[15:25:37] [SUCCESS] Downloaded: 0 files
+[15:25:37] [SUCCESS] Data acquisition completed successfully
+[15:25:37] [INFO] Ready for coordinate validation (Step 1.2)
+[15:25:37] [SUCCESS] Results saved to step_1_1_code_longspan.json
+[15:25:37] [SUCCESS] Detailed logs available in exploratory/step_1_1_code_longspan.log
+[15:25:46] [SUCCESS] Provenance snapshot updated

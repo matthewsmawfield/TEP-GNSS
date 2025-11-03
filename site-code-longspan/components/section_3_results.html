@@ -1,0 +1,438 @@
+<h2>3. Results</h2>
+
+<div style="background-color: rgba(255,255,255,0.9); border: 1px solid #495773; border-radius: 6px; padding: 18px; margin: 18px 0; font-size: 14px;">
+    <p style="margin-top:0; margin-bottom:12px;"><strong>Snapshot of core metrics.</strong> Analysis of 165,198,849 station pairs over 25.3 years (2000-2025) from CODE reveals systematic distance-structured correlations with strong directional dependence and dynamic coupling to Earth's orbital motion:</p>
+    <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr style="background-color: rgba(73,87,115,0.1);">
+                    <th style="padding:8px; border:1px solid #495773; text-align:left;">Observable</th>
+                    <th style="padding:8px; border:1px solid #495773; text-align:left;">Value</th>
+                    <th style="padding:8px; border:1px solid #495773; text-align:left;">Significance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding:8px; border:1px solid #495773;">Anisotropy Strength</td>
+                    <td style="padding:8px; border:1px solid #495773;">1.981 ± 0.23</td>
+                    <td style="padding:8px; border:1px solid #495773;">p < 10⁻¹⁵</td>
+                </tr>
+                <tr style="background-color: rgba(73,87,115,0.03);">
+                    <td style="padding:8px; border:1px solid #495773;">Orbital Velocity Correlation</td>
+                    <td style="padding:8px; border:1px solid #495773;">r = -0.864</td>
+                    <td style="padding:8px; border:1px solid #495773;">p = 4.65 × 10⁻¹¹ (6.6σ)</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #495773;">18.6-Year Nutation Coupling</td>
+                    <td style="padding:8px; border:1px solid #495773;">R² = 0.640</td>
+                    <td style="padding:8px; border:1px solid #495773;">p < 10⁻⁸</td>
+                </tr>
+                <tr style="background-color: rgba(73,87,115,0.03);">
+                    <td style="padding:8px; border:1px solid #495773;">Network Synchronization</td>
+                    <td style="padding:8px; border:1px solid #495773;">Index = 0.582</td>
+                    <td style="padding:8px; border:1px solid #495773;">p < 0.001</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #495773;">Planetary Events (Bonferroni)</td>
+                    <td style="padding:8px; border:1px solid #495773;">34/156 detected</td>
+                    <td style="padding:8px; border:1px solid #495773;">α = 0.0007</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="margin-top:12px;">These headline metrics confirm temporal stability of the multi-center study findings over decadal timescales and enable first detection of long-period geophysical signatures. Detailed analyses follow.</p>
+</div>
+
+<h3>3.1 Spatial Anisotropy Structure</h3>
+<p><strong>Objective</strong>: Establish whether GNSS clock-pair coherence exhibits directional dependence (Claim A).</p>
+<h4>3.1.1 Directional Correlation Lengths</h4>
+<p>Replicating the multi-center study, spatial anisotropy was tested by fitting exponential decay models C(d) = A·exp(-d/λ) + B to station pairs binned by azimuth. Analysis of 165,198,849 station pairs reveals pronounced directional variation in correlation decay lengths:</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+            <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Direction</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">λ (km)</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">R²</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Station Pairs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">North (N)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">2,314</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.742</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Northeast (NE)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">3,147</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.859</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">East (E)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">5,002</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.813</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Southeast (SE)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">6,805</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.873</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">South (S)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">3,549</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.791</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Southwest (SW)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4,327</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.801</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">West (W)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">7,664</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.788</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Northwest (NW)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4,798</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.756</td>
+                <td style="padding: 8px; border: 1px solid #495773;">20,649,856</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="experimental-section" style="background-color: rgba(73, 87, 115, 0.05); border: 2px solid #495773; padding: 20px; margin: 20px 0;">
+    <h4 style="margin-top: 0; color: #220126;">Key Findings</h4>
+    <ul style="line-height: 1.7;">
+        <li><strong>Anisotropy Strength:</strong> 1.981 ± 0.23</li>
+        <li><strong>Coefficient of Variation:</strong> 0.468 (moderate anisotropy)</li>
+        <li><strong>Maximum/Minimum Ratio:</strong> 3.31 (West/North)</li>
+        <li><strong>Mean Correlation Length:</strong> 4,201 ± 1,967 km</li>
+        <li><strong>Statistical Significance:</strong> p < 10⁻¹⁵ (vs isotropic null)</li>
+        <li><strong>E-W/N-S Ratio:</strong> 2.16 (rotation-aligned anisotropy)</li>
+    </ul>
+</div>
+<p><strong>Finding</strong>: Replicating the multi-center study, we again observe EW > NS correlation lengths. The correlation structure exhibits statistically significant anisotropy (strength = 1.981 ± 0.23, p < 10⁻¹⁵ vs isotropic null). Magnitudes are consistent with the multi-center study within uncertainty; the longer record narrows confidence intervals.</p>
+<h3>3.2 Orbital Motion Coupling</h3>
+<p><strong>Objective</strong>: Test whether the spatial anisotropy varies systematically with Earth's orbital kinematics (Claim B).</p>
+<h4>3.2.1 Annual Modulation of Anisotropy</h4>
+
+<p>The multi-center study reported r ≈ -0.57 to -0.79 across centers. Over 25.3 years we find r = -0.864 using the same seasonal phase. The EW/NS anisotropy ratio was computed in 30-day sliding windows and correlated with Earth's orbital velocity.</p>
+
+<p><strong>Primary Correlation:</strong></p>
+<ul>
+  <li><strong>Metric:</strong> EW/NS ratio vs orbital velocity</li>
+  <li><strong>Pearson r:</strong> -0.864 (95% CI: [-0.923, -0.765])</li>
+  <li><strong>Significance:</strong> p = 4.65 × 10⁻¹¹</li>
+  <li><strong>Effective σ:</strong> 6.6</li>
+  <li><strong>Temporal samples:</strong> 34 (30-day windows)</li>
+</ul>
+
+<p><strong>Seasonal Pattern:</strong></p>
+<ul>
+  <li><strong>Perihelion</strong> (January): EW/NS ratio minimum (~0.95)</li>
+  <li><strong>Aphelion</strong> (July): EW/NS ratio maximum (~1.25)</li>
+  <li><strong>Amplitude:</strong> 30% modulation</li>
+  <li><strong>Phase lag:</strong> 12 ± 5 days</li>
+</ul>
+
+<p><strong>Finding:</strong> The spatial anisotropy structure varies predictably with Earth's orbital velocity (r = -0.864, p < 10⁻¹⁰), supporting Claim B. The 30% annual modulation is phase-coherent across all 25 years.</p>
+<h3>3.3 Planetary Event Responses</h3>
+<p><strong>Objective</strong>: Test whether the coherence field responds to transient gravitational configurations (Claim D, secondary evidence).</p>
+<p><strong>Note</strong>: The multi-center study tested a small, predeclared set and found 6/8 Bonferroni-significant responses. Here we reproduce that set in our pipeline and then scale to 156 events with dependence-aware corrections. Physical modeling against gravitational predictors (e.g., tidal potential ∝ M/r³) would enhance mechanistic interpretation of the observed inverse mass-dependence pattern.</p>
+<h4>3.3.1 Detection Statistics</h4>
+<p>An analysis of 156 planetary alignment events (oppositions/conjunctions) was performed using 240-day windows with Gaussian pulse fitting. This yielded 72 statistically significant responses (≥2σ):</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+            <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Planet</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Total Events</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Significant (≥2σ)</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Bonferroni (α=0.0007)</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Detection Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Mercury</td>
+                <td style="padding: 8px; border: 1px solid #495773;">24</td>
+                <td style="padding: 8px; border: 1px solid #495773;">11</td>
+                <td style="padding: 8px; border: 1px solid #495773;">8</td>
+                <td style="padding: 8px; border: 1px solid #495773;">45.8%</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Venus</td>
+                <td style="padding: 8px; border: 1px solid #495773;">19</td>
+                <td style="padding: 8px; border: 1px solid #495773;">9</td>
+                <td style="padding: 8px; border: 1px solid #495773;">5</td>
+                <td style="padding: 8px; border: 1px solid #495773;">47.4%</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Mars</td>
+                <td style="padding: 8px; border: 1px solid #495773;">28</td>
+                <td style="padding: 8px; border: 1px solid #495773;">18</td>
+                <td style="padding: 8px; border: 1px solid #495773;">12</td>
+                <td style="padding: 8px; border: 1px solid #495773;">64.3%</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Jupiter</td>
+                <td style="padding: 8px; border: 1px solid #495773;">26</td>
+                <td style="padding: 8px; border: 1px solid #495773;">12</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">46.2%</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Saturn</td>
+                <td style="padding: 8px; border: 1px solid #495773;">24</td>
+                <td style="padding: 8px; border: 1px solid #495773;">13</td>
+                <td style="padding: 8px; border: 1px solid #495773;">3</td>
+                <td style="padding: 8px; border: 1px solid #495773;">54.2%</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Uranus</td>
+                <td style="padding: 8px; border: 1px solid #495773;">19</td>
+                <td style="padding: 8px; border: 1px solid #495773;">6</td>
+                <td style="padding: 8px; border: 1px solid #495773;">1</td>
+                <td style="padding: 8px; border: 1px solid #495773;">31.6%</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Neptune</td>
+                <td style="padding: 8px; border: 1px solid #495773;">17</td>
+                <td style="padding: 8px; border: 1px solid #495773;">3</td>
+                <td style="padding: 8px; border: 1px solid #495773;">1</td>
+                <td style="padding: 8px; border: 1px solid #495773;">17.6%</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.05); font-weight: bold;">
+                <td style="padding: 8px; border: 1px solid #495773;">Total</td>
+                <td style="padding: 8px; border: 1px solid #495773;">156</td>
+                <td style="padding: 8px; border: 1px solid #495773;">72</td>
+                <td style="padding: 8px; border: 1px solid #495773;">34</td>
+                <td style="padding: 8px; border: 1px solid #495773;">45.9%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="experimental-section" style="background-color: rgba(73, 87, 115, 0.05); border: 2px solid #495773; padding: 20px; margin: 20px 0;">
+    <h4 style="margin-top: 0; color: #220126;">Multiple Testing Survival</h4>
+    <ul style="line-height: 1.7;">
+        <li><strong>Bonferroni</strong> (α = 0.0007): 34/72 (47%) survive ultra-conservative correction</li>
+        <li><strong>False Discovery Rate</strong> (q = 0.05): 72/72 (100%) survive FDR control</li>
+        <li><strong>Permutation Testing</strong> (p < 0.05): 68/72 (94%) survive empirical null</li>
+    </ul>
+</div>
+<h4>3.3.2 Enhancement Factor Analysis</h4>
+<p>The observed amplitude modulations far exceed theoretical predictions:</p>
+
+<div class="experimental-section" style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
+    <h4 style="margin-top: 0; color: #495773;">Enhancement Distribution</h4>
+    <ul style="line-height: 1.7;">
+        <li><strong>Minimum:</strong> 1.03× (Jupiter 2024)</li>
+        <li><strong>Maximum:</strong> 955.1× (Mars 2014)</li>
+        <li><strong>Median:</strong> 90.7×</li>
+        <li><strong>Mean:</strong> 156.8× ± 210.7×</li>
+        <li><strong>Coefficient of Variation:</strong> 1.33</li>
+    </ul>
+</div>
+
+<p><strong>Notable Ultra-High Enhancements:</strong></p>
+<div style="overflow-x: auto; margin: 20px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+            <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Rank</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Event</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Enhancement Factor</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Significance (σ)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">1</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Mars 2014</td>
+                <td style="padding: 8px; border: 1px solid #495773;">955.1×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">5.14σ</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">2</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Saturn 2011</td>
+                <td style="padding: 8px; border: 1px solid #495773;">526.3×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">5.56σ</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">3</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Mercury 2015</td>
+                <td style="padding: 8px; border: 1px solid #495773;">487.2×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">6.99σ</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Mars 2007</td>
+                <td style="padding: 8px; border: 1px solid #495773;">440.8×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">1.95σ</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">5</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Mercury 2000</td>
+                <td style="padding: 8px; border: 1px solid #495773;">392.3×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">2.47σ</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">6</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Venus 2010</td>
+                <td style="padding: 8px; border: 1px solid #495773;">234.5×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4.21σ</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">7</td>
+                <td style="padding: 8px; border: 1px solid #495773;">Mars 2018</td>
+                <td style="padding: 8px; border: 1px solid #495773;">223.0×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">3.36σ</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p>These enhancement factors cannot be explained by:
+- Gravitational potential changes (expected: 10⁻⁹ - 10⁻⁷)
+- Tidal forces (expected: 10⁻¹¹ - 10⁻⁹)
+- Magnetic field perturbations (expected: < 10⁻¹²)</p>
+<h4>3.3.3 Mass-Scaled Enhancement Analysis</h4>
+<p><strong>Caveat</strong>: This analysis is exploratory and lacks proper control against physical gravitational predictors. A rigorous test would require modeling against tidal potential (∝ M/r³) or similar physically grounded metrics.</p>
+<p>To assess empirical mass-dependence, mass-scaled enhancement factors were computed by dividing the observed enhancement by the planetary mass ratio (relative to Earth):</p>
+<pre><code>Mass-Scaled Enhancement = Enhancement Factor / Planet Mass Ratio</code></pre>
+<p><strong>Observed pattern</strong> (mean mass-scaled enhancement for significant detections):</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+            <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Planet</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Mass Ratio (vs Earth)</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Mean Enhancement</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Mass-Scaled Enhancement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Mercury</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.055</td>
+                <td style="padding: 8px; border: 1px solid #495773;">243.8×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4,456×</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Venus</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.815</td>
+                <td style="padding: 8px; border: 1px solid #495773;">142.3×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">174.6×</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Mars</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.107</td>
+                <td style="padding: 8px; border: 1px solid #495773;">231.9×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">2,167×</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Jupiter</td>
+                <td style="padding: 8px; border: 1px solid #495773;">317.8</td>
+                <td style="padding: 8px; border: 1px solid #495773;">6.7×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.021×</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Saturn</td>
+                <td style="padding: 8px; border: 1px solid #495773;">95.2</td>
+                <td style="padding: 8px; border: 1px solid #495773;">118.4×</td>
+                <td style="padding: 8px; border: 1px solid #495773;">1.24×</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p><strong>Observation</strong>: Smaller planets show higher per-unit-mass responses. This pattern is inconsistent with simple mass-proportional gravitational coupling, but requires re-analysis with proper controls (tidal potential predictors, distance normalization, multiple comparison corrections across all solar system bodies) before mechanistic conclusions can be drawn. See Discussion §4.3 for interpretation.</p>
+<h3>3.4 Geophysical Couplings</h3>
+<p><strong>Objective</strong>: Test whether the coherence field couples to Earth's rotational dynamics (Claim E).</p>
+<p><strong>Note</strong>: Long-period components were out of reach in the multi-center study; the semiannual and 18.6-year tests here are therefore [NEW].</p>
+<h4>3.4.1 Nutation Signatures</h4>
+<p>Harmonic regression of the daily coherence time series was performed against known nutation periods. Results show coupling to Earth's rotational dynamics:</p>
+
+<div style="overflow-x: auto; margin: 20px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+            <tr style="background-color: rgba(73, 87, 115, 0.1);">
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Nutation Component</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Period</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">R²</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">p-value</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Amplitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 8px; border: 1px solid #495773;">Semiannual</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.5 years (182.6 days)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.902</td>
+                <td style="padding: 8px; border: 1px solid #495773;">< 10⁻²⁰</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.0142 ± 0.0008</td>
+            </tr>
+            <tr style="background-color: rgba(73, 87, 115, 0.03);">
+                <td style="padding: 8px; border: 1px solid #495773;">Main Nutation (Lunar)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">18.6 years (6,798 days)</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.640</td>
+                <td style="padding: 8px; border: 1px solid #495773;">< 10⁻⁸</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.0089 ± 0.0012</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p><strong>Finding</strong>: Strong coupling detected to both semiannual (R² = 0.902, p < 10⁻²⁰) and 18.6-year lunar nutation cycles (R² = 0.640, p < 10⁻⁸), supporting Claim E. The semiannual component explains 90.2% of variance in the filtered coherence time series.</p>
+<h4>3.4.2 Chandler Wobble</h4>
+<p>Coupling to the ~14-month Chandler wobble was tested using Lomb-Scargle periodogram analysis:</p>
+<ul>
+  <li><strong>Period:</strong> 436 days (14.3 months, consistent with known wobble)</li>
+  <li><strong>R²:</strong> 0.106 (below significance threshold of 0.15)</li>
+  <li><strong>Amplitude:</strong> 0.0023 ± 0.0008</li>
+  <li><strong>Complete cycles observed:</strong> 21.23</li>
+  <li><strong>Phase stability:</strong> 0.72 (moderate coherence)</li>
+</ul>
+<p><strong>Finding</strong>: Borderline detection (R² = 0.106 < 0.15 threshold). The signal shows physically consistent period and phase stability across 21 cycles but does not meet strict significance criteria. This represents suggestive but not conclusive evidence.</p>
+<h3>3.5 Network-Wide Phenomena</h3>
+<p><strong>Objective</strong>: Test whether the phenomenon exhibits global coordination (Claim F).</p>
+<h4>3.5.1 Global Coherence</h4>
+<p>Network-wide phase synchronization was computed across 104 non-overlapping 90-day windows:</p>
+<ul>
+  <li><b>Temporal Coverage:</b> 9,221 days (2000-2025)</li>
+  <li><b>Temporal Windows Analyzed:</b> 104 (90-day)</li>
+  <li><b>Dominant State:</b> Constructive interference (87% of windows)</li>
+  <li><b>Phase Synchronization Index:</b> 0.582</li>
+  <li><b>Collective Motion Magnitude:</b> 0.65 ± 0.08</li>
+  <li><b>Leave-one-station-out stability:</b> Effect persists with any single station removed</li>
+</ul>
+<p><strong>Finding</strong>: The network exhibits globally coordinated behavior (synchronization index = 0.582, p < 0.001 vs spatially shuffled null), supporting Claim F. This coordination is inconsistent with independent local effects.</p>
+
+<div style="margin: 30px 0; text-align: center;">
+  <img src="figures/step_2_2_longspan_code_25year_timeseries.png" alt="25-Year Temporal Evolution of Global Coherence" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 10px; background: white;">
+  <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">
+    <strong>Figure 3.5.1:</strong> 25-year temporal evolution of network-wide coherence (2000-2025). Daily mean coherence values (gray) with 90-day smoothing (blue) show sustained global coordination across the entire dataset. Red markers indicate major planetary alignment events. The persistent baseline coherence and event-associated modulations demonstrate temporal stability of the phenomenon over decadal scales.
+  </p>
+</div>
+
+<h4>3.5.2 Continuous Planetary Correlation</h4>
+<p>A test for sustained correlation between daily global coherence and a composite planetary configuration metric was conducted:</p>
+<ul>
+  <li><strong>Correlation:</strong> r = -0.0994</li>
+  <li><strong>Significance:</strong> p = 0.0308 (autocorrelation-corrected)</li>
+  <li><strong>Optimal smoothing:</strong> 240 days</li>
+  <li><strong>Temporal Coverage:</strong> 9,221 days (2000-2025)</li>
+  <li><strong>Effect size:</strong> Cohen's d = 0.21 (small but significant)</li>
+</ul>
+<p><strong>Finding</strong>: Weak but statistically significant continuous correlation detected (r = -0.099, p = 0.031 after autocorrelation correction), providing preliminary support for Claim D. This suggests gravitational influence extends beyond discrete alignment events, though the effect size is small and requires replication with physically grounded predictors.</p>

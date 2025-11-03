@@ -1,0 +1,1107 @@
+[00:44:06] [INFO] 
+[00:44:06] [INFO] ================================================================================
+[00:44:06] [INFO] TEP GNSS Analysis Package v0.21 (Jaipur) - STEP 2.2: Geospatial Temporal Analysis
+[00:44:06] [INFO] ================================================================================
+[00:44:06] [INFO] 
+[00:44:06] [INFO] Memory usage: 8.7/24.0 GB (84.9%)
+[00:44:06] [INFO] 
+============================================================
+[00:44:06] [INFO] 
+[00:44:06] [INFO] ================================================================================
+[00:44:06] [INFO] PROCESSING CODE - Geospatial Temporal Analysis
+[00:44:06] [INFO] ================================================================================
+[00:44:06] [INFO] 
+[00:44:06] [INFO] ============================================================
+[00:44:06] [INFO] Starting geospatial temporal analysis for CODE
+[00:44:06] [INFO] ============================================================
+[00:44:06] [INFO] MULTI-SCALE TEMPORAL WINDOW STRATEGY:
+[00:44:06] [INFO]   Temporal Orbital Tracking: 30-day windows (seasonal signal + noise reduction)
+[00:44:06] [INFO]   Mesh Dance Analysis: OPTIMIZED (90d coherence + 30d oscillation/spiral)
+[00:44:06] [INFO]   Planetary Oppositions: 240-day windows (optimal coupling timescale)
+[00:44:06] [INFO]   Chandler Wobble: Full 433-day cycle (period-matched analysis)
+[00:44:06] [INFO] 
+[00:44:06] [INFO] Rationale: Each analysis uses windows matched to its characteristic physical timescale
+[00:44:06] [INFO] Based on empirical analysis showing optimal coupling at 240 days (Savitzky-Golay)
+[00:44:06] [INFO] ============================================================
+[00:44:06] [PROCESS] Loading complete geospatial dataset from Step 2.1 for CODE...
+[00:44:06] [INFO] Loading from /Users/matthewsmawfield/www/TEP-GNSS/data/processed/exploratory/step_2_1_geospatial_code.csv
+[00:44:06] [INFO] Using chunked processing (file: 21.1 GB, available: 3.6 GB)
+[00:44:06] [INFO] Large file detected (21.1GB) - using aggressive memory management
+[00:44:06] [INFO] This will take longer but prevent memory crashes
+[00:44:06] [PROCESS] Reading CSV file in chunks...
+[00:44:07] [PROCESS] Processing chunk 1... (0 rows processed)
+[00:44:07] [INFO] Memory usage: 8.6/24.0 GB (84.6%)
+[00:44:07] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[00:44:10] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:13] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:16] [PROCESS] Processing chunk 11... (3,000,000 rows processed)
+[00:44:16] [INFO] Memory usage: 8.7/24.0 GB (84.6%)
+[00:44:16] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:44:17] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:22] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:26] [PROCESS] Processing chunk 21... (6,000,000 rows processed)
+[00:44:26] [INFO] Memory usage: 8.7/24.0 GB (84.6%)
+[00:44:26] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:44:26] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:29] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:32] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:34] [PROCESS] Processing chunk 31... (9,000,000 rows processed)
+[00:44:34] [INFO] Memory usage: 8.6/24.0 GB (84.5%)
+[00:44:34] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[00:44:35] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:39] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:45] [PROCESS] Processing chunk 41... (12,000,000 rows processed)
+[00:44:45] [INFO] Memory usage: 8.7/24.0 GB (84.7%)
+[00:44:45] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:44:45] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:50] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:54] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:44:58] [PROCESS] Processing chunk 51... (15,000,000 rows processed)
+[00:44:58] [INFO] Memory usage: 8.7/24.0 GB (84.3%)
+[00:44:58] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:45:00] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:08] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:19] [PROCESS] Processing chunk 61... (18,000,000 rows processed)
+[00:45:19] [INFO] Memory usage: 8.6/24.0 GB (84.8%)
+[00:45:19] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[00:45:19] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:27] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:31] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:33] [PROCESS] Processing chunk 71... (21,000,000 rows processed)
+[00:45:33] [INFO] Memory usage: 8.8/24.0 GB (84.0%)
+[00:45:33] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[00:45:35] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:40] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:45:51] [PROCESS] Processing chunk 81... (24,000,000 rows processed)
+[00:45:51] [INFO] Memory usage: 8.8/24.0 GB (85.0%)
+[00:45:51] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[00:45:51] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:46:11] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:46:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:46:38] [PROCESS] Processing chunk 91... (27,000,000 rows processed)
+[00:46:38] [INFO] Memory usage: 8.5/24.0 GB (82.3%)
+[00:46:38] [WARNING] WARNING: Memory usage (8.5 GB) exceeds limit (8.0 GB)
+[00:46:39] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:46:44] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:46:56] [PROCESS] Processing chunk 101... (30,000,000 rows processed)
+[00:46:56] [INFO] Memory usage: 9.0/24.0 GB (81.7%)
+[00:46:56] [WARNING] WARNING: Memory usage (9.0 GB) exceeds limit (8.0 GB)
+[00:46:56] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:47:06] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:47:14] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:47:20] [PROCESS] Processing chunk 111... (33,000,000 rows processed)
+[00:47:20] [INFO] Memory usage: 8.4/24.0 GB (84.5%)
+[00:47:20] [WARNING] WARNING: Memory usage (8.4 GB) exceeds limit (8.0 GB)
+[00:47:21] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:47:38] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:47:59] [PROCESS] Processing chunk 121... (36,000,000 rows processed)
+[00:47:59] [INFO] Memory usage: 8.6/24.0 GB (84.7%)
+[00:47:59] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[00:47:59] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:48:12] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:48:18] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:48:45] [PROCESS] Processing chunk 131... (39,000,000 rows processed)
+[00:48:45] [INFO] Memory usage: 8.7/24.0 GB (84.9%)
+[00:48:45] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:48:46] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:49:14] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:49:25] [PROCESS] Processing chunk 141... (42,000,000 rows processed)
+[00:49:25] [INFO] Memory usage: 8.8/24.0 GB (84.6%)
+[00:49:25] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[00:49:25] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:49:45] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:50:08] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:50:22] [PROCESS] Processing chunk 151... (45,000,000 rows processed)
+[00:50:22] [INFO] Memory usage: 8.7/24.0 GB (82.8%)
+[00:50:22] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:50:23] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:50:52] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:51:32] [PROCESS] Processing chunk 161... (48,000,000 rows processed)
+[00:51:32] [INFO] Memory usage: 9.5/24.0 GB (81.0%)
+[00:51:32] [WARNING] WARNING: Memory usage (9.5 GB) exceeds limit (8.0 GB)
+[00:51:32] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:51:54] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:52:14] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:52:24] [PROCESS] Processing chunk 171... (51,000,000 rows processed)
+[00:52:24] [INFO] Memory usage: 8.9/24.0 GB (76.4%)
+[00:52:24] [WARNING] WARNING: Memory usage (8.9 GB) exceeds limit (8.0 GB)
+[00:52:25] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:52:30] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:52:37] [PROCESS] Processing chunk 181... (54,000,000 rows processed)
+[00:52:37] [INFO] Memory usage: 8.3/24.0 GB (84.5%)
+[00:52:37] [WARNING] WARNING: Memory usage (8.3 GB) exceeds limit (8.0 GB)
+[00:52:37] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:53:09] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:53:52] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:22] [PROCESS] Processing chunk 191... (57,000,000 rows processed)
+[00:54:22] [INFO] Memory usage: 9.0/24.0 GB (76.9%)
+[00:54:22] [WARNING] WARNING: Memory usage (9.0 GB) exceeds limit (8.0 GB)
+[00:54:23] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:29] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:34] [PROCESS] Processing chunk 201... (60,000,000 rows processed)
+[00:54:34] [INFO] Memory usage: 7.9/24.0 GB (76.6%)
+[00:54:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:39] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:44] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:49] [PROCESS] Processing chunk 211... (63,000,000 rows processed)
+[00:54:49] [INFO] Memory usage: 8.3/24.0 GB (75.3%)
+[00:54:49] [WARNING] WARNING: Memory usage (8.3 GB) exceeds limit (8.0 GB)
+[00:54:50] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:54:55] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:01] [PROCESS] Processing chunk 221... (66,000,000 rows processed)
+[00:55:01] [INFO] Memory usage: 9.8/24.0 GB (77.6%)
+[00:55:01] [WARNING] WARNING: Memory usage (9.8 GB) exceeds limit (8.0 GB)
+[00:55:01] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:07] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:13] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:19] [PROCESS] Processing chunk 231... (69,000,000 rows processed)
+[00:55:19] [INFO] Memory usage: 8.7/24.0 GB (72.4%)
+[00:55:19] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[00:55:20] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:26] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:32] [PROCESS] Processing chunk 241... (72,000,000 rows processed)
+[00:55:32] [INFO] Memory usage: 10.1/24.0 GB (74.9%)
+[00:55:32] [WARNING] WARNING: Memory usage (10.1 GB) exceeds limit (8.0 GB)
+[00:55:32] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:37] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:44] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:49] [PROCESS] Processing chunk 251... (75,000,000 rows processed)
+[00:55:49] [INFO] Memory usage: 7.4/24.0 GB (72.7%)
+[00:55:50] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:55:56] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:56:02] [PROCESS] Processing chunk 261... (78,000,000 rows processed)
+[00:56:02] [INFO] Memory usage: 7.8/24.0 GB (74.7%)
+[00:56:02] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:56:08] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:56:17] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:56:50] [PROCESS] Processing chunk 271... (81,000,000 rows processed)
+[00:56:50] [INFO] Memory usage: 9.5/24.0 GB (79.0%)
+[00:56:50] [WARNING] WARNING: Memory usage (9.5 GB) exceeds limit (8.0 GB)
+[00:56:51] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:57:29] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:57:39] [PROCESS] Processing chunk 281... (84,000,000 rows processed)
+[00:57:39] [INFO] Memory usage: 8.0/24.0 GB (74.5%)
+[00:57:39] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:57:51] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:58:31] [PROCESS] Consolidating 5 chunks to manage memory...
+[00:59:28] [PROCESS] Processing chunk 291... (87,000,000 rows processed)
+[00:59:28] [INFO] Memory usage: 8.3/24.0 GB (84.0%)
+[00:59:28] [WARNING] WARNING: Memory usage (8.3 GB) exceeds limit (8.0 GB)
+[00:59:29] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:00:42] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:02:00] [PROCESS] Processing chunk 301... (90,000,000 rows processed)
+[01:02:00] [INFO] Memory usage: 8.3/24.0 GB (84.3%)
+[01:02:00] [WARNING] WARNING: Memory usage (8.3 GB) exceeds limit (8.0 GB)
+[01:02:00] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:03:05] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:04:12] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:05:19] [PROCESS] Processing chunk 311... (93,000,000 rows processed)
+[01:05:19] [INFO] Memory usage: 8.4/24.0 GB (84.0%)
+[01:05:19] [WARNING] WARNING: Memory usage (8.4 GB) exceeds limit (8.0 GB)
+[01:05:20] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:06:24] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:07:51] [PROCESS] Processing chunk 321... (96,000,000 rows processed)
+[01:07:51] [INFO] Memory usage: 8.4/24.0 GB (84.4%)
+[01:07:51] [WARNING] WARNING: Memory usage (8.4 GB) exceeds limit (8.0 GB)
+[01:07:51] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:09:07] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:10:20] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:11:13] [PROCESS] Processing chunk 331... (99,000,000 rows processed)
+[01:11:13] [INFO] Memory usage: 9.8/24.0 GB (75.1%)
+[01:11:13] [WARNING] WARNING: Memory usage (9.8 GB) exceeds limit (8.0 GB)
+[01:11:14] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:12:01] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:12:58] [PROCESS] Processing chunk 341... (102,000,000 rows processed)
+[01:12:58] [INFO] Memory usage: 8.4/24.0 GB (82.7%)
+[01:12:58] [WARNING] WARNING: Memory usage (8.4 GB) exceeds limit (8.0 GB)
+[01:12:58] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:13:36] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:13:48] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:13:54] [PROCESS] Processing chunk 351... (105,000,000 rows processed)
+[01:13:54] [INFO] Memory usage: 5.6/24.0 GB (63.0%)
+[01:13:55] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:02] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:11] [PROCESS] Processing chunk 361... (108,000,000 rows processed)
+[01:14:11] [INFO] Memory usage: 6.4/24.0 GB (64.3%)
+[01:14:11] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:20] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:27] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:33] [PROCESS] Processing chunk 371... (111,000,000 rows processed)
+[01:14:33] [INFO] Memory usage: 6.1/24.0 GB (62.5%)
+[01:14:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:41] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:14:50] [PROCESS] Processing chunk 381... (114,000,000 rows processed)
+[01:14:50] [INFO] Memory usage: 6.2/24.0 GB (61.6%)
+[01:14:50] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:15:03] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:15:23] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:15:42] [PROCESS] Processing chunk 391... (117,000,000 rows processed)
+[01:15:42] [INFO] Memory usage: 6.5/24.0 GB (59.3%)
+[01:15:43] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:16:01] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:16:17] [PROCESS] Processing chunk 401... (120,000,000 rows processed)
+[01:16:17] [INFO] Memory usage: 7.0/24.0 GB (61.7%)
+[01:16:17] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:16:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:16:55] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:17:23] [PROCESS] Processing chunk 411... (123,000,000 rows processed)
+[01:17:23] [INFO] Memory usage: 7.4/24.0 GB (69.9%)
+[01:17:24] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:18:08] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:18:34] [PROCESS] Processing chunk 421... (126,000,000 rows processed)
+[01:18:34] [INFO] Memory usage: 7.0/24.0 GB (59.9%)
+[01:18:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:19:06] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:19:56] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:20:37] [PROCESS] Processing chunk 431... (129,000,000 rows processed)
+[01:20:37] [INFO] Memory usage: 6.5/24.0 GB (58.7%)
+[01:20:38] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:21:09] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:21:58] [PROCESS] Processing chunk 441... (132,000,000 rows processed)
+[01:21:58] [INFO] Memory usage: 7.0/24.0 GB (68.0%)
+[01:21:58] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:22:51] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:23:45] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:24:33] [PROCESS] Processing chunk 451... (135,000,000 rows processed)
+[01:24:33] [INFO] Memory usage: 7.0/24.0 GB (62.7%)
+[01:24:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:25:14] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:26:01] [PROCESS] Processing chunk 461... (138,000,000 rows processed)
+[01:26:01] [INFO] Memory usage: 6.4/24.0 GB (64.8%)
+[01:26:01] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:26:55] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:27:43] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:28:31] [PROCESS] Processing chunk 471... (141,000,000 rows processed)
+[01:28:31] [INFO] Memory usage: 7.0/24.0 GB (64.4%)
+[01:28:32] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:29:21] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:30:12] [PROCESS] Processing chunk 481... (144,000,000 rows processed)
+[01:30:12] [INFO] Memory usage: 7.8/24.0 GB (69.4%)
+[01:30:12] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:31:08] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:32:02] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:32:53] [PROCESS] Processing chunk 491... (147,000,000 rows processed)
+[01:32:53] [INFO] Memory usage: 7.2/24.0 GB (64.0%)
+[01:32:54] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:33:48] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:34:47] [PROCESS] Processing chunk 501... (150,000,000 rows processed)
+[01:34:47] [INFO] Memory usage: 9.2/24.0 GB (74.1%)
+[01:34:47] [WARNING] WARNING: Memory usage (9.2 GB) exceeds limit (8.0 GB)
+[01:34:47] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:35:42] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:36:49] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:37:42] [PROCESS] Processing chunk 511... (153,000,000 rows processed)
+[01:37:42] [INFO] Memory usage: 9.0/24.0 GB (74.3%)
+[01:37:42] [WARNING] WARNING: Memory usage (9.0 GB) exceeds limit (8.0 GB)
+[01:37:43] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:39:06] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:41:34] [PROCESS] Processing chunk 521... (156,000,000 rows processed)
+[01:41:34] [INFO] Memory usage: 8.6/24.0 GB (84.5%)
+[01:41:34] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[01:41:34] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:44:07] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:47:24] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:50:15] [PROCESS] Processing chunk 531... (159,000,000 rows processed)
+[01:50:15] [INFO] Memory usage: 8.8/24.0 GB (84.8%)
+[01:50:15] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[01:50:16] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:53:16] [PROCESS] Consolidating 5 chunks to manage memory...
+[01:56:44] [PROCESS] Processing chunk 541... (162,000,000 rows processed)
+[01:56:44] [INFO] Memory usage: 8.7/24.0 GB (84.7%)
+[01:56:44] [WARNING] WARNING: Memory usage (8.7 GB) exceeds limit (8.0 GB)
+[01:56:44] [PROCESS] Consolidating 5 chunks to manage memory...
+[02:00:19] [PROCESS] Consolidating 5 chunks to manage memory...
+[02:03:31] [PROCESS] Consolidating 5 chunks to manage memory...
+[02:05:38] [PROCESS] Processing chunk 551... (165,000,000 rows processed)
+[02:05:38] [INFO] Memory usage: 8.5/24.0 GB (82.6%)
+[02:05:38] [WARNING] WARNING: Memory usage (8.5 GB) exceeds limit (8.0 GB)
+[02:05:38] [PROCESS] Concatenating final chunks...
+[02:07:07] [SUCCESS] CSV loaded successfully: 165,198,849 rows
+[02:07:07] [INFO] Data quality metrics:
+[02:07:07] [INFO]   Coherence range: [-1.000000, 1.000000]
+[02:07:08] [INFO]   Coherence mean: 0.007924 ± 0.716238
+[02:07:10] [INFO]   Distance range: [1.8, 19946.2] km
+[02:07:11] [INFO]   Distance mean: 9080.6 ± 4669.1 km
+[02:07:39] [SUCCESS] Geospatial dataset loaded: 165,198,849 pairs, 30.83 GB
+[02:07:39] [SUCCESS] Azimuth already computed in Step 2.1 - no redundant calculation needed
+[02:07:40] [PROCESS] Verifying required columns are present...
+[02:07:40] [SUCCESS] All required columns present: ['azimuth', 'delta_longitude', 'delta_local_time']
+[02:07:40] [INFO] Available columns: ['date', 'station_i', 'station_j', 'dist_km', 'plateau_phase', 'station1_lat', 'station1_lon', 'station2_lat', 'station2_lon', 'azimuth', 'delta_longitude', 'delta_local_time', 'coherence']
+[02:07:40] [INFO] Memory usage: 8.3/24.0 GB (84.4%)
+[02:07:40] [WARNING] WARNING: Memory usage (8.3 GB) exceeds limit (8.0 GB)
+[02:08:08] [PROCESS] Starting enhanced anisotropy analysis (chunked processing)...
+[02:08:08] [INFO] Analyzing 165,198,849 pairs with coordinate information
+[02:08:08] [INFO] Processing data in chunks of 5,000,000 rows...
+[02:08:08] [PROCESS] Processing chunk 1/34 (rows 0 to 5,000,000)...
+[02:08:08] [INFO] Memory usage: 10.0/24.0 GB (76.5%)
+[02:08:08] [WARNING] WARNING: Memory usage (10.0 GB) exceeds limit (8.0 GB)
+[02:08:53] [PROCESS] Processing chunk 6/34 (rows 25,000,000 to 30,000,000)...
+[02:08:53] [INFO] Memory usage: 8.2/24.0 GB (83.5%)
+[02:08:53] [WARNING] WARNING: Memory usage (8.2 GB) exceeds limit (8.0 GB)
+[02:09:48] [PROCESS] Processing chunk 11/34 (rows 50,000,000 to 55,000,000)...
+[02:09:48] [INFO] Memory usage: 8.6/24.0 GB (84.5%)
+[02:09:48] [WARNING] WARNING: Memory usage (8.6 GB) exceeds limit (8.0 GB)
+[02:10:42] [PROCESS] Processing chunk 16/34 (rows 75,000,000 to 80,000,000)...
+[02:10:42] [INFO] Memory usage: 8.8/24.0 GB (84.2%)
+[02:10:42] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[02:11:39] [PROCESS] Processing chunk 21/34 (rows 100,000,000 to 105,000,000)...
+[02:11:39] [INFO] Memory usage: 8.8/24.0 GB (84.2%)
+[02:11:39] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[02:12:53] [PROCESS] Processing chunk 26/34 (rows 125,000,000 to 130,000,000)...
+[02:12:53] [INFO] Memory usage: 8.8/24.0 GB (84.3%)
+[02:12:53] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[02:14:01] [PROCESS] Processing chunk 31/34 (rows 150,000,000 to 155,000,000)...
+[02:14:01] [INFO] Memory usage: 8.8/24.0 GB (84.5%)
+[02:14:01] [WARNING] WARNING: Memory usage (8.8 GB) exceeds limit (8.0 GB)
+[02:14:40] [SUCCESS] Chunk processing complete. Computing sector statistics from binned data...
+[02:14:40] [INFO] Analyzing 8 directional sectors with 40 distance bins
+[02:14:40] [PROCESS] Processing sector 1/8: N (27,794,141 pairs)
+[02:14:40] [SUCCESS]   N fit successful: λ = 2313.7 km, R² = 0.562
+[02:14:40] [PROCESS] Processing sector 2/8: NE (35,187,549 pairs)
+[02:14:40] [SUCCESS]   NE fit successful: λ = 2540.2 km, R² = 0.859
+[02:14:40] [PROCESS] Processing sector 3/8: E (16,069,811 pairs)
+[02:14:40] [SUCCESS]   E fit successful: λ = 3206.5 km, R² = 0.753
+[02:14:40] [PROCESS] Processing sector 4/8: SE (11,973,015 pairs)
+[02:14:40] [SUCCESS]   SE fit successful: λ = 6805.3 km, R² = 0.873
+[02:14:40] [PROCESS] Processing sector 5/8: S (12,247,934 pairs)
+[02:14:40] [SUCCESS]   S fit successful: λ = 2718.0 km, R² = 0.729
+[02:14:40] [PROCESS] Processing sector 6/8: SW (13,802,590 pairs)
+[02:14:40] [SUCCESS]   SW fit successful: λ = 5331.5 km, R² = 0.604
+[02:14:40] [PROCESS] Processing sector 7/8: W (14,284,646 pairs)
+[02:14:40] [SUCCESS]   W fit successful: λ = 7664.3 km, R² = 0.746
+[02:14:40] [PROCESS] Processing sector 8/8: NW (33,839,163 pairs)
+[02:14:40] [SUCCESS]   NW fit successful: λ = 3028.3 km, R² = 0.546
+[02:14:40] [PROCESS] Computing anisotropy statistics from 8 successful sector fits...
+[02:14:40] [SUCCESS] Enhanced Anisotropy complete: 8 sectors, CV = 0.468
+[02:14:40] [PROCESS] Starting Temporal Orbital Tracking Analysis...
+[02:14:40] [PROCESS] Testing for seasonal orbital motion signatures in GPS timing correlations
+[02:15:03] [INFO] Temporal range: 2000-02-27 00:00:00 to 2025-06-30 00:00:00
+[02:15:03] [INFO] Day of year range: 1 to 366
+[02:15:18] [SUCCESS] Using pre-computed azimuths from Step 2.1
+[02:16:20] [INFO] Using chunked aggregation for temporal orbital tracking...
+[02:16:20] [PROCESS] Tracking E-W/N-S ratio across 34 temporal samples (each using 30-day windows)...
+[02:16:20] [INFO] Window strategy: Each sample uses ±15 days (30-day total) to balance seasonal signal with noise reduction
+[02:29:30] [SUCCESS] Robust correlation confirmed: E-W/N-S anisotropy correlates with Earth's orbital motion (r=-0.864, p=0.0000)
+[02:29:30] [INFO] Results indicate GPS timing correlations may reflect Earth's orbital dynamics
+[02:29:30] [SUCCESS] Temporal orbital tracking complete: 34 samples analyzed
+[02:29:30] [PROCESS] Starting Chandler Wobble Analysis (14-month period)...
+[02:29:43] [INFO] Temporal coverage: 9256 days (21.78 Chandler cycles)
+[02:29:43] [INFO] Testing 11 candidate Chandler periods: 420-440 days
+[02:51:39] [INFO] Optimal Chandler period from scan: 436 days (preliminary R²=0.0000)
+[02:54:23] [INFO] No significant Chandler wobble signature detected
+[02:54:23] [SUCCESS] CHANDLER WOBBLE ANALYSIS RESULTS:
+[02:54:23] [INFO]   Optimal Period: 436 days (14.32 months)
+[02:54:23] [INFO]   Temporal Coverage: 9256 days (21.23 cycles)
+[02:54:23] [INFO]   Phase Bins Analyzed: 36/36 (resolution: 10° per bin)
+[02:54:23] [INFO]   Chandler Signature: R² = 0.106 (weak signal)
+[02:54:23] [SUCCESS] Chandler wobble analysis complete: 36 phase bins analyzed
+[02:54:23] [PROCESS] Starting 3D Spherical Harmonic Analysis...
+[02:54:23] [SUCCESS] Using pre-computed azimuths from Step 2.1
+[02:54:23] [INFO] Using chunked aggregation for 3D spherical harmonic analysis...
+[02:56:27] [SUCCESS] Accumulated statistics for 16×8 spherical bins
+[02:56:27] [SUCCESS] Strong 3D anisotropy detected: strength = 1.981
+[02:56:27] [SUCCESS] 3D SPHERICAL HARMONIC ANALYSIS RESULTS:
+[02:56:27] [INFO]   3D Anisotropy Strength: 1.981
+[02:56:27] [INFO]   Spherical Bins Analyzed: 16
+[02:56:27] [INFO]   Azimuth Resolution: 16 bins (22.5° each)
+[02:56:27] [INFO]   Elevation Resolution: 8 bins (0-90°)
+[02:56:27] [SUCCESS]   Strong 3D Structure: 1.981 (DETECTED)
+[02:56:27] [SUCCESS] 3D spherical harmonic analysis complete: 16 bins analyzed
+[02:56:27] [PROCESS] Starting Mesh Dance Analysis - Network Coherence Assessment
+[02:56:27] [PROCESS] Analyzing coherent motion patterns of GPS station network...
+[02:56:31] [INFO] Using chunked aggregation for mesh dance analysis...
+[02:56:31] [INFO] Analyzing mesh coherence patterns...
+[02:56:31] [INFO] Using OPTIMIZED windows: 90d for coherence (10 samples), 30d for oscillation/spiral
+[02:58:18] [SUCCESS] Accumulated statistics for 104 coherence windows and 309 oscillation windows
+[02:58:18] [INFO] Using 309 high-resolution 30-day windows for spiral/oscillation detection
+[02:58:18] [INFO] Analyzing spiral dynamics of mesh motion...
+[02:58:18] [INFO] Analyzing collective mesh oscillation patterns...
+[02:58:18] [INFO] Oscillation analysis using 309 samples (window size: 30d)
+[02:58:18] [INFO] Analyzing spacetime coupling signatures...
+[02:58:18] [INFO] Computing network coherence classification...
+[02:58:18] [SUCCESS] MESH DANCE ANALYSIS RESULTS:
+[02:58:18] [INFO]   Network Coherence Score: 0.555
+[02:58:18] [INFO]   Classification: MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns
+[02:58:18] [INFO]   Time Windows: 104
+[02:58:18] [INFO]   Temporal Span: 9270 days
+[02:58:18] [INFO]   Best Collective Oscillation: 365.2 day period
+[02:58:18] [INFO]      Oscillation R²: 0.021
+[02:58:18] [INFO]      Significant Oscillations: 1
+[02:58:18] [SUCCESS] MESH DANCE ANALYSIS COMPLETE: MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns
+[02:58:18] [PROCESS] Starting Jupiter Opposition Pulse Analysis...
+[02:58:21] [INFO] Data coverage: 2000-02-27 to 2025-06-30 (9256 days)
+[02:58:21] [INFO] Testing 5 window sizes: [60, 90, 120, 180, 240] days
+[02:58:21] [INFO] Analyzing with ±60-day window (120-day total)...
+[02:58:58] [INFO]   Window ±60d: 3/23 significant detections
+[02:58:58] [INFO] Analyzing with ±90-day window (180-day total)...
+[02:59:42] [INFO]   Window ±90d: 5/23 significant detections
+[02:59:42] [INFO] Analyzing with ±120-day window (240-day total)...
+[03:00:44] [INFO]   Window ±120d: 6/23 significant detections
+[03:00:44] [INFO] Analyzing with ±180-day window (360-day total)...
+[03:02:48] [INFO]   Window ±180d: 6/23 significant detections
+[03:02:48] [INFO] Analyzing with ±240-day window (480-day total)...
+[03:05:38] [INFO]   Window ±240d: 7/23 significant detections
+[03:05:38] [SUCCESS] Best window size: ±240 days (7 significant)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2004: 3.9σ, amplitude=0.0066 (SNR=0.5)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2005: 4.7σ, amplitude=-0.0085 (SNR=0.5)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2008: 4.9σ, amplitude=0.0131 (SNR=1.1)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2014: 5.1σ, amplitude=-0.0320 (SNR=0.4)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2017: 3.3σ, amplitude=-0.0072 (SNR=0.8)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2018: 3.4σ, amplitude=-0.0041 (SNR=0.5)
+[03:05:38] [SUCCESS]     Jupiter_Opposition_2021: 6.4σ, amplitude=0.0415 (SNR=6.2) ⚠️
+[03:05:38] [SUCCESS] Jupiter opposition analysis complete: tested 5 window sizes
+[03:05:38] [PROCESS] Starting Saturn Opposition Analysis...
+[03:05:39] [INFO] Testing 5 window sizes for Saturn: [60, 90, 120, 180, 240] days
+[03:06:24] [INFO]   Saturn window ±60d: 2/24 significant
+[03:07:16] [INFO]   Saturn window ±90d: 2/25 significant
+[03:08:31] [INFO]   Saturn window ±120d: 5/25 significant
+[03:10:47] [INFO]   Saturn window ±180d: 3/25 significant
+[03:13:45] [INFO]   Saturn window ±240d: 3/25 significant
+[03:13:45] [SUCCESS] Best Saturn window: ±120 days (5 significant)
+[03:13:45] [SUCCESS]     saturn_2011: 5.6σ, amplitude=0.1000 (SNR=7.1) ⚠️
+[03:13:45] [SUCCESS]     saturn_2013: 3.4σ, amplitude=-0.0359 (SNR=0.6)
+[03:13:45] [SUCCESS]     saturn_2019: 4.4σ, amplitude=0.0054 (SNR=0.9)
+[03:13:45] [SUCCESS]     saturn_2020: 3.0σ, amplitude=0.0172 (SNR=2.8) ⚠️
+[03:13:45] [SUCCESS]     saturn_2022: 4.6σ, amplitude=0.0073 (SNR=1.1)
+[03:13:46] [SUCCESS] Saturn opposition analysis complete: tested 5 window sizes
+[03:13:46] [PROCESS] Starting Mars Opposition Analysis...
+[03:13:47] [INFO] Testing 5 window sizes for Mars: [60, 90, 120, 180, 240] days
+[03:14:07] [INFO]   Mars window ±60d: 2/12 significant
+[03:14:31] [INFO]   Mars window ±90d: 4/12 significant
+[03:14:59] [INFO]   Mars window ±120d: 3/12 significant
+[03:15:53] [INFO]   Mars window ±180d: 3/12 significant
+[03:17:10] [INFO]   Mars window ±240d: 3/12 significant
+[03:17:10] [SUCCESS] Best Mars window: ±90 days (4 significant)
+[03:17:10] [SUCCESS]     mars_2001: 5.1σ, amplitude=0.0398 (SNR=2.5) ⚠️
+[03:17:10] [SUCCESS]     mars_2014: 3.9σ, amplitude=-0.0097 (SNR=0.9)
+[03:17:10] [SUCCESS]     mars_2018: 3.4σ, amplitude=0.0111 (SNR=1.7) ⚠️
+[03:17:10] [SUCCESS]     mars_2020: 4.1σ, amplitude=-0.0052 (SNR=1.1)
+[03:17:10] [SUCCESS] Mars opposition analysis complete: tested 5 window sizes
+[03:17:10] [PROCESS] Starting Enhanced Continuous Planetary Analysis...
+[03:17:10] [INFO] Incorporating Step 4.4 methodology: continuous time series + Savitzky-Golay smoothing
+[03:17:11] [INFO] Computing daily GPS coherence statistics...
+[03:17:16] [INFO] Daily time series: 9221 days from 2000-02-27 to 2025-06-30
+[03:17:16] [INFO] Computing high-precision planetary influences via JPL ephemeris...
+[03:17:22] [INFO] Testing multiple Savitzky-Golay smoothing windows...
+[03:17:23] [SUCCESS] Best smoothing window: 240 days (r=-0.099, p_corrected=0.0308)
+[03:17:23] [SUCCESS] Enhanced continuous planetary analysis complete
+[03:17:23] [PROCESS] Starting Venus Inferior Conjunction Analysis...
+[03:17:24] [INFO] Testing 5 window sizes for Venus: [60, 90, 120, 180, 240] days
+[03:17:56] [INFO]   Venus window ±60d: 0/16 significant
+[03:18:29] [INFO]   Venus window ±90d: 2/16 significant
+[03:19:13] [INFO]   Venus window ±120d: 3/16 significant
+[03:20:31] [INFO]   Venus window ±180d: 3/16 significant
+[03:22:35] [INFO]   Venus window ±240d: 4/16 significant
+[03:22:35] [SUCCESS] Best Venus window: ±240 days (4 significant)
+[03:22:35] [SUCCESS]     venus_2004: 3.7σ, amplitude=-0.0073 (SNR=0.5)
+[03:22:35] [SUCCESS]     venus_2014: 5.0σ, amplitude=-0.0302 (SNR=0.4)
+[03:22:35] [SUCCESS]     venus_2017: 3.3σ, amplitude=-0.0073 (SNR=0.8)
+[03:22:35] [SUCCESS]     venus_2022: 6.1σ, amplitude=-0.0063 (SNR=0.7)
+[03:22:35] [SUCCESS] Venus conjunction analysis complete: tested 5 window sizes
+[03:22:35] [PROCESS] Starting Mercury Inferior Conjunction Analysis...
+[03:22:37] [INFO] Testing 5 window sizes for Mercury: [60, 90, 120, 180, 240] days
+[03:25:08] [INFO]   Mercury window ±60d: 7/80 significant
+[03:28:12] [INFO]   Mercury window ±90d: 12/80 significant
+[03:31:58] [INFO]   Mercury window ±120d: 21/80 significant
+[03:37:13] [INFO]   Mercury window ±180d: 21/80 significant
+[03:44:23] [INFO]   Mercury window ±240d: 18/80 significant
+[03:44:23] [SUCCESS] Best Mercury window: ±120 days (21 significant)
+[03:44:23] [SUCCESS]     mercury_2001_07: 3.0σ, amplitude=-0.0109 (SNR=0.9)
+[03:44:23] [SUCCESS]     mercury_2002_02: 6.4σ, amplitude=0.0920 (SNR=6.7) ⚠️
+[03:44:23] [SUCCESS]     mercury_2003_06: 3.7σ, amplitude=0.0108 (SNR=0.9) ⚠️
+[03:44:23] [SUCCESS]     mercury_2004_05: 3.5σ, amplitude=-0.0072 (SNR=0.6)
+[03:44:23] [SUCCESS]     mercury_2004_09: 3.1σ, amplitude=0.0069 (SNR=0.6)
+[03:44:23] [SUCCESS]     mercury_2005_08: 3.8σ, amplitude=0.0109 (SNR=0.7)
+[03:44:23] [SUCCESS]     mercury_2008_07: 4.9σ, amplitude=0.0140 (SNR=1.2)
+[03:44:23] [SUCCESS]     mercury_2011_12: 4.3σ, amplitude=0.0761 (SNR=4.8) ⚠️
+[03:44:23] [SUCCESS]     mercury_2013_03: 3.2σ, amplitude=-0.0333 (SNR=0.7)
+[03:44:23] [SUCCESS]     mercury_2013_11: 3.7σ, amplitude=-0.0419 (SNR=0.8)
+[03:44:23] [SUCCESS]     mercury_2014_03: 4.5σ, amplitude=-0.0099 (SNR=0.9)
+[03:44:23] [SUCCESS]     mercury_2018_01: 4.7σ, amplitude=0.0102 (SNR=1.6) ⚠️
+[03:44:23] [SUCCESS]     mercury_2018_12: 7.0σ, amplitude=0.0114 (SNR=1.8) ⚠️
+[03:44:23] [SUCCESS]     mercury_2019_04: 3.5σ, amplitude=-0.0107 (SNR=1.3)
+[03:44:23] [SUCCESS]     mercury_2019_08: 3.8σ, amplitude=0.0050 (SNR=0.7)
+[03:44:23] [SUCCESS]     mercury_2019_11: 5.3σ, amplitude=0.0089 (SNR=1.2)
+[03:44:23] [SUCCESS]     mercury_2020_03: 4.2σ, amplitude=-0.0077 (SNR=0.9)
+[03:44:23] [SUCCESS]     mercury_2021_03: 3.6σ, amplitude=-0.0046 (SNR=0.7)
+[03:44:23] [SUCCESS]     mercury_2021_10: 4.5σ, amplitude=-0.0091 (SNR=1.1)
+[03:44:23] [SUCCESS]     mercury_2022_06: 4.4σ, amplitude=0.0074 (SNR=1.1)
+[03:44:23] [SUCCESS]     mercury_2022_10: 5.2σ, amplitude=-0.0081 (SNR=1.0)
+[03:44:23] [SUCCESS] Mercury conjunction analysis complete: tested 5 window sizes
+[03:44:23] [PROCESS] Starting Solar Rotation Cycle Analysis...
+[03:44:23] [INFO] Testing TEP coupling to rotating solar magnetic field (Carrington rotation)
+[03:44:24] [INFO] Data coverage: 2000-02-27 to 2025-06-30 (9256 days)
+[03:44:24] [INFO] Solar rotation period: 27.0 days (~342.8 complete rotations)
+[03:44:29] [INFO] Weak solar rotation signal: 21.6-day period (r=-0.012, p=0.2318, SNR=3.9)
+[03:44:29] [PROCESS] Starting Lunar Standstill Analysis (Event-Based)...
+[03:44:31] [INFO] Data coverage: 2000-02-27 to 2025-06-30 (9256 days)
+[03:44:31] [INFO] Lunar standstill event window: ±180 days (±5.9 months)
+[03:44:31] [INFO] Expected amplitude: 0.050%
+[03:44:31] [INFO] Analyzing 1 lunar standstill event(s)
+[03:44:31] [PROCESS]   Processing event: lunar_standstill_2025 (2025-06-01)
+[03:44:34] [INFO]     Lunar standstill signal: 1.2σ (not significant)
+[03:44:34] [SUCCESS] Lunar standstill analysis complete: No significant Lunar Standstill signals detected.
+[03:44:34] [PROCESS] Starting Nutation Analysis...
+[03:49:27] [SUCCESS] Nutation analysis complete: 2 significant signatures detected
+[03:49:32] [INFO] Memory usage: 7.6/24.0 GB (51.9%)
+[03:49:34] [SUCCESS] Results saved: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/exploratory/step_2_2_geospatial_temporal_analysis_code.json
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] JUPITER OPPOSITION ANALYSIS SUMMARY - CODE
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [SUCCESS] Jupiter Opposition: 7 SIGNIFICANT DETECTION(S) (≥3.0σ)
+[03:49:34] [SUCCESS]    2004-03-04: 3.9σ enhancement at day -51.6
+[03:49:34] [INFO]       Amplitude: 111.4% (expected: 0.220%, enhancement: 3x)
+[03:49:34] [SUCCESS]    2005-04-03: 4.7σ suppression at day -38.7
+[03:49:34] [INFO]       Amplitude: -57.6% (expected: 0.220%, enhancement: 4x)
+[03:49:34] [SUCCESS]    2008-07-09: 4.9σ enhancement at day -15.1
+[03:49:34] [INFO]       Amplitude: 127.0% (expected: 0.220%, enhancement: 6x)
+[03:49:34] [SUCCESS]    2014-01-05: 5.1σ suppression at day 74.0
+[03:49:34] [INFO]       Amplitude: -108.9% (expected: 0.220%, enhancement: 15x)
+[03:49:34] [SUCCESS]    2017-04-07: 3.3σ suppression at day -4.3
+[03:49:34] [INFO]       Amplitude: -86.8% (expected: 0.220%, enhancement: 3x)
+[03:49:34] [SUCCESS]    2018-05-09: 3.4σ suppression at day -17.0
+[03:49:34] [INFO]       Amplitude: -64.6% (expected: 0.220%, enhancement: 2x)
+[03:49:34] [SUCCESS]    2021-08-20: 6.4σ enhancement at day 5.0
+[03:49:34] [INFO]       Amplitude: 687.6% (expected: 0.220%, enhancement: 19x)
+[03:49:34] [INFO] Statistical Summary:
+[03:49:34] [INFO]    Total Events Analyzed: 23
+[03:49:34] [INFO]    Detections ≥1.0σ: 18/23 (78.3%)
+[03:49:34] [INFO]    Average Amplitude: 124.9% (expected: 0.220%)
+[03:49:34] [INFO]    Maximum Amplitude: 687.6% (22x expected)
+[03:49:34] [INFO]    Note: Individual event analysis complete. Multi-event stacking in Step 4.4
+[03:49:34] [INFO] --------------------------------------------------
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] SATURN OPPOSITION ANALYSIS SUMMARY - CODE
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [SUCCESS] Saturn Opposition: 5 SIGNIFICANT DETECTION(S) (≥3.0σ)
+[03:49:34] [SUCCESS]    2011-04-03: 5.6σ enhancement at day -7.0
+[03:49:34] [INFO]       Amplitude: 673.8% (expected: 0.019%, enhancement: 526x)
+[03:49:34] [SUCCESS]    2013-04-28: 3.4σ suppression at day -65.0
+[03:49:34] [INFO]       Amplitude: -73.8% (expected: 0.019%, enhancement: 189x)
+[03:49:34] [SUCCESS]    2019-07-09: 4.4σ enhancement at day 22.6
+[03:49:34] [INFO]       Amplitude: 157.2% (expected: 0.019%, enhancement: 29x)
+[03:49:34] [SUCCESS]    2020-07-20: 3.0σ enhancement at day 3.0
+[03:49:34] [INFO]       Amplitude: 305.7% (expected: 0.019%, enhancement: 91x)
+[03:49:34] [SUCCESS]    2022-08-14: 4.6σ enhancement at day -10.5
+[03:49:34] [INFO]       Amplitude: 134.2% (expected: 0.019%, enhancement: 39x)
+[03:49:34] [INFO] Statistical Summary:
+[03:49:34] [INFO]    Total Events Analyzed: 25
+[03:49:34] [INFO]    Detections ≥1.0σ: 21/25 (84.0%)
+[03:49:34] [INFO]    Average Amplitude: 164.2% (expected: 0.019%)
+[03:49:34] [INFO]    Maximum Amplitude: 673.8% (248x expected)
+[03:49:34] [INFO]    Note: Individual event analysis complete. Multi-event stacking in Step 4.4
+[03:49:34] [INFO] --------------------------------------------------
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] MARS OPPOSITION ANALYSIS SUMMARY - CODE
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [SUCCESS] Mars Opposition: 4 SIGNIFICANT DETECTION(S) (≥3.0σ)
+[03:49:34] [INFO]     REMARKABLE: Mars has the weakest expected signal (44x weaker than Jupiter)
+[03:49:34] [SUCCESS]    2001-06-13: 5.1σ enhancement at day -11.9
+[03:49:34] [INFO]       Amplitude: 349.6% (expected: 0.0001%, enhancement: 796x)
+[03:49:34] [SUCCESS]    2014-04-08: 3.9σ suppression at day -9.2
+[03:49:34] [INFO]       Amplitude: -91.0% (expected: 0.0001%, enhancement: 193x)
+[03:49:34] [SUCCESS]    2018-07-27: 3.4σ enhancement at day 1.4
+[03:49:34] [INFO]       Amplitude: 287.2% (expected: 0.0001%, enhancement: 223x)
+[03:49:34] [SUCCESS]    2020-10-13: 4.1σ suppression at day 0.5
+[03:49:34] [INFO]       Amplitude: -63.6% (expected: 0.0001%, enhancement: 103x)
+[03:49:34] [INFO] Statistical Summary:
+[03:49:34] [INFO]    Total Events Analyzed: 12
+[03:49:34] [INFO]    Detections ≥1.0σ: 12/12 (100.0%)
+[03:49:34] [INFO]    Average Amplitude: 173.4% (expected: 0.0050%)
+[03:49:34] [INFO]    Maximum Amplitude: 349.6% (489x expected)
+[03:49:34] [INFO]    Note: Individual event analysis complete. Multi-event stacking in Step 4.4
+[03:49:34] [INFO] --------------------------------------------------
+[03:49:34] [INFO] Skipping temporal coherence analysis - file too large (21.1GB) to reload safely
+[03:49:34] [INFO] Temporal coherence analysis disabled - skipping dataset reload
+[03:49:34] [INFO] 
+
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] COMPREHENSIVE SCIENTIFIC SIGNIFICANCE REPORT - CODE
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+1. PLANETARY GRAVITATIONAL EVENT ANALYSIS
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]    Analysis of GPS timing correlation response to planetary configurations
+[03:49:34] [INFO]    Detection threshold: ≥2σ (95%+ confidence)
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] \n================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] STATISTICAL SIGNIFICANCE CORRECTIONS
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] \n================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] MASS SCALING ANALYSIS
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [PROCESS] Starting Mass Scaling Analysis...
+[03:49:34] [WARNING] Insufficient planetary detections for coupling analysis
+[03:49:34] [INFO] Multiple Testing Correction Results:
+[03:49:34] [INFO]    Total tests: 72
+[03:49:34] [INFO]    Uncorrected significant: 72
+[03:49:34] [INFO]    Bonferroni significant: 34
+[03:49:34] [INFO]    FDR significant: 72
+[03:49:34] [INFO]    Bonferroni α: 0.000694
+[03:49:34] [INFO] 
+   JUPITER:
+[03:49:34] [INFO]       Events Analyzed: 23
+[03:49:34] [INFO]       Expected Amplitude: 0.2200%
+[03:49:34] [INFO]       Statistical Summary:
+[03:49:34] [INFO]          Mean Sigma Level: 2.33σ
+[03:49:34] [INFO]          Maximum Sigma Level: 6.40σ
+[03:49:34] [INFO]          Mean Observed Amplitude: 48.51%
+[03:49:34] [INFO]          Maximum Observed Amplitude: 87.30%
+[03:49:34] [INFO]          Mean Enhancement Factor: 1.5x
+[03:49:34] [INFO]          Maximum Enhancement Factor: 2.8x
+[03:49:34] [SUCCESS]       SIGNIFICANT DETECTIONS (≥3.0σ): 11
+[03:49:34] [INFO]          2000-11-28: 2.09σ, 35.9% (4x expected)
+[03:49:34] [INFO]          2003-02-02: 2.23σ, 69.7% (7x expected)
+[03:49:34] [INFO]          2004-03-04: 3.94σ, 52.7% (3x expected)
+[03:49:34] [INFO]          2005-04-03: 4.68σ, 36.6% (4x expected)
+[03:49:34] [INFO]          2008-07-09: 4.94σ, 55.9% (6x expected)
+[03:49:34] [INFO]          2011-10-29: 2.11σ, 39.2% (9x expected)
+[03:49:34] [INFO]          2014-01-05: 5.14σ, 52.1% (15x expected)
+[03:49:34] [INFO]          2017-04-07: 3.31σ, 46.5% (3x expected)
+[03:49:34] [INFO]          2018-05-09: 3.45σ, 39.2% (2x expected)
+[03:49:34] [INFO]          2021-08-20: 6.40σ, 87.3% (19x expected)
+[03:49:34] [INFO]          2024-12-07: 2.13σ, 28.8% (1x expected)
+[03:49:34] [INFO]       Notable Detections (2.0-3.0σ): 7
+[03:49:34] [INFO]          2006-05-04: 1.23σ, 56.5%
+[03:49:34] [INFO]          2007-06-05: 1.80σ, 65.9%
+[03:49:34] [INFO]          2009-08-14: 1.80σ, 62.5%
+[03:49:34] [INFO]          2016-03-08: 1.16σ, 52.9%
+[03:49:34] [INFO]          2019-06-10: 1.13σ, 55.4%
+[03:49:34] [INFO]          2020-07-14: 1.59σ, 28.1%
+[03:49:34] [INFO]          2023-11-03: 1.24σ, 54.3%
+[03:49:34] [INFO] 
+   SATURN:
+[03:49:34] [INFO]       Events Analyzed: 25
+[03:49:34] [INFO]       Expected Amplitude: 0.0190%
+[03:49:34] [INFO]       Statistical Summary:
+[03:49:34] [INFO]          Mean Sigma Level: 2.01σ
+[03:49:34] [INFO]          Maximum Sigma Level: 5.56σ
+[03:49:34] [INFO]          Mean Observed Amplitude: 54.69%
+[03:49:34] [INFO]          Maximum Observed Amplitude: 87.08%
+[03:49:34] [INFO]          Mean Enhancement Factor: 20.1x
+[03:49:34] [INFO]          Maximum Enhancement Factor: 32.1x
+[03:49:34] [SUCCESS]       SIGNIFICANT DETECTIONS (≥3.0σ): 9
+[03:49:34] [INFO]          2008-02-24: 2.51σ, 33.7% (36x expected)
+[03:49:34] [INFO]          2009-03-08: 2.22σ, 67.0% (133x expected)
+[03:49:34] [INFO]          2010-03-22: 2.00σ, 32.7% (37x expected)
+[03:49:34] [INFO]          2011-04-03: 5.56σ, 87.1% (526x expected)
+[03:49:34] [INFO]          2013-04-28: 3.42σ, 42.5% (189x expected)
+[03:49:34] [INFO]          2016-06-03: 2.67σ, 71.4% (143x expected)
+[03:49:34] [INFO]          2019-07-09: 4.40σ, 61.1% (29x expected)
+[03:49:34] [INFO]          2020-07-20: 3.01σ, 75.4% (91x expected)
+[03:49:34] [INFO]          2022-08-14: 4.62σ, 57.3% (39x expected)
+[03:49:34] [INFO]       Notable Detections (2.0-3.0σ): 12
+[03:49:34] [INFO]          2000-11-19: 1.05σ, 51.6%
+[03:49:34] [INFO]          2001-12-03: 1.63σ, 76.4%
+[03:49:34] [INFO]          2002-12-17: 1.97σ, 63.6%
+[03:49:34] [INFO]          2003-12-31: 1.96σ, 70.7%
+[03:49:34] [INFO]          2005-01-13: 1.53σ, 43.2%
+[03:49:34] [INFO]          2006-01-27: 1.09σ, 52.2%
+[03:49:34] [INFO]          2012-04-15: 1.47σ, 44.4%
+[03:49:34] [INFO]          2014-05-10: 1.24σ, 67.9%
+[03:49:34] [INFO]          2015-05-23: 1.57σ, 60.7%
+[03:49:34] [INFO]          2018-06-27: 1.32σ, 52.0%
+[03:49:34] [INFO]          2021-08-02: 1.70σ, 63.8%
+[03:49:34] [INFO]          2023-08-27: 1.56σ, 60.1%
+[03:49:34] [INFO] 
+   MARS:
+[03:49:34] [INFO]       Events Analyzed: 12
+[03:49:34] [INFO]       Expected Amplitude: 0.0050%
+[03:49:34] [INFO]       Statistical Summary:
+[03:49:34] [INFO]          Mean Sigma Level: 2.68σ
+[03:49:34] [INFO]          Maximum Sigma Level: 5.15σ
+[03:49:34] [INFO]          Mean Observed Amplitude: 58.65%
+[03:49:34] [INFO]          Maximum Observed Amplitude: 77.76%
+[03:49:34] [INFO]          Mean Enhancement Factor: 82.1x
+[03:49:34] [INFO]          Maximum Enhancement Factor: 108.9x
+[03:49:34] [SUCCESS]       SIGNIFICANT DETECTIONS (≥3.0σ): 7
+[03:49:34] [INFO]          2001-06-13: 5.15σ, 77.8% (796x expected)
+[03:49:34] [INFO]          2005-11-07: 2.08σ, 59.5% (503x expected)
+[03:49:34] [INFO]          2012-03-03: 2.14σ, 47.6% (955x expected)
+[03:49:34] [INFO]          2014-04-08: 3.94σ, 47.7% (193x expected)
+[03:49:34] [INFO]          2016-05-22: 2.87σ, 73.4% (563x expected)
+[03:49:34] [INFO]          2018-07-27: 3.36σ, 74.2% (223x expected)
+[03:49:34] [INFO]          2020-10-13: 4.05σ, 38.9% (103x expected)
+[03:49:34] [INFO]       Notable Detections (2.0-3.0σ): 5
+[03:49:34] [INFO]          2003-08-28: 1.82σ, 68.1%
+[03:49:34] [INFO]          2007-12-24: 1.95σ, 70.4%
+[03:49:34] [INFO]          2010-01-29: 1.47σ, 31.4%
+[03:49:34] [INFO]          2022-12-08: 1.65σ, 52.0%
+[03:49:34] [INFO]          2025-01-16: 1.73σ, 63.1%
+[03:49:34] [INFO] 
+   VENUS:
+[03:49:34] [INFO]       Events Analyzed: 16
+[03:49:34] [INFO]       Expected Amplitude: 0.1000%
+[03:49:34] [INFO]       Statistical Summary:
+[03:49:34] [INFO]          Mean Sigma Level: 2.19σ
+[03:49:34] [INFO]          Maximum Sigma Level: 6.14σ
+[03:49:34] [INFO]          Mean Observed Amplitude: 44.91%
+[03:49:34] [INFO]          Maximum Observed Amplitude: 81.18%
+[03:49:34] [INFO]          Mean Enhancement Factor: 3.1x
+[03:49:34] [INFO]          Maximum Enhancement Factor: 5.7x
+[03:49:34] [SUCCESS]       SIGNIFICANT DETECTIONS (≥3.0σ): 5
+[03:49:34] [INFO]          2004-06-08: 3.70σ, 40.8% (7x expected)
+[03:49:34] [INFO]          2014-01-11: 5.01σ, 51.8% (30x expected)
+[03:49:34] [INFO]          2017-03-25: 3.30σ, 46.4% (7x expected)
+[03:49:34] [INFO]          2018-10-26: 2.07σ, 46.7% (5x expected)
+[03:49:34] [INFO]          2022-01-09: 6.14σ, 40.4% (6x expected)
+[03:49:34] [INFO]       Notable Detections (2.0-3.0σ): 9
+[03:49:34] [INFO]          2001-03-30: 1.66σ, 28.7%
+[03:49:34] [INFO]          2006-01-15: 1.52σ, 58.7%
+[03:49:34] [INFO]          2007-08-18: 1.31σ, 25.8%
+[03:49:34] [INFO]          2009-03-29: 1.45σ, 51.0%
+[03:49:34] [INFO]          2010-10-29: 1.21σ, 40.4%
+[03:49:34] [INFO]          2012-06-06: 1.68σ, 81.2%
+[03:49:34] [INFO]          2015-08-15: 1.72σ, 37.3%
+[03:49:34] [INFO]          2023-08-13: 1.48σ, 47.6%
+[03:49:34] [INFO]          2025-03-23: 1.93σ, 59.6%
+[03:49:34] [INFO] 
+   MERCURY:
+[03:49:34] [INFO]       Events Analyzed: 80
+[03:49:34] [INFO]       Expected Amplitude: 0.0100%
+[03:49:34] [INFO]       Statistical Summary:
+[03:49:34] [INFO]          Mean Sigma Level: 2.36σ
+[03:49:34] [INFO]          Maximum Sigma Level: 6.99σ
+[03:49:34] [INFO]          Mean Observed Amplitude: 54.40%
+[03:49:34] [INFO]          Maximum Observed Amplitude: 94.65%
+[03:49:34] [INFO]          Mean Enhancement Factor: 38.1x
+[03:49:34] [INFO]          Maximum Enhancement Factor: 66.3x
+[03:49:34] [SUCCESS]       SIGNIFICANT DETECTIONS (≥3.0σ): 40
+[03:49:34] [INFO]          2000-07-27: 2.47σ, 69.1% (392x expected)
+[03:49:34] [INFO]          2000-11-15: 2.56σ, 36.3% (103x expected)
+[03:49:34] [INFO]          2001-03-09: 2.94σ, 37.2% (119x expected)
+[03:49:34] [INFO]          2001-07-09: 3.04σ, 37.0% (109x expected)
+[03:49:34] [INFO]          2002-02-18: 6.43σ, 93.3% (920x expected)
+[03:49:34] [INFO]          2002-06-21: 2.19σ, 60.6% (96x expected)
+[03:49:34] [INFO]          2003-02-04: 2.46σ, 67.1% (141x expected)
+[03:49:34] [INFO]          2003-06-03: 3.67σ, 77.3% (108x expected)
+[03:49:34] [INFO]          2004-05-14: 3.45σ, 40.8% (72x expected)
+[03:49:34] [INFO]          2004-09-09: 3.10σ, 61.5% (69x expected)
+[03:49:34] [INFO]          2005-08-23: 3.80σ, 52.8% (109x expected)
+[03:49:34] [INFO]          2006-11-24: 2.18σ, 76.5% (243x expected)
+[03:49:34] [INFO]          2008-03-03: 2.69σ, 34.2% (72x expected)
+[03:49:34] [INFO]          2008-07-01: 4.93σ, 60.0% (140x expected)
+[03:49:34] [INFO]          2010-05-26: 2.12σ, 67.8% (308x expected)
+[03:49:34] [INFO]          2011-12-23: 4.32σ, 82.4% (761x expected)
+[03:49:34] [INFO]          2012-12-04: 2.40σ, 52.7% (180x expected)
+[03:49:34] [INFO]          2013-03-31: 3.22σ, 41.9% (333x expected)
+[03:49:34] [INFO]          2013-11-17: 3.71σ, 49.5% (419x expected)
+[03:49:34] [INFO]          2014-03-14: 4.49σ, 47.2% (99x expected)
+[03:49:34] [INFO]          2016-02-07: 2.14σ, 61.1% (148x expected)
+[03:49:34] [INFO]          2017-01-19: 2.21σ, 72.2% (195x expected)
+[03:49:34] [INFO]          2018-01-01: 4.69σ, 68.5% (102x expected)
+[03:49:34] [INFO]          2018-04-30: 2.06σ, 42.3% (66x expected)
+[03:49:34] [INFO]          2018-12-15: 6.99σ, 75.3% (114x expected)
+[03:49:34] [INFO]          2019-04-11: 3.46σ, 45.3% (107x expected)
+[03:49:34] [INFO]          2019-08-09: 3.80σ, 55.7% (50x expected)
+[03:49:34] [INFO]          2019-11-28: 5.28σ, 60.9% (89x expected)
+[03:49:34] [INFO]          2020-03-24: 4.16σ, 39.2% (77x expected)
+[03:49:34] [INFO]          2020-07-22: 2.95σ, 75.2% (172x expected)
+[03:49:34] [INFO]          2021-03-06: 3.61σ, 36.7% (46x expected)
+[03:49:34] [INFO]          2021-07-04: 2.35σ, 79.4% (91x expected)
+[03:49:34] [INFO]          2021-10-25: 4.49σ, 43.3% (91x expected)
+[03:49:34] [INFO]          2022-06-16: 4.36σ, 56.0% (74x expected)
+[03:49:34] [INFO]          2022-10-08: 5.19σ, 44.5% (81x expected)
+[03:49:34] [INFO]          2023-05-29: 2.28σ, 34.9% (40x expected)
+[03:49:34] [INFO]          2023-09-22: 2.74σ, 44.7% (51x expected)
+[03:49:34] [INFO]          2024-05-09: 2.05σ, 51.7% (64x expected)
+[03:49:34] [INFO]          2024-09-05: 3.00σ, 78.5% (191x expected)
+[03:49:34] [INFO]          2024-12-25: 2.05σ, 39.3% (31x expected)
+[03:49:34] [INFO]       Notable Detections (2.0-3.0σ): 34
+[03:49:34] [INFO]          2001-10-29: 1.19σ, 69.4%
+[03:49:34] [INFO]          2002-10-13: 1.13σ, 68.0%
+[03:49:34] [INFO]          2003-09-26: 1.11σ, 39.2%
+[03:49:34] [INFO]          2004-01-17: 1.93σ, 70.4%
+[03:49:34] [INFO]          2004-12-29: 1.62σ, 45.0%
+[03:49:34] [INFO]          2005-04-26: 1.51σ, 60.8%
+[03:49:34] [INFO]          2005-12-12: 1.19σ, 53.5%
+[03:49:34] [INFO]          2006-04-08: 1.28σ, 56.5%
+[03:49:34] [INFO]          2006-08-07: 1.39σ, 60.8%
+[03:49:34] [INFO]          2007-03-22: 1.04σ, 45.5%
+[03:49:34] [INFO]          2007-07-20: 1.79σ, 38.8%
+[03:49:34] [INFO]          2007-11-08: 1.70σ, 66.6%
+[03:49:34] [INFO]          2008-10-24: 1.43σ, 57.7%
+[03:49:34] [INFO]          2009-02-13: 1.13σ, 40.2%
+[03:49:34] [INFO]          2009-06-13: 1.48σ, 56.1%
+[03:49:34] [INFO]          2009-10-06: 1.50σ, 54.5%
+[03:49:34] [INFO]          2010-01-27: 1.53σ, 57.4%
+[03:49:34] [INFO]          2010-09-19: 1.61σ, 36.1%
+[03:49:34] [INFO]          2011-01-09: 1.17σ, 40.3%
+[03:49:34] [INFO]          2011-05-07: 1.87σ, 62.5%
+[03:49:34] [INFO]          2012-04-18: 1.47σ, 44.4%
+[03:49:34] [INFO]          2013-07-30: 1.91σ, 94.6%
+[03:49:34] [INFO]          2014-07-12: 1.51σ, 66.4%
+[03:49:34] [INFO]          2014-11-01: 1.41σ, 31.4%
+[03:49:34] [INFO]          2015-02-21: 1.75σ, 40.5%
+[03:49:34] [INFO]          2015-10-16: 1.20σ, 51.4%
+[03:49:34] [INFO]          2017-05-18: 1.21σ, 53.7%
+[03:49:34] [INFO]          2017-09-12: 1.08σ, 45.0%
+[03:49:34] [INFO]          2018-08-26: 1.96σ, 72.2%
+[03:49:34] [INFO]          2020-11-10: 1.33σ, 57.2%
+[03:49:34] [INFO]          2022-02-16: 1.12σ, 35.3%
+[03:49:34] [INFO]          2023-01-30: 1.14σ, 56.5%
+[03:49:34] [INFO]          2024-01-12: 1.61σ, 49.1%
+[03:49:34] [INFO]          2025-04-21: 1.96σ, 36.5%
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+2. GEOPHYSICAL SIGNATURE ANALYSIS
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]    Correlation with known Earth rotation and orbital parameters
+[03:49:34] [INFO] 
+   CHANDLER WOBBLE (14-month polar motion):
+[03:49:34] [INFO]       Detection Status: BORDERLINE DETECTED (1.9σ equivalent)
+[03:49:34] [INFO]       R² Correlation: 0.106 (thresholds: DETECTED >0.15, BORDERLINE 0.10-0.15)
+[03:49:34] [INFO]       Period: 436 days (14.3 months)
+[03:49:34] [INFO]       Temporal Coverage: 9256 days (21.23 complete cycles)
+[03:49:34] [INFO] 
+   EARTH ORBITAL MOTION (annual cycle):
+[03:49:34] [SUCCESS]       Detection Status: DETECTED (6.6σ)
+[03:49:34] [INFO]       Correlation Coefficient: r = -0.864 (threshold: |r| > 0.40, 6.6σ equivalent)
+[03:49:34] [INFO]       Statistical Significance: p = 0.0000
+[03:49:34] [INFO]       Temporal Samples: 34 (30-day windows)
+[03:49:34] [INFO]       Interpretation: Directional anisotropy (E-W vs N-S) correlates with
+[03:49:34] [INFO]                      Earth's position in orbit, suggesting orbital velocity
+[03:49:34] [INFO]                      modulates GPS timing correlation structure
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+3. AMPLITUDE ENHANCEMENT ANALYSIS
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]    Comparison of observed vs. expected gravitational coupling amplitudes
+[03:49:34] [INFO] 
+   Enhancement Factor Statistics (Observed/Expected Amplitude):
+[03:49:34] [INFO]       Number of Significant Detections: 72
+[03:49:34] [INFO]       Mean Enhancement: 157.8x
+[03:49:34] [INFO]       Median Enhancement: 90.7x
+[03:49:34] [INFO]       Standard Deviation: 210.7x
+[03:49:34] [INFO]       Range: 1.0x - 955.1x
+[03:49:34] [INFO]       Coefficient of Variation: 1.33
+[03:49:34] [INFO] 
+   Mechanistic Interpretation:
+[03:49:34] [INFO]       Mean enhancement >100x indicates NON-LINEAR COUPLING mechanism.
+[03:49:34] [INFO]       Such large amplification cannot be explained by direct
+[03:49:34] [INFO]       gravitational effects and suggests resonance, tidal amplification,
+[03:49:34] [INFO]       or parametric coupling processes with geophysical modes.
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+4. DETECTION RESULTS SUMMARY
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+   Reporting all detected signals with statistical metrics
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+   GRAVITATIONAL/GEOPHYSICAL COUPLING ANALYSES:
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]       1. PLANETARY GRAVITATIONAL COUPLING
+[03:49:34] [INFO]          Significant Events: 72 (≥2σ)
+[03:49:34] [INFO]          Confidence Levels: 41 events ≥3σ, 31 events 2-3σ
+[03:49:34] [INFO]       2. CHANDLER WOBBLE (14-Month Polar Motion)
+[03:49:34] [INFO]          R² = 0.1059
+[03:49:34] [INFO]          Period = 436 days (14.3 months)
+[03:49:34] [INFO]          Temporal Coverage = 21.23 complete cycles
+[03:49:34] [INFO]       3. ORBITAL MOTION CORRELATION (Annual Cycle)
+[03:49:34] [INFO]          r = -0.8640, p = 4.65e-11 (6.6σ)
+[03:49:34] [INFO]          Samples: 34 temporal windows
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+   STRUCTURAL/TEMPORAL ANALYSES:
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]       4. THREE-DIMENSIONAL SPATIAL ANISOTROPY
+[03:49:34] [INFO]          Anisotropy Strength = 1.9810
+[03:49:34] [INFO]          Spherical Bins = 16
+[03:49:34] [INFO]       5. NETWORK MESH COHERENCE
+[03:49:34] [INFO]          Mean Coherence Score = 0.5824
+[03:49:34] [INFO]          Classification = Unknown
+[03:49:34] [INFO]          Temporal Windows = 104
+[03:49:34] [INFO]       6. NUTATION SIGNATURES
+[03:49:34] [INFO]          Periods Tested = 3
+[03:49:34] [INFO]          - main_nutation: R² = 0.6404, Amplitude = -0.006484
+[03:49:34] [INFO]          - annual_nutation: R² = 0.0178, Amplitude = -0.000258
+[03:49:34] [INFO]          - semiannual_nutation: R² = 0.9019, Amplitude = 0.001547
+[03:49:34] [INFO]       7. CONTINUOUS PLANETARY CORRELATION
+[03:49:34] [INFO]          Pearson r = -0.0994
+[03:49:34] [INFO]          p-value (autocorr-corrected) = 0.0308
+[03:49:34] [INFO]          Smoothing Window = 240 days
+[03:49:34] [INFO]          Temporal Coverage = 9221 days
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+   ANALYSIS SUMMARY:
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO]       1. ORBITAL MOTION COUPLING (Strongest Evidence)
+[03:49:34] [INFO]          Pearson Correlation: r = -0.8640, p = 4.65e-11
+[03:49:34] [INFO]          Physical Mechanism: Directional anisotropy (E-W vs N-S) in GPS timing
+[03:49:34] [INFO]          correlations systematically varies with Earth's orbital position,
+[03:49:34] [INFO]          consistent with velocity-dependent modulation of spacetime geometry.
+[03:49:34] [INFO]          This represents the strongest evidence for temporal-gravitational coupling.
+[03:49:34] [INFO]       2. THREE-DIMENSIONAL SPATIAL ANISOTROPY
+[03:49:34] [INFO]          Anisotropy Strength: 1.9810
+[03:49:34] [INFO]          Physical Mechanism: Non-isotropic correlation structure indicates
+[03:49:34] [INFO]          geometric coupling to Earth's reference frame. GPS timing correlations
+[03:49:34] [INFO]          exhibit directional dependence inconsistent with random noise,
+[03:49:34] [INFO]          suggesting coupling to spatial orientation and gravitational geometry.
+[03:49:34] [INFO]       3. NETWORK MESH COHERENCE (Collective Dynamics)
+[03:49:34] [INFO]          Coherence Score: 0.5824
+[03:49:34] [INFO]          Physical Mechanism: Coordinated temporal field dynamics across
+[03:49:34] [INFO]          the GPS station network indicate collective response to external
+[03:49:34] [INFO]          influence rather than independent local effects. Suggests global
+[03:49:34] [INFO]          gravitational field modulation affecting all stations coherently.
+[03:49:34] [INFO]       4. NUTATION SIGNATURES (Rotational Coupling)
+[03:49:34] [INFO]          Significant Signatures: 2 detected
+[03:49:34] [INFO]          Physical Mechanism: GPS timing correlations exhibit modulation at
+[03:49:34] [INFO]          Earth's nutation frequencies (18.6-year and shorter periods),
+[03:49:34] [INFO]          indicating coupling to polar axis precession dynamics beyond
+[03:49:34] [INFO]          simple diurnal/seasonal effects.
+[03:49:34] [INFO]       5. CONTINUOUS PLANETARY INFLUENCE
+[03:49:34] [INFO]          Correlation: r = -0.0994, p = 0.0308
+[03:49:34] [INFO]          Physical Mechanism: Sustained correlation between daily GPS
+[03:49:34] [INFO]          coherence and planetary configurations indicates continuous
+[03:49:34] [INFO]          gravitational influence rather than transient effects. Suggests
+[03:49:34] [INFO]          baseline modulation of spacetime geometry by planetary masses.
+[03:49:34] [INFO]       6. PLANETARY EVENT RESPONSES (Direct Gravitational Coupling)
+[03:49:34] [INFO]          Significant Events: 72 (≥2σ), including 41 at ≥3σ
+[03:49:34] [INFO]          Physical Mechanism: GPS timing correlations exhibit amplitude
+[03:49:34] [INFO]          modulation during planetary alignments. Enhancement factors
+[03:49:34] [INFO]          (1.0x - 955.1x) indicate
+[03:49:34] [INFO]          non-linear coupling or resonance effects beyond simple
+[03:49:34] [INFO]          gravitational mass scaling.
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+COMPREHENSIVE ANALYSIS SUMMARY
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:34] [INFO] 
+DATASET CHARACTERISTICS:
+[03:49:34] [INFO]    Temporal Coverage: 9256 days
+[03:49:34] [INFO] 
+SIGNATURES DETECTED:
+[03:49:34] [SUCCESS]    ✓ ORBITAL MOTION COUPLING
+[03:49:34] [INFO]      Pearson correlation: r = -0.864
+[03:49:34] [INFO]      Statistical significance: p = 4.65e-11
+[03:49:34] [INFO]      Temporal samples: 34
+[03:49:34] [INFO]      Physical interpretation: E-W/N-S anisotropy tracks Earth's orbital position
+[03:49:34] [SUCCESS]    ✓ 3D SPATIAL ANISOTROPY
+[03:49:34] [INFO]      Anisotropy strength: 1.981 (threshold: >1.0)
+[03:49:34] [INFO]      Spherical harmonic bins: 16
+[03:49:34] [INFO]      Physical interpretation: Non-isotropic 3D correlation structure
+[03:49:34] [SUCCESS]    ✓ NETWORK COHERENCE
+[03:49:34] [INFO]      Coherence metric: 0.582 (threshold: >0.3)
+[03:49:34] [INFO]      Classification: Unknown
+[03:49:34] [INFO]      Time windows: 104
+[03:49:34] [INFO]      Physical interpretation: Coordinated temporal dynamics across station network
+[03:49:34] [SUCCESS]    ✓ NUTATION SIGNATURES (2 detected)
+[03:49:34] [INFO]      main_nutation: R² = 0.640, amplitude = -0.0065
+[03:49:34] [INFO]      semiannual_nutation: R² = 0.902, amplitude = 0.0015
+[03:49:34] [INFO]      Physical interpretation: Coupling to Earth's rotation axis precession
+[03:49:34] [SUCCESS]    ✓ CONTINUOUS PLANETARY CORRELATION
+[03:49:34] [INFO]      Correlation: r = -0.099, p = 0.0308
+[03:49:34] [INFO]      Smoothing window: 240 days
+[03:49:34] [INFO]      Daily samples: 9221
+[03:49:34] [INFO]      Physical interpretation: Sustained gravitational influence on timing correlations
+[03:49:34] [SUCCESS]    ✓ PLANETARY EVENT RESPONSES (72 events ≥2σ)
+[03:49:34] [INFO]      Confidence breakdown: 41 at ≥3σ (99.7%), 31 at 2-3σ (95-99.7%), 0 at 1-2σ (68-95%)
+[03:49:34] [INFO]      Jupiter: 11 events, σ range: 2.1-6.4
+[03:49:34] [INFO]      Saturn: 9 events, σ range: 2.0-5.6
+[03:49:34] [INFO]      Mars: 7 events, σ range: 2.1-5.1
+[03:49:34] [INFO]      Venus: 5 events, σ range: 2.1-6.1
+[03:49:34] [INFO]      Mercury: 40 events, σ range: 2.0-7.0
+[03:49:34] [INFO]      Enhancement factors: 1.0x - 955.1x
+[03:49:34] [INFO]      Physical interpretation: Amplitude modulation during planetary alignments
+[03:49:34] [INFO]    ✓ CHANDLER WOBBLE (BORDERLINE)
+[03:49:34] [INFO]      R² correlation: 0.106
+[03:49:34] [INFO]      Period: 436 days
+[03:49:34] [INFO]      Complete cycles: 21.23
+[03:49:34] [INFO]      Physical interpretation: Modulation by 14-month polar motion
+[03:49:34] [SUCCESS] 
+All analyses complete. Results saved to JSON output file.
+[03:49:34] [INFO] 
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] ================================================================================
+[03:49:34] [INFO] 
+[03:49:35] [SUCCESS] Final results saved: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/exploratory/step_2_2_geospatial_temporal_analysis_code.json
+[03:49:35] [SUCCESS] Statistical validation complete for CODE in 11126.4s
+[03:49:36] [SUCCESS] Final results saved: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/exploratory/step_2_2_geospatial_temporal_analysis_code.json
+[03:49:36] [INFO] 
+================================================================================
+[03:49:36] [INFO] 
+[03:49:36] [INFO] ================================================================================
+[03:49:36] [INFO] GEOSPATIAL TEMPORAL ANALYSIS COMPLETE
+[03:49:36] [INFO] ================================================================================
+[03:49:36] [INFO] 
+[03:49:36] [INFO] ================================================================================
+[03:49:36] [SUCCESS] Validation Summary:
+[03:49:36] [INFO]   CODE:
+[03:49:36] [INFO]     Enhanced Anisotropy: 8 sectors, CV = 0.468 (moderate)
+[03:49:36] [INFO] Total execution time: 11130.4 seconds

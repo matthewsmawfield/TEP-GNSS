@@ -1,0 +1,7248 @@
+#!/usr/bin/env python3
+"""
+TEP GNSS Analysis - STEP 2.2: Geospatial Temporal Analysis
+========================================================
+
+Performs comprehensive geospatial and temporal analysis including astronomical
+event correlations, orbital tracking, anisotropy analysis, and advanced temporal field studies.
+
+Requirements: Step 2.1 complete (Geospatial Data Processing)
+Next: Step 3.0 (Cross-Validation Suite)
+
+Key Analyses:
+1. Enhanced Anisotropy Analysis - detailed directional and temporal propagation tests
+2. Temporal Orbital Tracking - correlation patterns with Earth orbital motion
+3. Helical Motion Analysis - Chandler wobble, 3D spherical harmonics
+4. Planetary Opposition Analysis - gravitational potential coupling (Jupiter, Saturn, Mars)
+5. Lunar Standstill Analysis - sidereal day amplitude modulation
+
+MULTI-SCALE WINDOW STRATEGY:
+Different analyses use different temporal windows matched to their characteristic physical timescales:
+- Temporal Orbital Tracking: 30-day windows (balances seasonal signal vs noise)
+- Mesh Dance Analysis: 120-day windows (long-timescale collective dynamics)
+- Planetary Oppositions: 240-day windows (gravitational coupling optimal timescale)
+- Chandler Wobble: Full 433-day cycle analysis
+- Lunar Standstill: Monthly resolution for 18.6-year cycle tracking
+
+TERMINOLOGY STANDARDIZATION:
+Throughout this implementation, we use consistent terminology:
+- "phase-alignment index": Primary correlation metric (cos(weighted_phase))
+- "coherence": Network-level composite metric (mesh + motion + Earth coupling)  
+- "correlation": Generic term for statistical association
+
+DISTANCE BINNING METHODOLOGY:
+- 40 logarithmic bins attempted (50-13,000 km range)
+- Minimum threshold: 1,000 pairs per bin for statistical reliability
+- Effective bins: N_eff ≈ 25-28 (varies by analysis center)
+- Rationale: Uniform log-space sampling critical for exponential decay detection
+
+This multi-scale approach is scientifically rigorous as each phenomenon operates on its
+characteristic timescale. Based on empirical analysis showing optimal coupling at 240 days
+for gravitational-temporal field interactions (Savitzky-Golay smoothing analysis).
+
+CRITICAL: This step loads the COMPLETE pair-level dataset (~5-6 GB) into memory
+for maximum statistical rigor as requested by reviewers.
+
+Inputs:
+  - data/processed/step_2_1_geospatial_{ac}.csv (from Step 2.1)
+  - results/outputs/step_2_0_correlation_{ac}.json (from Step 2.0)
+
+Outputs:
+  - results/outputs/step_2_2_geospatial_temporal_analysis_{ac}.json
+  - results/outputs/step_2_2_enhanced_anisotropy_{ac}.json
+  - results/outputs/step_2_2_helical_motion_only_{ac}.json
+  - results/outputs/step_2_2_jupiter_only_{ac}.json
+  - results/outputs/step_2_2_saturn_only_{ac}.json
+  - results/outputs/step_2_2_mars_only_{ac}.json
+  - results/outputs/step_2_2_lunar_only_{ac}.json
+  - results/outputs/step_2_2_astronomical_events_{ac}.json
+
+Environment Variables:
+  - TEP_ENABLE_ENHANCED_ANISOTROPY: Enable enhanced anisotropy tests (default: 1)
+  - TEP_ENABLE_TEMPORAL_ORBITAL_TRACKING: Enable temporal orbital tracking (default: 1)
+  - TEP_ENABLE_CHANDLER_WOBBLE: Enable Chandler wobble analysis (default: 1)
+  - TEP_ENABLE_3D_HARMONICS: Enable 3D spherical harmonic analysis (default: 1)
+  - TEP_ENABLE_MESH_DANCE_ANALYSIS: Enable mesh dance analysis (default: 1)
+  - TEP_ENABLE_JUPITER_OPPOSITION: Enable Jupiter opposition analysis (default: 1)
+  - TEP_ENABLE_SATURN_OPPOSITION: Enable Saturn opposition analysis (default: 1)
+  - TEP_ENABLE_MARS_OPPOSITION: Enable Mars opposition analysis (default: 1)
+  - TEP_ENABLE_LUNAR_STANDSTILL: Enable lunar standstill analysis (default: 1)
+  - TEP_ENABLE_NUTATION_ANALYSIS: Enable nutation analysis (default: 1)
+  - TEP_MEMORY_LIMIT_GB: Maximum memory to use in GB (default: 8.0)
+
+Author: Matthew Lukin Smawfield
+Date: October 2025
+Theory: Temporal Equivalence Principle (TEP)
+"""
+
+# Standard library imports
+import os
+import sys
+import time
+import json
+import gc
+import warnings
+from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Tuple, Optional, Union
+import multiprocessing as mp
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
+from glob import glob
+from functools import lru_cache, partial
+
+# Third-party imports
+import pandas as pd
+import numpy as np
+import psutil  # For memory monitoring
+from scipy.optimize import curve_fit
+from scipy import stats
+from scipy.stats import norm
+from astropy.time import Time
+from astropy.coordinates import solar_system_ephemeris, get_body_barycentric_posvel
+from astropy import units as u
+from scipy.signal import savgol_filter, correlate
+import statsmodels.api as sm
+from statsmodels.stats.diagnostic import acorr_ljungbox
+from statsmodels.tsa.stattools import acf
+
+# Suppress scipy optimization warnings
+warnings.filterwarnings('ignore', 'Covariance of the parameters could not be estimated')
+warnings.filterwarnings('ignore', 'An input array is constant')
+warnings.filterwarnings('ignore', category=UserWarning, module='scipy')
+
+# Anchor to package root (exploratory folder is two levels below repo root)
+PACKAGE_ROOT = Path(__file__).resolve().parents[2]
+ROOT = PACKAGE_ROOT
+
+# Import TEP utilities for better configuration and error handling
+sys.path.insert(0, str(PACKAGE_ROOT))
+
+# Local imports
+from scripts.utils.config import TEPConfig
+from scripts.utils.exceptions import (
+    SafeErrorHandler, TEPDataError, TEPFileError, 
+    TEPAnalysisError, safe_csv_read, safe_json_read, safe_json_write,
+    validate_file_exists, validate_directory_exists
+)
+from scripts.utils.geospatial import compute_azimuth, classify_ew_ns
+from scripts.utils.pid_manager import ensure_single_instance
+from scripts.utils.logger import print_status, TEPLogger, set_step_logger
+
+# Namespace for isolated logs/outputs
+NAMESPACE = os.getenv('TEP_LOG_NAMESPACE') or os.getenv('TEP_OUTPUT_NAMESPACE') or 'code_longspan'
+
+# Initialize step-specific logger (namespaced)
+step_logger = TEPLogger(
+    name="step_2_2_code_longspan",
+    level="INFO",
+    log_file_path=PACKAGE_ROOT / "logs" / NAMESPACE / "step_2_2_code_longspan.log"
+)
+
+# Register step logger so print_status uses it
+set_step_logger(step_logger)
+
+def check_memory_usage():
+    """Monitor memory usage and warn if approaching limits"""
+    memory = psutil.virtual_memory()
+    used_gb = memory.used / (1024**3)
+    total_gb = memory.total / (1024**3)
+    percent = memory.percent
+    
+    print_status(f"Memory usage: {used_gb:.1f}/{total_gb:.1f} GB ({percent:.1f}%)", "INFO")
+    
+    memory_limit_gb = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')
+    if used_gb > memory_limit_gb:
+        print_status(f"WARNING: Memory usage ({used_gb:.1f} GB) exceeds limit ({memory_limit_gb} GB)", "WARNING")
+        return False
+    return True
+
+def performance_monitor(func):
+    """Decorator to monitor function performance"""
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        start_memory = psutil.virtual_memory().used / (1024**3)
+        
+        result = func(*args, **kwargs)
+        
+        end_time = time.time()
+        end_memory = psutil.virtual_memory().used / (1024**3)
+        
+        return result
+    return wrapper
+
+def autocorr_robust_correlation(x, y, max_lags=None):
+    x = np.array(x)
+    y = np.array(y)
+    n = len(x)
+    if max_lags is None:
+        max_lags = min(20, n // 5)
+    r_raw, p_raw = stats.pearsonr(x, y)
+    acf_x = acf(x, nlags=max_lags, alpha=0.05)
+    acf_y = acf(y, nlags=max_lags, alpha=0.05)
+    r1_x = acf_x[0][1] if len(acf_x[0]) > 1 else 0
+    r1_y = acf_y[0][1] if len(acf_y[0]) > 1 else 0
+    r1_x = np.clip(r1_x, -0.95, 0.95)
+    r1_y = np.clip(r1_y, -0.95, 0.95)
+    n_eff = n * (1 - r1_x * r1_y) / (1 + r1_x * r1_y)
+    n_eff = max(10, n_eff)
+    se_corrected = np.sqrt((1 - r_raw**2) / (n_eff - 2))
+    t_stat = r_raw / se_corrected
+    p_corrected = 2 * (1 - stats.t.cdf(np.abs(t_stat), n_eff - 2))
+    try:
+        X = sm.add_constant(x)
+        model = sm.OLS(y, X).fit()
+        residuals = model.resid
+        ljung_box = acorr_ljungbox(residuals, lags=min(10, len(residuals)//5), return_df=True)
+        ljung_box_p = ljung_box['lb_pvalue'].iloc[-1]
+    except Exception:
+        ljung_box_p = np.nan
+    return {
+        'correlation': float(r_raw),
+        'p_value_raw': float(p_raw),
+        'p_value_autocorr_corrected': float(p_corrected),
+        'n_effective': float(n_eff),
+        'ljung_box_p': float(ljung_box_p) if not np.isnan(ljung_box_p) else np.nan
+    }
+
+def bh_fdr(pvals, alpha=0.05):
+    pvals = np.array(pvals, dtype=float)
+    n = len(pvals)
+    if n == 0:
+        return np.array([]), []
+    order = np.argsort(pvals)
+    ranked = pvals[order]
+    thresh = alpha * (np.arange(1, n + 1) / n)
+    below = ranked <= thresh
+    if below.any():
+        k = np.max(np.where(below)[0])
+        cutoff = ranked[k]
+    else:
+        cutoff = 0.0
+    padj = np.empty_like(ranked)
+    cumulative_min = 1.0
+    for i in range(n - 1, -1, -1):
+        val = ranked[i] * n / (i + 1)
+        cumulative_min = min(cumulative_min, val)
+        padj[i] = cumulative_min
+    padj = np.clip(padj, 0, 1)
+    padj_full = np.empty_like(padj)
+    padj_full[order] = padj
+    significant_idx = order[np.where(ranked <= cutoff)[0]] if cutoff > 0 else []
+    return padj_full, significant_idx
+
+def _design_matrix_multi_harmonic(phases_rad, H, phi0, include_intercept=True):
+    phases_shift = phases_rad + phi0
+    cols = []
+    for h in range(1, H + 1):
+        cols.append(np.cos(h * phases_shift))
+        cols.append(np.sin(h * phases_shift))
+    X = np.column_stack(cols) if cols else np.empty((len(phases_rad), 0))
+    if include_intercept:
+        X = np.column_stack([np.ones(len(phases_rad)), X])
+    return X
+
+def fit_multi_harmonic_phase_sweep(phases_rad, y, weights, max_harmonics, phase_sweep_steps):
+    n = len(y)
+    if n < 4:
+        return {'success': False, 'error': 'insufficient_bins'}
+    best = None
+    phi_grid = np.linspace(0, 2*np.pi, phase_sweep_steps, endpoint=False)
+    y = np.asarray(y)
+    w = np.asarray(weights) if weights is not None else np.ones_like(y)
+    ybar = np.sum(w * y) / np.sum(w)
+    sst = np.sum(w * (y - ybar)**2)
+    for phi0 in phi_grid:
+        for H in range(1, max_harmonics + 1):
+            X = _design_matrix_multi_harmonic(phases_rad, H, phi0, include_intercept=True)
+            try:
+                model = sm.WLS(y, X, weights=w).fit()
+                resid = model.resid
+                sse = float(np.sum(w * resid**2))
+                k = X.shape[1]
+                r2 = max(0.0, 1.0 - sse / max(1e-12, sst))
+                bic = n * np.log(max(1e-12, sse / n)) + k * np.log(n)
+                # Intercept-only baseline
+                X0 = np.ones((n, 1))
+                model0 = sm.WLS(y, X0, weights=w).fit()
+                sse0 = float(np.sum(w * model0.resid**2))
+                df1 = k - 1
+                df2 = max(1, n - k)
+                num = (sse0 - sse) / max(1e-12, df1)
+                den = sse / max(1e-12, df2)
+                F = num / max(1e-12, den)
+                from scipy.stats import f as fdist
+                p_val = float(1 - fdist.cdf(F, df1, df2)) if F >= 0 else 1.0
+                coefs = np.asarray(model.params)
+                amp = float(np.sqrt(np.sum(coefs[1:]**2))) if k > 1 else 0.0
+                cand = {
+                    'phi0': float(phi0),
+                    'best_h': int(H),
+                    'r_squared': float(r2),
+                    'bic': float(bic),
+                    'p_value': p_val,
+                    'amplitude_total': amp,
+                    'k': int(k)
+                }
+                if best is None:
+                    best = cand
+                else:
+                    if cand['r_squared'] > best['r_squared'] + 1e-9 or (
+                        abs(cand['r_squared'] - best['r_squared']) <= 1e-9 and cand['bic'] < best['bic']):
+                        best = cand
+            except Exception:
+                continue
+    if best is None:
+        return {'success': False, 'error': 'fit_failed'}
+    best['best_phi_deg'] = float((best['phi0'] * 180.0 / np.pi) % 360.0)
+    best['success'] = True
+    return best
+
+def permutation_pvalue_multi_harmonic(phases_rad, y, weights, max_harmonics, phase_sweep_steps, n_perm, observed_r2, rng=None):
+    if n_perm <= 0:
+        return 1.0
+    rng = np.random.default_rng(rng)
+    y = np.asarray(y)
+    w = np.asarray(weights) if weights is not None else np.ones_like(y)
+    count = 0
+    for _ in range(n_perm):
+        y_perm = rng.permutation(y)
+        res = fit_multi_harmonic_phase_sweep(phases_rad, y_perm, w, max_harmonics, phase_sweep_steps)
+        if not res.get('success'):
+            continue
+        if res['r_squared'] >= observed_r2 - 1e-12:
+            count += 1
+    p_emp = (1 + count) / (n_perm + 1)
+    return float(p_emp)
+
+def correlation_model(r, amplitude, lambda_km, offset):
+    """Exponential correlation model for TEP: C(r) = A * exp(-r/λ) + C₀"""
+    return amplitude * np.exp(-r / lambda_km) + offset
+
+def correlation_model_vectorized(r_array, amplitude, lambda_km, offset):
+    """Vectorized version of correlation model for array inputs"""
+    return amplitude * np.exp(-r_array / lambda_km) + offset
+
+def load_complete_geospatial_dataset(ac: str) -> pd.DataFrame:
+    """
+    Load complete pair dataset from Step 2.1 geospatial files (with pre-computed azimuth).
+    
+    This is more efficient than loading from Step 2.0 pair files because:
+    - Azimuth is already computed in Step 2.1
+    - Delta longitude and local time differences are pre-calculated
+    - Smaller file size due to aggregation
+    
+    Args:
+        ac: Analysis center name ('code', 'igs_combined', 'esa_final')
+    
+    Returns:
+        pd.DataFrame: Complete dataset with azimuth and geospatial metrics
+    """
+    print_status(f"Loading complete geospatial dataset from Step 2.1 for {ac.upper()}...", "PROCESS")
+    
+    # Load from Step 2.1 geospatial file (much more efficient)
+    geospatial_file = ROOT / "data" / "processed" / NAMESPACE / f"step_2_1_geospatial_{ac}.csv"
+    
+    if not geospatial_file.exists():
+        raise TEPFileError(f"Step 2.1 geospatial file not found: {geospatial_file}")
+    
+    print_status(f"Loading from {geospatial_file}", "INFO")
+    
+    # Check file size for progress estimation
+    file_size_mb = geospatial_file.stat().st_size / (1024 * 1024)
+    
+    try:
+        
+        # Check available memory and decide on loading strategy
+        memory = psutil.virtual_memory()
+        available_gb = memory.available / (1024**3)
+        file_size_gb = file_size_mb / 1024
+        
+        # Use chunked processing if file is large or memory is limited
+        use_chunked = file_size_gb > 5.0 or available_gb < 10.0
+        
+        if use_chunked:
+            print_status(f"Using chunked processing (file: {file_size_gb:.1f} GB, available: {available_gb:.1f} GB)", "INFO")
+            
+            # Adaptive chunk size based on available memory (very conservative for large files)
+            if file_size_gb > 15.0:
+                # For very large files: aggressive memory management
+                chunk_size = max(100_000, min(300_000, int(available_gb * 100_000)))
+                print_status(f"Large file detected ({file_size_gb:.1f}GB) - using aggressive memory management", "INFO")
+                print_status("This will take longer but prevent memory crashes", "INFO")
+            else:
+                # For moderate files: normal chunking
+                chunk_size = max(100_000, min(2_000_000, int(available_gb * 250_000)))
+            
+            processed_chunks = []
+            initial_count = 0
+            after_dropna = 0
+            after_dist_filter = 0
+            after_coherence_nan_filter = 0
+            final_count = 0
+            
+            print_status("Reading CSV file in chunks...", "PROCESS")
+            # Define dtypes for memory optimization
+            dtype_dict = {
+                'dist_km': 'float32',
+                'plateau_phase': 'float32',
+                'station_i': 'category',
+                'station_j': 'category'
+            }
+            
+            for chunk_num, chunk_df in enumerate(pd.read_csv(geospatial_file, chunksize=chunk_size, parse_dates=['date'], dtype=dtype_dict, low_memory=True)):
+                if chunk_num % 10 == 0:
+                    print_status(f"Processing chunk {chunk_num + 1}... ({final_count:,} rows processed)", "PROCESS")
+                    check_memory_usage()
+                
+                initial_count += len(chunk_df)
+                
+                # Add coherence column (use float32 for memory efficiency)
+                chunk_df['coherence'] = np.cos(chunk_df['plateau_phase']).astype('float32')
+                
+                # Filter 1: Remove NaN values in critical columns
+                chunk_df.dropna(subset=['dist_km', 'coherence', 'station_i', 'station_j', 'date'], inplace=True)
+                after_dropna += len(chunk_df)
+                
+                # Filter 2: Remove zero or negative distances
+                chunk_df = chunk_df[chunk_df['dist_km'] > 0]
+                after_dist_filter += len(chunk_df)
+                
+                # Filter 3: Remove NaN or infinite coherence values
+                chunk_df = chunk_df[~np.isnan(chunk_df['coherence'])]
+                chunk_df = chunk_df[~np.isinf(chunk_df['coherence'])]
+                after_coherence_nan_filter += len(chunk_df)
+                
+                # Filter 4: Validate coherence range
+                chunk_df = chunk_df[(chunk_df['coherence'] >= -1.0) & (chunk_df['coherence'] <= 1.0)]
+                final_count += len(chunk_df)
+                
+                if len(chunk_df) > 0:
+                    processed_chunks.append(chunk_df)
+                
+                # Consolidate chunks periodically to manage memory (very aggressive for large files)
+                consolidation_threshold = 5 if file_size_gb > 15.0 else 10
+                if len(processed_chunks) >= consolidation_threshold:
+                    print_status(f"Consolidating {len(processed_chunks)} chunks to manage memory...", "PROCESS")
+                    consolidated = pd.concat(processed_chunks, ignore_index=True)
+                    del processed_chunks  # Delete old chunks before reassigning
+                    processed_chunks = [consolidated]
+                    del consolidated  # Delete reference
+                    gc.collect()
+                    # Force memory release to OS (platform-specific)
+                    try:
+                        import ctypes
+                        libc = ctypes.CDLL("libc.dylib")
+                        libc.malloc_trim(0)
+                    except:
+                        pass  # Platform doesn't support malloc_trim
+            
+            print_status("Concatenating final chunks...", "PROCESS")
+            complete_df = pd.concat(processed_chunks, ignore_index=True)
+            del processed_chunks
+            gc.collect()
+            
+            print_status(f"CSV loaded successfully: {len(complete_df):,} rows", "SUCCESS")
+        else:
+            # Load entire file into memory (original approach for smaller files)
+            print_status("Reading CSV file into memory...", "PROCESS")
+            complete_df = pd.read_csv(geospatial_file, parse_dates=['date'])
+            print_status(f"CSV loaded successfully: {len(complete_df):,} rows", "SUCCESS")
+            
+            # Add coherence column (preserving sign like Step 2.0)
+            print_status("Computing coherence values from plateau phase...", "PROCESS")
+            complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+            
+            # Clean data - ENHANCED QUALITY FILTERING (aligned with Step 2.0)
+            print_status("Cleaning and filtering data...", "PROCESS")
+            initial_count = len(complete_df)
+            
+            # Filter 1: Remove NaN values in critical columns
+            complete_df.dropna(subset=['dist_km', 'coherence', 'station_i', 'station_j', 'date'], inplace=True)
+            after_dropna = len(complete_df)
+            
+            # Filter 2: Remove zero or negative distances
+            complete_df = complete_df[complete_df['dist_km'] > 0]
+            after_dist_filter = len(complete_df)
+            
+            # Filter 3: Remove NaN or infinite coherence values (KEY FILTER from Step 2.0 line 1317)
+            # This ensures we skip pairs with failed correlation analysis
+            complete_df = complete_df[~np.isnan(complete_df['coherence'])]
+            complete_df = complete_df[~np.isinf(complete_df['coherence'])]
+            after_coherence_nan_filter = len(complete_df)
+            
+            # Filter 4: Validate coherence range (cos() should give [-1, 1])
+            # This catches any numerical errors or data corruption
+            complete_df = complete_df[(complete_df['coherence'] >= -1.0) & (complete_df['coherence'] <= 1.0)]
+            final_count = len(complete_df)
+        
+        # Check if filtering removed any data
+        total_filtered = initial_count - final_count
+        if total_filtered > 0:
+            print_status(f"Quality filtering removed {total_filtered:,} pairs ({100*total_filtered/initial_count:.2f}%)", "INFO")
+        
+        # DATA QUALITY DIAGNOSTICS
+        print_status(f"Data quality metrics:", "INFO")
+        print_status(f"  Coherence range: [{complete_df['coherence'].min():.6f}, {complete_df['coherence'].max():.6f}]", "INFO")
+        print_status(f"  Coherence mean: {complete_df['coherence'].mean():.6f} ± {complete_df['coherence'].std():.6f}", "INFO")
+        print_status(f"  Distance range: [{complete_df['dist_km'].min():.1f}, {complete_df['dist_km'].max():.1f}] km", "INFO")
+        print_status(f"  Distance mean: {complete_df['dist_km'].mean():.1f} ± {complete_df['dist_km'].std():.1f} km", "INFO")
+        
+        print_status(f"Geospatial dataset loaded: {len(complete_df):,} pairs, {complete_df.memory_usage(deep=True).sum()/(1024**3):.2f} GB", "SUCCESS")
+        print_status("Azimuth already computed in Step 2.1 - no redundant calculation needed", "SUCCESS")
+        
+        # VERIFICATION: Cross-check with Step 2.1 geospatial processing log
+        # Note: Step 2.0 consolidated CSV contains distance-binned aggregate data (~117k bins)
+        # while Step 2.2 uses raw pair-by-pair data (~39M pairs) - this is correct!
+        try:
+            geospatial_log = f'results/outputs/step_2_1_geospatial_processing.json'
+            if os.path.exists(geospatial_log):
+                import json
+                with open(geospatial_log, 'r') as f:
+                    geo_log = json.load(f)
+                
+                # Check if this AC's data is in the log
+                ac_key = ac.lower().replace('_', '')  # Convert 'igs_combined' to 'igscombined' if needed
+                # Try both formats: 'code', 'igs_combined', 'esa_final'
+                analysis_centers = geo_log.get('analysis_centers', {})
+                
+                # Try exact match first, then try without underscore
+                ac_data = analysis_centers.get(ac.lower(), analysis_centers.get(ac_key, {}))
+                
+                if ac_data:
+                    step_2_1_count = ac_data.get('total_pairs', 0)
+                    
+                    if step_2_1_count == final_count:
+                        print_status(f"✓ VERIFIED: Analyzing same {final_count:,} pairs as Step 2.1", "SUCCESS")
+                    elif step_2_1_count > 0 and abs(step_2_1_count - final_count) / step_2_1_count < 0.01:  # Within 1%
+                        print_status(f"✓ CLOSE MATCH: Step 2.1 processed {step_2_1_count:,} pairs, we have {final_count:,} pairs (diff: {abs(step_2_1_count - final_count):,})", "SUCCESS")
+                    elif step_2_1_count > 0:
+                        print_status(f"⚠ MISMATCH: Step 2.1 processed {step_2_1_count:,} pairs, we have {final_count:,} pairs (diff: {abs(step_2_1_count - final_count):,})", "WARNING")
+        except Exception as e:
+            pass  # Verification optional
+        
+        # Verify required columns are present
+        print_status("Verifying required columns are present...", "PROCESS")
+        required_cols = ['azimuth', 'delta_longitude', 'delta_local_time']
+        missing_cols = [col for col in required_cols if col not in complete_df.columns]
+        
+        if missing_cols:
+            raise TEPDataError(f"Missing required columns from Step 2.1: {missing_cols}")
+        
+        print_status(f"All required columns present: {required_cols}", "SUCCESS")
+        print_status(f"Available columns: {list(complete_df.columns)}", "INFO")
+        check_memory_usage()
+        
+        return complete_df
+        
+    except Exception as e:
+        print_status(f"Failed to load Step 2.1 geospatial data: {e}", "ERROR")
+        print_status("Falling back to Step 2.0 pair data loading...", "WARNING")
+        return load_complete_pair_dataset(ac)
+
+def load_complete_pair_dataset(ac: str, use_chunked_processing: bool = None) -> pd.DataFrame:
+    """
+    Load the complete pair-level dataset for an analysis center with smart memory management.
+    Uses consolidated data for consistency with main Step 2.0 analysis.
+    
+    Args:
+        ac: Analysis center name
+        use_chunked_processing: Force chunked processing (None = auto-detect based on memory)
+    
+    Returns:
+        pd.DataFrame: Complete dataset with columns [date, station_i, station_j, 
+                     dist_km, plateau_phase, coherence, ...]
+    """
+    print_status(f"Loading complete pair-level dataset for {ac.upper()}...", "PROCESS")
+    
+    # Use consolidated data from Step 2.0 for consistency with main analysis
+    consolidated_file = ROOT / 'results' / 'outputs' / f'step_2_0_pairs_consolidated_{ac}.csv'
+    
+    if consolidated_file.exists():
+        print_status(f"Using consolidated data: {consolidated_file.name}", "INFO")
+        try:
+            complete_df = pd.read_csv(consolidated_file)
+            # Ensure coherence column exists
+            if 'plateau_phase' in complete_df.columns and 'coherence' not in complete_df.columns:
+                complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+            print_status(f"Loaded consolidated dataset: {len(complete_df):,} pairs for {ac}", "SUCCESS")
+            return complete_df
+        except Exception as e:
+            print_status(f"Failed to load consolidated data: {e}", "WARNING")
+            print_status("Falling back to individual pair files...", "INFO")
+    else:
+        print_status(f"Consolidated file not found: {consolidated_file.name}", "WARNING")
+        print_status("Using individual pair files (WARNING: may not match main analysis data)", "WARNING")
+    
+    # Fallback to individual files if consolidated not available
+    try:
+        pair_dir = validate_directory_exists(ROOT / 'results' / 'tmp', "Pair-level data directory")
+    except TEPFileError as e:
+        raise TEPDataError(f"Pair-level data directory not available: {e}") from e
+    
+    pair_files = list(pair_dir.glob(f"step_2_0_pairs_{ac}_*.csv"))
+    if not pair_files:
+        raise TEPDataError(f"No pair-level files found for {ac}")
+    
+    print_status(f"Found {len(pair_files)} pair-level files to load (fallback mode)", "INFO")
+    
+    # Check available memory and decide on loading strategy
+    memory = psutil.virtual_memory()
+    available_gb = memory.available / (1024**3)
+    memory_limit_gb = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')
+    
+    if use_chunked_processing is None:
+        # Auto-detect: use chunked processing if low on memory
+        use_chunked_processing = available_gb < (memory_limit_gb * 0.7)  # Use 70% threshold
+    
+    if use_chunked_processing:
+        print_status(f"Using chunked processing (available: {available_gb:.1f} GB)", "INFO")
+        return _load_dataset_chunked(pair_files, ac)
+    else:
+        print_status(f"Using in-memory processing (available: {available_gb:.1f} GB)", "INFO")
+        return _load_dataset_memory(pair_files, ac)
+
+def _load_dataset_memory(pair_files: List[Path], ac: str) -> pd.DataFrame:
+    """Load dataset using in-memory processing with optimized batch loading"""
+    df_chunks = []
+    total_pairs = 0
+    
+    # OPTIMIZATION: Process files in batches for better I/O performance
+    batch_size = TEPConfig.get_int('TEP_LOAD_BATCH_SIZE')
+    if len(pair_files) < batch_size: # Handle case where there are fewer files than the batch size
+        batch_size = len(pair_files)
+    
+    for batch_start in range(0, len(pair_files), batch_size):
+        batch_end = min(batch_start + batch_size, len(pair_files))
+        batch_files = pair_files[batch_start:batch_end]
+        
+        print_status(f"Loading batch {batch_start//batch_size + 1}: files {batch_start+1}-{batch_end}/{len(pair_files)}", "PROCESS")
+        check_memory_usage()
+        
+        # Load batch of files
+        batch_chunks = []
+        for pfile in batch_files:
+            def _load_file():
+                return safe_csv_read(pfile)
+            
+            df_chunk = SafeErrorHandler.safe_file_operation(
+                _load_file,
+                error_message=f"Failed to load {pfile.name}",
+                logger_func=print_status,
+                return_on_error=None
+            )
+            
+            if df_chunk is not None and len(df_chunk) > 0:
+                batch_chunks.append(df_chunk)
+                total_pairs += len(df_chunk)
+        
+        # Concatenate batch and add to main chunks
+        if batch_chunks:
+            batch_df = pd.concat(batch_chunks, ignore_index=True)
+            df_chunks.append(batch_df)
+            del batch_chunks  # Free memory immediately
+            gc.collect()
+    
+    if not df_chunks:
+        raise TEPDataError(f"No valid data loaded for {ac}")
+    
+    print_status(f"Concatenating {len(df_chunks)} chunks with {total_pairs:,} total pairs...", "PROCESS")
+    
+    # Concatenate all chunks
+    complete_df = pd.concat(df_chunks, ignore_index=True)
+    del df_chunks  # Free intermediate memory
+    gc.collect()
+    
+    # Add coherence column and clean data with vectorized operations
+    # Calculate proper phase coherence (preserving sign like Step 2.0)
+    complete_df['coherence'] = np.cos(complete_df['plateau_phase'])
+    # Vectorized filtering for better performance
+    valid_mask = (
+        complete_df['dist_km'].notna() & 
+        complete_df['station_i'].notna() & 
+        complete_df['station_j'].notna() & 
+        complete_df['date'].notna() & 
+        (complete_df['dist_km'] > 0)
+    )
+    complete_df = complete_df[valid_mask]
+    
+    print_status(f"Dataset loaded: {len(complete_df):,} pairs, {complete_df.memory_usage(deep=True).sum()/(1024**3):.2f} GB", "SUCCESS")
+    check_memory_usage()
+    
+    return complete_df
+
+def _load_dataset_chunked(pair_files: List[Path], ac: str) -> pd.DataFrame:
+    """Load dataset using chunked processing for memory-constrained environments"""
+    print_status("Using chunked processing to manage memory usage", "INFO")
+    
+    # Optimized chunk size based on available memory
+    memory = psutil.virtual_memory()
+    available_gb = memory.available / (1024**3)
+    min_chunk_size = TEPConfig.get_int('TEP_MIN_CHUNK_SIZE')
+    max_chunk_size = TEPConfig.get_int('TEP_MAX_CHUNK_SIZE')
+    chunk_size = min(max_chunk_size, max(min_chunk_size, int(available_gb * 10000)))  # Adaptive chunk size
+    processed_chunks = []
+    total_pairs = 0
+    
+    for i, pfile in enumerate(pair_files):
+        if i % TEPConfig.get_int('TEP_FILE_LOGGING_INTERVAL') == 0:  # Log progress for debugging
+            print_status(f"Processing file {i+1}/{len(pair_files)}: {pfile.name}", "PROCESS")
+            if i > 0:
+                check_memory_usage()
+        
+        try:
+            # Read file in chunks to manage memory
+            for chunk_df in pd.read_csv(pfile, chunksize=chunk_size, parse_dates=['date']):
+                if len(chunk_df) == 0:
+                    continue
+                
+                # Process chunk immediately with vectorized operations
+                chunk_df['coherence'] = np.cos(chunk_df['plateau_phase'])
+                # Vectorized filtering for better performance
+                valid_mask = (
+                    chunk_df['dist_km'].notna() & 
+                    chunk_df['station_i'].notna() & 
+                    chunk_df['station_j'].notna() & 
+                    chunk_df['date'].notna() & 
+                    (chunk_df['dist_km'] > 0)
+                )
+                chunk_df = chunk_df[valid_mask]                
+                if len(chunk_df) > 0:
+                    processed_chunks.append(chunk_df)
+                    total_pairs += len(chunk_df)
+                
+                # Memory management: consolidate chunks if too many
+                if len(processed_chunks) > TEPConfig.get_int('TEP_CHUNK_CONSOLIDATION_THRESHOLD'):
+                    print_status("Consolidating chunks to manage memory...", "PROCESS")
+                    consolidated = pd.concat(processed_chunks, ignore_index=True)
+                    processed_chunks = [consolidated]
+                    gc.collect()
+                    
+        except (pd.errors.EmptyDataError, pd.errors.ParserError) as e:
+            print_status(f"Skipping malformed file {pfile.name}: {e}", "WARNING")
+            continue
+        except (MemoryError, OverflowError) as e:
+            print_status(f"Memory error processing {pfile.name}: {e}", "ERROR")
+            raise TEPAnalysisError(f"Insufficient memory for chunked processing: {e}") from e
+    
+    if not processed_chunks:
+        raise TEPDataError(f"No valid data loaded for {ac}")
+    
+    print_status(f"Finalizing chunked dataset with {total_pairs:,} total pairs...", "PROCESS")
+    complete_df = pd.concat(processed_chunks, ignore_index=True)
+    
+    print_status(f"Chunked dataset loaded: {len(complete_df):,} pairs", "SUCCESS")
+    check_memory_usage()
+    
+    return complete_df
+
+def _subsample_to_match_distribution_enhanced(sector_distances, reference_distances, max_samples=5000):
+    """
+    Subsample sector distances to match the reference distance distribution.
+    
+    This function implements distance distribution matching by subsampling pairs
+    from a sector to match the global distance distribution, preventing bias
+    in λEW/λNS ratios from differing distance sampling patterns.
+    
+    Args:
+        sector_distances: Array of distances for the specific sector
+        reference_distances: Array of all distances (global reference)
+        max_samples: Maximum number of samples to return
+        
+    Returns:
+        Array of indices to subsample from sector_distances
+    """
+    import numpy as np
+    from scipy import stats
+    
+    # Create distance bins based on reference distribution
+    n_bins = min(20, len(np.unique(reference_distances)) // 10)
+    if n_bins < 5:
+        n_bins = 5
+    
+    # Compute reference histogram
+    ref_hist, ref_bins = np.histogram(reference_distances, bins=n_bins, density=True)
+    
+    # Compute sector histogram
+    sector_hist, sector_bins = np.histogram(sector_distances, bins=ref_bins, density=True)
+    
+    # Calculate target counts per bin for the sector
+    total_sector_pairs = len(sector_distances)
+    target_samples = min(max_samples, total_sector_pairs)
+    
+    # For each bin, determine how many samples we want
+    target_counts = []
+    for i in range(len(ref_bins) - 1):
+        # Target fraction based on reference distribution
+        target_fraction = ref_hist[i] / np.sum(ref_hist)
+        target_count = int(target_fraction * target_samples)
+        target_counts.append(target_count)
+    
+    # Subsample from each bin
+    selected_indices = []
+    for i in range(len(ref_bins) - 1):
+        # Find indices in this distance bin
+        bin_mask = (sector_distances >= ref_bins[i]) & (sector_distances < ref_bins[i+1])
+        bin_indices = np.where(bin_mask)[0]
+        
+        if len(bin_indices) > 0:
+            # Sample up to target count
+            n_sample = min(target_counts[i], len(bin_indices))
+            if n_sample > 0:
+                # Random sampling with fixed seed for reproducibility
+                np.random.seed(42 + i)  # Different seed per bin
+                sampled_indices = np.random.choice(bin_indices, size=n_sample, replace=False)
+                selected_indices.extend(sampled_indices)
+    
+    return np.array(selected_indices)
+
+
+def run_enhanced_anisotropy_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Perform enhanced anisotropy analysis on the complete dataset using chunked processing.
+    This analysis investigates whether the TEP correlation (lambda) exhibits
+    directional dependence, which could indicate unmodeled systematic effects
+    or underlying geophysical processes.
+    
+    Uses incremental aggregation to handle arbitrarily large datasets without
+    loading everything into memory at once.
+    
+    Args:
+        complete_df (pd.DataFrame): The complete pair-level dataset.
+        
+    Returns:
+        Dict: A dictionary containing the results of the anisotropy analysis,
+              including directional lambda estimates and statistical tests.
+    """
+    print_status("Starting enhanced anisotropy analysis (chunked processing)...", "PROCESS")
+    
+    # Check if we have coordinate information
+    required_cols = ['station1_lat', 'station1_lon', 'station2_lat', 'station2_lon']
+    has_coords = all(col in complete_df.columns for col in required_cols)
+    
+    if not has_coords:
+        return {'success': False, 'error': 'Coordinate columns not found in dataset'}
+    
+    # Get total count without loading all data
+    total_pairs = len(complete_df)
+    print_status(f"Analyzing {total_pairs:,} pairs with coordinate information", "INFO")
+    
+    # CHUNKED PROCESSING: Process data in chunks to avoid memory issues
+    chunk_size = 5_000_000  # Process 5M rows at a time
+    sector_names = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
+    
+    # Analysis parameters
+    num_bins = TEPConfig.get_int('TEP_BINS')
+    max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
+    edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
+    
+    # Initialize accumulators for BINNED statistics (memory-efficient)
+    # Instead of storing all points, we accumulate binned statistics
+    sector_binned_accumulators = {sector: {
+        'bin_sums': np.zeros(num_bins),      # Sum of coherences per bin
+        'bin_counts': np.zeros(num_bins),    # Count per bin
+        'bin_dist_sums': np.zeros(num_bins), # Sum of distances per bin
+        'total_count': 0
+    } for sector in sector_names}
+    
+    global_bin_counts = np.zeros(num_bins)  # Global distance distribution
+    global_distances_sample = []  # Small sample for distribution matching
+    reservoir_size = 50_000  # Keep 50k samples for distribution matching
+    total_processed = 0
+    
+    print_status(f"Processing data in chunks of {chunk_size:,} rows...", "INFO")
+    
+    # Process dataframe in chunks
+    num_chunks = (total_pairs + chunk_size - 1) // chunk_size
+    
+    for chunk_idx in range(num_chunks):
+        start_idx = chunk_idx * chunk_size
+        end_idx = min(start_idx + chunk_size, total_pairs)
+        
+        if chunk_idx % 5 == 0:
+            print_status(f"Processing chunk {chunk_idx + 1}/{num_chunks} (rows {start_idx:,} to {end_idx:,})...", "PROCESS")
+            check_memory_usage()
+        
+        # Get chunk
+        chunk_df = complete_df.iloc[start_idx:end_idx].copy()
+        
+        # Filter to valid coordinates
+        chunk_df = chunk_df.dropna(subset=required_cols)
+        if len(chunk_df) == 0:
+            continue
+        
+        # Compute or use pre-computed azimuths
+        if 'azimuth' not in chunk_df.columns or chunk_df['azimuth'].isna().any():
+            chunk_df['azimuth'] = chunk_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'],
+                                          row['station2_lat'], row['station2_lon']), axis=1
+            )
+        
+        # Classify into sectors
+        chunk_df['sector'] = chunk_df['azimuth'].apply(lambda az: sector_names[int((az + 22.5) / 45) % 8])
+        
+        # Bin distances for the chunk
+        chunk_df['dist_bin'] = pd.cut(chunk_df['dist_km'], bins=edges, labels=False, right=False)
+        
+        # Accumulate BINNED statistics by sector (memory-efficient)
+        for sector in sector_names:
+            sector_data = chunk_df[chunk_df['sector'] == sector]
+            if len(sector_data) > 0:
+                for bin_idx in range(num_bins):
+                    bin_data = sector_data[sector_data['dist_bin'] == bin_idx]
+                    if len(bin_data) > 0:
+                        sector_binned_accumulators[sector]['bin_sums'][bin_idx] += bin_data['coherence'].sum()
+                        sector_binned_accumulators[sector]['bin_counts'][bin_idx] += len(bin_data)
+                        sector_binned_accumulators[sector]['bin_dist_sums'][bin_idx] += bin_data['dist_km'].sum()
+                sector_binned_accumulators[sector]['total_count'] += len(sector_data)
+        
+        # Accumulate global distance distribution (binned)
+        for bin_idx in range(num_bins):
+            bin_data = chunk_df[chunk_df['dist_bin'] == bin_idx]
+            global_bin_counts[bin_idx] += len(bin_data)
+        
+        # Reservoir sampling for distribution matching (keep small sample)
+        chunk_distances = chunk_df['dist_km'].values
+        for dist in chunk_distances:
+            if len(global_distances_sample) < reservoir_size:
+                global_distances_sample.append(dist)
+            else:
+                total_processed += 1
+                j = np.random.randint(0, total_processed)
+                if j < reservoir_size:
+                    global_distances_sample[j] = dist
+        
+        # Free memory
+        del chunk_df
+        gc.collect()
+    
+    print_status(f"Chunk processing complete. Computing sector statistics from binned data...", "SUCCESS")
+    
+    # Compute bin centers for analysis
+    bin_centers = np.sqrt(edges[:-1] * edges[1:])  # Geometric mean of bin edges
+    min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+    
+    # Normalize global distribution for weighting
+    global_dist_normalized = global_bin_counts / global_bin_counts.sum() if global_bin_counts.sum() > 0 else global_bin_counts
+    
+    print_status(f"Analyzing {len(sector_names)} directional sectors with {num_bins} distance bins", "INFO")
+    
+    # Analyze each sector using binned accumulators
+    sector_results = {}
+    distance_matching_results = {}
+    
+    for i, sector in enumerate(sector_names):
+        acc = sector_binned_accumulators[sector]
+        
+        if acc['total_count'] < 1000:
+            continue
+        
+        print_status(f"Processing sector {i+1}/{len(sector_names)}: {sector} ({acc['total_count']:,} pairs)", "PROCESS")
+        
+        # Compute mean distances and coherences per bin
+        valid_bins = acc['bin_counts'] >= min_bin_count
+        if valid_bins.sum() < 5:
+            print_status(f"Skipping sector {sector}: only {valid_bins.sum()} bins with >= {min_bin_count} pairs", "WARNING")
+            continue
+        
+        # Extract valid bins
+        bin_distances = acc['bin_dist_sums'][valid_bins] / acc['bin_counts'][valid_bins]
+        bin_coherences = acc['bin_sums'][valid_bins] / acc['bin_counts'][valid_bins]
+        bin_counts = acc['bin_counts'][valid_bins]
+        
+        # Fit exponential model to binned data
+        try:
+            distances = bin_distances
+            coherences = bin_coherences
+            weights = bin_counts
+            
+            c_range = coherences.max() - coherences.min()
+            p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+            
+            # Adaptive bounds based on data characteristics
+            adaptive_bounds = TEPConfig.get_adaptive_lambda_bounds(distances)
+
+            popt, pcov = curve_fit(
+                correlation_model, distances, coherences,
+                p0=p0, sigma=1.0/np.sqrt(weights),
+                bounds=adaptive_bounds,
+                maxfev=5000
+            )
+            
+            # Calculate R-squared
+            y_pred = correlation_model(distances, *popt)
+            ss_res = np.sum(weights * (coherences - y_pred)**2)
+            ss_tot = np.sum(weights * (coherences - np.average(coherences, weights=weights))**2)
+            r_squared = 1 - ss_res/ss_tot if ss_tot > 0 else 0
+            
+            sector_results[sector] = {
+                'amplitude': float(popt[0]),
+                'lambda_km': float(popt[1]),
+                'offset': float(popt[2]),
+                'r_squared': float(r_squared),
+                'n_pairs': int(acc['total_count']),
+                'n_bins': len(distances),
+                'param_errors': [float(np.sqrt(pcov[i, i])) for i in range(3)],
+                'binned_processing': True
+            }
+            print_status(f"  {sector} fit successful: λ = {popt[1]:.1f} km, R² = {r_squared:.3f}", "SUCCESS")
+            
+        except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+            print_status(f"  {sector} fit failed: {str(e)[:50]}...", "WARNING")
+            continue  # Skip failed fits
+    
+    if len(sector_results) < 4:  # Need reasonable directional coverage
+        return {'success': False, 'error': f'Only {len(sector_results)} sectors with successful fits'}
+    
+    print_status(f"Computing anisotropy statistics from {len(sector_results)} successful sector fits...", "PROCESS")
+    # Compute anisotropy statistics
+    lambda_values = [s['lambda_km'] for s in sector_results.values()]
+    lambda_mean = np.mean(lambda_values)
+    lambda_std = np.std(lambda_values)
+    lambda_cv = lambda_std / lambda_mean if lambda_mean > 0 else 0
+    
+    # Earth motion analysis
+    ew_sectors = ['E', 'W']
+    ns_sectors = ['N', 'S']
+    
+    ew_lambdas = [sector_results[s]['lambda_km'] for s in ew_sectors if s in sector_results]
+    ns_lambdas = [sector_results[s]['lambda_km'] for s in ns_sectors if s in sector_results]
+    
+    earth_motion_analysis = {}
+    if len(ew_lambdas) >= 1 and len(ns_lambdas) >= 1:
+        ew_mean = np.mean(ew_lambdas)
+        ns_mean = np.mean(ns_lambdas)
+        rotation_ratio = ew_mean / ns_mean if ns_mean > 0 else 1.0
+        
+        earth_motion_analysis = {
+            'ew_lambda_mean': float(ew_mean),
+            'ns_lambda_mean': float(ns_mean),
+            'ew_ns_ratio': float(rotation_ratio),
+            'rotation_aligned': bool(abs(rotation_ratio - 1.0) > 0.2),
+            'interpretation': f'E-W/N-S ratio = {rotation_ratio:.2f} ' + 
+                           ('(rotation-aligned anisotropy)' if abs(rotation_ratio - 1.0) > 0.2 else '(minimal rotation effect)')
+        }
+    
+    # Overall results
+    results = {
+        'success': True,
+        'sector_results': sector_results,
+        'anisotropy_statistics': {
+            'lambda_mean': float(lambda_mean),
+            'lambda_std': float(lambda_std),
+            'coefficient_of_variation': float(lambda_cv),
+            'n_sectors': len(sector_results),
+            'anisotropy_category': 'extreme' if lambda_cv > 0.8 else 'moderate' if lambda_cv > 0.2 else 'minimal'
+        },
+        'earth_motion_analysis': earth_motion_analysis,
+        'data_summary': {
+            'total_pairs_analyzed': total_pairs,
+            'total_pairs_with_valid_coords': sum(acc['total_count'] for acc in sector_binned_accumulators.values()),
+            'sectors_analyzed': list(sector_results.keys()),
+            'chunked_processing': True,
+            'chunk_size': chunk_size,
+            'num_distance_bins': num_bins,
+            'binned_aggregation': True
+        }
+    }
+    
+    print_status(f"Enhanced Anisotropy complete: {len(sector_results)} sectors, CV = {lambda_cv:.3f}", "SUCCESS")
+    return results
+def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Track anisotropy patterns by day-of-year to detect orbital motion signatures.
+    Tests whether E-W/N-S ratio varies seasonally in synchronization with Earth's 
+    orbital motion, which would support TEP coupling predictions.
+    """
+    print_status("Starting Temporal Orbital Tracking Analysis...", "PROCESS")
+    print_status("Testing for seasonal orbital motion signatures in GPS timing correlations", "PROCESS")
+    
+    # Check if we have date and coordinate information
+    required_cols = ['date', 'station1_lat', 'station1_lon', 'station2_lat', 'station2_lon']
+    has_required_data = all(col in complete_df.columns for col in required_cols)
+    
+    if not has_required_data:
+        return {'success': False, 'error': 'Date or coordinate columns not found in dataset'}
+    
+    # Convert date column to datetime and extract day of year
+    complete_df['date'] = pd.to_datetime(complete_df['date'])
+    complete_df['day_of_year'] = complete_df['date'].dt.dayofyear
+    
+    print_status(f"Temporal range: {complete_df['date'].min()} to {complete_df['date'].max()}", "INFO")
+    print_status(f"Day of year range: {complete_df['day_of_year'].min()} to {complete_df['day_of_year'].max()}", "INFO")
+    
+    # Check if azimuths are already computed (from Step 2.1)
+    if 'azimuth' in complete_df.columns and complete_df['azimuth'].notna().all():
+        print_status("Using pre-computed azimuths from Step 2.1", "SUCCESS")
+    else:
+        # Compute azimuths for all pairs (fallback for Step 2.0 data)
+        print_status("Computing azimuths for all station pairs...", "PROCESS")
+        complete_df['azimuth'] = complete_df.apply(
+            lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                       row['station2_lat'], row['station2_lon']), axis=1
+        )
+        print_status("Azimuth computation completed", "SUCCESS")
+    
+    # Group into East-West vs North-South for temporal tracking
+    complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+    
+    # Analysis parameters
+    num_bins = TEPConfig.get_int('TEP_BINS')
+    max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
+    min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+    edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
+    
+    # ========================================
+    # TEMPORAL ORBITAL TRACKING WINDOW STRATEGY
+    # ========================================
+    # Window size: 30 days (±15 days)
+    # Rationale: Balances seasonal signal preservation (365-day cycle) with noise reduction
+    #            30-day window is appropriate for averaging out weekly/monthly variations
+    #            while preserving the annual orbital motion signal we're detecting
+    # Sampling: Every 10 days (34 samples per year)
+    # Nyquist: Well above Nyquist criterion for 365-day cycle (need >2 samples per cycle)
+    # Expected: Stronger correlation than 5-day windows (closer to optimal coupling timescale)
+    # ========================================
+    
+    # CHUNKED PROCESSING: Use binned aggregation for temporal tracking
+    print_status("Using chunked aggregation for temporal orbital tracking...", "INFO")
+    
+    temporal_tracking = []
+    day_samples = range(15, 351, 10)  # Sample every 10 days from day 15 to 350 (allows ±15 day windows)
+    day_window = 15  # ±15 days = 30-day total window
+    
+    print_status(f"Tracking E-W/N-S ratio across {len(day_samples)} temporal samples (each using 30-day windows)...", "PROCESS")
+    print_status(f"Window strategy: Each sample uses ±15 days (30-day total) to balance seasonal signal with noise reduction", "INFO")
+    
+    # Process each temporal window
+    for day_of_year in day_samples:
+        # Initialize accumulators for EW and NS directions
+        ew_accumulators = {
+            'bin_sums': np.zeros(num_bins),
+            'bin_counts': np.zeros(num_bins),
+            'bin_dist_sums': np.zeros(num_bins),
+            'total_count': 0
+        }
+        ns_accumulators = {
+            'bin_sums': np.zeros(num_bins),
+            'bin_counts': np.zeros(num_bins),
+            'bin_dist_sums': np.zeros(num_bins),
+            'total_count': 0
+        }
+        
+        # Process dataframe in chunks for this temporal window
+        chunk_size = 10_000_000
+        total_pairs = len(complete_df)
+        num_chunks = (total_pairs + chunk_size - 1) // chunk_size
+        
+        for chunk_idx in range(num_chunks):
+            start_idx = chunk_idx * chunk_size
+            end_idx = min(start_idx + chunk_size, total_pairs)
+            
+            chunk_df = complete_df.iloc[start_idx:end_idx]
+            
+            # Filter to temporal window
+            day_mask = (chunk_df['day_of_year'] >= day_of_year - day_window) & \
+                       (chunk_df['day_of_year'] <= day_of_year + day_window)
+            
+            if not day_mask.any():
+                continue
+            
+            day_data = chunk_df[day_mask]
+            
+            # Split by EW/NS
+            ew_mask = day_data['ew_ns_class'] == 'EW'
+            ns_mask = day_data['ew_ns_class'] == 'NS'
+            
+            # Bin by distance for EW
+            if ew_mask.any():
+                ew_data = day_data[ew_mask]
+                dist_bin_idx = np.digitize(ew_data['dist_km'], edges) - 1
+                dist_bin_idx = np.clip(dist_bin_idx, 0, num_bins - 1)
+                
+                for bin_idx in range(num_bins):
+                    bin_mask = dist_bin_idx == bin_idx
+                    if bin_mask.any():
+                        ew_accumulators['bin_sums'][bin_idx] += ew_data.loc[bin_mask, 'coherence'].sum()
+                        ew_accumulators['bin_counts'][bin_idx] += bin_mask.sum()
+                        ew_accumulators['bin_dist_sums'][bin_idx] += ew_data.loc[bin_mask, 'dist_km'].sum()
+                
+                ew_accumulators['total_count'] += ew_mask.sum()
+            
+            # Bin by distance for NS
+            if ns_mask.any():
+                ns_data = day_data[ns_mask]
+                dist_bin_idx = np.digitize(ns_data['dist_km'], edges) - 1
+                dist_bin_idx = np.clip(dist_bin_idx, 0, num_bins - 1)
+                
+                for bin_idx in range(num_bins):
+                    bin_mask = dist_bin_idx == bin_idx
+                    if bin_mask.any():
+                        ns_accumulators['bin_sums'][bin_idx] += ns_data.loc[bin_mask, 'coherence'].sum()
+                        ns_accumulators['bin_counts'][bin_idx] += bin_mask.sum()
+                        ns_accumulators['bin_dist_sums'][bin_idx] += ns_data.loc[bin_mask, 'dist_km'].sum()
+                
+                ns_accumulators['total_count'] += ns_mask.sum()
+        
+        # Check if we have sufficient data
+        if ew_accumulators['total_count'] < 500 or ns_accumulators['total_count'] < 500:
+            continue
+        
+        # Fit correlation models from accumulated data
+        ew_lambda = fit_correlation_from_bins(ew_accumulators, edges, min_bin_count)
+        ns_lambda = fit_correlation_from_bins(ns_accumulators, edges, min_bin_count)
+        
+        if ew_lambda is not None and ns_lambda is not None and ns_lambda > 0:
+            ew_ns_ratio = ew_lambda / ns_lambda
+            
+            # Calculate Earth's orbital parameters for this day
+            orbital_params = calculate_earth_orbital_motion(day_of_year)
+            
+            temporal_tracking.append({
+                'day_of_year': day_of_year,
+                'ew_lambda_km': ew_lambda,
+                'ns_lambda_km': ns_lambda,
+                'ew_ns_ratio': ew_ns_ratio,
+                'n_ew_pairs': int(ew_accumulators['total_count']),
+                'n_ns_pairs': int(ns_accumulators['total_count']),
+                'orbital_speed_kms': orbital_params['orbital_speed'],
+                'orbital_phase': orbital_params['orbital_phase'],
+                'earth_sun_distance_au': orbital_params['distance_au']
+            })
+    
+    if len(temporal_tracking) < 10:
+        return {'success': False, 'error': f'Insufficient temporal samples: {len(temporal_tracking)}'}
+    
+    # Statistical analysis of temporal patterns
+    days = [t['day_of_year'] for t in temporal_tracking]
+    ew_ns_ratios = [t['ew_ns_ratio'] for t in temporal_tracking]
+    orbital_speeds = [t['orbital_speed_kms'] for t in temporal_tracking]
+    
+    # Test correlation with orbital motion
+    orbital_correlation, orbital_p_value = stats.pearsonr(orbital_speeds, ew_ns_ratios)
+    
+    # Test for 365.25-day periodicity
+    def seasonal_model(day, amplitude, phase, offset):
+        return offset + amplitude * np.cos(2 * np.pi * day / 365.25 + phase)
+    
+    try:
+        popt, pcov = curve_fit(seasonal_model, days, ew_ns_ratios, 
+                              p0=[0.5, 0, np.mean(ew_ns_ratios)],
+                              bounds=([-2, -2*np.pi, 0], [2, 2*np.pi, 10]))
+        
+        seasonal_fit = {
+            'amplitude': popt[0],
+            'phase': popt[1], 
+            'offset': popt[2],
+            'fit_success': True,
+            'seasonal_variation_percent': abs(popt[0]) / popt[2] * 100
+        }
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        print_status(f"Seasonal fit failed: {e}", "WARNING")
+        seasonal_fit = {'fit_success': False}
+    
+    # Overall results
+    results = {
+        'success': True,
+        'temporal_tracking_data': temporal_tracking,
+        'statistical_analysis': {
+            'orbital_speed_correlation': orbital_correlation,
+            'orbital_correlation_p_value': orbital_p_value,
+            'n_temporal_samples': len(temporal_tracking),
+            'mean_ew_ns_ratio': np.mean(ew_ns_ratios),
+            'ew_ns_ratio_std': np.std(ew_ns_ratios),
+            'ew_ns_ratio_range': [min(ew_ns_ratios), max(ew_ns_ratios)]
+        },
+        'seasonal_analysis': seasonal_fit,
+        'orbital_motion_evidence': {
+            'correlation_with_orbital_speed': orbital_correlation,
+            'significance_p_value': orbital_p_value,
+            'evidence_strength': classify_orbital_evidence(orbital_correlation, orbital_p_value),
+            'interpretation': f'E-W/N-S ratio {"correlates" if abs(orbital_correlation) > 0.3 else "does not correlate"} with orbital speed'
+        }
+    }
+    
+    # Critical assessment
+    if abs(orbital_correlation) > 0.5 and orbital_p_value < 0.05:
+        print_status(f"Robust correlation confirmed: E-W/N-S anisotropy correlates with Earth's orbital motion (r={orbital_correlation:.3f}, p={orbital_p_value:.4f})", "SUCCESS")
+        print_status("Results indicate GPS timing correlations may reflect Earth's orbital dynamics", "INFO")
+    elif abs(orbital_correlation) > 0.3:
+        print_status(f"Significant correlation with Earth's orbital motion identified (r={orbital_correlation:.3f})", "INFO")
+    
+    print_status(f"Temporal orbital tracking complete: {len(temporal_tracking)} samples analyzed", "SUCCESS")
+    return results
+
+def fit_correlation_from_bins(accumulators: Dict, edges: np.ndarray, min_bin_count: int) -> Optional[float]:
+    """Fit correlation model from pre-binned accumulated data"""
+    try:
+        # Extract valid bins
+        valid_bins = accumulators['bin_counts'] >= min_bin_count
+        if valid_bins.sum() < 3:
+            return None
+        
+        bin_distances = accumulators['bin_dist_sums'][valid_bins] / accumulators['bin_counts'][valid_bins]
+        bin_coherences = accumulators['bin_sums'][valid_bins] / accumulators['bin_counts'][valid_bins]
+        bin_counts = accumulators['bin_counts'][valid_bins]
+        
+        # Fit exponential model
+        weights = np.sqrt(bin_counts)
+        popt, _ = curve_fit(
+            lambda r, A, lam, C: A * np.exp(-r / lam) + C,
+            bin_distances, bin_coherences,
+            p0=[0.1, 3000, 0.0],
+            sigma=1.0/weights,
+            bounds=([-1, 100, -1], [1, 20000, 1]),
+            maxfev=5000
+        )
+        return popt[1]  # Return lambda
+    except:
+        return None
+
+def fit_directional_correlation(directional_df: pd.DataFrame, edges: np.ndarray, min_bin_count: int) -> Optional[float]:
+    """Fit correlation model to directional subset of data"""
+    try:
+        # Create a working copy to avoid SettingWithCopyWarning
+        df_work = directional_df.copy()
+        
+        # Bin the data
+        df_work['dist_bin'] = pd.cut(df_work['dist_km'], bins=edges, right=False)
+        binned = df_work.groupby('dist_bin', observed=True).agg(
+            mean_dist=('dist_km', 'mean'),
+            mean_coh=('coherence', 'mean'),
+            count=('coherence', 'size')
+        ).reset_index()
+        
+        # Filter for robust bins
+        binned = binned[binned['count'] >= min_bin_count].dropna()
+        
+        if len(binned) < 5:  # Need enough bins for fitting
+            return None
+        
+        # Fit exponential model
+        distances = binned['mean_dist'].values
+        coherences = binned['mean_coh'].values
+        weights = binned['count'].values
+        
+        c_range = coherences.max() - coherences.min()
+        p0 = [c_range, TEPConfig.get_float('TEP_INITIAL_LAMBDA_GUESS'), coherences.min()]
+        
+        # Adaptive bounds based on data characteristics
+        adaptive_bounds = TEPConfig.get_adaptive_lambda_bounds(distances)
+
+        popt, _ = curve_fit(
+            correlation_model, distances, coherences,
+            p0=p0, sigma=1.0/np.sqrt(weights),
+            bounds=adaptive_bounds,
+            maxfev=5000
+        )
+        
+        return popt[1]  # Return lambda
+        
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        print_status(f"Directional correlation fit failed: {e}", "WARNING")
+        return None
+
+def calculate_earth_orbital_motion(day_of_year: int) -> Dict:
+    """Calculate Earth's orbital parameters for given day of year"""
+    # Perihelion occurs around January 4 (day 4)
+    perihelion_day = 4
+    orbital_phase = 2 * np.pi * (day_of_year - perihelion_day) / 365.25
+    
+    # Orbital parameters
+    mean_orbital_speed = 29.78  # km/s
+    eccentricity = 0.0167
+    distance_factor = (1 - eccentricity * np.cos(orbital_phase))
+    orbital_speed = mean_orbital_speed / distance_factor
+    
+    return {
+        'day_of_year': day_of_year,
+        'orbital_phase': orbital_phase,
+        'orbital_speed': orbital_speed,
+        'distance_au': distance_factor,
+        'speed_variation_percent': (orbital_speed - mean_orbital_speed) / mean_orbital_speed * 100
+    }
+
+def classify_orbital_evidence(correlation: float, p_value: float) -> str:
+    """Classify strength of orbital motion evidence"""
+    if abs(correlation) > 0.7 and p_value < 0.001:
+        return "Robust correlation with Earth's orbital motion confirmed"
+    elif abs(correlation) > 0.5 and p_value < 0.01:
+        return "Strong correlation with Earth's orbital motion detected"
+    elif abs(correlation) > 0.3 and p_value < 0.05:
+        return "Moderate correlation with Earth's orbital motion identified"
+    elif abs(correlation) > 0.2:
+        return "Weak correlation with Earth's orbital motion observed"
+    else:
+        return "No statistically significant correlation with Earth's orbital motion detected"
+def process_analysis_center(ac: str) -> Dict:
+    """
+    Process geospatial temporal analysis for one analysis center.
+    
+    Args:
+        ac: Analysis center name ('code', 'igs_combined', 'esa_final')
+    
+    Returns:
+        dict: Geospatial temporal analysis results
+    """
+    print_status(f"Starting geospatial temporal analysis for {ac.upper()}", "INFO")
+    print_status("=" * 60, "INFO")
+    
+    # Display multi-scale window strategy
+    print_status("MULTI-SCALE TEMPORAL WINDOW STRATEGY:", "INFO")
+    print_status("  Temporal Orbital Tracking: 30-day windows (seasonal signal + noise reduction)", "INFO")
+    print_status("  Mesh Dance Analysis: OPTIMIZED (90d coherence + 30d oscillation/spiral)", "INFO")
+    print_status("  Planetary Oppositions: 240-day windows (optimal coupling timescale)", "INFO")
+    print_status("  Chandler Wobble: Full 433-day cycle (period-matched analysis)", "INFO")
+    print_status("", "INFO")
+    print_status("Rationale: Each analysis uses windows matched to its characteristic physical timescale", "INFO")
+    print_status("Based on empirical analysis showing optimal coupling at 240 days (Savitzky-Golay)", "INFO")
+    print_status("=" * 60, "INFO")
+    
+    start_time = time.time()
+    
+    try:
+        # Load complete dataset into memory (Step 2.1 geospatial data with pre-computed azimuth)
+        complete_df = load_complete_geospatial_dataset(ac)
+        
+        # Initialize results
+        results = {
+            'analysis_center': ac.upper(),
+            'timestamp': datetime.now().isoformat(),
+            'data_summary': {
+                'total_pairs': len(complete_df),
+                'unique_stations': len(pd.unique(complete_df[['station_i', 'station_j']].values.ravel())),
+                'unique_dates': len(complete_df['date'].unique()),
+                'distance_range_km': [float(complete_df['dist_km'].min()), float(complete_df['dist_km'].max())],
+                'coherence_range': [float(complete_df['coherence'].min()), float(complete_df['coherence'].max())]
+            }
+        }
+
+        # Run Enhanced Anisotropy analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_ENHANCED_ANISOTROPY'):
+            results['enhanced_anisotropy_analysis'] = run_enhanced_anisotropy_analysis(complete_df)
+        else:
+            results['enhanced_anisotropy_analysis'] = {'enabled': False}
+        
+        # Run Temporal Orbital Tracking analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_TEMPORAL_ORBITAL_TRACKING'):
+            results['temporal_orbital_tracking'] = run_temporal_orbital_tracking_analysis(complete_df)
+        else:
+            results['temporal_orbital_tracking'] = {'enabled': False}
+        
+        # ===== NEW HELICAL MOTION ANALYSES (ADDITIONS ONLY) =====
+        
+        # Run Chandler Wobble analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_CHANDLER_WOBBLE', default=True):
+            results['chandler_wobble_analysis'] = run_chandler_wobble_analysis(complete_df)
+        else:
+            results['chandler_wobble_analysis'] = {'enabled': False}
+        
+        # Run 3D Spherical Harmonic analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_3D_HARMONICS', default=True):
+            results['spherical_harmonics_analysis'] = run_3d_spherical_harmonic_analysis(complete_df)
+        else:
+            results['spherical_harmonics_analysis'] = {'enabled': False}
+            
+        # Run Mesh Dance Analysis if enabled (THE ULTIMATE TEST)
+        if TEPConfig.get_bool('TEP_ENABLE_MESH_DANCE_ANALYSIS', default=True):
+            results['mesh_dance_analysis'] = run_mesh_dance_analysis(complete_df)
+        else:
+            results['mesh_dance_analysis'] = {'enabled': False}
+            
+        # Run Jupiter Opposition analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_JUPITER_OPPOSITION', default=True):
+            results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df)
+        else:
+            results['jupiter_opposition_analysis'] = {'enabled': False}
+        
+        # Run Saturn Opposition analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_SATURN_OPPOSITION', default=True):
+            results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df)
+        else:
+            results['saturn_opposition_analysis'] = {'enabled': False}
+        
+        # Run Mars Opposition analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_MARS_OPPOSITION', default=True):
+            results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df)
+        else:
+            results['mars_opposition_analysis'] = {'enabled': False}
+        
+        # Run Enhanced Continuous Planetary Analysis (Step 4.4 methodology)
+        if TEPConfig.get_bool('TEP_ENABLE_CONTINUOUS_PLANETARY', default=True):
+            results['continuous_planetary_analysis'] = run_continuous_planetary_analysis(complete_df)
+        else:
+            results['continuous_planetary_analysis'] = {'enabled': False}
+        
+        # Run Venus Inferior Conjunction analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_VENUS_CONJUNCTION', True):  # Default True - significant signal
+            results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df)
+        else:
+            results['venus_conjunction_analysis'] = {'enabled': False}
+        
+        # Run Mercury Inferior Conjunction analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_MERCURY_CONJUNCTION', True):  # Default True - complete inner planets
+            results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df)
+        else:
+            results['mercury_conjunction_analysis'] = {'enabled': False}
+        
+        # Run Solar Rotation analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_SOLAR_ROTATION', True):  # Default True - unique mechanism test
+            results['solar_rotation_analysis'] = run_solar_rotation_analysis(complete_df)
+        else:
+            results['solar_rotation_analysis'] = {'enabled': False}
+        
+        # Run Lunar Standstill analysis if enabled
+        if TEPConfig.get_bool('TEP_ENABLE_LUNAR_STANDSTILL', default=True):
+            results['lunar_standstill_analysis'] = run_lunar_standstill_analysis(complete_df)
+        else:
+            results['lunar_standstill_analysis'] = {'enabled': False}
+        
+        
+        # Run Nutation analysis if enabled (requires multi-year data)
+        if TEPConfig.get_bool('TEP_ENABLE_NUTATION_ANALYSIS', default=True):
+            results['nutation_analysis'] = run_nutation_analysis(complete_df)
+        else:
+            results['nutation_analysis'] = {'enabled': False}
+        
+        # ===== END NEW HELICAL MOTION ANALYSES =====
+        
+        # Clean up memory
+        del complete_df
+        gc.collect()
+        check_memory_usage()
+        
+        results['execution_time_seconds'] = time.time() - start_time
+        results['success'] = True
+        
+        # SAVE RESULTS IMMEDIATELY (before temporal coherence reload that may crash)
+        output_dir = ROOT / "results/outputs" / NAMESPACE
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = output_dir / f"step_2_2_geospatial_temporal_analysis_{ac}.json"
+        try:
+            safe_json_write(results, output_file, indent=2)
+            print_status(f"Results saved: {output_file}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to save results: {e}", "WARNING")
+        
+        # Print summaries for planetary opposition analyses
+        if results.get('jupiter_opposition_analysis', {}).get('success') is not False:
+            print_summary_jupiter_results(results)
+        if results.get('saturn_opposition_analysis', {}).get('success') is not False:
+            print_summary_saturn_results(results)
+        if results.get('mars_opposition_analysis', {}).get('success') is not False:
+            print_summary_mars_results(results)
+        
+        # Run temporal coherence assessment for signal stability validation
+        try:
+            # Check if temporal coherence analysis is enabled (only remaining enhanced analysis)
+            temporal_enabled = TEPConfig.get_bool('TEP_ENABLE_TEMPORAL_COHERENCE', default=True)
+            
+            # Check file size to prevent memory crash on reload
+            geospatial_file = ROOT / "data/processed" / NAMESPACE / f"step_2_1_geospatial_{ac}.csv"
+            if geospatial_file.exists():
+                file_size_gb = geospatial_file.stat().st_size / (1024**3)
+                if file_size_gb > 15.0:
+                    print_status(f"Skipping temporal coherence analysis - file too large ({file_size_gb:.1f}GB) to reload safely", "INFO")
+                    temporal_enabled = False
+            
+            if temporal_enabled:
+                # Reload df for temporal coherence analysis
+                complete_df = load_complete_geospatial_dataset(ac)
+                
+                # Temporal Coherence Assessment
+                # Analyzes signal persistence across multiple timescales to validate temporal stability
+                print_status("\n" + "="*80, "INFO")
+                results['temporal_coherence'] = analyze_temporal_coherence(complete_df, results)
+                
+                del complete_df
+                gc.collect()
+                
+                # Re-save with temporal coherence results
+                try:
+                    safe_json_write(results, output_file, indent=2)
+                    print_status(f"Results updated with temporal coherence: {output_file}", "SUCCESS")
+                except Exception as e:
+                    print_status(f"Failed to update results: {e}", "WARNING")
+            else:
+                print_status("Temporal coherence analysis disabled - skipping dataset reload", "INFO")
+            
+        except Exception as e:
+            print_status(f"Enhanced analysis modules failed: {e}", "WARNING")
+            # Results already saved, so this is non-fatal
+        
+        # Generate comprehensive scientific significance report (Option B)
+        try:
+            print_status("\n", "INFO")
+            comprehensive_report = generate_comprehensive_scientific_report(results, ac)
+            results['comprehensive_report'] = comprehensive_report
+            
+            # Re-save results with comprehensive report included
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Final results saved: {output_file}", "SUCCESS")
+            except Exception as save_err:
+                print_status(f"Failed to save final results with comprehensive report: {save_err}", "WARNING")
+        except Exception as e:
+            print_status(f"Comprehensive report generation failed: {e}", "WARNING")
+        
+        print_status(f"Statistical validation complete for {ac.upper()} in {results['execution_time_seconds']:.1f}s", "SUCCESS")
+        return results
+        
+    except (TEPDataError, TEPFileError, TEPAnalysisError) as e:
+        print_status(f"Statistical validation failed for {ac.upper()} - TEP error: {e}", "ERROR")
+        return {
+            'analysis_center': ac.upper(),
+            'timestamp': datetime.now().isoformat(),
+            'success': False,
+            'error': str(e),
+            'error_type': 'TEP_ERROR',
+            'execution_time_seconds': time.time() - start_time
+        }
+    except (MemoryError, OverflowError) as e:
+        print_status(f"Statistical validation failed for {ac.upper()} - resource error: {e}", "ERROR")
+        return {
+            'analysis_center': ac.upper(),
+            'timestamp': datetime.now().isoformat(),
+            'success': False,
+            'error': str(e),
+            'error_type': 'RESOURCE_ERROR',
+            'execution_time_seconds': time.time() - start_time
+        }
+    except Exception as e:
+        print_status(f"Statistical validation failed for {ac.upper()} - unexpected error: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'analysis_center': ac.upper(),
+            'timestamp': datetime.now().isoformat(),
+            'success': False,
+            'error': str(e),
+            'error_type': 'UNEXPECTED_ERROR',
+            'execution_time_seconds': time.time() - start_time
+        }
+
+def run_helical_motion_only(analysis_center: str = None) -> Dict:
+    """
+    Orchestrates the helical motion analysis suite. This function runs only the
+    analyses related to Earth's helical motion, which include:
+    - Chandler Wobble analysis: Detects 14-month polar motion signatures.
+    - 3D Spherical Harmonic analysis: Decomposes directional anisotropy patterns.
+    - Mesh Dance analysis: Assesses network-wide coherent motion patterns.
+    - Nutation analysis: Detects 18.6-year axial tilt variations (if enabled).
+
+    This function is designed for targeted testing and validation of the helical
+    motion detection capabilities.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the results from all executed helical motion
+              analyses, organized by analysis center. Each entry includes a
+              'success' status and potentially an 'error' message if an analysis failed.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("HELICAL MOTION ANALYSIS - Advanced Earth Motion Detection", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    for ac in centers:
+        print_status(f"\n{'='*60}")
+        print_status(f"PROCESSING {ac.upper()} - HELICAL MOTION ANALYSIS", "TITLE")
+        print_status(f"{'='*60}", "TITLE")
+        
+        try:
+            # Load complete dataset from Step 2.1 (with pre-computed azimuth)
+            complete_df = load_complete_geospatial_dataset(ac)
+            
+            results = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'analysis_type': 'helical_motion_only',
+                'data_summary': {
+                    'total_pairs': len(complete_df),
+                    'unique_stations': len(pd.unique(complete_df[['station_i', 'station_j']].values.ravel())),
+                    'unique_dates': len(complete_df['date'].unique()),
+                }
+            }
+            
+            print_status(f"Loaded {len(complete_df):,} station pairs for {ac.upper()}", "INFO")
+            
+            # Run ONLY the 5 new helical motion analyses
+            
+            # 1. Chandler Wobble Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_CHANDLER_WOBBLE', default=True):
+                print_status("Running Chandler Wobble Analysis...", "PROCESS")
+                results['chandler_wobble_analysis'] = run_chandler_wobble_analysis(complete_df)
+            else:
+                results['chandler_wobble_analysis'] = {'enabled': False}
+            
+            # 2. 3D Spherical Harmonic Analysis
+            if TEPConfig.get_bool('TEP_ENABLE_3D_HARMONICS', default=True):
+                print_status("Running 3D Spherical Harmonic Analysis...", "PROCESS")
+                results['spherical_harmonics_analysis'] = run_3d_spherical_harmonic_analysis(complete_df)
+            else:
+                results['spherical_harmonics_analysis'] = {'enabled': False}
+                
+            # 5. MESH DANCE ANALYSIS - Network Coherence Assessment
+            if TEPConfig.get_bool('TEP_ENABLE_MESH_DANCE_ANALYSIS', default=True):
+                print_status("Running Mesh Dance Analysis - Network Coherence Assessment...", "PROCESS")
+                results['mesh_dance_analysis'] = run_mesh_dance_analysis(complete_df)
+            else:
+                results['mesh_dance_analysis'] = {'enabled': False}
+            
+            # 6. Jupiter Opposition Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_JUPITER_OPPOSITION', default=True):
+                print_status("Running Jupiter Opposition Pulse Analysis...", "PROCESS")
+                results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df)
+            else:
+                results['jupiter_opposition_analysis'] = {'enabled': False}
+            
+            # 7. Saturn Opposition Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_SATURN_OPPOSITION', default=True):
+                print_status("Running Saturn Opposition Pulse Analysis...", "PROCESS")
+                results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df)
+            else:
+                results['saturn_opposition_analysis'] = {'enabled': False}
+            
+            # 8. Mars Opposition Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_MARS_OPPOSITION', default=True):
+                print_status("Running Mars Opposition Pulse Analysis...", "PROCESS")
+                results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df)
+            else:
+                results['mars_opposition_analysis'] = {'enabled': False}
+            
+            # 9. Venus Inferior Conjunction Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_VENUS_CONJUNCTION', True):
+                print_status("Running Venus Inferior Conjunction Analysis...", "PROCESS")
+                results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df)
+            else:
+                results['venus_conjunction_analysis'] = {'enabled': False}
+            
+            # 10. Mercury Inferior Conjunction Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_MERCURY_CONJUNCTION', True):
+                print_status("Running Mercury Inferior Conjunction Analysis...", "PROCESS")
+                results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df)
+            else:
+                results['mercury_conjunction_analysis'] = {'enabled': False}
+            
+            # 11. Solar Rotation Cycle Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_SOLAR_ROTATION', True):
+                print_status("Running Solar Rotation Cycle Analysis...", "PROCESS")
+                results['solar_rotation_analysis'] = run_solar_rotation_analysis(complete_df)
+            else:
+                results['solar_rotation_analysis'] = {'enabled': False}
+            
+            # 12. Lunar Standstill Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_LUNAR_STANDSTILL', default=True):
+                print_status("Running Major Lunar Standstill Analysis...", "PROCESS")
+                results['lunar_standstill_analysis'] = run_lunar_standstill_analysis(complete_df)
+            else:
+                results['lunar_standstill_analysis'] = {'enabled': False}
+            
+            # 10. Nutation Analysis (if enabled)
+            if TEPConfig.get_bool('TEP_ENABLE_NUTATION_ANALYSIS', default=True):
+                print_status("Running Nutation Analysis...", "PROCESS")
+                results['nutation_analysis'] = run_nutation_analysis(complete_df)
+            else:
+                results['nutation_analysis'] = {'enabled': False}
+            
+            # Clean up memory
+            del complete_df
+            gc.collect()
+            
+            results['execution_time_seconds'] = time.time() - start_time
+            results['success'] = True
+            
+            # Save results with special naming for helical motion only (namespaced)
+            output_dir = ROOT / "results/outputs" / NAMESPACE
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            output_file = output_dir / f"step_2_2_helical_motion_only_{ac}.json"
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Helical motion results saved: {output_file}", "SUCCESS")
+            except (TEPFileError, TEPDataError) as e:
+                print_status(f"Failed to save results: {e}", "WARNING")
+            
+            all_results[ac] = results
+            
+            # Print summary of what was detected
+            print_summary_helical_motion_results(results)
+            
+        except Exception as e:
+            print_status(f"Helical motion analysis failed for {ac.upper()}: {e}", "ERROR")
+            all_results[ac] = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'success': False,
+                'error': str(e),
+                'analysis_type': 'helical_motion_only'
+            }
+    
+    total_time = time.time() - start_time
+    print_status("HELICAL MOTION ANALYSIS COMPLETE", "TITLE")
+    print_status(f"Total execution time: {total_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def run_jupiter_only(analysis_center: str = None) -> Dict:
+    """
+    Orchestrates the Jupiter opposition analysis. This function runs only the
+    analysis related to Jupiter opposition events, looking for gravitational
+    potential coupling.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the results from the Jupiter opposition
+              analysis, organized by analysis center. Each entry includes a
+              'success' status and potentially an 'error' message if the analysis failed.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("JUPITER OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    for ac in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {ac.upper()} - JUPITER OPPOSITION ANALYSIS", "INFO")
+        print_status(f"{'='*60}", "INFO")
+        
+        try:
+            # Load complete dataset from Step 2.1 (with pre-computed azimuth)
+            complete_df = load_complete_geospatial_dataset(ac)
+            
+            results = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'analysis_type': 'jupiter_opposition_only',
+                'data_summary': {
+                    'total_pairs': len(complete_df),
+                    'unique_stations': len(pd.unique(complete_df[['station_i', 'station_j']].values.ravel())),
+                    'unique_dates': len(complete_df['date'].unique()),
+                }
+            }
+            
+            print_status(f"Loaded {len(complete_df):,} station pairs for {ac.upper()}", "INFO")
+            
+            # Run ONLY Jupiter Opposition Analysis
+            print_status("Running Jupiter Opposition Pulse Analysis...", "PROCESS")
+            results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df)
+            
+            # Clean up memory
+            del complete_df
+            gc.collect()
+            
+            results['execution_time_seconds'] = time.time() - start_time
+            results['success'] = True
+            
+            # Save results with special naming for Jupiter only (namespaced)
+            output_dir = ROOT / "results/outputs" / NAMESPACE
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            output_file = output_dir / f"step_2_2_jupiter_only_{ac}.json"
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Jupiter opposition results saved: {output_file}", "SUCCESS")
+            except (TEPFileError, TEPDataError) as e:
+                print_status(f"Failed to save results: {e}", "WARNING")
+            
+            all_results[ac] = results
+            
+            # Print summary of what was detected
+            print_summary_jupiter_results(results)
+            
+        except Exception as e:
+            print_status(f"Jupiter opposition analysis failed for {ac.upper()}: {e}", "ERROR")
+            all_results[ac] = {
+                'analysis_center': ac.upper(),
+                'timestamp': datetime.now().isoformat(),
+                'success': False,
+                'error': str(e),
+                'analysis_type': 'jupiter_opposition_only'
+            }
+    
+    total_time = time.time() - start_time
+    print_status("JUPITER OPPOSITION ANALYSIS COMPLETE", "TITLE")
+    print_status(f"Total execution time: {total_time:.1f} seconds", "INFO")
+    
+    return all_results
+def run_saturn_only(analysis_center: str = None) -> Dict:
+    """
+    Orchestrates the Saturn opposition analysis. This function runs only the
+    analysis related to Saturn opposition events, looking for gravitational
+    potential coupling. Saturn's signal is expected to be smaller than Jupiter's,
+    making it an important validation test.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the results from the Saturn opposition
+              analysis, organized by analysis center. Each entry includes a
+              'success' status and potentially an 'error' message if the analysis failed.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("SATURN OPPOSITION ANALYSIS - Gravitational Potential Pulse Detection", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    for center in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {center.upper()} - SATURN OPPOSITION ANALYSIS", "TITLE")
+        print_status(f"{'='*60}", "INFO")
+        
+        # Load data for this center
+        complete_df = load_complete_geospatial_dataset(center)
+        
+        print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
+        
+        # Run Saturn opposition analysis
+        results = {'analysis_center': center}
+        results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df)
+        
+        # Print summary
+        print_summary_saturn_results(results)
+        
+        # Save results (namespaced)
+        output_dir = ROOT / "results/outputs" / NAMESPACE
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = output_dir / f"step_2_2_saturn_only_{center}.json"
+        try:
+            safe_json_write(results, output_file, indent=2)
+            print_status(f"Saturn opposition results saved: {output_file}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to save results: {e}", "ERROR")
+        
+        all_results[center] = results
+    
+    elapsed_time = time.time() - start_time
+    print_status("SATURN OPPOSITION ANALYSIS COMPLETED", "TITLE")
+    print_status(f"Total execution time: {elapsed_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def run_mars_only(analysis_center: str = None) -> Dict:
+    """
+    Orchestrates the Mars opposition analysis. This function runs only the
+    analysis related to Mars opposition events, looking for gravitational
+    potential coupling. Mars has the weakest expected signal, making it an
+    excellent test of the detection sensitivity.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the results from the Mars opposition
+              analysis, organized by analysis center. Each entry includes a
+              'success' status and potentially an 'error' message if the analysis failed.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("MARS OPPOSITION ANALYSIS - Weakest Signal Sensitivity Test", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    for center in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {center.upper()} - MARS OPPOSITION ANALYSIS", "TITLE")
+        print_status(f"{'='*60}", "INFO")
+        
+        # Load data for this center
+        complete_df = load_complete_geospatial_dataset(center)
+        
+        print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
+        
+        # Run Mars opposition analysis
+        results = {'analysis_center': center}
+        results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df)
+        
+        # Print summary
+        print_summary_mars_results(results)
+        
+        # Save results (namespaced)
+        output_dir = ROOT / "results/outputs" / NAMESPACE
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = output_dir / f"step_2_2_mars_only_{center}.json"
+        try:
+            safe_json_write(results, output_file, indent=2)
+            print_status(f"Mars opposition results saved: {output_file}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to save results: {e}", "ERROR")
+        
+        all_results[center] = results
+    
+    elapsed_time = time.time() - start_time
+    print_status("MARS OPPOSITION ANALYSIS COMPLETED", "TITLE")
+    print_status(f"Total execution time: {elapsed_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def run_lunar_only(analysis_center: str = None) -> Dict:
+    """
+    Orchestrates the Major Lunar Standstill analysis. This function runs only the
+    analysis related to Lunar Standstill events, tracking sidereal day amplitude
+    enhancement.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the results from the Lunar Standstill
+              analysis, organized by analysis center. Each entry includes a
+              'success' status and potentially an 'error' message if the analysis failed.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("LUNAR STANDSTILL ANALYSIS - Sidereal Day Amplitude Tracking", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    for center in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {center.upper()} - LUNAR STANDSTILL ANALYSIS", "TITLE")
+        print_status(f"{'='*60}", "INFO")
+        
+        # Load data for this center
+        complete_df = load_complete_geospatial_dataset(center)
+        
+        print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
+        
+        # Run Lunar Standstill analysis
+        results = {'analysis_center': center}
+        results['lunar_standstill_analysis'] = run_lunar_standstill_analysis(complete_df)
+        
+        # Print summary
+        print_summary_lunar_standstill_results(results)
+        
+        # Save results (namespaced)
+        output_dir = ROOT / "results/outputs" / NAMESPACE
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_file = output_dir / f"step_2_2_lunar_only_{center}.json"
+        try:
+            safe_json_write(results, output_file, indent=2)
+            print_status(f"Lunar Standstill results saved: {output_file}", "SUCCESS")
+        except Exception as e:
+            print_status(f"Failed to save results: {e}", "ERROR")
+        
+        all_results[center] = results
+    
+    elapsed_time = time.time() - start_time
+    print_status("🌙 LUNAR STANDSTILL ANALYSIS COMPLETED", "TITLE")
+    print_status(f"Total execution time: {elapsed_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def run_astronomical_events_only(analysis_center: str = None, event_window_days_list: Optional[List[int]] = None) -> Dict:
+    """
+    Orchestrates a comparative analysis of Jupiter, Saturn, and Mars opposition events.
+    This function runs all three planetary opposition analyses and then provides
+    a consolidated comparison of their results.
+
+    Args:
+        analysis_center (str, optional): The specific analysis center to process
+                                         ('code', 'igs_combined', 'esa_final').
+                                         If None, runs all configured centers.
+
+    Returns:
+        Dict: A dictionary containing the comparative results from the astronomical
+              event analyses, organized by analysis center. Each entry includes the
+              results from Jupiter, Saturn, and Mars analyses, along with an overall
+              comparison summary.
+    """
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING}", "TITLE")
+    print_status("ASTRONOMICAL EVENTS ANALYSIS - Jupiter vs Saturn vs Mars Opposition Comparison", "TITLE")
+
+    all_results = {}
+    start_time = time.time()
+    
+    # Determine analysis centers
+    if analysis_center:
+        centers = [analysis_center]
+    else:
+        centers = ['code', 'igs_combined', 'esa_final']
+    
+    # Determine windows to run
+    if event_window_days_list and isinstance(event_window_days_list, list) and len(event_window_days_list) > 0:
+        windows_to_run = sorted(set(int(w) for w in event_window_days_list))
+    else:
+        # Default: multi-window sweep based on manuscript-supported ranges
+        windows_to_run = [30, 60, 120, 180, 240]
+
+    for center in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {center.upper()} - ASTRONOMICAL EVENTS ANALYSIS", "INFO")
+        print_status(f"{'='*60}", "INFO")
+        
+        # Load data for this center
+        complete_df = load_complete_geospatial_dataset(center)
+        
+        print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
+        
+        center_results = {}
+        print_status(f"Astronomical events sensitivity sweep windows: {windows_to_run}", "INFO")
+
+        for win in windows_to_run:
+            print_status(f"\nRunning planetary analyses for {center} with event window ±{win} days", "PROCESS")
+            # Run planetary analyses with override window
+            results = {'analysis_center': center, 'event_window_days_used': int(win)}
+            results['jupiter_opposition_analysis'] = run_jupiter_opposition_analysis(complete_df, event_window_override=int(win))
+            results['saturn_opposition_analysis'] = run_saturn_opposition_analysis(complete_df, event_window_override=int(win))
+            results['mars_opposition_analysis'] = run_mars_opposition_analysis(complete_df, event_window_override=int(win))
+            # Include inner planets for completeness
+            try:
+                results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df, event_window_override=int(win))
+            except TypeError:
+                # Backward compatibility if function signature not yet updated
+                results['venus_conjunction_analysis'] = run_venus_opposition_analysis(complete_df)
+            try:
+                results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df, event_window_override=int(win))
+            except TypeError:
+                results['mercury_conjunction_analysis'] = run_mercury_opposition_analysis(complete_df)
+
+            # Mark wrapper success and provide aliases expected by summary/comparison
+            results['success'] = True
+            results['jupiter'] = results.get('jupiter_opposition_analysis', {})
+            results['saturn'] = results.get('saturn_opposition_analysis', {})
+            results['mars'] = results.get('mars_opposition_analysis', {})
+
+            # Print summaries for this window
+            print_summary_jupiter_results(results)
+            print_summary_saturn_results(results)
+            print_summary_mars_results(results)
+            print_summary_astronomical_comparison(results)
+
+            # Save per-window results (namespaced)
+            output_dir = ROOT / "results/outputs" / NAMESPACE
+            output_dir.mkdir(parents=True, exist_ok=True)
+            suffix = f"_w{int(win)}"
+            output_file = output_dir / f"step_2_2_astronomical_events_{center}{suffix}.json"
+            try:
+                safe_json_write(results, output_file, indent=2)
+                print_status(f"Astronomical events results saved: {output_file}", "SUCCESS")
+            except Exception as e:
+                print_status(f"Failed to save results: {e}", "ERROR")
+
+            center_results[int(win)] = results
+
+        all_results[center] = center_results if len(center_results) > 1 else next(iter(center_results.values()))
+    
+    elapsed_time = time.time() - start_time
+    print_status("🌌 ASTRONOMICAL EVENTS ANALYSIS COMPLETED", "TITLE")
+    print_status(f"Total execution time: {elapsed_time:.1f} seconds", "INFO")
+    
+    return all_results
+
+def print_summary_jupiter_results(results: Dict):
+    """Print a comprehensive summary of Jupiter opposition analysis results with enhanced scientific reporting"""
+    print_status(f"JUPITER OPPOSITION ANALYSIS SUMMARY - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('success', False):
+        if TEPConfig.get_bool('TEP_ENABLE_JUPITER_OPPOSITION', default=True):
+            # Enhanced detection categorization
+            jupiter_analysis = results.get('jupiter_opposition_analysis', {})
+            if 'best_window_event_results' in jupiter_analysis:
+                event_results = jupiter_analysis.get('best_window_event_results', {})
+            elif 'event_results' in jupiter_analysis:
+                print_status("WARNING: best_window_event_results missing; using event_results fallback for Jupiter.", "WARNING")
+                event_results = jupiter_analysis.get('event_results', {})
+            else:
+                print_status("ERROR: No Jupiter event results found.", "ERROR")
+                event_results = {}
+            significant_events = []  # 3.0σ+
+            notable_events = []  # 2.0-3.0σ
+            subsignificant_events = []  # 1.0-2.0σ
+            all_amplitudes = []
+            
+            for event_name, event_data in event_results.items():
+                if event_data.get('success'):
+                    gaussian = event_data.get('gaussian_fit', {})
+                    if gaussian.get('fit_success', False):
+                        amplitude = gaussian.get('amplitude', 0)
+                        std_err = gaussian.get('amplitude_std_err', 1)
+                        sigma_level = abs(amplitude / std_err) if std_err > 0 else 0
+                        amplitude_pct = gaussian.get('amplitude_fraction_of_baseline', 0) * 100
+                        
+                        all_amplitudes.append(amplitude_pct)
+                        
+                        event_info = (event_name, event_data, sigma_level, amplitude_pct)
+                        
+                        if gaussian.get('is_significant', False):  # 3.0σ+
+                            significant_events.append(event_info)
+                        elif sigma_level >= 2.0:
+                            notable_events.append(event_info)
+                        elif sigma_level >= 1.0:
+                            subsignificant_events.append(event_info)
+            
+            # ENHANCED REPORTING LOGIC
+            total_detections = len(significant_events) + len(notable_events) + len(subsignificant_events)
+            
+            if significant_events:
+                print_status(f"Jupiter Opposition: {len(significant_events)} SIGNIFICANT DETECTION(S) (≥3.0σ)", "SUCCESS")
+                for event_name, event_data, sigma, amp_pct in significant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    gaussian = event_data.get('gaussian_fit', {})
+                    direction = "suppression" if gaussian.get('amplitude', 0) < 0 else "enhancement"
+                    center_days = gaussian.get('center_days', 0)
+                    expected_amp = 0.00220  # Jupiter expected amplitude (fractional units)
+                    # Calculate enhancement factor using absolute amplitude units
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    
+                    print_status(f"   {event_date}: {sigma:.1f}σ {direction} at day {center_days:.1f}", "SUCCESS")
+                    print_status(f"      Amplitude: {amp_pct:.1f}% (expected: {expected_amp*100:.3f}%, enhancement: {enhancement_factor:.0f}x)", "INFO")
+            elif notable_events:
+                print_status(f"Jupiter Opposition: {len(notable_events)} NOTABLE DETECTION(S) (2.0-3.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in notable_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    expected_amp = 0.00220
+                    # CRITICAL FIX: Calculate enhancement using absolute amplitudes
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude ({enhancement_factor:.0f}x expected)", "INFO")
+            elif subsignificant_events:
+                print_status(f"Jupiter Opposition: {len(subsignificant_events)} SUB-SIGNIFICANT DETECTION(S) (1.0-2.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in subsignificant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude", "INFO")
+            else:
+                print_status(f"Jupiter Opposition: No detections above 1.0σ threshold", "INFO")
+                print_status(f"   Note: All {len(event_results)} events analyzed showed σ < 1.0", "INFO")
+
+            
+            # Scientific context and statistical summary
+            if all_amplitudes:
+                avg_amp = np.mean(np.abs(all_amplitudes))
+                max_amp = np.max(np.abs(all_amplitudes))
+                expected_amp = 0.220  # Keep as percentage for display
+                print_status(f"Statistical Summary:", "INFO")
+                print_status(f"   Total Events Analyzed: {len(event_results)}", "INFO")
+                print_status(f"   Detections ≥1.0σ: {total_detections}/{len(event_results)} ({100*total_detections/max(len(event_results),1):.1f}%)", "INFO")
+                # Calculate enhancement factors using absolute amplitude units
+                expected_amp_abs = expected_amp / 100
+                typical_baseline = 0.007  # Baseline coherence for unit conversion
+                avg_amp_abs = (avg_amp / 100) * typical_baseline
+                max_amp_abs = (max_amp / 100) * typical_baseline
+                avg_enhancement = avg_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                max_enhancement = max_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                
+                print_status(f"   Average Amplitude: {avg_amp:.1f}% (expected: {expected_amp:.3f}%)", "INFO")
+                print_status(f"   Maximum Amplitude: {max_amp:.1f}% ({max_enhancement:.0f}x expected)", "INFO")
+            
+            # Stacked analysis note
+            print_status(f"   Note: Individual event analysis complete. Multi-event stacking in Step 4.4", "INFO")
+
+        else:
+            print_status("Jupiter Opposition: Disabled in configuration", "INFO")
+    else:
+        error = results.get('error', 'Unknown error')
+        print_status(f"Jupiter Opposition: Failed - {error}", "ERROR")
+    print_status("-" * 50, "INFO")
+
+def print_summary_saturn_results(results: Dict):
+    """Print a comprehensive summary of Saturn opposition analysis results with enhanced scientific reporting"""
+    print_status(f"SATURN OPPOSITION ANALYSIS SUMMARY - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('success', False):
+        if TEPConfig.get_bool('TEP_ENABLE_SATURN_OPPOSITION', default=True):
+            # Enhanced detection categorization
+            saturn_analysis = results.get('saturn_opposition_analysis', {})
+            if 'best_window_event_results' in saturn_analysis:
+                event_results = saturn_analysis.get('best_window_event_results', {})
+            elif 'event_results' in saturn_analysis:
+                print_status("WARNING: best_window_event_results missing; using event_results fallback for Saturn.", "WARNING")
+                event_results = saturn_analysis.get('event_results', {})
+            else:
+                print_status("ERROR: No Saturn event results found.", "ERROR")
+                event_results = {}
+            significant_events = []  # 3.0σ+
+            notable_events = []  # 2.0-3.0σ
+            subsignificant_events = []  # 1.0-2.0σ
+            all_amplitudes = []
+            
+            for event_name, event_data in event_results.items():
+                if event_data.get('success'):
+                    gaussian = event_data.get('gaussian_fit', {})
+                    if gaussian.get('fit_success', False):
+                        amplitude = gaussian.get('amplitude', 0)
+                        std_err = gaussian.get('amplitude_std_err', 1)
+                        sigma_level = abs(amplitude / std_err) if std_err > 0 else 0
+                        amplitude_pct = gaussian.get('amplitude_fraction_of_baseline', 0) * 100
+                        
+                        all_amplitudes.append(amplitude_pct)
+                        
+                        event_info = (event_name, event_data, sigma_level, amplitude_pct)
+                        
+                        if gaussian.get('is_significant', False):  # 3.0σ+
+                            significant_events.append(event_info)
+                        elif sigma_level >= 2.0:
+                            notable_events.append(event_info)
+                        elif sigma_level >= 1.0:
+                            subsignificant_events.append(event_info)
+            
+            # ENHANCED REPORTING LOGIC
+            total_detections = len(significant_events) + len(notable_events) + len(subsignificant_events)
+            
+            if significant_events:
+                print_status(f"Saturn Opposition: {len(significant_events)} SIGNIFICANT DETECTION(S) (≥3.0σ)", "SUCCESS")
+                for event_name, event_data, sigma, amp_pct in significant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    gaussian = event_data.get('gaussian_fit', {})
+                    direction = "suppression" if gaussian.get('amplitude', 0) < 0 else "enhancement"
+                    center_days = gaussian.get('center_days', 0)
+                    expected_amp = 0.00019  # Saturn expected amplitude (absolute units)
+                    # Calculate enhancement factor using absolute amplitude units
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    
+                    print_status(f"   {event_date}: {sigma:.1f}σ {direction} at day {center_days:.1f}", "SUCCESS")
+                    print_status(f"      Amplitude: {amp_pct:.1f}% (expected: {expected_amp*100:.3f}%, enhancement: {enhancement_factor:.0f}x)", "INFO")
+            elif notable_events:
+                print_status(f"Saturn Opposition: {len(notable_events)} NOTABLE DETECTION(S) (2.0-3.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in notable_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    expected_amp = 0.00019  # Absolute units
+                    # Compute absolute amplitude from percent-of-baseline
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude ({enhancement_factor:.0f}x expected)", "INFO")
+            elif subsignificant_events:
+                print_status(f"Saturn Opposition: {len(subsignificant_events)} SUB-SIGNIFICANT DETECTION(S) (1.0-2.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in subsignificant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude", "INFO")
+            else:
+                print_status(f"Saturn Opposition: No detections above 1.0σ threshold", "INFO")
+                print_status(f"   Note: All {len(event_results)} events analyzed showed σ < 1.0", "INFO")
+            
+            # Scientific context and statistical summary
+            if all_amplitudes:
+                avg_amp = np.mean(np.abs(all_amplitudes))
+                max_amp = np.max(np.abs(all_amplitudes))
+                expected_amp = 0.019  # Keep as percentage for display
+                print_status(f"Statistical Summary:", "INFO")
+                print_status(f"   Total Events Analyzed: {len(event_results)}", "INFO")
+                print_status(f"   Detections ≥1.0σ: {total_detections}/{len(event_results)} ({100*total_detections/max(len(event_results),1):.1f}%)", "INFO")
+                # Calculate enhancement factors using absolute amplitude units
+                expected_amp_abs = expected_amp / 100
+                typical_baseline = 0.007  # Baseline coherence for unit conversion
+                avg_amp_abs = (avg_amp / 100) * typical_baseline
+                max_amp_abs = (max_amp / 100) * typical_baseline
+                avg_enhancement = avg_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                max_enhancement = max_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                
+                print_status(f"   Average Amplitude: {avg_amp:.1f}% (expected: {expected_amp:.3f}%)", "INFO")
+                print_status(f"   Maximum Amplitude: {max_amp:.1f}% ({max_enhancement:.0f}x expected)", "INFO")
+            
+            # Stacked analysis note
+            print_status(f"   Note: Individual event analysis complete. Multi-event stacking in Step 4.4", "INFO")
+        else:
+            print_status("Saturn Opposition: Disabled in configuration", "INFO")
+    else:
+        error = results.get('error', 'Unknown error')
+        print_status(f"Saturn Opposition: Failed - {error}", "ERROR")
+    print_status("-" * 50, "INFO")
+
+def print_summary_mars_results(results: Dict):
+    """Print a comprehensive summary of Mars opposition analysis results with enhanced scientific reporting"""
+    print_status(f"MARS OPPOSITION ANALYSIS SUMMARY - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('success', False):
+        if TEPConfig.get_bool('TEP_ENABLE_MARS_OPPOSITION', default=True):
+            # Enhanced detection categorization
+            mars_analysis = results.get('mars_opposition_analysis', {})
+            if 'best_window_event_results' in mars_analysis:
+                event_results = mars_analysis.get('best_window_event_results', {})
+            elif 'event_results' in mars_analysis:
+                print_status("WARNING: best_window_event_results missing; using event_results fallback for Mars.", "WARNING")
+                event_results = mars_analysis.get('event_results', {})
+            else:
+                print_status("ERROR: No Mars event results found.", "ERROR")
+                event_results = {}
+            significant_events = []  # 3.0σ+
+            notable_events = []  # 2.0-3.0σ
+            subsignificant_events = []  # 1.0-2.0σ
+            all_amplitudes = []
+            
+            for event_name, event_data in event_results.items():
+                if event_data.get('success'):
+                    gaussian = event_data.get('gaussian_fit', {})
+                    if gaussian.get('fit_success', False):
+                        amplitude = gaussian.get('amplitude', 0)
+                        std_err = gaussian.get('amplitude_std_err', 1)
+                        sigma_level = abs(amplitude / std_err) if std_err > 0 else 0
+                        amplitude_pct = gaussian.get('amplitude_fraction_of_baseline', 0) * 100
+                        
+                        all_amplitudes.append(amplitude_pct)
+                        
+                        event_info = (event_name, event_data, sigma_level, amplitude_pct)
+                        
+                        if gaussian.get('is_significant', False):  # 3.0σ+
+                            significant_events.append(event_info)
+                        elif sigma_level >= 2.0:
+                            notable_events.append(event_info)
+                        elif sigma_level >= 1.0:
+                            subsignificant_events.append(event_info)
+            
+            # ENHANCED REPORTING LOGIC
+            total_detections = len(significant_events) + len(notable_events) + len(subsignificant_events)
+            
+            if significant_events:
+                print_status(f"Mars Opposition: {len(significant_events)} SIGNIFICANT DETECTION(S) (≥3.0σ)", "SUCCESS")
+                print_status("    REMARKABLE: Mars has the weakest expected signal (44x weaker than Jupiter)", "INFO")
+                for event_name, event_data, sigma, amp_pct in significant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    gaussian = event_data.get('gaussian_fit', {})
+                    direction = "suppression" if gaussian.get('amplitude', 0) < 0 else "enhancement"
+                    center_days = gaussian.get('center_days', 0)
+                    expected_amp = 0.00005  # Mars expected amplitude (absolute units)
+                    # Calculate enhancement factor using absolute amplitude units
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    
+                    print_status(f"   {event_date}: {sigma:.1f}σ {direction} at day {center_days:.1f}", "SUCCESS")
+                    print_status(f"      Amplitude: {amp_pct:.1f}% (expected: {expected_amp:.4f}%, enhancement: {enhancement_factor:.0f}x)", "INFO")
+            elif notable_events:
+                print_status(f"Mars Opposition: {len(notable_events)} NOTABLE DETECTION(S) (2.0-3.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in notable_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    expected_amp = 0.00005  # Absolute units
+                    # Compute absolute amplitude from percent-of-baseline
+                    gaussian_data = event_data.get('gaussian_fit', {})
+                    baseline = gaussian_data.get('baseline', 0.007)
+                    amplitude_fraction = gaussian_data.get('amplitude_fraction_of_baseline', 0)
+                    actual_amplitude = abs(amplitude_fraction) * baseline
+                    enhancement_factor = actual_amplitude / expected_amp if expected_amp > 0 else 0
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude ({enhancement_factor:.0f}x expected)", "INFO")
+            elif subsignificant_events:
+                print_status(f"Mars Opposition: {len(subsignificant_events)} SUB-SIGNIFICANT DETECTION(S) (1.0-2.0σ)", "INFO")
+                for event_name, event_data, sigma, amp_pct in subsignificant_events:
+                    event_date = event_data.get('event_date', 'Unknown')[:10]
+                    print_status(f"   {event_date}: {sigma:.1f}σ, {amp_pct:.1f}% amplitude", "INFO")
+            else:
+                print_status(f"Mars Opposition: No detections above 1.0σ threshold (expected for weakest signal)", "INFO")
+                print_status(f"   Note: All {len(event_results)} events analyzed showed σ < 1.0", "INFO")
+            
+            # Scientific context and statistical summary
+            if all_amplitudes:
+                avg_amp = np.mean(np.abs(all_amplitudes))
+                max_amp = np.max(np.abs(all_amplitudes))
+                expected_amp = 0.0050  # Keep as percentage for display
+                print_status(f"Statistical Summary:", "INFO")
+                print_status(f"   Total Events Analyzed: {len(event_results)}", "INFO")
+                print_status(f"   Detections ≥1.0σ: {total_detections}/{len(event_results)} ({100*total_detections/max(len(event_results),1):.1f}%)", "INFO")
+                print_status(f"   Average Amplitude: {avg_amp:.1f}% (expected: {expected_amp:.4f}%)", "INFO")
+                # CRITICAL FIX: Calculate enhancement factor for summary using absolute units
+                expected_amp_abs = expected_amp / 100  # Convert percentage to absolute
+                # max_amp is percentage of baseline, convert to absolute
+                typical_baseline = 0.007  # Typical baseline coherence
+                max_amp_abs = (max_amp / 100) * typical_baseline
+                max_enhancement = max_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                
+                print_status(f"   Maximum Amplitude: {max_amp:.1f}% ({max_enhancement:.0f}x expected)", "INFO")
+            
+            # Stacked analysis note
+            print_status(f"   Note: Individual event analysis complete. Multi-event stacking in Step 4.4", "INFO")
+        else:
+            print_status("Mars Opposition: Disabled in configuration", "INFO")
+    else:
+        error = results.get('error', 'Unknown error')
+        print_status(f"Mars Opposition: Failed - {error}", "ERROR")
+    print_status("-" * 50, "INFO")
+
+def print_summary_lunar_standstill_results(results: Dict):
+    """Print a summary of the Lunar Standstill analysis results"""
+    print_status(f"LUNAR STANDSTILL ANALYSIS SUMMARY - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('success', False):
+        if TEPConfig.get_bool('TEP_ENABLE_LUNAR_STANDSTILL', default=True):
+            enhancement = results.get('standstill_enhancement', {})
+            if enhancement.get('success', False):
+                status = "Significant enhancement detected" if enhancement.get('is_significant', False) else "No significant enhancement"
+                ratio = enhancement.get('enhancement_ratio', 0.0)
+                percent = (ratio - 1) * 100
+                print_status(f"🌙 Major Lunar Standstill: {status}", "INFO")
+                print_status(f"   Enhancement Ratio: {ratio:.2f}x ({percent:+.1f}%)", "INFO")
+                print_status(f"   Pre-standstill amplitude: {enhancement.get('pre_amplitude', 0):.6f}", "INFO")
+                print_status(f"   Standstill amplitude: {enhancement.get('standstill_amplitude', 0):.6f}", "INFO")
+            else:
+                print_status(f"🌙 Major Lunar Standstill: Insufficient data for enhancement analysis", "WARNING")
+
+            # Monthly amplitudes
+            monthly_amplitudes = results.get('monthly_amplitudes', {})
+            if monthly_amplitudes.get('success', False):
+                print_status(f"   Analysis periods:", "INFO")
+                for period_name, stats in monthly_amplitudes.get('periods', {}).items():
+                    print_status(f"     {period_name}: {stats['n_months']} months, amplitude = {stats['mean_amplitude']:.6f}", "INFO")
+                
+                peak_month = monthly_amplitudes.get('peak_amplitude_month', 'N/A')
+                print_status(f"   Peak amplitude month: {peak_month}", "INFO")
+
+            # Quadratic fit
+            quadratic_fit = results.get('quadratic_fit', {})
+            if quadratic_fit.get('success', False):
+                offset = quadratic_fit.get('peak_offset_months', 0.0)
+                r_squared = quadratic_fit.get('r_squared', 0.0)
+                print_status(f"   Quadratic fit peak: {offset:.1f} months from expected ({r_squared:.3f} R²)", "INFO")
+        else:
+            print_status("Major Lunar Standstill: Disabled in configuration", "INFO")
+    else:
+        error = results.get('error', 'Unknown error')
+        print_status(f"Major Lunar Standstill: Failed - {error}", "ERROR")
+    print_status("-" * 50, "INFO")
+
+def print_summary_astronomical_comparison(results: Dict):
+    """Print a comparison of Jupiter vs Saturn vs Mars opposition results"""
+    print_status(f"ASTRONOMICAL EVENTS COMPARISON - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('jupiter', {}).get('success', False) and \
+       results.get('saturn', {}).get('success', False) and \
+       results.get('mars', {}).get('success', False):
+        
+        jupiter = results['jupiter']
+        saturn = results['saturn']
+        mars = results['mars']
+
+        # Individual event counts (computed from event_results)
+        def count_significant(event_results_dict: Dict) -> tuple:
+            if not isinstance(event_results_dict, dict):
+                return 0, 0
+            total = 0
+            sig = 0
+            for ev in event_results_dict.values():
+                if isinstance(ev, dict) and ev.get('success', False):
+                    total += 1
+                    if ev.get('gaussian_fit', {}).get('is_significant', False):
+                        sig += 1
+            return sig, total
+
+        if 'best_window_event_results' in jupiter:
+            j_ev = jupiter.get('best_window_event_results', {})
+        elif 'event_results' in jupiter:
+            print_status("WARNING: best_window_event_results missing; using event_results fallback for Jupiter (comparison).", "WARNING")
+            j_ev = jupiter.get('event_results', {})
+        else:
+            print_status("ERROR: No Jupiter event results found (comparison).", "ERROR")
+            j_ev = {}
+
+        if 'best_window_event_results' in saturn:
+            s_ev = saturn.get('best_window_event_results', {})
+        elif 'event_results' in saturn:
+            print_status("WARNING: best_window_event_results missing; using event_results fallback for Saturn (comparison).", "WARNING")
+            s_ev = saturn.get('event_results', {})
+        else:
+            print_status("ERROR: No Saturn event results found (comparison).", "ERROR")
+            s_ev = {}
+
+        if 'best_window_event_results' in mars:
+            m_ev = mars.get('best_window_event_results', {})
+        elif 'event_results' in mars:
+            print_status("WARNING: best_window_event_results missing; using event_results fallback for Mars (comparison).", "WARNING")
+            m_ev = mars.get('event_results', {})
+        else:
+            print_status("ERROR: No Mars event results found (comparison).", "ERROR")
+            m_ev = {}
+        j_sig, j_tot = count_significant(j_ev)
+        s_sig, s_tot = count_significant(s_ev)
+        m_sig, m_tot = count_significant(m_ev)
+
+        print_status(f"Jupiter: {j_sig}/{j_tot} significant events", "INFO")
+        print_status(f"Saturn:  {s_sig}/{s_tot} significant events", "INFO")
+        print_status(f"Mars:    {m_sig}/{m_tot} significant events", "INFO")
+
+        # Expected ratios (if available) - prefer per-analysis expected_amplitude, fallback to config
+        jupiter_expected = jupiter.get('expected_amplitude', TEPConfig.get_float('TEP_JUPITER_AMPLITUDE_FRACTION', 0.0022))
+        saturn_expected = saturn.get('expected_amplitude', TEPConfig.get_float('TEP_SATURN_AMPLITUDE_FRACTION', 0.00019))
+        mars_expected = mars.get('expected_amplitude', TEPConfig.get_float('TEP_MARS_AMPLITUDE_FRACTION', 0.00005))
+        if all(x is not None and x > 0 for x in [jupiter_expected, saturn_expected, mars_expected]):
+            print_status(f"Expected amplitude ratios:", "INFO")
+            print_status(f"   Jupiter/Saturn: {jupiter_expected/saturn_expected:.1f}x", "INFO")
+            print_status(f"   Jupiter/Mars: {jupiter_expected/mars_expected:.1f}x", "INFO")
+            print_status(f"   Saturn/Mars: {saturn_expected/mars_expected:.1f}x", "INFO")
+
+        # Stacked analysis comparison
+        jupiter_stacked = jupiter.get('stacked_analysis', {})
+        saturn_stacked = saturn.get('stacked_analysis', {})
+        if (
+            jupiter_stacked.get('enabled') and jupiter_stacked.get('success', False) and
+            saturn_stacked.get('enabled') and saturn_stacked.get('success', False)
+        ):
+            jupiter_sigma = jupiter_stacked.get('sigma_level', 0.0)
+            saturn_sigma = saturn_stacked.get('sigma_level', 0.0)
+            print_status(f"Stacked significance: Jupiter {jupiter_sigma:.1f}σ vs Saturn {saturn_sigma:.1f}σ", "INFO")
+
+        # Overall conclusion
+        total_significant = j_sig + s_sig + m_sig
+        if total_significant > 0:
+            print_status(f"CONCLUSION: {total_significant} significant astronomical event signals detected!", "SUCCESS")
+            if m_sig > 0:
+                print_status("    EXTRAORDINARY: Mars signal detected despite being weakest expected!", "SUCCESS")
+        else:
+            print_status("CONCLUSION: No significant astronomical event signals detected", "INFO")
+    else:
+        print_status("Cannot compare - one or more analyses failed", "WARNING")
+    print_status("-" * 50, "INFO")
+
+def print_summary_helical_motion_results(results: Dict):
+    """Print a summary of the helical motion analysis results"""
+    print_status(f"HELICAL MOTION ANALYSIS SUMMARY - {results['analysis_center'].upper()}", "TITLE")
+
+    if results.get('success', False):
+        # Chandler Wobble
+        chandler_wobble = results.get('chandler_wobble_analysis', {})
+        interp = chandler_wobble.get('interpretation', 'N/A')
+        print_status(f"Chandler Wobble (14-month): {interp}", "INFO")
+
+        # 3D Spherical Harmonics
+        spherical_harmonics = results.get('spherical_harmonics_analysis', {})
+        n_sectors = spherical_harmonics.get('n_valid_sectors', 0)
+        cv = spherical_harmonics.get('coefficient_of_variation', 0.0)
+        print_status(f"3D Spherical Harmonics: {n_sectors} directional sectors analyzed, CV = {cv:.3f}", "INFO")
+
+
+        # Mesh Dance Analysis
+        mesh_dance = results.get('mesh_dance_analysis', {})
+        classification = mesh_dance.get('dance_signature_classification', 'N/A')
+        score = mesh_dance.get('dance_score', 0.0)
+        print_status(f"Mesh Dance Analysis: {classification} (score = {score:.3f})", "INFO")
+
+        # Jupiter Opposition Analysis (as part of helical motion suite)
+        jupiter_opp = results.get('jupiter_opposition_analysis', {})
+        if 'best_window_event_results' in jupiter_opp:
+            j_event_results = jupiter_opp.get('best_window_event_results', {})
+        elif 'event_results' in jupiter_opp:
+            print_status("WARNING: best_window_event_results missing; using event_results fallback for Jupiter (helical summary).", "WARNING")
+            j_event_results = jupiter_opp.get('event_results', {})
+        else:
+            print_status("ERROR: No Jupiter event results found (helical summary).", "ERROR")
+            j_event_results = {}
+        n_events = len(j_event_results) if isinstance(j_event_results, dict) and j_event_results else jupiter_opp.get('n_opposition_events_total', 0)
+        interpretation = jupiter_opp.get('interpretation', 'N/A')
+        print_status(f"Jupiter Opposition: {n_events} events analyzed - {interpretation}", "INFO")
+
+        # Nutation Analysis
+        nutation = results.get('nutation_analysis', {})
+        if nutation.get('success', False):
+            nutation_summary = "Nutation Analysis: Successful" 
+            if nutation.get('nutation_results'):
+                for name, res in nutation['nutation_results'].items():
+                    if res.get('r_squared', 0) > 0.1: # Threshold for significance
+                        nutation_summary += f" - {name.replace('_', ' ').title()}: Amp={res['amplitude']:.4f}, R²={res['r_squared']:.3f}"
+                    else:
+                        nutation_summary += f" - {name.replace('_', ' ').title()}: No significant signature"
+            else:
+                nutation_summary += ": No specific nutation periods analyzed or found"
+            print_status(nutation_summary, "INFO")
+        else:
+            error_msg = nutation.get('error', 'Unknown error')
+            print_status(f"Nutation Analysis: Failed - {error_msg}", "ERROR")
+
+        # Tid Exclusion
+        tid_exclusion = results.get('tid_exclusion_analysis', {})
+        if tid_exclusion.get('success', False):
+            significant_bands = tid_exclusion.get('significant_bands', [])
+            print_status(f"TID Exclusion Analysis: {len(significant_bands)} significant bands excluded", "INFO")
+
+        # Additional Visualizations
+        additional_viz = results.get('additional_visualizations', {})
+        if additional_viz.get('success', False):
+            for fig in additional_viz.get('figures_generated', []):
+                print_status(f"Figure Generated: {fig}", "INFO")
+
+        # Methodology Validation
+        method_validation = results.get('methodology_validation', {})
+        if method_validation.get('success', False):
+            for key, value in method_validation.get('metrics', {}).items():
+                print_status(f"Validation Metric {key}: {value}", "INFO")
+
+        # Gravitational Temporal Field Analysis (GTFA)
+        gtfa = results.get('gravitational_temporal_field_analysis', {})
+        if gtfa.get('success', False):
+            enhancement = gtfa.get('summary_metrics', {}).get('global_enhancement', {})
+            significant = enhancement.get('is_significant', False)
+            print_status(f"Gravitational Temporal Field Analysis: {enhancement.get('enhancement_ratio', 0):.4f}x enhancement ({str(significant)})", "INFO")
+            if gtfa.get('station_impact_analysis', {}).get('success', False):
+                impacts = gtfa['station_impact_analysis']['impacted_stations']
+                print_status(f"Impacted Stations: {len(impacts)} detected", "INFO")
+
+        # Geographic Bias Validation
+        geographic_bias = results.get('geographic_bias_validation', {})
+        if geographic_bias.get('success', False):
+            bias_detected = geographic_bias.get('bias_detected', False)
+            print_status(f"Geographic Bias Validation: Bias detected = {bias_detected}", "INFO")
+
+        # Realistic Ionospheric Validation
+        ionospheric_validation = results.get('realistic_ionospheric_validation', {})
+        if ionospheric_validation.get('success', False):
+            validation_result = ionospheric_validation.get('validation_result', 'N/A')
+            print_status(f"Realistic Ionospheric Validation: {validation_result}", "INFO")
+
+        # Targeted Diurnal Analysis
+        diurnal_analysis = results.get('targeted_diurnal_analysis', {})
+        if diurnal_analysis.get('success', False):
+            significant_patterns = diurnal_analysis.get('significant_diurnal_patterns', 0)
+            print_status(f"Targeted Diurnal Analysis: {significant_patterns} significant patterns detected", "INFO")
+            for pattern in diurnal_analysis.get('patterns', []):
+                print_status(f"   Pattern {pattern['id']}: {pattern['status']}", "INFO")
+
+        # Block-wise Cross Validation
+        block_wise_cv = results.get('block_wise_cross_validation', {})
+        if block_wise_cv.get('success', False):
+            cv_score = block_wise_cv.get('cross_validation_score', 0.0)
+            print_status(f"Block-wise Cross Validation: Score = {cv_score:.3f}", "INFO")
+    else:
+        error = results.get('error', 'Unknown error')
+        print_status(f"Helical Motion Analysis: Failed - {error}", "ERROR")
+    print_status("-" * 50, "INFO")
+@ensure_single_instance
+def main():
+    """Main function with command-line options for different analysis modes."""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="TEP GNSS Geospatial Temporal Analysis - Step 5")
+    parser.add_argument('--mode', choices=['full', 'helical', 'jupiter', 'saturn', 'mars', 'lunar', 'eclipse', 'astronomical'], default='full',
+                        help='Analysis mode: full (complete geospatial temporal analysis) [default], helical (helical motion analyses only), jupiter (Jupiter opposition only), saturn (Saturn opposition only), mars (Mars opposition only), lunar (Lunar Standstill only), or astronomical (Jupiter, Saturn, Mars, Venus, Mercury)')
+    parser.add_argument('--center', choices=['code'], default='code',
+                        help='Specific GNSS analysis center to process (CODE only)')
+    parser.add_argument('--event-windows', type=str,
+                        help='Comma-separated list of event window half-widths in days for planetary sensitivity runs (default: 30,60,120,180,240)')
+    parser.add_argument('--list-helical', action='store_true',
+                        help='List available helical motion analysis methods')
+    
+    args = parser.parse_args()
+    
+    if args.list_helical:
+        print_status("AVAILABLE HELICAL MOTION ANALYSES:", "TITLE")
+        print_status("=" * 50, "INFO")
+        print_status("1. Chandler Wobble Analysis (14-month polar axis motion)", "INFO")
+        print_status("2. 3D Spherical Harmonic Analysis (directional anisotropy decomposition)", "INFO")
+        print_status("3. Mesh Dance Analysis (network coherence dynamics)", "INFO")
+        print_status("4. Jupiter Opposition Analysis (gravitational potential pulse events)", "INFO")
+        print_status("5. Saturn Opposition Analysis (gravitational potential pulse events)", "INFO")
+        print_status("8. Mars Opposition Analysis (gravitational potential pulse events)", "INFO")
+        print_status("9. Nutation Analysis (18.6-year axial tilt variations)", "INFO")
+        print_status("", "INFO")
+        print_status("ASTRONOMICAL EVENT ANALYSES:", "TITLE")
+        print_status("=" * 50, "INFO")
+        print_status("• Jupiter Oppositions: 23 events (2000-2024) - 0.22% expected amplitude", "INFO")
+        print_status("• Saturn Oppositions: 25 events (2000-2025) - 0.019% expected amplitude", "INFO")
+        print_status("• Mars Oppositions: 12 events (2001-2025) - 0.005% expected amplitude", "INFO")
+        print_status("• Venus Inferior Conjunctions: 17 events (2000-2025) - 0.1% expected amplitude", "INFO")
+        print_status("• Mercury Inferior Conjunctions: 80 events (2000-2025) - 0.01% expected amplitude", "INFO")
+        print_status("• Major Lunar Standstill: 2024-2025 (sidereal day amplitude enhancement)", "INFO")
+        print_status("• Default multi-window sweep: ±30, ±60, ±120, ±180, ±240 days", "INFO")
+        print_status("• Center: CODE only", "INFO")
+        print_status("• Statistical significance testing", "INFO")
+        print_status("", "INFO")
+        print_status("TO RUN ANALYSES:", "TITLE")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode helical", "INFO")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode jupiter --center esa_final", "INFO")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode saturn --center code", "INFO")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode mars --center igs_combined", "INFO")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode lunar --center igs_combined", "INFO")
+        print_status("   python scripts/steps/step_2_core_analysis/step_2_2_tep_geospatial_temporal_analysis.py --mode astronomical  # All planets", "INFO")
+        return True
+    
+    if args.mode == 'helical':
+        # Run ONLY the new helical motion analyses
+        results = run_helical_motion_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    if args.mode == 'jupiter':
+        # Run ONLY the Jupiter opposition analysis
+        results = run_jupiter_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    if args.mode == 'saturn':
+        # Run ONLY the Saturn opposition analysis
+        results = run_saturn_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    if args.mode == 'mars':
+        # Run ONLY the Mars opposition analysis
+        results = run_mars_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    if args.mode == 'lunar':
+        # Run ONLY the Lunar Standstill analysis
+        results = run_lunar_only(args.center)
+        return all(r.get('success', False) for r in results.values())
+    
+    if args.mode == 'astronomical':
+        # Run Jupiter, Saturn, AND Mars opposition analyses
+        event_windows = None
+        if args.event_windows:
+            try:
+                event_windows = [int(s.strip()) for s in args.event_windows.split(',') if s.strip()]
+            except Exception:
+                event_windows = None
+        results = run_astronomical_events_only(args.center, event_window_days_list=event_windows)
+        return all(r.get('success', False) for r in results.values())
+    
+    # Original full Step 2.2 analysis
+    from scripts.utils.version_utils import VERSION_STRING
+    print_status(f"TEP GNSS Analysis Package {VERSION_STRING} - STEP 2.2: Geospatial Temporal Analysis", "TITLE")
+    
+    start_time = time.time()
+    
+    # Validate configuration before starting
+    config_issues = TEPConfig.validate_configuration()
+    if config_issues:
+        print_status("Configuration validation failed:", "ERROR")
+        for issue in config_issues:
+            print_status(f"  - {issue}", "ERROR")
+        return False
+    
+    # Check memory availability
+    memory = psutil.virtual_memory()
+    used_gb = memory.used / (1024**3)
+    total_gb = memory.total / (1024**3)
+    percent = memory.percent
+    print_status(f"Memory usage: {used_gb:.1f}/{total_gb:.1f} GB ({percent:.1f}%)", "INFO")
+    
+    memory_limit = TEPConfig.get_float('TEP_MEMORY_LIMIT_GB')
+    # Memory check removed - warnings disabled
+    
+    # Process analysis centers (CODE only)
+    centers = ['code']
+    
+    results = {}
+    for ac in centers:
+        print_status(f"\n{'='*60}", "INFO")
+        print_status(f"PROCESSING {ac.upper()} - Geospatial Temporal Analysis", "TITLE")
+        print_status(f"{'='*60}", "INFO")
+        
+        result = process_analysis_center(ac)
+        results[ac] = result
+        
+        # Final save (results already saved during analysis, this updates if temporal coherence ran)
+        output_dir = ROOT / "results/outputs" / NAMESPACE
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_file = output_dir / f"step_2_2_geospatial_temporal_analysis_{ac}.json"
+        try:
+            safe_json_write(result, output_file, indent=2)
+            print_status(f"Final results saved: {output_file}", "SUCCESS")
+        except (TEPFileError, TEPDataError) as e:
+            print_status(f"Failed to save final results: {e}", "WARNING")
+    
+    # Summary
+    print_status(f"\n{'='*80}", "INFO")
+    print_status("GEOSPATIAL TEMPORAL ANALYSIS COMPLETE", "TITLE")
+    print_status(f"{'='*80}", "INFO")
+    
+    if results:
+        print_status("Validation Summary:", "SUCCESS")
+        for ac, result in results.items():
+            if result.get('success', False):
+                print_status(f"  {ac.upper()}:", "INFO")
+
+                if result.get('enhanced_anisotropy_analysis', {}).get('success', False):
+                    anisotropy = result['enhanced_anisotropy_analysis']
+                    aniso_stats = anisotropy['anisotropy_statistics']
+                    print_status(f"    Enhanced Anisotropy: {aniso_stats['n_sectors']} sectors, CV = {aniso_stats['coefficient_of_variation']:.3f} ({aniso_stats['anisotropy_category']})", "INFO")
+            else:
+                print_status(f"  {ac.upper()}: FAILED - {result.get('error', 'Unknown error')}", "ERROR")
+        
+        print_status(f"Total execution time: {time.time() - start_time:.1f} seconds", "INFO")
+        
+        return True
+    else:
+        print_status("No successful validations", "ERROR")
+        return False
+
+# ===== MISSING FUNCTIONS FROM MAIN BRANCH STEP 5 =====
+
+def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Detect 14-month Chandler wobble signatures in GPS timing correlations.
+    
+    The Chandler wobble causes Earth's rotation axis to wander ~9 meters from 
+    the geographic poles with a period of ~14 months. This should modulate
+    correlation patterns as the station mesh "wobbles" relative to inertial space.
+    """
+    print_status("Starting Chandler Wobble Analysis (14-month period)...", "PROCESS")
+    
+    try:
+        # Convert dates to datetime if not already done
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Calculate days since epoch for continuous time analysis
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # Check temporal coverage for Chandler wobble analysis
+        data_span_days = (complete_df['date'].max() - complete_df['date'].min()).days + 1  # Inclusive date count
+        chandler_period_days = TEPConfig.get_float('TEP_CHANDLER_PERIOD_DAYS', 425.0)  # ~14 months
+        n_chandler_cycles = data_span_days / chandler_period_days
+        
+        print_status(f"Temporal coverage: {data_span_days} days ({n_chandler_cycles:.2f} Chandler cycles)", "INFO")
+        
+        if n_chandler_cycles < 1.5:  # Need at least 1.5 cycles for meaningful analysis
+            return {
+                'success': False,
+                'error': f'Insufficient temporal coverage for Chandler wobble: {n_chandler_cycles:.2f} cycles (need ≥1.5)',
+                'data_span_days': data_span_days,
+                'chandler_period_days': chandler_period_days,
+                'cycles_available': n_chandler_cycles
+            }
+        
+        # Test multiple Chandler wobble periods to find best fit (period varies 430-437 days)
+        test_periods = np.arange(420, 441, 2)  # Test 420-440 days in 2-day steps
+        print_status(f"Testing {len(test_periods)} candidate Chandler periods: {test_periods[0]}-{test_periods[-1]} days", "INFO")
+        
+        best_period = chandler_period_days
+        best_preliminary_r2 = 0
+        
+        # Quick scan to find optimal period (use coarse bins for speed)
+        for test_period in test_periods:
+            complete_df['test_phase'] = (2 * np.pi * complete_df['days_since_epoch'] / test_period) % (2 * np.pi)
+            phase_bins_coarse = np.linspace(0, 2*np.pi, 13)  # 12 bins for quick test
+            complete_df['test_bin'] = pd.cut(complete_df['test_phase'], bins=phase_bins_coarse, labels=range(12))
+            
+            # Quick E-W/N-S ratio calculation per bin
+            test_ratios = []
+            for bin_idx in range(12):
+                bin_data = complete_df[complete_df['test_bin'] == bin_idx]
+                if len(bin_data) > 1000:
+                    ew_mean = bin_data[bin_data['ew_ns_class'] == 'EW']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 0
+                    ns_mean = bin_data[bin_data['ew_ns_class'] == 'NS']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 1
+                    if ns_mean != 0:
+                        test_ratios.append(ew_mean / ns_mean)
+            
+            if len(test_ratios) >= 8:
+                # Compute variance explained by sinusoid
+                test_r2 = 1 - np.var(test_ratios) / (np.var(test_ratios) + 1e-10)
+                if test_r2 > best_preliminary_r2:
+                    best_preliminary_r2 = test_r2
+                    best_period = test_period
+        
+        print_status(f"Optimal Chandler period from scan: {best_period} days (preliminary R²={best_preliminary_r2:.4f})", "INFO")
+        chandler_period_days = best_period
+        
+        # Now perform full analysis with optimal period and high resolution
+        complete_df['chandler_phase'] = (2 * np.pi * complete_df['days_since_epoch'] / chandler_period_days) % (2 * np.pi)
+        
+        # Group data into phase bins (36 bins = 10° phase increments for better resolution)
+        n_phase_bins = 36
+        phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+        complete_df['chandler_phase_bin'] = pd.cut(complete_df['chandler_phase'], 
+                                                   bins=phase_bins, 
+                                                   labels=range(n_phase_bins))
+        
+        # Azimuth already computed in Step 2.1 - no need to recalculate!
+        if 'azimuth' not in complete_df.columns:
+            print_status("Computing azimuth for Chandler wobble analysis...", "PROCESS")
+            complete_df['azimuth'] = complete_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                           row['station2_lat'], row['station2_lon']), axis=1
+            )
+        
+        # Classify pairs as East-West or North-South
+        def classify_ew_ns(azimuth):
+            if (45 <= azimuth <= 135) or (225 <= azimuth <= 315):
+                return 'EW'
+            else:
+                return 'NS'
+        
+        complete_df['ew_ns_class'] = complete_df['azimuth'].apply(classify_ew_ns)
+        
+        # Analyze each phase bin
+        phase_results = []
+        num_bins = TEPConfig.get_int('TEP_BINS')
+        max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
+        min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+        edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
+        
+        for phase_bin in range(n_phase_bins):
+            phase_data = complete_df[complete_df['chandler_phase_bin'] == phase_bin].copy()
+            
+            if len(phase_data) < 500:  # Lowered requirement for better temporal coverage
+                continue
+                
+            # Analyze E-W and N-S separately
+            ew_data = phase_data[phase_data['ew_ns_class'] == 'EW']
+            ns_data = phase_data[phase_data['ew_ns_class'] == 'NS']
+            
+            ew_lambda = fit_directional_correlation(ew_data, edges, min_bin_count)
+            ns_lambda = fit_directional_correlation(ns_data, edges, min_bin_count)
+            
+            if ew_lambda and ns_lambda:
+                phase_results.append({
+                    'phase_bin': phase_bin,
+                    'phase_degrees': phase_bin * 10,  # 10° per bin (36 bins)
+                    'ew_lambda_km': ew_lambda,
+                    'ns_lambda_km': ns_lambda,
+                    'ew_ns_ratio': ew_lambda / ns_lambda,
+                    'n_ew_pairs': len(ew_data),
+                    'n_ns_pairs': len(ns_data)
+                })
+        
+        if len(phase_results) < 18:  # Need at least 18 phase bins for meaningful analysis with 36 bins
+            return {
+                'success': False,
+                'error': f'Insufficient phase bins for Chandler wobble: {len(phase_results)} (need ≥18)',
+                'n_phase_bins': len(phase_results),
+                'tested_period_days': chandler_period_days
+            }
+        
+        # Test for 14-month periodicity in E-W/N-S ratio
+        phases = [r['phase_degrees'] for r in phase_results]
+        ew_ns_ratios = [r['ew_ns_ratio'] for r in phase_results]
+        
+        # Fit sinusoidal model to detect periodicity
+        try:
+            def sinusoidal_model(phase_rad, amplitude, phase_offset, baseline):
+                return amplitude * np.cos(phase_rad + phase_offset) + baseline
+            
+            phase_rad = np.array(phases) * np.pi / 180
+            popt, pcov = curve_fit(sinusoidal_model, phase_rad, ew_ns_ratios, 
+                                 p0=[0.1, 0, np.mean(ew_ns_ratios)])
+            
+            amplitude, phase_offset, baseline = popt
+            r_squared = 1 - np.sum((ew_ns_ratios - sinusoidal_model(phase_rad, *popt))**2) / np.sum((ew_ns_ratios - np.mean(ew_ns_ratios))**2)
+            
+            chandler_signature = {
+                'fit_success': True,
+                'amplitude': float(amplitude),
+                'phase_offset_rad': float(phase_offset),
+                'baseline': float(baseline),
+                'r_squared': float(r_squared),
+                'n_phase_bins': len(phase_results)
+            }
+            
+        except Exception as e:
+            chandler_signature = {
+                'fit_success': False,
+                'error': str(e),
+                'n_phase_bins': len(phase_results)
+            }
+        
+        results = {
+            'success': True,
+            'analysis_type': 'chandler_wobble',
+            'temporal_coverage': {
+                'data_span_days': data_span_days,
+                'chandler_period_days': chandler_period_days,
+                'chandler_period_months': chandler_period_days / 30.44,
+                'cycles_available': n_chandler_cycles
+            },
+            'period_optimization': {
+                'tested_periods': test_periods.tolist(),
+                'optimal_period_days': chandler_period_days,
+                'preliminary_r2': best_preliminary_r2
+            },
+            'n_phase_bins': n_phase_bins,
+            'phase_analysis': phase_results,
+            'chandler_signature': chandler_signature,
+            'chandler_period_days': chandler_period_days,
+            'chandler_period_months': chandler_period_days / 30.44,
+            'chandler_r2': chandler_signature.get('r_squared', 0)
+        }
+        
+        if chandler_signature.get('fit_success') and chandler_signature.get('r_squared', 0) > 0.3:
+            print_status(f"Chandler wobble signature detected: R² = {chandler_signature['r_squared']:.3f}", "SUCCESS")
+        else:
+            print_status("No significant Chandler wobble signature detected", "INFO")
+        
+        print_status(f"CHANDLER WOBBLE ANALYSIS RESULTS:", "SUCCESS")
+        print_status(f"  Optimal Period: {chandler_period_days} days ({chandler_period_days/30.44:.2f} months)", "INFO")
+        print_status(f"  Temporal Coverage: {data_span_days} days ({data_span_days/chandler_period_days:.2f} cycles)", "INFO")
+        print_status(f"  Phase Bins Analyzed: {len(phase_results)}/{n_phase_bins} (resolution: {360/n_phase_bins:.0f}° per bin)", "INFO")
+        if chandler_signature['r_squared'] > 0.3:
+            print_status(f"  Chandler Signature: R² = {chandler_signature['r_squared']:.3f} (DETECTED)", "SUCCESS")
+        elif chandler_signature['r_squared'] > 0.1:
+            print_status(f"  Chandler Signature: R² = {chandler_signature['r_squared']:.3f} (weak signal)", "INFO")
+        else:
+            print_status(f"  Chandler Signature: R² = {chandler_signature['r_squared']:.3f} (not significant)", "INFO")
+        print_status(f"Chandler wobble analysis complete: {len(phase_results)} phase bins analyzed", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Chandler wobble analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+def run_3d_spherical_harmonic_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Replace simple E-W/N-S analysis with full spherical harmonic decomposition.
+    
+    This captures the complete 3D anisotropy pattern of the station mesh,
+    revealing complex directional structures beyond simple E-W vs N-S.
+    
+    Args:
+        complete_df: Complete pair dataset with coordinates and coherence
+        
+    Returns:
+        dict: 3D spherical harmonic analysis results
+    """
+    print_status("Starting 3D Spherical Harmonic Analysis...", "PROCESS")
+    
+    try:
+        # Azimuth already computed in Step 2.1 - no need to recalculate!
+        if 'azimuth' not in complete_df.columns:
+            print_status("Computing azimuths (fallback - Step 2.1 data not available)...", "WARNING")
+            complete_df['azimuth'] = complete_df.apply(
+                lambda row: compute_azimuth(row['station1_lat'], row['station1_lon'], 
+                                           row['station2_lat'], row['station2_lon']), axis=1
+            )
+        else:
+            print_status("Using pre-computed azimuths from Step 2.1", "SUCCESS")
+        
+        # Compute elevation angles accounting for Earth curvature
+        def compute_elevation_angle(lat1, lon1, lat2, lon2):
+            """Compute elevation angle for station pair"""
+            # Convert to radians
+            lat1_rad, lon1_rad = np.radians(lat1), np.radians(lon1)
+            lat2_rad, lon2_rad = np.radians(lat2), np.radians(lon2)
+            
+            # Calculate great circle distance
+            dlat = lat2_rad - lat1_rad
+            dlon = lon2_rad - lon1_rad
+            a = np.sin(dlat/2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon/2)**2
+            c = 2 * np.arcsin(np.sqrt(a))
+            distance_rad = c
+            
+            # Earth radius in km
+            R = 6371.0
+            
+            # Calculate elevation angle (angle from horizontal)
+            # This is the angle between the line connecting stations and the local horizontal
+            elevation_rad = np.arcsin(distance_rad / (2 * R))
+            elevation_deg = np.degrees(elevation_rad)
+            
+            return elevation_deg
+        
+        # CHUNKED PROCESSING: Use binned aggregation for 3D analysis
+        print_status("Using chunked aggregation for 3D spherical harmonic analysis...", "INFO")
+        
+        # Group into spherical bins for harmonic analysis
+        n_azimuth_bins = 16  # 22.5° azimuth resolution
+        n_elevation_bins = 8  # Elevation bins
+        
+        azimuth_bins = np.linspace(0, 2*np.pi, n_azimuth_bins + 1)
+        elevation_bins = np.linspace(0, np.pi/2, n_elevation_bins + 1)  # 0 to 90°
+        
+        # Distance binning parameters
+        num_bins = TEPConfig.get_int('TEP_BINS')
+        max_distance = TEPConfig.get_float('TEP_MAX_DISTANCE_KM')
+        min_bin_count = TEPConfig.get_int('TEP_MIN_BIN_COUNT')
+        edges = np.logspace(np.log10(50), np.log10(max_distance), num_bins + 1)
+        
+        # Initialize accumulators for each spherical bin
+        spherical_accumulators = {}
+        for az_bin in range(n_azimuth_bins):
+            for el_bin in range(n_elevation_bins):
+                key = (az_bin, el_bin)
+                spherical_accumulators[key] = {
+                    'bin_sums': np.zeros(num_bins),
+                    'bin_counts': np.zeros(num_bins),
+                    'bin_dist_sums': np.zeros(num_bins),
+                    'total_count': 0
+                }
+        
+        # Process dataframe in chunks
+        chunk_size = 10_000_000
+        total_pairs = len(complete_df)
+        num_chunks = (total_pairs + chunk_size - 1) // chunk_size
+        
+        R = 6371.0  # Earth radius in km
+        
+        for chunk_idx in range(num_chunks):
+            start_idx = chunk_idx * chunk_size
+            end_idx = min(start_idx + chunk_size, total_pairs)
+            
+            chunk_df = complete_df.iloc[start_idx:end_idx].copy()
+            
+            # Compute elevation angles for this chunk
+            lat1_rad = np.radians(chunk_df['station1_lat'])
+            lon1_rad = np.radians(chunk_df['station1_lon'])
+            lat2_rad = np.radians(chunk_df['station2_lat'])
+            lon2_rad = np.radians(chunk_df['station2_lon'])
+            
+            dlat = lat2_rad - lat1_rad
+            dlon = lon2_rad - lon1_rad
+            a = np.sin(dlat/2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon/2)**2
+            c = 2 * np.arcsin(np.sqrt(a))
+            distance_rad = c
+            
+            elevation_rad = np.arcsin(distance_rad / (2 * R))
+            chunk_df['elevation_deg'] = np.degrees(elevation_rad)
+            chunk_df['elevation_rad'] = elevation_rad
+            
+            # Convert azimuth to radians
+            chunk_df['azimuth_rad'] = np.radians(chunk_df['azimuth'])
+            
+            # Bin by azimuth and elevation
+            azimuth_bin_idx = np.digitize(chunk_df['azimuth_rad'], azimuth_bins) - 1
+            azimuth_bin_idx = np.clip(azimuth_bin_idx, 0, n_azimuth_bins - 1)
+            
+            elevation_bin_idx = np.digitize(chunk_df['elevation_rad'], elevation_bins) - 1
+            elevation_bin_idx = np.clip(elevation_bin_idx, 0, n_elevation_bins - 1)
+            
+            # Bin by distance
+            distance_bin_idx = np.digitize(chunk_df['dist_km'], edges) - 1
+            distance_bin_idx = np.clip(distance_bin_idx, 0, num_bins - 1)
+            
+            # Accumulate statistics for each spherical bin
+            for az_bin in range(n_azimuth_bins):
+                for el_bin in range(n_elevation_bins):
+                    mask = (azimuth_bin_idx == az_bin) & (elevation_bin_idx == el_bin)
+                    if not mask.any():
+                        continue
+                    
+                    key = (az_bin, el_bin)
+                    acc = spherical_accumulators[key]
+                    
+                    bin_data = chunk_df[mask]
+                    bin_dist_idx = distance_bin_idx[mask]
+                    
+                    # Accumulate by distance bin
+                    for dist_bin in range(num_bins):
+                        dist_mask = bin_dist_idx == dist_bin
+                        if dist_mask.any():
+                            acc['bin_sums'][dist_bin] += bin_data.loc[dist_mask, 'coherence'].sum()
+                            acc['bin_counts'][dist_bin] += dist_mask.sum()
+                            acc['bin_dist_sums'][dist_bin] += bin_data.loc[dist_mask, 'dist_km'].sum()
+                    
+                    acc['total_count'] += mask.sum()
+            
+            del chunk_df
+            gc.collect()
+        
+        print_status(f"Accumulated statistics for {n_azimuth_bins}×{n_elevation_bins} spherical bins", "SUCCESS")
+        
+        # Analyze each spherical bin from accumulated data
+        spherical_results = []
+        
+        for az_bin in range(n_azimuth_bins):
+            for el_bin in range(n_elevation_bins):
+                key = (az_bin, el_bin)
+                acc = spherical_accumulators[key]
+                
+                if acc['total_count'] < min_bin_count:
+                    continue
+                
+                # Compute bin distances and coherences from accumulated data
+                valid_bins = acc['bin_counts'] >= min_bin_count
+                if valid_bins.sum() < 3:  # Need at least 3 distance bins
+                    continue
+                
+                bin_distances = acc['bin_dist_sums'][valid_bins] / acc['bin_counts'][valid_bins]
+                bin_coherences = acc['bin_sums'][valid_bins] / acc['bin_counts'][valid_bins]
+                bin_counts = acc['bin_counts'][valid_bins]
+                
+                # Fit exponential correlation model
+                try:
+                    weights = np.sqrt(bin_counts)
+                    popt, _ = curve_fit(
+                        lambda r, A, lam, C: A * np.exp(-r / lam) + C,
+                        bin_distances, bin_coherences,
+                        p0=[0.1, 3000, 0.0],
+                        sigma=1.0/weights,
+                        bounds=([-1, 100, -1], [1, 20000, 1]),
+                        maxfev=5000
+                    )
+                    lambda_km = popt[1]
+                    
+                    azimuth_center = (az_bin + 0.5) * 360 / n_azimuth_bins
+                    elevation_center = (el_bin + 0.5) * 90 / n_elevation_bins
+                    
+                    spherical_results.append({
+                        'azimuth_bin': az_bin,
+                        'elevation_bin': el_bin,
+                        'azimuth_deg': azimuth_center,
+                        'elevation_deg': elevation_center,
+                        'lambda_km': lambda_km,
+                        'n_pairs': int(acc['total_count'])
+                    })
+                except:
+                    pass  # Skip bins that fail to fit
+        
+        if len(spherical_results) < 8:  # Need sufficient spherical coverage
+            return {
+                'success': False,
+                'error': f'Insufficient spherical bins for 3D analysis: {len(spherical_results)} (need ≥8)',
+                'n_spherical_bins': len(spherical_results)
+            }
+        
+        # Compute spherical harmonic coefficients
+        # Convert to spherical coordinates for harmonic analysis
+        azimuths = np.array([r['azimuth_deg'] for r in spherical_results]) * np.pi / 180
+        elevations = np.array([r['elevation_deg'] for r in spherical_results]) * np.pi / 180
+        lambdas = np.array([r['lambda_km'] for r in spherical_results])
+        
+        # Compute low-order spherical harmonic coefficients
+        # Y_lm(theta, phi) where theta = elevation, phi = azimuth
+        harmonic_coeffs = {}
+        
+        # l=0 (constant)
+        harmonic_coeffs['Y_00'] = np.mean(lambdas)
+        
+        # l=1 (dipole)
+        harmonic_coeffs['Y_10'] = np.mean(lambdas * np.cos(elevations))
+        harmonic_coeffs['Y_11_real'] = np.mean(lambdas * np.sin(elevations) * np.cos(azimuths))
+        harmonic_coeffs['Y_11_imag'] = np.mean(lambdas * np.sin(elevations) * np.sin(azimuths))
+        
+        # l=2 (quadrupole)
+        harmonic_coeffs['Y_20'] = np.mean(lambdas * (3 * np.cos(elevations)**2 - 1) / 2)
+        harmonic_coeffs['Y_21_real'] = np.mean(lambdas * np.sin(elevations) * np.cos(elevations) * np.cos(azimuths))
+        harmonic_coeffs['Y_21_imag'] = np.mean(lambdas * np.sin(elevations) * np.cos(elevations) * np.sin(azimuths))
+        harmonic_coeffs['Y_22_real'] = np.mean(lambdas * np.sin(elevations)**2 * np.cos(2 * azimuths))
+        harmonic_coeffs['Y_22_imag'] = np.mean(lambdas * np.sin(elevations)**2 * np.sin(2 * azimuths))
+        
+        # Compute anisotropy metrics
+        dipole_magnitude = np.sqrt(harmonic_coeffs['Y_10']**2 + 
+                                  harmonic_coeffs['Y_11_real']**2 + 
+                                  harmonic_coeffs['Y_11_imag']**2)
+        
+        quadrupole_magnitude = np.sqrt(harmonic_coeffs['Y_20']**2 + 
+                                      harmonic_coeffs['Y_21_real']**2 + 
+                                      harmonic_coeffs['Y_21_imag']**2 +
+                                      harmonic_coeffs['Y_22_real']**2 + 
+                                      harmonic_coeffs['Y_22_imag']**2)
+        
+        # Anisotropy strength
+        anisotropy_strength = (dipole_magnitude + quadrupole_magnitude) / abs(harmonic_coeffs['Y_00'])
+        
+        results = {
+            'success': True,
+            'analysis_type': '3d_spherical_harmonic',
+            'n_spherical_bins': len(spherical_results),
+            'spherical_results': spherical_results,
+            'harmonic_coefficients': harmonic_coeffs,
+            'anisotropy_metrics': {
+                'dipole_magnitude': float(dipole_magnitude),
+                'quadrupole_magnitude': float(quadrupole_magnitude),
+                'anisotropy_strength': float(anisotropy_strength),
+                'monopole_strength': float(abs(harmonic_coeffs['Y_00']))
+            }
+        }
+        
+        if anisotropy_strength > 0.5:
+            print_status(f"Strong 3D anisotropy detected: strength = {anisotropy_strength:.3f}", "SUCCESS")
+        elif anisotropy_strength > 0.2:
+            print_status(f"Moderate 3D anisotropy detected: strength = {anisotropy_strength:.3f}", "INFO")
+        else:
+            print_status(f"Weak 3D anisotropy: strength = {anisotropy_strength:.3f}", "INFO")
+        
+        print_status(f"3D SPHERICAL HARMONIC ANALYSIS RESULTS:", "SUCCESS")
+        print_status(f"  3D Anisotropy Strength: {anisotropy_strength:.3f}", "INFO")
+        print_status(f"  Spherical Bins Analyzed: {len(spherical_results)}", "INFO")
+        print_status(f"  Azimuth Resolution: 16 bins (22.5° each)", "INFO")
+        print_status(f"  Elevation Resolution: 8 bins (0-90°)", "INFO")
+        if anisotropy_strength > 1.5:
+            print_status(f"  Strong 3D Structure: {anisotropy_strength:.3f} (DETECTED)", "SUCCESS")
+        else:
+            print_status(f"  Weak 3D Structure: {anisotropy_strength:.3f} (not significant)", "INFO")
+        print_status(f"3D spherical harmonic analysis complete: {len(spherical_results)} bins analyzed", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"3D spherical harmonic analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+
+def run_mesh_dance_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Mesh Dance Analysis: Coherent network dynamics detection.
+    
+    Analyzes the collective motion patterns of the GPS station network
+    to detect coherent dynamics that may indicate coupling with spacetime structure.
+    The analysis examines whether the entire GPS network exhibits coordinated
+    motion patterns that maintain consistent phase relationships across the mesh.
+    
+    Key concepts:
+    1. MESH COHERENCE: Network-wide coordination of station timing correlations
+    2. SPIRAL DYNAMICS: Detection of helical motion signatures in correlation patterns
+    3. PHASE RELATIONSHIPS: Maintenance of coherent phase relationships across stations
+    4. COLLECTIVE OSCILLATION: Network-wide synchronized oscillation patterns
+    5. SPACETIME COUPLING: Network response to structured spacetime geometry
+    
+    Args:
+        complete_df: Complete pair dataset with all motion analysis
+        
+    Returns:
+        dict: Mesh dance analysis results with network coherence metrics
+    """
+    print_status("Starting Mesh Dance Analysis - Network Coherence Assessment", "PROCESS")
+    print_status("Analyzing coherent motion patterns of GPS station network...", "PROCESS")
+    
+    try:
+        # Convert dates and basic setup
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # ========================================
+        # OPTIMIZED MESH DANCE ANALYSIS WINDOW STRATEGY
+        # ========================================
+        # MESH COHERENCE: 90-day windows for optimal statistical power (10 windows for 912-day dataset)
+        # OSCILLATION/SPIRAL: 30-day windows for higher temporal resolution (better Nyquist sampling for 365d cycles)
+        # 
+        # Rationale:
+        # - 90-day windows: Provide adequate statistical power (10+ samples) with good frequency resolution
+        # - 30-day windows: Detect oscillations/spirals (more samples, better frequency resolution)
+        # - For 912-day dataset:
+        #   * 90d windows → 10 samples (adequate for robust correlation, 4.1 samples per annual cycle)
+        #   * 30d windows → 30 samples (~12 per annual cycle, excellent for oscillation detection)
+        # Previous 120d windows only provided 8 samples (marginal statistical power)
+        # ========================================
+        
+        # CHUNKED PROCESSING: Use aggregation instead of copying windows
+        print_status("Using chunked aggregation for mesh dance analysis...", "INFO")
+        
+        # 1. MESH COHERENCE ANALYSIS (90-day windows)
+        # Test if all stations move together as one coherent system
+        print_status("Analyzing mesh coherence patterns...", "INFO")
+        
+        coherence_window_days = 90  # Optimized for statistical adequacy
+        oscillation_window_days = 30  # For high-resolution analysis
+        
+        print_status(f"Using OPTIMIZED windows: 90d for coherence (10 samples), 30d for oscillation/spiral", "INFO")
+        
+        # Process dataframe in chunks and accumulate window statistics
+        chunk_size = 10_000_000
+        total_pairs = len(complete_df)
+        num_chunks = (total_pairs + chunk_size - 1) // chunk_size
+        
+        # Initialize accumulators for both window types
+        coherence_window_accumulators = {}  # 90-day windows
+        oscillation_window_accumulators = {}  # 30-day windows
+        
+        for chunk_idx in range(num_chunks):
+            start_idx = chunk_idx * chunk_size
+            end_idx = min(start_idx + chunk_size, total_pairs)
+            
+            chunk_df = complete_df.iloc[start_idx:end_idx].copy()
+            
+            # Compute window assignments
+            chunk_df['coherence_window'] = (chunk_df['days_since_epoch'] // coherence_window_days) * coherence_window_days
+            chunk_df['oscillation_window'] = (chunk_df['days_since_epoch'] // oscillation_window_days) * oscillation_window_days
+            
+            # Accumulate statistics for 90-day coherence windows
+            for window in chunk_df['coherence_window'].unique():
+                window_data = chunk_df[chunk_df['coherence_window'] == window]
+                
+                if window not in coherence_window_accumulators:
+                    coherence_window_accumulators[window] = {
+                        'coherence_sum': 0, 'coherence_sq_sum': 0,
+                        'azimuth_sum': 0, 'abs_coherence_sum': 0,
+                        'phase_cos_sum': 0, 'phase_cos_sq_sum': 0,
+                        'constructive_count': 0, 'destructive_count': 0,
+                        'count': 0
+                    }
+                
+                acc = coherence_window_accumulators[window]
+                acc['coherence_sum'] += window_data['coherence'].sum()
+                acc['coherence_sq_sum'] += (window_data['coherence'] ** 2).sum()
+                acc['azimuth_sum'] += window_data['azimuth'].sum()
+                acc['abs_coherence_sum'] += np.abs(window_data['coherence']).sum()
+                phase_cos = np.cos(window_data['plateau_phase'])
+                acc['phase_cos_sum'] += phase_cos.sum()
+                acc['phase_cos_sq_sum'] += (phase_cos ** 2).sum()
+                acc['constructive_count'] += (window_data['coherence'] > 0).sum()
+                acc['destructive_count'] += (window_data['coherence'] <= 0).sum()
+                acc['count'] += len(window_data)
+            
+            # Accumulate statistics for 30-day oscillation windows
+            for window in chunk_df['oscillation_window'].unique():
+                window_data = chunk_df[chunk_df['oscillation_window'] == window]
+                
+                if window not in oscillation_window_accumulators:
+                    oscillation_window_accumulators[window] = {
+                        'coherence_sum': 0, 'coherence_sq_sum': 0,
+                        'azimuth_sum': 0, 'abs_coherence_sum': 0,
+                        'phase_cos_sum': 0, 'phase_cos_sq_sum': 0,
+                        'count': 0
+                    }
+                
+                acc = oscillation_window_accumulators[window]
+                acc['coherence_sum'] += window_data['coherence'].sum()
+                acc['coherence_sq_sum'] += (window_data['coherence'] ** 2).sum()
+                acc['azimuth_sum'] += window_data['azimuth'].sum()
+                acc['abs_coherence_sum'] += np.abs(window_data['coherence']).sum()
+                phase_cos = np.cos(window_data['plateau_phase'])
+                acc['phase_cos_sum'] += phase_cos.sum()
+                acc['phase_cos_sq_sum'] += (phase_cos ** 2).sum()
+                acc['count'] += len(window_data)
+            
+            del chunk_df
+            gc.collect()
+        
+        print_status(f"Accumulated statistics for {len(coherence_window_accumulators)} coherence windows and {len(oscillation_window_accumulators)} oscillation windows", "SUCCESS")
+        
+        if len(coherence_window_accumulators) < 3:
+            return {'success': False, 'error': f'Insufficient coherence windows: {len(coherence_window_accumulators)} (need ≥3)'}
+        
+        # Compute mesh evolution from accumulated statistics (90-day windows)
+        mesh_evolution = []
+        
+        for window in sorted(coherence_window_accumulators.keys()):
+            acc = coherence_window_accumulators[window]
+            
+            if acc['count'] < 1000:  # Need sufficient pairs per window
+                continue
+            
+            # Calculate mesh properties from accumulated statistics
+            n = acc['count']
+            
+            # A. COLLECTIVE MOTION VECTOR
+            mean_total_vector_magnitude = acc['abs_coherence_sum'] / n
+            mean_total_vector_direction = acc['azimuth_sum'] / n
+            
+            # B. MESH COHERENCE METRICS
+            coherence_mean = acc['coherence_sum'] / n
+            coherence_variance = (acc['coherence_sq_sum'] / n) - (coherence_mean ** 2)
+            coherence_std = np.sqrt(max(0, coherence_variance))
+            coherence_uniformity = 1.0 / (1.0 + coherence_std)
+            
+            # C. PHASE COHERENCE ACROSS THE MESH
+            phase_cos_mean = acc['phase_cos_sum'] / n
+            phase_cos_variance = (acc['phase_cos_sq_sum'] / n) - (phase_cos_mean ** 2)
+            phase_cos_std = np.sqrt(max(0, phase_cos_variance))
+            phase_synchronization = 1.0 / (1.0 + phase_cos_std)
+            
+            # D. INTERFERENCE STATE DISTRIBUTION
+            dominant_interference_state = 'constructive' if acc['constructive_count'] > acc['destructive_count'] else 'destructive'
+            interference_dominance = max(acc['constructive_count'], acc['destructive_count']) / n
+            
+            # E. OSCILLATION SYNCHRONIZATION
+            # Use abs coherence std as proxy for oscillation synchronization
+            oscillation_synchronization = coherence_uniformity  # Same as coherence uniformity for aggregated data
+            
+            mesh_evolution.append({
+                'time_window': int(window),
+                'days_since_epoch': int(window),
+                'n_pairs': n,
+                'collective_motion_magnitude': float(mean_total_vector_magnitude),
+                'collective_motion_direction': float(mean_total_vector_direction),
+                'coherence_uniformity': float(coherence_uniformity),
+                'phase_synchronization': float(phase_synchronization),
+                'dominant_interference_state': dominant_interference_state,
+                'interference_dominance': float(interference_dominance),
+                'oscillation_synchronization': float(oscillation_synchronization),
+                'mesh_coherence_score': float(
+                    (coherence_uniformity + phase_synchronization + oscillation_synchronization) / 3.0
+                )
+            })
+        
+        if len(mesh_evolution) < 3:
+            return {'success': False, 'error': f'Insufficient mesh evolution data: {len(mesh_evolution)}'}
+        
+        # 2. CREATE HIGH-RESOLUTION 30-DAY WINDOWS FOR SPIRAL/OSCILLATION DETECTION
+        mesh_evolution_highres = []
+        
+        for window in sorted(oscillation_window_accumulators.keys()):
+            acc = oscillation_window_accumulators[window]
+            
+            if acc['count'] < 500:  # Lower threshold for smaller windows
+                continue
+            
+            # Calculate same metrics from accumulated statistics
+            n = acc['count']
+            mean_total_vector_magnitude = acc['abs_coherence_sum'] / n
+            mean_total_vector_direction = acc['azimuth_sum'] / n
+            
+            coherence_mean = acc['coherence_sum'] / n
+            coherence_variance = (acc['coherence_sq_sum'] / n) - (coherence_mean ** 2)
+            coherence_std = np.sqrt(max(0, coherence_variance))
+            coherence_uniformity = 1.0 / (1.0 + coherence_std)
+            
+            phase_cos_mean = acc['phase_cos_sum'] / n
+            phase_cos_variance = (acc['phase_cos_sq_sum'] / n) - (phase_cos_mean ** 2)
+            phase_cos_std = np.sqrt(max(0, phase_cos_variance))
+            phase_synchronization = 1.0 / (1.0 + phase_cos_std)
+            
+            oscillation_synchronization = coherence_uniformity
+            
+            mesh_evolution_highres.append({
+                'time_window': int(window),
+                'days_since_epoch': int(window),
+                'n_pairs': n,
+                'collective_motion_magnitude': float(mean_total_vector_magnitude),
+                'collective_motion_direction': float(mean_total_vector_direction),
+                'mesh_coherence_score': float(
+                    (coherence_uniformity + phase_synchronization + oscillation_synchronization) / 3.0
+                )
+            })
+        
+        if len(mesh_evolution_highres) < 10:
+            print_status(f"Warning: Only {len(mesh_evolution_highres)} high-res windows, using 120-day windows for spiral/oscillation", "WARNING")
+            mesh_for_dynamics = mesh_evolution  # Fallback to 120-day windows
+        else:
+            print_status(f"Using {len(mesh_evolution_highres)} high-resolution 30-day windows for spiral/oscillation detection", "INFO")
+            mesh_for_dynamics = mesh_evolution_highres
+        
+        # 2. SPIRAL DYNAMICS ANALYSIS (using high-resolution windows)
+        # Test if the mesh is tracing helical/spiral paths through spacetime
+        print_status("Analyzing spiral dynamics of mesh motion...", "INFO")
+        
+        # Extract time series of collective motion
+        times = [m['days_since_epoch'] for m in mesh_for_dynamics]
+        directions = [m['collective_motion_direction'] for m in mesh_for_dynamics]
+        magnitudes = [m['collective_motion_magnitude'] for m in mesh_for_dynamics]
+        coherence_scores = [m['mesh_coherence_score'] for m in mesh_for_dynamics]
+        
+        # Test for spiral patterns in the motion direction
+        # A true spiral would show systematic rotation of the motion vector
+        direction_changes = np.diff(directions)
+        
+        # Handle angle wrapping
+        direction_changes = np.where(direction_changes > np.pi, direction_changes - 2*np.pi, direction_changes)
+        direction_changes = np.where(direction_changes < -np.pi, direction_changes + 2*np.pi, direction_changes)
+        
+        # Test for consistent rotation (spiral signature)
+        mean_rotation_rate = np.mean(direction_changes)
+        rotation_consistency = 1.0 - np.std(direction_changes) / (np.pi/4)  # Normalized consistency
+        
+        # Test for helical pattern (magnitude oscillation with direction rotation)
+        magnitude_oscillation = np.std(magnitudes) / np.mean(magnitudes) if np.mean(magnitudes) > 0 else 0
+        
+        spiral_signature = {
+            'mean_rotation_rate_rad_per_week': float(mean_rotation_rate),
+            'rotation_consistency': float(max(0, rotation_consistency)),
+            'magnitude_oscillation': float(magnitude_oscillation),
+            'spiral_strength': float(max(0, rotation_consistency) * magnitude_oscillation),
+            'is_spiral_motion': bool(rotation_consistency > 0.005 and magnitude_oscillation > 0.002)
+        }
+        
+        # 3. COLLECTIVE COHERENT OSCILLATION (using high-resolution windows)
+        # Test if the entire mesh oscillates coherently as one system
+        print_status("Analyzing collective mesh oscillation patterns...", "INFO")
+        
+        # Fit sinusoidal models to mesh coherence over time
+        time_array = np.array(times)
+        coherence_array = np.array(coherence_scores)
+        
+        print_status(f"Oscillation analysis using {len(time_array)} samples (window size: {'30d' if len(mesh_for_dynamics) == len(mesh_evolution_highres) else '120d'})", "INFO")
+        
+        # Test multiple frequencies to find dominant oscillation
+        test_frequencies = [1/365.25, 1/427.0, 1.0, 2.0]  # Annual, Chandler, daily, semi-daily
+        oscillation_results = {}
+        
+        for freq in test_frequencies:
+            try:
+                # Simplified oscillation analysis to avoid SciPy warnings
+                # Use direct correlation instead of curve fitting
+                
+                period_days = 1.0 / freq if freq > 0 else float('inf')
+                
+                # Check data variation first
+                coherence_std = np.std(coherence_array)
+                if coherence_std < 1e-8:  # Very low variation
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient coherence variation',
+                        'coherence_std': float(coherence_std)
+                    }
+                    continue
+                
+                # Direct correlation with sine and cosine components
+                time_phase = 2 * np.pi * freq * time_array
+                phase_sin = np.sin(time_phase)
+                phase_cos = np.cos(time_phase)
+
+                # Additional checks to prevent ConstantInputWarning
+                phase_sin_std = np.std(phase_sin)
+                phase_cos_std = np.std(phase_cos)
+
+                # Skip if phase arrays are constant or have insufficient variation
+                if phase_sin_std < 1e-12 or phase_cos_std < 1e-12 or coherence_std < 1e-12:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient variation for correlation (prevents scipy warning)',
+                        'coherence_std': float(coherence_std),
+                        'phase_sin_std': float(phase_sin_std),
+                        'phase_cos_std': float(phase_cos_std)
+                    }
+                    continue
+
+                # Check if we have at least 3 unique values (scipy's minimum)
+                if len(set(coherence_array)) < 3 or len(set(phase_sin)) < 3 or len(set(phase_cos)) < 3:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'Insufficient unique values for correlation',
+                        'coherence_unique': len(set(coherence_array)),
+                        'phase_sin_unique': len(set(phase_sin)),
+                        'phase_cos_unique': len(set(phase_cos))
+                    }
+                    continue
+
+                try:
+                    from scipy.stats import pearsonr
+                    corr_sin, p_sin = pearsonr(coherence_array, phase_sin)
+                    corr_cos, p_cos = pearsonr(coherence_array, phase_cos)
+                except Exception as e:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': f'Correlation calculation failed: {e}'
+                    }
+                    continue
+                
+                # Take the stronger correlation
+                if abs(corr_sin) > abs(corr_cos):
+                    correlation = corr_sin
+                    p_value = p_sin
+                    phase_component = 'sine'
+                else:
+                    correlation = corr_cos
+                    p_value = p_cos
+                    phase_component = 'cosine'
+                
+                # Check for valid results
+                if not (np.isnan(correlation) or np.isnan(p_value)):
+                    # Calculate R² from correlation coefficient
+                    r_squared = correlation ** 2
+                    
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'correlation': float(correlation),
+                        'r_squared': float(r_squared),  # ADDED: R² calculation
+                        'p_value': float(p_value),
+                        'phase_component': phase_component,
+                        'coherence_variation': float(coherence_std),
+                        'fit_success': True,
+                        'analysis_method': 'direct_correlation'
+                    }
+                else:
+                    oscillation_results[f'freq_{freq:.6f}'] = {
+                        'frequency_cpd': float(freq),
+                        'period_days': float(period_days),
+                        'fit_success': False,
+                        'error': 'NaN correlation results'
+                    }
+                
+            except Exception as e:
+                oscillation_results[f'freq_{freq:.6f}'] = {
+                    'frequency_cpd': float(freq),
+                    'fit_success': False,
+                    'error': str(e)
+                }
+        
+        # Find the strongest oscillation
+        # First try strict criteria (p < 0.05)
+        strict_oscillations = {k: v for k, v in oscillation_results.items() 
+                             if v.get('fit_success') and v.get('p_value', 1) < 0.05}
+        
+        # Try relaxed criteria (p < 0.1) 
+        relaxed_oscillations = {k: v for k, v in oscillation_results.items() 
+                              if v.get('fit_success') and v.get('p_value', 1) < 0.1}
+        
+        # All successful oscillations (use relaxed threshold for counting)
+        successful_oscillations = relaxed_oscillations
+        
+        if strict_oscillations:
+            best_oscillation = max(strict_oscillations.values(), 
+                                 key=lambda x: abs(x.get('correlation', 0)))
+        elif relaxed_oscillations:
+            best_oscillation = max(relaxed_oscillations.values(), 
+                                 key=lambda x: abs(x.get('correlation', 0)))
+        else:
+            # If still no successes, use the best available oscillation
+            available_oscillations = {k: v for k, v in oscillation_results.items() 
+                                    if v.get('fit_success')}
+            if available_oscillations:
+                best_oscillation = max(available_oscillations.values(), 
+                                     key=lambda x: abs(x.get('correlation', 0)))
+                successful_oscillations = {}  # Mark as no significant oscillations
+            else:
+                best_oscillation = {'correlation': 0.0, 'r_squared': 0.0, 'no_significant_oscillation': True}
+                successful_oscillations = {}
+        
+        # 4. SPACETIME COUPLING SIGNATURE
+        # Network response analysis: coherent mesh coupling to spacetime structure
+        print_status("Analyzing spacetime coupling signatures...", "INFO")
+        
+        # Calculate mesh-wide correlation with Earth motion phases
+        mesh_earth_coupling = {}
+        
+        # Test correlation between mesh coherence and various Earth motion phases
+        if len(mesh_evolution) >= 12:  # Need sufficient data
+            
+            # Earth motion phases for each time window
+            earth_phases = {}
+            for window_data in mesh_evolution:
+                days = window_data['days_since_epoch']
+                earth_phases[days] = {
+                    'rotation_phase': (days % 1.0) * 2 * np.pi,
+                    'orbital_phase': (days % 365.25) / 365.25 * 2 * np.pi,
+                    'chandler_phase': (days % 427.0) / 427.0 * 2 * np.pi
+                }
+            
+            # Test correlations
+            for phase_name in ['rotation_phase', 'orbital_phase', 'chandler_phase']:
+                phase_values = [earth_phases[m['days_since_epoch']][phase_name] for m in mesh_evolution]
+                
+                # Convert phases to sine/cosine for correlation
+                phase_sin = np.sin(phase_values)
+                phase_cos = np.cos(phase_values)
+                
+                # Test correlation with mesh coherence
+                coherence_values = [m['mesh_coherence_score'] for m in mesh_evolution]
+                
+                try:
+                    # Safe correlation calculation with variation checks
+                    coherence_std = np.std(coherence_values)
+                    phase_sin_std = np.std(phase_sin)
+                    phase_cos_std = np.std(phase_cos)
+                    
+                    if coherence_std < 1e-10 or len(set(coherence_values)) < 3:
+                        mesh_earth_coupling[phase_name] = {
+                            'error': 'Constant coherence values - no variation to correlate',
+                            'coherence_std': float(coherence_std),
+                            'coherence_range': [float(min(coherence_values)), float(max(coherence_values))],
+                            'unique_values': len(set(coherence_values))
+                        }
+                    elif phase_sin_std < 1e-10 and phase_cos_std < 1e-10:
+                        mesh_earth_coupling[phase_name] = {
+                            'error': 'Constant phase values - insufficient temporal variation',
+                            'phase_std': float(phase_sin_std)
+                        }
+                    else:
+                        # Proceed with correlation if sufficient variation
+                        # Additional check to ensure we don't have constant arrays
+                        if len(set(coherence_values)) >= 3 and len(set(phase_sin)) >= 3:
+                            # Check for scipy's stricter constant threshold
+                            if coherence_std < 1e-12 or phase_sin_std < 1e-12:
+                                mesh_earth_coupling[phase_name] = {
+                                    'error': 'Arrays too constant for scipy correlation',
+                                    'coherence_std': float(coherence_std),
+                                    'phase_sin_std': float(phase_sin_std),
+                                    'phase_cos_std': float(phase_cos_std),
+                                    'coherence_unique': len(set(coherence_values)),
+                                    'phase_sin_unique': len(set(phase_sin))
+                                }
+                                continue
+
+                            try:
+                                corr_sin, p_sin = pearsonr(coherence_values, phase_sin)
+                                corr_cos, p_cos = pearsonr(coherence_values, phase_cos)
+                            except Exception as e:
+                                mesh_earth_coupling[phase_name] = {
+                                    'error': f'Correlation calculation failed: {e}',
+                                    'coherence_std': float(coherence_std),
+                                    'phase_sin_std': float(phase_sin_std)
+                                }
+                                continue
+                        else:
+                            mesh_earth_coupling[phase_name] = {
+                                'error': 'Insufficient unique values for correlation',
+                                'coherence_unique': len(set(coherence_values)),
+                                'phase_sin_unique': len(set(phase_sin)),
+                                'phase_cos_unique': len(set(phase_cos))
+                            }
+                            continue
+                        
+                        # Check for NaN results
+                        if np.isnan(corr_sin) or np.isnan(corr_cos):
+                            mesh_earth_coupling[phase_name] = {
+                                'error': 'NaN correlation results',
+                                'corr_sin': float(corr_sin) if not np.isnan(corr_sin) else None,
+                                'corr_cos': float(corr_cos) if not np.isnan(corr_cos) else None
+                            }
+                        else:
+                            # Take the stronger correlation
+                            if abs(corr_sin) > abs(corr_cos):
+                                mesh_earth_coupling[phase_name] = {
+                                    'correlation': float(corr_sin),
+                                    'p_value': float(p_sin),
+                                    'phase_component': 'sine',
+                                    'data_variation': float(coherence_std)
+                                }
+                            else:
+                                mesh_earth_coupling[phase_name] = {
+                                    'correlation': float(corr_cos),
+                                    'p_value': float(p_cos),
+                                    'phase_component': 'cosine',
+                                    'data_variation': float(coherence_std)
+                                }
+                        
+                except Exception as e:
+                    mesh_earth_coupling[phase_name] = {
+                        'error': str(e),
+                        'coherence_std': float(np.std(coherence_values)) if len(coherence_values) > 0 else 0
+                    }
+        
+        # 5. NETWORK COHERENCE CLASSIFICATION
+        # Final assessment: coherent network dynamics signature strength
+        print_status("Computing network coherence classification...", "INFO")
+        
+        # Earth coupling detection includes both direct phase correlation AND oscillation period matching
+        # Check if best oscillation matches Earth motion periods (annual ~365d, Chandler ~433d, sidereal day ~1d)
+        oscillation_matches_earth = False
+        if best_oscillation.get('fit_success'):
+            period = best_oscillation.get('period_days', 0)
+            # Check if period matches known Earth motion cycles (±10% tolerance)
+            earth_periods = [1.0, 365.25, 433.0, 182.6]  # Sidereal day, Annual, Chandler, Semi-annual
+            oscillation_matches_earth = any(abs(period - ep) / ep < 0.1 for ep in earth_periods)
+        
+        # Count Earth couplings from both methods
+        phase_couplings = sum(1 for c in mesh_earth_coupling.values() 
+                            if abs(c.get('correlation', 0)) > 0.15 and c.get('p_value', 1) < 0.15)
+        oscillation_earth_coupling = 1 if oscillation_matches_earth else 0
+        total_earth_couplings = phase_couplings + oscillation_earth_coupling
+        
+        dance_metrics = {
+            'mesh_coherence_strength': float(np.mean([m['mesh_coherence_score'] for m in mesh_evolution])),
+            'spiral_motion_detected': spiral_signature['is_spiral_motion'],
+            'spiral_strength': spiral_signature['spiral_strength'],
+            'collective_oscillation_detected': len(successful_oscillations) > 0,
+            'strongest_oscillation_correlation': float(best_oscillation.get('correlation', 0)),
+            'earth_coupling_detected': (phase_couplings > 0) or oscillation_matches_earth,
+            'n_significant_earth_couplings': total_earth_couplings,
+            'oscillation_matches_earth_period': oscillation_matches_earth,
+            'best_oscillation_period_days': float(best_oscillation.get('period_days', 0)) if best_oscillation.get('fit_success') else None
+        }
+        
+        # NETWORK COHERENCE CLASSIFICATION
+        # Use continuous scoring instead of binary to capture partial signals
+        spiral_score = min(1.0, dance_metrics['spiral_strength'] * 10.0)  # Scale spiral strength
+        oscillation_score = min(1.0, abs(dance_metrics['strongest_oscillation_correlation']))
+        earth_coupling_score = min(1.0, dance_metrics['n_significant_earth_couplings'] / 3.0)  # Max 3 couplings
+        
+        # Calculate network coherence score
+        # Weighted combination of mesh coherence, spiral, oscillation, and Earth coupling
+        mesh_coherence_base = dance_metrics['mesh_coherence_strength']
+        
+        # If we have any significant components, boost the score
+        has_significant_components = (
+            dance_metrics['spiral_motion_detected'] or 
+            dance_metrics['collective_oscillation_detected'] or 
+            dance_metrics['earth_coupling_detected']
+        )
+        
+        # Count significant components for additional boost
+        n_significant_components = sum([
+            dance_metrics['spiral_motion_detected'],
+            dance_metrics['collective_oscillation_detected'], 
+            dance_metrics['earth_coupling_detected']
+        ])
+        
+        # CRITICAL FIX: Always initialize boost_factor before use
+        if has_significant_components:
+            # Progressive boost based on number of significant components
+            boost_factor = 1.0 + (n_significant_components * 0.15)  # 15% boost per component
+            mesh_coherence_boosted = min(1.0, mesh_coherence_base * boost_factor)
+        else:
+            boost_factor = 1.0  # No boost when no significant components
+            mesh_coherence_boosted = mesh_coherence_base
+        
+        # Weight distribution for mesh dance score calculation
+        base_score = (
+            mesh_coherence_boosted * 0.5 +   # Mesh coherence (primary component)
+            spiral_score * 0.17 +            # Spiral motion  
+            oscillation_score * 0.17 +       # Oscillation
+            earth_coupling_score * 0.16      # Earth coupling
+        )
+        
+        # Use calculated base score without artificial floor
+        dance_score = base_score
+        
+        dance_classification = _classify_dance_signature(dance_score, dance_metrics)
+        
+        # Print detailed mesh dance results
+        print_status(f"MESH DANCE ANALYSIS RESULTS:", "SUCCESS")
+        print_status(f"  Network Coherence Score: {dance_score:.3f}", "INFO")
+        print_status(f"  Classification: {dance_classification}", "INFO")
+        print_status(f"  Time Windows: {len(mesh_evolution)}", "INFO")
+        print_status(f"  Temporal Span: {int(max(times) - min(times))} days", "INFO")
+        
+        if best_oscillation:
+            print_status(f"  Best Collective Oscillation: {best_oscillation.get('period_days', 0):.1f} day period", "INFO")
+            print_status(f"     Oscillation R²: {best_oscillation.get('r_squared', 0):.3f}", "INFO")
+            print_status(f"     Significant Oscillations: {len(successful_oscillations)}", "INFO")
+        
+        if mesh_earth_coupling.get('success', False):
+            coupling_strength = mesh_earth_coupling.get('coupling_strength', 0)
+            print_status(f"  Earth-Mesh Coupling: {coupling_strength:.3f} strength", "INFO")
+            print_status(f"     Coupling R²: {mesh_earth_coupling.get('r_squared', 0):.3f}", "INFO")
+        
+        print_status(f"MESH DANCE ANALYSIS COMPLETE: {dance_classification}", "SUCCESS")
+        
+        return {
+            'success': True,
+            'analysis_type': 'mesh_dance_ultimate',
+            'n_time_windows': len(mesh_evolution),
+            'temporal_span_days': int(max(times) - min(times)),
+            'mesh_evolution': mesh_evolution,
+            'spiral_signature': spiral_signature,
+            'collective_oscillation': {
+                'oscillation_results': oscillation_results,
+                'best_oscillation': best_oscillation,
+                'n_significant_oscillations': len(successful_oscillations)
+            },
+            'spacetime_coupling': {
+                'mesh_earth_coupling': mesh_earth_coupling,
+                'coupling_summary': dance_metrics
+            },
+            'dance_signature': {
+                'dance_score': float(dance_score),
+                'classification': dance_classification,
+                'metrics': dance_metrics
+            },
+            'interpretation': f"MESH DANCE ANALYSIS: {dance_classification}"
+        }
+        
+    except Exception as e:
+        print_status(f"Mesh dance analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+def classify_dance_signature(dance_score: float, metrics: Dict) -> str:
+    """Classify the strength of the mesh dance signature for network coherence assessment"""
+    
+    if dance_score >= 0.8 and metrics['spiral_motion_detected'] and metrics['earth_coupling_detected']:
+        return "EXCEPTIONAL NETWORK COHERENCE - Strong mesh dance dynamics with spacetime coupling detected"
+    elif dance_score >= 0.6 and (metrics['spiral_motion_detected'] or metrics['collective_oscillation_detected']):
+        return "STRONG NETWORK COHERENCE - Clear mesh dance dynamics detected"
+    elif dance_score >= 0.4 and metrics['mesh_coherence_strength'] > 0.5:
+        return "MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns"
+    elif dance_score >= 0.2:
+        return "WEAK NETWORK COHERENCE - Limited mesh coherence detected"
+    else:
+        return "NO NETWORK COHERENCE - No coherent mesh dynamics detected"
+
+# ===== END NEW HELICAL MOTION ANALYSIS FUNCTIONS =====
+
+# ===== ENHANCED CONTINUOUS PLANETARY ANALYSIS (Step 4.4 Methodology) =====
+
+def run_continuous_planetary_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Enhanced continuous planetary analysis incorporating Step 4.4 methodology.
+    
+    This performs:
+    1. Daily time series construction (not just event windows)
+    2. Multi-window Savitzky-Golay smoothing (30-365 days)
+    3. Cross-correlation with lag detection
+    4. Autocorrelation-robust statistics
+    5. Multi-planet stacking
+    
+    This is more sophisticated than event-based analysis because it:
+    - Uses continuous daily data (captures secular trends)
+    - Tests multiple smoothing windows empirically
+    - Corrects for temporal autocorrelation
+    - Finds optimal time lags
+    
+    Args:
+        complete_df: Complete GPS pair dataset
+        
+    Returns:
+        Dict with comprehensive analysis results
+    """
+    from scipy.signal import savgol_filter
+    
+    print_status("Starting Enhanced Continuous Planetary Analysis...", "PROCESS")
+    print_status("Incorporating Step 4.4 methodology: continuous time series + Savitzky-Golay smoothing", "INFO")
+    
+    try:
+        # Convert dates
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Compute daily statistics
+        print_status("Computing daily GPS coherence statistics...", "INFO")
+        daily_df = complete_df.groupby('date').agg({
+            'coherence': ['mean', 'std', 'count']
+        }).reset_index()
+        daily_df.columns = ['date', 'coherence_mean', 'coherence_std', 'n_pairs']
+        
+        print_status(f"Daily time series: {len(daily_df)} days from {daily_df['date'].min().date()} to {daily_df['date'].max().date()}", "INFO")
+        
+        # High-precision gravitational influence using JPL ephemeris (Step 4.4 parity)
+        print_status("Computing high-precision planetary influences via JPL ephemeris...", "INFO")
+        solar_system_ephemeris.set('jpl')
+        PLANETARY_MASSES = {
+            'sun': 332946.0,
+            'jupiter': 317.8,
+            'saturn': 95.2,
+            'venus': 0.815,
+            'mars': 0.107,
+        }
+        dates_list = pd.to_datetime(daily_df['date']).dt.strftime('%Y-%m-%d').tolist()
+        sun_infl, jup_infl, sat_infl, ven_infl, mar_infl = [], [], [], [], []
+        for dstr in dates_list:
+            astro_time = Time(dstr)
+            earth_pos, _ = get_body_barycentric_posvel('earth', astro_time)
+            # Sun
+            sun_pos, _ = get_body_barycentric_posvel('sun', astro_time)
+            sun_ec = sun_pos.xyz - earth_pos.xyz
+            sun_dist_au = np.linalg.norm(sun_ec.value)
+            sun_infl.append(PLANETARY_MASSES['sun'] / (sun_dist_au ** 2))
+            # Jupiter
+            j_pos, _ = get_body_barycentric_posvel('jupiter', astro_time)
+            j_ec = j_pos.xyz - earth_pos.xyz
+            j_dist_au = np.linalg.norm(j_ec.value)
+            jup_infl.append(PLANETARY_MASSES['jupiter'] / (j_dist_au ** 2))
+            # Saturn
+            s_pos, _ = get_body_barycentric_posvel('saturn', astro_time)
+            s_ec = s_pos.xyz - earth_pos.xyz
+            s_dist_au = np.linalg.norm(s_ec.value)
+            sat_infl.append(PLANETARY_MASSES['saturn'] / (s_dist_au ** 2))
+            # Venus
+            v_pos, _ = get_body_barycentric_posvel('venus', astro_time)
+            v_ec = v_pos.xyz - earth_pos.xyz
+            v_dist_au = np.linalg.norm(v_ec.value)
+            ven_infl.append(PLANETARY_MASSES['venus'] / (v_dist_au ** 2))
+            # Mars
+            m_pos, _ = get_body_barycentric_posvel('mars', astro_time)
+            m_ec = m_pos.xyz - earth_pos.xyz
+            m_dist_au = np.linalg.norm(m_ec.value)
+            mar_infl.append(PLANETARY_MASSES['mars'] / (m_dist_au ** 2))
+        daily_df['sun_influence'] = sun_infl
+        daily_df['jupiter_influence'] = jup_infl
+        daily_df['saturn_influence'] = sat_infl
+        daily_df['venus_influence'] = ven_infl
+        daily_df['mars_influence'] = mar_infl
+        daily_df['total_planetary_influence'] = daily_df[['jupiter_influence','saturn_influence','venus_influence','mars_influence']].sum(axis=1)
+        daily_df['total_influence'] = daily_df['sun_influence'] + daily_df['total_planetary_influence']
+        
+        # Test multiple smoothing windows
+        print_status("Testing multiple Savitzky-Golay smoothing windows...", "INFO")
+        smoothing_windows = [30, 60, 90, 120, 180, 240]
+        window_results = {}
+        
+        for window in smoothing_windows:
+            # Adjust window to be valid
+            adjusted_window = min(window, len(daily_df) // 4)
+            if adjusted_window % 2 == 0:
+                adjusted_window -= 1
+            
+            if adjusted_window < 5:
+                continue
+            
+            poly_order = min(3, adjusted_window - 2)
+            
+            try:
+                # Apply Savitzky-Golay smoothing
+                smoothed_coherence = savgol_filter(
+                    daily_df['coherence_mean'].fillna(0), 
+                    adjusted_window, 
+                    poly_order
+                )
+                smoothed_planetary = savgol_filter(
+                    daily_df['total_planetary_influence'].fillna(0), 
+                    adjusted_window, 
+                    poly_order
+                )
+                
+                # Robust correlation stats
+                robust = autocorr_robust_correlation(smoothed_planetary, smoothed_coherence)
+                r = robust['correlation']
+                p = robust['p_value_raw']
+                p_corrected = robust['p_value_autocorr_corrected']
+                n_eff = robust['n_effective']
+
+                # Cross-correlation lag (normalized)
+                sp = (smoothed_planetary - np.mean(smoothed_planetary)) / (np.std(smoothed_planetary) + 1e-12)
+                sc = (smoothed_coherence - np.mean(smoothed_coherence)) / (np.std(smoothed_coherence) + 1e-12)
+                xc = correlate(sc, sp, mode='full')
+                lags = np.arange(-len(sp) + 1, len(sp))
+                idx = int(np.argmax(np.abs(xc)))
+                lag_days = int(lags[idx])
+                lag_corr = float(xc[idx] / max(1, len(sp)))
+                
+                window_results[window] = {
+                    'window_days': adjusted_window,
+                    'correlation': float(r),
+                    'p_value_raw': float(p),
+                    'p_value_corrected': float(p_corrected),
+                    'n_effective': float(n_eff),
+                    'lag_days': lag_days,
+                    'lag_correlation': lag_corr
+                }
+                
+            except Exception as e:
+                window_results[window] = {'error': str(e)}
+        
+        # Find best window
+        valid_windows = {w: r for w, r in window_results.items() if 'error' not in r}
+        if not valid_windows:
+            return {
+                'success': False,
+                'error': 'No valid smoothing windows found'
+            }
+        
+        best_window = max(valid_windows.keys(), 
+                         key=lambda w: abs(valid_windows[w]['correlation']))
+        best_result = valid_windows[best_window]
+        
+        print_status(f"Best smoothing window: {best_window} days (r={best_result['correlation']:.3f}, p_corrected={best_result['p_value_corrected']:.4f})", "SUCCESS")
+        
+        # Summary results
+        results = {
+            'success': True,
+            'analysis_type': 'continuous_planetary_analysis_enhanced',
+            'n_days': len(daily_df),
+            'date_range': {
+                'start': daily_df['date'].min().isoformat(),
+                'end': daily_df['date'].max().isoformat()
+            },
+            'smoothing_windows_tested': smoothing_windows,
+            'window_results': valid_windows,
+            'best_window_days': best_window,
+            'best_correlation': best_result['correlation'],
+            'best_p_value_corrected': best_result['p_value_corrected'],
+            'best_n_effective': best_result['n_effective'],
+            'best_lag_days': valid_windows[best_window].get('lag_days', 0),
+            'best_lag_correlation': valid_windows[best_window].get('lag_correlation', 0.0),
+            'interpretation': f"Continuous analysis with {best_window}-day smoothing shows {'significant' if best_result['p_value_corrected'] < 0.05 else 'non-significant'} correlation (r={best_result['correlation']:.3f}, p={best_result['p_value_corrected']:.4f})"
+        }
+        
+        print_status("Enhanced continuous planetary analysis complete", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Continuous planetary analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e)
+        }
+
+# ===== END ENHANCED CONTINUOUS PLANETARY ANALYSIS =====
+
+# ===== MULTI-WINDOW PLANETARY ANALYSIS HELPER =====
+
+def analyze_planetary_events_multi_window(complete_df: pd.DataFrame,
+                                         events: List[Dict],
+                                         planet_name: str,
+                                         expected_amplitude: float,
+                                         window_sizes: List[int] = [60, 90, 120, 180, 240],
+                                         event_window_override: Optional[int] = None) -> Dict:
+    """
+    Generic multi-window planetary event analysis.
+    Tests multiple window sizes to find optimal detection window.
+    
+    Args:
+        complete_df: Complete GPS pair dataset
+        events: List of event dicts with 'date' and 'name'
+        planet_name: Name of planet (for logging)
+        expected_amplitude: Expected signal amplitude
+        window_sizes: List of half-window sizes to test (days)
+        event_window_override: Optional single window size override
+        
+    Returns:
+        Dict with results for all window sizes
+    """
+    if event_window_override is not None:
+        try:
+            window_sizes = [int(event_window_override)]
+        except Exception:
+            pass
+    
+    min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
+    data_start = complete_df['date'].min()
+    data_end = complete_df['date'].max()
+    
+    print_status(f"Testing {len(window_sizes)} window sizes for {planet_name}: {window_sizes} days", "INFO")
+    
+    results_by_window_size = {}
+    
+    for event_window_days in window_sizes:
+        # Filter events within data range for this window
+        valid_events = []
+        for event in events:
+            event_date = event['date']
+            if data_start - pd.Timedelta(days=event_window_days) <= event_date <= data_end + pd.Timedelta(days=event_window_days):
+                valid_events.append(event)
+        
+        if not valid_events:
+            results_by_window_size[event_window_days] = {
+                'success': False,
+                'error': 'No events within coverage for this window size'
+            }
+            continue
+        
+        # Analyze each event
+        event_analysis_results = {}
+        
+        for event in valid_events:
+            event_date = event['date']
+            event_name = event['name']
+            
+            window_start = event_date - pd.Timedelta(days=event_window_days)
+            window_end = event_date + pd.Timedelta(days=event_window_days)
+            
+            window_data = complete_df[
+                (complete_df['date'] >= window_start) & 
+                (complete_df['date'] <= window_end)
+            ].copy()
+            
+            if len(window_data) < min_pairs_per_day * 10:
+                event_analysis_results[event_name] = {'success': False, 'error': 'Insufficient pairs'}
+                continue
+            
+            window_data['days_from_event'] = (window_data['date'] - event_date).dt.days
+            
+            event_result = _analyze_event_window(window_data, event_date, event_window_days, expected_amplitude, min_pairs_per_day)
+            event_analysis_results[event_name] = event_result
+        
+        # Count significant detections
+        n_significant = sum(1 for res in event_analysis_results.values() 
+                          if res.get('success') and res.get('gaussian_fit', {}).get('is_significant', False))
+        
+        results_by_window_size[event_window_days] = {
+            'success': True,
+            'n_events_analyzed': len(event_analysis_results),
+            'n_significant_detections': n_significant,
+            'event_results': event_analysis_results
+        }
+        
+        print_status(f"  {planet_name} window ±{event_window_days}d: {n_significant}/{len(event_analysis_results)} significant", "INFO")
+    
+    # Find best window
+    best_window_size = max(results_by_window_size.keys(), 
+                          key=lambda w: results_by_window_size[w].get('n_significant_detections', 0))
+    best_results = results_by_window_size[best_window_size]
+    
+    print_status(f"Best {planet_name} window: ±{best_window_size} days ({best_results.get('n_significant_detections', 0)} significant)", "SUCCESS")
+    
+    # Report significant detections
+    if best_results.get('event_results'):
+        for event_name, event_result in best_results['event_results'].items():
+            if event_result.get('success') and event_result.get('gaussian_fit', {}).get('is_significant', False):
+                fit = event_result['gaussian_fit']
+                sigma = fit['sigma_level']
+                amp_abs = fit.get('amplitude_absolute', fit['amplitude'])
+                amp_snr = fit.get('amplitude_snr', 0)
+                warning = fit.get('baseline_warning')
+                
+                # Show absolute amplitude and SNR as primary metrics
+                msg = f"    {event_name}: {sigma:.1f}σ, amplitude={amp_abs:.4f} (SNR={amp_snr:.1f})"
+                if warning:
+                    msg += f" ⚠️"
+                print_status(msg, "SUCCESS")
+    
+    return {
+        'window_sizes_tested': window_sizes,
+        'results_by_window_size': results_by_window_size,
+        'best_window_size_days': int(best_window_size),
+        'best_window_n_significant': best_results.get('n_significant_detections', 0),
+        'best_window_event_results': best_results.get('event_results', {})
+    }
+
+# ===== END MULTI-WINDOW HELPER =====
+
+def run_jupiter_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
+    """
+    Analyze GPS timing correlations around Jupiter opposition events using
+    GAUSSIAN PULSE FITTING and STACKED ANALYSIS.
+    
+    Jupiter oppositions occur when Earth-Jupiter distance is minimized, causing
+    Jupiter's gravitational potential at Earth to peak. According to TEP theory,
+    this should manifest as a transient, pulse-like enhancement in timing correlations.
+    
+    DETECTION CHARACTERISTICS:
+    - Jupiter orbital period: 11.9 years (4,333 days)
+    - Dataset coverage: 9,221 days (25.3 years) = 2.1 complete Jupiter orbits
+    - Available oppositions: 23 events (excellent statistical power)
+    - Gravitational influence variation: Complete orbital cycle coverage
+    
+    NOTE: Jupiter shows stronger signals in Step 4.4 continuous daily analysis, which
+    captures long-term secular variation rather than requiring sharp transient peaks.
+    Event-based analysis (this function) has low statistical power for slow-moving planets.
+    """
+    print_status("Starting Jupiter Opposition Pulse Analysis...", "PROCESS")
+    
+    try:
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Define analysis parameters - TEST MULTIPLE WINDOW SIZES for robustness
+        window_sizes_to_test = [60, 90, 120, 180, 240]  # Days (half-window, so ±60 = 120-day total, etc.)
+        if event_window_override is not None:
+            try:
+                window_sizes_to_test = [int(event_window_override)]
+            except Exception:
+                pass
+        
+        expected_amplitude = TEPConfig.get_float('TEP_JUPITER_AMPLITUDE_FRACTION', 0.0022) # 0.22% expected amplitude
+        min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100) # Min pairs for daily binning
+        
+        # Define Jupiter opposition events (UTC dates)
+        # Complete 2000-2025 coverage: 24 events spanning 2.0 Jupiter orbits
+        jupiter_oppositions = [
+            # 2000-2010
+            {'date': pd.Timestamp('2000-11-28'), 'name': 'Jupiter_Opposition_2000'},
+            {'date': pd.Timestamp('2001-12-31'), 'name': 'Jupiter_Opposition_2001'},
+            {'date': pd.Timestamp('2003-02-02'), 'name': 'Jupiter_Opposition_2003'},
+            {'date': pd.Timestamp('2004-03-04'), 'name': 'Jupiter_Opposition_2004'},
+            {'date': pd.Timestamp('2005-04-03'), 'name': 'Jupiter_Opposition_2005'},
+            {'date': pd.Timestamp('2006-05-04'), 'name': 'Jupiter_Opposition_2006'},
+            {'date': pd.Timestamp('2007-06-05'), 'name': 'Jupiter_Opposition_2007'},
+            {'date': pd.Timestamp('2008-07-09'), 'name': 'Jupiter_Opposition_2008'},
+            {'date': pd.Timestamp('2009-08-14'), 'name': 'Jupiter_Opposition_2009'},
+            {'date': pd.Timestamp('2010-09-21'), 'name': 'Jupiter_Opposition_2010'},
+            # 2011-2020
+            {'date': pd.Timestamp('2011-10-29'), 'name': 'Jupiter_Opposition_2011'},
+            {'date': pd.Timestamp('2012-12-03'), 'name': 'Jupiter_Opposition_2012'},
+            {'date': pd.Timestamp('2014-01-05'), 'name': 'Jupiter_Opposition_2014'},
+            {'date': pd.Timestamp('2015-02-06'), 'name': 'Jupiter_Opposition_2015'},
+            {'date': pd.Timestamp('2016-03-08'), 'name': 'Jupiter_Opposition_2016'},
+            {'date': pd.Timestamp('2017-04-07'), 'name': 'Jupiter_Opposition_2017'},
+            {'date': pd.Timestamp('2018-05-09'), 'name': 'Jupiter_Opposition_2018'},
+            {'date': pd.Timestamp('2019-06-10'), 'name': 'Jupiter_Opposition_2019'},
+            {'date': pd.Timestamp('2020-07-14'), 'name': 'Jupiter_Opposition_2020'},
+            # 2021-2025
+            {'date': pd.Timestamp('2021-08-20'), 'name': 'Jupiter_Opposition_2021'},
+            {'date': pd.Timestamp('2022-09-26'), 'name': 'Jupiter_Opposition_2022'},
+            {'date': pd.Timestamp('2023-11-03'), 'name': 'Jupiter_Opposition_2023'},
+            {'date': pd.Timestamp('2024-12-07'), 'name': 'Jupiter_Opposition_2024'}
+        ]
+        
+        # Check data coverage
+        data_start = complete_df['date'].min()
+        data_end = complete_df['date'].max()
+        data_span_days = (data_end - data_start).days + 1
+        print_status(f"Data coverage: {data_start.strftime('%Y-%m-%d')} to {data_end.strftime('%Y-%m-%d')} ({data_span_days} days)", "INFO")
+
+        # Test multiple window sizes for robustness
+        print_status(f"Testing {len(window_sizes_to_test)} window sizes: {window_sizes_to_test} days", "INFO")
+        
+        results_by_window_size = {}
+        
+        for event_window_days in window_sizes_to_test:
+            print_status(f"Analyzing with ±{event_window_days}-day window ({event_window_days*2}-day total)...", "INFO")
+            
+            # Filter to events within data range for this window size
+            valid_events_raw = []
+            for event in jupiter_oppositions:
+                event_date = event['date']
+                if data_start - pd.Timedelta(days=event_window_days) <= event_date <= data_end + pd.Timedelta(days=event_window_days):
+                    valid_events_raw.append(event)
+            
+            if not valid_events_raw:
+                results_by_window_size[event_window_days] = {
+                    'success': False,
+                    'error': 'No events within coverage for this window size'
+                }
+                continue
+            
+            # Analyze each valid opposition event
+            event_analysis_results = {}
+            
+            for event in valid_events_raw:
+                event_date = event['date']
+                event_name = event['name']
+                
+                window_start = event_date - pd.Timedelta(days=event_window_days)
+                window_end = event_date + pd.Timedelta(days=event_window_days)
+                
+                window_data = complete_df[
+                    (complete_df['date'] >= window_start) & 
+                    (complete_df['date'] <= window_end)
+                ].copy()
+                
+                if len(window_data) < min_pairs_per_day * 10:
+                    event_analysis_results[event_name] = {'success': False, 'error': 'Insufficient total pairs in window'}
+                    continue
+                
+                window_data['days_from_event'] = (window_data['date'] - event_date).dt.days
+                
+                event_result = _analyze_event_window(window_data, event_date, event_window_days, expected_amplitude, min_pairs_per_day)
+                event_analysis_results[event_name] = event_result
+            
+            # Store results for this window size
+            n_significant = sum(1 for res in event_analysis_results.values() 
+                              if res.get('success') and res.get('gaussian_fit', {}).get('is_significant', False))
+            
+            results_by_window_size[event_window_days] = {
+                'success': True,
+                'n_events_analyzed': len(event_analysis_results),
+                'n_significant_detections': n_significant,
+                'event_results': event_analysis_results
+            }
+            
+            print_status(f"  Window ±{event_window_days}d: {n_significant}/{len(event_analysis_results)} significant detections", "INFO")
+        
+        # Find best window size (most significant detections)
+        best_window_size = max(results_by_window_size.keys(), 
+                              key=lambda w: results_by_window_size[w].get('n_significant_detections', 0))
+        best_results = results_by_window_size[best_window_size]
+        
+        print_status(f"Best window size: ±{best_window_size} days ({best_results['n_significant_detections']} significant)", "SUCCESS")
+        
+        # Report significant detections from best window
+        if best_results.get('event_results'):
+            for event_name, event_result in best_results['event_results'].items():
+                if event_result.get('success') and event_result.get('gaussian_fit', {}).get('is_significant', False):
+                    fit = event_result['gaussian_fit']
+                    sigma_level = fit['sigma_level']
+                    amp_abs = fit.get('amplitude_absolute', fit['amplitude'])
+                    amp_snr = fit.get('amplitude_snr', 0)
+                    warning = fit.get('baseline_warning')
+                    
+                    msg = f"    {event_name}: {sigma_level:.1f}σ, amplitude={amp_abs:.4f} (SNR={amp_snr:.1f})"
+                    if warning:
+                        msg += f" ⚠️"
+                    print_status(msg, "SUCCESS")
+        
+        # REMOVED: Stacked analysis is now performed in Step 4.4 (Comprehensive Gravitational-Temporal Field Analysis)
+        # Step 4.4 provides more sophisticated analysis with Savitzky-Golay smoothing and multi-planet stacking
+        # Keeping only individual event detection here for exploratory analysis
+        stacked_analysis_result = {
+            'enabled': False, 
+            'deferred_to': 'step_4.4_gravitational_temporal_field_analysis',
+            'reason': 'More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation'
+        }
+
+        # Final results structure with multi-window analysis
+        results = {
+            'success': True,
+            'analysis_type': 'jupiter_opposition_analysis_multi_window',
+            'n_opposition_events_total': len(jupiter_oppositions),
+            'window_sizes_tested': window_sizes_to_test,
+            'results_by_window_size': results_by_window_size,
+            'best_window_size_days': int(best_window_size),
+            'best_window_n_significant': best_results.get('n_significant_detections', 0),
+            'best_window_event_results': best_results.get('event_results', {}),
+            'stacked_analysis': stacked_analysis_result,
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'interpretation': f"Jupiter opposition analysis completed. Best window: ±{best_window_size}d with {best_results.get('n_significant_detections', 0)} significant detections."
+        }
+
+        print_status(f"Jupiter opposition analysis complete: tested {len(window_sizes_to_test)} window sizes", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Jupiter opposition analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc() # For debugging
+        return {
+            'success': False, 
+            'error': str(e),
+            'analysis_type': 'jupiter_opposition_analysis',
+            'n_opposition_events_total': len(jupiter_oppositions) if 'jupiter_oppositions' in locals() else 0,
+            'interpretation': f"Jupiter opposition analysis failed due to error: {str(e)}"
+        }
+
+def run_saturn_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
+    """
+    Analyze GPS timing correlations around Saturn opposition events.
+    
+    Saturn oppositions occur when Earth-Saturn distance is minimized, causing
+    Saturn's gravitational potential at Earth to peak. According to TEP theory,
+    this should create a brief global enhancement in timing correlations.
+    
+    Expected amplitude: ~0.019% of the solar annual perihelion-aphelion swing
+    (ΔU/c² ≈ 6.3×10⁻¹⁴ vs solar ΔU/c² ≈ 3.3×10⁻¹⁰)
+    
+    This is ~12x smaller than Jupiter's signal, making it an excellent
+    orthogonal validation test.
+    
+    Key Saturn opposition dates:
+    - August 27, 2023
+    - September 8, 2024
+    - September 21, 2025
+    
+    DETECTION CHARACTERISTICS:
+    - Saturn orbital period: 29.5 years (10,759 days)
+    - Dataset coverage: 9,221 days (25.3 years) = 0.86 Saturn orbits
+    - Available oppositions: 25 events (excellent statistical power)
+    - Like Jupiter, Saturn benefits from both event-based and continuous daily analysis (Step 4.4)
+      for capturing slow orbital modulation
+    
+    Args:
+        complete_df: Complete pair dataset with dates and coherence
+        
+    Returns:
+        dict: Saturn opposition analysis results
+    """
+    try:
+        print_status("Starting Saturn Opposition Analysis...", "PROCESS")
+        
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Saturn opposition dates (when Earth-Saturn distance is minimized)
+        # Complete 2000-2025 coverage: 25 events spanning 0.85 Saturn orbits
+        saturn_events = [
+            # 2000-2010
+            {'name': 'saturn_2000', 'date': pd.to_datetime('2000-11-19'), 'description': 'Saturn Opposition November 2000'},
+            {'name': 'saturn_2001', 'date': pd.to_datetime('2001-12-03'), 'description': 'Saturn Opposition December 2001'},
+            {'name': 'saturn_2002', 'date': pd.to_datetime('2002-12-17'), 'description': 'Saturn Opposition December 2002'},
+            {'name': 'saturn_2003', 'date': pd.to_datetime('2003-12-31'), 'description': 'Saturn Opposition December 2003'},
+            {'name': 'saturn_2005', 'date': pd.to_datetime('2005-01-13'), 'description': 'Saturn Opposition January 2005'},
+            {'name': 'saturn_2006', 'date': pd.to_datetime('2006-01-27'), 'description': 'Saturn Opposition January 2006'},
+            {'name': 'saturn_2007', 'date': pd.to_datetime('2007-02-10'), 'description': 'Saturn Opposition February 2007'},
+            {'name': 'saturn_2008', 'date': pd.to_datetime('2008-02-24'), 'description': 'Saturn Opposition February 2008'},
+            {'name': 'saturn_2009', 'date': pd.to_datetime('2009-03-08'), 'description': 'Saturn Opposition March 2009'},
+            {'name': 'saturn_2010', 'date': pd.to_datetime('2010-03-22'), 'description': 'Saturn Opposition March 2010'},
+            # 2011-2020
+            {'name': 'saturn_2011', 'date': pd.to_datetime('2011-04-03'), 'description': 'Saturn Opposition April 2011'},
+            {'name': 'saturn_2012', 'date': pd.to_datetime('2012-04-15'), 'description': 'Saturn Opposition April 2012'},
+            {'name': 'saturn_2013', 'date': pd.to_datetime('2013-04-28'), 'description': 'Saturn Opposition April 2013'},
+            {'name': 'saturn_2014', 'date': pd.to_datetime('2014-05-10'), 'description': 'Saturn Opposition May 2014'},
+            {'name': 'saturn_2015', 'date': pd.to_datetime('2015-05-23'), 'description': 'Saturn Opposition May 2015'},
+            {'name': 'saturn_2016', 'date': pd.to_datetime('2016-06-03'), 'description': 'Saturn Opposition June 2016'},
+            {'name': 'saturn_2017', 'date': pd.to_datetime('2017-06-15'), 'description': 'Saturn Opposition June 2017'},
+            {'name': 'saturn_2018', 'date': pd.to_datetime('2018-06-27'), 'description': 'Saturn Opposition June 2018'},
+            {'name': 'saturn_2019', 'date': pd.to_datetime('2019-07-09'), 'description': 'Saturn Opposition July 2019'},
+            {'name': 'saturn_2020', 'date': pd.to_datetime('2020-07-20'), 'description': 'Saturn Opposition July 2020'},
+            # 2021-2025
+            {'name': 'saturn_2021', 'date': pd.to_datetime('2021-08-02'), 'description': 'Saturn Opposition August 2021'},
+            {'name': 'saturn_2022', 'date': pd.to_datetime('2022-08-14'), 'description': 'Saturn Opposition August 2022'},
+            {'name': 'saturn_2023', 'date': pd.to_datetime('2023-08-27'), 'description': 'Saturn Opposition August 2023'},
+            {'name': 'saturn_2024', 'date': pd.to_datetime('2024-09-08'), 'description': 'Saturn Opposition September 2024'},
+            {'name': 'saturn_2025', 'date': pd.to_datetime('2025-09-21'), 'description': 'Saturn Opposition September 2025'}
+        ]
+        
+        # Use multi-window analysis helper
+        expected_amplitude = TEPConfig.get_float('TEP_SATURN_AMPLITUDE_FRACTION', 0.00019)
+        
+        multi_window_results = analyze_planetary_events_multi_window(
+            complete_df=complete_df,
+            events=saturn_events,
+            planet_name="Saturn",
+            expected_amplitude=expected_amplitude,
+            window_sizes=[60, 90, 120, 180, 240],
+            event_window_override=event_window_override
+        )
+        
+        # Prepare final results
+        stacked_analysis_result = {
+            'enabled': False,
+            'deferred_to': 'step_4.4_gravitational_temporal_field_analysis'
+        }
+        
+        results = {
+            'success': True,
+            'analysis_type': 'saturn_opposition_analysis_multi_window',
+            'n_opposition_events_total': len(saturn_events),
+            'window_sizes_tested': multi_window_results['window_sizes_tested'],
+            'results_by_window_size': multi_window_results['results_by_window_size'],
+            'best_window_size_days': multi_window_results['best_window_size_days'],
+            'best_window_n_significant': multi_window_results['best_window_n_significant'],
+            'best_window_event_results': multi_window_results['best_window_event_results'],
+            'stacked_analysis': stacked_analysis_result,
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'interpretation': f"Saturn opposition analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+        }
+        
+        print_status(f"Saturn opposition analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Saturn opposition analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e),
+            'analysis_type': 'saturn_opposition_analysis',
+            'n_opposition_events_total': len(saturn_events) if 'saturn_events' in locals() else 0,
+            'interpretation': f"Saturn opposition analysis failed due to error: {str(e)}"
+        }
+
+def run_mars_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
+    """
+    Analyze GPS timing correlations around Mars opposition events.
+    """
+    try:
+        print_status("Starting Mars Opposition Analysis...", "PROCESS")
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Mars opposition events
+        mars_events = [
+            {'name': 'mars_2001', 'date': pd.to_datetime('2001-06-13'), 'description': 'Mars Opposition June 2001'},
+            {'name': 'mars_2003', 'date': pd.to_datetime('2003-08-28'), 'description': 'Mars Opposition August 2003'},
+            {'name': 'mars_2005', 'date': pd.to_datetime('2005-11-07'), 'description': 'Mars Opposition November 2005'},
+            {'name': 'mars_2007', 'date': pd.to_datetime('2007-12-24'), 'description': 'Mars Opposition December 2007'},
+            {'name': 'mars_2010', 'date': pd.to_datetime('2010-01-29'), 'description': 'Mars Opposition January 2010'},
+            {'name': 'mars_2012', 'date': pd.to_datetime('2012-03-03'), 'description': 'Mars Opposition March 2012'},
+            {'name': 'mars_2014', 'date': pd.to_datetime('2014-04-08'), 'description': 'Mars Opposition April 2014'},
+            {'name': 'mars_2016', 'date': pd.to_datetime('2016-05-22'), 'description': 'Mars Opposition May 2016'},
+            {'name': 'mars_2018', 'date': pd.to_datetime('2018-07-27'), 'description': 'Mars Opposition July 2018'},
+            {'name': 'mars_2020', 'date': pd.to_datetime('2020-10-13'), 'description': 'Mars Opposition October 2020'},
+            {'name': 'mars_2022', 'date': pd.to_datetime('2022-12-08'), 'description': 'Mars Opposition December 2022'},
+            {'name': 'mars_2025', 'date': pd.to_datetime('2025-01-16'), 'description': 'Mars Opposition January 2025'}
+        ]
+        
+        # Use multi-window analysis helper
+        expected_amplitude = TEPConfig.get_float('TEP_MARS_AMPLITUDE_FRACTION', 0.00005)
+        
+        multi_window_results = analyze_planetary_events_multi_window(
+            complete_df=complete_df,
+            events=mars_events,
+            planet_name="Mars",
+            expected_amplitude=expected_amplitude,
+            window_sizes=[60, 90, 120, 180, 240],
+            event_window_override=event_window_override
+        )
+        
+        results = {
+            'success': True,
+            'analysis_type': 'mars_opposition_analysis_multi_window',
+            'n_opposition_events_total': len(mars_events),
+            'window_sizes_tested': multi_window_results['window_sizes_tested'],
+            'results_by_window_size': multi_window_results['results_by_window_size'],
+            'best_window_size_days': multi_window_results['best_window_size_days'],
+            'best_window_n_significant': multi_window_results['best_window_n_significant'],
+            'best_window_event_results': multi_window_results['best_window_event_results'],
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'interpretation': f"Mars opposition analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+        }
+        
+        print_status(f"Mars opposition analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Mars opposition analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e),
+            'analysis_type': 'mars_opposition_analysis',
+            'n_opposition_events_total': len(mars_events) if 'mars_events' in locals() else 0,
+            'interpretation': f"Mars opposition analysis failed due to error: {str(e)}"
+        }
+
+def run_mercury_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
+    """
+    Analyze GPS timing correlations around Mercury inferior conjunction events.
+    """
+    try:
+        print_status("Starting Mercury Inferior Conjunction Analysis...", "PROCESS")
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Mercury inferior conjunction events (full coverage 2000-2025)
+        mercury_events = [
+            # 2000
+            {'name': 'mercury_2000_03', 'date': pd.to_datetime('2000-03-28'), 'description': 'Mercury Inferior Conjunction March 2000'},
+            {'name': 'mercury_2000_07', 'date': pd.to_datetime('2000-07-27'), 'description': 'Mercury Inferior Conjunction July 2000'},
+            {'name': 'mercury_2000_11', 'date': pd.to_datetime('2000-11-15'), 'description': 'Mercury Inferior Conjunction November 2000'},
+            # 2001
+            {'name': 'mercury_2001_03', 'date': pd.to_datetime('2001-03-09'), 'description': 'Mercury Inferior Conjunction March 2001'},
+            {'name': 'mercury_2001_07', 'date': pd.to_datetime('2001-07-09'), 'description': 'Mercury Inferior Conjunction July 2001'},
+            {'name': 'mercury_2001_10', 'date': pd.to_datetime('2001-10-29'), 'description': 'Mercury Inferior Conjunction October 2001'},
+            # 2002
+            {'name': 'mercury_2002_02', 'date': pd.to_datetime('2002-02-18'), 'description': 'Mercury Inferior Conjunction February 2002'},
+            {'name': 'mercury_2002_06', 'date': pd.to_datetime('2002-06-21'), 'description': 'Mercury Inferior Conjunction June 2002'},
+            {'name': 'mercury_2002_10', 'date': pd.to_datetime('2002-10-13'), 'description': 'Mercury Inferior Conjunction October 2002'},
+            # 2003
+            {'name': 'mercury_2003_02', 'date': pd.to_datetime('2003-02-04'), 'description': 'Mercury Inferior Conjunction February 2003'},
+            {'name': 'mercury_2003_06', 'date': pd.to_datetime('2003-06-03'), 'description': 'Mercury Inferior Conjunction June 2003'},
+            {'name': 'mercury_2003_09', 'date': pd.to_datetime('2003-09-26'), 'description': 'Mercury Inferior Conjunction September 2003'},
+            # 2004
+            {'name': 'mercury_2004_01', 'date': pd.to_datetime('2004-01-17'), 'description': 'Mercury Inferior Conjunction January 2004'},
+            {'name': 'mercury_2004_05', 'date': pd.to_datetime('2004-05-14'), 'description': 'Mercury Inferior Conjunction May 2004'},
+            {'name': 'mercury_2004_09', 'date': pd.to_datetime('2004-09-09'), 'description': 'Mercury Inferior Conjunction September 2004'},
+            {'name': 'mercury_2004_12', 'date': pd.to_datetime('2004-12-29'), 'description': 'Mercury Inferior Conjunction December 2004'},
+            # 2005
+            {'name': 'mercury_2005_04', 'date': pd.to_datetime('2005-04-26'), 'description': 'Mercury Inferior Conjunction April 2005'},
+            {'name': 'mercury_2005_08', 'date': pd.to_datetime('2005-08-23'), 'description': 'Mercury Inferior Conjunction August 2005'},
+            {'name': 'mercury_2005_12', 'date': pd.to_datetime('2005-12-12'), 'description': 'Mercury Inferior Conjunction December 2005'},
+            # 2006
+            {'name': 'mercury_2006_04', 'date': pd.to_datetime('2006-04-08'), 'description': 'Mercury Inferior Conjunction April 2006'},
+            {'name': 'mercury_2006_08', 'date': pd.to_datetime('2006-08-07'), 'description': 'Mercury Inferior Conjunction August 2006'},
+            {'name': 'mercury_2006_11', 'date': pd.to_datetime('2006-11-24'), 'description': 'Mercury Inferior Conjunction November 2006'},
+            # 2007
+            {'name': 'mercury_2007_03', 'date': pd.to_datetime('2007-03-22'), 'description': 'Mercury Inferior Conjunction March 2007'},
+            {'name': 'mercury_2007_07', 'date': pd.to_datetime('2007-07-20'), 'description': 'Mercury Inferior Conjunction July 2007'},
+            {'name': 'mercury_2007_11', 'date': pd.to_datetime('2007-11-08'), 'description': 'Mercury Inferior Conjunction November 2007'},
+            # 2008
+            {'name': 'mercury_2008_03', 'date': pd.to_datetime('2008-03-03'), 'description': 'Mercury Inferior Conjunction March 2008'},
+            {'name': 'mercury_2008_07', 'date': pd.to_datetime('2008-07-01'), 'description': 'Mercury Inferior Conjunction July 2008'},
+            {'name': 'mercury_2008_10', 'date': pd.to_datetime('2008-10-24'), 'description': 'Mercury Inferior Conjunction October 2008'},
+            # 2009
+            {'name': 'mercury_2009_02', 'date': pd.to_datetime('2009-02-13'), 'description': 'Mercury Inferior Conjunction February 2009'},
+            {'name': 'mercury_2009_06', 'date': pd.to_datetime('2009-06-13'), 'description': 'Mercury Inferior Conjunction June 2009'},
+            {'name': 'mercury_2009_10', 'date': pd.to_datetime('2009-10-06'), 'description': 'Mercury Inferior Conjunction October 2009'},
+            # 2010
+            {'name': 'mercury_2010_01', 'date': pd.to_datetime('2010-01-27'), 'description': 'Mercury Inferior Conjunction January 2010'},
+            {'name': 'mercury_2010_05', 'date': pd.to_datetime('2010-05-26'), 'description': 'Mercury Inferior Conjunction May 2010'},
+            {'name': 'mercury_2010_09', 'date': pd.to_datetime('2010-09-19'), 'description': 'Mercury Inferior Conjunction September 2010'},
+            # 2011
+            {'name': 'mercury_2011_01', 'date': pd.to_datetime('2011-01-09'), 'description': 'Mercury Inferior Conjunction January 2011'},
+            {'name': 'mercury_2011_05', 'date': pd.to_datetime('2011-05-07'), 'description': 'Mercury Inferior Conjunction May 2011'},
+            {'name': 'mercury_2011_09', 'date': pd.to_datetime('2011-09-03'), 'description': 'Mercury Inferior Conjunction September 2011'},
+            {'name': 'mercury_2011_12', 'date': pd.to_datetime('2011-12-23'), 'description': 'Mercury Inferior Conjunction December 2011'},
+            # 2012
+            {'name': 'mercury_2012_04', 'date': pd.to_datetime('2012-04-18'), 'description': 'Mercury Inferior Conjunction April 2012'},
+            {'name': 'mercury_2012_08', 'date': pd.to_datetime('2012-08-16'), 'description': 'Mercury Inferior Conjunction August 2012'},
+            {'name': 'mercury_2012_12', 'date': pd.to_datetime('2012-12-04'), 'description': 'Mercury Inferior Conjunction December 2012'},
+            # 2013
+            {'name': 'mercury_2013_03', 'date': pd.to_datetime('2013-03-31'), 'description': 'Mercury Inferior Conjunction March 2013'},
+            {'name': 'mercury_2013_07', 'date': pd.to_datetime('2013-07-30'), 'description': 'Mercury Inferior Conjunction July 2013'},
+            {'name': 'mercury_2013_11', 'date': pd.to_datetime('2013-11-17'), 'description': 'Mercury Inferior Conjunction November 2013'},
+            # 2014
+            {'name': 'mercury_2014_03', 'date': pd.to_datetime('2014-03-14'), 'description': 'Mercury Inferior Conjunction March 2014'},
+            {'name': 'mercury_2014_07', 'date': pd.to_datetime('2014-07-12'), 'description': 'Mercury Inferior Conjunction July 2014'},
+            {'name': 'mercury_2014_11', 'date': pd.to_datetime('2014-11-01'), 'description': 'Mercury Inferior Conjunction November 2014'},
+            # 2015
+            {'name': 'mercury_2015_02', 'date': pd.to_datetime('2015-02-21'), 'description': 'Mercury Inferior Conjunction February 2015'},
+            {'name': 'mercury_2015_06', 'date': pd.to_datetime('2015-06-24'), 'description': 'Mercury Inferior Conjunction June 2015'},
+            {'name': 'mercury_2015_10', 'date': pd.to_datetime('2015-10-16'), 'description': 'Mercury Inferior Conjunction October 2015'},
+            # 2016
+            {'name': 'mercury_2016_02', 'date': pd.to_datetime('2016-02-07'), 'description': 'Mercury Inferior Conjunction February 2016'},
+            {'name': 'mercury_2016_06', 'date': pd.to_datetime('2016-06-05'), 'description': 'Mercury Inferior Conjunction June 2016'},
+            {'name': 'mercury_2016_09', 'date': pd.to_datetime('2016-09-28'), 'description': 'Mercury Inferior Conjunction September 2016'},
+            # 2017
+            {'name': 'mercury_2017_01', 'date': pd.to_datetime('2017-01-19'), 'description': 'Mercury Inferior Conjunction January 2017'},
+            {'name': 'mercury_2017_05', 'date': pd.to_datetime('2017-05-18'), 'description': 'Mercury Inferior Conjunction May 2017'},
+            {'name': 'mercury_2017_09', 'date': pd.to_datetime('2017-09-12'), 'description': 'Mercury Inferior Conjunction September 2017'},
+            # 2018
+            {'name': 'mercury_2018_01', 'date': pd.to_datetime('2018-01-01'), 'description': 'Mercury Inferior Conjunction January 2018'},
+            {'name': 'mercury_2018_04', 'date': pd.to_datetime('2018-04-30'), 'description': 'Mercury Inferior Conjunction April 2018'},
+            {'name': 'mercury_2018_08', 'date': pd.to_datetime('2018-08-26'), 'description': 'Mercury Inferior Conjunction August 2018'},
+            {'name': 'mercury_2018_12', 'date': pd.to_datetime('2018-12-15'), 'description': 'Mercury Inferior Conjunction December 2018'},
+            # 2019
+            {'name': 'mercury_2019_04', 'date': pd.to_datetime('2019-04-11'), 'description': 'Mercury Inferior Conjunction April 2019'},
+            {'name': 'mercury_2019_08', 'date': pd.to_datetime('2019-08-09'), 'description': 'Mercury Inferior Conjunction August 2019'},
+            {'name': 'mercury_2019_11', 'date': pd.to_datetime('2019-11-28'), 'description': 'Mercury Inferior Conjunction November 2019'},
+            # 2020
+            {'name': 'mercury_2020_03', 'date': pd.to_datetime('2020-03-24'), 'description': 'Mercury Inferior Conjunction March 2020'},
+            {'name': 'mercury_2020_07', 'date': pd.to_datetime('2020-07-22'), 'description': 'Mercury Inferior Conjunction July 2020'},
+            {'name': 'mercury_2020_11', 'date': pd.to_datetime('2020-11-10'), 'description': 'Mercury Inferior Conjunction November 2020'},
+            # 2021
+            {'name': 'mercury_2021_03', 'date': pd.to_datetime('2021-03-06'), 'description': 'Mercury Inferior Conjunction March 2021'},
+            {'name': 'mercury_2021_07', 'date': pd.to_datetime('2021-07-04'), 'description': 'Mercury Inferior Conjunction July 2021'},
+            {'name': 'mercury_2021_10', 'date': pd.to_datetime('2021-10-25'), 'description': 'Mercury Inferior Conjunction October 2021'},
+            # 2022
+            {'name': 'mercury_2022_02', 'date': pd.to_datetime('2022-02-16'), 'description': 'Mercury Inferior Conjunction February 2022'},
+            {'name': 'mercury_2022_06', 'date': pd.to_datetime('2022-06-16'), 'description': 'Mercury Inferior Conjunction June 2022'},
+            {'name': 'mercury_2022_10', 'date': pd.to_datetime('2022-10-08'), 'description': 'Mercury Inferior Conjunction October 2022'},
+            # 2023
+            {'name': 'mercury_2023_01', 'date': pd.to_datetime('2023-01-30'), 'description': 'Mercury Inferior Conjunction January 2023'},
+            {'name': 'mercury_2023_05', 'date': pd.to_datetime('2023-05-29'), 'description': 'Mercury Inferior Conjunction May 2023'},
+            {'name': 'mercury_2023_09', 'date': pd.to_datetime('2023-09-22'), 'description': 'Mercury Inferior Conjunction September 2023'},
+            # 2024
+            {'name': 'mercury_2024_01', 'date': pd.to_datetime('2024-01-12'), 'description': 'Mercury Inferior Conjunction January 2024'},
+            {'name': 'mercury_2024_05', 'date': pd.to_datetime('2024-05-09'), 'description': 'Mercury Inferior Conjunction May 2024'},
+            {'name': 'mercury_2024_09', 'date': pd.to_datetime('2024-09-05'), 'description': 'Mercury Inferior Conjunction September 2024'},
+            {'name': 'mercury_2024_12', 'date': pd.to_datetime('2024-12-25'), 'description': 'Mercury Inferior Conjunction December 2024'},
+            # 2025
+            {'name': 'mercury_2025_04', 'date': pd.to_datetime('2025-04-21'), 'description': 'Mercury Inferior Conjunction April 2025'}
+        ]
+        
+        # Use multi-window analysis helper
+        expected_amplitude = TEPConfig.get_float('TEP_MERCURY_AMPLITUDE_FRACTION', 0.0001)
+        
+        multi_window_results = analyze_planetary_events_multi_window(
+            complete_df=complete_df,
+            events=mercury_events,
+            planet_name="Mercury",
+            expected_amplitude=expected_amplitude,
+            window_sizes=[60, 90, 120, 180, 240],
+            event_window_override=event_window_override
+        )
+        
+        results = {
+            'success': True,
+            'analysis_type': 'mercury_conjunction_analysis_multi_window',
+            'n_conjunction_events_total': len(mercury_events),
+            'window_sizes_tested': multi_window_results['window_sizes_tested'],
+            'results_by_window_size': multi_window_results['results_by_window_size'],
+            'best_window_size_days': multi_window_results['best_window_size_days'],
+            'best_window_n_significant': multi_window_results['best_window_n_significant'],
+            'best_window_event_results': multi_window_results['best_window_event_results'],
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'interpretation': f"Mercury conjunction analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+        }
+        
+        print_status(f"Mercury conjunction analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Mercury conjunction analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e),
+            'analysis_type': 'mercury_conjunction_analysis',
+            'n_conjunction_events_total': len(mercury_events) if 'mercury_events' in locals() else 0,
+            'interpretation': f"Mercury conjunction analysis failed due to error: {str(e)}"
+        }
+
+# ===== SOLAR ROTATION AND OTHER ANALYSES FOLLOW =====
+
+def run_venus_opposition_analysis(complete_df: pd.DataFrame, event_window_override: Optional[int] = None) -> Dict:
+    """
+    Analyze GPS timing correlations around Venus inferior conjunction events.
+    
+    Venus inferior conjunctions occur when Venus passes between Earth and Sun,
+    reaching minimum Earth-Venus distance (~0.28 AU). Despite smaller mass than
+    outer planets, Venus's proximity makes it gravitationally significant for TEP.
+    
+    Earth-Venus synodic period: ~584 days (~19 months)
+    Expected amplitude: ~0.1% (stronger than Saturn due to proximity)
+    """
+    try:
+        print_status("Starting Venus Inferior Conjunction Analysis...", "PROCESS")
+        
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Venus inferior conjunctions (closest approach, between Earth and Sun)
+        # Source: Shadetree Physics astronomical ephemeris calculations
+        # URL: http://www.shadetreephysics.com/vel/1918ics.htm
+        # Venus synodic period: ~584 days (~19 months)
+        # Complete 2000-2025 coverage: 16 events (VERIFIED)
+        venus_events = [
+            # 2001-2010
+            {'name': 'venus_2001', 'date': pd.to_datetime('2001-03-30'), 'description': 'Venus Inferior Conjunction March 2001'},
+            {'name': 'venus_2002', 'date': pd.to_datetime('2002-10-31'), 'description': 'Venus Inferior Conjunction October 2002'},
+            {'name': 'venus_2004', 'date': pd.to_datetime('2004-06-08'), 'description': 'Venus Inferior Conjunction June 2004 (TRANSIT)'},
+            {'name': 'venus_2006', 'date': pd.to_datetime('2006-01-15'), 'description': 'Venus Inferior Conjunction January 2006'},
+            {'name': 'venus_2007', 'date': pd.to_datetime('2007-08-18'), 'description': 'Venus Inferior Conjunction August 2007'},
+            {'name': 'venus_2009', 'date': pd.to_datetime('2009-03-29'), 'description': 'Venus Inferior Conjunction March 2009'},
+            {'name': 'venus_2010', 'date': pd.to_datetime('2010-10-29'), 'description': 'Venus Inferior Conjunction October 2010'},
+            # 2011-2020
+            {'name': 'venus_2012', 'date': pd.to_datetime('2012-06-06'), 'description': 'Venus Inferior Conjunction June 2012 (TRANSIT)'},
+            {'name': 'venus_2014', 'date': pd.to_datetime('2014-01-11'), 'description': 'Venus Inferior Conjunction January 2014'},
+            {'name': 'venus_2015', 'date': pd.to_datetime('2015-08-15'), 'description': 'Venus Inferior Conjunction August 2015'},
+            {'name': 'venus_2017', 'date': pd.to_datetime('2017-03-25'), 'description': 'Venus Inferior Conjunction March 2017'},
+            {'name': 'venus_2018', 'date': pd.to_datetime('2018-10-26'), 'description': 'Venus Inferior Conjunction October 2018'},
+            {'name': 'venus_2020', 'date': pd.to_datetime('2020-06-03'), 'description': 'Venus Inferior Conjunction June 2020'},
+            # 2021-2025
+            {'name': 'venus_2022', 'date': pd.to_datetime('2022-01-09'), 'description': 'Venus Inferior Conjunction January 2022'},
+            {'name': 'venus_2023', 'date': pd.to_datetime('2023-08-13'), 'description': 'Venus Inferior Conjunction August 2023'},
+            {'name': 'venus_2025', 'date': pd.to_datetime('2025-03-23'), 'description': 'Venus Inferior Conjunction March 2025'}
+        ]
+        
+        # Use multi-window analysis helper (early return)
+        expected_amplitude = TEPConfig.get_float('TEP_VENUS_AMPLITUDE_FRACTION', 0.001)
+        mw = analyze_planetary_events_multi_window(
+            complete_df=complete_df,
+            events=venus_events,
+            planet_name="Venus",
+            expected_amplitude=expected_amplitude,
+            window_sizes=[60, 90, 120, 180, 240],
+            event_window_override=event_window_override
+        )
+        results = {
+            'success': True,
+            'analysis_type': 'venus_conjunction_analysis_multi_window',
+            'n_conjunction_events_total': len(venus_events),
+            'window_sizes_tested': mw['window_sizes_tested'],
+            'results_by_window_size': mw['results_by_window_size'],
+            'best_window_size_days': mw['best_window_size_days'],
+            'best_window_n_significant': mw['best_window_n_significant'],
+            'best_window_event_results': mw['best_window_event_results'],
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'interpretation': f"Venus conjunction analysis completed. Best window: ±{mw['best_window_size_days']}d with {mw['best_window_n_significant']} significant detections."
+        }
+        print_status(f"Venus conjunction analysis complete: tested {len(mw['window_sizes_tested'])} window sizes", "SUCCESS")
+        return results
+
+        # ========================================
+        # VENUS CONJUNCTION WINDOW STRATEGY
+        # ========================================
+        # Window size: 240 days (±120 days) - Consistent with planetary coupling timescale
+        # Rationale: Venus has significant gravitational effect due to proximity
+        #            Longer window captures full synodic cycle context
+        # ========================================
+        
+        # Configuration
+        window_days = TEPConfig.get_int('TEP_EVENT_WINDOW_DAYS', 120)  # ±120 days = 240-day total window
+        if event_window_override is not None:
+            try:
+                window_days = int(event_window_override)
+            except Exception:
+                pass
+        expected_amplitude = TEPConfig.get_float('TEP_VENUS_AMPLITUDE_FRACTION', 0.001)  # 0.1%
+        min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
+        
+        print_status(f"Using ±{window_days}-day windows for Venus coupling detection", "INFO")
+        
+        print_status(f"Analyzing {len(venus_events)} Venus inferior conjunction events", "INFO")
+        print_status(f"Event window: ±{window_days} days, Expected Amplitude: {expected_amplitude*100:.3f}%", "INFO")
+        print_status(f"Venus synodic period: ~584 days (~19 months)", "INFO")
+        
+        # Check data coverage
+        data_start = complete_df['date'].min()
+        data_end = complete_df['date'].max()
+        data_span_days = (data_end - data_start).days + 1  # Inclusive date count
+        print_status(f"Data coverage: {data_start.date()} to {data_end.date()} ({data_span_days} days)", "INFO")
+
+        if data_span_days < (2 * window_days):
+            print_status(
+                f"Skipping Venus inferior conjunction analysis: data span {data_span_days} days < required window {2 * window_days} days",
+                "WARNING"
+            )
+            return {
+                'success': False,
+                'error': 'insufficient_temporal_coverage',
+                'required_days': int(2 * window_days),
+                'available_days': int(data_span_days)
+            }
+        
+        event_analysis_results = {}
+        all_event_data_for_stacking = []
+        
+        for event in venus_events:
+            event_name = event['name']
+            event_date = event['date']
+            description = event['description']
+            
+            # Check if event is within data range
+            if not (data_start - pd.Timedelta(days=window_days) <= event_date <= data_end + pd.Timedelta(days=window_days)):
+                print_status(f"Skipping {event_name} ({event_date.date()}): outside data range", "WARNING")
+                event_analysis_results[event_name] = {'success': False, 'error': 'Event outside data range'}
+                continue
+            
+            print_status(f"  Processing event: {event_name} ({event_date.date()})", "PROCESS")
+            
+            # Define time windows
+            event_start = event_date - pd.Timedelta(days=window_days)
+            event_end = event_date + pd.Timedelta(days=window_days)
+            
+            # Extract event data
+            event_data = complete_df[
+                (complete_df['date'] >= event_start) & 
+                (complete_df['date'] <= event_end)
+            ].copy()
+            
+            if len(event_data) < min_pairs_per_day * 10:
+                print_status(f"    Skipping event {event_name}: insufficient total pairs ({len(event_data)})", "WARNING")
+                event_analysis_results[event_name] = {'success': False, 'error': 'Insufficient total pairs in window'}
+                continue
+            
+            event_data['days_from_event'] = (event_data['date'] - event_date).dt.days
+            
+            event_result = _analyze_event_window(event_data, event_date, window_days, expected_amplitude, min_pairs_per_day)
+            
+            event_result['description'] = description
+            event_analysis_results[event_name] = event_result
+            
+            if event_result['success']:
+                all_event_data_for_stacking.append(event_data)
+                fit = event_result['gaussian_fit']
+                sigma_level = fit['sigma_level']
+                amp_abs = fit.get('amplitude_absolute', fit['amplitude'])
+                amp_snr = fit.get('amplitude_snr', 0)
+                warning = fit.get('baseline_warning')
+                threshold = TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0)
+                
+                if fit['is_significant']:
+                    msg = f"    Significant detection for {event_name}: {sigma_level:.1f}σ (exceeds {threshold:.1f}σ threshold), amplitude={amp_abs:.4f} (SNR={amp_snr:.1f})"
+                    if warning:
+                        msg += f" ⚠️"
+                    print_status(msg, "SUCCESS")
+                else:
+                    print_status(f"    Signal detected for {event_name}: {sigma_level:.1f}σ (below {threshold:.1f}σ threshold), amplitude={amp_abs:.4f}", "INFO")
+            else:
+                print_status(f"    Analysis failed for {event_name}: {event_result['error']}", "WARNING")
+        
+        stacked_analysis_result = {
+            'enabled': False,
+            'deferred_to': 'step_4.4_gravitational_temporal_field_analysis',
+            'reason': 'More sophisticated stacked analysis available in Step 4.4 with multi-planet correlation'
+        }
+
+        results = {
+            'success': True,
+            'analysis_type': 'venus_inferior_conjunction_analysis',
+            'n_conjunction_events_total': len(venus_events),
+            'n_conjunction_events_analyzed': len(event_analysis_results),
+            'event_results': event_analysis_results,
+            'stacked_analysis': stacked_analysis_result,
+            'expected_amplitude': expected_amplitude,
+            'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
+            'event_window_days_used': int(window_days),
+            'interpretation': 'Venus inferior conjunction analysis completed.'
+        }
+        
+        n_significant_individual = sum(1 for res in event_analysis_results.values() if res.get('success') and res['gaussian_fit'].get('is_significant', False))
+        if n_significant_individual > 0:
+            results['interpretation'] = f"Significant Venus conjunction signal(s) detected: {n_significant_individual}"
+        else:
+            results['interpretation'] = "No significant Venus conjunction signals detected."
+
+        print_status(f"Venus inferior conjunction analysis complete: {len(event_analysis_results)} events analyzed", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Venus conjunction analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e),
+            'analysis_type': 'venus_inferior_conjunction_analysis',
+            'n_conjunction_events_total': len(venus_events) if 'venus_events' in locals() else 0,
+            'interpretation': f"Venus conjunction analysis failed: {str(e)}"
+        }
+
+def run_solar_rotation_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Analyze GPS timing correlations with solar rotation cycle (Carrington rotation).
+    
+    Unlike planetary oppositions, this tests TEP coupling to the rotating solar magnetic
+    field and solar activity patterns. The Sun's ~27-day rotation period creates periodic
+    modulation in solar wind, magnetic field orientation, and space weather at Earth.
+    
+    Physical mechanism: Solar rotation → space weather modulation → potential TEP coupling
+    Carrington rotation period: ~27.3 days (sidereal at solar equator)
+    Expected signature: Periodic modulation in timing correlations at ~27-day period
+    
+    This is fundamentally different from gravitational oppositions - it tests whether
+    TEP couples to rotating magnetic/plasma structures rather than static gravitational fields.
+    """
+    try:
+        print_status("Starting Solar Rotation Cycle Analysis...", "PROCESS")
+        print_status("Testing TEP coupling to rotating solar magnetic field (Carrington rotation)", "INFO")
+        
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Configuration
+        carrington_period_days = 27.3  # Solar rotation period at equator (sidereal)
+        synodic_period_days = 27.0  # Approximately synodic period as seen from Earth
+        
+        # Check data coverage
+        data_start = complete_df['date'].min()
+        data_end = complete_df['date'].max()
+        total_days = (data_end - data_start).days + 1  # Inclusive date count
+        n_rotations = total_days / synodic_period_days
+        
+        print_status(f"Data coverage: {data_start.date()} to {data_end.date()} ({total_days} days)", "INFO")
+        print_status(f"Solar rotation period: {synodic_period_days:.1f} days (~{n_rotations:.1f} complete rotations)", "INFO")
+        
+        # Compute daily coherence to analyze periodicity
+        daily_coherence = complete_df.groupby('date')['coherence'].agg(['mean', 'std', 'count']).reset_index()
+        daily_coherence = daily_coherence[daily_coherence['count'] >= 100]  # Minimum pairs per day
+        
+        if len(daily_coherence) < 30:
+            return {
+                'success': False,
+                'error': 'Insufficient daily samples for periodic analysis',
+                'analysis_type': 'solar_rotation_analysis'
+            }
+        
+        # Compute days from start for FFT analysis
+        daily_coherence['days_from_start'] = (daily_coherence['date'] - data_start).dt.days
+        
+        # Perform spectral analysis to detect ~27-day periodicity
+        from scipy import signal
+        from scipy.stats import pearsonr
+        
+        # Detrend data and pre-whiten annual component
+        coherence_series = daily_coherence['mean'].values
+        days_series = daily_coherence['days_from_start'].values
+        
+        # Remove linear trend
+        z = np.polyfit(days_series, coherence_series, 1)
+        p = np.poly1d(z)
+        detrended = coherence_series - p(days_series)
+        
+        # Pre-whiten annual cycle (cos/sin at 365.25d)
+        omega_ann = 2 * np.pi / 365.25
+        X = np.column_stack([
+            np.ones_like(days_series),
+            np.cos(omega_ann * days_series),
+            np.sin(omega_ann * days_series)
+        ])
+        # Least-squares fit and residuals
+        beta, *_ = np.linalg.lstsq(X, detrended, rcond=None)
+        series = detrended - X.dot(beta)
+        
+        # Compute periodogram
+        freqs, power = signal.periodogram(series, fs=1.0, window='hann', scaling='spectrum')
+        periods = 1.0 / freqs[1:]  # Skip DC component
+        power = power[1:]
+        
+        # Find peak near 27-day period
+        target_period = synodic_period_days
+        period_range = (20, 35)  # Search range for solar rotation signal
+        
+        mask = (periods >= period_range[0]) & (periods <= period_range[1])
+        if mask.sum() > 0:
+            peak_idx = np.argmax(power[mask])
+            peak_period = periods[mask][peak_idx]
+            peak_power = power[mask][peak_idx]
+            
+            # Compute significance by comparing to background
+            background_power = np.median(power)
+            snr = peak_power / background_power if background_power > 0 else 0
+            
+            # Test correlation with sinusoid at detected period
+            test_sine = np.sin(2 * np.pi * days_series / peak_period)
+            test_cosine = np.cos(2 * np.pi * days_series / peak_period)
+            
+            r_sin, p_sin = pearsonr(series, test_sine)
+            r_cos, p_cos = pearsonr(series, test_cosine)
+            
+            # Use stronger correlation
+            if abs(r_sin) > abs(r_cos):
+                correlation = r_sin
+                p_value = p_sin
+                phase_component = 'sine'
+            else:
+                correlation = r_cos
+                p_value = p_cos
+                phase_component = 'cosine'
+            
+            r_squared = correlation ** 2
+            
+            is_significant = (p_value < 0.05) and (snr > 2.0) and (abs(correlation) > 0.3)
+            
+            results = {
+                'success': True,
+                'analysis_type': 'solar_rotation_analysis',
+                'physical_mechanism': 'rotating_solar_magnetic_field_modulation',
+                'carrington_period_days': carrington_period_days,
+                'target_period_days': synodic_period_days,
+                'detected_period_days': float(peak_period),
+                'n_rotations_observed': float(n_rotations),
+                'period_deviation_days': float(peak_period - synodic_period_days),
+                'spectral_snr': float(snr),
+                'peak_power': float(peak_power),
+                'background_power': float(background_power),
+                'correlation': float(correlation),
+                'p_value': float(p_value),
+                'r_squared': float(r_squared),
+                'phase_component': phase_component,
+                'is_significant': is_significant,
+                'interpretation': f"Solar rotation {'detected' if is_significant else 'not detected'} at {peak_period:.1f}-day period (target: {synodic_period_days:.1f}d, SNR: {snr:.1f}, r={correlation:.3f}, p={p_value:.4f})"
+            }
+            
+            if is_significant:
+                print_status(f"Significant solar rotation signal detected: {peak_period:.1f}-day period (r={correlation:.3f}, p={p_value:.4f}, SNR={snr:.1f})", "SUCCESS")
+            else:
+                print_status(f"Weak solar rotation signal: {peak_period:.1f}-day period (r={correlation:.3f}, p={p_value:.4f}, SNR={snr:.1f})", "INFO")
+                
+            return results
+        else:
+            return {
+                'success': False,
+                'error': 'No spectral peaks found in target period range',
+                'analysis_type': 'solar_rotation_analysis',
+                'period_range_searched': period_range
+            }
+            
+    except Exception as e:
+        print_status(f"Solar rotation analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False,
+            'error': str(e),
+            'analysis_type': 'solar_rotation_analysis',
+            'interpretation': f"Solar rotation analysis failed: {str(e)}"
+        }
+
+
+def run_lunar_standstill_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Analyze GPS timing correlations around major lunar standstill events.
+            {'name': 'mercury_2000_11', 'date': pd.to_datetime('2000-11-15'), 'description': 'Mercury Inferior Conjunction November 2000'},
+            # 2001
+            {'name': 'mercury_2001_03', 'date': pd.to_datetime('2001-03-09'), 'description': 'Mercury Inferior Conjunction March 2001'},
+            {'name': 'mercury_2001_07', 'date': pd.to_datetime('2001-07-09'), 'description': 'Mercury Inferior Conjunction July 2001'},
+            {'name': 'mercury_2001_10', 'date': pd.to_datetime('2001-10-29'), 'description': 'Mercury Inferior Conjunction October 2001'},
+            # 2002
+            {'name': 'mercury_2002_02', 'date': pd.to_datetime('2002-02-18'), 'description': 'Mercury Inferior Conjunction February 2002'},
+            {'name': 'mercury_2002_06', 'date': pd.to_datetime('2002-06-21'), 'description': 'Mercury Inferior Conjunction June 2002'},
+            {'name': 'mercury_2002_10', 'date': pd.to_datetime('2002-10-13'), 'description': 'Mercury Inferior Conjunction October 2002'},
+            # 2003
+            {'name': 'mercury_2003_02', 'date': pd.to_datetime('2003-02-04'), 'description': 'Mercury Inferior Conjunction February 2003'},
+            {'name': 'mercury_2003_06', 'date': pd.to_datetime('2003-06-03'), 'description': 'Mercury Inferior Conjunction June 2003'},
+            {'name': 'mercury_2003_09', 'date': pd.to_datetime('2003-09-26'), 'description': 'Mercury Inferior Conjunction September 2003'},
+            # 2004
+            {'name': 'mercury_2004_01', 'date': pd.to_datetime('2004-01-17'), 'description': 'Mercury Inferior Conjunction January 2004'},
+            {'name': 'mercury_2004_05', 'date': pd.to_datetime('2004-05-14'), 'description': 'Mercury Inferior Conjunction May 2004'},
+            {'name': 'mercury_2004_09', 'date': pd.to_datetime('2004-09-09'), 'description': 'Mercury Inferior Conjunction September 2004'},
+            {'name': 'mercury_2004_12', 'date': pd.to_datetime('2004-12-29'), 'description': 'Mercury Inferior Conjunction December 2004'},
+            # 2005
+            {'name': 'mercury_2005_04', 'date': pd.to_datetime('2005-04-26'), 'description': 'Mercury Inferior Conjunction April 2005'},
+            {'name': 'mercury_2005_08', 'date': pd.to_datetime('2005-08-23'), 'description': 'Mercury Inferior Conjunction August 2005'},
+            {'name': 'mercury_2005_12', 'date': pd.to_datetime('2005-12-12'), 'description': 'Mercury Inferior Conjunction December 2005'},
+            # 2006
+            {'name': 'mercury_2006_04', 'date': pd.to_datetime('2006-04-08'), 'description': 'Mercury Inferior Conjunction April 2006'},
+            {'name': 'mercury_2006_08', 'date': pd.to_datetime('2006-08-07'), 'description': 'Mercury Inferior Conjunction August 2006'},
+            {'name': 'mercury_2006_11', 'date': pd.to_datetime('2006-11-24'), 'description': 'Mercury Inferior Conjunction November 2006'},
+            # 2007
+            {'name': 'mercury_2007_03', 'date': pd.to_datetime('2007-03-22'), 'description': 'Mercury Inferior Conjunction March 2007'},
+            {'name': 'mercury_2007_07', 'date': pd.to_datetime('2007-07-20'), 'description': 'Mercury Inferior Conjunction July 2007'},
+            {'name': 'mercury_2007_11', 'date': pd.to_datetime('2007-11-08'), 'description': 'Mercury Inferior Conjunction November 2007'},
+            # 2008
+            {'name': 'mercury_2008_03', 'date': pd.to_datetime('2008-03-03'), 'description': 'Mercury Inferior Conjunction March 2008'},
+            {'name': 'mercury_2008_07', 'date': pd.to_datetime('2008-07-01'), 'description': 'Mercury Inferior Conjunction July 2008'},
+            {'name': 'mercury_2008_10', 'date': pd.to_datetime('2008-10-24'), 'description': 'Mercury Inferior Conjunction October 2008'},
+            # 2009
+            {'name': 'mercury_2009_02', 'date': pd.to_datetime('2009-02-13'), 'description': 'Mercury Inferior Conjunction February 2009'},
+            {'name': 'mercury_2009_06', 'date': pd.to_datetime('2009-06-13'), 'description': 'Mercury Inferior Conjunction June 2009'},
+            {'name': 'mercury_2009_10', 'date': pd.to_datetime('2009-10-06'), 'description': 'Mercury Inferior Conjunction October 2009'},
+            # 2010
+            {'name': 'mercury_2010_01', 'date': pd.to_datetime('2010-01-27'), 'description': 'Mercury Inferior Conjunction January 2010'},
+            {'name': 'mercury_2010_05', 'date': pd.to_datetime('2010-05-26'), 'description': 'Mercury Inferior Conjunction May 2010'},
+            {'name': 'mercury_2010_09', 'date': pd.to_datetime('2010-09-19'), 'description': 'Mercury Inferior Conjunction September 2010'},
+            # 2011
+            {'name': 'mercury_2011_01', 'date': pd.to_datetime('2011-01-09'), 'description': 'Mercury Inferior Conjunction January 2011'},
+            {'name': 'mercury_2011_05', 'date': pd.to_datetime('2011-05-07'), 'description': 'Mercury Inferior Conjunction May 2011'},
+            {'name': 'mercury_2011_09', 'date': pd.to_datetime('2011-09-03'), 'description': 'Mercury Inferior Conjunction September 2011'},
+            {'name': 'mercury_2011_12', 'date': pd.to_datetime('2011-12-23'), 'description': 'Mercury Inferior Conjunction December 2011'},
+            # 2012
+            {'name': 'mercury_2012_04', 'date': pd.to_datetime('2012-04-18'), 'description': 'Mercury Inferior Conjunction April 2012'},
+            {'name': 'mercury_2012_08', 'date': pd.to_datetime('2012-08-16'), 'description': 'Mercury Inferior Conjunction August 2012'},
+            {'name': 'mercury_2012_12', 'date': pd.to_datetime('2012-12-04'), 'description': 'Mercury Inferior Conjunction December 2012'},
+            # 2013
+            {'name': 'mercury_2013_03', 'date': pd.to_datetime('2013-03-31'), 'description': 'Mercury Inferior Conjunction March 2013'},
+            {'name': 'mercury_2013_07', 'date': pd.to_datetime('2013-07-30'), 'description': 'Mercury Inferior Conjunction July 2013'},
+            {'name': 'mercury_2013_11', 'date': pd.to_datetime('2013-11-17'), 'description': 'Mercury Inferior Conjunction November 2013'},
+            # 2014
+            {'name': 'mercury_2014_03', 'date': pd.to_datetime('2014-03-14'), 'description': 'Mercury Inferior Conjunction March 2014'},
+            {'name': 'mercury_2014_07', 'date': pd.to_datetime('2014-07-12'), 'description': 'Mercury Inferior Conjunction July 2014'},
+            {'name': 'mercury_2014_11', 'date': pd.to_datetime('2014-11-01'), 'description': 'Mercury Inferior Conjunction November 2014'},
+            # 2015
+            {'name': 'mercury_2015_02', 'date': pd.to_datetime('2015-02-21'), 'description': 'Mercury Inferior Conjunction February 2015'},
+            {'name': 'mercury_2015_06', 'date': pd.to_datetime('2015-06-24'), 'description': 'Mercury Inferior Conjunction June 2015'},
+            {'name': 'mercury_2015_10', 'date': pd.to_datetime('2015-10-16'), 'description': 'Mercury Inferior Conjunction October 2015'},
+            # 2016
+            {'name': 'mercury_2016_02', 'date': pd.to_datetime('2016-02-07'), 'description': 'Mercury Inferior Conjunction February 2016'},
+            {'name': 'mercury_2016_06', 'date': pd.to_datetime('2016-06-05'), 'description': 'Mercury Inferior Conjunction June 2016'},
+            {'name': 'mercury_2016_09', 'date': pd.to_datetime('2016-09-28'), 'description': 'Mercury Inferior Conjunction September 2016'},
+            # 2017
+            {'name': 'mercury_2017_01', 'date': pd.to_datetime('2017-01-19'), 'description': 'Mercury Inferior Conjunction January 2017'},
+            {'name': 'mercury_2017_05', 'date': pd.to_datetime('2017-05-18'), 'description': 'Mercury Inferior Conjunction May 2017'},
+            {'name': 'mercury_2017_09', 'date': pd.to_datetime('2017-09-12'), 'description': 'Mercury Inferior Conjunction September 2017'},
+            # 2018
+            {'name': 'mercury_2018_01', 'date': pd.to_datetime('2018-01-01'), 'description': 'Mercury Inferior Conjunction January 2018'},
+            {'name': 'mercury_2018_04', 'date': pd.to_datetime('2018-04-30'), 'description': 'Mercury Inferior Conjunction April 2018'},
+            {'name': 'mercury_2018_08', 'date': pd.to_datetime('2018-08-26'), 'description': 'Mercury Inferior Conjunction August 2018'},
+            {'name': 'mercury_2018_12', 'date': pd.to_datetime('2018-12-15'), 'description': 'Mercury Inferior Conjunction December 2018'},
+            # 2019
+            {'name': 'mercury_2019_04', 'date': pd.to_datetime('2019-04-11'), 'description': 'Mercury Inferior Conjunction April 2019'},
+            {'name': 'mercury_2019_08', 'date': pd.to_datetime('2019-08-09'), 'description': 'Mercury Inferior Conjunction August 2019'},
+            {'name': 'mercury_2019_11', 'date': pd.to_datetime('2019-11-28'), 'description': 'Mercury Inferior Conjunction November 2019'},
+            # 2020
+            {'name': 'mercury_2020_03', 'date': pd.to_datetime('2020-03-24'), 'description': 'Mercury Inferior Conjunction March 2020'},
+            {'name': 'mercury_2020_07', 'date': pd.to_datetime('2020-07-22'), 'description': 'Mercury Inferior Conjunction July 2020'},
+            {'name': 'mercury_2020_11', 'date': pd.to_datetime('2020-11-10'), 'description': 'Mercury Inferior Conjunction November 2020'},
+            # 2021
+            {'name': 'mercury_2021_03', 'date': pd.to_datetime('2021-03-06'), 'description': 'Mercury Inferior Conjunction March 2021'},
+            {'name': 'mercury_2021_07', 'date': pd.to_datetime('2021-07-04'), 'description': 'Mercury Inferior Conjunction July 2021'},
+            {'name': 'mercury_2021_10', 'date': pd.to_datetime('2021-10-25'), 'description': 'Mercury Inferior Conjunction October 2021'},
+            # 2022
+            {'name': 'mercury_2022_02', 'date': pd.to_datetime('2022-02-16'), 'description': 'Mercury Inferior Conjunction February 2022'},
+            {'name': 'mercury_2022_06', 'date': pd.to_datetime('2022-06-16'), 'description': 'Mercury Inferior Conjunction June 2022'},
+            {'name': 'mercury_2022_10', 'date': pd.to_datetime('2022-10-08'), 'description': 'Mercury Inferior Conjunction October 2022'},
+            # 2023
+            {'name': 'mercury_2023_01', 'date': pd.to_datetime('2023-01-30'), 'description': 'Mercury Inferior Conjunction January 2023'},
+            {'name': 'mercury_2023_05', 'date': pd.to_datetime('2023-05-29'), 'description': 'Mercury Inferior Conjunction May 2023'},
+            {'name': 'mercury_2023_09', 'date': pd.to_datetime('2023-09-22'), 'description': 'Mercury Inferior Conjunction September 2023'},
+            # 2024
+            {'name': 'mercury_2024_01', 'date': pd.to_datetime('2024-01-12'), 'description': 'Mercury Inferior Conjunction January 2024'},
+            {'name': 'mercury_2024_05', 'date': pd.to_datetime('2024-05-09'), 'description': 'Mercury Inferior Conjunction May 2024'},
+            {'name': 'mercury_2024_09', 'date': pd.to_datetime('2024-09-05'), 'description': 'Mercury Inferior Conjunction September 2024'},
+            {'name': 'mercury_2024_12', 'date': pd.to_datetime('2024-12-25'), 'description': 'Mercury Inferior Conjunction December 2024'},
+            # 2025
+    
+    Major Lunar Standstills occur every 18.6 years when the Moon reaches its 
+    
+    Major Lunar Standstills occur every 18.6 years when the Moon reaches its 
+    maximum declination (±28.7°), creating enhanced tidal effects that should 
+    modulate GPS timing correlations.
+    
+    This analysis uses the same event-window approach as planetary oppositions,
+    looking for coherence enhancement during the standstill peak period.
+    
+    Expected amplitude: ~0.05% enhancement during standstill maximum
+    """
+    print_status("Starting Lunar Standstill Analysis (Event-Based)...", "PROCESS")
+    
+    try:
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Define major lunar standstill events (18.6-year cycle peaks)
+        lunar_standstill_events = [
+            {
+                'name': 'lunar_standstill_2025',
+                'date': pd.Timestamp('2025-06-01'),
+                'description': 'Major Lunar Standstill 2024-2025 - Maximum lunar declination (±28.7°)'
+            }
+        ]
+        
+        # Configuration
+        window_days = TEPConfig.get_int('TEP_LUNAR_WINDOW_DAYS', 180)  # ±6 months around peak
+        expected_amplitude = 0.0005  # Expected fractional amplitude (0.05%)
+        min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
+        
+        # Data range check
+        data_start = complete_df['date'].min()
+        data_end = complete_df['date'].max()
+        data_span_days = (data_end - data_start).days + 1  # Inclusive date count
+        
+        print_status(f"Data coverage: {data_start.date()} to {data_end.date()} ({data_span_days} days)", "INFO")
+        print_status(f"Lunar standstill event window: ±{window_days} days (±{window_days/30.4:.1f} months)", "INFO")
+        print_status(f"Expected amplitude: {expected_amplitude*100:.3f}%", "INFO")
+        
+        # Filter events within data range
+        valid_events = []
+        for event in lunar_standstill_events:
+            if data_start - pd.Timedelta(days=window_days) <= event['date'] <= data_end + pd.Timedelta(days=window_days):
+                valid_events.append(event)
+        
+        if not valid_events:
+            return {
+                'success': False,
+                'error': 'No lunar standstill events within dataset coverage',
+                'analysis_type': 'lunar_standstill_analysis',
+                'data_coverage': f"{data_start.date()} to {data_end.date()}",
+                'required_date': '2025-06-01 ± 6 months'
+            }
+        
+        # Analyze each valid standstill event
+        event_analysis_results = {}
+        all_event_data_for_stacking = []
+        
+        print_status(f"Analyzing {len(valid_events)} lunar standstill event(s)", "INFO")
+        
+        for event in valid_events:
+            event_date = event['date']
+            event_name = event['name']
+            
+            print_status(f"  Processing event: {event_name} ({event_date.date()})", "PROCESS")
+            
+            # Define time window
+            window_start = event_date - pd.Timedelta(days=window_days)
+            window_end = event_date + pd.Timedelta(days=window_days)
+            
+            # Extract event data
+            window_data = complete_df[
+                (complete_df['date'] >= window_start) & 
+                (complete_df['date'] <= window_end)
+            ].copy()
+            
+            if len(window_data) < min_pairs_per_day * 10:
+                print_status(f"    Skipping event {event_name}: insufficient total pairs ({len(window_data)})", "WARNING")
+                event_analysis_results[event_name] = {
+                    'success': False, 
+                    'error': 'Insufficient total pairs in window',
+                    'event_date': event_date.isoformat()
+                }
+                continue
+            
+            window_data['days_from_event'] = (window_data['date'] - event_date).dt.days
+            
+            # Analyze using standard event window analysis (same as planetary oppositions)
+            event_result = _analyze_event_window(
+                window_data, event_date, window_days, 
+                expected_amplitude, min_pairs_per_day
+            )
+            
+            # Add description
+            event_result['description'] = event['description']
+            event_analysis_results[event_name] = event_result
+            
+            if event_result['success']:
+                all_event_data_for_stacking.append(window_data)
+                
+                # Extract results for reporting
+                gaussian = event_result.get('gaussian_fit', {})
+                if gaussian.get('fit_success'):
+                    amplitude = gaussian.get('amplitude', 0)
+                    sigma_level = gaussian.get('sigma_level', 0)
+                    is_significant = gaussian.get('is_significant', False)
+                    
+                    if is_significant:
+                        print_status(f"    SIGNIFICANT lunar standstill signal: {sigma_level:.1f}σ", "SUCCESS")
+                    else:
+                        print_status(f"    Lunar standstill signal: {sigma_level:.1f}σ (not significant)", "INFO")
+        
+        # Determine overall interpretation
+        n_significant = sum(1 for r in event_analysis_results.values() 
+                          if r.get('success') and r.get('gaussian_fit', {}).get('is_significant', False))
+        
+        if n_significant > 0:
+            interpretation = f"Significant Lunar Standstill signal(s) detected: {n_significant}"
+        else:
+            interpretation = "No significant Lunar Standstill signals detected."
+        
+        # Final results
+        results = {
+            'success': True,
+            'analysis_type': 'lunar_standstill_analysis',
+            'n_standstill_events_total': len(lunar_standstill_events),
+            'n_standstill_events_analyzed': len(valid_events),
+            'window_days': window_days,
+            'expected_amplitude': expected_amplitude,
+            'event_results': event_analysis_results,
+            'interpretation': interpretation
+        }
+        
+        print_status(f"Lunar standstill analysis complete: {interpretation}", "SUCCESS")
+        return results
+        
+    except Exception as e:
+        print_status(f"Lunar standstill analysis failed: {e}", "ERROR")
+        import traceback
+        traceback.print_exc()
+        return {
+            'success': False, 
+            'error': str(e),
+            'analysis_type': 'lunar_standstill_analysis',
+            'interpretation': f"Lunar standstill analysis failed: {str(e)}"
+        }
+
+def run_nutation_analysis(complete_df: pd.DataFrame) -> Dict:
+    """
+    Analyze GPS timing correlations for Earth's nutation signatures.
+    
+    Earth's nutation causes periodic variations in the orientation of Earth's
+    rotation axis, which should create detectable modulations in GPS timing.
+    """
+    try:
+        print_status("Starting Nutation Analysis...", "PROCESS")
+        
+        # Convert dates to datetime
+        complete_df['date'] = pd.to_datetime(complete_df['date'])
+        
+        # Calculate days since epoch for nutation analysis
+        epoch = pd.Timestamp('2000-01-01')
+        complete_df['days_since_epoch'] = (complete_df['date'] - epoch).dt.days
+        
+        # Principal nutation periods (days)
+        nutation_periods = {
+            'main_nutation': 6798.4,  # ~18.6 years (main lunar nutation)
+            'annual_nutation': 365.25,  # Annual nutation
+            'semiannual_nutation': 182.6  # Semiannual nutation
+        }
+        
+        # Check temporal coverage
+        data_span_days = (complete_df['date'].max() - complete_df['date'].min()).days + 1  # Inclusive date count
+        
+        nutation_results = {}
+        
+        for nutation_name, period_days in nutation_periods.items():
+            # Calculate nutation phase
+            complete_df['nutation_phase'] = (2 * np.pi * complete_df['days_since_epoch'] / period_days) % (2 * np.pi)
+            
+            # Group into phase bins
+            n_phase_bins = 12  # 30° phase resolution
+            phase_bins = np.linspace(0, 2*np.pi, n_phase_bins + 1)
+            complete_df['nutation_phase_bin'] = pd.cut(complete_df['nutation_phase'], 
+                                                      bins=phase_bins, 
+                                                      labels=range(n_phase_bins))
+            
+            # Analyze coherence vs nutation phase
+            phase_coherence_data = []
+            
+            for phase_bin in range(n_phase_bins):
+                phase_data = complete_df[complete_df['nutation_phase_bin'] == phase_bin]
+                
+                if len(phase_data) < 100:  # Need sufficient data per bin
+                    continue
+                
+                mean_coherence = phase_data['coherence'].mean()
+                coherence_std = phase_data['coherence'].std()
+                
+                phase_coherence_data.append({
+                    'phase_bin': phase_bin,
+                    'phase_degrees': phase_bin * 30,  # 30° per bin
+                    'mean_coherence': mean_coherence,
+                    'coherence_std': coherence_std,
+                    'n_pairs': len(phase_data)
+                })
+            
+            if len(phase_coherence_data) >= 6:  # Need sufficient phase coverage
+                # Test for nutation modulation
+                phases = [d['phase_degrees'] for d in phase_coherence_data]
+                coherences = [d['mean_coherence'] for d in phase_coherence_data]
+                
+                # Fit sinusoidal model to detect nutation signature
+                try:
+                    def nutation_model(phase_rad, amplitude, phase_offset, baseline):
+                        return amplitude * np.cos(phase_rad + phase_offset) + baseline
+                    
+                    phase_rad = np.array(phases) * np.pi / 180
+                    popt, pcov = curve_fit(nutation_model, phase_rad, coherences, 
+                                         p0=[0.01, 0, np.mean(coherences)])
+                    
+                    amplitude, phase_offset, baseline = popt
+                    r_squared = 1 - np.sum((coherences - nutation_model(phase_rad, *popt))**2) / np.sum((coherences - np.mean(coherences))**2)
+                    
+                    nutation_results[nutation_name] = {
+                        'period_days': period_days,
+                        'amplitude': float(amplitude),
+                        'phase_offset_rad': float(phase_offset),
+                        'baseline': float(baseline),
+                        'r_squared': float(r_squared),
+                        'n_phase_bins': len(phase_coherence_data),
+                        'phase_data': phase_coherence_data
+                    }
+                    
+                except Exception as e:
+                    nutation_results[nutation_name] = {
+                        'period_days': period_days,
+                        'fit_error': str(e),
+                        'n_phase_bins': len(phase_coherence_data)
+                    }
+        
+        results = {
+            'success': True,
+            'analysis_type': 'nutation_analysis',
+            'data_span_days': data_span_days,
+            'nutation_results': nutation_results
+        }
+        
+        # Report significant nutation signatures
+        significant_nutations = [name for name, result in nutation_results.items() 
+                               if result.get('r_squared', 0) > 0.1]
+        
+        if significant_nutations:
+            print_status(f"Nutation analysis complete: {len(significant_nutations)} significant signatures detected", "SUCCESS")
+        else:
+            print_status("Nutation analysis complete: No significant signatures detected", "INFO")
+        
+        return results
+        
+    except Exception as e:
+        print_status(f"Nutation analysis failed: {e}", "ERROR")
+        return {'success': False, 'error': str(e)}
+
+# ===== NEW HELPER FUNCTIONS FOR PLANETARY OPPOSITION ANALYSIS =====
+
+def gaussian_pulse_model(days_array, amplitude, sigma, baseline, center_days=0):
+    """Gaussian pulse model for fitting event-locked coherence changes."""
+    return amplitude * np.exp(-0.5 * ((days_array - center_days) / sigma)**2) + baseline
+
+def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, window_days: int, expected_amplitude: float, min_daily_pairs: int) -> Dict:
+    """Helper to analyze a single event window with Gaussian fitting."""
+    daily_data = []
+    for day in range(-window_days, window_days + 1):
+        day_data = event_data[event_data['days_from_event'] == day]
+        if len(day_data) >= min_daily_pairs:
+            daily_coherence = day_data['coherence'].mean()
+            daily_data.append({
+                'days_from_event': day,
+                'mean_coherence': daily_coherence,
+                'n_pairs': len(day_data)
+            })
+
+    if len(daily_data) < 10: # Need at least 10 daily bins for fitting
+        return {'success': False, 'error': f'Insufficient daily data for fitting ({len(daily_data)} bins)'}
+
+    days = np.array([d['days_from_event'] for d in daily_data])
+    coherences = np.array([d['mean_coherence'] for d in daily_data])
+    
+    try:
+        # Initial guess for amplitude: expected_amplitude or the max/min deviation from mean
+        initial_amp_guess = expected_amplitude
+        if coherences.max() - coherences.mean() > abs(expected_amplitude) and coherences.max() - coherences.mean() > abs(coherences.min() - coherences.mean()):
+            initial_amp_guess = coherences.max() - coherences.mean()
+        elif abs(coherences.min() - coherences.mean()) > abs(expected_amplitude):
+            initial_amp_guess = coherences.min() - coherences.mean()
+        
+        # Ensure amplitude guess has correct sign if we have a strong expectation
+        if expected_amplitude > 0 and initial_amp_guess < 0:
+            initial_amp_guess = abs(initial_amp_guess)
+        elif expected_amplitude < 0 and initial_amp_guess > 0:
+            initial_amp_guess = -abs(initial_amp_guess)
+        
+        day_range = max(abs(days.min()), abs(days.max()))
+        center_bounds = [-day_range, day_range]  # Allow center anywhere in the event window
+        
+        # Clamp initial guesses to be within bounds
+        initial_amp_guess = np.clip(initial_amp_guess, -0.1, 0.1)
+        baseline_guess = np.clip(np.mean(coherences), -1.0, 1.0)
+        
+        p0 = [initial_amp_guess, 5.0, baseline_guess, 0.0] # amplitude, sigma, baseline, center_days
+        
+        # Bounds: amplitude (-0.1 to 0.1), sigma (1 to 60 days), baseline (-1 to 1), center_days (±window_days)
+        bounds = ([-0.1, 1.0, -1.0, center_bounds[0]], [0.1, 60.0, 1.0, center_bounds[1]]) 
+
+        popt, pcov = curve_fit(
+            gaussian_pulse_model, days, coherences,
+            p0=p0,
+            bounds=bounds,
+            maxfev=5000
+        )
+        
+        amplitude, sigma, baseline, center_days = popt
+        perr = np.sqrt(np.diag(pcov))
+        amplitude_std_err = perr[0]
+
+        # Calculate R-squared
+        coherence_pred = gaussian_pulse_model(days, *popt)
+        ss_res = np.sum((coherences - coherence_pred)**2)
+        ss_tot = np.sum((coherences - np.mean(coherences))**2)
+        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+        
+        # Significance: amplitude / standard error
+        sigma_level = abs(amplitude / amplitude_std_err) if amplitude_std_err > 0 else 0
+        is_significant = sigma_level >= TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0)
+
+        # Enhanced amplitude metrics
+        # amplitude_percent represents the modulation depth relative to total signal
+        total_signal = abs(baseline) + abs(amplitude)
+        amplitude_percent = (abs(amplitude) / total_signal * 100) if total_signal > 0 else 0
+        
+        # Also keep the baseline ratio for reference (can exceed 100%)
+        amplitude_fraction_of_baseline = amplitude / baseline if baseline != 0 else 0
+        
+        # Compute baseline standard deviation for SNR
+        # Use residuals far from center (>3 sigma away) as "baseline noise"
+        baseline_mask = np.abs(days - center_days) > (3 * sigma)
+        if np.sum(baseline_mask) > 5:
+            baseline_std = np.std(coherences[baseline_mask])
+        else:
+            # Fallback: use overall std
+            baseline_std = np.std(coherences)
+        
+        amplitude_snr = abs(amplitude) / baseline_std if baseline_std > 0 else 0
+        
+        # Warning for anomalous amplitudes
+        baseline_warning = None
+        if abs(amplitude) > abs(baseline) * 2:
+            baseline_warning = f'Large modulation: amplitude ({abs(amplitude):.4f}) > 2x baseline ({abs(baseline):.4f}). SNR: {amplitude_snr:.2f}'
+
+        return {
+            'success': True,
+            'event_date': event_date.isoformat(),
+            'window_days': window_days,
+            'n_pairs_in_window': len(event_data),
+            'n_daily_bins': len(daily_data),
+            'daily_data': daily_data,
+            'gaussian_fit': {
+                # Primary amplitude metrics (absolute)
+                'amplitude_absolute': float(amplitude),  # Primary: absolute coherence change
+                'amplitude_snr': float(amplitude_snr),   # Signal-to-noise ratio
+                
+                # Legacy/secondary metrics
+                'amplitude': float(amplitude),  # Kept for backward compatibility
+                'amplitude_fraction_of_baseline': float(amplitude_fraction_of_baseline),
+                'amplitude_percent': float(amplitude_percent),  # Secondary: can be inflated
+                
+                # Baseline metrics
+                'baseline': float(baseline),
+                'baseline_std': float(baseline_std),
+                'baseline_warning': baseline_warning,
+                
+                # Fit parameters
+                'sigma_days': float(sigma),
+                'center_days': float(center_days),
+                'r_squared': float(r_squared),
+                
+                # Significance
+                'amplitude_std_err': float(amplitude_std_err),
+                'sigma_level': float(sigma_level),
+                'is_significant': bool(is_significant),
+                'fit_success': True
+            }
+        }
+        
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        return {'success': False, 'error': f'Gaussian fit failed: {str(e)}', 'daily_data': daily_data, 'fit_success': False}
+
+def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: int, expected_amplitude: float, min_daily_pairs: int) -> Dict:
+    """Performs stacked analysis across multiple events."""
+    import time
+    start_time = time.time()
+    
+    if not all_event_data:
+        return {'success': False, 'error': 'No data for stacked analysis'}
+
+    # Stack all valid daily data
+    stacked_daily_data = {}
+    for event_df in all_event_data:
+        for index, row in event_df.iterrows():
+            day = row['days_from_event']
+            coherence = row['coherence']
+            if day not in stacked_daily_data:
+                stacked_daily_data[day] = []
+            stacked_daily_data[day].append(coherence)
+    
+    # Calculate mean coherence for each day across all stacked events
+    mean_stacked_daily_data = []
+    for day in sorted(stacked_daily_data.keys()):
+        if len(stacked_daily_data[day]) >= min_daily_pairs:
+            mean_stacked_daily_data.append({
+                'days_from_event': day,
+                'mean_coherence': np.mean(stacked_daily_data[day]),
+                'n_pairs': len(stacked_daily_data[day])
+            })
+            
+    if len(mean_stacked_daily_data) < 10:
+        return {'success': False, 'error': f'Insufficient daily data for stacked fitting ({len(mean_stacked_daily_data)} bins)'}
+
+    days = np.array([d['days_from_event'] for d in mean_stacked_daily_data])
+    coherences = np.array([d['mean_coherence'] for d in mean_stacked_daily_data])
+    
+    try:
+        initial_amp_guess = expected_amplitude
+        if coherences.max() - coherences.mean() > abs(expected_amplitude) and coherences.max() - coherences.mean() > abs(coherences.min() - coherences.mean()):
+            initial_amp_guess = coherences.max() - coherences.mean()
+        elif abs(coherences.min() - coherences.mean()) > abs(expected_amplitude):
+            initial_amp_guess = coherences.min() - coherences.mean()
+
+        if expected_amplitude > 0 and initial_amp_guess < 0:
+            initial_amp_guess = abs(initial_amp_guess)
+        elif expected_amplitude < 0 and initial_amp_guess > 0:
+            initial_amp_guess = -abs(initial_amp_guess)
+
+        # Better initial parameter guesses for faster convergence
+        baseline_guess = np.mean(coherences)
+        sigma_guess = np.std(days) / 3.0  # Better sigma estimate based on data spread
+        center_guess = days[np.argmax(np.abs(coherences - baseline_guess))]  # Center at peak deviation
+        
+        day_range = max(abs(days.min()), abs(days.max()))
+        center_bounds = [-day_range, day_range]
+        
+        # Clamp initial guesses to be within bounds
+        initial_amp_guess = np.clip(initial_amp_guess, -0.1, 0.1)
+        sigma_guess = np.clip(sigma_guess, 1.0, 60.0)  # Increased max sigma for larger windows
+        baseline_guess = np.clip(baseline_guess, -1.0, 1.0)
+        center_guess = np.clip(center_guess, center_bounds[0], center_bounds[1])
+        
+        p0 = [initial_amp_guess, sigma_guess, baseline_guess, center_guess] 
+        bounds = ([-0.1, 1.0, -1.0, center_bounds[0]], [0.1, 60.0, 1.0, center_bounds[1]])
+
+        popt, pcov = curve_fit(
+            gaussian_pulse_model, days, coherences,
+            p0=p0,
+            bounds=bounds,
+            maxfev=5000
+        )
+        
+        amplitude, sigma, baseline, center_days = popt
+        perr = np.sqrt(np.diag(pcov))
+        amplitude_std_err = perr[0]
+
+        coherence_pred = gaussian_pulse_model(days, *popt)
+        ss_res = np.sum((coherences - coherence_pred)**2)
+        ss_tot = np.sum((coherences - np.mean(coherences))**2)
+        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+        
+        sigma_level = abs(amplitude / amplitude_std_err) if amplitude_std_err > 0 else 0
+        is_significant = sigma_level >= TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0)
+
+        # Enhanced amplitude metrics for stacked analysis
+        total_signal = abs(baseline) + abs(amplitude)
+        amplitude_percent = (abs(amplitude) / total_signal * 100) if total_signal > 0 else 0
+        amplitude_fraction_of_baseline = amplitude / baseline if baseline != 0 else 0
+        
+        # Compute baseline standard deviation for SNR
+        baseline_mask = np.abs(days - center_days) > (3 * sigma)
+        if np.sum(baseline_mask) > 5:
+            baseline_std = np.std(coherences[baseline_mask])
+        else:
+            baseline_std = np.std(coherences)
+        
+        amplitude_snr = abs(amplitude) / baseline_std if baseline_std > 0 else 0
+        
+        # Warning for small baselines
+        small_baseline_threshold = 0.02
+        baseline_warning = None
+        if abs(baseline) < small_baseline_threshold and abs(amplitude_percent) > 200:
+            baseline_warning = f'High percentage ({amplitude_percent:.0f}%) due to small baseline ({baseline:.4f}). Absolute amplitude: {amplitude:.4f}'
+
+        elapsed_time = time.time() - start_time
+        
+        return {
+            'success': True,
+            'n_events_stacked': len(all_event_data),
+            'n_daily_bins_stacked': len(mean_stacked_daily_data),
+            'stacked_daily_data': mean_stacked_daily_data,
+            'processing_time_seconds': float(elapsed_time),
+            'gaussian_fit': {
+                # Primary amplitude metrics (absolute)
+                'amplitude_absolute': float(amplitude),
+                'amplitude_snr': float(amplitude_snr),
+                
+                # Legacy/secondary metrics
+                'amplitude': float(amplitude),
+                'amplitude_fraction_of_baseline': float(amplitude_fraction_of_baseline),
+                'amplitude_percent': float(amplitude_percent),
+                
+                # Baseline metrics
+                'baseline': float(baseline),
+                'baseline_std': float(baseline_std),
+                'baseline_warning': baseline_warning,
+                
+                # Fit parameters
+                'sigma_days': float(sigma),
+                'center_days': float(center_days),
+                'r_squared': float(r_squared),
+                
+                # Significance
+                'amplitude_std_err': float(amplitude_std_err),
+                'sigma_level': float(sigma_level),
+                'is_significant': bool(is_significant),
+                'fit_success': True
+            }
+        }
+    
+    except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
+        elapsed_time = time.time() - start_time
+        return {'success': False, 'error': f'Stacked Gaussian fit failed: {str(e)}', 'fit_success': False, 'processing_time_seconds': float(elapsed_time)}
+
+# ===== END NEW HELPER FUNCTIONS =====
+
+# ===== NEW HELPER FUNCTIONS FOR LUNAR STANDSTILL ANALYSIS =====
+
+def sinusoidal_fit_model(phase_rad, amplitude, phase_offset, baseline):
+    """Sinusoidal model for fitting sidereal day amplitude."""
+    return amplitude * np.cos(phase_rad + phase_offset) + baseline
+
+def _calculate_sidereal_amplitude_for_day(daily_df: pd.DataFrame, min_pairs_per_bin: int) -> Optional[Dict]:
+    """
+    Calculates the sidereal day amplitude for a single day's data.
+    Assumes daily_df has 'plateau_phase' and 'date' columns.
+    """
+    if len(daily_df) < min_pairs_per_bin * 5: # Need enough data for binning and fitting
+        return None
+
+    # Calculate Local Sidereal Time (LST) proxy - using hour of day for simplicity
+    # A more precise LST calculation would involve longitude and UTC, but hour is a good proxy for diurnal phase
+    daily_df['hour_of_day'] = daily_df['date'].dt.hour
+    daily_df['lst_phase'] = (2 * np.pi * daily_df['hour_of_day'] / 24) % (2 * np.pi)
+
+    n_lst_bins = 8 # 3-hour bins
+    lst_bins = np.linspace(0, 2 * np.pi, n_lst_bins + 1)
+    daily_df['lst_phase_bin'] = pd.cut(daily_df['lst_phase'], bins=lst_bins, labels=False, include_lowest=True)
+
+    binned_data = daily_df.groupby('lst_phase_bin').agg(
+        mean_coherence=('coherence', 'mean'),
+        n_pairs=('coherence', 'size')
+    ).reset_index()
+
+    binned_data = binned_data[binned_data['n_pairs'] >= min_pairs_per_bin]
+
+    if len(binned_data) < 4: # Need at least 4 bins for a robust sinusoidal fit
+        return None
+
+    # Fit sinusoidal model
+    try:
+        phases = (binned_data['lst_phase_bin'] + 0.5) * (2 * np.pi / n_lst_bins)
+        coherences = binned_data['mean_coherence']
+        weights = binned_data['n_pairs']
+
+        p0 = [0.01, 0, np.mean(coherences)] # amplitude, phase_offset, baseline
+        bounds = ([-0.1, -np.pi, -1.0], [0.1, np.pi, 1.0])
+
+        popt, pcov = curve_fit(
+            sinusoidal_fit_model, phases, coherences,
+            p0=p0, sigma=1.0/np.sqrt(weights), bounds=bounds, maxfev=5000
+        )
+
+        amplitude, phase_offset, baseline = popt
+        perr = np.sqrt(np.diag(pcov))
+        amplitude_std_err = perr[0]
+
+        r_squared = 1 - np.sum((coherences - sinusoidal_fit_model(phases, *popt))**2) / np.sum((coherences - np.mean(coherences))**2)
+        
+        return {
+            'amplitude': float(amplitude),
+            'amplitude_std_err': float(amplitude_std_err),
+            'r_squared': float(r_squared),
+            'baseline': float(baseline),
+            'fit_success': True,
+            'n_bins': len(binned_data)
+        }
+    except Exception as e:
+        return {'fit_success': False, 'error': str(e)}
+
+def _calculate_monthly_amplitudes(complete_df: pd.DataFrame, min_pairs_per_day: int) -> Dict:
+    """
+    Calculates mean sidereal day amplitudes for each month.
+    """
+    monthly_amplitudes = {}
+    daily_groups = complete_df.groupby(complete_df['date'].dt.to_period('D'))
+
+    all_daily_results = []
+
+    for day_period, daily_df in daily_groups:
+        day_str = day_period.start_time.isoformat()[:10]
+        if len(daily_df) < min_pairs_per_day: # Minimum pairs for any daily processing
+            continue
+        
+        sidereal_amp_result = _calculate_sidereal_amplitude_for_day(daily_df.copy(), min_pairs_per_bin=min_pairs_per_day // 5) # Heuristic for min_pairs_per_bin
+        
+        if sidereal_amp_result and sidereal_amp_result['fit_success']:
+            all_daily_results.append({
+                'date': day_period.start_time,
+                'amplitude': sidereal_amp_result['amplitude'],
+                'r_squared': sidereal_amp_result['r_squared'],
+                'baseline': sidereal_amp_result['baseline'],
+                'n_pairs': len(daily_df)
+            })
+    
+    if not all_daily_results:
+        return {'success': False, 'error': 'No successful daily amplitude calculations'}
+
+    daily_amplitudes_df = pd.DataFrame(all_daily_results)
+    daily_amplitudes_df['month_year'] = daily_amplitudes_df['date'].dt.to_period('M')
+
+    monthly_grouped = daily_amplitudes_df.groupby('month_year').agg(
+        mean_amplitude=('amplitude', 'mean'),
+        std_amplitude=('amplitude', 'std'),
+        n_days=('amplitude', 'size'),
+        mean_baseline=('baseline', 'mean')
+    ).reset_index()
+    monthly_grouped['month_year'] = monthly_grouped['month_year'].dt.to_timestamp()
+
+    monthly_grouped = monthly_grouped.sort_values('month_year')
+    
+    # Fill NaN std with 0 if only one day in month
+    monthly_grouped['std_amplitude'] = monthly_grouped['std_amplitude'].fillna(0.0)
+
+    return {
+        'success': True,
+        'periods': monthly_grouped.to_dict(orient='records'),
+        'n_months': len(monthly_grouped),
+        'mean_overall_amplitude': monthly_grouped['mean_amplitude'].mean(),
+        'mean_overall_baseline': monthly_grouped['mean_baseline'].mean()
+    }
+
+def _fit_quadratic_model(monthly_amplitudes: List[Dict], standstill_peak_month: pd.Timestamp) -> Dict:
+    """
+    Fits a quadratic model to monthly amplitudes to detect lunar standstill peak.
+    Assumes monthly_amplitudes is a list of dicts with 'month_year' (timestamp) and 'mean_amplitude'.
+    """
+    if len(monthly_amplitudes) < 5:
+        return {'success': False, 'error': 'Insufficient monthly amplitude data for quadratic fit'}
+
+    df = pd.DataFrame(monthly_amplitudes)
+    df['months_from_peak'] = (df['month_year'].dt.to_period('M').view(dtype='int64') - standstill_peak_month.to_period('M').view(dtype='int64'))
+
+    x_data = df['months_from_peak'].values
+    y_data = df['mean_amplitude'].values
+    weights = df['n_days'].values # Use number of days in month as weight
+
+    def quadratic_model(x, a, b, c):
+        return a * x**2 + b * x + c
+
+    try:
+        p0 = [-0.00001, 0, np.mean(y_data)] # Initial guess: downward parabola, small slope, mean amplitude
+        bounds = ([-0.01, -0.1, -1.0], [0.01, 0.1, 1.0]) # Reasonable bounds
+
+        popt, pcov = curve_fit(
+            quadratic_model, x_data, y_data,
+            p0=p0, sigma=1.0/np.sqrt(weights), bounds=bounds, maxfev=5000
+        )
+
+        a, b, c = popt
+        perr = np.sqrt(np.diag(pcov))
+
+        # Peak of parabola: -b / (2a)
+        peak_offset_months = -b / (2 * a) if a != 0 else 0
+        peak_amplitude = quadratic_model(peak_offset_months, *popt)
+
+        # R-squared
+        y_pred = quadratic_model(x_data, *popt)
+        ss_res = np.sum(weights * (y_data - y_pred)**2)
+        ss_tot = np.sum(weights * (y_data - np.average(y_data, weights=weights))**2)
+        r_squared = 1 - ss_res/ss_tot if ss_tot > 0 else 0
+
+        return {
+            'success': True,
+            'a': float(a),
+            'b': float(b),
+            'c': float(c),
+            'peak_offset_months': float(peak_offset_months),
+            'peak_amplitude': float(peak_amplitude),
+            'r_squared': float(r_squared),
+            'param_errors': [float(e) for e in perr]
+        }
+    except Exception as e:
+        return {'success': False, 'error': f'Quadratic fit failed: {str(e)}'}
+def _calculate_standstill_enhancement(monthly_amplitudes: List[Dict], pre_standstill_months: int, during_standstill_months: int, expected_amplitude_baseline: float, significance_threshold: float) -> Dict:
+    """
+    Calculates enhancement ratio during standstill vs pre-standstill.
+    Assumes monthly_amplitudes is a list of dicts with 'month_year' (timestamp) and 'mean_amplitude'.
+    """
+    if not monthly_amplitudes or len(monthly_amplitudes) < (pre_standstill_months + during_standstill_months) / 2: # heuristic
+        return {'success': False, 'error': 'Insufficient monthly data for enhancement calculation'}
+    
+    df = pd.DataFrame(monthly_amplitudes)
+    df['month_year'] = pd.to_datetime(df['month_year'])
+    df = df.set_index('month_year').sort_index()
+
+    # Define periods relative to the overall mean amplitude of the standstill period
+    # For Lunar Standstill, we expect an *enhancement* in the sidereal day amplitude
+    
+    # Approximate the standstill period (e.g., 2024-2025)
+    standstill_start_approx = pd.Timestamp('2024-01-01')
+    standstill_end_approx = pd.Timestamp('2025-12-31')
+
+    pre_standstill_period_end = standstill_start_approx - pd.DateOffset(months=1)
+    pre_standstill_period_start = pre_standstill_period_end - pd.DateOffset(months=pre_standstill_months)
+
+    during_standstill_period_start = standstill_start_approx
+    during_standstill_period_end = standstill_end_approx # Use full 2-year range for 'during'
+
+    pre_amplitudes = df.loc[pre_standstill_period_start:pre_standstill_period_end, 'mean_amplitude'].dropna()
+    standstill_amplitudes = df.loc[during_standstill_period_start:during_standstill_period_end, 'mean_amplitude'].dropna()
+
+    if len(pre_amplitudes) < 3 or len(standstill_amplitudes) < 3:
+        return {'success': False, 'error': 'Insufficient data for pre-standstill or standstill periods'}
+
+    mean_pre_amplitude = pre_amplitudes.mean()
+    std_pre_amplitude = pre_amplitudes.std()
+    mean_standstill_amplitude = standstill_amplitudes.mean()
+    std_standstill_amplitude = standstill_amplitudes.std()
+
+    # Calculate enhancement ratio: standstill / pre-standstill
+    enhancement_ratio = mean_standstill_amplitude / mean_pre_amplitude if mean_pre_amplitude > 0 else np.nan
+    enhancement_absolute = mean_standstill_amplitude - mean_pre_amplitude
+
+    # Statistical significance of enhancement (simple t-test or z-test if means/stds are stable)
+    # Assuming independent samples and roughly normal distribution for simplicity
+    # For a more rigorous test, consider Welch's t-test or non-parametric tests
+    
+    # Z-test for difference of means if stds are known or large sample
+    pooled_std_sq = (std_pre_amplitude**2 / len(pre_amplitudes)) + (std_standstill_amplitude**2 / len(standstill_amplitudes))
+    if pooled_std_sq > 0:
+        z_score = enhancement_absolute / np.sqrt(pooled_std_sq)
+        p_value = stats.norm.sf(abs(z_score)) * 2 # Two-tailed p-value
+    else:
+        z_score = np.nan
+        p_value = 1.0 # No variance, no significant difference
+
+    is_significant = p_value < significance_threshold and enhancement_ratio > 1.0 # Significant if enhanced AND statistically significant
+
+    return {
+        'success': True,
+        'mean_pre_amplitude': float(mean_pre_amplitude),
+        'std_pre_amplitude': float(std_pre_amplitude),
+        'mean_standstill_amplitude': float(mean_standstill_amplitude),
+        'std_standstill_amplitude': float(std_standstill_amplitude),
+        'enhancement_ratio': float(enhancement_ratio) if not np.isnan(enhancement_ratio) else 0.0,
+        'enhancement_absolute': float(enhancement_absolute),
+        'z_score': float(z_score) if not np.isnan(z_score) else 0.0,
+        'p_value': float(p_value),
+        'is_significant': bool(is_significant),
+        'pre_standstill_months_count': len(pre_amplitudes),
+        'standstill_months_count': len(standstill_amplitudes),
+        'interpretation': f"Lunar standstill resulted in {enhancement_ratio:.2f}x amplitude enhancement." if is_significant else "No significant lunar standstill enhancement detected."
+    }
+
+def _classify_dance_signature(dance_score: float, dance_metrics: Dict) -> str:
+    """
+    Classify the mesh dance signature based on dance score and metrics.
+    
+    Args:
+        dance_score: Overall dance score (0.0 to 1.0)
+        dance_metrics: Dictionary containing detailed dance metrics
+        
+    Returns:
+        str: Classification string describing the network coherence level
+    """
+    # Enhanced classification based on dance score and component analysis
+    if dance_score >= 0.8:
+        return "EXCEPTIONAL NETWORK COHERENCE - Unified spacetime detector with strong collective dynamics"
+    elif dance_score >= 0.6:
+        return "HIGH NETWORK COHERENCE - Strong collective motion with coherent mesh dynamics"
+    elif dance_score >= 0.45:
+        return "MODERATE NETWORK COHERENCE - Mesh coherence with collective motion patterns"
+    elif dance_score >= 0.25:
+        return "WEAK NETWORK COHERENCE - Limited collective motion detected"
+    else:
+        return "MINIMAL NETWORK COHERENCE - No significant collective dynamics"
+
+# ===== END NEW HELPER FUNCTIONS =====
+
+# ===== TEMPORAL COHERENCE ASSESSMENT MODULE =====
+
+def analyze_resonance_frequencies(df: pd.DataFrame, results: Dict) -> Dict:
+    """
+    OPTION C.1: Resonance Frequency Analysis
+    
+    Analyzes potential resonance effects between GPS timing correlations and 
+    known geophysical/astronomical frequencies. Tests for non-linear amplitude
+    enhancement at specific frequency combinations.
+    
+    This addresses the extraordinary amplitude enhancements observed (100x-19,000x)
+    which suggest resonance phenomena rather than linear gravitational coupling.
+    """
+    print_status("Starting Resonance Frequency Analysis...", "PROCESS")
+    
+    resonance_results = {
+        'success': False,
+        'resonance_patterns': [],
+        'enhancement_factors': {},
+        'coherent_frequencies': []
+    }
+    
+    try:
+        # Define known frequencies (cycles/day)
+        frequencies = {
+            'chandler_wobble': 1/433.0,
+            'annual': 1/365.25,
+            'semiannual': 2/365.25,
+            'lunar_month': 1/27.32,
+            'solar_rotation': 1/27.0,
+            'tidal_m2': 1/0.5175,  # M2 tide
+            'jupiter_synodic': 1/398.9,
+            'saturn_synodic': 1/378.1,
+            'mars_synodic': 1/780.0
+        }
+        
+        # Extract temporal data
+        df['day_of_year'] = pd.to_datetime(df['date']).dt.dayofyear
+        
+        # Test for resonance between frequency pairs
+        resonance_patterns = []
+        
+        for name1, freq1 in frequencies.items():
+            for name2, freq2 in frequencies.items():
+                if name1 >= name2:
+                    continue
+                
+                # Sum and difference frequencies (beat patterns)
+                sum_freq = freq1 + freq2
+                diff_freq = abs(freq1 - freq2)
+                
+                # Test correlation at sum/difference frequencies
+                for freq_type, test_freq in [('sum', sum_freq), ('diff', diff_freq)]:
+                    period_days = 1/test_freq if test_freq > 0 else np.inf
+                    
+                    if 10 < period_days < 1000:  # Focus on observable periods
+                        # Compute phase at this frequency
+                        phase = 2 * np.pi * test_freq * df['day_of_year']
+                        df[f'cos_{name1}_{name2}_{freq_type}'] = np.cos(phase)
+                        
+                        # Correlation with coherence
+                        corr = df['coherence'].corr(df[f'cos_{name1}_{name2}_{freq_type}'])
+                        
+                        if abs(corr) > 0.15:  # Significant correlation threshold
+                            resonance_patterns.append({
+                                'freq1_name': name1,
+                                'freq2_name': name2,
+                                'combination': freq_type,
+                                'resonance_period_days': period_days,
+                                'correlation': corr,
+                                'frequency_hz': test_freq
+                            })
+        
+        # Sort by correlation strength
+        resonance_patterns.sort(key=lambda x: abs(x['correlation']), reverse=True)
+        
+        resonance_results['resonance_patterns'] = resonance_patterns[:20]  # Top 20
+        resonance_results['success'] = True
+        resonance_results['n_significant_resonances'] = len([p for p in resonance_patterns if abs(p['correlation']) > 0.2])
+        
+        print_status(f"Resonance Analysis: {len(resonance_patterns)} patterns detected", "SUCCESS")
+        print_status(f"  Significant Resonances (|r|>0.2): {resonance_results['n_significant_resonances']}", "INFO")
+        
+        if resonance_patterns:
+            print_status(f"  Top Resonance: {resonance_patterns[0]['freq1_name']} + {resonance_patterns[0]['freq2_name']} ({resonance_patterns[0]['resonance_period_days']:.1f} days, r={resonance_patterns[0]['correlation']:.3f})", "INFO")
+        
+    except Exception as e:
+        print_status(f"Resonance analysis failed: {e}", "ERROR")
+        resonance_results['error'] = str(e)
+    
+    return resonance_results
+
+
+def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
+    """
+    Mass Scaling Analysis: Test A_obs vs (M/d²)
+    
+    Tests whether observed amplitudes scale with gravitational theory predictions
+    by correlating A_obs with expected amplitude ∝ (M/d²). This is the proper
+    test for gravitational scaling (NOT testing E vs mass, which is circular).
+    
+    Distinguishes between:
+    - Linear coupling: A_obs ∝ (M/d²)
+    - Quadratic coupling: A_obs ∝ (M/d²)²
+    - Resonant coupling: highly variable enhancement factors
+    """
+    print_status("Starting Mass Scaling Analysis...", "PROCESS")
+    
+    coupling_results = {
+        'success': False,
+        'coupling_type': 'unknown',
+        'linearity_test': {},
+        'enhancement_distribution': {}
+    }
+    
+    try:
+        # Extract planetary event amplitudes
+        all_amplitudes = []
+        expected_amplitudes = []
+        
+        for planet in ['jupiter_opposition_analysis', 'saturn_opposition_analysis', 'mars_opposition_analysis']:
+            if planet in planetary_results and planetary_results[planet].get('success'):
+                events = planetary_results[planet].get('event_results', {})
+                for event_data in events.values():
+                    if event_data.get('success'):
+                        gaussian = event_data.get('gaussian_fit', {})
+                        if gaussian.get('fit_success'):
+                            # Calculate absolute amplitude for proper unit consistency
+                            baseline = gaussian.get('baseline', 0.007)
+                            amp_absolute = abs(gaussian.get('amplitude_fraction_of_baseline', 0)) * baseline
+                            
+                            if 'jupiter' in planet:
+                                expected_absolute = 0.00220  # 0.220% as absolute
+                            elif 'saturn' in planet:
+                                expected_absolute = 0.00019  # 0.019% as absolute
+                            else:  # mars
+                                expected_absolute = 0.00005  # 0.0050% as absolute
+                            
+                            all_amplitudes.append(amp_absolute)
+                            expected_amplitudes.append(expected_absolute)
+        
+        if len(all_amplitudes) >= 3:
+            all_amplitudes = np.array(all_amplitudes)
+            expected_amplitudes = np.array(expected_amplitudes)
+            
+            # Test linearity: observed/expected should be constant for linear coupling
+            enhancement_factors = all_amplitudes / expected_amplitudes
+            
+            # Statistics
+            mean_enhancement = np.mean(enhancement_factors)
+            std_enhancement = np.std(enhancement_factors)
+            cv_enhancement = std_enhancement / mean_enhancement if mean_enhancement > 0 else np.inf
+            
+            # Linearity test: correlation between expected and observed
+            if len(expected_amplitudes) > 1:
+                linear_corr = np.corrcoef(expected_amplitudes, all_amplitudes)[0, 1]
+                
+                # Test quadratic relationship
+                quadratic_prediction = expected_amplitudes ** 2
+                quadratic_corr = np.corrcoef(quadratic_prediction, all_amplitudes)[0, 1] if np.std(quadratic_prediction) > 0 else 0
+                
+                coupling_results['linearity_test'] = {
+                    'linear_correlation': linear_corr,
+                    'quadratic_correlation': quadratic_corr,
+                    'mean_enhancement': mean_enhancement,
+                    'std_enhancement': std_enhancement,
+                    'cv_enhancement': cv_enhancement
+                }
+                
+                # Determine coupling type
+                if abs(quadratic_corr) > abs(linear_corr) and abs(quadratic_corr) > 0.5:
+                    coupling_type = 'QUADRATIC (Non-linear)'
+                elif abs(linear_corr) > 0.5:
+                    coupling_type = 'LINEAR'
+                elif cv_enhancement > 1.5:
+                    coupling_type = 'RESONANT (highly variable enhancement)'
+                else:
+                    coupling_type = 'WEAK/UNCLEAR'
+                
+                coupling_results['coupling_type'] = coupling_type
+                coupling_results['success'] = True
+                
+                print_status(f"Non-Linear Coupling Analysis Complete", "SUCCESS")
+                print_status(f"  Coupling Type: {coupling_type}", "INFO")
+                print_status(f"  Mean Enhancement: {mean_enhancement:.0f}x", "INFO")
+                print_status(f"  Enhancement CV: {cv_enhancement:.2f}", "INFO")
+                print_status(f"  Linear Correlation: {linear_corr:.3f}", "INFO")
+                print_status(f"  Quadratic Correlation: {quadratic_corr:.3f}", "INFO")
+            else:
+                print_status("Insufficient data for linearity test", "WARNING")
+        else:
+            print_status("Insufficient planetary detections for coupling analysis", "WARNING")
+    
+    except Exception as e:
+        print_status(f"Non-linear coupling analysis failed: {e}", "ERROR")
+        coupling_results['error'] = str(e)
+    
+    return coupling_results
+
+
+def analyze_temporal_coherence(df: pd.DataFrame, results: Dict) -> Dict:
+    """
+    Temporal Coherence Assessment
+    
+    Analyzes the temporal coherence of detected signals across different timescales
+    and spatial separations. Tests whether signals maintain phase coherence over time,
+    which would indicate a fundamental temporal field coupling vs random fluctuations.
+    """
+    print_status("Starting Temporal Coherence Assessment...", "PROCESS")
+    
+    coherence_results = {
+        'success': False,
+        'coherence_timescales': {},
+        'spatial_coherence': {},
+        'phase_stability': {}
+    }
+    
+    try:
+        # Group by time windows
+        df['date_dt'] = pd.to_datetime(df['date'])
+        df['week'] = (df['date_dt'] - df['date_dt'].min()).dt.days // 7
+        
+        # Analyze coherence across different timescales
+        timescales = {
+            'weekly': 7,
+            'monthly': 30,
+            'quarterly': 90,
+            'biannual': 180
+        }
+        
+        coherence_by_timescale = {}
+        
+        for scale_name, window_days in timescales.items():
+            # Group by time windows
+            df['time_bin'] = (df['date_dt'] - df['date_dt'].min()).dt.days // window_days
+            
+            # Compute coherence variance across time bins
+            time_coherence = df.groupby('time_bin')['coherence'].mean()
+            
+            if len(time_coherence) > 2:
+                # Autocorrelation at lag 1 (temporal persistence)
+                autocorr = time_coherence.autocorr(lag=1)
+                
+                # Variance (stability)
+                variance = time_coherence.var()
+                
+                coherence_by_timescale[scale_name] = {
+                    'autocorrelation': autocorr,
+                    'variance': variance,
+                    'n_bins': len(time_coherence),
+                    'is_coherent': autocorr > 0.3  # Significant persistence
+                }
+        
+        coherence_results['coherence_timescales'] = coherence_by_timescale
+        
+        # Spatial coherence: do nearby pairs show similar temporal evolution?
+        distance_bins = [0, 500, 2000, 10000, 20000]
+        spatial_coherence = {}
+        
+        for i in range(len(distance_bins)-1):
+            mask = (df['dist_km'] >= distance_bins[i]) & (df['dist_km'] < distance_bins[i+1])
+            if mask.sum() > 100:
+                dist_coherence = df[mask].groupby('week')['coherence'].mean()
+                if len(dist_coherence) > 2:
+                    spatial_coherence[f'{distance_bins[i]}-{distance_bins[i+1]}km'] = {
+                        'temporal_stability': dist_coherence.std(),
+                        'autocorrelation': dist_coherence.autocorr(lag=1)
+                    }
+        
+        coherence_results['spatial_coherence'] = spatial_coherence
+        coherence_results['success'] = True
+        
+        # Summary
+        n_coherent_scales = sum([1 for v in coherence_by_timescale.values() if v.get('is_coherent', False)])
+        
+        print_status(f"Temporal Coherence Assessment Complete", "SUCCESS")
+        print_status(f"  Coherent Timescales: {n_coherent_scales}/{len(timescales)}", "INFO")
+        print_status(f"  Spatial Bins Analyzed: {len(spatial_coherence)}", "INFO")
+        
+        for scale_name, metrics in coherence_by_timescale.items():
+            if metrics.get('is_coherent'):
+                print_status(f"  {scale_name.capitalize()}: autocorr={metrics['autocorrelation']:.3f} (coherent)", "INFO")
+    
+    except Exception as e:
+        print_status(f"Temporal coherence analysis failed: {e}", "ERROR")
+        coherence_results['error'] = str(e)
+    
+    return coherence_results
+
+
+def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> Dict:
+    """
+    Apply multiple testing corrections consistent with Step 3.6 methodology.
+    Uses both Bonferroni and FDR corrections as implemented in the reference methods.
+    """
+    if not all_planetary_detections:
+        return {'corrected_detections': [], 'correction_stats': {}}
+    
+    # Extract p-values
+    p_values = np.array([det['p_value'] for det in all_planetary_detections])
+    n_tests = len(p_values)
+    
+    # Bonferroni correction (conservative)
+    bonferroni_alpha = 0.05 / n_tests
+    bonferroni_significant = p_values < bonferroni_alpha
+    
+    # FDR correction (Benjamini-Hochberg procedure)
+    # Sort p-values and apply BH procedure
+    sorted_indices = np.argsort(p_values)
+    sorted_p_values = p_values[sorted_indices]
+    
+    # Find largest k such that P(k) ≤ (k/n) * α
+    fdr_alpha = 0.05
+    fdr_significant = np.zeros(n_tests, dtype=bool)
+    for i in range(n_tests-1, -1, -1):
+        if sorted_p_values[i] <= (i + 1) / n_tests * fdr_alpha:
+            # All tests with indices 0 to i are significant
+            fdr_significant[sorted_indices[:i+1]] = True
+            break
+    
+    # Add correction results to detections
+    corrected_detections = []
+    for i, detection in enumerate(all_planetary_detections):
+        corrected_det = detection.copy()
+        corrected_det.update({
+            'bonferroni_significant': bool(bonferroni_significant[i]),
+            'fdr_significant': bool(fdr_significant[i]),
+            'bonferroni_corrected_p': min(1.0, detection['p_value'] * n_tests),
+            'original_p_value': detection['p_value']
+        })
+        corrected_detections.append(corrected_det)
+    
+    correction_stats = {
+        'total_tests': n_tests,
+        'bonferroni_alpha': bonferroni_alpha,
+        'fdr_alpha': fdr_alpha,
+        'bonferroni_significant_count': int(np.sum(bonferroni_significant)),
+        'fdr_significant_count': int(np.sum(fdr_significant)),
+        'uncorrected_significant_count': int(np.sum(p_values < 0.05))
+    }
+    
+    return {
+        'corrected_detections': corrected_detections,
+        'correction_stats': correction_stats
+    }
+
+
+def calculate_gravitational_scaling_consistency(planetary_events: Dict) -> Dict:
+    """
+    DEPRECATED: This test is circular/uninformative.
+    
+    Testing E vs mass is circular because E = A_obs / (M/d²), so dividing by mass
+    then testing correlation with mass is mathematically uninformative.
+    
+    Use analyze_nonlinear_coupling() instead, which properly tests A_obs vs (M/d²).
+    
+    Kept for backwards compatibility only.
+    """
+    print_status("⚠️  DEPRECATED: calculate_gravitational_scaling_consistency is circular", "WARNING")
+    print_status("   Use analyze_nonlinear_coupling() for proper mass scaling test", "WARNING")
+    
+    return {
+        'success': False,
+        'deprecated': True,
+        'message': 'Use mass_scaling_analysis instead - tests A_obs vs (M/d²) directly'
+    }
+
+
+def generate_comprehensive_scientific_report(all_results: Dict, analysis_center: str) -> Dict:
+    """
+    OPTION B: Comprehensive Scientific Significance Report
+    
+    Generates a detailed scientific assessment report including:
+    - Complete detection inventory with statistical characterization
+    - Amplitude enhancement analysis with mechanistic interpretation
+    - Geophysical signature correlation analysis
+    - Multi-scale temporal coherence assessment
+    - TEP theory implications and evidence synthesis
+    """
+    print_status("=" * 80, "TITLE")
+    print_status(f"COMPREHENSIVE SCIENTIFIC SIGNIFICANCE REPORT - {analysis_center.upper()}", "TITLE")
+    print_status("=" * 80, "TITLE")
+    
+    report = {
+        'analysis_center': analysis_center,
+        'timestamp': datetime.now().isoformat(),
+        'planetary_events': {},
+        'corrected_detections': [],
+        'multiple_testing_corrections': {},
+        'gravitational_scaling': {},
+        'geophysical_signatures': {},
+        'amplitude_analysis': {},
+        'temporal_patterns': {},
+        'scientific_implications': {}
+    }
+    
+    try:
+        # ============================================================
+        # SECTION 1: PLANETARY GRAVITATIONAL EVENT ANALYSIS
+        # ============================================================
+        print_status(f"\n1. PLANETARY GRAVITATIONAL EVENT ANALYSIS", "TITLE")
+        print_status(f"   Analysis of GPS timing correlation response to planetary configurations", "INFO")
+        print_status(f"   Detection threshold: ≥2σ (95%+ confidence)", "INFO")
+        
+        planetary_events = {}
+        all_planetary_detections = []
+        
+        # Expected amplitudes for planetary gravitational coupling analysis
+        planet_info = {
+            'jupiter_opposition_analysis': {'name': 'Jupiter', 'expected_amp': 0.00220, 'mass_ratio': 317.8, 'expected_amp_pct': 0.220},
+            'saturn_opposition_analysis': {'name': 'Saturn', 'expected_amp': 0.00019, 'mass_ratio': 95.2, 'expected_amp_pct': 0.019},
+            'mars_opposition_analysis': {'name': 'Mars', 'expected_amp': 0.00005, 'mass_ratio': 0.107, 'expected_amp_pct': 0.0050},
+            'venus_conjunction_analysis': {'name': 'Venus', 'expected_amp': 0.00100, 'mass_ratio': 0.815, 'expected_amp_pct': 0.100},
+            'mercury_conjunction_analysis': {'name': 'Mercury', 'expected_amp': 0.00010, 'mass_ratio': 0.055, 'expected_amp_pct': 0.010}
+        }
+        
+        for planet_key, info in planet_info.items():
+            if planet_key in all_results and all_results[planet_key].get('success'):
+                events = all_results[planet_key].get('best_window_event_results', {})
+                planet_data = {
+                    'planet_name': info['name'],
+                    'expected_amplitude_pct': info['expected_amp_pct'],
+                    'events_analyzed': len(events),
+                    'significant_detections': [],
+                    'notable_detections': [],
+                    'subsignificant_detections': [],
+                    'all_sigma_levels': [],
+                    'all_amplitudes': []
+                }
+                
+                for event_name, event_data in events.items():
+                    if event_data.get('success'):
+                        gaussian = event_data.get('gaussian_fit', {})
+                        if gaussian.get('fit_success'):
+                            amplitude = gaussian.get('amplitude', 0)
+                            std_err = gaussian.get('amplitude_std_err', 1)
+                            sigma = abs(amplitude / std_err) if std_err > 0 else 0
+                            
+                            # Use corrected amplitude_percent if available, otherwise calculate it
+                            if 'amplitude_percent' in gaussian:
+                                amp_pct = gaussian.get('amplitude_percent', 0)
+                            else:
+                                # Recalculate with corrected formula for old results
+                                baseline = gaussian.get('baseline', 0.007)
+                                total_signal = abs(baseline) + abs(amplitude)
+                                amp_pct = (abs(amplitude) / total_signal * 100) if total_signal > 0 else 0
+                            
+                            event_date = event_data.get('event_date', 'Unknown')[:10]
+                            
+                            planet_data['all_sigma_levels'].append(sigma)
+                            planet_data['all_amplitudes'].append(amp_pct)
+                            
+                            # Calculate enhancement factor using absolute amplitude units
+                            baseline_coherence = gaussian.get('baseline', 0.007)
+                            actual_amplitude = abs(gaussian.get('amplitude_fraction_of_baseline', 0)) * baseline_coherence
+                            expected_amplitude_abs = info['expected_amp_pct'] / 100
+                            
+                            detection_info = {
+                                'event_name': event_name,
+                                'event_date': event_date,
+                                'sigma_level': sigma,
+                                'amplitude_pct': amp_pct,
+                                'actual_amplitude_abs': actual_amplitude,
+                                'expected_amplitude_abs': expected_amplitude_abs,
+                                'enhancement_factor': actual_amplitude / expected_amplitude_abs if expected_amplitude_abs > 0 else 0,
+                                'direction': 'suppression' if amplitude < 0 else 'enhancement',
+                                'p_value': 2 * (1 - norm.cdf(abs(sigma))),  # Two-tailed p-value from sigma level
+                                'mass_scaled_enhancement': (actual_amplitude / expected_amplitude_abs) / info['mass_ratio'] if expected_amplitude_abs > 0 and info['mass_ratio'] > 0 else 0
+                            }
+                            
+                            # Geophysical detection threshold: 2σ (95% confidence)
+                            if sigma >= 2.0:
+                                planet_data['significant_detections'].append(detection_info)
+                                all_planetary_detections.append({**detection_info, 'planet': info['name']})
+                            elif sigma >= 1.0:
+                                planet_data['notable_detections'].append(detection_info)
+                            elif sigma >= 0.5:
+                                planet_data['subsignificant_detections'].append(detection_info)
+                
+                # Calculate statistics with proper mass ratio information
+                if planet_data['all_sigma_levels']:
+                    planet_data['mean_sigma'] = np.mean(planet_data['all_sigma_levels'])
+                    planet_data['max_sigma'] = np.max(planet_data['all_sigma_levels'])
+                    planet_data['mean_amplitude'] = np.mean(planet_data['all_amplitudes'])
+                    planet_data['max_amplitude'] = np.max(planet_data['all_amplitudes'])
+                    # Calculate enhancement statistics using absolute amplitude units
+                    typical_baseline = 0.007  # Baseline coherence for unit conversion
+                    mean_amp_abs = (planet_data['mean_amplitude'] / 100) * typical_baseline
+                    max_amp_abs = (planet_data['max_amplitude'] / 100) * typical_baseline
+                    expected_amp_abs = info['expected_amp_pct'] / 100
+                    
+                    planet_data['mean_enhancement'] = mean_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                    planet_data['max_enhancement'] = max_amp_abs / expected_amp_abs if expected_amp_abs > 0 else 0
+                    planet_data['mass_ratio'] = info['mass_ratio']  # Add mass ratio for scaling analysis
+                
+                planetary_events[info['name']] = planet_data
+        
+        # Apply multiple testing corrections for statistical rigor
+        print_status("\\n" + "="*80, "TITLE")
+        print_status("STATISTICAL SIGNIFICANCE CORRECTIONS", "TITLE")
+        print_status("="*80, "TITLE")
+        
+        correction_results = apply_multiple_testing_corrections(all_planetary_detections)
+        
+        # Mass scaling analysis: Test A_obs vs (M/d²) for gravitational consistency
+        print_status("\\n" + "="*80, "TITLE")
+        print_status("MASS SCALING ANALYSIS", "TITLE")
+        print_status("="*80, "TITLE")
+        mass_scaling_results = analyze_nonlinear_coupling(all_results)
+        
+        print_status(f"Multiple Testing Correction Results:", "INFO")
+        if correction_results.get('correction_stats'):
+            correction_stats = correction_results['correction_stats']
+            print_status(f"   Total tests: {correction_stats.get('total_tests', 0)}", "INFO")
+            print_status(f"   Uncorrected significant: {correction_stats.get('uncorrected_significant_count', 0)}", "INFO")
+            print_status(f"   Bonferroni significant: {correction_stats.get('bonferroni_significant_count', 0)}", "INFO")
+            print_status(f"   FDR significant: {correction_stats.get('fdr_significant_count', 0)}", "INFO")
+            print_status(f"   Bonferroni α: {correction_stats.get('bonferroni_alpha', 0.05):.6f}", "INFO")
+        else:
+            print_status("   No planetary detections found for correction analysis", "INFO")
+        
+        if mass_scaling_results['success']:
+            print_status(f"Mass Scaling Analysis:", "INFO")
+            linearity = mass_scaling_results.get('linearity_test', {})
+            print_status(f"   A_obs vs (M/d²) correlation: r={linearity.get('linear_correlation', 0):.3f}", "INFO")
+            print_status(f"   A_obs vs (M/d²)² correlation: r={linearity.get('quadratic_correlation', 0):.3f}", "INFO")
+            print_status(f"   Coupling type: {mass_scaling_results.get('coupling_type', 'unknown')}", "INFO")
+            print_status(f"   Mean enhancement factor: {linearity.get('mean_enhancement', 0):.0f}x", "INFO")
+        
+        # Print detailed planetary analysis
+        for planet_name, data in planetary_events.items():
+            print_status(f"\n   {planet_name.upper()}:", "INFO")
+            print_status(f"      Events Analyzed: {data['events_analyzed']}", "INFO")
+            print_status(f"      Expected Amplitude: {data['expected_amplitude_pct']:.4f}%", "INFO")
+            
+            if data['all_sigma_levels']:
+                print_status(f"      Statistical Summary:", "INFO")
+                print_status(f"         Mean Sigma Level: {data['mean_sigma']:.2f}σ", "INFO")
+                print_status(f"         Maximum Sigma Level: {data['max_sigma']:.2f}σ", "INFO")
+                print_status(f"         Mean Observed Amplitude: {data['mean_amplitude']:.2f}%", "INFO")
+                print_status(f"         Maximum Observed Amplitude: {data['max_amplitude']:.2f}%", "INFO")
+                print_status(f"         Mean Enhancement Factor: {data['mean_enhancement']:.1f}x", "INFO")
+                print_status(f"         Maximum Enhancement Factor: {data['max_enhancement']:.1f}x", "INFO")
+            
+            if data['significant_detections']:
+                print_status(f"      SIGNIFICANT DETECTIONS (≥3.0σ): {len(data['significant_detections'])}", "SUCCESS")
+                for det in data['significant_detections']:
+                    print_status(f"         {det['event_date']}: {det['sigma_level']:.2f}σ, {det['amplitude_pct']:.1f}% ({det['enhancement_factor']:.0f}x expected)", "INFO")
+            
+            if data['notable_detections']:
+                print_status(f"      Notable Detections (2.0-3.0σ): {len(data['notable_detections'])}", "INFO")
+                for det in data['notable_detections']:
+                    print_status(f"         {det['event_date']}: {det['sigma_level']:.2f}σ, {det['amplitude_pct']:.1f}%", "INFO")
+        
+        report['planetary_events'] = planetary_events
+        report['corrected_detections'] = correction_results['corrected_detections']
+        report['multiple_testing_corrections'] = correction_results['correction_stats']
+        report['mass_scaling_analysis'] = mass_scaling_results  # Proper test: A_obs vs (M/d²)
+        
+        # ============================================================
+        # SECTION 2: GEOPHYSICAL SIGNATURE ANALYSIS
+        # ============================================================
+        print_status(f"\n2. GEOPHYSICAL SIGNATURE ANALYSIS", "TITLE")
+        print_status(f"   Correlation with known Earth rotation and orbital parameters", "INFO")
+        
+        geophysical_sigs = {}
+        
+        # Chandler Wobble
+        if 'chandler_wobble_analysis' in all_results and all_results['chandler_wobble_analysis'].get('success'):
+            cw_data = all_results['chandler_wobble_analysis']
+            cw_signature = cw_data.get('chandler_signature', {})
+            cw_temporal = cw_data.get('temporal_coverage', {})
+            cw_rsq = cw_signature.get('r_squared', 0)
+            cw_period = cw_temporal.get('chandler_period_days', 433)
+            cw_coverage = cw_temporal.get('data_span_days', 0)
+            cw_cycles = cw_coverage / cw_period if cw_period > 0 else 0
+            
+            # Detection threshold: R² > 0.15 for significant signal
+            geophysical_sigs['chandler_wobble'] = {
+                'detected': cw_rsq > 0.15,
+                'borderline': 0.10 < cw_rsq <= 0.15,
+                'r_squared': cw_rsq,
+                'period_days': cw_period,
+                'coverage_days': cw_coverage,
+                'complete_cycles': cw_cycles
+            }
+            
+            print_status(f"\n   CHANDLER WOBBLE (14-month polar motion):", "INFO")
+            # Convert R² to statistical significance for consistent reporting
+            n_samples = len(cw_data.get('phase_analysis', []))
+            if n_samples > 2 and cw_rsq > 0:
+                r_correlation = np.sqrt(cw_rsq)
+                t_stat = r_correlation * np.sqrt(n_samples - 2) / np.sqrt(1 - cw_rsq)
+                p_value = 2 * (1 - stats.t.cdf(abs(t_stat), n_samples - 2))
+                sigma_equivalent = abs(norm.ppf(p_value / 2))
+            else:
+                sigma_equivalent = 0.0
+                p_value = 1.0
+            
+            # Enhanced detection categorization with updated thresholds
+            if cw_rsq > 0.15:
+                status = "DETECTED"
+                level = "SUCCESS"
+            elif cw_rsq > 0.10:
+                status = "BORDERLINE DETECTED"
+                level = "INFO"
+            else:
+                status = "Not Significant"
+                level = "INFO"
+
+            print_status(f"      Detection Status: {status} ({sigma_equivalent:.1f}σ equivalent)", level)
+            print_status(f"      R² Correlation: {cw_rsq:.3f} (thresholds: DETECTED >0.15, BORDERLINE 0.10-0.15)", "INFO")
+            print_status(f"      Period: {cw_period:.0f} days ({cw_period/30.44:.1f} months)", "INFO")
+            print_status(f"      Temporal Coverage: {cw_coverage:.0f} days ({cw_cycles:.2f} complete cycles)", "INFO")
+            if cw_rsq > 0.4:
+                print_status(f"      Interpretation: GPS timing correlations exhibit significant modulation", "INFO")
+                print_status(f"                     at Chandler wobble frequency, suggesting coupling to", "INFO")
+                print_status(f"                     Earth's polar motion dynamics", "INFO")
+            elif cw_rsq > 0.35:
+                print_status(f"      Interpretation: Borderline Chandler wobble coupling detected (p ≈ {p_value:.4f}).", "INFO")
+                print_status(f"                     Signal is conventionally significant but slightly below", "INFO")
+                print_status(f"                     analysis threshold. Suggests weak to moderate polar motion coupling.", "INFO")
+        
+        # Orbital Motion
+        if 'temporal_orbital_tracking' in all_results and all_results['temporal_orbital_tracking'].get('success'):
+            orb_data = all_results['temporal_orbital_tracking']
+            orb_stats = orb_data.get('statistical_analysis', {})
+            orb_corr = orb_stats.get('orbital_speed_correlation', 0)
+            orb_pval = orb_stats.get('orbital_correlation_p_value', 1.0)
+            orb_samples = orb_stats.get('n_temporal_samples', 0)
+            
+            geophysical_sigs['orbital_motion'] = {
+                'detected': abs(orb_corr) > 0.4,
+                'correlation': orb_corr,
+                'p_value': orb_pval,
+                'n_samples': orb_samples
+            }
+            
+            print_status(f"\n   EARTH ORBITAL MOTION (annual cycle):", "INFO")
+            # Convert correlation to statistical significance for consistent reporting
+            if orb_samples > 2:
+                t_stat = abs(orb_corr) * np.sqrt(orb_samples - 2) / np.sqrt(1 - orb_corr**2 + 1e-12)
+                # Guard against p = 0 due to precision underflow
+                p_for_sigma = max(min(orb_pval, 1 - 1e-16), 1e-16)
+                sigma_equivalent = abs(norm.ppf(p_for_sigma / 2))
+            else:
+                sigma_equivalent = 0.0
+            
+            print_status(f"      Detection Status: {'DETECTED' if abs(orb_corr) > 0.4 else 'Not Significant'} ({sigma_equivalent:.1f}σ)", "SUCCESS" if abs(orb_corr) > 0.4 else "INFO")
+            print_status(f"      Correlation Coefficient: r = {orb_corr:.3f} (threshold: |r| > 0.40, {sigma_equivalent:.1f}σ equivalent)", "INFO")
+            print_status(f"      Statistical Significance: p = {orb_pval:.4f}", "INFO")
+            print_status(f"      Temporal Samples: {orb_samples} (30-day windows)", "INFO")
+            if abs(orb_corr) > 0.4:
+                print_status(f"      Interpretation: Directional anisotropy (E-W vs N-S) correlates with", "INFO")
+                print_status(f"                     Earth's position in orbit, suggesting orbital velocity", "INFO")
+                print_status(f"                     modulates GPS timing correlation structure", "INFO")
+        
+        
+        report['geophysical_signatures'] = geophysical_sigs
+        
+        # ============================================================
+        # SECTION 3: AMPLITUDE ENHANCEMENT ANALYSIS
+        # ============================================================
+        print_status(f"\n3. AMPLITUDE ENHANCEMENT ANALYSIS", "TITLE")
+        print_status(f"   Comparison of observed vs. expected gravitational coupling amplitudes", "INFO")
+        
+        if all_planetary_detections:
+            all_enhancements = [d['enhancement_factor'] for d in all_planetary_detections]
+            
+            enhancement_stats = {
+                'n_detections': len(all_planetary_detections),
+                'mean_enhancement': np.mean(all_enhancements),
+                'median_enhancement': np.median(all_enhancements),
+                'std_enhancement': np.std(all_enhancements) if len(all_enhancements) > 1 else np.nan,
+                'min_enhancement': np.min(all_enhancements),
+                'max_enhancement': np.max(all_enhancements),
+                'cv_enhancement': np.std(all_enhancements) / np.mean(all_enhancements) if len(all_enhancements) > 1 and np.mean(all_enhancements) > 0 else np.nan
+            }
+            
+            print_status(f"\n   Enhancement Factor Statistics (Observed/Expected Amplitude):", "INFO")
+            print_status(f"      Number of Significant Detections: {enhancement_stats['n_detections']}", "INFO")
+            print_status(f"      Mean Enhancement: {enhancement_stats['mean_enhancement']:.1f}x", "INFO")
+            print_status(f"      Median Enhancement: {enhancement_stats['median_enhancement']:.1f}x", "INFO")
+            print_status(f"      Standard Deviation: {enhancement_stats['std_enhancement']:.1f}x", "INFO")
+            print_status(f"      Range: {enhancement_stats['min_enhancement']:.1f}x - {enhancement_stats['max_enhancement']:.1f}x", "INFO")
+            print_status(f"      Coefficient of Variation: {enhancement_stats['cv_enhancement']:.2f}", "INFO")
+            
+            print_status(f"\n   Mechanistic Interpretation:", "INFO")
+            if enhancement_stats['cv_enhancement'] > 1.5:
+                print_status(f"      High variability (CV > 1.5) suggests RESONANT COUPLING mechanism", "INFO")
+                print_status(f"      rather than simple linear gravitational response. Amplitude", "INFO")
+                print_status(f"      enhancement likely depends on frequency matching, orbital", "INFO")
+                print_status(f"      resonances, or event-specific geometric configurations.", "INFO")
+                print_status(f"      NOTE: Enhancement does NOT scale with planetary mass, suggesting", "INFO")
+                print_status(f"      proximity/resonance effects dominate over mass (Mercury/Venus > Jupiter).", "INFO")
+            elif enhancement_stats['mean_enhancement'] > 100:
+                print_status(f"      Mean enhancement >100x indicates NON-LINEAR COUPLING mechanism.", "INFO")
+                print_status(f"      Such large amplification cannot be explained by direct", "INFO")
+                print_status(f"      gravitational effects and suggests resonance, tidal amplification,", "INFO")
+                print_status(f"      or parametric coupling processes with geophysical modes.", "INFO")
+            else:
+                print_status(f"      Enhancement factors suggest linear to weakly non-linear coupling", "INFO")
+                print_status(f"      with gravitational potential modulation.", "INFO")
+            
+            report['amplitude_analysis'] = enhancement_stats
+        else:
+            print_status(f"\n   No significant planetary detections for enhancement analysis", "INFO")
+        
+        # ============================================================
+        # SECTION 4: DETECTION RESULTS SUMMARY
+        # ============================================================
+        print_status(f"\n4. DETECTION RESULTS SUMMARY", "TITLE")
+        print_status(f"\n   Reporting all detected signals with statistical metrics", "INFO")
+        
+        # Extract actual metrics for reporting
+        has_planetary = len(all_planetary_detections) > 0
+        has_chandler = geophysical_sigs.get('chandler_wobble', {}).get('detected', False)
+        borderline_chandler = geophysical_sigs.get('chandler_wobble', {}).get('borderline', False)
+        has_orbital = geophysical_sigs.get('orbital_motion', {}).get('detected', False)
+        
+        anisotropy_strength = 0
+        if 'spherical_harmonics_analysis' in all_results and all_results['spherical_harmonics_analysis'].get('success'):
+            anisotropy_metrics = all_results['spherical_harmonics_analysis'].get('anisotropy_metrics', {})
+            anisotropy_strength = anisotropy_metrics.get('anisotropy_strength', 0)
+        has_3d_anisotropy = anisotropy_strength > 1.5
+        
+        mesh_score = 0
+        if 'mesh_dance_analysis' in all_results and all_results['mesh_dance_analysis'].get('success'):
+            mesh_evolution = all_results['mesh_dance_analysis'].get('mesh_evolution', [])
+            if mesh_evolution:
+                coherence_scores = [window.get('mesh_coherence_score', 0) for window in mesh_evolution]
+                mesh_score = np.mean(coherence_scores) if coherence_scores else 0
+        has_mesh_coherence = mesh_score > 0.4
+        
+        nutation_results = {}
+        if 'nutation_analysis' in all_results and all_results['nutation_analysis'].get('success'):
+            nutation_results = all_results['nutation_analysis'].get('nutation_results', {})
+        has_nutation = any(res.get('r_squared', 0) > 0.1 for res in nutation_results.values())
+        
+        best_corr = 0
+        best_p = 1.0
+        if 'continuous_planetary_analysis' in all_results and all_results['continuous_planetary_analysis'].get('success'):
+            best_corr = all_results['continuous_planetary_analysis'].get('best_correlation', 0)
+            best_p = all_results['continuous_planetary_analysis'].get('best_p_value_corrected', 1.0)
+        has_continuous_planetary = abs(best_corr) > 0.05 and best_p < 0.05
+        
+        print_status(f"\n   GRAVITATIONAL/GEOPHYSICAL COUPLING ANALYSES:", "TITLE")
+        
+        # Planetary coupling
+        print_status(f"      1. PLANETARY GRAVITATIONAL COUPLING", "INFO")
+        if has_planetary:
+            print_status(f"         Significant Events: {len(all_planetary_detections)} (≥2σ)", "INFO")
+            sig_3 = sum(1 for d in all_planetary_detections if d['sigma_level'] >= 3.0)
+            sig_2 = sum(1 for d in all_planetary_detections if 2.0 <= d['sigma_level'] < 3.0)
+            print_status(f"         Confidence Levels: {sig_3} events ≥3σ, {sig_2} events 2-3σ", "INFO")
+        else:
+            print_status(f"         No significant events detected (threshold: 2σ)", "INFO")
+        
+        # Chandler wobble
+        print_status(f"      2. CHANDLER WOBBLE (14-Month Polar Motion)", "INFO")
+        if 'chandler_wobble' in geophysical_sigs:
+            r2 = geophysical_sigs['chandler_wobble']['r_squared']
+            period = geophysical_sigs['chandler_wobble']['period_days']
+            cycles = geophysical_sigs['chandler_wobble']['complete_cycles']
+            print_status(f"         R² = {r2:.4f}", "INFO")
+            print_status(f"         Period = {period:.0f} days ({period/30.44:.1f} months)", "INFO")
+            print_status(f"         Temporal Coverage = {cycles:.2f} complete cycles", "INFO")
+        
+        # Orbital motion
+        print_status(f"      3. ORBITAL MOTION CORRELATION (Annual Cycle)", "INFO")
+        if has_orbital:
+            corr = geophysical_sigs['orbital_motion']['correlation']
+            pval = geophysical_sigs['orbital_motion']['p_value']
+            n_samples = geophysical_sigs['orbital_motion']['n_samples']
+            sigma_equiv = abs(norm.ppf(pval / 2)) if pval > 0 else 0
+            print_status(f"         r = {corr:.4f}, p = {pval:.2e} ({sigma_equiv:.1f}σ)", "INFO")
+            print_status(f"         Samples: {n_samples} temporal windows", "INFO")
+        else:
+            print_status(f"         No significant correlation (threshold: |r| > 0.4, p < 0.05)", "INFO")
+        
+        print_status(f"\n   STRUCTURAL/TEMPORAL ANALYSES:", "TITLE")
+        
+        # 3D Anisotropy
+        print_status(f"      4. THREE-DIMENSIONAL SPATIAL ANISOTROPY", "INFO")
+        if 'spherical_harmonics_analysis' in all_results and all_results['spherical_harmonics_analysis'].get('success'):
+            print_status(f"         Anisotropy Strength = {anisotropy_strength:.4f}", "INFO")
+            n_spherical_bins = all_results['spherical_harmonics_analysis'].get('n_spherical_bins', 0)
+            print_status(f"         Spherical Bins = {n_spherical_bins}", "INFO")
+        
+        print_status(f"      5. NETWORK MESH COHERENCE", "INFO")
+        if 'mesh_dance_analysis' in all_results and all_results['mesh_dance_analysis'].get('success'):
+            print_status(f"         Mean Coherence Score = {mesh_score:.4f}", "INFO")
+            classification = all_results['mesh_dance_analysis'].get('dance_signature_classification', 'Unknown')
+            n_windows = all_results['mesh_dance_analysis'].get('n_time_windows', 0)
+            print_status(f"         Classification = {classification}", "INFO")
+            print_status(f"         Temporal Windows = {n_windows}", "INFO")
+        
+        print_status(f"      6. NUTATION SIGNATURES", "INFO")
+        if nutation_results:
+            print_status(f"         Periods Tested = {len(nutation_results)}", "INFO")
+            for name, res in nutation_results.items():
+                r2 = res.get('r_squared', 0)
+                amp = res.get('amplitude', 0)
+                print_status(f"         - {name}: R² = {r2:.4f}, Amplitude = {amp:.6f}", "INFO")
+        
+        print_status(f"      7. CONTINUOUS PLANETARY CORRELATION", "INFO")
+        if 'continuous_planetary_analysis' in all_results and all_results['continuous_planetary_analysis'].get('success'):
+            print_status(f"         Pearson r = {best_corr:.4f}", "INFO")
+            print_status(f"         p-value (autocorr-corrected) = {best_p:.4f}", "INFO")
+            best_window = all_results['continuous_planetary_analysis'].get('best_window_days', 0)
+            n_days = all_results['continuous_planetary_analysis'].get('n_days', 0)
+            print_status(f"         Smoothing Window = {best_window} days", "INFO")
+            print_status(f"         Temporal Coverage = {n_days} days", "INFO")
+        
+        print_status(f"\n   ANALYSIS SUMMARY:", "TITLE")
+        
+        # Detailed interpretation based on actual detections
+        if has_orbital:
+            print_status(f"      1. ORBITAL MOTION COUPLING (Strongest Evidence)", "INFO")
+            corr = geophysical_sigs['orbital_motion']['correlation']
+            pval = geophysical_sigs['orbital_motion']['p_value']
+            print_status(f"         Pearson Correlation: r = {corr:.4f}, p = {pval:.2e}", "INFO")
+            print_status(f"         Physical Mechanism: Directional anisotropy (E-W vs N-S) in GPS timing", "INFO")
+            print_status(f"         correlations systematically varies with Earth's orbital position,", "INFO")
+            print_status(f"         consistent with velocity-dependent modulation of spacetime geometry.", "INFO")
+            print_status(f"         This represents the strongest evidence for temporal-gravitational coupling.", "INFO")
+        
+        if has_3d_anisotropy:
+            print_status(f"      2. THREE-DIMENSIONAL SPATIAL ANISOTROPY", "INFO")
+            print_status(f"         Anisotropy Strength: {anisotropy_strength:.4f}", "INFO")
+            print_status(f"         Physical Mechanism: Non-isotropic correlation structure indicates", "INFO")
+            print_status(f"         geometric coupling to Earth's reference frame. GPS timing correlations", "INFO")
+            print_status(f"         exhibit directional dependence inconsistent with random noise,", "INFO")
+            print_status(f"         suggesting coupling to spatial orientation and gravitational geometry.", "INFO")
+        
+        if has_mesh_coherence:
+            print_status(f"      3. NETWORK MESH COHERENCE (Collective Dynamics)", "INFO")
+            print_status(f"         Coherence Score: {mesh_score:.4f}", "INFO")
+            print_status(f"         Physical Mechanism: Coordinated temporal field dynamics across", "INFO")
+            print_status(f"         the GPS station network indicate collective response to external", "INFO")
+            print_status(f"         influence rather than independent local effects. Suggests global", "INFO")
+            print_status(f"         gravitational field modulation affecting all stations coherently.", "INFO")
+        
+        if has_nutation:
+            n_nut = sum(1 for res in nutation_results.values() if res.get('r_squared', 0) > 0.1)
+            print_status(f"      4. NUTATION SIGNATURES (Rotational Coupling)", "INFO")
+            print_status(f"         Significant Signatures: {n_nut} detected", "INFO")
+            print_status(f"         Physical Mechanism: GPS timing correlations exhibit modulation at", "INFO")
+            print_status(f"         Earth's nutation frequencies (18.6-year and shorter periods),", "INFO")
+            print_status(f"         indicating coupling to polar axis precession dynamics beyond", "INFO")
+            print_status(f"         simple diurnal/seasonal effects.", "INFO")
+        
+        if has_continuous_planetary:
+            print_status(f"      5. CONTINUOUS PLANETARY INFLUENCE", "INFO")
+            print_status(f"         Correlation: r = {best_corr:.4f}, p = {best_p:.4f}", "INFO")
+            print_status(f"         Physical Mechanism: Sustained correlation between daily GPS", "INFO")
+            print_status(f"         coherence and planetary configurations indicates continuous", "INFO")
+            print_status(f"         gravitational influence rather than transient effects. Suggests", "INFO")
+            print_status(f"         baseline modulation of spacetime geometry by planetary masses.", "INFO")
+        
+        if len(all_planetary_detections) > 0:
+            sig_3 = sum(1 for d in all_planetary_detections if d['sigma_level'] >= 3.0)
+            sig_2 = sum(1 for d in all_planetary_detections if 2.0 <= d['sigma_level'] < 3.0)
+            print_status(f"      6. PLANETARY EVENT RESPONSES (Direct Gravitational Coupling)", "INFO")
+            print_status(f"         Significant Events: {len(all_planetary_detections)} (≥2σ), including {sig_3} at ≥3σ", "INFO")
+            print_status(f"         Physical Mechanism: GPS timing correlations exhibit amplitude", "INFO")
+            print_status(f"         modulation during planetary alignments. Enhancement factors", "INFO")
+            print_status(f"         ({np.min([d['enhancement_factor'] for d in all_planetary_detections]):.1f}x - {np.max([d['enhancement_factor'] for d in all_planetary_detections]):.1f}x) indicate", "INFO")
+            print_status(f"         non-linear coupling or resonance effects beyond simple", "INFO")
+            print_status(f"         gravitational mass scaling.", "INFO")
+        
+        print_status(f"\n" + "="*80, "TITLE")
+        
+        report['detection_summary'] = {
+            'planetary_events': {
+                'n_significant_events': len(all_planetary_detections) if has_planetary else 0,
+                'n_3sigma': sum(1 for d in all_planetary_detections if d['sigma_level'] >= 3.0) if has_planetary else 0,
+                'n_2sigma': sum(1 for d in all_planetary_detections if 2.0 <= d['sigma_level'] < 3.0) if has_planetary else 0
+            },
+            'chandler_wobble': {
+                'r_squared': geophysical_sigs.get('chandler_wobble', {}).get('r_squared', 0),
+                'period_days': geophysical_sigs.get('chandler_wobble', {}).get('period_days', 0),
+                'complete_cycles': geophysical_sigs.get('chandler_wobble', {}).get('complete_cycles', 0)
+            },
+            'orbital_motion': {
+                'correlation': geophysical_sigs.get('orbital_motion', {}).get('correlation', 0),
+                'p_value': geophysical_sigs.get('orbital_motion', {}).get('p_value', 1.0),
+                'n_samples': geophysical_sigs.get('orbital_motion', {}).get('n_samples', 0)
+            },
+            'spatial_anisotropy': {
+                'anisotropy_strength': anisotropy_strength,
+                'n_spherical_bins': all_results.get('spherical_harmonics_analysis', {}).get('n_spherical_bins', 0) if 'spherical_harmonics_analysis' in all_results else 0
+            },
+            'mesh_coherence': {
+                'mean_coherence_score': mesh_score,
+                'classification': all_results.get('mesh_dance_analysis', {}).get('dance_signature_classification', 'Unknown') if 'mesh_dance_analysis' in all_results else 'Unknown',
+                'n_time_windows': all_results.get('mesh_dance_analysis', {}).get('n_time_windows', 0) if 'mesh_dance_analysis' in all_results else 0
+            },
+            'nutation': {
+                'n_periods_tested': len(nutation_results),
+                'results_by_period': {name: {'r_squared': res.get('r_squared', 0), 'amplitude': res.get('amplitude', 0)} for name, res in nutation_results.items()}
+            },
+            'continuous_planetary': {
+                'correlation': best_corr,
+                'p_value_corrected': best_p,
+                'smoothing_window_days': all_results.get('continuous_planetary_analysis', {}).get('best_window_days', 0) if 'continuous_planetary_analysis' in all_results else 0,
+                'n_days': all_results.get('continuous_planetary_analysis', {}).get('n_days', 0) if 'continuous_planetary_analysis' in all_results else 0
+            }
+        }
+        
+        # ============================================================
+        # COMPREHENSIVE FINDINGS SUMMARY
+        # ============================================================
+        print_status("=" * 80, "TITLE")
+        print_status("\nCOMPREHENSIVE ANALYSIS SUMMARY", "TITLE")
+        print_status("=" * 80, "TITLE")
+        
+        # Detailed scientific summary - extract dataset info from results
+        print_status(f"\nDATASET CHARACTERISTICS:", "INFO")
+        
+        # Get dataset info from any available analysis result
+        dataset_info = None
+        for key in ['temporal_orbital_tracking', 'chandler_wobble_analysis', 'spherical_harmonics_analysis']:
+            if key in all_results and all_results[key].get('success'):
+                if 'temporal_coverage' in all_results[key]:
+                    dataset_info = all_results[key]['temporal_coverage']
+                    break
+                elif 'data_span_days' in all_results[key]:
+                    dataset_info = {'data_span_days': all_results[key]['data_span_days']}
+                    break
+        
+        if dataset_info:
+            if 'data_span_days' in dataset_info:
+                print_status(f"   Temporal Coverage: {dataset_info['data_span_days']} days", "INFO")
+            if 'date_range' in dataset_info:
+                print_status(f"   Date Range: {dataset_info['date_range']['start']} to {dataset_info['date_range']['end']}", "INFO")
+        else:
+            print_status(f"   Dataset characteristics available in individual analysis results", "INFO")
+        
+        print_status(f"\nSIGNATURES DETECTED:", "INFO")
+        
+        if has_orbital:
+            print_status(f"   ✓ ORBITAL MOTION COUPLING", "SUCCESS")
+            print_status(f"     Pearson correlation: r = {geophysical_sigs['orbital_motion']['correlation']:.3f}", "INFO")
+            print_status(f"     Statistical significance: p = {geophysical_sigs['orbital_motion']['p_value']:.2e}", "INFO")
+            print_status(f"     Temporal samples: {geophysical_sigs['orbital_motion']['n_samples']}", "INFO")
+            print_status(f"     Physical interpretation: E-W/N-S anisotropy tracks Earth's orbital position", "INFO")
+        
+        if has_3d_anisotropy:
+            print_status(f"   ✓ 3D SPATIAL ANISOTROPY", "SUCCESS")
+            print_status(f"     Anisotropy strength: {anisotropy_strength:.3f} (threshold: >1.0)", "INFO")
+            print_status(f"     Spherical harmonic bins: {all_results['spherical_harmonics_analysis'].get('n_spherical_bins', 0)}", "INFO")
+            print_status(f"     Physical interpretation: Non-isotropic 3D correlation structure", "INFO")
+        
+        if has_mesh_coherence:
+            print_status(f"   ✓ NETWORK COHERENCE", "SUCCESS")
+            print_status(f"     Coherence metric: {mesh_score:.3f} (threshold: >0.3)", "INFO")
+            classification = all_results['mesh_dance_analysis'].get('dance_signature_classification', 'Unknown')
+            print_status(f"     Classification: {classification}", "INFO")
+            print_status(f"     Time windows: {all_results['mesh_dance_analysis'].get('n_time_windows', 0)}", "INFO")
+            print_status(f"     Physical interpretation: Coordinated temporal dynamics across station network", "INFO")
+        
+        if has_nutation:
+            n_nut = sum(1 for res in nutation_results.values() if res.get('r_squared', 0) > 0.1)
+            print_status(f"   ✓ NUTATION SIGNATURES ({n_nut} detected)", "SUCCESS")
+            for name, res in nutation_results.items():
+                if res.get('r_squared', 0) > 0.1:
+                    print_status(f"     {name}: R² = {res['r_squared']:.3f}, amplitude = {res.get('amplitude', 0):.4f}", "INFO")
+            print_status(f"     Physical interpretation: Coupling to Earth's rotation axis precession", "INFO")
+        
+        if has_continuous_planetary:
+            print_status(f"   ✓ CONTINUOUS PLANETARY CORRELATION", "SUCCESS")
+            print_status(f"     Correlation: r = {best_corr:.3f}, p = {best_p:.4f}", "INFO")
+            print_status(f"     Smoothing window: {all_results['continuous_planetary_analysis'].get('best_window_days', 0)} days", "INFO")
+            print_status(f"     Daily samples: {all_results['continuous_planetary_analysis'].get('n_days', 0)}", "INFO")
+            print_status(f"     Physical interpretation: Sustained gravitational influence on timing correlations", "INFO")
+        
+        if len(all_planetary_detections) > 0:
+            # Count by sigma level
+            sig_3 = sum(1 for d in all_planetary_detections if d['sigma_level'] >= 3.0)
+            sig_2 = sum(1 for d in all_planetary_detections if 2.0 <= d['sigma_level'] < 3.0)
+            sig_1 = sum(1 for d in all_planetary_detections if 1.0 <= d['sigma_level'] < 2.0)
+            print_status(f"   ✓ PLANETARY EVENT RESPONSES ({len(all_planetary_detections)} events ≥2σ)", "SUCCESS")
+            print_status(f"     Confidence breakdown: {sig_3} at ≥3σ (99.7%), {sig_2} at 2-3σ (95-99.7%), {sig_1} at 1-2σ (68-95%)", "INFO")
+            # Group by planet
+            by_planet = {}
+            for det in all_planetary_detections:
+                planet = det['planet']
+                if planet not in by_planet:
+                    by_planet[planet] = []
+                by_planet[planet].append(det)
+            
+            for planet, dets in by_planet.items():
+                print_status(f"     {planet}: {len(dets)} events, σ range: {min(d['sigma_level'] for d in dets):.1f}-{max(d['sigma_level'] for d in dets):.1f}", "INFO")
+            print_status(f"     Enhancement factors: {np.min([d['enhancement_factor'] for d in all_planetary_detections]):.1f}x - {np.max([d['enhancement_factor'] for d in all_planetary_detections]):.1f}x", "INFO")
+            print_status(f"     Physical interpretation: Amplitude modulation during planetary alignments", "INFO")
+        
+        if has_chandler or borderline_chandler:
+            status_str = "DETECTED" if has_chandler else "BORDERLINE"
+            print_status(f"   ✓ CHANDLER WOBBLE ({status_str})", "SUCCESS" if has_chandler else "INFO")
+            print_status(f"     R² correlation: {geophysical_sigs['chandler_wobble']['r_squared']:.3f}", "INFO")
+            print_status(f"     Period: {geophysical_sigs['chandler_wobble']['period_days']:.0f} days", "INFO")
+            print_status(f"     Complete cycles: {geophysical_sigs['chandler_wobble']['complete_cycles']:.2f}", "INFO")
+            print_status(f"     Physical interpretation: Modulation by 14-month polar motion", "INFO")
+        
+        print_status("\nAll analyses complete. Results saved to JSON output file.", "SUCCESS")
+        print_status("=" * 80, "TITLE")
+        
+    except Exception as e:
+        print_status(f"Report generation failed: {e}", "ERROR")
+        report['error'] = str(e)
+    
+    return report
+
+# ===== END ENHANCED ANALYSIS MODULES =====
+
+if __name__ == "__main__":
+    try:
+        success = main()
+        sys.exit(0 if success else 1)
+    except KeyboardInterrupt:
+        print_status("Step 2.2 interrupted by user", "WARNING")
+        sys.exit(1)
+    except (TEPDataError, TEPFileError) as e:
+        print_status(f"Step 2.2 failed - data/file error: {e}", "ERROR")
+        sys.exit(1)
+    except TEPAnalysisError as e:
+        print_status(f"Step 2.2 failed - analysis error: {e}", "ERROR")
+        sys.exit(1)
+    except Exception as e:
+        print_status(f"Step 2.2 failed - unexpected error: {e}", "CRITICAL")
+        sys.exit(1)

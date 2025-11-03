@@ -1,8 +1,0 @@
-[13:44:16] [INFO] Skipping cleanup phase
-[13:44:16] [INFO] Starting from Step 4.7 - will execute 1 steps
-[13:44:16] [INFO] Starting step 21/21: Step 4.7: Multiple Comparison Corrections
-[13:44:16] [PROCESS] Executing Step 4.7: Multiple Comparison Corrections...
-[13:44:18] [SUCCESS] Step 4.7: Multiple Comparison Corrections completed successfully
-[13:44:18] [SUCCESS] Step 21 completed in 2.7 seconds
-[13:44:18] [PROCESS] Validating full pipeline results...
-[13:44:18] [SUCCESS] Full pipeline validation passed - found 2736 raw data files and all expected outputs

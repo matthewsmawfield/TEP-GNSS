@@ -1,0 +1,59 @@
+{
+  "title": "Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks",
+  "author": "Matthew Lukin Smawfield",
+  "version": "v0.1 (Cairo)",
+  "first_published": "3 November 2025",
+  "last_updated": "3 November 2025",
+  "doi": "10.5281/zenodo.17517142",
+  "code_repo": "github.com/matthewsmawfield/TEP-GNSS",
+  "sections": [
+    {
+      "id": "abstract",
+      "file": "abstract.html",
+      "title": "Abstract",
+      "order": 1
+    },
+    {
+      "id": "executive_summary",
+      "file": "executive_summary.html",
+      "title": "Executive Summary",
+      "order": 2
+    },
+    {
+      "id": "section_1",
+      "file": "section_1_introduction.html",
+      "title": "1. Introduction",
+      "order": 3
+    },
+    {
+      "id": "section_2",
+      "file": "section_2_methods.html",
+      "title": "2. Data and Methods",
+      "order": 4
+    },
+    {
+      "id": "section_3",
+      "file": "section_3_results.html",
+      "title": "3. Results",
+      "order": 5
+    },
+    {
+      "id": "section_4",
+      "file": "section_4_discussion.html",
+      "title": "4. Discussion",
+      "order": 6
+    },
+    {
+      "id": "section_5",
+      "file": "section_5_conclusions.html",
+      "title": "5. Conclusions",
+      "order": 7
+    },
+    {
+      "id": "references",
+      "file": "references.html",
+      "title": "References & Contact",
+      "order": 8
+    }
+  ]
+}

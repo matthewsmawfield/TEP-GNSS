@@ -426,13 +426,14 @@ class TEPConfig:
     def get_worker_count(env_var: str = 'TEP_WORKERS') -> int:
         """
         Get a valid worker count from an environment variable.
-        Caps the value at the number of available CPU cores to prevent over-subscription.
+        Allows oversubscription for I/O-bound tasks (up to 2x CPU cores).
         """
         default_workers = mp.cpu_count()
         try:
             user_workers = int(os.getenv(env_var, default_workers))
-            # Cap at the number of physical cores
-            return max(1, min(user_workers, default_workers))
+            # Allow up to 2x CPU cores for I/O-bound tasks, but cap at 32
+            max_workers = min(32, default_workers * 2)
+            return max(1, min(user_workers, max_workers))
         except (ValueError, TypeError):
             return default_workers
     
