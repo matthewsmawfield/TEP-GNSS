@@ -158,6 +158,8 @@ Analysis of 62.7 million station-pair measurements across 364 total unique stati
 ### Paper 2: 25-Year Temporal Extension Results
 Extended analysis of 165.2 million station-pair measurements over 25.3 years confirms temporal stability and reveals long-period phenomena:
 
+![25-year temporal evolution of GNSS network coherence](results/figures/step_2_2_longspan_code_25year_timeseries.png)
+
 **Temporal Stability:**
 - **Decadal confirmation:** Original signatures confirmed over 25-year timescale
 - **Orbital coupling:** Strong correlation with Earth's orbital velocity (r = -0.864, p < 10⁻¹⁰)
