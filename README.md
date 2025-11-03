@@ -1,9 +1,22 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Version:** v0.21 (Jaipur)
-**Date:** 16 October 2025
-**DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
+**Repository Version:** v0.21 (Jaipur) + v0.1 (Cairo Extension)
+**Date:** 3 November 2025
+
+## Published Papers
+
+### Paper 1: Multi-Center Analysis (v0.21 - Jaipur)
+**Title:** Global Time Echoes: Distance-Structured Correlations in GNSS Clocks  
+**DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
+**Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
+**Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
+
+### Paper 2: 25-Year Temporal Extension (v0.1 - Cairo)
+**Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
+**DOI:** [10.5281/zenodo.17517142](https://doi.org/10.5281/zenodo.17517142)  
+**Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
+**Analysis:** 165.2 million station pairs from CODE analysis center over 25.3 years (2000-2025)
 
 ## Theoretical Foundation
 
@@ -21,9 +34,13 @@ with characteristic correlation lengths $\lambda = 1,000-10,000$ km for screened
 
 ## Abstract
 
-This repository implements a comprehensive experimental framework for testing Temporal Equivalence Principle predictions through analysis of Global Navigation Satellite System (GNSS) precision timing networks. The analysis systematically examines distance-structured correlations across three independent analysis centers (CODE, IGS, ESA), providing rigorous experimental validation of theoretical predictions regarding screened scalar field dynamics and gravitational-temporal coupling.
+This repository implements a comprehensive experimental framework for testing Temporal Equivalence Principle predictions through analysis of Global Navigation Satellite System (GNSS) precision timing networks. The framework has produced two complementary studies:
 
-This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events. Extensive validation—including 24-61× signal enhancement over null tests (z = 15.8-31.9 across 180 scrambling iterations), temporal/spatial cross-validation, and systematic bias controls—provides substantial evidence of signal authenticity, suggesting that GNSS networks act as sensitive detectors of continental-scale phenomena affecting atomic transition frequencies. These findings, detailed in this package, are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
+**Paper 1 (Multi-Center Analysis):** Presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events.
+
+**Paper 2 (25-Year Temporal Extension):** Extends the analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pairs. This temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.640, p < 10⁻⁸) and enhanced statistical power for planetary event detection (72 events detected, 34 surviving Bonferroni correction).
+
+Both studies employ extensive validation—including 24-61× signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—providing substantial evidence of signal authenticity. These findings are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
 ## Cloud-Based Analysis Execution (Recommended)
 
 **For optimal computational performance and scientific output quality:**
@@ -94,6 +111,9 @@ python scripts/clean_run_step4.py
 
 # Core analysis only (Step 2.0-2.2)
 python scripts/run_step2_only.py
+
+# 25-Year Longspan Analysis (Paper 2)
+python scripts/code_longspan/step_2_2_code_longspan.py
 ```
 
 **Individual Step Execution:**
@@ -123,9 +143,10 @@ python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravita
 
 ## Principal Results
 
-Our comprehensive analysis of 62.7 million station-pair measurements across 364 total unique stations (selected from 767 total cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
+The TEP-GNSS analysis framework has produced two complementary studies with significant findings:
 
-*Note: Station inclusion criteria require ≥20 observation epochs per temporal file (TEP_MIN_EPOCHS = 20) to ensure reliable spectral analysis and statistical validity.*
+### Paper 1: Multi-Center Analysis Results
+Analysis of 62.7 million station-pair measurements across 364 total unique stations (selected from 767 total cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
 
 ![Distance-structured correlations in GNSS precision timing networks](site/public/figures/figure_1_TEP_site_themed.png)
 
@@ -134,15 +155,23 @@ Our comprehensive analysis of 62.7 million station-pair measurements across 364 
 - **Statistical robustness:** Strong exponential model fits ($R^2 = 0.920$–$0.970$ on distance-bin means, Neff ≈ 25–28 bins)
 - **Theoretical alignment:** Results within predicted range [1,000–10,000 km], established before data analysis
 
-**Validation Framework:**
-- **Multi-center consistency:** Comprehensive null hypothesis testing is consistent with a genuine physical signal (24–61× signal enhancement over randomized controls)
-- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance $p < 10^{-5}$
-- **Bias characterization:** Systematic geometric artifact detection and mitigation
+### Paper 2: 25-Year Temporal Extension Results
+Extended analysis of 165.2 million station-pair measurements over 25.3 years confirms temporal stability and reveals long-period phenomena:
 
-**Advanced Correlations:**
-- **Gravitational coupling:** Direct evidence of temporal field correlations with planetary gravitational patterns ($r = -0.458$, $p < 10^{-48}$)
-- **Temporal dynamics:** Seasonal correlation patterns identified with optimal coupling windows of 240 days
-- **Enhanced validation:** Comprehensive framework with exploratory analysis capabilities
+**Temporal Stability:**
+- **Decadal confirmation:** Original signatures confirmed over 25-year timescale
+- **Orbital coupling:** Strong correlation with Earth's orbital velocity (r = -0.864, p < 10⁻¹⁰)
+- **Enhanced detection:** 72 planetary event responses (34 surviving Bonferroni correction)
+
+**Long-Period Geophysical Signatures:**
+- **Nutation cycle:** Clear detection of 18.6-year lunar nutation (R² = 0.640, p < 10⁻⁸)
+- **Chandler wobble:** Confirmed with extended temporal baseline
+- **Seasonal patterns:** Robust annual modulation effects
+
+### Unified Validation Framework
+- **Multi-center consistency:** Comprehensive null hypothesis testing consistent with genuine physical signal (24–61× signal enhancement over randomized controls)
+- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance $p < 10^{-5}$
+- **Cross-validation:** LOSO/LODO procedures confirming robustness across temporal and spatial sampling
 
 ### Key Methodological Notes
 
@@ -316,6 +345,8 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 | `TEP_DATE_END` | 2025-06-30 | Analysis temporal window end date |
 | `TEP_MIN_EPOCHS` | 20 | Minimum observation epochs per station |
 
+*Note: Paper 2 (25-Year analysis) uses extended temporal parameters (2000-2025) and CODE-only data processing.*
+
 **Statistical Validation Parameters:**
 | Parameter | Default Value | Description |
 |-----------|---------------|-------------|
@@ -386,7 +417,7 @@ results/
 
 ## Citation and Attribution
 
-### Primary Citation
+### Paper 1: Multi-Center Analysis
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
@@ -396,6 +427,20 @@ results/
   year={2025},
   doi={10.5281/zenodo.17127229},
   url={https://doi.org/10.5281/zenodo.17127229},
+  note={Preprint}
+}
+```
+
+### Paper 2: 25-Year Temporal Extension
+
+```bibtex
+@article{smawfield2025globaltimeechoes25year,
+  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.1)},
+  author={Smawfield, Matthew Lukin},
+  journal={Zenodo},
+  year={2025},
+  doi={10.5281/zenodo.17517142},
+  url={https://doi.org/10.5281/zenodo.17517142},
   note={Preprint}
 }
 ```
@@ -459,9 +504,11 @@ This work is designed for reproducibility. All code, data processing steps, and 
 ### Resources
 
 **Repository:** [https://github.com/matthewsmawfield/TEP-GNSS](https://github.com/matthewsmawfield/TEP-GNSS)  
-**Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
-**DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
+**Paper 1 Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
+**Paper 2 Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
+**Paper 1 DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
+**Paper 2 DOI:** [10.5281/zenodo.17517142](https://doi.org/10.5281/zenodo.17517142)  
 
 ---
 
-**Version:** v0.21 (Jaipur) | **Date:** 16 October 2025 | **Status:** Active Research
+**Repository Version:** v0.21 (Jaipur) + v0.1 (Cairo Extension) | **Date:** 3 November 2025 | **Status:** Active Research
