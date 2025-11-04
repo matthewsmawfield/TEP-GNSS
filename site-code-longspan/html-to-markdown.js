@@ -38,13 +38,13 @@ class HTMLToMarkdownConverter {
         html = html.replace(/<div[^>]*class=["'][^"']*manuscript-section[^"']*["'][^>]*data-section=["']([^"']*)["'][^>]*>/gi, '\n\n## $1\n\n');
         
         // Convert headers
-        html = html.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n\n');
-        html = html.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n\n');
-        html = html.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n\n');
-        html = html.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n#### $1\n\n');
+        html = html.replace(/<h1[^>]*>(.*?)<\/h1>/gis, '\n# $1\n\n');
+        html = html.replace(/<h2[^>]*>(.*?)<\/h2>/gis, '\n## $1\n\n');
+        html = html.replace(/<h3[^>]*>(.*?)<\/h3>/gis, '\n### $1\n\n');
+        html = html.replace(/<h4[^>]*>(.*?)<\/h4>/gis, '\n#### $1\n\n');
         
-        // Convert paragraphs
-        html = html.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n');
+        // Convert paragraphs - use 's' flag to match across newlines
+        html = html.replace(/<p[^>]*>(.*?)<\/p>/gis, '$1\n\n');
         
         // Convert strong/bold
         html = html.replace(/<(strong|b)[^>]*>(.*?)<\/(strong|b)>/gi, '**$2**');
@@ -92,15 +92,7 @@ class HTMLToMarkdownConverter {
             return this.convertTable(match);
         });
         
-        // Remove remaining HTML tags
-        html = html.replace(/<[^>]+>/g, '');
-        
-        // Restore MathJax expressions
-        mathExpressions.forEach((expr, index) => {
-            html = html.replace(`__MATH_EXPRESSION_${index}__`, expr);
-        });
-        
-        // Decode HTML entities
+        // Decode HTML entities BEFORE removing tags to prevent < and > from being interpreted as tag delimiters
         html = html.replace(/&amp;/g, '&');
         html = html.replace(/&lt;/g, '<');
         html = html.replace(/&gt;/g, '>');
@@ -114,6 +106,37 @@ class HTMLToMarkdownConverter {
         html = html.replace(/&sup3;/g, '³');
         html = html.replace(/&sup1;/g, '¹');
         html = html.replace(/&deg;/g, '°');
+        
+        // Convert superscripts and subscripts BEFORE removing HTML tags
+        // This preserves scientific notation like 10⁻¹⁰
+        html = html.replace(/<sup[^>]*>(.*?)<\/sup>/gi, (match, content) => {
+            // Convert digits to superscript Unicode
+            const superscriptMap = {
+                '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+                '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+                '-': '⁻', '−': '⁻', '+': '⁺', '=': '⁼', '(': '⁽', ')': '⁾'
+            };
+            return content.split('').map(c => superscriptMap[c] || c).join('');
+        });
+        
+        html = html.replace(/<sub[^>]*>(.*?)<\/sub>/gi, (match, content) => {
+            // Convert digits to subscript Unicode
+            const subscriptMap = {
+                '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄',
+                '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+                '-': '₋', '−': '₋', '+': '₊', '=': '₌', '(': '₍', ')': '₎'
+            };
+            return content.split('').map(c => subscriptMap[c] || c).join('');
+        });
+        
+        // Remove remaining HTML tags (but not < or > used as comparison operators)
+        // Only match tags that start with < followed by a letter or /
+        html = html.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+        
+        // Restore MathJax expressions
+        mathExpressions.forEach((expr, index) => {
+            html = html.replace(`__MATH_EXPRESSION_${index}__`, expr);
+        });
         
         // Clean up whitespace
         html = html.replace(/\n\s*\n\s*\n/g, '\n\n');
