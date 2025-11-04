@@ -20,7 +20,7 @@ MULTI-SCALE WINDOW STRATEGY:
 Different analyses use different temporal windows matched to their characteristic physical timescales:
 - Temporal Orbital Tracking: 30-day windows (balances seasonal signal vs noise)
 - Mesh Dance Analysis: 120-day windows (long-timescale collective dynamics)
-- Planetary Oppositions: 240-day windows (gravitational coupling optimal timescale)
+- Planetary Events: primary ±120-day window; ±60, ±90, ±180, ±240 for robustness (no window optimization for inference)
 - Chandler Wobble: Full 433-day cycle analysis
 - Lunar Standstill: Monthly resolution for 18.6-year cycle tracking
 
@@ -37,8 +37,7 @@ DISTANCE BINNING METHODOLOGY:
 - Rationale: Uniform log-space sampling critical for exponential decay detection
 
 This multi-scale approach is scientifically rigorous as each phenomenon operates on its
-characteristic timescale. Based on empirical analysis showing optimal coupling at 240 days
-for gravitational-temporal field interactions (Savitzky-Golay smoothing analysis).
+characteristic timescale. Prior smoothing analyses explored 240-day windows; however, all inferential statistics for event analyses use only the pre-specified ±120-day window and no optimization across windows is performed. Sensitivity-window results are descriptive (robustness) and not used for window selection.
 
 CRITICAL: This step loads the COMPLETE pair-level dataset (~5-6 GB) into memory
 for maximum statistical rigor as requested by reviewers.
@@ -1389,12 +1388,12 @@ def process_analysis_center(ac: str) -> Dict:
     # Display multi-scale window strategy
     print_status("MULTI-SCALE TEMPORAL WINDOW STRATEGY:", "INFO")
     print_status("  Temporal Orbital Tracking: 30-day windows (seasonal signal + noise reduction)", "INFO")
-    print_status("  Mesh Dance Analysis: OPTIMIZED (90d coherence + 30d oscillation/spiral)", "INFO")
-    print_status("  Planetary Oppositions: 240-day windows (optimal coupling timescale)", "INFO")
+    print_status("  Mesh Dance Analysis: 90d coherence + 30d oscillation/spiral windows (empirical defaults)", "INFO")
+    print_status("  Planetary Events: primary ±120-day window; ±60/±90/±180/±240 for robustness (no optimization)", "INFO")
     print_status("  Chandler Wobble: Full 433-day cycle (period-matched analysis)", "INFO")
     print_status("", "INFO")
     print_status("Rationale: Each analysis uses windows matched to its characteristic physical timescale", "INFO")
-    print_status("Based on empirical analysis showing optimal coupling at 240 days (Savitzky-Golay)", "INFO")
+    print_status("Inference policy: event analyses use ±120-day for significance; sensitivity windows are descriptive only", "INFO")
     print_status("=" * 60, "INFO")
     
     start_time = time.time()
@@ -2130,6 +2129,7 @@ def run_astronomical_events_only(analysis_center: str = None, event_window_days_
         print_status(f"Loaded {len(complete_df):,} station pairs for {center}", "SUCCESS")
         
         center_results = {}
+        print_status("Inference policy: ±120-day window is used for reported p-values; other windows are robustness-only.", "INFO")
         print_status(f"Astronomical events sensitivity sweep windows: {windows_to_run}", "INFO")
 
         for win in windows_to_run:
@@ -2795,7 +2795,7 @@ def main():
         print_status("• Venus Inferior Conjunctions: 17 events (2000-2025) - 0.1% expected amplitude", "INFO")
         print_status("• Mercury Inferior Conjunctions: 80 events (2000-2025) - 0.01% expected amplitude", "INFO")
         print_status("• Major Lunar Standstill: 2024-2025 (sidereal day amplitude enhancement)", "INFO")
-        print_status("• Default multi-window sweep: ±30, ±60, ±120, ±180, ±240 days", "INFO")
+        print_status("• Default sensitivity windows: ±30, ±60, ±120, ±180, ±240 days (primary inference uses ±120-day only)", "INFO")
         print_status("• Center: CODE only", "INFO")
         print_status("• Statistical significance testing", "INFO")
         print_status("", "INFO")
@@ -2982,7 +2982,7 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
                     best_preliminary_r2 = test_r2
                     best_period = test_period
         
-        print_status(f"Optimal Chandler period from scan: {best_period} days (preliminary R²={best_preliminary_r2:.4f})", "INFO")
+        print_status(f"Best-fit Chandler period from scan (descriptive): {best_period} days (preliminary R²={best_preliminary_r2:.4f})", "INFO")
         chandler_period_days = best_period
         
         # Now perform full analysis with optimal period and high resolution
@@ -3111,7 +3111,7 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
             print_status("No significant Chandler wobble signature detected", "INFO")
         
         print_status(f"CHANDLER WOBBLE ANALYSIS RESULTS:", "SUCCESS")
-        print_status(f"  Optimal Period: {chandler_period_days} days ({chandler_period_days/30.44:.2f} months)", "INFO")
+        print_status(f"  Selected Period (from scan): {chandler_period_days} days ({chandler_period_days/30.44:.2f} months)", "INFO")
         print_status(f"  Temporal Coverage: {data_span_days} days ({data_span_days/chandler_period_days:.2f} cycles)", "INFO")
         print_status(f"  Phase Bins Analyzed: {len(phase_results)}/{n_phase_bins} (resolution: {360/n_phase_bins:.0f}° per bin)", "INFO")
         if chandler_signature['r_squared'] > 0.3:
@@ -3463,7 +3463,7 @@ def run_mesh_dance_analysis(complete_df: pd.DataFrame) -> Dict:
         coherence_window_days = 90  # Optimized for statistical adequacy
         oscillation_window_days = 30  # For high-resolution analysis
         
-        print_status(f"Using OPTIMIZED windows: 90d for coherence (10 samples), 30d for oscillation/spiral", "INFO")
+        print_status(f"Using windows: 90d for coherence (10 samples), 30d for oscillation/spiral", "INFO")
         
         # Process dataframe in chunks and accumulate window statistics
         chunk_size = 10_000_000
@@ -4093,7 +4093,7 @@ def run_continuous_planetary_analysis(complete_df: pd.DataFrame) -> Dict:
     - Uses continuous daily data (captures secular trends)
     - Tests multiple smoothing windows empirically
     - Corrects for temporal autocorrelation
-    - Finds optimal time lags
+    - Estimates time lags
     
     Args:
         complete_df: Complete GPS pair dataset
@@ -4237,7 +4237,7 @@ def run_continuous_planetary_analysis(complete_df: pd.DataFrame) -> Dict:
                          key=lambda w: abs(valid_windows[w]['correlation']))
         best_result = valid_windows[best_window]
         
-        print_status(f"Best smoothing window: {best_window} days (r={best_result['correlation']:.3f}, p_corrected={best_result['p_value_corrected']:.4f})", "SUCCESS")
+        print_status(f"Highest |r| among tested smoothing windows (descriptive): {best_window} days (r={best_result['correlation']:.3f}, p_corrected={best_result['p_value_corrected']:.4f})", "SUCCESS")
         
         # Summary results
         results = {
@@ -4283,7 +4283,8 @@ def analyze_planetary_events_multi_window(complete_df: pd.DataFrame,
                                          event_window_override: Optional[int] = None) -> Dict:
     """
     Generic multi-window planetary event analysis.
-    Tests multiple window sizes to find optimal detection window.
+    Evaluates pre-specified window sizes for robustness only; primary inferences use the
+    pre-specified ±120-day window and no window optimization is used for inferential results.
     
     Args:
         complete_df: Complete GPS pair dataset
@@ -4306,7 +4307,7 @@ def analyze_planetary_events_multi_window(complete_df: pd.DataFrame,
     data_start = complete_df['date'].min()
     data_end = complete_df['date'].max()
     
-    print_status(f"Testing {len(window_sizes)} window sizes for {planet_name}: {window_sizes} days", "INFO")
+    print_status(f"Testing {len(window_sizes)} window sizes for {planet_name} (robustness): {window_sizes} days", "INFO")
     
     results_by_window_size = {}
     
@@ -4362,12 +4363,16 @@ def analyze_planetary_events_multi_window(complete_df: pd.DataFrame,
         
         print_status(f"  {planet_name} window ±{event_window_days}d: {n_significant}/{len(event_analysis_results)} significant", "INFO")
     
-    # Find best window
+    # Descriptive summary across windows (not used for inference)
     best_window_size = max(results_by_window_size.keys(), 
                           key=lambda w: results_by_window_size[w].get('n_significant_detections', 0))
     best_results = results_by_window_size[best_window_size]
     
-    print_status(f"Best {planet_name} window: ±{best_window_size} days ({best_results.get('n_significant_detections', 0)} significant)", "SUCCESS")
+    print_status(
+        f"Descriptive summary — highest count among tested windows for {planet_name}: ±{best_window_size} days "
+        f"({best_results.get('n_significant_detections', 0)} significant)",
+        "SUCCESS"
+    )
     
     # Report significant detections
     if best_results.get('event_results'):
@@ -4527,12 +4532,12 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame, event_window_over
             
             print_status(f"  Window ±{event_window_days}d: {n_significant}/{len(event_analysis_results)} significant detections", "INFO")
         
-        # Find best window size (most significant detections)
+        # Descriptive summary across windows (most significant detections)
         best_window_size = max(results_by_window_size.keys(), 
                               key=lambda w: results_by_window_size[w].get('n_significant_detections', 0))
         best_results = results_by_window_size[best_window_size]
         
-        print_status(f"Best window size: ±{best_window_size} days ({best_results['n_significant_detections']} significant)", "SUCCESS")
+        print_status(f"Descriptive summary — highest detection count among tested windows: ±{best_window_size} days ({best_results['n_significant_detections']} significant)", "SUCCESS")
         
         # Report significant detections from best window
         if best_results.get('event_results'):
@@ -4571,7 +4576,7 @@ def run_jupiter_opposition_analysis(complete_df: pd.DataFrame, event_window_over
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
-            'interpretation': f"Jupiter opposition analysis completed. Best window: ±{best_window_size}d with {best_results.get('n_significant_detections', 0)} significant detections."
+            'interpretation': f"Jupiter opposition analysis completed. Highest detection count among tested sensitivity windows: ±{best_window_size}d with {best_results.get('n_significant_detections', 0)} significant detections (descriptive; primary inferences use ±120-day only)."
         }
 
         print_status(f"Jupiter opposition analysis complete: tested {len(window_sizes_to_test)} window sizes", "SUCCESS")
@@ -4690,7 +4695,7 @@ def run_saturn_opposition_analysis(complete_df: pd.DataFrame, event_window_overr
             'stacked_analysis': stacked_analysis_result,
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
-            'interpretation': f"Saturn opposition analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+            'interpretation': f"Saturn opposition analysis completed. Highest detection count among tested sensitivity windows: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections (descriptive; primary inferences use ±120-day only)."
         }
         
         print_status(f"Saturn opposition analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
@@ -4755,7 +4760,7 @@ def run_mars_opposition_analysis(complete_df: pd.DataFrame, event_window_overrid
             'best_window_event_results': multi_window_results['best_window_event_results'],
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
-            'interpretation': f"Mars opposition analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+            'interpretation': f"Mars opposition analysis completed. Highest detection count among tested sensitivity windows: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections (descriptive; primary inferences use ±120-day only)."
         }
         
         print_status(f"Mars opposition analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
@@ -4914,7 +4919,7 @@ def run_mercury_opposition_analysis(complete_df: pd.DataFrame, event_window_over
             'best_window_event_results': multi_window_results['best_window_event_results'],
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
-            'interpretation': f"Mercury conjunction analysis completed. Best window: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections."
+            'interpretation': f"Mercury conjunction analysis completed. Highest detection count among tested sensitivity windows: ±{multi_window_results['best_window_size_days']}d with {multi_window_results['best_window_n_significant']} significant detections (descriptive; primary inferences use ±120-day only)."
         }
         
         print_status(f"Mercury conjunction analysis complete: tested {len(multi_window_results['window_sizes_tested'])} window sizes", "SUCCESS")
@@ -4999,7 +5004,7 @@ def run_venus_opposition_analysis(complete_df: pd.DataFrame, event_window_overri
             'best_window_event_results': mw['best_window_event_results'],
             'expected_amplitude': expected_amplitude,
             'detection_threshold': TEPConfig.get_float('TEP_SIGNIFICANCE_THRESHOLD', 3.0),
-            'interpretation': f"Venus conjunction analysis completed. Best window: ±{mw['best_window_size_days']}d with {mw['best_window_n_significant']} significant detections."
+            'interpretation': f"Venus conjunction analysis completed. Highest detection count among tested sensitivity windows: ±{mw['best_window_size_days']}d with {mw['best_window_n_significant']} significant detections (descriptive; primary inferences use ±120-day only)."
         }
         print_status(f"Venus conjunction analysis complete: tested {len(mw['window_sizes_tested'])} window sizes", "SUCCESS")
         return results

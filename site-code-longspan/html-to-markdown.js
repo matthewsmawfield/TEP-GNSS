@@ -34,6 +34,8 @@ class HTMLToMarkdownConverter {
             return `__MATH_EXPRESSION_${mathExpressions.length - 1}__`;
         });
         
+        
+        
         // Convert manuscript sections to proper markdown structure FIRST
         html = html.replace(/<div[^>]*class=["'][^"']*manuscript-section[^"']*["'][^>]*data-section=["']([^"']*)["'][^>]*>/gi, '\n\n## $1\n\n');
         
@@ -43,8 +45,11 @@ class HTMLToMarkdownConverter {
         html = html.replace(/<h3[^>]*>(.*?)<\/h3>/gis, '\n### $1\n\n');
         html = html.replace(/<h4[^>]*>(.*?)<\/h4>/gis, '\n#### $1\n\n');
         
-        // Convert paragraphs - use 's' flag to match across newlines
-        html = html.replace(/<p[^>]*>(.*?)<\/p>/gis, '$1\n\n');
+        // Convert paragraphs - preserve internal line breaks
+        html = html.replace(/<p[^>]*>(.*?)<\/p>/gis, (match, content) => {
+            // Trim leading/trailing whitespace but preserve internal structure
+            return content.trim() + '\n\n';
+        });
         
         // Convert strong/bold
         html = html.replace(/<(strong|b)[^>]*>(.*?)<\/(strong|b)>/gi, '**$2**');
@@ -107,6 +112,10 @@ class HTMLToMarkdownConverter {
         html = html.replace(/&sup1;/g, '¹');
         html = html.replace(/&deg;/g, '°');
         
+        // After decoding, temporarily protect stray '<' that are NOT tag starts (e.g., "p < 0.05", "< 5 minutes")
+        // Replace with a placeholder to survive tag-stripping, then restore later.
+        html = html.replace(/<(?!\/?[a-zA-Z])/g, '__LT__');
+        
         // Convert superscripts and subscripts BEFORE removing HTML tags
         // This preserves scientific notation like 10⁻¹⁰
         html = html.replace(/<sup[^>]*>(.*?)<\/sup>/gi, (match, content) => {
@@ -132,6 +141,9 @@ class HTMLToMarkdownConverter {
         // Remove remaining HTML tags (but not < or > used as comparison operators)
         // Only match tags that start with < followed by a letter or /
         html = html.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+        
+        // Restore any protected '<' placeholders back to literal '<'
+        html = html.replace(/__LT__/g, '<');
         
         // Restore MathJax expressions
         mathExpressions.forEach((expr, index) => {
@@ -164,7 +176,9 @@ class HTMLToMarkdownConverter {
             const cells = row.match(/<t[dh][^>]*>(.*?)<\/t[dh]>/gis);
             if (cells) {
                 const cellTexts = cells.map(cell => 
-                    cell.replace(/<[^>]+>/g, '').trim()
+                    // Remove only bona fide HTML tags (starting with a letter or '/')
+                    // Avoid stripping comparators like '< 0.05' that appear in plain text
+                    cell.replace(/<\/?[a-zA-Z][^>]*>/g, '').trim()
                 );
                 rows.push(cellTexts);
             }
@@ -206,7 +220,7 @@ class HTMLToMarkdownConverter {
         const date = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, '').trim() : 'First published: 17 September 2025 · Last updated: 13 October 2025';
         
         const doiMatch = html.match(/DOI:\s*<a[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/i);
-        const doi = doiMatch ? doiMatch[2] : '10.5281/zenodo.17517142';
+        const doi = doiMatch ? doiMatch[2] : '10.5281/zenodo.17517141';
         
         return { title, author, version, date, doi };
     }
