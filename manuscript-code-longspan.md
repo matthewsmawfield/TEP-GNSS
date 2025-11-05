@@ -436,6 +436,8 @@ Replicating the multi-center study, spatial anisotropy was tested by fitting exp
 | West (W) | 7,664 | 0.746 | 14,284,646 |
 | Northwest (NW) | 3,028 | 0.546 | 33,839,163 |
 
+**Physical Significance:** The directional variation is statistically significant and persistent. If the correlation structure were driven by purely local, isotropic effects (atmospheric turbulence, ionospheric scattering, instrument noise), all directions would show similar decay lengths. The observed 3.3× difference between West and North suggests the correlation structure exhibits directional dependence that is not explained by isotropic noise sources alone.
+
 **Experimental Section:**
 
 #### Key Findings
@@ -564,6 +566,8 @@ An analysis of 156 planetary alignment events (oppositions/conjunctions) was per
 
 #### 3.3.2 Enhancement Factor Analysis
 
+**Why Enhancement Factors Matter:** Classical general relativity predicts that planetary gravitational effects on atomic clocks should produce rate modulations of order Δf/f ~ GM/rc² ≈ 10⁻⁹ to 10⁻⁷ (depending on planetary mass and distance). The observed amplitude enhancements (mean 157.8×, maximum 955.1×) exceed these GR predictions by 2–3 orders of magnitude. This discrepancy suggests the GNSS network may be sensitive to additional physical mechanisms beyond standard relativistic effects. The enhancement factors provide a quantitative constraint on any proposed coupling mechanism.
+
 The observed amplitude modulations far exceed theoretical predictions:
 
 **Experimental Section:**
@@ -655,6 +659,10 @@ To assess empirical mass-dependence, mass-scaled enhancement factors were comput
 
 #### 3.4.1 Nutation Signatures
 
+**Objective**: Test whether the coherence field responds to Earth's rotational dynamics (Claim C).
+
+**Why Nutation Coupling Matters:** Nutation is the wobble of Earth's rotational axis caused by the gravitational torques of the Sun and Moon. Detection of coupling to nutation indicates the phenomenon responds to Earth's rotational dynamics—either directly or through coupling to orbital perturbations that nutation induces. Either pathway demonstrates sensitivity to multiple geophysical timescales and rules out simple, single-mechanism atmospheric or ionospheric effects, which are decoupled from Earth's rotational mechanics.
+
 Harmonic regression of the daily coherence time series was performed against known nutation periods. Results show coupling to Earth's rotational dynamics:
 
 | Nutation Component | Period | R² | p-value | Amplitude |
@@ -710,6 +718,8 @@ Coupling to the ~14-month Chandler wobble was tested using Lomb-Scargle periodog
 ### 3.5 Network-Wide Phenomena (Mesh Dance)
 
 **Objective**: Test whether the phenomenon exhibits global coordination (Claim F).
+
+**Why Network Coherence Matters:** If GNSS clock correlations were driven primarily by independent, station-specific effects (equipment noise, local multipath), the network would show incoherent patterns. A coherence index of 0.582 across 814 globally distributed stations indicates coordinated behavior exceeding what would be expected from purely local effects. This is consistent with a global-scale influence—whether external (gravitational/orbital) or internal (geophysical)—affecting the network as a unified system rather than as independent stations.
 
 #### 3.5.1 Mesh Dance Dynamics
 
