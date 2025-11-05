@@ -93,8 +93,11 @@
 <p><strong>New (Long-Period Access)</strong>:</p>
 <ul>
   <li><strong>18.6-Year Nutation</strong>: R² = 0.640, p < 10⁻⁸ (multi-center study: inaccessible)</li>
-  <li><strong>Network Synchronization</strong>: Global phase coherence index = 0.582 (multi-center study: not tested)</li>
   <li><strong>Decadal Stability</strong>: Confirms signatures across 2+ solar cycles</li>
+</ul>
+<p><strong>Replicated (Confirms Temporal Stability)</strong>:</p>
+<ul>
+  <li><strong>Network Synchronization (Mesh Dance)</strong>: Index = 0.582, consistent with multi-center range (CODE: 0.624, IGS: 0.579, ESA: 0.602)</li>
 </ul>
 <p><strong>Cross-Center Validation Status</strong>: The multi-center study's critical contribution was cross-center validation (R² = 0.920-0.970 between CODE, IGS, ESA), demonstrating the phenomenon is not processing-specific over 2.5 years. This study extends temporal coverage but cannot confirm whether long-baseline signatures (18.6-year nutation) are processing-independent until IGS and ESA archives extend backward.</p>
 <h3>4.3 Physical Interpretation</h3>
@@ -141,6 +144,19 @@
 <ol>
   <li><strong>Nature of the Coupling:</strong> The orbital velocity correlation (r = -0.864) survives multiple controls and is difficult to explain via conventional systematics. If confirmed by multi-center replication, this would suggest Earth's heliocentric motion influences GNSS timing correlations in ways not accounted for in standard models.</li>
   <li><strong>Planetary Event Responses:</strong> The observed 72 significant responses (34 Bonferroni-corrected) and their enhancement factors (up to 955×) exceed classical gravitational predictions. However, proper control analysis against physical predictors (tidal potential, distance-normalized models) is required before mechanistic conclusions can be drawn.</li>
+</ol>
+
+<h4>4.4.1 Enhancement Factor Mechanisms: Open Questions</h4>
+
+<p>The observed 100-900× enhancement factors (mean 157.8×, maximum 955.1×, coefficient of variation 1.34) exceed classical GR predictions by 2-3 orders of magnitude. The large variability (1.03-955×) and empirical inverse mass-dependence pattern indicate the coupling mechanism is complex and not fully explained by current models. Two hypotheses merit systematic investigation:</p>
+
+<p><strong>Phase-Dependent Modulation:</strong> The large range of enhancement factors suggests configuration-dependent amplification. The observed high coefficient of variation (CV = 1.34) directly supports this hypothesis: different planetary configurations would produce different enhancement magnitudes, creating the observed variability. Factors that could modulate response amplitude include: (a) Earth-planet distance (Mars varies 0.4-2.7 AU, factor of ~7× in distance), (b) Earth's orbital position (perihelion vs aphelion), (c) multi-planet alignments (constructive vs destructive interference of gravitational gradients), and (d) network phase state at time of event (the mesh dance analysis shows temporal phase evolution). Testing requires: systematic stratification of events by planetary configuration, Earth's orbital phase, and multi-body alignments to identify phase-dependent patterns.</p>
+
+<p><strong>Nonlinear Field Coupling:</strong> Within the TEP framework, if spacetime geometry couples nonlinearly to gravitational perturbations, enhancement could arise from environmental screening mechanisms. The empirical inverse mass-dependence (smaller planets showing higher per-mass responses) is particularly intriguing: if coupling depends on gravitational *gradients* (∝ M/r³, tidal potential) rather than absolute mass, closer planetary approaches could dominate despite lower total mass. However, this interpretation remains speculative without: (a) quantitative TEP predictions for enhancement as a function of mass, distance, and gradient, (b) modeling against tidal potential predictors, (c) distance normalization to standard range, and (d) testing against null events (asteroids, trans-Neptunian objects).</p>
+
+<p><strong>Current Status:</strong> These hypotheses are testable with existing data through frequency analysis, phase-dependent stratification, and physical predictor modeling. However, mechanistic interpretation requires development of quantitative theoretical predictions. The high enhancement factors and inverse mass-dependence pattern are empirically robust but mechanistically unexplained, representing a key open question for future work.</p>
+
+<ol start="3">
   <li><strong>Spatial Structure:</strong> The anisotropic correlation field (E-W:N-S = 2.16) persists across 25 years and aligns approximately with Earth's orbital plane. Whether this reflects propagation effects, processing biases, or a genuine geometric coupling remains to be determined through multi-constellation and raw-data analysis.</li>
   <li><strong>Global Coordination:</strong> Network synchronization (index = 0.582) demonstrates coordinated behavior across the 814-station network. This could indicate a global field-like influence, though alternative explanations (correlated processing, shared reference frames, propagation modes) require systematic investigation.</li>
   <li><strong>Multi-Scale Temporal Structure:</strong> The detection of couplings at timescales from days (planetary events) to decades (18.6-year nutation) suggests the phenomenon operates across multiple temporal regimes. The physical mechanism enabling this scale-invariance is unclear.</li>

@@ -148,6 +148,8 @@
 
 <p><strong>Enhanced Control:</strong> The multi-center study's hemisphere stratification analysis (§3.4) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders. See §3.2.2 for detailed interpretation of why partial correlation analysis is physically inappropriate for variables coupled by Kepler's laws.</p>
 <h4>2.3.3 Planetary Event Analysis</h4>
+<p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>
+
 <p>For each planetary alignment (opposition/conjunction), we pre-declare <strong>±120 days as the primary analysis window</strong>, with additional window sizes (±60, ±90, ±180, ±240 days) reported as sensitivity analyses:</p>
 <ol>
 <li><strong>Primary Window:</strong> ±120 days (pre-registered as primary)</li>
@@ -157,8 +159,6 @@
 <li><strong>Multiple Testing Correction:</strong> Bonferroni and FDR corrections applied across complete event set</li>
 <li><strong>Mass-Scaled Enhancement:</strong> Enhancement / (Planet Mass / Earth Mass)</li>
 </ol>
-
-<p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>
 
 <p>The mass-scaled enhancement metric normalizes the observed response by the planet's gravitational influence, allowing empirical assessment of mass-dependence patterns.</p>
 

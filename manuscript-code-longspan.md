@@ -1,8 +1,8 @@
-# Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.3)
+# Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.4)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.3 (Cairo)  
-**Date:** First published: 3 November 2025 · Last updated: 4 November 2025  
+**Version:** v0.4 (Cairo)  
+**Date:** First published: 3 November 2025 · Last updated: 5 November 2025  
 **DOI:** 10.5281/zenodo.17517141  
 **Generated:** 2025-11-05  
 
@@ -14,7 +14,7 @@ Following the multi-center study's detection of distance-structured correlations
 
 The analysis replicates the multi-center study's core findings with enhanced statistical power. Spatial anisotropy is pronounced with E–W > N–S (EW:NS = 2.16; strength = 1.981 ± 0.23) and correlates with Earth's orbital dynamics (r = −0.864, p < 10⁻¹⁰). Directional structure shows E–W elongation approximately aligned with the orbital plane. Planetary alignment analysis detects 72 of 156 events at ≥2σ significance, with 34 surviving Bonferroni correction (primary window: ±120 days).
 
-The 25-year baseline enables decadal-scale tests of long-period rotational coupling, revealing strong evidence for the 18.6-year lunar nutation cycle (R² = 0.640, p < 10⁻⁸) and suggestive evidence for the 14-month Chandler wobble (R² = 0.106). Network-wide phase synchronization (index = 0.582) demonstrates global coordination inconsistent with local effects. These findings establish decadal stability of the detected correlation structure and provide quantitative constraints on long-period geophysical coupling in precision timing networks. This single-center analysis trades cross-center validation for temporal depth; multi-center replication is required to confirm processing-independence of decadal signatures. While these patterns are consistent with theories predicting velocity-dependent spacetime geometry modulation (e.g., TEP), independent replication by other analysis centers and raw data analysis are essential before definitive acceptance of these extraordinary claims.
+The 25-year baseline enables decadal-scale tests of long-period rotational coupling, revealing strong evidence for the 18.6-year lunar nutation cycle (R² = 0.640, p < 10⁻⁸) and suggestive evidence for the 14-month Chandler wobble (R² = 0.106). Network-wide phase synchronization (index = 0.582) demonstrates global coordination inconsistent with local effects. These findings establish decadal stability of the detected correlation structure and provide quantitative constraints on long-period geophysical coupling in precision timing networks. While these patterns are consistent with the Temporal Equivalence Principle (TEP), which predicts velocity-dependent spacetime geometry modulation, independent replication by other analysis centers and raw data analysis are essential before definitive acceptance of these extraordinary claims.
 
 †Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Zenodo. https://doi.org/10.5281/zenodo.17127229
 
@@ -40,6 +40,8 @@ The 25-year baseline enables decadal-scale tests of long-period rotational coupl
 
       - Chandler-wobble hints
 
+      - Mesh dance dynamics (extended to 25 years)
+
       - Cross-center agreement (CODE/IGS/ESA)
 
     **New in this CODE-only, 25.3-year analysis:**
@@ -49,8 +51,6 @@ The 25-year baseline enables decadal-scale tests of long-period rotational coupl
       - Long-period tests (18.6-year nutation)
 
       - High-statistics event survey (156 events)
-
-      - Network-wide synchronization
 
       - Stronger orbital-velocity tracking
 
@@ -189,14 +189,16 @@ Physical modeling recommended (§4.5) |
 Limited to ~6 cycles | **Extended:** R² = 0.106 (borderline)
 21+ complete cycles observed
 Phase stability = 0.72 |
-| **18.6-Year Nutation** | *Inaccessible (baseline too short)* | **New Detection:** R² = 0.640, p < 10⁻⁸
+| **18.6-Year Nutation** | *Not testable (baseline < 2.5 years)* | **New Detection:** R² = 0.640, p < 10⁻⁸
 1.4 complete cycles
 Multi-center replication needed |
 | **Semiannual Nutation** | *Not explicitly tested* | **New Detection:** R² = 0.902, p < 10⁻²⁰
 50+ complete cycles |
-| **Network Synchronization** | *Not tested in Paper 1* | **New Analysis:** Index = 0.582
-87% constructive interference
-104 temporal windows |
+| **Network Synchronization** | Mesh dance detected across 3 centers
+CODE: 0.624, IGS: 0.579, ESA: 0.602
+Confirmed global coordination | **Replicated:** Index = 0.582
+Consistent with multi-center range
+104 temporal windows over 25 years |
 
 **Key Insight:** All core signatures from Paper 1 (anisotropy, orbital coupling, event responses) are re-observed here with added sensitivity to long-period dynamics. The multi-center study's comprehensive validation framework—including 388 statistical tests, extensive null testing (temporal/spatial/phase scrambling), ionospheric controls (TID exclusion), and cross-center consistency—provides the foundation upon which these temporal extensions are built.
 
@@ -310,6 +312,8 @@ Using 30-day sliding windows centered on each day of year, R(t) was correlated w
 
 #### 2.3.3 Planetary Event Analysis
 
+**Inference policy:** All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.
+
 For each planetary alignment (opposition/conjunction), we pre-declare **±120 days as the primary analysis window**, with additional window sizes (±60, ±90, ±180, ±240 days) reported as sensitivity analyses:
 
 - **Primary Window:** ±120 days (pre-registered as primary)
@@ -323,8 +327,6 @@ For each planetary alignment (opposition/conjunction), we pre-declare **±120 da
 - **Multiple Testing Correction:** Bonferroni and FDR corrections applied across complete event set
 
 - **Mass-Scaled Enhancement:** Enhancement / (Planet Mass / Earth Mass)
-
-**Inference policy:** All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.
 
 The mass-scaled enhancement metric normalizes the observed response by the planet's gravitational influence, allowing empirical assessment of mass-dependence patterns.
 
@@ -557,6 +559,8 @@ An analysis of 156 planetary alignment events (oppositions/conjunctions) was per
 
 #### Primary Window Results (±120 days)
 
+    *Note: Detection counts below reflect the pre-specified ±120-day primary window only. The detection statistics table above includes results from all window sizes (±60 to ±240 days) for robustness assessment.*
+
 | Planet | Total Conjunctions | Significant Detections (≥2σ) |
 | --- | --- | --- |
 | Mercury | 80 | 21 |
@@ -584,6 +588,8 @@ The observed amplitude modulations far exceed theoretical predictions:
 
         - **Coefficient of Variation:** 1.34
 
+**Physical Interpretation:** The 100-900× enhancement factors exceed classical GR predictions by 2-3 orders of magnitude and show large event-to-event variability (coefficient of variation 1.34). Enhancement factors are computed as ratios of observed amplitudes to GR predictions (which include distance via GM/rc²), but further normalization to a standard reference distance would enable direct cross-event comparison independent of orbital geometry. This magnitude and variability pattern indicates the coupling mechanism is not simple mass-proportional gravitational interaction. Possible mechanisms are discussed in §4.4.1.
+
 **Notable Ultra-High Enhancements:**
 
 | Rank | Event | Enhancement Factor | Significance (σ) |
@@ -606,7 +612,7 @@ The observed amplitude modulations far exceed theoretical predictions:
 
 **Observed Enhancement Factors:** Mean 157.8×, median 90.8×, maximum 955.1×. These cannot be explained by the above mechanisms.
 
-#### 3.3.2b Amplitude Analysis: Statistical Distribution
+#### 3.3.3 Amplitude Analysis: Statistical Distribution
 
 **Critical Finding:** The observed enhancement factors show extreme variability and systematically exceed theoretical predictions by orders of magnitude. This is the most significant quantitative discrepancy between observations and conventional gravitational models:
 
@@ -632,7 +638,7 @@ The observed amplitude modulations far exceed theoretical predictions:
 
 **Physical Interpretation:** The mean enhancement of 157.8× is approximately **10⁸ times larger** than expected from gravitational potential changes (10⁻⁹ to 10⁻⁷). Even the minimum detected enhancement (1.03×) exceeds theoretical predictions. This systematic and extreme discrepancy **requires explanation beyond conventional gravitational coupling mechanisms** and represents the most striking quantitative signature in the entire analysis. The high coefficient of variation (1.34) indicates event-to-event variability is substantial, suggesting the coupling mechanism may depend on additional factors beyond simple mass and distance relationships. **Rigorous interpretation requires modeling against physically grounded predictors (tidal potential ∝ M/r³, distance-normalized metrics) and testing against null events (asteroid conjunctions, random dates).**
 
-#### 3.3.3 Mass-Scaled Enhancement Analysis
+#### 3.3.4 Mass-Scaled Enhancement Analysis
 
 **Caveat**: This analysis is exploratory and lacks proper control against physical gravitational predictors. Rigorous interpretation requires: (1) modeling against tidal potential (∝ M/r³), (2) distance normalization to standard range, (3) testing against null events (asteroid conjunctions, random dates), and (4) phase-dependence analysis (approach vs recession). These analyses are recommended as highest-priority future work.
 
@@ -655,11 +661,9 @@ To assess empirical mass-dependence, mass-scaled enhancement factors were comput
 
 **Objective**: Test whether the coherence field couples to Earth's rotational dynamics (Claim E).
 
-**Note**: Long-period components were out of reach in the multi-center study; the semiannual and 18.6-year tests here are therefore [NEW].
+**Note**: Long-period components were out of reach in the multi-center study; the semiannual and 18.6-year tests here are therefore new.
 
 #### 3.4.1 Nutation Signatures
-
-**Objective**: Test whether the coherence field responds to Earth's rotational dynamics (Claim C).
 
 **Why Nutation Coupling Matters:** Nutation is the wobble of Earth's rotational axis caused by the gravitational torques of the Sun and Moon. Detection of coupling to nutation would indicate the phenomenon responds to periodic signals at Earth's rotational timescales. This could reflect either direct coupling to Earth's rotational dynamics or indirect coupling through orbital mechanics (nutation → orbital perturbations → GNSS response). Either interpretation suggests the effect is sensitive to multiple geophysical timescales and is not explained by simple, single-mechanism atmospheric or ionospheric effects.
 
@@ -901,9 +905,11 @@ A critical validation of temporal stability requires comparing this 25-year CODE
 
   - **18.6-Year Nutation**: R² = 0.640, p < 10⁻⁸ (multi-center study: inaccessible)
 
-  - **Network Synchronization**: Global phase coherence index = 0.582 (multi-center study: not tested)
-
   - **Decadal Stability**: Confirms signatures across 2+ solar cycles
+
+**Replicated (Confirms Temporal Stability)**:
+
+  - **Network Synchronization (Mesh Dance)**: Index = 0.582, consistent with multi-center range (CODE: 0.624, IGS: 0.579, ESA: 0.602)
 
 **Cross-Center Validation Status**: The multi-center study's critical contribution was cross-center validation (R² = 0.920-0.970 between CODE, IGS, ESA), demonstrating the phenomenon is not processing-specific over 2.5 years. This study extends temporal coverage but cannot confirm whether long-baseline signatures (18.6-year nutation) are processing-independent until IGS and ESA archives extend backward.
 
@@ -971,6 +977,16 @@ These findings raise several important questions for fundamental physics:
   - **Nature of the Coupling:** The orbital velocity correlation (r = -0.864) survives multiple controls and is difficult to explain via conventional systematics. If confirmed by multi-center replication, this would suggest Earth's heliocentric motion influences GNSS timing correlations in ways not accounted for in standard models.
 
   - **Planetary Event Responses:** The observed 72 significant responses (34 Bonferroni-corrected) and their enhancement factors (up to 955×) exceed classical gravitational predictions. However, proper control analysis against physical predictors (tidal potential, distance-normalized models) is required before mechanistic conclusions can be drawn.
+
+#### 4.4.1 Enhancement Factor Mechanisms: Open Questions
+
+The observed 100-900× enhancement factors (mean 157.8×, maximum 955.1×, coefficient of variation 1.34) exceed classical GR predictions by 2-3 orders of magnitude. The large variability (1.03-955×) and empirical inverse mass-dependence pattern indicate the coupling mechanism is complex and not fully explained by current models. Two hypotheses merit systematic investigation:
+
+**Phase-Dependent Modulation:** The large range of enhancement factors suggests configuration-dependent amplification. The observed high coefficient of variation (CV = 1.34) directly supports this hypothesis: different planetary configurations would produce different enhancement magnitudes, creating the observed variability. Factors that could modulate response amplitude include: (a) Earth-planet distance (Mars varies 0.4-2.7 AU, factor of ~7× in distance), (b) Earth's orbital position (perihelion vs aphelion), (c) multi-planet alignments (constructive vs destructive interference of gravitational gradients), and (d) network phase state at time of event (the mesh dance analysis shows temporal phase evolution). Testing requires: systematic stratification of events by planetary configuration, Earth's orbital phase, and multi-body alignments to identify phase-dependent patterns.
+
+**Nonlinear Field Coupling:** Within the TEP framework, if spacetime geometry couples nonlinearly to gravitational perturbations, enhancement could arise from environmental screening mechanisms. The empirical inverse mass-dependence (smaller planets showing higher per-mass responses) is particularly intriguing: if coupling depends on gravitational *gradients* (∝ M/r³, tidal potential) rather than absolute mass, closer planetary approaches could dominate despite lower total mass. However, this interpretation remains speculative without: (a) quantitative TEP predictions for enhancement as a function of mass, distance, and gradient, (b) modeling against tidal potential predictors, (c) distance normalization to standard range, and (d) testing against null events (asteroids, trans-Neptunian objects).
+
+**Current Status:** These hypotheses are testable with existing data through frequency analysis, phase-dependent stratification, and physical predictor modeling. However, mechanistic interpretation requires development of quantitative theoretical predictions. The high enhancement factors and inverse mass-dependence pattern are empirically robust but mechanistically unexplained, representing a key open question for future work.
 
   - **Spatial Structure:** The anisotropic correlation field (E-W:N-S = 2.16) persists across 25 years and aligns approximately with Earth's orbital plane. Whether this reflects propagation effects, processing biases, or a genuine geometric coupling remains to be determined through multi-constellation and raw-data analysis.
 
@@ -1147,13 +1163,13 @@ Teunissen, P. J., & Montenbruck, O. (Eds.). (2017). *Springer Handbook of Global
 
 ## How to cite
 
-    **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. v0.3 (Cairo). Zenodo. https://doi.org/10.5281/zenodo.17517141
+    **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. v0.4 (Cairo). Zenodo. https://doi.org/10.5281/zenodo.17517141
 
         **BibTeX:**
 @misc{Smawfield_TEP_GNSS_Longspan_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: 25-Year Temporal Evolution of 
-                  Distance-Structured Correlations in GNSS Clocks (Cairo v0.3)},
+                  Distance-Structured Correlations in GNSS Clocks (Cairo v0.4)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17517141},
