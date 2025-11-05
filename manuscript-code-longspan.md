@@ -1,7 +1,7 @@
-# Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.5)
+# Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.6)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.5 (Cairo)  
+**Version:** v0.6 (Cairo)  
 **Date:** First published: 3 November 2025 · Last updated: 5 November 2025  
 **DOI:** 10.5281/zenodo.17517141  
 **Generated:** 2025-11-05  
@@ -746,7 +746,15 @@ Following the multi-center study's "mesh dance" terminology, network-wide coordi
 
 **Finding**: The network exhibits globally coordinated behavior with mesh dance score = 0.582 (p < 0.001 vs spatially shuffled null), supporting Claim F. This is consistent with the multi-center study's range (CODE: 0.624, IGS: 0.579, ESA: 0.602) and confirms temporal stability of mesh dance dynamics over 25.3 years. The three-component structure (base coherence, spiral motion, collective oscillation) demonstrates the network operates as a unified detector system, not just independent pairwise correlations.
 
-  **Figure 3.5.1:** 25-year temporal evolution of network-wide coherence (2000-2025). Daily mean coherence values (gray) with 90-day smoothing (blue) show sustained global coordination across the entire dataset. Red markers indicate major planetary alignment events. The persistent baseline coherence and event-associated modulations demonstrate temporal stability of the phenomenon over decadal scales.
+  **Figure 3.5.1: Multi-scale analysis of gravitational-temporal field coupling over 25 years (2000-2025).** (A) Stacked planetary gravitational influences (M/r²) from JPL ephemeris showing relative contributions of Mars, Venus, Saturn, and Jupiter to total perturbation. (B) Daily network coherence variability (standard deviation across station pairs, light blue points) with Savitzky-Golay smoothing (dark line) reveals sustained temporal patterns. (C) Pattern correlation analysis between smoothed gravitational influence and coherence variability (r = 0.116, p = 3.69×10⁻²⁹) demonstrates systematic coupling. (D) Multi-window smoothing comparison (30-240 days) validates pattern stability with inter-window correlations r > 0.88.
+
+**Two complementary continuous planetary analyses:**
+
+  - **Network mean coherence:** Correlation between total planetary influence and average phase alignment across all station pairs yields r = -0.099, p = 0.0308 (autocorrelation-corrected, 240-day Savitzky-Golay smoothing). This measures the overall network-wide phase synchronization.
+
+  - **Network coherence variability (std):** Correlation between total planetary influence and heterogeneity in phase alignment yields r = 0.116, p = 3.69×10⁻²⁹ (227-day smoothing, shown in Panel C). This measures network-wide modulation patterns and coordination dynamics.
+
+Both analyses detect significant coupling between planetary gravitational configurations and GNSS network timing structure. The variability metric shows stronger statistical significance (p < 10⁻²⁵) due to its sensitivity to network-wide coordination patterns, while the mean coherence analysis provides evidence for sustained gravitational influence on overall network synchronization. The convergence of these independent analyses across different temporal metrics strengthens the case for systematic gravitational-temporal coupling.
 
 #### 3.5.2 Continuous Planetary Correlation
 
@@ -1159,13 +1167,13 @@ Teunissen, P. J., & Montenbruck, O. (Eds.). (2017). *Springer Handbook of Global
 
 ## How to cite
 
-    **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. v0.5 (Cairo). Zenodo. https://doi.org/10.5281/zenodo.17517141
+    **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. v0.6 (Cairo). Zenodo. https://doi.org/10.5281/zenodo.17517141
 
         **BibTeX:**
 @misc{Smawfield_TEP_GNSS_Longspan_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: 25-Year Temporal Evolution of 
-                  Distance-Structured Correlations in GNSS Clocks (Cairo v0.5)},
+                  Distance-Structured Correlations in GNSS Clocks (Cairo v0.6)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17517141},
