@@ -4,7 +4,7 @@
 **Version:** v0.21 (Jaipur)  
 **Date:** First published: 17 September 2025 · Last updated: 16 October 2025  
 **DOI:** 10.5281/zenodo.17127229  
-**Generated:** 2025-11-03  
+**Generated:** 2025-11-04  
 
 ---
 

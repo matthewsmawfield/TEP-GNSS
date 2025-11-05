@@ -4,7 +4,7 @@
 **Version:** v0.3 (Cairo)  
 **Date:** First published: 3 November 2025 · Last updated: 4 November 2025  
 **DOI:** 10.5281/zenodo.17517141  
-**Generated:** 2025-11-04  
+**Generated:** 2025-11-05  
 
 ---
 
@@ -509,6 +509,8 @@ The multi-center study reported r ≈ -0.57 to -0.79 across centers. Over 25.3 y
 #### 3.2.2 Physical Interpretation: Orbital Coupling
 
 **Status and Physical Interpretation:** Orbital velocity and Earth-Sun distance are **physically coupled by Kepler's laws** (r = −1.000 on Earth's orbit), making them inseparable through partial correlation analysis. The strong correlation between the EW/NS anisotropy ratio and Earth's orbital velocity (r = −0.864, p = 4.65 × 10⁻¹¹) provides direct evidence for orbital coupling. The multi-center study's hemisphere stratification analysis (§3.4 in Paper 1) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders.
+
+**Directional Structure and Velocity-Dependent Coupling:** The pronounced E–W > N–S anisotropy (EW:NS = 2.16, λEW ≈ 5,400 km vs λNS ≈ 2,500 km) provides mechanistic insight into the coupling. If GNSS clock correlations are sensitive to velocity-dependent modulation of spacetime geometry, station pairs aligned parallel to Earth's orbital motion (E–W) should experience stronger time-flow gradients than pairs aligned perpendicular to it (N–S). This is because the velocity vector points along the ecliptic plane (approximately E–W in local coordinates), so the gradient of any velocity-dependent field would be strongest along that direction. Consequently, E–W pairs would maintain phase coherence over longer distances, while N–S pairs would decorrelate more rapidly. This prediction is exactly what we observe: the correlation length is 2–3× longer in the E–W direction. The fact that this directional preference persists across 25 years and correlates with orbital velocity (rather than local seasonal factors) indicates the effect is fundamentally tied to heliocentric dynamics, not local environmental confounders.
 
 ### 3.3 Planetary Event Responses
 
