@@ -661,7 +661,7 @@ To assess empirical mass-dependence, mass-scaled enhancement factors were comput
 
 **Objective**: Test whether the coherence field responds to Earth's rotational dynamics (Claim C).
 
-**Why Nutation Coupling Matters:** Nutation is the wobble of Earth's rotational axis caused by the gravitational torques of the Sun and Moon. Detection of coupling to nutation indicates the phenomenon responds to Earth's rotational dynamics—either directly or through coupling to orbital perturbations that nutation induces. Either pathway demonstrates sensitivity to multiple geophysical timescales and rules out simple, single-mechanism atmospheric or ionospheric effects, which are decoupled from Earth's rotational mechanics.
+**Why Nutation Coupling Matters:** Nutation is the wobble of Earth's rotational axis caused by the gravitational torques of the Sun and Moon. Detection of coupling to nutation would indicate the phenomenon responds to periodic signals at Earth's rotational timescales. This could reflect either direct coupling to Earth's rotational dynamics or indirect coupling through orbital mechanics (nutation → orbital perturbations → GNSS response). Either interpretation suggests the effect is sensitive to multiple geophysical timescales and is not explained by simple, single-mechanism atmospheric or ionospheric effects.
 
 Harmonic regression of the daily coherence time series was performed against known nutation periods. Results show coupling to Earth's rotational dynamics:
 
@@ -719,7 +719,7 @@ Coupling to the ~14-month Chandler wobble was tested using Lomb-Scargle periodog
 
 **Objective**: Test whether the phenomenon exhibits global coordination (Claim F).
 
-**Why Network Coherence Matters:** If GNSS clock correlations were driven primarily by independent, station-specific effects (equipment noise, local multipath), the network would show incoherent patterns. A coherence index of 0.582 across 814 globally distributed stations indicates coordinated behavior exceeding what would be expected from purely local effects. This is consistent with a global-scale influence—whether external (gravitational/orbital) or internal (geophysical)—affecting the network as a unified system rather than as independent stations.
+**Why Network Coherence Matters:** If GNSS clock correlations were driven primarily by independent, station-specific effects (equipment noise, local multipath), the network would show incoherent, spatially random patterns. A coherence index of 0.582 across 814 globally distributed stations indicates moderate coordinated behavior across the network. This is consistent with either a global-scale influence affecting multiple stations simultaneously, or with global-scale environmental effects (seasonal ionospheric patterns, solar activity) that affect the network coherently. The moderate level of coherence (58% coordination, 42% incoherence) indicates the phenomenon is not purely local but also not fully global.
 
 #### 3.5.1 Mesh Dance Dynamics
 
