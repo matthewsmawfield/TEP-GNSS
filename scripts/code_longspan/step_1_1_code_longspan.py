@@ -282,6 +282,9 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
     }
     
     # Use configurable minimum file size
+    # Old format .CLK.Z files are ~600KB (allow down to 400KB for edge cases), new format .CLK.gz files are ~5MB
+    if str(destination).endswith('.CLK.Z'):
+        min_size_mb = 0.4
     min_size_bytes = int(TEPConfig.get_float('TEP_MIN_FILE_SIZE_MB', min_size_mb) * 1024 * 1024)
     
     # Check if file already exists and has sufficient size
@@ -310,8 +313,11 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
             # Increase timeout for retries
             timeout = TEPConfig.get_int('TEP_DOWNLOAD_TIMEOUT', 60) + (attempt * 30)
             
+            # Create request with User-Agent header (required by CDDIS)
+            req = urllib.request.Request(url, headers={'User-Agent': 'TEP-GNSS/0.3'})
+            
             # Download with urllib
-            with urllib.request.urlopen(url, context=ssl_context, timeout=timeout) as response:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=timeout) as response:
                 data = response.read()
             
             with open(destination, 'wb') as f:
@@ -342,15 +348,41 @@ def download_file_robust(url: str, destination: Path, min_size_mb: float = 1.0) 
     
     return result
 
+# Known missing files (404s that won't be retried)
+KNOWN_MISSING_FILES = {
+    # Late December 2022 data gap (days 380-426)
+    'COD22380.CLK.Z', 'COD22381.CLK.Z', 'COD22382.CLK.Z', 'COD22383.CLK.Z',
+    'COD22384.CLK.Z', 'COD22385.CLK.Z', 'COD22386.CLK.Z', 'COD22390.CLK.Z',
+    'COD22391.CLK.Z', 'COD22392.CLK.Z', 'COD22393.CLK.Z', 'COD22394.CLK.Z',
+    'COD22395.CLK.Z', 'COD22396.CLK.Z', 'COD22400.CLK.Z', 'COD22401.CLK.Z',
+    'COD22402.CLK.Z', 'COD22403.CLK.Z', 'COD22404.CLK.Z', 'COD22405.CLK.Z',
+    'COD22406.CLK.Z', 'COD22410.CLK.Z', 'COD22411.CLK.Z', 'COD22412.CLK.Z',
+    'COD22413.CLK.Z', 'COD22414.CLK.Z', 'COD22415.CLK.Z', 'COD22416.CLK.Z',
+    'COD22420.CLK.Z', 'COD22421.CLK.Z', 'COD22422.CLK.Z', 'COD22423.CLK.Z',
+    'COD22424.CLK.Z', 'COD22425.CLK.Z', 'COD22426.CLK.Z'
+}
+
 def download_worker(task: Dict) -> Dict:
     """Worker function for parallel downloads - based on aggressive_acquire.py"""
     url = task['url']
     destination = task['destination']
     date_str = task['date_str']
     
-    # Check if already exists and has reasonable size (>1MB)
-    min_file_size_mb = TEPConfig.get_float('TEP_MIN_FILE_SIZE_MB', 1.0)
-    if destination.exists() and destination.stat().st_size > int(min_file_size_mb * 1024 * 1024):  # 1MB
+    # Skip known missing files to avoid 404 spam
+    if destination.name in KNOWN_MISSING_FILES:
+        return {
+            'success': False,
+            'skipped': True,
+            'known_missing': True,
+            'destination': str(destination),
+            'date_str': date_str,
+            'error': 'Known missing file (data gap on server)'
+        }
+    
+    # Check if already exists and has reasonable size
+    # Old format .CLK.Z files are ~600KB (allow down to 400KB for edge cases), new format .CLK.gz files are ~5MB
+    min_file_size_mb = 0.4 if str(destination).endswith('.CLK.Z') else TEPConfig.get_float('TEP_MIN_FILE_SIZE_MB', 1.0)
+    if destination.exists() and destination.stat().st_size > int(min_file_size_mb * 1024 * 1024):
         size_mb = destination.stat().st_size / (1024*1024)
         return {
             'success': True, 
@@ -365,6 +397,17 @@ def download_worker(task: Dict) -> Dict:
     
     # Download file
     result = download_file_robust(url, destination)
+    
+    # Log download attempts with full details for provenance
+    if result.get('success') and not result.get('skipped'):
+        size_mb = result.get('size_bytes', 0) / (1024 * 1024)
+        step_logger.info(f"Downloaded: {destination.name} ({size_mb:.2f} MB) from {url}")
+    elif result.get('skipped'):
+        size_mb = result.get('size_bytes', 0) / (1024 * 1024)
+        step_logger.debug(f"Skipped (exists): {destination.name} ({size_mb:.2f} MB)")
+    else:
+        error_msg = result.get('error', 'Unknown error')
+        step_logger.debug(f"Download failed: {error_msg} | File: {destination.name} | URL: {url}")
 
     # Legacy CODE archive fallback for older years (e.g., 2005):
     # Try COD{gpsweek}{dow}.CLK.Z under http://ftp.aiub.unibe.ch/CODE/{year}/
@@ -376,10 +419,15 @@ def download_worker(task: Dict) -> Dict:
             dow = gps_day_of_week(date_obj)
             legacy_url = f"http://ftp.aiub.unibe.ch/CODE/{year}/COD{week:04d}{dow}.CLK.Z"
             legacy_dst = destination.parent / f"COD{week:04d}{dow}.CLK.Z"
+            step_logger.debug(f"Trying legacy format: {legacy_url}")
             # Attempt legacy download
             legacy_result = download_file_robust(legacy_url, legacy_dst)
             if legacy_result.get('success'):
+                size_mb = legacy_result.get('size_bytes', 0) / (1024 * 1024)
+                step_logger.info(f"Downloaded (legacy): {legacy_dst.name} ({size_mb:.2f} MB) from {legacy_url}")
                 return legacy_result
+            else:
+                step_logger.debug(f"Legacy download failed: {legacy_result.get('error', 'Unknown')} | URL: {legacy_url}")
         except Exception as _:
             # Ignore and return original result
             pass
@@ -423,9 +471,18 @@ def generate_download_tasks() -> List[Dict]:
         doy = day_of_year(date)
         week = gps_week_from_date(date)
         
-        # CODE
-        code_url = TEPConfig.get_str('TEP_CODE_CLK_URL_TEMPLATE').format(year=year, doy=doy)
-        code_dst = raw_dir / "code" / f"COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
+        # CODE - AIUB changed naming convention in 2023
+        # Old format (≤2022): COD{gpsweek}{dow}.CLK.Z (e.g., COD21385.CLK.Z)
+        # New format (≥2023): COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz
+        if year < 2023:
+            # Old format: GPS week (4 digits) + day of week (1 digit)
+            dow = (date - datetime(1980, 1, 6)).days % 7  # Day of week (0=Sunday)
+            code_url = f"http://ftp.aiub.unibe.ch/CODE/{year}/COD{week}{dow}.CLK.Z"
+            code_dst = raw_dir / "code" / f"COD{week}{dow}.CLK.Z"
+        else:
+            # New format
+            code_url = TEPConfig.get_str('TEP_CODE_CLK_URL_TEMPLATE').format(year=year, doy=doy)
+            code_dst = raw_dir / "code" / f"COD0OPSFIN_{year}{doy:03d}0000_01D_30S_CLK.CLK.gz"
         tasks.append({
             'center': 'CODE',
             'url': code_url,
@@ -483,7 +540,9 @@ def download_clock_files():
         existing_count = 0
         
         for task in tasks:
-            if task['destination'].exists() and task['destination'].stat().st_size > int(TEPConfig.get_float('TEP_MIN_FILE_SIZE_MB', 1.0) * 1024 * 1024):
+            # Old format .CLK.Z files are ~600KB (allow down to 400KB for edge cases), new format .CLK.gz files are ~5MB
+            min_size_mb = 0.4 if str(task['destination']).endswith('.CLK.Z') else TEPConfig.get_float('TEP_MIN_FILE_SIZE_MB', 1.0)
+            if task['destination'].exists() and task['destination'].stat().st_size > int(min_size_mb * 1024 * 1024):
                 existing_count += 1
             else:
                 missing_tasks.append(task)
@@ -539,11 +598,16 @@ def download_clock_files():
                                         total_done = global_progress['downloaded'] + global_progress['failed']
                                         print_status(f"[PROGRESS] Overall: {total_done}/{global_progress['total_missing']} files ({progress_pct:.1f}%) | Rate: {rate:.1f} files/sec", "INFO")
                         else:
-                            failed += 1
-                            failed_tasks.append(original_task)  # Store failed task for retry
-                            with progress_lock:
-                                global_progress['failed'] += 1
-                            print_status(f"{center} download failed: {result.get('error', 'Unknown error')}", "DEBUG")
+                            # Don't retry known missing files
+                            if not result.get('known_missing', False):
+                                failed += 1
+                                failed_tasks.append(original_task)  # Store failed task for retry
+                                with progress_lock:
+                                    global_progress['failed'] += 1
+                                print_status(f"{center} download failed: {result.get('error', 'Unknown error')}", "DEBUG")
+                            else:
+                                # Known missing file - don't count as failure or retry
+                                pass
                             
                     except Exception as e:
                         failed += 1

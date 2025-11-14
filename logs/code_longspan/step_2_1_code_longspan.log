@@ -1,0 +1,174 @@
+[11:25:46] [INFO] 
+[11:25:46] [INFO] ================================================================================
+[11:25:46] [INFO] TEP-GNSS Analysis Framework v0.18
+[11:25:46] [INFO] ================================================================================
+[11:25:46] [INFO] 
+[11:25:46] [INFO] 
+[11:25:46] [INFO] ================================================================================
+[11:25:46] [INFO] STEP 2.1: Comprehensive Geospatial Data Quality Assessment
+[11:25:46] [INFO] ================================================================================
+[11:25:46] [INFO] 
+[11:25:46] [INFO] Performing rigorous quality validation of multi-center GNSS timing correlations
+[11:25:46] [INFO] Analysis scope: Quality assurance, statistical validation, and methodological transparency
+[11:25:46] [INFO] Configured distance outlier thresholds: < 1.0km or > 20000.0km
+[11:25:46] [INFO] Found 1 consolidated data files from Step 2.0.
+[11:25:46] [INFO] Using quality-filtered consolidated data from Step 2.0
+[11:25:46] [INFO] Loaded 768 station coordinates for analysis
+[11:25:46] [PROCESS] Processing analysis center: CODE (1 files)
+[11:25:46] [INFO] Removing stale processed file: /Users/matthewsmawfield/www/TEP-GNSS/data/processed/code_longspan/step_2_1_geospatial_code.csv
+[11:25:48] [INFO] Will regenerate fresh processed data...
+[11:25:48] [PROCESS] Concatenating individual CSV files...
+[11:27:21] [INFO] Initial data loaded: 165,264,833 records
+[11:27:21] [WARNING] Large dataset detected (165,264,833 records). Enabling memory optimization...
+[11:27:22] [DEBUG] Memory cleanup: RSS=237.89 MB (actual usage), VMS=416098.16 MB (virtual memory)
+[11:27:45] [WARNING] Removing 1 duplicate pairs from CODE data...
+[11:29:46] [INFO] After deduplication: 165,264,832 unique records (0.0% duplicates removed)
+[11:30:55] [INFO] After coordinate filtering: 165,264,832 records
+[11:30:55] [SUCCESS]   → ✓ All pairs have coordinates for BOTH stations (100% retained for distance analysis)
+[11:31:55] [WARNING] Removed 75,227 distance outliers (< 1.0km or > 20000.0km) for CODE
+[11:31:55] [INFO] Calculating azimuth...
+[11:32:16] [INFO] Calculating longitude and local time differences...
+[11:43:41] [SUCCESS] Saved enriched data for CODE to /Users/matthewsmawfield/www/TEP-GNSS/data/processed/code_longspan/step_2_1_geospatial_code.csv
+[11:43:41] [DEBUG] Memory cleanup: RSS=771.41 MB (actual usage), VMS=432951.31 MB (virtual memory)
+[11:43:41] [PROCESS] Performing comprehensive data analysis on FULL dataset...
+[11:43:41] [INFO] Analyzing ALL 165,189,605 records (NO SAMPLING)
+[11:43:41] [INFO] Processing FULL dataset: 165,189,605 records
+[11:43:41] [PROCESS] Generating comprehensive analytical metadata from FULL dataset...
+[11:43:41] [INFO]   → Computing station statistics and distance analysis...
+[11:43:41] [PROCESS] Generating comprehensive analytical metadata for CODE...
+[11:44:01] [INFO] Calculating metadata from FULL dataset: 165,189,605 pairs, 814 stations, 9218 dates
+[11:44:09] [PROCESS] Analyzing geographic coverage from actual data (memory-optimized)...
+[11:44:41] [INFO]   → 814 stations with coordinates, 0 without
+[11:44:41] [INFO]   → 165,189,605 pairs with complete coordinates (100.00%)
+[11:44:41] [PROCESS] Calculating distance statistics from full dataset...
+[11:45:01] [PROCESS] Calculating quality indicators from full dataset...
+[11:45:32] [DEBUG] Memory cleanup: RSS=2680.14 MB (actual usage), VMS=434467.61 MB (virtual memory)
+[11:45:32] [PROCESS] Analyzing data quality and pair retention...
+[11:45:32] [INFO]   → Computing filtering statistics and pair retention metrics...
+[11:45:32] [PROCESS] Analyzing data coverage against global station database for CODE...
+[11:45:36] [INFO]   → Found 474 unique stations in 165,189,605 records
+[11:45:36] [INFO]   → Database comparison: 474 stations in both data and database
+[11:45:36] [INFO]   → 294 stations in database but not in this AC's data
+[11:45:36] [DEBUG] Memory cleanup: RSS=3038.27 MB (actual usage), VMS=434467.61 MB (virtual memory)
+[11:45:36] [PROCESS] Analyzing pair-level filtering and exclusions...
+[11:45:36] [INFO]   → Analyzing pair-level filtering effects and exclusions...
+[11:45:36] [PROCESS] Analyzing pair-level filtering for CODE...
+[11:45:45] [DEBUG] Memory cleanup: RSS=1402.77 MB (actual usage), VMS=434467.61 MB (virtual memory)
+[11:45:45] [PROCESS] Analyzing temporal coverage...
+[11:45:45] [INFO]   → Computing temporal distribution and coverage patterns...
+[11:45:45] [PROCESS] Analyzing temporal coverage for CODE...
+[11:45:47] [INFO]   → Date range: 2000-03-01T00:00:00 to 2025-06-30T00:00:00 (9253 days, 9218 unique dates)
+[11:47:05] [DEBUG] Memory cleanup: RSS=2499.34 MB (actual usage), VMS=447865.36 MB (virtual memory)
+[11:47:05] [PROCESS] Analyzing data quality metrics...
+[11:47:05] [INFO]   → Computing coherence statistics and quality indicators...
+[11:47:05] [PROCESS] Analyzing data quality metrics for CODE...
+[11:47:36] [INFO]   → Plateau phase range: -3.142 to 3.142 rad (mean: -0.000, std: 1.812)
+[11:47:36] [INFO]   → Total phase values analyzed: 165,189,605
+[11:47:36] [INFO]   → Boundary clustering analysis (±0.05 rad from ±π):
+[11:47:36] [INFO]      • Near +π boundary: 1,371,290 values (0.83%)
+[11:47:36] [INFO]      • Near -π boundary: 1,372,417 values (0.83%)
+[11:47:36] [INFO]      • Total at boundaries: 2,743,707 values (1.66%)
+[11:47:36] [INFO]   → ✓ OK: Boundary clustering (1.66%) is within acceptable range
+[11:50:30] [DEBUG] Memory cleanup: RSS=637.69 MB (actual usage), VMS=447225.36 MB (virtual memory)
+[11:50:30] [PROCESS] Analyzing temporal gaps and data density...
+[11:50:30] [INFO]   → Computing temporal gaps, data density, and coverage patterns...
+[11:50:30] [PROCESS] Analyzing temporal gaps and coverage for CODE...
+[11:50:32] [INFO]   → Analyzing 9218 unique dates, 35 missing dates
+[12:14:53] [DEBUG] Memory cleanup: RSS=1844.75 MB (actual usage), VMS=447291.36 MB (virtual memory)
+[12:14:53] [PROCESS] Performing validation and outlier detection...
+[12:14:53] [INFO]   → Detecting duplicates, outliers, and validating data integrity...
+[12:14:53] [PROCESS] Performing validation and outlier detection for CODE...
+[12:15:44] [INFO]   → Found 0 duplicate pairs (0.00%)
+[12:15:49] [INFO]   → Distance outliers: 0 very short (<1.0km), 0 very long (>20000.0km)
+[12:15:54] [INFO]   → Checking pair symmetry (memory-optimized)...
+[12:17:09] [INFO]   → Pair symmetry: 165,189,605 total pairs, 144,838 unique canonical pairs
+[12:17:13] [DEBUG] Memory cleanup: RSS=131.47 MB (actual usage), VMS=447709.36 MB (virtual memory)
+[12:17:13] [PROCESS] Analyzing station coverage...
+[12:17:13] [INFO]   → Computing station inclusion/exclusion statistics...
+[12:17:13] [PROCESS] Analyzing station coverage for CODE...
+[12:17:19] [INFO]   → Found 474 unique stations in 474 records
+[12:17:19] [INFO]   → Coordinate coverage: 474/768 stations from global database used in this analysis (61.7%)
+[12:18:22] [PROCESS] Calculating per-station metrics (all stations)...
+[12:18:22] [INFO]   → Computing per-station pair counts and temporal coverage (7.5GB memory available)...
+[12:18:22] [PROCESS] Analyzing per-station metrics for CODE (all stations)...
+[12:18:29] [DEBUG] Processing 814 unique stations...
+[12:18:30] [DEBUG] Computing date and partner statistics...
+[12:18:47] [DEBUG] Combining station statistics...
+[12:18:47] [DEBUG] Processed 100/814 stations...
+[12:18:47] [DEBUG] Processed 600/814 stations...
+[12:18:47] [DEBUG] Computing summary statistics...
+[12:18:47] [DEBUG] Completed per-station analysis for 814 stations
+[12:18:47] [SUCCESS] Full dataset analyzed: (165189605, 15)
+[12:19:08] [PROCESS] Finalizing analysis and generating comprehensive summary...
+[12:19:08] [INFO]   → Computing final statistics and summary metrics...
+[12:19:08] [INFO] Station overlap analysis not available, using comprehensive metadata for CODE: 814
+[12:19:08] [SUCCESS] Summary output saved: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/code_longspan/step_2_1_geospatial_processing.json
+[12:19:08] [SUCCESS] Detailed logs available in step_2_1_data_quality_validation.log
+[12:19:08] [INFO] Analysis Summary:
+[12:19:08] [INFO]   → Total unique stations across all centers: 814
+[12:19:08] [SUCCESS] ✓ No data quality warnings detected
+[12:19:08] [PROCESS] Creating station distances file for validation steps...
+[12:19:08] [INFO]   → Computing station-to-station distances for validation...
+[12:19:08] [INFO] Loaded 768 station coordinates
+[12:19:08] [INFO] Using all 768 stations for distance calculation
+[12:19:08] [PROCESS] Calculating 294,528 station pair distances...
+[12:19:08] [INFO]   Progress: 10,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 20,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 30,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 40,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 50,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 60,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 70,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 80,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 90,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 100,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 110,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 120,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 130,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 140,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 150,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 160,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 170,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 180,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 190,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 200,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 210,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 220,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 230,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 240,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 250,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 260,000/294,528 pairs
+[12:19:08] [INFO]   Progress: 270,000/294,528 pairs
+[12:19:09] [INFO]   Progress: 280,000/294,528 pairs
+[12:19:09] [INFO]   Progress: 290,000/294,528 pairs
+[12:19:09] [SUCCESS] Station distances file created: /Users/matthewsmawfield/www/TEP-GNSS/data/processed/step_2_1_station_distances.csv
+[12:19:09] [SUCCESS] Total station pairs: 294,528
+[12:19:09] [INFO] 
+[12:19:09] [SUCCESS] ================================================================================
+[12:19:09] [SUCCESS] 🎉 STEP 2.1 COMPLETED SUCCESSFULLY!
+[12:19:09] [SUCCESS] ================================================================================
+[12:19:09] [INFO] 
+[12:19:09] [INFO] 📊 FINAL RESULTS SUMMARY:
+[12:19:09] [INFO] 
+[12:19:09] [INFO] 🔍 STATION ANALYSIS CLARIFICATION:
+[12:19:09] [INFO]   • Raw station codes input: 814 (mix of 4-char and 9-char codes)
+[12:19:09] [INFO]   • Unique stations analyzed: 474 (after 4-char normalization)
+[12:19:09] [INFO]   • Stations with coordinates: 474 (100% of analyzed stations)
+[12:19:09] [INFO] 
+[12:19:09] [INFO] 📏 CRITICAL FOR DISTANCE CORRELATIONS:
+[12:19:09] [INFO]   • Total pairs with coordinates for BOTH stations: 165,189,605
+[12:19:09] [INFO]   • Pairs excluded due to missing coordinates: 0
+[12:19:09] [INFO]   • Distance analysis coverage: 100% (all pairs usable)
+[12:19:09] [INFO] 
+[12:19:09] [INFO] 📊 DATASET QUALITY:
+[12:19:09] [INFO]   • Data quality: EXCELLENT (no warnings)
+[12:19:09] [INFO]   • Station pairs for validation: 294,528 (all stations, no sampling)
+[12:19:09] [INFO] 
+[12:19:09] [INFO] 📁 OUTPUT FILES CREATED:
+[12:19:09] [INFO]   • 21GB enriched CSV: step_2_1_geospatial_code.csv
+[12:19:09] [INFO]   • JSON metadata: step_2_1_geospatial_processing.json
+[12:19:09] [INFO]   • Station distances: step_2_1_station_distances.csv
+[12:19:09] [INFO]   • Clean logs: step_2_1_code_longspan.log
+[12:19:09] [INFO] 
+[12:19:09] [SUCCESS] ✅ READY FOR STEP 2.2 - All data validated and complete!
+[12:19:09] [SUCCESS] ================================================================================

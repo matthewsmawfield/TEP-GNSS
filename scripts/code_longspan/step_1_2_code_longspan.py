@@ -155,7 +155,7 @@ def validate_coordinate_data():
 
 def create_step_2_0_summary():
     """Create Step 1.2 completion summary with definitive station counts"""
-    coord_file = Path("data/coordinates/step_1_1_station_coords_global.csv")
+    coord_file = Path(f"data/coordinates/{NAMESPACE}/step_1_1_station_coords_global.csv")
     
     if not coord_file.exists():
         print_status("Coordinate file not found for summary", "ERROR")
@@ -354,7 +354,7 @@ def audit_station_ids():
     set_step_logger(step_logger)
     print_status("Running comprehensive station ID audit...", "PROCESS")
 
-    coord_file = Path("data/coordinates/step_1_1_station_coords_global.csv")
+    coord_file = Path(f"data/coordinates/{NAMESPACE}/step_1_1_station_coords_global.csv")
     if not coord_file.exists():
         print_status("Coordinate file not found, cannot run audit.", "ERROR")
         return

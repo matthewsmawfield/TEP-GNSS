@@ -57,7 +57,7 @@ class TEPConfig:
 
         # Processing parameters
         'TEP_WORKERS': 14,  # Number of worker processes to use for parallel processing (optimized for comprehensive analysis)
-        'TEP_MEMORY_LIMIT_GB': 8.0,  # Memory limit in GB for data processing to prevent excessive RAM usage
+        'TEP_MEMORY_LIMIT_GB': 12.0,  # Memory limit in GB for data processing to prevent excessive RAM usage
         
         # Data parameters
         'TEP_MIN_STATIONS': 0,  # Minimum number of stations required for analysis (0 means no minimum)

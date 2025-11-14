@@ -4,8 +4,8 @@
 "Long-Term Stability and Geophysical Coupling of Temporal-Gravitational Signatures in GNSS: A 25-Year Confirmatory Analysis"
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.6 (Cairo)  
-**Date:** 5 November 2025  
+**Version:** v0.7 (Cairo)  
+**Date:** 14 November 2025  
 **Status:** Preprint
 
 ## Overview

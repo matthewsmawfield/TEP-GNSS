@@ -2358,16 +2358,19 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None, distance_
     max_anisotropy_samples = int(os.getenv('TEP_ANISOTROPY_SAMPLES', '10000'))  # Limit for memory
 
     # PERFORMANCE OPTIMIZATION: Streaming pair data collection with fixed memory limits
-    # DISABLED BY DEFAULT to prevent disk space issues
+    # REQUIRED FOR STEPS 2.1 & 2.2: Pair-level files needed for geospatial/temporal analysis
     consolidated_pair_data = []
-    write_pair_level = TEPConfig.get_bool('TEP_WRITE_PAIR_LEVEL', False)  # Changed from True to False
+    write_pair_level = TEPConfig.get_bool('TEP_WRITE_PAIR_LEVEL', True)  # Default TRUE for pipeline continuity
     max_memory_pairs = int(os.getenv('TEP_MAX_MEMORY_PAIRS', '100000'))  # Reduced from 500K to 100K
     
-    # Log memory optimization settings
+    # Log memory optimization settings and pipeline requirements
     if write_pair_level:
         step_logger.info("Pair-level CSV writing enabled (will use ~15-20 GB disk space)")
+        step_logger.info("Required for Steps 2.1 (Data Quality) and 2.2 (Geospatial/Temporal Analysis)")
     else:
         step_logger.info("Pair-level CSV writing is disabled (memory-optimized mode)")
+        step_logger.warning("WARNING: Steps 2.1 and 2.2 will FAIL without pair-level files!")
+        step_logger.warning("Set TEP_WRITE_PAIR_LEVEL=True in config to enable full pipeline")
     
     # Checkpoint/resume support (namespaced)
     checkpoint_dir = ROOT / "results/tmp" / NAMESPACE
@@ -3050,7 +3053,7 @@ def main():
     
     # Load coordinates
     print_status("Loading station coordinates...", "PROCESS")
-    coords_file = ROOT / "data/coordinates/step_1_1_station_coords_global.csv"
+    coords_file = ROOT / f"data/coordinates/{NAMESPACE}/step_1_1_station_coords_global.csv"
     if not coords_file.exists():
         print_status(f"Coordinate file not found: {coords_file}", "ERROR")
         return False
@@ -3062,24 +3065,7 @@ def main():
         print_status(f"Error loading coordinates: {e}", "ERROR")
         return False
 
-    # Verify that Step 1.1 has been run and generated clock files
-    print_status("Verifying Step 1.1 data acquisition...", "PROCESS")
-    # This is a basic check. More robust checks should be in Step 1.2
-    expected_centers = TEPConfig.DEFAULTS.get('analysis.analysis_centers', ['code', 'igs_combined', 'esa_final'])
-    missing_files_any_center = False
-    for center in expected_centers:
-        data_dir = ROOT / "data" / "raw" / center
-        if not data_dir.exists() or not any(data_dir.glob("*.CLK.gz")):
-            print_status(f"  No CLK files found for {center} in {data_dir}", "ERROR")
-            missing_files_any_center = True
-    
-    if missing_files_any_center:
-        print_status("CRITICAL: Step 1.1 data acquisition not completed or failed. Please run Step 1.1 first.", "ERROR")
-        return False
-    else:
-        print_status("Step 1.1 data acquisition verified.", "SUCCESS")
-    
-    # Process analysis centers via argparse
+    # Process analysis centers via argparse (do this BEFORE validation)
     import argparse
     parser = argparse.ArgumentParser(description='Step 3: Correlation Analysis')
     parser.add_argument('--center', choices=['code', 'igs_combined', 'esa_final'], nargs='*',
@@ -3088,6 +3074,24 @@ def main():
     centers = ['code']  # Force CODE-only for exploratory long-span
     if args.center:
         centers = [c for c in args.center if c.lower() == 'code'] or ['code']
+    
+    # Verify that Step 1.1 has been run for the centers we're processing
+    print_status("Verifying Step 1.1 data acquisition...", "PROCESS")
+    missing_files_any_center = False
+    for center in centers:
+        data_dir = ROOT / "data" / "raw" / center
+        if not data_dir.exists() or not any(data_dir.glob("*.CLK.gz")):
+            print_status(f"  No CLK files found for {center} in {data_dir}", "ERROR")
+            missing_files_any_center = True
+        else:
+            clk_count = len(list(data_dir.glob("*.CLK.gz")))
+            print_status(f"  Found {clk_count} CLK files for {center}", "SUCCESS")
+    
+    if missing_files_any_center:
+        print_status("CRITICAL: Step 1.1 data acquisition not completed for requested centers. Please run Step 1.1 first.", "ERROR")
+        return False
+    else:
+        print_status("Step 1.1 data acquisition verified for requested centers.", "SUCCESS")
     
     # Setup output directories (namespaced)
     output_dir = ROOT / 'results/outputs' / NAMESPACE

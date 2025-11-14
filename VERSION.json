@@ -1,17 +1,18 @@
 {
-  "version": "0.3",
+  "version": "0.7",
   "codename": "Cairo",
-  "date": "2025-11-04",
+  "date": "2025-11-06",
   "paper": "2",
   "changes": [
-    "Removed fabricated hemisphere stratification analysis claims (analysis was never performed)",
-    "Removed partial correlation analysis table showing unperformed 'To be computed' analyses",
-    "Corrected manuscript to only report completed analyses with verified data",
-    "Improved scientific rigor by removing speculative future analyses from results sections"
+    "Complete 25-year CODE data acquisition pipeline (2000-2025, 9,313 days)",
+    "Enhanced download provenance logging with file sizes and URLs",
+    "Adaptive file size thresholds for old format (.CLK.Z, 400KB) vs new format (.CLK.gz, 1MB)",
+    "Legacy format fallback support for pre-2022 CODE files",
+    "Comprehensive error handling and logging for data acquisition"
   ],
-  "previous_version": "0.2",
+  "previous_version": "0.3",
   "previous_date": "2025-11-04",
-  "description": "Corrections to remove fabricated analyses and improve scientific accuracy",
+  "description": "Complete data acquisition pipeline with enhanced provenance tracking",
   "impact": "Enhanced manuscript integrity by ensuring all reported analyses have been performed",
   "short_description": "Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. Extended analysis of 165.2M measurements over 25.3 years confirms temporal stability and reveals long-period geophysical coupling including 18.6-year nutation cycle.",
   "long_description": "This study extends the TEP-GNSS analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pair measurements. The temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.640, p < 10⁻⁸) and enhanced statistical power for planetary event detection (72 events detected, 34 surviving Bonferroni correction). Strong orbital velocity coupling is confirmed (r = -0.864, p < 10⁻¹⁰) with enhanced temporal resolution.\n\nWebsite: https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/",

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.6) | Matthew Lukin Smawfield</title>
+    <title>Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.7) | Matthew Lukin Smawfield</title>
     
     <!-- Primary Meta Tags -->
     <meta name="description" content="Confirmatory study extending the multi-center GNSS analysis to 25.3 years using CODE data (165M+ pairs). Confirms temporal stability of orbital velocity correlation and reveals long-period geophysical coupling including 18.6-year nutation cycle.">
@@ -11,7 +11,7 @@
     <meta name="author" content="Matthew Lukin Smawfield">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="language" content="English">
-    <meta name="title" content="Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.6) | Matthew Lukin Smawfield">
+    <meta name="title" content="Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.7) | Matthew Lukin Smawfield">
     <meta name="subject" content="Theoretical Physics">
     <meta name="coverage" content="Worldwide">
     <meta name="classification" content="Education, Science, Research, Physics">
@@ -33,8 +33,8 @@
     <meta property="og:site_name" content="TEP-GNSS">
     <meta property="article:author" content="Matthew Lukin Smawfield">
     <meta property="article:published_time" content="2025-11-03T00:00:00Z">
-    <meta property="article:modified_time" content="2025-11-05T00:00:00Z">
-    <meta property="og:updated_time" content="2025-11-05T00:00:00Z">
+    <meta property="article:modified_time" content="2025-11-14T00:00:00Z">
+    <meta property="og:updated_time" content="2025-11-14T00:00:00Z">
     <meta property="article:section" content="Physics">
     <meta property="article:tag" content="GNSS">
     <meta property="article:tag" content="Atomic Clocks">
@@ -71,7 +71,7 @@
     <meta name="citation_journal_title" content="Preprint">
     <meta name="citation_doi" content="10.5281/zenodo.17517141">
     <meta name="citation_abstract_html_url" content="https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/">
-    <meta name="citation_pdf_url" content="https://zenodo.org/records/17531050/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.6_Cairo.pdf?download=1">
+    <meta name="citation_pdf_url" content="https://zenodo.org/records/17608029/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.7_Cairo.pdf?download=1">
     <meta name="citation_language" content="en">
     <meta name="citation_keywords" content="TEP-GNSS; GNSS; atomic clocks; distance correlations; phase coherence; temporal equivalence principle">
     
@@ -138,7 +138,7 @@
           "https://orcid.org/0009-0003-8219-3159"
         ]
       },
-        "version": "v0.6 (Cairo)",
+        "version": "v0.7 (Cairo)",
       "publisher": {
         "@type": "Organization",
         "name": "Independent Research",
@@ -503,6 +503,39 @@
         table tr:nth-child(even) {
             background-color: rgba(73, 87, 115, 0.03);
         }
+
+        /* Standardized table class for consistent styling across components */
+        .std-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin: 20px 0 !important;
+            font-size: 13px;
+        }
+
+        .std-table th, .std-table td {
+            padding: 8px 12px !important;
+            border: 1px solid #495773 !important;
+            text-align: left !important;
+        }
+
+        .std-table th {
+            background-color: rgba(73, 87, 115, 0.1) !important;
+            font-weight: bold !important;
+        }
+
+        .std-table tr:nth-child(even) {
+            background-color: rgba(73, 87, 115, 0.03) !important;
+        }
+
+        .table-responsive { overflow-x: auto; }
+
+        .std-table caption {
+            caption-side: top;
+            text-align: left;
+            font-weight: bold;
+            color: #495773;
+            padding-bottom: 6px;
+        }
         
         .references {
             font-size: 14px;
@@ -734,7 +767,13 @@
                 .abstract h2 {
                     break-after: avoid;
                 }
-                
+                /* Ensure tables print cleanly */
+                .std-table { page-break-inside: avoid; break-inside: avoid; }
+                .std-table thead { display: table-header-group; }
+                .std-table tfoot { display: table-footer-group; }
+                .std-table tr { break-inside: avoid; }
+                .std-table th { background-color: #e6e6e6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                .std-table tr:nth-child(even) { background-color: transparent !important; }
             }
     </style>
   </head>
@@ -743,9 +782,9 @@
         <img src="./public/header-image.webp" alt="Abstract representation of GNSS clock correlations and temporal-gravitational patterns" class="header-image" loading="eager">
         <h1 class="title">Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks</h1>
         <div class="author">Matthew Lukin Smawfield</div>
-        <div class="version">Version: v0.6 (Cairo)</div>
-        <div class="date">First published: 3 November 2025 · Last updated: 5 November 2025</div>
-        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17517141">10.5281/zenodo.17517141</a><a class="pdf-link no-print" href="https://zenodo.org/records/17531050/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.6_Cairo.pdf?download=1" aria-label="Download PDF (v0.6)" title="Download PDF (v0.6)">
+        <div class="version">Version: v0.7 (Cairo)</div>
+        <div class="date">First published: 3 November 2025 · Last updated: 14 November 2025</div>
+        <div class="doi">DOI: <a href="https://doi.org/10.5281/zenodo.17517141">10.5281/zenodo.17517141</a><a class="pdf-link no-print" href="https://zenodo.org/records/17608029/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.7_Cairo.pdf?download=1" aria-label="Download PDF (v0.7)" title="Download PDF (v0.7)">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
             </svg>
@@ -836,6 +875,23 @@
             
             // Re-initialize any other scripts that depend on content
             // Add any additional initialization here as needed
+            standardizeTables();
+        }
+        // Standardize all tables inside manuscript content for consistent styling and printability
+        function standardizeTables() {
+            const contentDiv = document.getElementById('manuscript-content');
+            if (!contentDiv) return;
+            const tables = contentDiv.querySelectorAll('table');
+            tables.forEach((t) => {
+                t.classList.add('std-table');
+                // Wrap in a responsive container if not already wrapped
+                if (!t.parentElement.classList.contains('table-responsive')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'table-responsive';
+                    t.parentNode.insertBefore(wrapper, t);
+                    wrapper.appendChild(t);
+                }
+            });
         }
         
         // Copy to clipboard function (for code examples)
@@ -861,7 +917,7 @@
     <script>
         // Store the original title
         const originalTitle = document.title;
-        const pdfFilename = "Smawfield_2025_GlobalTimeEchoes_25Year_v0.6_Cairo.pdf";
+        const pdfFilename = "Smawfield_2025_GlobalTimeEchoes_25Year_v0.7_Cairo.pdf";
         
         // Set PDF filename only before printing
         window.addEventListener('beforeprint', function() {

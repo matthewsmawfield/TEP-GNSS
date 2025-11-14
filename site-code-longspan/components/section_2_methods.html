@@ -18,8 +18,8 @@
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Temporal Coverage</strong></td>
-        <td style="padding: 8px; border: 1px solid #495773;">February 27, 2000 to June 30, 2025 (9,221 days analyzed; 9,255 calendar days)<br>
-        <span style="font-size: 0.9em; color: #666;">Note: Different analyses use slightly different temporal windows due to edge effects, windowing requirements, and data quality filtering (range: 9,221-9,270 days).</span></td>
+        <td style="padding: 8px; border: 1px solid #495773;">March 1, 2000 to June 30, 2025 (9,218 days analyzed; 9,253 calendar days)<br>
+        <span style="font-size: 0.9em; color: #666;">Note: Different analyses use slightly different temporal windows due to edge effects, windowing requirements, and data quality filtering (range: 9,218-9,270 days).</span></td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Sampling Rate</strong></td>
@@ -27,15 +27,15 @@
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Station Count</strong></td>
-        <td style="padding: 8px; border: 1px solid #495773;">814 unique receivers</td>
+        <td style="padding: 8px; border: 1px solid #495773;">474 unique receivers (814 total codes including 4-char/9-char variants)</td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Total Station-Days</strong></td>
-        <td style="padding: 8px; border: 1px solid #495773;">1,825,509</td>
+        <td style="padding: 8px; border: 1px solid #495773;">1,574,861</td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Total Station Pairs</strong></td>
-        <td style="padding: 8px; border: 1px solid #495773;">165,198,849</td>
+        <td style="padding: 8px; border: 1px solid #495773;">165,189,605</td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Clock Solution Precision</strong></td>
@@ -45,7 +45,9 @@
   </table>
 </div>
 <h4>2.1.2 Station Distribution</h4>
-<p>The 814 GNSS receivers provide global coverage across all continents with concentrations in:</p>
+<p><strong>Station Code Methodology:</strong> The analysis database contains 814 total station codes, representing 474 unique physical receivers. Many stations appear with both 4-character legacy codes (e.g., "VILL") and 9-character extended codes (e.g., "VILL00ESP") in the coordinate catalog. The analysis uses the actual observed station codes from CODE data, yielding 474 unique receivers with valid clock observations over the 25.3-year period.</p>
+
+<p>The 474 unique GNSS receivers provide global coverage across all continents with concentrations in:</p>
 
 <div style="overflow-x: auto; margin: 20px 0;">
   <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
@@ -59,37 +61,37 @@
     <tbody>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;">North America</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">287</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">35.3%</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">167</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">35.2%</td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;">Europe</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">198</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">115</td>
         <td style="padding: 8px; border: 1px solid #495773; text-align: right;">24.3%</td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;">Asia-Pacific</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">156</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">91</td>
         <td style="padding: 8px; border: 1px solid #495773; text-align: right;">19.2%</td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;">South America</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">89</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">10.9%</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">52</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">11.0%</td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;">Africa</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">48</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">28</td>
         <td style="padding: 8px; border: 1px solid #495773; text-align: right;">5.9%</td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;">Antarctica</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">36</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">21</td>
         <td style="padding: 8px; border: 1px solid #495773; text-align: right;">4.4%</td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.05); font-weight: bold;">
         <td style="padding: 8px; border: 1px solid #495773;">Total</td>
-        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">814</td>
+        <td style="padding: 8px; border: 1px solid #495773; text-align: right;">474</td>
         <td style="padding: 8px; border: 1px solid #495773; text-align: right;">100%</td>
       </tr>
     </tbody>
@@ -120,7 +122,7 @@
 <h4>2.2.3 Spatial Binning</h4>
 <p>Station pairs were categorized by:</p>
 <ul>
-  <li><strong>Distance:</strong> 40 logarithmically-spaced bins from 1-20,000 km</li>
+  <li><strong>Distance:</strong> ≈30 logarithmically-spaced bins from 1-20,000 km (29 bins for azimuth-averaged fits)</li>
   <li><strong>Azimuth:</strong> 8 compass sectors (N, NE, E, SE, S, SW, W, NW)</li>
   <li><strong>3D Orientation:</strong> 16 spherical harmonic bins for full 3D analysis</li>
 </ul>
@@ -150,26 +152,25 @@
 <h4>2.3.3 Planetary Event Analysis</h4>
 <p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>
 
-<p>For each planetary alignment (opposition/conjunction), we pre-declare <strong>±120 days as the primary analysis window</strong>, with additional window sizes (±60, ±90, ±180, ±240 days) reported as sensitivity analyses:</p>
+<p>For each planetary alignment (opposition/conjunction), we pre-declare ±120 days as the primary analysis window, with additional window sizes (±60, ±90, ±180, ±240 days) reported as sensitivity analyses:</p>
 <ol>
 <li><strong>Primary Window:</strong> ±120 days (pre-registered as primary)</li>
 <li><strong>Sensitivity Windows:</strong> ±60, ±90, ±180, ±240 days (reported as robustness checks; no inferential claims)</li>
-<li><strong>Gaussian Pulse Fitting:</strong> Fit Gaussian model to event-locked coherence changes</li>
-<li><strong>Significance Testing:</strong> Amplitude/standard error ratio (σ level)</li>
-<li><strong>Multiple Testing Correction:</strong> Bonferroni and FDR corrections applied across complete event set</li>
-<li><strong>Mass-Scaled Enhancement:</strong> Enhancement / (Planet Mass / Earth Mass)</li>
-</ol>
-
-<p>The mass-scaled enhancement metric normalizes the observed response by the planet's gravitational influence, allowing empirical assessment of mass-dependence patterns.</p>
+  <li><strong>Gaussian Pulse Fitting:</strong> Fit Gaussian model to event-locked coherence changes</li>
+  <li><strong>Significance Testing:</strong> Amplitude/standard error ratio (σ level)</li>
+  <li><strong>Multiple Testing Correction:</strong> Bonferroni and FDR corrections applied across complete event set</li>
+  <li><strong>Amplitude Metric:</strong> Modulation depth = |amplitude| / (|baseline| + |amplitude|) × 100% (bounded 0–100%)</li>
+  <li><strong>Gravitational Scaling Tests:</strong> Correlation of observed amplitudes with GM/r² predictors (Pearson, Spearman)</li>
+  </ol>
 
 <h4>2.3.4 Geophysical Coupling Analysis</h4>
 <p><strong>Chandler Wobble:</strong></p>
-<ul>
-<li>Period search: 420-440 days (2-day increments)</li>
-<li>Method: Sinusoidal curve fitting to EW/NS ratio vs phase</li>
-<li>Phase resolution: 36 bins (10° increments)</li>
-<li>Coverage: 21+ complete cycles (25.3 years / 433 days)</li>
-</ul>
+  <ul>
+  <li>Period search: 420-440 days (2-day increments)</li>
+  <li>Method: Sinusoidal curve fitting to EW/NS ratio vs phase</li>
+  <li>Phase resolution: 36 bins (10° increments)</li>
+  <li>Coverage: ~21.2 complete cycles (9,218 days / 436 days)</li>
+  </ul>
 
 <p><strong>Nutation:</strong></p>
 <ul>
@@ -195,10 +196,10 @@
   <li><strong>Bonferroni:</strong> α_corrected = 0.05/N_tests</li>
   <li><strong>False Discovery Rate:</strong> Benjamini-Hochberg procedure</li>
   <li><strong>Permutation Testing:</strong> Empirical p-values from 10,000 iterations</li>
-</ul>
-<p><strong>Clarification:</strong> Multi-window analyses are used for robustness only; primary inferences and multiplicity corrections are computed exclusively using the pre-specified ±120-day window.</p>
-<h4>2.4.3 Cross-Validation</h4>
-<ul>
+ </ul>
+<p><strong>Clarification:</strong> Planetary event inference follows the §2.3.3 policy; multi‑window analyses are robustness‑only.</p>
+ <h4>2.4.3 Cross-Validation</h4>
+ <ul>
   <li><strong>Leave-One-Station-Out (LOSO):</strong> Verify robustness to single station removal</li>
   <li><strong>Temporal Holdout:</strong> Train on 2000-2020, test on 2021-2025</li>
   <li><strong>Bootstrap Resampling:</strong> 1,000 iterations for confidence intervals</li>

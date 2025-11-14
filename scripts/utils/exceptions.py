@@ -137,7 +137,7 @@ class SafeErrorHandler:
                    ConnectionError, TimeoutError) as e:
                 last_error = e
                 if attempt == 0:
-                    logger_func(f"{error_message}: {e}", "WARNING")
+                    print_status(f"{error_message}: {e}", "WARNING")
                 
                 if attempt < max_retries:
                     print_status(f"Retrying network operation (attempt {attempt + 2}/{max_retries + 1})", "INFO")
