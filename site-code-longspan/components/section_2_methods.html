@@ -115,10 +115,13 @@
 <li><strong>Cross-Power Spectral Density:</strong> Complex CSD computed using Welch's method</li>
 <li><strong>Frequency Band Selection:</strong> Analysis focused on 10-500 µHz (periods: 33 minutes to 28 hours)</li>
 <li><strong>Phase-Coherent Extraction:</strong> Magnitude-weighted circular averaging of complex phases</li>
-<li><strong>Correlation Metric:</strong> Band-averaged magnitude with representative phase</li>
-</ol>
+  <li><strong>Correlation Metric:</strong> Band-averaged magnitude with representative phase</li>
+ </ol>
 
 <p>This frequency-domain approach preserves phase relationships between station pairs while extracting correlation strength, enabling detection of field-mediated timing correlations predicted by TEP theory. The method is identical to that validated across three independent analysis centers (CODE, IGS, ESA) in the original multi-center study.</p>
+
+<p>Operational GNSS clock products are generated under an implicit objective of network synchronization: analysis centers estimate and remove offsets, drifts, and other deterministic structure so that clocks agree as closely as possible. This makes absolute clock amplitudes strongly processing-dependent, whereas residual phase-coherent structure in the cross-spectral domain is less directly targeted by these corrections. For this reason, all primary distance-structure and orbital-dynamics inferences in this paper are based on phase-coherence metrics rather than raw clock amplitude excursions, which may already have been partially absorbed into analysis-center corrections.</p>
+
 <h4>2.2.3 Spatial Binning</h4>
 <p>Station pairs were categorized by:</p>
 <ul>

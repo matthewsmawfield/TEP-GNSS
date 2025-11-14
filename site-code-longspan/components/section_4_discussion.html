@@ -350,13 +350,15 @@
 
 <h5>Processing Center Correction Considerations</h5>
 
-<p>GNSS analysis centers (CODE, IGS, ESA) apply systematic error corrections during clock estimation. If these centers detect and partially correct for planetary gravitational effects without recognizing their physical origin, several observations become explicable:</p>
+<p>GNSS analysis centers (CODE, IGS, ESA) apply systematic error corrections during clock estimation with the explicit goal of producing a self-consistent, globally synchronized clock ensemble. In practice, this means that structured amplitude deviations in individual clocks are prime candidates for removal or attenuation, whereas subtle correlation structure in inter-station phase relationships is less directly targeted by standard correction pipelines. If these centers detect and partially correct for planetary gravitational effects without recognizing their physical origin, several observations become explicable:</p>
 
 <ul>
   <li><strong>Observed amplitudes:</strong> May represent residuals from incomplete corrections rather than full physical signal</li>
   <li><strong>Multi-center correlation (R²=0.920-0.970):</strong> Similar correction strategies across centers produce consistent residual patterns</li>
   <li><strong>Temporal variations:</strong> Changes in processing algorithms over 25-year period may affect amplitude estimates</li>
 </ul>
+
+<p>This framework naturally reconciles two key findings of this study: (i) the absence of GM/r² scaling in planetary event amplitudes, and (ii) the robust detection of distance-structured correlations and orbital modulation in phase-coherence metrics. If amplitude-like components of the underlying signal are preferentially removed by analysis-center corrections, while residual coherence structure survives in the cross-spectral domain, then one expects weak or distorted amplitude scaling but persistent, reproducible patterns in the correlation field. The methodology adopted here—focusing primary inferences on phase-coherence and distance structure, and treating absolute modulation depths as processing-dependent—follows directly from this consideration.</p>
 
 <h5>Discriminating Tests Required</h5>
 

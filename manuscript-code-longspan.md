@@ -14,7 +14,7 @@ Following the multi-center study's detection of distance-structured correlations
 
 Six independent signatures converge: (1) Spatial anisotropy persists with EW>NS (ratio=2.16, strength=1.981±0.23, p<10⁻¹⁵), (2) anisotropy ratio correlates strongly with orbital velocity (r=-0.864, p<10⁻¹¹, 6.6σ) across 25 solar orbits, (3) 47% of planetary events survive ultra-conservative Bonferroni correction (34/156), (4) coupling to 18.6-year lunar nutation (R²=0.640, p<10⁻⁸) and semiannual nutation (R²=0.904), (5) network synchronization (score=0.582) replicates multi-center range (0.579-0.624), (6) null results for solar rotation (27-day) and lunar standstill demonstrate selectivity for orbital-gravitational phenomena over surface features.
 
-Observed patterns confirm key a priori TEP predictions: correlation length λ=1,000-10,000 km (observed: 4,201±1,967 km), exponential decay preferred over power-law (ΔAIC=12.8), velocity-dependent anisotropy (r=-0.864), and geometric alignment (EW/NS=2.16). The absence of GM/r² scaling in planetary event amplitudes suggests either processing-induced transfer function distortion (testable via raw carrier phase analysis) or novel coupling physics. Raw data validation, multi-constellation replication, and quantitative TEP predictions represent critical next steps.
+Observed patterns confirm key a priori TEP predictions: correlation length λ=1,000-10,000 km (observed: 4,201±1,967 km), exponential models remain competitive with the best spatial kernel (exponential ΔAIC=12.8 relative to the Gaussian) and strongly outperform simple power-law forms (power-law ΔAIC > 30), velocity-dependent anisotropy (r=-0.864), and geometric alignment (EW/NS=2.16). The absence of GM/r² scaling in planetary event amplitudes suggests either processing-induced transfer function distortion (testable via raw carrier phase analysis) or novel coupling physics. Raw data validation, multi-constellation replication, and quantitative TEP predictions represent critical next steps.
 
 †Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Zenodo. https://doi.org/10.5281/zenodo.17127229
 
@@ -288,9 +288,11 @@ For each station pair (i,j) with common observation epochs, phase-coherent corre
 
 - **Phase-Coherent Extraction:** Magnitude-weighted circular averaging of complex phases
 
-- **Correlation Metric:** Band-averaged magnitude with representative phase
+  - **Correlation Metric:** Band-averaged magnitude with representative phase
 
 This frequency-domain approach preserves phase relationships between station pairs while extracting correlation strength, enabling detection of field-mediated timing correlations predicted by TEP theory. The method is identical to that validated across three independent analysis centers (CODE, IGS, ESA) in the original multi-center study.
+
+Operational GNSS clock products are generated under an implicit objective of network synchronization: analysis centers estimate and remove offsets, drifts, and other deterministic structure so that clocks agree as closely as possible. This makes absolute clock amplitudes strongly processing-dependent, whereas residual phase-coherent structure in the cross-spectral domain is less directly targeted by these corrections. For this reason, all primary distance-structure and orbital-dynamics inferences in this paper are based on phase-coherence metrics rather than raw clock amplitude excursions, which may already have been partially absorbed into analysis-center corrections.
 
 #### 2.2.3 Spatial Binning
 
@@ -1158,13 +1160,15 @@ The lack of correlation between observed GPS coherence modulations and GM/r² sc
 
 Processing Center Correction Considerations
 
-GNSS analysis centers (CODE, IGS, ESA) apply systematic error corrections during clock estimation. If these centers detect and partially correct for planetary gravitational effects without recognizing their physical origin, several observations become explicable:
+GNSS analysis centers (CODE, IGS, ESA) apply systematic error corrections during clock estimation with the explicit goal of producing a self-consistent, globally synchronized clock ensemble. In practice, this means that structured amplitude deviations in individual clocks are prime candidates for removal or attenuation, whereas subtle correlation structure in inter-station phase relationships is less directly targeted by standard correction pipelines. If these centers detect and partially correct for planetary gravitational effects without recognizing their physical origin, several observations become explicable:
 
   - **Observed amplitudes:** May represent residuals from incomplete corrections rather than full physical signal
 
   - **Multi-center correlation (R²=0.920-0.970):** Similar correction strategies across centers produce consistent residual patterns
 
   - **Temporal variations:** Changes in processing algorithms over 25-year period may affect amplitude estimates
+
+This framework naturally reconciles two key findings of this study: (i) the absence of GM/r² scaling in planetary event amplitudes, and (ii) the robust detection of distance-structured correlations and orbital modulation in phase-coherence metrics. If amplitude-like components of the underlying signal are preferentially removed by analysis-center corrections, while residual coherence structure survives in the cross-spectral domain, then one expects weak or distorted amplitude scaling but persistent, reproducible patterns in the correlation field. The methodology adopted here—focusing primary inferences on phase-coherence and distance structure, and treating absolute modulation depths as processing-dependent—follows directly from this consideration.
 
 Discriminating Tests Required
 
