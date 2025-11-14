@@ -410,8 +410,6 @@ For each planetary alignment (opposition/conjunction), we pre-declare ±120 days
 
   - **Leave-One-Station-Out (LOSO):** Verify robustness to single station removal
 
-  - **Temporal Holdout:** Train on 2000-2020, test on 2021-2025
-
   - **Bootstrap Resampling:** 1,000 iterations for confidence intervals
 
 #### 2.4.4 Leveraging Multi-Center Validation
@@ -429,22 +427,6 @@ Adopted from Paper 1 Validation Framework:
   - **Hemisphere stratification:** Identical calendar phasing in Northern and Southern hemispheres (perihelion peak)
 
   - **Bootstrap validation:** LOSO/LODO (Leave-One-Day-Out) robustness confirmed
-
-**New Long-Baseline Validation:** To address the extended temporal coverage, we add specific validation for temporal stability:
-
-Temporal Holdout Validation (2021-2025):
-
-  - **Training period:** 2000-2020 (20.8 years, 7,594 days)
-
-  - **Test period:** 2021-2025 (4.5 years, 1,624 days)
-
-  - **Validation results:** All core signatures replicate with p < 10⁻⁵ stability
-
-  - **Anisotropy stability:** EW/NS ratio variation within 3% of training predictions
-
-  - **Orbital coupling persistence:** r = -0.842 in test period vs r = -0.864 in training
-
-**Key Insight:** The temporal holdout validation confirms that the phenomenology documented in Paper 1 remains stable across the extended baseline, providing strong evidence against time-varying systematic artifacts. All core signatures (anisotropy, orbital coupling, event responses) demonstrate remarkable temporal stability, supporting the robustness of the underlying effects.
 
 ## 3. Results: Multi-Signature Convergence Across Decadal Timescales
 

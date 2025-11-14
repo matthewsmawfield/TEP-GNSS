@@ -204,7 +204,6 @@
  <h4>2.4.3 Cross-Validation</h4>
  <ul>
   <li><strong>Leave-One-Station-Out (LOSO):</strong> Verify robustness to single station removal</li>
-  <li><strong>Temporal Holdout:</strong> Train on 2000-2020, test on 2021-2025</li>
   <li><strong>Bootstrap Resampling:</strong> 1,000 iterations for confidence intervals</li>
 </ul>
 
@@ -222,17 +221,3 @@
 </ul>
 </div>
 
-<p><strong>New Long-Baseline Validation:</strong> To address the extended temporal coverage, we add specific validation for temporal stability:</p>
-
-<div style="background-color: rgba(240,248,255,0.8); border: 1px solid #4682B4; padding: 15px; margin: 15px 0; border-radius: 4px;">
-<h5 style="margin-top: 0; color: #2C5F77;">Temporal Holdout Validation (2021-2025):</h5>
-<ul style="margin-bottom: 0;">
-  <li><strong>Training period:</strong> 2000-2020 (20.8 years, 7,594 days)</li>
-  <li><strong>Test period:</strong> 2021-2025 (4.5 years, 1,624 days)</li>
-  <li><strong>Validation results:</strong> All core signatures replicate with p < 10⁻⁵ stability</li>
-  <li><strong>Anisotropy stability:</strong> EW/NS ratio variation within 3% of training predictions</li>
-  <li><strong>Orbital coupling persistence:</strong> r = -0.842 in test period vs r = -0.864 in training</li>
-</ul>
-</div>
-
-<p><strong>Key Insight:</strong> The temporal holdout validation confirms that the phenomenology documented in Paper 1 remains stable across the extended baseline, providing strong evidence against time-varying systematic artifacts. All core signatures (anisotropy, orbital coupling, event responses) demonstrate remarkable temporal stability, supporting the robustness of the underlying effects.</p>
