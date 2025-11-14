@@ -1,0 +1,135 @@
+<h2>6. Analysis Package</h2>
+<p style="font-size: 13px; color: #666; font-style: italic; margin-bottom: 15px;">Complete Reproducible Pipeline for 25-Year Long-Baseline Analysis</p>
+
+<p>This work provides a complete, reproducible 5-step pipeline for testing TEP predictions using 25.3 years of GNSS data (2000-2025), extending the multi-center study to investigate decadal stability and long-period phenomena:</p>
+
+<div class="experimental-section">
+    <h2>Pipeline Overview</h2>
+    <p style="font-size: 13px; color: #666; margin: 8px 0 16px 0; font-style: italic;">*Optimized for local high-performance computing with extended temporal coverage*</p>
+    
+    <div style="border: 1px solid rgba(73, 87, 115, 0.25); background: rgba(73, 87, 115, 0.05); border-radius: 8px; padding: 12px 14px; margin: 12px 0;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: #2D0140;">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <div style="flex: 1;">
+                <div style="color: #2D0140; font-weight: 600; font-size: 14px; margin-bottom: -2px;">Complete source code & documentation</div>
+                <a href="https://github.com/matthewsmawfield/TEP-GNSS" target="_blank" rel="noopener noreferrer" style="color: #495773; font-size: 12px; text-decoration: none;">https://github.com/matthewsmawfield/TEP-GNSS</a>
+            </div>
+        </div>
+    </div>
+    
+    <h3>Setup: Clone Repository <span style="background-color: rgba(73, 87, 115, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">~1 minute</span></h3>
+    <div class="error-budget">
+Command: <code style="background: rgba(73, 87, 115, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">git clone git@github.com:matthewsmawfield/TEP-GNSS.git</code>
+        <button type="button" aria-label="Copy command" onclick="copyToClipboard('git clone git@github.com:matthewsmawfield/TEP-GNSS.git', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+        </button><br>
+    </div>
+    <script>
+    function copyToClipboard(text, button) {
+        navigator.clipboard.writeText(text).then(() => {
+            button.style.color = '#2D0140';
+            button.style.opacity = '1';
+            button.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                button.style.color = '#495773';
+                button.style.opacity = '0.7';
+                button.style.transform = 'scale(1)';
+            }, 800);
+        });
+    }
+    </script>
+    <p>Purpose: Obtain the full analysis code locally to run the 25-year long-baseline pipeline and reproduce results.</p>
+
+    <h3>Complete 5-Step Pipeline</h3>
+    <p>Sequential processing from raw GNSS products to comprehensive temporal analysis:</p>
+    
+    <h4>Execution Commands <span style="background-color: rgba(73, 87, 115, 0.1); color: #2D0140; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">Primary Options</span></h4>
+    <div class="error-budget" style="margin: 15px 0;">
+        <p style="margin: 5px 0; font-size: 13px;"><strong>Complete pipeline (default 2000-2025):</strong></p>
+        <code style="background: rgba(73, 87, 115, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py</code>
+        <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+        </button><br>
+        <br>
+        <p style="margin: 5px 0; font-size: 13px;"><strong>Custom date range:</strong></p>
+        <code style="background: rgba(73, 87, 115, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py --date-start 2000-03-01 --date-end 2025-06-30</code>
+        <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py --date-start 2000-03-01 --date-end 2025-06-30', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+        </button><br>
+        <br>
+        <p style="margin: 5px 0; font-size: 13px;"><strong>View all options:</strong></p>
+        <code style="background: rgba(73, 87, 115, 0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px;">python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py --help</code>
+        <button type="button" aria-label="Copy command" onclick="copyToClipboard('python scripts/code_longspan/code_longspan_steps_1_1_to_2_2.py --help', this)" title="Copy command" style="margin-left: 6px; padding: 4px; border: 1px solid rgba(73, 87, 115, 0.2); border-radius: 4px; background: rgba(73, 87, 115, 0.05); color: #495773; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(73, 87, 115, 0.1)'; this.style.borderColor='rgba(73, 87, 115, 0.3)'" onmouseout="this.style.background='rgba(73, 87, 115, 0.05)'; this.style.borderColor='rgba(73, 87, 115, 0.2)'">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div style="margin: 15px 0; padding: 10px; background: rgba(73, 87, 115, 0.05); border-radius: 6px;">
+        <h4 style="margin: 0 0 10px 0; color: #2D0140;">Pipeline Steps (1.1 → 1.2 → 2.0 → 2.1 → 2.2):</h4>
+        <ol style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+            <li><strong>Step 1.1:</strong> Data acquisition and preprocessing from CODE GNSS archive</li>
+            <li><strong>Step 1.2:</strong> Quality control and coordinate processing</li>
+            <li><strong>Step 2.0:</strong> Correlation analysis and aggregate statistics</li>
+            <li><strong>Step 2.1:</strong> Geospatial processing and pair-level analysis</li>
+            <li><strong>Step 2.2:</strong> Comprehensive temporal and astronomical analysis</li>
+        </ol>
+        <div style="margin: 15px 0; padding: 10px; background: rgba(44, 83, 131, 0.05); border: 1px solid rgba(44, 83, 131, 0.2); border-radius: 6px;">
+            <h4 style="margin: 0 0 10px 0; color: #2C5F77; font-size: 13px;">Analysis Outputs:</h4>
+            <ul style="margin: 8px 0; padding-left: 20px; font-size: 12px;">
+                <li><strong>Temporal Coverage:</strong> 25.3 years (1 March 2000 to 30 June 2025)</li>
+                <li><strong>Station Network:</strong> 474 unique GNSS receivers</li>
+                <li><strong>Pair Analysis:</strong> 165,189,605 station pairs</li>
+                <li><strong>Long-Period Detection:</strong> 18.6-year nutation, Chandler wobble (436-day)</li>
+                <li><strong>Planetary Events:</strong> 72 significant detections (34 Bonferroni-corrected)</li>
+                <li><strong>Validation Framework:</strong> Temporal holdout (2000-2020 train, 2021-2025 test)</li>
+            </ul>
+        </div>
+        <p style="margin: 15px 0 5px 0; font-size: 12px; color: #666;"><strong>Expected Runtime:</strong> ~12-24 hours total (all 5 steps) on 16+ core system</p>
+        <p style="margin: 5px 0; font-size: 12px; color: #666;"><strong>Storage Requirements:</strong> ~15-20 GB for pair-level data files</p>
+    </div>
+    
+    <h4>System Requirements <span style="background-color: rgba(73, 87, 115, 0.1); color: #495773; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: normal;">Local HPC</span></h4>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        <li><strong>CPU:</strong> 16+ cores recommended (parallel processing across 5 pipeline steps)</li>
+        <li><strong>RAM:</strong> 32GB+ minimum, 64GB+ recommended for large dataset processing</li>
+        <li><strong>Storage:</strong> 100GB+ available (15-20 GB for pair-level data, rest for outputs)</li>
+        <li><strong>Network:</strong> Internet access for GNSS data download from IGS servers</li>
+        <li><strong>Python:</strong> 3.8+ with required packages (automated installation)</li>
+    </ul>
+    
+    <p style="margin: 10px 0; font-size: 13px; color: #666;">Recommended system: 32+ cores, 64GB+ RAM, 100GB+ storage</p>
+
+    <div style="margin: 20px 0; padding: 15px; background: rgba(44, 83, 131, 0.05); border: 2px solid rgba(44, 83, 131, 0.2); border-radius: 8px;">
+        <h4 style="margin-top: 0; color: #2C5F77;">Key Differences from Paper 1</h4>
+        <ul style="margin: 10px 0; padding-left: 20px; font-size: 13px;">
+            <li><strong>Temporal Coverage:</strong> 25.3 years vs 2.5 years (10× extension)</li>
+            <li><strong>Analysis Center:</strong> Single-center (CODE) vs multi-center (CODE/IGS/ESA)</li>
+            <li><strong>Focus:</strong> Decadal stability and long-period phenomena vs cross-center validation</li>
+            <li><strong>New Capabilities:</strong> 18.6-year nutation detection, enhanced planetary statistics</li>
+            <li><strong>Validation:</strong> Temporal holdout vs cross-center consistency</li>
+            <li><strong>Computational:</strong> Local HPC vs cloud-based (GCP) deployment</li>
+        </ul>
+        <p style="margin: 10px 0 0 0; font-size: 12px; color: #666; font-style: italic;">Note: Paper 1's comprehensive validation framework (388 statistical tests, null testing, cross-center consistency) is adopted and extended with temporal validation.</p>
+    </div>
+</div>
+
+<div style="background-color: rgba(73, 87, 115, 0.08); padding: 15px; margin: 20px 0; border-radius: 4px;">
+    <h3 style="margin-top: 0; color: #2D0140;">Citation and Access</h3>
+    <p><strong>Repository:</strong> <a href="https://github.com/matthewsmawfield/TEP-GNSS" target="_blank" rel="noopener noreferrer" style="color: #495773;">https://github.com/matthewsmawfield/TEP-GNSS</a></p>
+    <p><strong>License:</strong> MIT License - Open source with attribution requirements</p>
+    <p><strong>Data Access:</strong> GNSS clock products from CODE analysis center via IGS FTP servers</p>
+    <p><strong>Documentation:</strong> Complete analysis code, usage examples, validation reports, and analysis results</p>
+    <p><strong>Dependencies:</strong> Python 3.8+, NumPy, SciPy, Pandas, Matplotlib, AstroPy (automated installation)</p>
+</div>
+
+<p><strong>Reproducibility Statement:</strong> This pipeline provides complete reproducibility for the 25-year long-baseline analysis presented in this manuscript. All code, data processing steps, validation procedures, and analysis parameters are fully documented and version-controlled. The analysis builds upon the validated methodology from the multi-center study while extending temporal coverage to enable investigation of decadal stability and long-period geophysical phenomena.</p>

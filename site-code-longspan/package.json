@@ -1,6 +1,6 @@
 {
   "name": "tep-gnss-site-code-longspan",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Long-Term Stability and Geophysical Coupling of TEP-GNSS: 25-Year Analysis",
   "main": "index.html",
   "scripts": {

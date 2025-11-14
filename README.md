@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.21 (Jaipur) + v0.3 (Cairo Extension)
-**Date:** 4 November 2025
+**Repository Version:** v0.21 (Jaipur) + v0.9 (Cairo Extension)
+**Date:** 14 November 2025
 
 ## Published Papers
 
@@ -12,7 +12,7 @@
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
 **Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
 
-### Paper 2: 25-Year Temporal Extension (v0.3 - Cairo)
+### Paper 2: 25-Year Temporal Extension (v0.9 - Cairo)
 **Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
@@ -437,7 +437,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes25year,
-  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.3)},
+  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.9)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -513,4 +513,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Repository Version:** v0.21 (Jaipur) + v0.3 (Cairo Extension) | **Date:** 4 November 2025 | **Status:** Active Research
+**Repository Version:** v0.21 (Jaipur) + v0.9 (Cairo Extension) | **Date:** 14 November 2025 | **Status:** Active Research
