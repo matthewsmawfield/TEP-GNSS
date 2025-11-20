@@ -105,7 +105,8 @@
   <li><strong>Outlier Removal:</strong> 3σ filtering based on modified Z-scores</li>
   <li><strong>Detrending:</strong> Removal of linear and quadratic trends per day</li>
   <li><strong>Normalization:</strong> Zero-mean, unit-variance normalization per station</li>
-  <li><strong>Gap Handling:</strong> Linear interpolation for gaps < 5 minutes, exclusion otherwise</li>
+  <li><strong>Gap Handling:</strong> Linear interpolation for gaps &lt; 5 minutes, exclusion otherwise</li>
+  <li><strong>Least-Squares Adjustment:</strong> Daily clock parameters are estimated by minimizing the squared amplitude of residuals for each station; this preferentially removes mass-dependent frequency shifts while leaving phase-coherence structure largely intact.</li>
 </ol>
 <h4>2.2.2 Phase-Coherent Correlation Analysis</h4>
 <p>For each station pair (i,j) with common observation epochs, phase-coherent correlations were computed using cross-power spectral density analysis (identical to the method used in the multi-center study):</p>
@@ -122,8 +123,7 @@
 
 <p><strong>Observable Definition:</strong> All subsequent analyses use this band-averaged coherence and its derived correlation lengths as the primary observable. Coherence is a <em>dimensionless</em> correlation metric on [-1,1]; it quantifies the strength of phase-coherent structure between station residuals rather than the absolute clock frequency shift Δf/f. Reported percentage changes (e.g., the ≈19% annual modulation of the EW/NS ratio, or 1–3% planetary modulation depths) therefore describe relative changes in this coherence-based correlation structure and in ratios of correlation lengths, not 10–20% changes in underlying atomic clock rates, which remain at standard GR levels (≈10⁻¹⁶–10⁻¹⁰).</p>
 
-<p>Operational GNSS clock products are generated under an implicit objective of network synchronization: analysis centers estimate and remove offsets, drifts, and other deterministic structure so that clocks agree as closely as possible. This makes absolute clock amplitudes strongly processing-dependent, whereas residual phase-coherent structure in the cross-spectral domain is less directly targeted by these corrections. For this reason, all primary distance-structure and orbital-dynamics inferences in this paper are based on phase-coherence metrics rather than raw clock amplitude excursions, which may already have been partially absorbed into analysis-center corrections.</p>
-
+<p>Operational GNSS clock products are generated under an implicit objective of network synchronization: analysis centers estimate and remove offsets, drifts, and other deterministic structure so that clocks agree as closely as possible. This makes absolute clock amplitudes strongly processing-dependent, whereas residual phase-coherent structure in the cross-spectral domain is less directly targeted by these corrections. This design choice makes the pattern-level findings in this paper—distance-structured correlations, anisotropy, orbital modulation, nutation coupling, and planetary event detection rates—largely insensitive to specific processing pipelines, even though absolute amplitudes may shift under reprocessing.</p>
 <h4>2.2.3 Spatial Binning</h4>
 <p>Station pairs were categorized by:</p>
 <ul>
@@ -131,6 +131,7 @@
   <li><strong>Azimuth:</strong> 8 compass sectors (N, NE, E, SE, S, SW, W, NW)</li>
   <li><strong>3D Orientation:</strong> 16 spherical harmonic bins for full 3D analysis</li>
 </ul>
+
 <h3>2.3 Analysis Methods</h3>
 <h4>2.3.1 Exponential Decay Fitting</h4>
 <p>For each spatial sector, the distance-correlation relationship was fit:</p>
@@ -154,6 +155,15 @@
 </ul>
 
 <p><strong>Enhanced Control:</strong> The multi-center study's hemisphere stratification analysis (§3.4) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders. See §3.2.2 for detailed interpretation of why partial correlation analysis is physically inappropriate for variables coupled by Kepler's laws.</p>
+<p><strong>Significance Estimation:</strong> Because the 30-day windows overlap, the EW/NS–velocity correlation uses an autocorrelation-robust Pearson estimator. Let <em>N</em> be the number of overlapping window samples (here <em>N</em> = 34), and let ρ<sub>x</sub>, ρ<sub>y</sub> be the lag‑1 autocorrelations of the orbital‑speed and EW/NS‑ratio series, respectively. We approximate the effective degrees of freedom using a Bartlett-style correction</p>
+<pre style="background:#f7f7f7; padding:6px;">
+N<sub>eff</sub> = N · (1 − ρ<sub>x</sub>ρ<sub>y</sub>) / (1 + ρ<sub>x</sub>ρ<sub>y</sub>)
+</pre>
+<p>The corrected standard error of the correlation is then</p>
+<pre style="background:#f7f7f7; padding:6px;">
+SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
+</pre>
+<p>and the test statistic <em>t</em> = r / SE<sub>corr</sub> is evaluated against a Student‑<em>t</em> distribution with N<sub>eff</sub> − 2 degrees of freedom to obtain the autocorrelation‑corrected p‑value. The reported orbital p‑value p = 0.0013 (3.2σ) is based on this N<sub>eff</sub>; naïve Pearson p‑values that ignore temporal dependence (and effectively assume N<sub>eff</sub> = N) are not used for inference.</p>
 <h4>2.3.3 Planetary Event Analysis</h4>
 <p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>
 

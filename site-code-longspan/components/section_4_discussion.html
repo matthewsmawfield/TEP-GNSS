@@ -20,12 +20,12 @@
   <li><strong>Y-axis:</strong> The EW/NS ratio (East-West correlation length divided by North-South correlation length). This directly measures the <em>shape</em> of the anisotropy ellipse at any given time.</li>
   <li><strong>X-axis:</strong> Earth's orbital velocity around the Sun (varying between 29.3-30.3 km/s).</li>
 </ul>
-<p><strong>Physical Interpretation</strong>: The shape of the spatial anisotropy systematically changes over the course of a year, in lockstep with Earth's orbital velocity. As Earth speeds up near perihelion (January), the E-W correlation length grows relative to the N-S length. As it slows near aphelion (July), the ratio decreases. This ≈19% annual modulation (offset ≈ 1.27, amplitude ≈ 0.24) is phase-coherent across all 25 years.</p>
+<p><strong>Physical Interpretation</strong>: The shape of the spatial anisotropy systematically changes over the course of a year, in lockstep with Earth's orbital velocity. As Earth speeds up near perihelion (January), the E-W correlation length grows relative to the N-S length. As it slows near aphelion (July), the ratio decreases. This ≈19% annual modulation (offset ≈ 1.27, amplitude ≈ 0.24) describes the change in the <em>shape</em> of the coherence field (λ<sub>EW</sub>/λ<sub>NS</sub>), not a 19% modulation of individual clock rates.</p>
 <p>This result is statistically strong and was not reproduced by the conventional explanations evaluated in §4.3.2. It is consistent with the TEP framework, which predicts that velocity‑dependent screening effects in the conformal coupling A(φ) modulate the correlation structure of the timing network.</p>
 <h4>4.1.3 Event-Based Evidence: Planetary Alignments</h4>
-<p>We analyze event-locked windows around planetary alignments to test whether the GNSS network responds to transient changes in the local gravitational environment. 72 statistically significant (≥2σ) responses were detected from 156 events analyzed.</p>
-<p><strong>Overall Signal Strength</strong>: 34 of 72 detections remain significant under Bonferroni correction (α = 0.0007). This 47% survival under an intentionally conservative correction indicates repeatable event responses.</p>
-<p><strong>Modulation Depths</strong>: The 72 significant events show modulation depths ranging from 2.3% to 100% (median 46.8%). This indicates that planetary alignments produce coherence modulations of comparable magnitude to the baseline correlation field, with typical events showing ~40-60% modulation depth. The distribution exhibits substantial event-to-event variability, with some events producing minimal modulation and others dominating the signal.</p>
+<p>We analyze event-locked windows around planetary alignments to test whether the GNSS network responds to transient changes in the local gravitational environment. Using the pre-specified ±120-day window and Gaussian pulse fitting (§3.3), 67 statistically significant (≥2σ) responses were detected among 156 events.</p>
+<p><strong>Overall Signal Strength</strong>: 38 of the 67 detections remain significant under Bonferroni correction (α ≈ 0.00069), and all 67 survive FDR control at q = 0.05. This ≈57% Bonferroni survival under an intentionally conservative correction indicates repeatable event responses.</p>
+<p><strong>Modulation Depths</strong>: The 67 significant events show modulation depths ranging from 0.3% to 10.0% (median ≈1.1%). These values describe subtle but statistically significant modulations of the coherence metric, with typical events in the ~1–3% range. As clarified in §2.2.2, these percentages refer to changes in a coherence-based correlation structure rather than large changes in underlying clock frequencies.</p>
 <p><strong>Gravitational Scaling Analysis</strong>: Testing whether observed amplitudes correlate with GR predictions (GM/r²) reveals no significant correlation:</p>
 <ul>
   <li>Pearson correlation (A_obs vs M/r²): r = -0.053, p = 0.656 (not significant)</li>
@@ -66,7 +66,7 @@
 <ul>
   <li><strong>Spatial Anisotropy</strong>: EW > NS structure confirmed; magnitudes consistent within uncertainty</li>
   <li><strong>Orbital Velocity Correlation</strong>: Multi-center study r ≈ -0.57 to -0.79; long-span (see §3.2 for numeric values)</li>
-  <li><strong>Planetary Event Responses</strong>: Multi-center study found 6/8 Bonferroni-significant; we confirm and extend to 34/156</li>
+  <li><strong>Planetary Event Responses</strong>: Multi-center study found 6/8 Bonferroni-significant; we confirm and extend to 67/156 events ≥2σ, of which 38 remain Bonferroni-significant</li>
 </ul>
 <p><strong>Strengthened (Higher Statistics)</strong>:</p>
 <ul>
@@ -81,7 +81,7 @@
 </ul>
 <p><strong>Replicated (Confirms Temporal Stability)</strong>:</p>
 <ul>
-  <li><strong>Network Synchronization (Mesh Dance)</strong>: Index = 0.582, consistent with multi-center range (CODE: 0.624, IGS: 0.579, ESA: 0.602)</li>
+  <li><strong>Network Synchronization (Mesh Dance)</strong>: Index = 0.554, consistent with multi-center range (CODE: 0.624, IGS: 0.579, ESA: 0.602)</li>
 </ul>
 <p><strong>Cross-Center Validation Status</strong>: The multi-center study's critical contribution was cross-center validation (R² = 0.920-0.970 between CODE, IGS, ESA), demonstrating the phenomenon is not processing-specific over 2.5 years. This study extends temporal coverage but cannot confirm whether long-baseline signatures (18.6-year nutation) are processing-independent until IGS and ESA archives extend backward.</p>
 <h3>4.3 Physical Interpretation</h3>
@@ -89,13 +89,13 @@
 <h4>4.3.1 Consistency with TEP Predictions</h4>
 <p>The observations align closely with Temporal Equivalence Principle predictions across multiple independent signatures:</p>
 <p><strong>Predicted</strong>: Correlation length modulation with velocity
-<strong>Observed</strong>: λ varies with orbital velocity (r = -0.864, p = 4.82 × 10⁻¹¹)</p>
+<strong>Observed</strong>: λ varies with orbital velocity (r = -0.864, p = 0.0013, 3.2σ; autocorr-corrected)</p>
 <p><strong>Predicted</strong>: Non-linear gravitational coupling
-<strong>Observed</strong>: Modulation depths 2.3-100% (median 47%) with no correlation to GM/r² scaling</p>
+<strong>Observed</strong>: 67 significant planetary events (≥2σ) with modulation depths 0.3–10% (median ≈1.1%; typical 1–3%) and no correlation with GM/r² scaling</p>
 <p><strong>Predicted</strong>: Geometric anisotropy aligned with motion
 <strong>Observed</strong>: E-W elongation (2.16:1 ratio) consistent with Earth's orbital plane</p>
 <p><strong>Predicted</strong>: Global field-like behavior
-<strong>Observed</strong>: Network coherence score 0.582 across 104 temporal windows</p>
+<strong>Observed</strong>: Network coherence score 0.554 across 104 temporal windows</p>
 <p><strong>Predicted</strong>: Multi-scale temporal coupling
 <strong>Observed</strong>: Signatures from hours (events) to decades (nutation)</p>
 
@@ -115,13 +115,18 @@
 
 <p><strong>Predicted vs. Observed Amplitude:</strong></p>
 <ul>
-  <li><strong>Expected modulation:</strong> ΔC/C ~ 10⁻⁷ to 10⁻⁶</li>
+  <li><strong>Expected modulation (first-order):</strong> ΔC/C ~ 10⁻⁷ to 10⁻⁶</li>
   <li><strong>Observed modulation:</strong> 19% anisotropy ratio modulation ≈ 1.9×10⁻¹</li>
-  <li><strong>Amplitude discrepancy:</strong> ~10² enhancement over naive prediction</li>
 </ul>
 
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid rgba(73, 87, 115, 0.3); color: #220126; padding: 15px; margin: 15px 0; border-radius: 4px;">
+    <strong>Note on Dimensionality and Scale:</strong> The observed 19% modulation refers to the anisotropy ratio (λ<sub>EW</sub>/λ<sub>NS</sub>), which is a dimensionless geometric parameter describing the <em>shape</em> of the correlation field. It does not represent a 19% change in atomic clock frequencies (Δf/f), which remain strictly bounded by standard GR limits (~10⁻¹⁰).
+    <br><br>
+    Comparing the 19% pattern modulation directly to relativistic v²/c² effects (~10⁻⁸) would be a category error: one describes the deformation of a global correlation structure, while the other limits local energetic deviations. The correlation field appears to behave as a "stiff" geometric structure that undergoes significant rotation or deformation under small kinematic changes, similar to how a Moiré pattern can shift dramatically with microscopic displacements. Thus, the large structural modulation does not imply a violation of energetic constraints.
+</div>
+
 <p><strong>Resolution: Information Resonance vs. Force Coupling</strong></p>
-<p>The discrepancy in amplitude and the lack of GM/r² scaling (mass dependence) suggests that the phenomenon may not be a force-based coupling (transfer of energy) but an <em>information-metric coupling</em> (synchronization of phase). in this view:</p>
+<p>The "stiff" response of the correlation field and the lack of GM/r² scaling (mass dependence) suggests that the phenomenon may not be a force-based coupling (transfer of energy) but an <em>information-metric coupling</em> (synchronization of phase). In this view:</p>
 <ul>
   <li><strong>Resonance dominates over Mass:</strong> The system responds to the <em>frequency</em> of the gravitational perturbation (e.g., orbital periods) rather than the <em>amplitude</em> (mass). This explains why planetary events are detected based on alignment geometry rather than planetary mass.</li>
   <li><strong>Network Amplification:</strong> A distributed clock network acts as a phased array, potentially amplifying weak coherent signals that would be undetectable in single-clock residuals.</li>
@@ -141,6 +146,8 @@
   <li><strong>Amplitude vs Gravity (M/r²):</strong> r = -0.096 (p = 0.23)</li>
 </ul>
 <p>This empirical result confirms that the coupling is <strong>not</strong> a simple linear tidal effect. The phenomenon exhibits a "saturation" or "resonance" behavior where the detection depends on alignment geometry (opposition/conjunction) rather than the magnitude of the gravitational potential. This distinguishes TEP-type coupling from conventional Newtonian or GR tidal forces.</p>
+
+<p><strong>The "Least Squares" Selection Effect:</strong> Standard GNSS clock estimation relies on <em>least-squares adjustment</em>, which explicitly minimizes the squared <em>amplitude</em> of residuals for every individual station. Signals that manifest primarily as an energetic frequency shift – proportional to planetary <span style="white-space:nowrap;">GM / r²</span> – are therefore systematically <em>suppressed</em> during processing. In contrast, subtle <em>phase-synchronization</em> patterns between <em>pairs</em> of stations are not an objective of the estimator and consequently survive as correlated structure in the residuals. The processing chain thus acts as a physics-blind filter that removes mass-dependent amplitudes while transmitting geometry-dependent phase structure. This provides a concrete, processing-based explanation for the observed absence of gravitational mass scaling alongside the robust detection of planetary <em>alignment</em> signatures. A direct prediction is that raw carrier-phase analysis – which bypasses least-squares suppression – should reveal the energetic component and restore a weak but non-zero GM/r² scaling.</p>
 
 <div style="background-color: rgba(230,240,255,0.8); border: 2px solid #0066cc; padding: 18px; margin: 20px 0; border-radius: 6px;">
   <h4 style="margin-top: 0; color: #003d7a;">Testable Predictions for Discriminating Mechanisms</h4>
@@ -174,7 +181,7 @@
 <h4>4.3.3 Selectivity of Detections: Theory-Consistent Pattern</h4>
 <p>The dataset shows a selective pattern of detections that is informative about mechanism:</p>
 <ul>
-  <li><strong>Detected (geometry/dynamics):</strong> Orbital coupling (see §3.2 for numeric values), event responses to planetary conjunctions (Mercury: 21/80 at ±120 days; Venus: 4/16 at ±240 days; 34 Bonferroni / 72 FDR survive overall).</li>
+  <li><strong>Detected (geometry/dynamics):</strong> Orbital coupling (see §3.2 for numeric values), event responses to planetary conjunctions (Mercury: 21/80 at ±120 days; Venus: 4/16 at ±240 days; 38 Bonferroni / 67 FDR survivors overall in the pre-specified ±120-day window).</li>
   <li><strong>Not detected (surface/declination geometry):</strong> Solar rotation 27-day signal (r = -0.012, p = 0.2318; peak at 21.6 days) and Major Lunar Standstill 2024–2025 (±180 days) show no significant effects.</li>
 </ul>
 <p><strong>Interpretation</strong>: This selectivity is <em>theory-consistent</em> with sensitivity to <em>gravitational geometry and orbital configuration</em> rather than solar-surface rotational phenomena or purely geometric lunar declination extrema. Within TEP, coupling arises from the spacetime/gravitational configuration that co-varies with orbital dynamics and specific alignments, not from surface features rotating with the Sun or calendar-fixed lunar declination peaks. The conjunction detections and strong orbital modulation, alongside nulls for solar rotation and lunar standstill, therefore support a gravitational-geometry mechanism over surface or declination-driven alternatives.</p>
@@ -226,7 +233,7 @@
     <tr>
       <td><strong>Random temporal structure</strong></td>
       <td>~5% false positives (α=0.05)</td>
-      <td>46% event detection rate (72/156)</td>
+      <td>≈43% event detection rate (67/156; ≥2σ in primary ±120-day window)</td>
       <td>✗ NO</td>
     </tr>
     <tr>
@@ -280,7 +287,7 @@
  <p>These findings raise several important questions for fundamental physics:</p>
 <ol>
   <li><strong>Nature of the Coupling:</strong> The orbital velocity correlation (see §3.2 for numeric values) survives multiple controls and is difficult to explain via conventional systematics. If confirmed by multi-center replication, this would suggest Earth's heliocentric motion influences GNSS timing correlations in ways not accounted for in standard models.</li>
-  <li><strong>Planetary Event Responses:</strong> The observed 72 significant responses (34 Bonferroni-corrected) with modulation depths ranging from 2.3% to 100% (median 46.8%) show no correlation with GM/r² gravitational scaling. This absence of classical scaling patterns requires further investigation through raw data analysis and physical modeling.</li>
+  <li><strong>Planetary Event Responses:</strong> The observed 67 significant responses (38 Bonferroni-corrected) with modulation depths ranging from 0.3% to 10.0% (median ≈1.1%) show no correlation with GM/r² gravitational scaling. This absence of classical scaling patterns requires further investigation through raw data analysis and physical modeling.</li>
 </ol>
 
 <h4>4.4.2 Physical Plausibility Cross-Check</h4>
@@ -327,8 +334,8 @@
     <tr>
       <td><strong>Anisotropy modulation</strong></td>
       <td>No standard prediction</td>
-      <td>19% annual variation</td>
-      <td>~ v²/c² × 10⁶</td>
+      <td>19% variation in <em>geometric ratio</em></td>
+      <td>Geometric parameter (not energetic)</td>
     </tr>
     <tr>
       <td><strong>Planetary event amplitude</strong></td>
@@ -354,7 +361,7 @@
 
 <p><strong>Plausibility Assessment:</strong> All observed magnitudes fall within physically reasonable ranges for Earth-scale gravitational coupling phenomena. The amplitude discrepancies (point 2) and scaling anomalies (point 3) require resolution through raw data analysis but do not invalidate the statistical detections or multi-signature convergence.</p>
 
-<p>The 72 significant planetary event responses show modulation depths ranging from 2.3% to 100% (median 46.8%), indicating substantial GPS coherence modulation during planetary alignments. Critically, gravitational scaling analysis reveals no significant correlation between observed amplitudes and GM/r² predictions (see §3.3), distinguishing this phenomenon from conventional tidal effects.</p>
+<p>The 67 significant planetary event responses show modulation depths ranging from 0.3% to 10.0% (median ≈1.1%), indicating subtle but repeatable GPS coherence modulation during planetary alignments. Critically, gravitational scaling analysis reveals no significant correlation between observed amplitudes and GM/r² predictions (see §3.3), distinguishing this phenomenon from conventional tidal effects.</p>
 
 <h5>Absence of Gravitational Scaling</h5>
 
@@ -375,7 +382,7 @@
   <li><strong>Temporal variations:</strong> Changes in processing algorithms over 25-year period may affect amplitude estimates</li>
 </ul>
 
-<p>This framework naturally reconciles two key findings of this study: (i) the absence of GM/r² scaling in planetary event amplitudes, and (ii) the robust detection of distance-structured correlations and orbital modulation in phase-coherence metrics. If amplitude-like components of the underlying signal are preferentially removed by analysis-center corrections, while residual coherence structure survives in the cross-spectral domain, then one expects weak or distorted amplitude scaling but persistent, reproducible patterns in the correlation field. The methodology adopted here—focusing primary inferences on phase-coherence and distance structure, and treating absolute modulation depths as processing-dependent—follows directly from this consideration.</p>
+<p>This framework naturally reconciles two key findings of this study: (i) the absence of GM/r² scaling in planetary event amplitudes, and (ii) the robust detection of distance-structured correlations and orbital modulation in phase-coherence metrics. If amplitude-like components of the underlying signal are preferentially removed by analysis-center corrections, while residual coherence structure survives in the cross-spectral domain, then one expects weak or distorted amplitude scaling but persistent, reproducible patterns in the correlation field. The methodology adopted here—focusing primary inferences on phase-coherence and distance structure, and treating absolute modulation depths as provisional and processing-sensitive—follows directly from this consideration.</p>
 
 <h5>Discriminating Tests Required</h5>
 
@@ -392,13 +399,13 @@
 
 <p><strong>Robust findings (independent of processing):</strong></p>
 <ul>
-  <li>Statistical significance: 72/156 events ≥2σ, 34 survive Bonferroni correction</li>
-  <li>Detection rates: Mercury 50%, Mars 58.3%, Jupiter 47.8%</li>
+  <li>Statistical significance: 67/156 events ≥2σ, 38 survive Bonferroni correction (57% of significant responses)</li>
+  <li>Detection rates (primary ±120-day window): Mercury 50%, Venus 25%, Mars 50%, Jupiter 34.8%, Saturn 36.0% (Table 3.3.1)</li>
   <li>Absence of GM/r² scaling (see §3.3)</li>
   <li>Multi-center consistency in detection patterns</li>
 </ul>
 
-<p><strong>Uncertain findings:</strong> The following items are likely processing-dependent and require raw data validation.</p>
+<p><strong>Uncertain findings:</strong> The following items are sensitive to processing choices and will be quantitatively resolved only with raw data validation.</p>
 <ul>
   <li>Absolute amplitude estimates</li>
   <li>Modulation depth magnitudes</li>
@@ -409,7 +416,7 @@
 
 <ol start="3">
   <li><strong>Spatial Structure:</strong> The anisotropic correlation field (E-W:N-S = 2.16) persists across 25 years and aligns approximately with Earth's orbital plane. Whether this reflects propagation effects, processing biases, or a genuine geometric coupling remains to be determined through multi-constellation and raw-data analysis.</li>
-  <li><strong>Global Coordination:</strong> Network synchronization (index = 0.582) demonstrates coordinated behavior across the 474-station network. This could indicate a global field-like influence, though alternative explanations (correlated processing, shared reference frames, propagation modes) require systematic investigation.</li>
+  <li><strong>Global Coordination:</strong> Network synchronization (index = 0.554) demonstrates coordinated behavior across the 474-station network. This could indicate a global field-like influence, though alternative explanations (correlated processing, shared reference frames, propagation modes) require systematic investigation.</li>
   <li><strong>Multi-Scale Temporal Structure:</strong> The detection of couplings at timescales from days (planetary events) to decades (18.6-year nutation) suggests the phenomenon operates across multiple temporal regimes. The physical mechanism enabling this scale-invariance is unclear.</li>
   <li><strong>Geophysical Integration:</strong> The strong nutation coupling (R² = 0.904 semiannual, R² = 0.641 for 18.6-year) indicates the timing correlation field is sensitive to Earth's rotational state. This dual sensitivity to both external (planetary) and internal (geophysical) dynamics requires explanation.</li>
   <li><strong>Theoretical Framework:</strong> While observations are broadly consistent with TEP predictions (velocity-dependent correlation modulation, geometric anisotropy), no quantitative theoretical model yet predicts the specific effect sizes, modulation depth distribution, or anisotropy ratios. Development of a predictive theory is critical for advancing beyond empirical description.</li>
@@ -418,7 +425,7 @@
 <ol>
   <li><strong>Single Analysis Center (Temporal Depth Trade-off):</strong> This study uses only CODE data to access the 25-year archive required for long-period analysis (18.6-year nutation, 21 Chandler cycles). While the multi-center study established cross-center validation (R² = 0.920-0.970) over 2.5 years, replication of these long-baseline findings with IGS and ESA products (when sufficient historical data becomes available) remains necessary to definitively exclude processing-specific artifacts in the decadal signatures.</li>
   <li><strong>Orbital Velocity Correlation - Methodological Note:</strong> The strongest result (see §3.2 for numeric values) survives window size variations, multiple detrending methods, and bootstrap robustness checks. As explained in §3.2.2, orbital velocity and Earth-Sun distance are physically coupled by Kepler's laws (r = −1.000), making partial correlation analysis inappropriate—they are not independent confounders but the same orbital phenomenon described two ways. The multi-center study's hemisphere stratification test (§3.4 in Paper 1) provides the proper discriminant: both Northern and Southern hemispheres show identical calendar phasing (peak at perihelion in January), directly falsifying local seasonal effects and confirming heliocentric orbital coupling. The effect is not driven by ionospheric conditions or simple solar activity correlations (established through comprehensive null testing in the multi-center study).</li>
-  <li><strong>Planetary Event Analysis - Physical Predictor Modeling:</strong> The planetary event analysis documents 72 statistically significant event-associated modulations (34 surviving conservative Bonferroni correction), with detection rates consistent across 25 years. The original study established these are not artifacts of processing or random chance through extensive Monte Carlo permutation testing. However, modeling against physically grounded predictors (e.g., tidal potential ∝ M/r³, distance-normalized metrics) would enhance interpretation of the observed non-classical scaling behavior (no GM/r² correlation). Testing against null events (asteroid conjunctions, random dates) would further distinguish planetary-specific responses from general temporal structure. While the repeatability and statistical significance are well-established, mechanistic interpretation would benefit from explicit gravitational modeling.</li>
+  <li><strong>Planetary Event Analysis - Physical Predictor Modeling:</strong> The planetary event analysis documents 67 statistically significant event-associated modulations (38 surviving conservative Bonferroni correction), with detection rates consistent across 25 years. The original study established these are not artifacts of processing or random chance through extensive Monte Carlo permutation testing. However, modeling against physically grounded predictors (e.g., tidal potential ∝ M/r³, distance-normalized metrics) would enhance interpretation of the observed non-classical scaling behavior (no GM/r² correlation). Testing against null events (asteroid conjunctions, random dates) would further distinguish planetary-specific responses from general temporal structure. While the repeatability and statistical significance are well-established, mechanistic interpretation would benefit from explicit gravitational modeling.</li>
   <li><strong>Unknown Systematics:</strong> Unknown systematic effects cannot be definitively ruled out, though any such effect would need to:
    <ul>
      <li>Correlate with Earth's orbital velocity (see §3.2)</li>

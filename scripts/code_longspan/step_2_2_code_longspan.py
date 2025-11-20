@@ -127,6 +127,8 @@ from scripts.utils.exceptions import (
 from scripts.utils.geospatial import compute_azimuth, classify_ew_ns
 from scripts.utils.pid_manager import ensure_single_instance
 from scripts.utils.logger import print_status, TEPLogger, set_step_logger
+from scripts.utils.env_regress import apply_env_regression
+from scripts.utils.permutation import permuted_pearson
 
 # Namespace for isolated logs/outputs
 NAMESPACE = os.getenv('TEP_LOG_NAMESPACE') or os.getenv('TEP_OUTPUT_NAMESPACE') or 'code_longspan'
@@ -170,13 +172,26 @@ def performance_monitor(func):
         return result
     return wrapper
 
-def autocorr_robust_correlation(x, y, max_lags=None):
+def autocorr_robust_correlation(x, y, max_lags=None, n_perm:int = None):
     x = np.array(x)
     y = np.array(y)
     n = len(x)
     if max_lags is None:
         max_lags = min(20, n // 5)
     r_raw, p_raw = stats.pearsonr(x, y)
+
+    # Optional permutation p-value (controls arbitrary autocorrelation structure)
+    p_perm = None
+    if n_perm is None:
+        try:
+            if TEPConfig.get_bool('TEP_ENABLE_PERMUTATION', False):
+                n_perm = TEPConfig.get_int('TEP_PERMUTATION_N', 10000)
+        except Exception:
+            n_perm = None
+    if n_perm and n_perm > 0:
+        _, p_emp = permuted_pearson(x, y, n_perm=n_perm)
+        p_perm = p_emp
+        print_status(f"Permutation test (n={n_perm}) p-value: {p_perm:.4g}", "INFO")
     acf_x = acf(x, nlags=max_lags, alpha=0.05)
     acf_y = acf(y, nlags=max_lags, alpha=0.05)
     r1_x = acf_x[0][1] if len(acf_x[0]) > 1 else 0
@@ -194,12 +209,14 @@ def autocorr_robust_correlation(x, y, max_lags=None):
         residuals = model.resid
         ljung_box = acorr_ljungbox(residuals, lags=min(10, len(residuals)//5), return_df=True)
         ljung_box_p = ljung_box['lb_pvalue'].iloc[-1]
-    except Exception:
+    except (ValueError, np.linalg.LinAlgError, statsmodels.tools.sm_exceptions.PerfectSeparationError):
+        # Fall back to NaN if OLS fails (e.g., singular matrix)
         ljung_box_p = np.nan
     return {
         'correlation': float(r_raw),
         'p_value_raw': float(p_raw),
         'p_value_autocorr_corrected': float(p_corrected),
+        'p_value_permutation': float(p_perm) if p_perm is not None else None,
         'n_effective': float(n_eff),
         'ljung_box_p': float(ljung_box_p) if not np.isnan(ljung_box_p) else np.nan
     }
@@ -489,6 +506,18 @@ def load_complete_geospatial_dataset(ac: str) -> pd.DataFrame:
         
         print_status(f"Geospatial dataset loaded: {len(complete_df):,} pairs, {complete_df.memory_usage(deep=True).sum()/(1024**3):.2f} GB", "SUCCESS")
         print_status("Azimuth already computed in Step 2.1 - no redundant calculation needed", "SUCCESS")
+
+        # Optional: regress out environmental drivers before analyses
+        if TEPConfig.get_bool('TEP_ENABLE_ENV_REGRESSION', False):
+            try:
+                print_status("Applying environmental covariate regression...", "PROCESS")
+                complete_df = apply_env_regression(complete_df)
+                # Replace coherence with residual for downstream analyses
+                if 'coherence_resid' in complete_df.columns:
+                    complete_df.rename(columns={'coherence': 'coherence_raw', 'coherence_resid': 'coherence'}, inplace=True)
+                    print_status("Environmental regression applied; 'coherence' now residuals", "SUCCESS")
+            except Exception as e:
+                print_status(f"Environmental regression failed – continuing with raw coherence: {e}", "WARNING")
         
         # VERIFICATION: Cross-check with Step 2.1 geospatial processing log
         # Note: Step 2.0 consolidated CSV contains distance-binned aggregate data (~117k bins)
@@ -1140,9 +1169,11 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
             
             chunk_df = complete_df.iloc[start_idx:end_idx]
             
-            # Filter to temporal window
-            day_mask = (chunk_df['day_of_year'] >= day_of_year - day_window) & \
-                       (chunk_df['day_of_year'] <= day_of_year + day_window)
+            # Robust ±day_window selection with wrap across year boundaries
+            delta_doy = (chunk_df['day_of_year'] - day_of_year + 365) % 365
+            # Convert values > 182 to negative range to obtain signed difference in [-182, 182]
+            delta_doy = np.where(delta_doy > 182, delta_doy - 365, delta_doy)
+            day_mask = np.abs(delta_doy) <= day_window
             
             if not day_mask.any():
                 continue
@@ -1219,7 +1250,8 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
     
     # Test correlation with orbital motion
     # Use robust correlation to account for temporal autocorrelation (overlapping 30-day windows)
-    orbital_stats = autocorr_robust_correlation(orbital_speeds, ew_ns_ratios)
+    perm_n = TEPConfig.get_int('TEP_PERMUTATION_N', 0) if TEPConfig.get_bool('TEP_ENABLE_PERMUTATION', False) else None
+    orbital_stats = autocorr_robust_correlation(orbital_speeds, ew_ns_ratios, n_perm=perm_n)
     orbital_correlation = orbital_stats['correlation']
     orbital_p_value = orbital_stats['p_value_autocorr_corrected']
     
@@ -1257,6 +1289,7 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
         },
         'seasonal_analysis': seasonal_fit,
         'orbital_motion_evidence': {
+            'permutation_p_value': orbital_stats.get('p_value_permutation'),
             'correlation_with_orbital_speed': orbital_correlation,
             'significance_p_value': orbital_p_value,
             'evidence_strength': classify_orbital_evidence(orbital_correlation, orbital_p_value),
@@ -2914,6 +2947,11 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
                 'cycles_available': n_chandler_cycles
             }
         
+        # Ensure E-W/N-S classification exists BEFORE quick scan
+        if 'ew_ns_class' not in complete_df.columns:
+            print_status("Classifying pairs as East-West / North-South for preliminary period scan...", "PROCESS")
+            complete_df['ew_ns_class'] = complete_df['azimuth'].apply(lambda az: 'EW' if (45 <= az <= 135) or (225 <= az <= 315) else 'NS')
+
         # Test multiple Chandler wobble periods to find best fit (period varies 430-437 days)
         test_periods = np.arange(420, 441, 2)  # Test 420-440 days in 2-day steps
         print_status(f"Testing {len(test_periods)} candidate Chandler periods: {test_periods[0]}-{test_periods[-1]} days", "INFO")
@@ -2932,10 +2970,12 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
             for bin_idx in range(12):
                 bin_data = complete_df[complete_df['test_bin'] == bin_idx]
                 if len(bin_data) > 1000:
-                    ew_mean = bin_data[bin_data['ew_ns_class'] == 'EW']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 0
-                    ns_mean = bin_data[bin_data['ew_ns_class'] == 'NS']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 1
-                    if ns_mean != 0:
-                        test_ratios.append(ew_mean / ns_mean)
+                    ew_mean = bin_data[bin_data['ew_ns_class'] == 'EW']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 0.0
+                    ns_mean = bin_data[bin_data['ew_ns_class'] == 'NS']['coherence'].mean() if 'ew_ns_class' in bin_data.columns else 0.0
+                    # Guard against division by zero or undefined means
+                    if ns_mean is None or np.isnan(ns_mean) or abs(ns_mean) < 1e-6:
+                        continue
+                    test_ratios.append(ew_mean / ns_mean)
             
             if len(test_ratios) >= 8:
                 # Compute variance explained by sinusoid
@@ -2944,7 +2984,13 @@ def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
                     best_preliminary_r2 = test_r2
                     best_period = test_period
         
-        print_status(f"Best-fit Chandler period from scan (descriptive): {best_period} days (preliminary R²={best_preliminary_r2:.4f})", "INFO")
+        # Log best period after quick scan (only meaningful if at least one variance-explained calculation succeeded)
+        if best_preliminary_r2 > 0:
+            print_status(
+                f"Best-fit Chandler period from scan (descriptive): {best_period} days "
+                f"(preliminary R²={best_preliminary_r2:.4f})", "INFO")
+        else:
+            print_status(f"Best-fit Chandler period from scan: {best_period} days", "INFO")
         chandler_period_days = best_period
         
         # Now perform full analysis with optimal period and high resolution
@@ -5802,6 +5848,23 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
         
         amplitude_snr = abs(amplitude) / baseline_std if baseline_std > 0 else 0
         
+        # Permutation test for amplitude significance (always print result for verbosity)
+        p_perm = None
+        if TEPConfig.get_bool('TEP_ENABLE_PERMUTATION', False):
+            n_perm_evt = TEPConfig.get_int('TEP_PERMUTATION_N', 1000)
+            count_ge = 0
+            rng = np.random.default_rng(42)
+            for _ in range(n_perm_evt):
+                coh_perm = rng.permutation(coherences)
+                try:
+                    popt_perm, _ = curve_fit(gaussian_pulse_model, days, coh_perm, p0=p0, bounds=bounds, maxfev=3000)
+                    if abs(popt_perm[0]) >= abs(amplitude) - 1e-12:
+                        count_ge += 1
+                except Exception:
+                    continue
+            p_perm = (count_ge + 1) / (n_perm_evt + 1)
+            print_status(f"Permutation p-value (event window): {p_perm:.4g}", "INFO")
+
         # Warning for anomalous amplitudes
         baseline_warning = None
         if abs(amplitude) > abs(baseline) * 2:
@@ -5839,6 +5902,7 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
                 # Significance
                 'amplitude_std_err': float(amplitude_std_err),
                 'sigma_level': float(sigma_level),
+                'permutation_p_value': float(p_perm) if p_perm is not None else None,
                 'is_significant': bool(is_significant),
                 'fit_success': True
             }
@@ -5943,6 +6007,23 @@ def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: i
         
         amplitude_snr = abs(amplitude) / baseline_std if baseline_std > 0 else 0
         
+        # Permutation significance
+        p_perm = None
+        if TEPConfig.get_bool('TEP_ENABLE_PERMUTATION', False):
+            n_perm_evt = TEPConfig.get_int('TEP_PERMUTATION_N', 1000)
+            rng = np.random.default_rng(42)
+            count_ge = 0
+            for _ in range(n_perm_evt):
+                coh_perm = rng.permutation(coherences)
+                try:
+                    popt_perm, _ = curve_fit(gaussian_pulse_model, days, coh_perm, p0=p0, bounds=bounds, maxfev=3000)
+                    if abs(popt_perm[0]) >= abs(amplitude) - 1e-12:
+                        count_ge += 1
+                except Exception:
+                    continue
+            p_perm = (count_ge + 1) / (n_perm_evt + 1)
+            print_status(f"Permutation p-value (event window): {p_perm:.4g}", "INFO")
+
         # Warning for small baselines
         small_baseline_threshold = 0.02
         baseline_warning = None
@@ -5982,6 +6063,7 @@ def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: i
                 # Significance
                 'amplitude_std_err': float(amplitude_std_err),
                 'sigma_level': float(sigma_level),
+                'permutation_p_value': float(p_perm) if p_perm is not None else None,
                 'is_significant': bool(is_significant),
                 'fit_success': True
             }
@@ -6391,8 +6473,17 @@ def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
         # Extract data from each planet's analysis results
         for planet_key, info in planet_info.items():
             if planet_key in planetary_results and planetary_results[planet_key].get('success'):
-                events = planetary_results[planet_key].get('best_window_event_results', {})
-                
+                planet_result = planetary_results[planet_key]
+
+                # Prefer the pre-specified ±120-day window for inferential results when available,
+                # otherwise fall back to the best-window event results used for robustness.
+                events = {}
+                results_by_window = planet_result.get('results_by_window_size', {})
+                if 120 in results_by_window:
+                    events = results_by_window[120].get('event_results', {}) or {}
+                else:
+                    events = planet_result.get('best_window_event_results', {}) or {}
+
                 for event_name, event_data in events.items():
                     if event_data.get('success'):
                         gaussian = event_data.get('gaussian_fit', {})
@@ -6446,6 +6537,7 @@ def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
         if len(observed_amps) >= 5:  # Need minimum sample size
             observed_amps = np.array(observed_amps)
             gr_predictions = np.array(gr_predictions)
+            planet_labels_arr = np.array(planet_labels)
             
             # Test correlation: does observed amplitude pattern follow GR pattern?
             from scipy.stats import pearsonr, spearmanr
@@ -6463,7 +6555,25 @@ def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
             coupling_results['scaling_p_value_pearson'] = float(p_pearson)
             coupling_results['n_events'] = len(observed_amps)
             coupling_results['success'] = True
-            
+
+            # Per-planet summary statistics
+            per_planet_stats: Dict[str, Dict[str, float]] = {}
+            unique_planets = sorted(set(planet_labels_arr.tolist()))
+            for pname in unique_planets:
+                mask = planet_labels_arr == pname
+                if not np.any(mask):
+                    continue
+                amps_p = observed_amps[mask]
+                gr_p = gr_predictions[mask]
+                per_planet_stats[pname] = {
+                    'n_events': int(mask.sum()),
+                    'mean_observed_amplitude': float(np.mean(amps_p)),
+                    'median_observed_amplitude': float(np.median(amps_p)),
+                    'mean_gr_prediction': float(np.mean(gr_p)),
+                    'median_gr_prediction': float(np.median(gr_p))
+                }
+            coupling_results['per_planet_stats'] = per_planet_stats
+
             # Interpretation
             if abs(corr_spearman) > 0.3 and p_spearman < 0.05:
                 interpretation = "GRAVITATIONAL SCALING DETECTED"
@@ -6585,8 +6695,16 @@ def analyze_temporal_coherence(df: pd.DataFrame, results: Dict) -> Dict:
 
 def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> Dict:
     """
-    Apply multiple testing corrections consistent with Step 3.6 methodology.
-    Uses both Bonferroni and FDR corrections as implemented in the reference methods.
+    Apply multiple-testing corrections.
+
+    Currently implements:
+    1. Bonferroni (strong-control, very conservative)
+    2. Benjamini–Hochberg FDR (BH)
+
+    ⚠️  Caveat: BH assumes test-statistic independence (or positive regression
+    dependence). Planetary event p-values are temporally correlated, so BH is
+    slightly anti-conservative.  A future update should switch to the
+    Benjamini–Yekutieli procedure or a permutation-based FDR.
     """
     if not all_planetary_detections:
         return {'corrected_detections': [], 'correction_stats': {}}
@@ -6599,18 +6717,25 @@ def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> 
     bonferroni_alpha = 0.05 / n_tests
     bonferroni_significant = p_values < bonferroni_alpha
     
-    # FDR correction (Benjamini-Hochberg procedure)
-    # Sort p-values and apply BH procedure
+    # FDR corrections
+    fdr_alpha = 0.05
+
+    # --- Benjamini–Hochberg (BH) ---
     sorted_indices = np.argsort(p_values)
     sorted_p_values = p_values[sorted_indices]
-    
-    # Find largest k such that P(k) ≤ (k/n) * α
-    fdr_alpha = 0.05
-    fdr_significant = np.zeros(n_tests, dtype=bool)
-    for i in range(n_tests-1, -1, -1):
+    bh_significant = np.zeros(n_tests, dtype=bool)
+    for i in range(n_tests - 1, -1, -1):
         if sorted_p_values[i] <= (i + 1) / n_tests * fdr_alpha:
-            # All tests with indices 0 to i are significant
-            fdr_significant[sorted_indices[:i+1]] = True
+            bh_significant[sorted_indices[:i+1]] = True
+            break
+
+    # --- Benjamini–Yekutieli (BY) ---
+    # Control under arbitrary dependence: divide alpha by harmonic number
+    c_m = np.sum(1.0 / np.arange(1, n_tests + 1))
+    by_significant = np.zeros(n_tests, dtype=bool)
+    for i in range(n_tests - 1, -1, -1):
+        if sorted_p_values[i] <= (i + 1) / n_tests * (fdr_alpha / c_m):
+            by_significant[sorted_indices[:i+1]] = True
             break
     
     # Add correction results to detections
@@ -6619,7 +6744,8 @@ def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> 
         corrected_det = detection.copy()
         corrected_det.update({
             'bonferroni_significant': bool(bonferroni_significant[i]),
-            'fdr_significant': bool(fdr_significant[i]),
+            'bh_fdr_significant': bool(bh_significant[i]),
+            'by_fdr_significant': bool(by_significant[i]),
             'bonferroni_corrected_p': min(1.0, detection['p_value'] * n_tests),
             'original_p_value': detection['p_value']
         })
@@ -6629,10 +6755,17 @@ def apply_multiple_testing_corrections(all_planetary_detections: List[Dict]) -> 
         'total_tests': n_tests,
         'bonferroni_alpha': bonferroni_alpha,
         'fdr_alpha': fdr_alpha,
+        'bh_fdr_significant_count': int(np.sum(bh_significant)),
+        'by_fdr_significant_count': int(np.sum(by_significant)),
         'bonferroni_significant_count': int(np.sum(bonferroni_significant)),
-        'fdr_significant_count': int(np.sum(fdr_significant)),
         'uncorrected_significant_count': int(np.sum(p_values < 0.05))
     }
+
+    # Verbose logging of significant counts
+    print_status(
+        f"Multiple-testing corrections → Bonferroni {int(np.sum(bonferroni_significant))}/{n_tests}, "
+        f"BH-FDR {int(np.sum(bh_significant))}/{n_tests}, BY-FDR {int(np.sum(by_significant))}/{n_tests}",
+        "INFO")
     
     return {
         'corrected_detections': corrected_detections,

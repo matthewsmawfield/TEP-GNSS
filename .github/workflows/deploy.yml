@@ -37,6 +37,15 @@ jobs:
         echo "✅ Build completed successfully"
         ls -la dist/
 
+    - name: Build code-longspan static site
+      run: |
+        cd site-code-longspan
+        node build.js
+        mkdir -p ../site/dist/code-longspan
+        cp -R dist/* ../site/dist/code-longspan/
+        echo "✅ code-longspan build completed"
+        ls -la ../site/dist/code-longspan
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
 
