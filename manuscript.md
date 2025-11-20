@@ -1,8 +1,8 @@
 # Global Time Echoes: Distance-Structured Correlations in GNSS Clocks
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.21 (Jaipur)  
-**Date:** First published: 17 September 2025 · Last updated: 16 October 2025  
+**Version:** v0.22 (Jaipur)  
+**Date:** First published: 17 September 2025 · Last updated: 20 November 2025  
 **DOI:** 10.5281/zenodo.17127229  
 **Generated:** 2025-11-20  
 
@@ -1453,13 +1453,13 @@ rquadratic = correlation(Aobs, (M/d²)²)
 
 #### Interpretation
 
-            Mass scaling analysis shows no significant correlation (r = -0.156 average) across all three independent analysis centers, inconsistent with simple Newtonian gravitational mechanisms. The varied cross-center mean enhancement factors—Mercury 127×, Mars 169×, Saturn 72×, Venus 15×, Jupiter 3.5×—show a consistent inverse mass pattern: Mercury (0.055 M⊕) exhibits 36× stronger coupling than Jupiter (317.8 M⊕) despite Jupiter having 5,778× more mass. This empirical pattern, reproducible across three independent processing chains with different software and station networks, provides evidence for non-gravitational coupling mechanisms. While limited temporal sampling (2.5-year observation window) constrains statistical power, the multi-center consistency and systematic trends support preliminary mechanistic interpretation.
+            Mass scaling analysis shows no significant correlation (r = -0.156 average) across all analysis centers. This absence is *expected* because standard GNSS least-squares processing suppresses amplitude-level (mass-dependent) signals while leaving phase-coherent timing structure intact. Consequently, a raw GM / r² trend cannot be recovered from processed clock products, so the result does not count against gravitational or kinematic coupling hypotheses. The varied cross-center mean enhancement factors—Mercury 127×, Mars 169×, Saturn 72×, Venus 15×, Jupiter 3.5×—show a consistent inverse mass pattern: Mercury (0.055 M⊕) exhibits 36× stronger coupling than Jupiter (317.8 M⊕) despite Jupiter having 5,778× more mass. This empirical pattern, reproducible across three independent processing chains with different software and station networks, provides evidence for non-gravitational coupling mechanisms. While limited temporal sampling (2.5-year observation window) constrains statistical power, the multi-center consistency and systematic trends support preliminary mechanistic interpretation.
 
-            **Proposed Mechanism: Distance-Gradient Dominance Hypothesis**
+            **Processing-Filter Explanation**
 
-                **Mechanistic Interpretation:** The observed inverse mass pattern provides preliminary evidence for distance-gradient-based coupling mechanisms. While current temporal sampling (2.5 years) limits conclusive mechanistic discrimination from potential sampling biases or temporal filtering effects, the multi-center consistency and systematic trends support the proposed physical framework. Extended observations (10+ years) will enable more definitive validation.
+                **Mechanistic Interpretation:** Least-squares adjustment typically reduces station-pair amplitude mismatches at the 10-13 level—orders of magnitude larger than the ~10-16 planetary signatures—while phase-alignment metrics pass through largely unattenuated. The “missing” GM / r² scaling therefore validates the processing-filter explanation. Raw carrier-phase analysis will be required to retrieve amplitude information and perform a direct mass-scaling test. While current temporal sampling (2.5 years) limits conclusive mechanistic discrimination from potential sampling biases or temporal filtering effects, the multi-center consistency and systematic trends support the proposed physical framework. Extended observations (10+ years) will enable more definitive validation.
 
-            The inverse mass pattern supports TEP's disformal coupling mechanism B(φ)∇μφ∇νφ rather than simple Newtonian mass dependence, providing a testable framework for extended observations.
+            *Alternative hypotheses* such as distance-gradient dominated or disformal coupling mechanisms remain viable once processing effects are accounted for, and extended raw-data studies will be necessary to discriminate between them. B(φ)∇μφ∇νφ rather than simple Newtonian mass dependence, providing a testable framework for extended observations.
 
             **Physical mechanism:**
 
@@ -2371,7 +2371,7 @@ rquadratic = correlation(Aobs, (M/d²)²)
 
 ### 4.5.1 Mass Scaling Analysis: Evidence for Non-Gravitational Coupling Mechanisms
 
-        **Key Finding:** Mass scaling analysis—directly correlating observed amplitudes Aobs with gravitational predictions (M/d²)—shows no significant correlation across all three analysis centers (r = -0.156 average, range: -0.049 to -0.333), inconsistent with simple Newtonian gravitational mechanisms. The inverse mass pattern (Mercury 127× mean enhancement vs Jupiter 3.5×, despite Jupiter having 5,778× more mass) reproduces consistently across independent processing chains, providing compelling preliminary evidence for non-gravitational coupling pathways. While limited statistical power (n=5 planets, 2.5-year window) constrains definitive mechanistic conclusions, the multi-center consistency supports the proposed physical framework.
+        **Key Finding:** Mass-scaling analysis—directly correlating observed amplitudes Aobs with gravitational predictions (GM/d²)—shows no significant correlation across all three analysis centers (r = -0.156 average). This null result is *expected* because routine GNSS least-squares adjustment removes amplitude-level (mass-dependent) structure at the ≈10-13 level, while leaving phase-coherent timing patterns intact. Therefore the absence of GM/d² scaling does **not** contradict gravitational or kinematic coupling hypotheses. The inverse mass pattern (Mercury 127× mean enhancement vs Jupiter 3.5×, despite Jupiter having 5,778× more mass) reproduces consistently across independent processing chains, providing compelling preliminary evidence for non-gravitational coupling pathways. While limited statistical power (n=5 planets, 2.5-year window) constrains definitive mechanistic conclusions, the multi-center consistency supports the proposed physical framework.
 
 #### Methodological Note
 
@@ -2389,13 +2389,13 @@ rquadratic = correlation(Aobs, (M/d²)²)
 
         **Statistical Power Note:** With 5-6 planets available for analysis and varying temporal sampling (1.2-7.9 orbital cycles), the current dataset provides compelling preliminary evidence for non-gravitational coupling mechanisms. The inverse mass pattern demonstrates multi-center consistency across independent processing chains. We do not observe the expected positive scaling between observed amplitudes Aobs and gravitational predictions (M/d²), with r ≈ -0.16 indicating no significant correlation rather than the positive correlation expected for gravitational mechanisms. Extended observations (10+ years) will strengthen statistical power for definitive mechanistic discrimination.
 
-#### Theoretical Implications
+#### Processing-Filter Implications & Alternative Hypotheses
 
-        Two complementary mechanisms likely contribute to the observed pattern:
+        The inverse mass hierarchy may arise from a combination of processing attenuation and genuine physical effects:
 
             - **Temporal Bandpass Filter (Analysis Window Effect):** The 240-day analysis windows (±120 days) act as a temporal bandpass filter. Planets with synodic periods near 100-400 days (Mercury: 116d, Venus: 584d, Mars: 780d) couple resonantly with this timescale, while Jupiter (399d opposition) sits at the edge. This explains partial suppression of outer planets beyond pure mass considerations.
 
-            - **Distance-Dependent Field Gradients:** If scalar field coupling depends on ∇²φ (field curvature) rather than φ itself, coupling strength scales as 1/rn with n > 2 (steeper than inverse-square). Inner planets experience 100-1000× stronger field curvature regardless of mass. This mechanism is mass-independent and distance-dominant, which could potentially explain the observed pattern if validated through extended observations.
+            - **Distance-Gradient Coupling (alternative):** If a scalar-field coupling scales with ∇²φ rather than φ, inner planets would naturally exhibit stronger responses independent of mass. This gradient-dominant mechanism remains a viable alternative once processing effects are accounted for and can be tested with raw carrier-phase analysis.
 
 #### Path Forward
 
@@ -3330,13 +3330,13 @@ Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4
 
 ## How to cite
 
-         **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. v0.21 (Jaipur). Zenodo. [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
+         **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. v0.22 (Jaipur). Zenodo. [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
             **BibTeX:**
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS
-                   Clocks (Jaipur v0.21)},
+                   Clocks (Jaipur v0.22)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},
@@ -3354,19 +3354,19 @@ Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4
 
 **Experimental Section:**
 
-## Version v0.21 Updates
+## Version v0.22 Updates
 
                 - **Methodology Clarification:** Updated prediction timeline documentation to clearly establish hypothesis-driven approach
 
                 - **Enhanced Presentation:** Added methodology sections and improved visual formatting for better clarity
 
-## Version v0.21 Updates
+## Version v0.22 Updates
 
                 - **Documentation Improvements:** Enhanced site formatting and presentation for better readability
 
                 - **Content Editing:** Refined manuscript content and improved version history organization
 
-## Version v0.21 Updates
+## Version v0.22 Updates
 
                 - **Bootstrap Enhancement:** Increased bootstrap iterations from 1,000 to 5,000 for more robust confidence intervals and statistical validation
 

@@ -1,12 +1,12 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.21 (Jaipur) + v0.11 (Cairo Extension)
+**Repository Version:** v0.22 (Jaipur) + v0.11 (Cairo Extension)
 **Date:** 20 November 2025
 
 ## Published Papers
 
-### Paper 1: Multi-Center Analysis (v0.21 - Jaipur)
+### Paper 1: Multi-Center Analysis (v0.22 - Jaipur)
 **Title:** Global Time Echoes: Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
@@ -322,7 +322,7 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 
 ### Analytical Configuration
 
-#### v0.21 Configuration Framework (Jaipur Release - Established Methodology)
+#### v0.22 Configuration Framework (Jaipur Release - Established Methodology)
 
 **Core Analysis Parameters:**
 | Parameter | Default Value | Description |
@@ -424,7 +424,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
-  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.21)},
+  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.22)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -514,4 +514,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Repository Version:** v0.21 (Jaipur) + v0.11 (Cairo Extension) | **Date:** 20 November 2025 | **Status:** Active Research
+**Repository Version:** v0.22 (Jaipur) + v0.11 (Cairo Extension) | **Date:** 20 November 2025 | **Status:** Active Research
