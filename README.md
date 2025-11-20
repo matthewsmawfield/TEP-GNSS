@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.21 (Jaipur) + v0.9 (Cairo Extension)
-**Date:** 14 November 2025
+**Repository Version:** v0.21 (Jaipur) + v0.10 (Cairo Extension)
+**Date:** 20 November 2025
 
 ## Published Papers
 
@@ -12,7 +12,7 @@
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
 **Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
 
-### Paper 2: 25-Year Temporal Extension (v0.9 - Cairo)
+### Paper 2: 25-Year Temporal Extension (v0.10 - Cairo)
 **Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
@@ -38,7 +38,7 @@ This repository implements a comprehensive experimental framework for testing Te
 
 **Paper 1 (Multi-Center Analysis):** Presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events.
 
-**Paper 2 (25-Year Temporal Extension):** Extends the analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pairs. This temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.640, p < 10⁻⁸) and enhanced statistical power for planetary event detection (72 events detected, 34 surviving Bonferroni correction).
+**Paper 2 (25-Year Temporal Extension):** Extends the analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pairs. This temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.641, p < 10⁻⁸) and enhanced statistical power for planetary event detection (67 events detected, 31 surviving Bonferroni correction).
 
 Both studies employ extensive validation—including 24-61× signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—providing substantial evidence of signal authenticity. These findings are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
 ## Cloud-Based Analysis Execution (Recommended)
@@ -163,10 +163,10 @@ Extended analysis of 165.2 million station-pair measurements over 25.3 years con
 **Temporal Stability:**
 - **Decadal confirmation:** Original signatures confirmed over 25-year timescale
 - **Orbital coupling:** Strong correlation with Earth's orbital velocity (r = -0.864, p < 10⁻¹⁰)
-- **Enhanced detection:** 72 planetary event responses (34 surviving Bonferroni correction)
+- **Enhanced detection:** 67 planetary event responses (31 surviving Bonferroni correction)
 
 **Long-Period Geophysical Signatures:**
-- **Nutation cycle:** Clear detection of 18.6-year lunar nutation (R² = 0.640, p < 10⁻⁸)
+- **Nutation cycle:** Clear detection of 18.6-year lunar nutation (R² = 0.641, p < 10⁻⁸)
 - **Chandler wobble:** Confirmed with extended temporal baseline
 - **Seasonal patterns:** Robust annual modulation effects
 
@@ -437,7 +437,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes25year,
-  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.9)},
+  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.10)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -513,4 +513,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Repository Version:** v0.21 (Jaipur) + v0.9 (Cairo Extension) | **Date:** 14 November 2025 | **Status:** Active Research
+**Repository Version:** v0.21 (Jaipur) + v0.10 (Cairo Extension) | **Date:** 20 November 2025 | **Status:** Active Research

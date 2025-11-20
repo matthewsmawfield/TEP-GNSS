@@ -1218,7 +1218,10 @@ def run_temporal_orbital_tracking_analysis(complete_df: pd.DataFrame) -> Dict:
     orbital_speeds = [t['orbital_speed_kms'] for t in temporal_tracking]
     
     # Test correlation with orbital motion
-    orbital_correlation, orbital_p_value = stats.pearsonr(orbital_speeds, ew_ns_ratios)
+    # Use robust correlation to account for temporal autocorrelation (overlapping 30-day windows)
+    orbital_stats = autocorr_robust_correlation(orbital_speeds, ew_ns_ratios)
+    orbital_correlation = orbital_stats['correlation']
+    orbital_p_value = orbital_stats['p_value_autocorr_corrected']
     
     # Test for 365.25-day periodicity
     def seasonal_model(day, amplitude, phase, offset):
@@ -6709,7 +6712,17 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
         
         for planet_key, info in planet_info.items():
             if planet_key in all_results and all_results[planet_key].get('success'):
-                events = all_results[planet_key].get('best_window_event_results', {})
+                # Use 120-day window results for reporting if available (standard policy)
+                # Fallback to best/only window if 120 not present (e.g. if override used)
+                results_by_window = all_results[planet_key].get('results_by_window_size', {})
+                if 120 in results_by_window:
+                    events = results_by_window[120].get('event_results', {})
+                    # print_status(f"   Using standard 120-day window for {info['name']} reporting", "INFO")
+                else:
+                    events = all_results[planet_key].get('best_window_event_results', {})
+                    # window_days = all_results[planet_key].get('best_window_size_days', 'unknown')
+                    # print_status(f"   Using {window_days}-day window for {info['name']} reporting (120-day not available)", "INFO")
+                
                 planet_data = {
                     'planet_name': info['name'],
                     'expected_amplitude_pct': info['expected_amp_pct'],

@@ -4,8 +4,8 @@
 "Long-Term Stability and Geophysical Coupling of Temporal-Gravitational Signatures in GNSS: A 25-Year Confirmatory Analysis"
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.9 (Cairo)  
-**Date:** 14 November 2025  
+**Version:** v0.10 (Cairo)  
+**Date:** 20 November 2025  
 **Status:** Preprint
 
 ## Overview
@@ -14,9 +14,9 @@ This is the website for Paper 2 of the TEP-GNSS project, which presents a 25-yea
 
 ## Key Findings
 
-- Confirms orbital velocity correlation (r = -0.864, p < 10⁻¹⁰)
-- 72 planetary event responses with inverse mass scaling
-- 18.6-year nutation cycle detection (R² = 0.640)
+- Confirms orbital velocity correlation (r = -0.864, p = 0.0013)
+- 67 planetary event responses (31 surviving Bonferroni correction)
+- 18.6-year nutation cycle detection (R² = 0.641)
 - 21+ cycles of Chandler wobble (R² = 0.106)
 - Network coherence over 25.3 years
 

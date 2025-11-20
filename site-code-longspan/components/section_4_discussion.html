@@ -37,7 +37,7 @@
 <p><strong>Nutation Signatures:</strong></p>
 <ul>
   <li><strong>Semiannual Nutation:</strong> R² = 0.904. A strong and clean signal, indicating that the daily coherence of the network is strongly modulated by the 6‑month wobble of Earth's axis caused by the Sun.</li>
-  <li><strong>Main Nutation (18.6 years):</strong> R² = 0.640. A strong detection of coupling to the long-period lunar-induced precession of Earth's rotational axis. This confirms sensitivity to multi-decadal astronomical cycles.</li>
+  <li><strong>Main Nutation (18.6 years):</strong> R² = 0.641. A strong detection of coupling to the long-period lunar-induced precession of Earth's rotational axis. This confirms sensitivity to multi-decadal astronomical cycles.</li>
 </ul>
 <p><strong>Chandler Wobble (14-month polar motion):</strong></p>
   <li>R² = 0.106. This is a borderline but physically consistent detection. The signal shows the correct period (436 days) and phase stability (0.72) across 21 complete cycles, but doesn't cross the strict significance threshold (R² > 0.15). This is likely due to the Chandler wobble having a lower amplitude or signal-to-noise ratio compared to forced nutation.</li>
@@ -120,12 +120,27 @@
   <li><strong>Amplitude discrepancy:</strong> ~10² enhancement over naive prediction</li>
 </ul>
 
+<p><strong>Resolution: Information Resonance vs. Force Coupling</strong></p>
+<p>The discrepancy in amplitude and the lack of GM/r² scaling (mass dependence) suggests that the phenomenon may not be a force-based coupling (transfer of energy) but an <em>information-metric coupling</em> (synchronization of phase). in this view:</p>
+<ul>
+  <li><strong>Resonance dominates over Mass:</strong> The system responds to the <em>frequency</em> of the gravitational perturbation (e.g., orbital periods) rather than the <em>amplitude</em> (mass). This explains why planetary events are detected based on alignment geometry rather than planetary mass.</li>
+  <li><strong>Network Amplification:</strong> A distributed clock network acts as a phased array, potentially amplifying weak coherent signals that would be undetectable in single-clock residuals.</li>
+</ul>
+
 <p><strong>Potential Resolution Mechanisms:</strong></p>
 <ol>
   <li><strong>Nonlinear screening enhancement:</strong> The relevant density regime (Earth's surface environment) may exhibit stronger-than-linear coupling effects compared to the space-based Cassini constraints</li>
   <li><strong>Coherent network amplification:</strong> Distributed clock networks could amplify individual coupling through collective synchronization and phase coherence</li>
   <li><strong>Processing residual artifacts:</strong> Raw data analysis is required to distinguish physical signals from processing-dependent amplitude effects</li>
 </ol>
+
+<h4>4.3.1.2 Resolution of Gravitational Scaling Anomaly (Step 2.3 Analysis)</h4>
+<p>Post-hoc physical modeling (Step 2.3) confirmed the absence of classical gravitational scaling. Analysis of 156 planetary events revealed no significant correlation between observed modulation amplitudes and tidal parameters (M/r³) or gravitational field strength (M/r²):</p>
+<ul>
+  <li><strong>Amplitude vs Tidal (M/r³):</strong> r = -0.058 (p = 0.47)</li>
+  <li><strong>Amplitude vs Gravity (M/r²):</strong> r = -0.096 (p = 0.23)</li>
+</ul>
+<p>This empirical result confirms that the coupling is <strong>not</strong> a simple linear tidal effect. The phenomenon exhibits a "saturation" or "resonance" behavior where the detection depends on alignment geometry (opposition/conjunction) rather than the magnitude of the gravitational potential. This distinguishes TEP-type coupling from conventional Newtonian or GR tidal forces.</p>
 
 <div style="background-color: rgba(230,240,255,0.8); border: 2px solid #0066cc; padding: 18px; margin: 20px 0; border-radius: 6px;">
   <h4 style="margin-top: 0; color: #003d7a;">Testable Predictions for Discriminating Mechanisms</h4>
@@ -181,7 +196,7 @@
     <tr>
       <td><strong>Station density bias</strong></td>
       <td>Static or slowly varying λ</td>
-      <td>Annual λ modulation (19% amplitude)</td>
+      <td>Annual λ modulation (19% amplitude) tracking orbital velocity</td>
       <td>✗ NO</td>
     </tr>
     <tr>
@@ -229,9 +244,10 @@
 <ul>
   <li><strong>Station-layout geometry (pair-density anisotropy):</strong>
     <ul>
-      <li><em>Assumption:</em> Uneven station distribution by azimuth induces apparent anisotropy.</li>
-      <li><em>Outcome:</em> Can bias absolute λ estimates, but does not impose a coherent annual phase tied to perihelion/aphelion.</li>
+      <li><em>Assumption:</em> Uneven station distribution by azimuth induces apparent anisotropy (e.g., more stations in US/Europe create EW bias).</li>
+      <li><em>Outcome:</em> Can bias absolute λ estimates, but does not impose a coherent annual phase tied to perihelion/aphelion. A static geometry bias cannot "breathe" with a 19% annual modulation.</li>
       <li><em>Mismatch:</em> Fails to generate r = -0.864 with orbital velocity or same-phase hemispheres; density effects are static or slowly varying, not heliocentric.</li>
+      <li><strong>Empirical Rebuttal (Step 2.3):</strong> Post-hoc normalization of correlation lengths by station pair density reveals that the EW > NS anisotropy <strong>persists and strengthens</strong> (Normalized Ratio ≈ 2.40) after accounting for sampling bias. This confirms the directional structure is not an artifact of receiver distribution.</li>
     </ul>
   </li>
   <li><strong>Global common-mode/whitening bias:</strong>
@@ -256,6 +272,7 @@
   <li><strong>Reference frame updates and clock datum choices:</strong> Affect absolute levels and slow drifts but do not impose heliocentric annual phasing with identical hemispheric timing.</li>
   <li><strong>Common-mode removal and detrending/whitening:</strong> Can reduce variance isotropically or along processing axes; insufficient to create persistent E–W > N–S correlation-length ratios tied to orbital velocity.</li>
   <li><strong>Editing/quality-control rules and batch processing:</strong> May introduce step changes or batch-specific patterns; these do not produce the continuous, phase-coherent annual modulation synchronized with perihelion/aphelion.</li>
+  <li><strong>Spectral Specificity Argument:</strong> Processing artifacts are typically broadband (noise) or aliased to sampling frequencies (daily/weekly). It is highly improbable that a generic least-squares processing chain would accidentally generate a coherent signal at exactly the 18.6-year lunar nutation period (R² = 0.641) or the 433-day Chandler wobble period, as these geophysical frequencies are not inherent to the algorithmic structure.</li>
 </ul>
 <p><em>Conclusion:</em> While raw carrier-phase reanalysis remains essential for amplitude quantification, the joint constraints from anisotropy structure, orbital-velocity phasing, and hemisphere same-phase behavior are not reproduced by these processing classes. A quantitative bounds table (mechanism × signature) is planned for a follow-on technical note.</p>
 
@@ -394,7 +411,7 @@
   <li><strong>Spatial Structure:</strong> The anisotropic correlation field (E-W:N-S = 2.16) persists across 25 years and aligns approximately with Earth's orbital plane. Whether this reflects propagation effects, processing biases, or a genuine geometric coupling remains to be determined through multi-constellation and raw-data analysis.</li>
   <li><strong>Global Coordination:</strong> Network synchronization (index = 0.582) demonstrates coordinated behavior across the 474-station network. This could indicate a global field-like influence, though alternative explanations (correlated processing, shared reference frames, propagation modes) require systematic investigation.</li>
   <li><strong>Multi-Scale Temporal Structure:</strong> The detection of couplings at timescales from days (planetary events) to decades (18.6-year nutation) suggests the phenomenon operates across multiple temporal regimes. The physical mechanism enabling this scale-invariance is unclear.</li>
-  <li><strong>Geophysical Integration:</strong> The strong nutation coupling (R² = 0.904 semiannual, R² = 0.640 for 18.6-year) indicates the timing correlation field is sensitive to Earth's rotational state. This dual sensitivity to both external (planetary) and internal (geophysical) dynamics requires explanation.</li>
+  <li><strong>Geophysical Integration:</strong> The strong nutation coupling (R² = 0.904 semiannual, R² = 0.641 for 18.6-year) indicates the timing correlation field is sensitive to Earth's rotational state. This dual sensitivity to both external (planetary) and internal (geophysical) dynamics requires explanation.</li>
   <li><strong>Theoretical Framework:</strong> While observations are broadly consistent with TEP predictions (velocity-dependent correlation modulation, geometric anisotropy), no quantitative theoretical model yet predicts the specific effect sizes, modulation depth distribution, or anisotropy ratios. Development of a predictive theory is critical for advancing beyond empirical description.</li>
 </ol>
 <h3>4.5 Limitations and Caveats</h3>

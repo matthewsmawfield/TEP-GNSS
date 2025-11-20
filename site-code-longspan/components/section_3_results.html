@@ -19,17 +19,17 @@
                 </tr>
                 <tr style="background-color: rgba(73,87,115,0.03);">
                     <td style="padding:8px; border:1px solid #495773;">Anisotropy Strength</td>
-                    <td style="padding:8px; border:1px solid #495773;">1.981 ± 0.23</td>
+                    <td style="padding:8px; border:1px solid #495773;">1.981</td>
                     <td style="padding:8px; border:1px solid #495773;">p < 10⁻¹⁵</td>
                 </tr>
                 <tr>
                     <td style="padding:8px; border:1px solid #495773;">Orbital Velocity Correlation</td>
                     <td style="padding:8px; border:1px solid #495773;">r = -0.864</td>
-                    <td style="padding:8px; border:1px solid #495773;">p = 4.82 × 10⁻¹¹ (6.6σ)</td>
+                    <td style="padding:8px; border:1px solid #495773;">p = 0.0013 (3.2σ)</td>
                 </tr>
                 <tr style="background-color: rgba(73,87,115,0.03);">
                     <td style="padding:8px; border:1px solid #495773;">18.6-Year Nutation Coupling</td>
-                    <td style="padding:8px; border:1px solid #495773;">R² = 0.640</td>
+                    <td style="padding:8px; border:1px solid #495773;">R² = 0.641</td>
                     <td style="padding:8px; border:1px solid #495773;">p < 10⁻⁸</td>
                 </tr>
                 <tr>
@@ -38,9 +38,9 @@
                     <td style="padding:8px; border:1px solid #495773;">p < 0.001</td>
                 </tr>
                 <tr style="background-color: rgba(73,87,115,0.03);">
-                    <td style="padding:8px; border:1px solid #495773;">Planetary Events (Bonferroni)</td>
-                    <td style="padding:8px; border:1px solid #495773;">34/156 detected</td>
-                    <td style="padding:8px; border:1px solid #495773;">α = 0.0007</td>
+                    <td style="padding:8px; border:1px solid #495773;">Planetary Events (≥2σ)</td>
+                    <td style="padding:8px; border:1px solid #495773;">67/156 detected</td>
+                    <td style="padding:8px; border:1px solid #495773;">43% detection rate</td>
                 </tr>
             </tbody>
         </table>
@@ -274,8 +274,8 @@
 <ul>
   <li><strong>Metric:</strong> EW/NS ratio vs orbital velocity</li>
   <li><strong>Pearson r:</strong> -0.864 (95% CI: [-0.923, -0.765])</li>
-  <li><strong>Significance:</strong> p = 4.82 × 10⁻¹¹</li>
-  <li><strong>Effective σ:</strong> 6.6</li>
+  <li><strong>Significance:</strong> p = 0.0013</li>
+  <li><strong>Effective σ:</strong> 3.2</li>
   <li><strong>Temporal samples:</strong> 34 (30-day windows)</li>
 </ul>
 
@@ -295,10 +295,10 @@
   <li>Bootstrap resampling: r = -0.864 ± 0.058 (95% CI: [-0.923, -0.765])</li>
   </ul>
 
-<p><strong>Finding:</strong> The spatial anisotropy structure varies predictably with Earth's orbital velocity (r = -0.864, p = 4.82 × 10⁻¹¹), supporting Claim B. The ≈19% annual modulation (offset ≈ 1.27, amplitude ≈ 0.24) is phase-coherent across all 25 years.</p>
+<p><strong>Finding:</strong> The spatial anisotropy structure varies predictably with Earth's orbital velocity (r = -0.864, p = 4.82 × 10⁻¹¹), supporting Claim B. The ≈19% annual modulation of the EW/NS <em>coherence ratio</em> (offset ≈ 1.27, amplitude ≈ 0.24; see §2.2.2 for observable definition) is phase-coherent across all 25 years.</p>
 
 <h4>3.2.2 Physical Interpretation: Orbital Coupling</h4>
-<p><strong>Status and Physical Interpretation:</strong> Orbital velocity and Earth-Sun distance are physically coupled by Kepler's laws (r = −1.000 on Earth's orbit), making them inseparable through partial correlation analysis. The strong correlation between the EW/NS anisotropy ratio and Earth's orbital velocity (r = −0.864, p = 4.82 × 10⁻¹¹) provides direct evidence for orbital coupling. The multi-center study's hemisphere stratification analysis (§3.4 in Paper 1) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders.</p>
+<p><strong>Status and Physical Interpretation:</strong> Orbital velocity and Earth-Sun distance are physically coupled by Kepler's laws (r = −1.000 on Earth's orbit), making them inseparable through partial correlation analysis. The strong correlation between the EW/NS anisotropy ratio and Earth's orbital velocity (r = −0.864, p = 0.0013) provides direct evidence for orbital coupling. The multi-center study's hemisphere stratification analysis (§3.4 in Paper 1) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders.</p>
 
 <p><strong>Directional Structure and Velocity-Dependent Coupling:</strong> The pronounced E–W > N–S anisotropy (EW:NS = 2.16, λ<sub>EW</sub> ≈ 5,400 km vs λ<sub>NS</sub> ≈ 2,500 km) provides mechanistic insight into the coupling. If GNSS clock correlations are sensitive to velocity-dependent modulation of spacetime geometry, station pairs aligned parallel to Earth's orbital motion (E–W) should experience stronger time-flow gradients than pairs aligned perpendicular to it (N–S). This is because the velocity vector points along the ecliptic plane (approximately E–W in local coordinates), so the gradient of any velocity-dependent field would be strongest along that direction. Consequently, E–W pairs would maintain phase coherence over longer distances, while N–S pairs would decorrelate more rapidly. This prediction is exactly what we observe: the correlation length is 2–3× longer in the E–W direction. The fact that this directional preference persists across 25 years and correlates with orbital velocity (rather than local seasonal factors) indicates the effect is fundamentally tied to heliocentric dynamics, not local environmental confounders.</p>
 
@@ -308,7 +308,7 @@
                  + α<sub>2</sub>sin(ω<sub>2</sub>t) + β<sub>2</sub>cos(ω<sub>2</sub>t)</pre>
 The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation</strong> of the EW/NS ratio (&plusmn;0.24 about a mean of&nbsp;1.274; JSON <code>seasonal_analysis</code> amplitude&nbsp;=&nbsp;0.24; amplitude/mean ≈ 18.8%). In contrast, the orbital-velocity model explains nearly all systematic variance:
 <ul>
-  <li><strong>Orbital model:</strong> Pearson r&nbsp;=&nbsp;−0.864, R²&nbsp;=&nbsp;0.746, p&nbsp;=&nbsp;4.82 × 10<sup>−11</sup></li>
+  <li><strong>Orbital model:</strong> Pearson r&nbsp;=&nbsp;−0.864, R²&nbsp;=&nbsp;0.746, p&nbsp;=&nbsp;0.0013</li>
   <li><strong>Seasonal model:</strong> captures &lt; 0.2 of observed variance (no significant correlation residuals remain; orbital signal persists after subtracting seasonal fit).</li>
 </ul>
 <p><strong>Conclusion:</strong> A simple seasonal harmonic cannot reproduce the strength, phase or amplitude of the EW/NS modulation. Orbital velocity remains the dominant explanatory variable across all 25&nbsp;years.</p>
@@ -318,7 +318,7 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
 <p><strong>Note</strong>: We report a statistically robust planetary‑event anomaly in processed GNSS clock products. Effect sizes (modulation depths) should be treated as <em>processing‑dependent</em> and show <em>no GM/r²‑like scaling</em>. Mechanistic interpretation is deferred pending raw carrier‑phase reanalysis. The multi-center study tested a small, predeclared set and found 6/8 Bonferroni‑significant responses; here we reproduce that set in our pipeline and then scale to 156 events with dependence‑aware corrections.</p>
 <h4>3.3.1 Detection Statistics</h4>
 <p><strong>Inference policy:</strong> All planetary event detection counts and p-values follow the canonical policy in §2.3.3 (primary ±120-day window; robustness-only additional windows; multiplicity across events × windows).</p>
-<p>An analysis of 156 planetary alignment events (oppositions/conjunctions) was performed using the ±120-day window with Gaussian pulse fitting. This yielded 72 statistically significant responses (≥2σ):</p>
+<p>An analysis of 156 planetary alignment events (oppositions/conjunctions) was performed using the ±120-day window with Gaussian pulse fitting. This yielded 67 statistically significant responses (≥2σ):</p>
 
 <div style="overflow-x: auto; margin: 20px 0;">
     <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
@@ -327,7 +327,7 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
                 <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Planet</th>
                 <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Total Events</th>
                 <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Significant (≥2σ)</th>
-                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Bonferroni (α=0.0007)</th>
+                <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Strong (≥3σ)</th>
                 <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Detection Rate</th>
             </tr>
         </thead>
@@ -342,37 +342,37 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
             <tr style="background-color: rgba(73, 87, 115, 0.03);">
                 <td style="padding: 8px; border: 1px solid #495773;">Venus</td>
                 <td style="padding: 8px; border: 1px solid #495773;">16</td>
-                <td style="padding: 8px; border: 1px solid #495773;">5</td>
-                <td style="padding: 8px; border: 1px solid #495773;">3</td>
-                <td style="padding: 8px; border: 1px solid #495773;">31.2%</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">25.0%</td>
             </tr>
             <tr>
                 <td style="padding: 8px; border: 1px solid #495773;">Mars</td>
                 <td style="padding: 8px; border: 1px solid #495773;">12</td>
-                <td style="padding: 8px; border: 1px solid #495773;">7</td>
-                <td style="padding: 8px; border: 1px solid #495773;">3</td>
-                <td style="padding: 8px; border: 1px solid #495773;">58.3%</td>
+                <td style="padding: 8px; border: 1px solid #495773;">6</td>
+                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">50.0%</td>
             </tr>
             <tr style="background-color: rgba(73, 87, 115, 0.03);">
                 <td style="padding: 8px; border: 1px solid #495773;">Jupiter</td>
                 <td style="padding: 8px; border: 1px solid #495773;">23</td>
-                <td style="padding: 8px; border: 1px solid #495773;">11</td>
-                <td style="padding: 8px; border: 1px solid #495773;">6</td>
-                <td style="padding: 8px; border: 1px solid #495773;">47.8%</td>
+                <td style="padding: 8px; border: 1px solid #495773;">8</td>
+                <td style="padding: 8px; border: 1px solid #495773;">7</td>
+                <td style="padding: 8px; border: 1px solid #495773;">34.8%</td>
             </tr>
             <tr>
                 <td style="padding: 8px; border: 1px solid #495773;">Saturn</td>
                 <td style="padding: 8px; border: 1px solid #495773;">25</td>
                 <td style="padding: 8px; border: 1px solid #495773;">9</td>
-                <td style="padding: 8px; border: 1px solid #495773;">4</td>
+                <td style="padding: 8px; border: 1px solid #495773;">5</td>
                 <td style="padding: 8px; border: 1px solid #495773;">36.0%</td>
             </tr>
             <tr style="background-color: rgba(73, 87, 115, 0.05); font-weight: bold;">
                 <td style="padding: 8px; border: 1px solid #495773;">Total</td>
                 <td style="padding: 8px; border: 1px solid #495773;">156</td>
-                <td style="padding: 8px; border: 1px solid #495773;">72</td>
-                <td style="padding: 8px; border: 1px solid #495773;">34</td>
-                <td style="padding: 8px; border: 1px solid #495773;">46.2%</td>
+                <td style="padding: 8px; border: 1px solid #495773;">67</td>
+                <td style="padding: 8px; border: 1px solid #495773;">38</td>
+                <td style="padding: 8px; border: 1px solid #495773;">42.9%</td>
             </tr>
         </tbody>
     </table>
@@ -381,23 +381,23 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
 <div class="experimental-section" style="background-color: rgba(73, 87, 115, 0.05); border: 2px solid #495773; padding: 20px; margin: 20px 0;">
     <h4 style="margin-top: 0; color: #220126;">Multiple Testing Survival</h4>
     <ul style="line-height: 1.7;">
-        <li><strong>Bonferroni</strong> (α = 0.000694): 34/72 (47%) survive ultra-conservative correction
+        <li><strong>Bonferroni</strong> (α = 0.000694): 31/67 (46%) survive ultra-conservative correction
             <ul style="margin-top: 5px; font-size: 0.95em;">
-                <li><em>Interpretation: Bonferroni is extremely conservative (designed for independent tests). 47% survival is strong evidence given this stringent threshold.</em></li>
+                <li><em>Interpretation: Bonferroni is extremely conservative (designed for independent tests). 46% survival is strong evidence given this stringent threshold.</em></li>
             </ul>
         </li>
-        <li><strong>False Discovery Rate</strong> (q = 0.05): 72/72 (100%) survive FDR control
+        <li><strong>False Discovery Rate</strong> (q = 0.05): 67/67 (100%) survive FDR control
             <ul style="margin-top: 5px; font-size: 0.95em;">
                 <li><em>Interpretation: FDR controls expected proportion of false positives. 100% survival indicates robust detections.</em></li>
             </ul>
         </li>
-        <li><strong>Permutation Testing</strong> (p < 0.05): 68/72 (94%) survive empirical null
+        <li><strong>Permutation Testing</strong> (p < 0.05): 63/67 (94%) survive empirical null
             <ul style="margin-top: 5px; font-size: 0.95em;">
                 <li><em>Interpretation: Empirical null (randomized station pairs) shows 94% of detections are not due to chance spatial patterns.</em></li>
             </ul>
         </li>
     </ul>
-    <p style="margin-top: 12px; font-size: 0.95em; font-style: italic;"><strong>Summary:</strong> The convergence of three independent multiple-testing approaches (Bonferroni, FDR, permutation) provides strong evidence that detected planetary event responses are not statistical artifacts. The 47% Bonferroni survival rate is particularly noteworthy given the ultra-conservative nature of this correction.</p>
+    <p style="margin-top: 12px; font-size: 0.95em; font-style: italic;"><strong>Summary:</strong> The convergence of three independent multiple-testing approaches (Bonferroni, FDR, permutation) provides strong evidence that detected planetary event responses are not statistical artifacts. The 46% Bonferroni survival rate is particularly noteworthy given the ultra-conservative nature of this correction.</p>
 </div>
 
 <div class="experimental-section" style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
@@ -433,20 +433,20 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
 <h4>3.3.2 Modulation Depth Analysis</h4>
 <p><strong>Methodology:</strong> Modulation depth quantifies the relative amplitude of the Gaussian pulse as a fraction of total signal: modulation_depth = |amplitude| / (|baseline| + |amplitude|) × 100%. This metric is bounded 0-100% and represents the percentage of total coherence signal contributed by the transient event response.</p>
 
-<p>The 72 significant planetary event responses show the following modulation depth distribution:</p>
+<p>The 67 significant planetary event responses show the following modulation depth distribution:</p>
 
 <div class="experimental-section" style="background-color: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
     <h4 style="margin-top: 0; color: #495773;">Modulation Depth Distribution</h4>
     <ul style="line-height: 1.7;">
-        <li><strong>Mean:</strong> 46.8% ± 18.6% (standard deviation)</li>
-        <li><strong>Median:</strong> 46.8% (50th percentile)</li>
-        <li><strong>Range:</strong> 2.3% to 100%</li>
-        <li><strong>Interquartile Range:</strong> 33.4% - 60.9%</li>
-        <li><strong>Typical Event:</strong> ~40-60% modulation depth</li>
+        <li><strong>Mean:</strong> 1.73% ± 1.5% (standard deviation)</li>
+        <li><strong>Median:</strong> 1.08% (50th percentile)</li>
+        <li><strong>Range:</strong> 0.3% to 10.0%</li>
+        <li><strong>Typical Event:</strong> ~1-3% modulation depth</li>
     </ul>
 </div>
 
-<p><strong>Interpretation:</strong> The median modulation depth of 47% indicates that planetary alignments produce coherence modulations of comparable magnitude to the baseline correlation field. The distribution shows substantial event-to-event variability, with some events producing minimal modulation (~2%) and others dominating the signal (approaching 100%).</p>
+<p><strong>Interpretation:</strong> The median modulation depth of 1.1% indicates that planetary alignments produce subtle but significant coherence modulations. As clarified in §2.2.2, these percentages refer to changes in the dimensionless coherence metric (and its derived correlation structure), not direct clock-rate shifts Δf/f. The distribution shows variability, with some events producing minimal modulation and others stronger signals, but generally remaining small-amplitude perturbations on the baseline field.</p>
+
 
 <h4>3.3.3 Gravitational Scaling Analysis</h4>
 <p><strong>Objective:</strong> Test whether observed amplitudes correlate with General Relativity predictions based on planetary mass and distance (GM/r²).</p>
@@ -454,7 +454,7 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
 <p><strong>Key Finding:</strong> The observed GPS coherence modulations do <strong>not</strong> directly correlate with GM/r² gravitational scaling:</p>
 
 <div class="experimental-section" style="padding: 15px; margin: 15px 0;">
-    <h4 style="margin-top: 0;">Correlation Analysis (N=72 events)</h4>
+    <h4 style="margin-top: 0;">Correlation Analysis (N=67 events)</h4>
     <ul style="line-height: 1.7;">
         <li><strong>Pearson Correlation (A_obs vs M/r²):</strong> r = -0.053, p = 0.656 (not significant)</li>
         <li><strong>Spearman Rank Correlation:</strong> ρ = -0.048, p = 0.686 (not significant)</li>
@@ -506,7 +506,7 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
             <tr style="background-color: rgba(73, 87, 115, 0.03);">
                 <td style="padding: 8px; border: 1px solid #495773;">Main Nutation (Lunar)</td>
                 <td style="padding: 8px; border: 1px solid #495773;">18.6 years (6,798 days)</td>
-                <td style="padding: 8px; border: 1px solid #495773;">0.640</td>
+                <td style="padding: 8px; border: 1px solid #495773;">0.641</td>
                 <td style="padding: 8px; border: 1px solid #495773;">< 10⁻⁸</td>
                 <td style="padding: 8px; border: 1px solid #495773;">0.00649 ± 0.0012</td>
             </tr>
@@ -520,7 +520,7 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
         </tbody>
     </table>
 </div>
-<p><strong>Finding</strong>: Strong coupling detected to both semiannual (R² = 0.904, p < 10⁻²⁰) and 18.6-year lunar nutation cycles (R² = 0.640, p < 10⁻⁸), supporting Claim E. The semiannual component explains 90.4% of variance in the filtered coherence time series. Notably, the annual period shows no significant coupling (R² = 0.0178, not significant), demonstrating specificity—only certain nutation periods are detected, not all periodic phenomena.</p>
+<p><strong>Finding</strong>: Strong coupling detected to both semiannual (R² = 0.904, p < 10⁻²⁰) and 18.6-year lunar nutation cycles (R² = 0.641, p < 10⁻⁸), supporting Claim E. The semiannual component explains 90.4% of variance in the filtered coherence time series. Notably, the annual period shows no significant coupling (R² = 0.0178, not significant), demonstrating specificity—only certain nutation periods are detected, not all periodic phenomena.</p>
 <h4>3.4.2 Chandler Wobble</h4>
 <p>Coupling to the ~14-month Chandler wobble was tested using Lomb-Scargle periodogram analysis:</p>
 <ul>
@@ -638,25 +638,25 @@ The best-fit seasonal model captures only <strong>≈18.8 % amplitude modulation
     <tr>
       <td><strong>Spatial Anisotropy</strong></td>
       <td>DETECTED</td>
-      <td>Strength = 1.981 ± 0.23, p < 10⁻¹⁵</td>
+      <td>Strength = 1.981, p < 10⁻¹⁵</td>
       <td>§3.1</td>
     </tr>
     <tr>
       <td><strong>Orbital Motion Coupling</strong></td>
       <td>DETECTED</td>
-      <td>r = −0.864, p = 4.82 × 10⁻¹¹ (6.6σ)</td>
+      <td>r = −0.864, p = 0.0013 (3.2σ)</td>
       <td>§3.2</td>
     </tr>
     <tr>
       <td><strong>Planetary Event Responses</strong></td>
       <td>DETECTED</td>
-      <td>72 significant (≥2σ), 34 Bonferroni-significant</td>
+      <td>67 significant (≥2σ), 31 Bonferroni-significant</td>
       <td>§3.3</td>
     </tr>
     <tr>
       <td><strong>Nutation Coupling</strong></td>
       <td>DETECTED</td>
-      <td>Semiannual R² = 0.904, 18.6-yr R² = 0.640</td>
+      <td>Semiannual R² = 0.904, 18.6-yr R² = 0.641</td>
       <td>§3.4.1</td>
     </tr>
     <tr>
