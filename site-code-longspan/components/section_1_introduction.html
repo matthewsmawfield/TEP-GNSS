@@ -2,6 +2,12 @@
 <h3>1.1 Background and Motivation</h3>
 <p>The Global Navigation Satellite System (GNSS) represents one of humanity's most precise timing networks, with atomic clocks maintaining synchronization at nanosecond levels across thousands of kilometers. While designed for positioning and navigation, this infrastructure inadvertently provides an unprecedented natural laboratory for testing fundamental physics at planetary scales. The continuous operation of hundreds of ground-based receivers, each equipped with high-stability oscillators phase-locked to satellite atomic clocks, creates a global mesh of timing correlations that may be sensitive to subtle relativistic effects.</p>
 <p>The theoretical basis for this investigation is the Temporal Equivalence Principle (TEP), which predicts that motion through gravitational fields should induce measurable modulations in the correlation structure of distributed timing networks. Unlike classical relativistic effects that manifest as clock rate differences, TEP predicts that the <em>correlation</em> between clocks—their tendency to maintain phase coherence—should vary with the local gravitational environment and the system's velocity through that environment.</p>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 20px 0; border-radius: 4px;">
+  <h4 style="margin-top: 0; color: #220126;">Methodological Note: Definition of "Coherence"</h4>
+  <p style="margin-bottom: 0;">Throughout this paper, <strong>"coherence"</strong> refers to phase synchronization between timing residuals at different GNSS stations, quantified via magnitude-weighted cross-power spectral density in the 10-500 μHz band (periods of 33 minutes to 28 hours). High coherence indicates stations' clocks vary together in phase; low coherence indicates independent variation. Unlike absolute frequency differences (Δf/f), coherence measures <strong>geometric relationships in the correlation structure</strong>, which GNSS processing preserves even while filtering amplitude effects. This distinction is critical: processed clock products remove network-wide frequency offsets (where classical gravitational effects manifest) but preserve the differential phase-coherence structure that TEP predicts should couple to velocity and gravitational configurations.</p>
+</div>
+
 <h3>1.2 Theoretical Context and Interpretive Framework</h3>
 <p><em>TEP in one line:</em> The Temporal Equivalence Principle (TEP) treats proper time as a dynamical field: instead of a fixed background parameter, time behaves like a scalar field woven through spacetime, whose local configuration and gradients govern clock rates, correlations, and the effective speed of light.</p>
 <p>This investigation is fundamentally grounded in empirical phenomenology: we systematically document systematic patterns in GNSS timing correlations over decadal timescales, then interpret these findings through established theoretical frameworks. TEP provides one such framework for interpreting velocity-dependent and gravitational coupling effects in distributed timing networks.</p>
@@ -37,56 +43,87 @@
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Correlation length (λ)</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">1,000-10,000 km (from screening theory)</td>
         <td style="padding: 8px; border: 1px solid #495773;">4,201 ± 1,967 km</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Exponential spatial decay</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">C(r) ∝ exp(-r/λ) preferred over power-law</td>
         <td style="padding: 8px; border: 1px solid #495773;">Exponential ΔAIC = 12.8 vs power-law ΔAIC > 30</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Velocity-dependent anisotropy</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">Correlation structure modulates with v/c</td>
-        <td style="padding: 8px; border: 1px solid #495773;">r = -0.864 (p = 0.0013, 3.2σ; autocorr-corrected)</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">r = -0.888 (95% CI: [-0.94, -0.81]), p < 2×10⁻⁷, 5.1σ; 0/5M surrogates</td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Geometric alignment with motion</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">EW > NS in ecliptic frame</td>
         <td style="padding: 8px; border: 1px solid #495773;">EW/NS = 2.16 (±0.23)</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Broadband (not frequency-selective)</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">Persistence across spectral bands</td>
         <td style="padding: 8px; border: 1px solid #495773;">Detected across 10-500 μHz</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
       <tr style="background-color: rgba(73, 87, 115, 0.03);">
         <td style="padding: 8px; border: 1px solid #495773;"><strong>Network-scale coordination</strong></td>
         <td style="padding: 8px; border: 1px solid #495773;">Global field-like coupling</td>
-        <td style="padding: 8px; border: 1px solid #495773;">Mesh score = 0.554</td>
-        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Confirmed</strong></td>
+        <td style="padding: 8px; border: 1px solid #495773;">Mesh score = 0.582</td>
+        <td style="padding: 8px; border: 1px solid #495773;"><strong>✓ Consistent</strong></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<p><strong>Key Finding:</strong> All major TEP predictions are confirmed by the GNSS observations, with the amplitude of velocity-dependent modulation exceeding naive first-order estimates. This discrepancy is discussed in §4.3.1.1 and may indicate nonlinear screening enhancement or network amplification effects.</p>
+<p><strong>Key Finding:</strong> All major TEP predictions are <em>consistent with</em> the GNSS observations, with the amplitude of velocity-dependent modulation exceeding naive first-order estimates. This discrepancy is discussed in §4.3.1.1 and may indicate nonlinear screening enhancement or network amplification effects. Raw carrier-phase analysis will be critical to distinguish physical coupling from potential processing-dependent amplitude effects.</p>
 <h3>1.3 Previous Work</h3>
 <p>The multi-center study established the phenomenon across independent analysis centers (CODE, IGS, ESA), reducing the likelihood of center-specific processing artifacts over 2.5 years. That study demonstrated velocity-dependent anisotropy and anomalous planetary event responses, using rigorous cross-center validation and null tests. However, the limited temporal baseline precluded the investigation of long-period geophysical or astronomical cycles.</p>
 <p>Prior to this, investigations of GNSS timing anomalies focused primarily on conventional effects such as ionospheric modeling, multipath errors, and clock stability (Hofmann-Wellenhof et al., 2008; Teunissen & Montenbruck, 2017; Ashby, 2003).</p>
-<h3>1.4 Study Objectives and Empirical Design</h3>
+<h3>1.4 Study Design: Replication, Extension, and Falsification Tests</h3>
 <p><strong>TEP-motivated empirical test:</strong> This work was explicitly conceived as a theory-driven empirical test of the Temporal Equivalence Principle using long-span GNSS clock products. The analysis pipeline, choice of observables (anisotropy, orbital modulation, planetary events, nutation, mesh coherence), and the a priori prediction table in §1.2 were defined to test whether GNSS timing correlations exhibit the specific spatial, temporal, and geophysical patterns forecast by TEP.</p>
 
-<p><strong>Methodological Foundation:</strong> This study builds upon the multi-center study's comprehensive validation framework, which established cross-center consistency (R² = 0.920-0.970 between CODE, IGS, ESA) through 388 statistical tests and extensive null testing. That foundational work demonstrated the existence of systematic distance-structured correlations in GNSS timing networks. This study makes a strategic trade-off: we leverage CODE's continuous 25-year archive to investigate decadal stability and long-period phenomena, building on the validated phenomenology while extending temporal reach. This approach confirms <em>temporal stability</em> of detected signatures and enables discovery of new long-period evidence.</p>
+<p><strong>Methodological Foundation:</strong> This study builds upon the multi-center study's comprehensive validation framework, which established cross-center consistency (R² = 0.920-0.970 between CODE, IGS, ESA) through 388 statistical tests and extensive null testing. That foundational work demonstrated the existence of systematic distance-structured correlations in GNSS timing networks over 2.5 years across three independent processing centers. This study extends the temporal baseline by a factor of 10× (25.3 years) to address three critical scientific questions that distinguish transient artifacts from genuine physical coupling:</p>
+
+<div style="background-color: rgba(240,248,255,0.6); border: 2px solid #4682B4; padding: 18px; margin: 20px 0; border-radius: 6px;">
+  <h4 style="margin-top: 0; color: #2C5F77;">Three Critical Questions: Distinguishing Replication, Extension, and Falsification</h4>
+  
+  <p style="margin-bottom: 12px;"><strong>Q1. Temporal Stability (Replication Test):</strong> Do the patterns detected in Paper 1 persist over 25 years, or are they transient artifacts of the 2.5-year window?</p>
+  <ul style="margin: 0 0 15px 20px; font-size: 0.95em;">
+    <li><strong>Paper 1 Baseline:</strong> EW/NS = 2.16, orbital r = -0.89, mesh = 0.58-0.62</li>
+    <li><strong>Expected if genuine:</strong> Patterns should be temporally stable (values within uncertainty)</li>
+    <li><strong>Expected if artifact:</strong> Patterns should vary with processing updates, drift over decades, or vanish in extended baseline</li>
+    <li><strong>Test:</strong> Re-measure anisotropy, orbital coupling, network coherence over 10× longer baseline</li>
+  </ul>
+  
+  <p style="margin-bottom: 12px;"><strong>Q2. Long-Period Signatures (Extension/Prediction Test):</strong> Can we detect TEP coupling to geophysical cycles that require >20-year baselines?</p>
+  <ul style="margin: 0 0 15px 20px; font-size: 0.95em;">
+    <li><strong>18.6-Year Lunar Nutation:</strong> Paper 1 baseline (2.5 years) = 0.13 cycles → untestable. This study: 1.4 cycles → <strong>first test possible</strong></li>
+    <li><strong>TEP Prediction:</strong> Inertial orientation coupling should produce R² = 0.6-0.7 (based on semiannual nutation analogy)</li>
+    <li><strong>Semiannual Nutation:</strong> Expected R² > 0.85 (persistence of Paper 1 short-period nutation coupling)</li>
+    <li><strong>Chandler Wobble:</strong> 21+ complete cycles observed → test phase stability and amplitude consistency</li>
+  </ul>
+  
+  <p style="margin-bottom: 12px;"><strong>Q3. Theoretical Selectivity (Falsification Test):</strong> Does the network respond to ALL periodic signals, or specifically to orbital/inertial dynamics?</p>
+  <ul style="margin: 0 0 8px 20px; font-size: 0.95em;">
+    <li><strong>Solar Rotation (27-day cycle):</strong> Strong periodic astronomical signal</li>
+    <li><strong>TEP Prediction:</strong> Should show NO coupling (null control) — TEP couples to heliocentric motion, not surface phenomena</li>
+    <li><strong>Alternative (processing artifact):</strong> Any strong periodic signal should couple if this is systematic error or frequency comb artifact</li>
+    <li><strong>Falsification Criterion:</strong> If solar rotation shows R² > 0.10 or p < 0.01, artifact hypothesis gains support</li>
+  </ul>
+  
+  <p style="font-size: 0.95em; margin-top: 15px; padding-top: 12px; border-top: 1px solid #4682B4;"><strong>Study Classification:</strong> This is a <em>replication + extension + falsification</em> study. Q1 tests temporal stability (replication). Q2 tests genuinely new predictions accessible only with this dataset (extension). Q3 tests theoretical specificity (falsification). Together, they distinguish genuine physical coupling from transient processing artifacts.</p>
+</div>
+
 <p><strong>Primary Empirical Objectives</strong>:</p>
 <ol>
-<li><strong>Objective A</strong>: Document temporal stability of core phenomenology (anisotropy, orbital coupling, event responses) over 25.3 years.</li>
-<li><strong>Objective B</strong>: Investigate long-period geophysical signatures (18.6-year nutation, >20 Chandler wobble cycles) enabled by extended baseline.</li>
-<li><strong>Objective C</strong>: Characterize planetary event responses with enhanced statistics across two decades.</li>
-<li><strong>Objective D</strong>: Test robustness of orbital coupling across multiple solar cycles and seasonal confounders.</li>
+<li><strong>Objective A (Replication):</strong> Document temporal stability of core phenomenology (anisotropy, orbital coupling, event responses) over 25.3 years.</li>
+<li><strong>Objective B (Extension):</strong> Test long-period geophysical signatures (18.6-year nutation, >20 Chandler wobble cycles) inaccessible in short baselines.</li>
+<li><strong>Objective C (Characterization):</strong> Enhance planetary event statistics across two decades with improved seasonal coverage.</li>
+<li><strong>Objective D (Falsification):</strong> Test theoretical selectivity with null controls (solar rotation) and robustness checks (hemisphere stratification).</li>
 </ol>
 
 <h3>1.5 Evidence Handoff: Building on Multi-Center Validation</h3>
@@ -109,17 +146,17 @@
     <tr>
       <td><strong>Orbital Velocity Coupling</strong></td>
       <td>r ≈ −0.57 to −0.79 across centers<br>Ionosphere/solar nulls passed<br>Hemisphere & seasonal controls</td>
-      <td><strong>Strengthened:</strong> r = −0.864 (3.2σ, p = 0.0013; autocorr-corrected)<br>25 complete solar orbits<br>Hemisphere stratification is the proper discriminant (see §3.2.2; partial correlation is inappropriate for coupled orbital variables)</td>
+      <td><strong>Strengthened:</strong> r = −0.888 (5.1σ, p < 2×10⁻⁷; 5 M surrogates)<br>25 complete solar orbits<br>Hemisphere stratification is the proper discriminant (see §3.2.2; partial correlation is inappropriate for coupled orbital variables)</td>
     </tr>
     <tr>
       <td><strong>Planetary Events</strong></td>
       <td>6/8 predeclared events Bonferroni-significant<br>Monte Carlo permutation validated<br>3–6σ confidence</td>
-      <td><strong>Extended:</strong> 67/156 events ≥2σ; 38 Bonferroni-significant<br>Amplitude metrics processing-dependent<br>Physical modeling recommended (§4.3)</td>
+      <td><strong>Extended:</strong> 56/156 events ≥2σ; 25 Bonferroni-significant<br>Amplitude metrics processing-dependent<br>Physical modeling recommended (§4.3)</td>
     </tr>
     <tr>
       <td><strong>Chandler Wobble</strong></td>
       <td>R² = 0.377–0.471 across centers<br>433-day period detected<br>Limited to ~6 cycles</td>
-      <td><strong>Extended:</strong> R² = 0.106 (borderline)<br>21+ complete cycles observed<br>Phase stability = 0.72</td>
+      <td><strong>Extended:</strong> R² = 0.096 (borderline)<br>21+ complete cycles observed<br>Phase stability = 0.72</td>
     </tr>
     <tr>
       <td><strong>18.6-Year Nutation</strong></td>
@@ -133,8 +170,8 @@
     </tr>
     <tr>
       <td><strong>Network Synchronization</strong></td>
-      <td>Mesh dance detected across 3 centers<br>CODE: 0.624, IGS: 0.579, ESA: 0.602<br>Confirmed global coordination</td>
-      <td><strong>Replicated:</strong> Index = 0.554<br>Consistent with multi-center range<br>104 temporal windows over 25 years</td>
+      <td>Mesh dance detected across 3 centers<br>CODE: 0.624, IGS: 0.579, ESA: 0.602<br>Consistent global coordination</td>
+      <td><strong>Replicated:</strong> Index = 0.582<br>Consistent with multi-center range<br>104 temporal windows over 25 years</td>
     </tr>
   </tbody>
 </table></div>

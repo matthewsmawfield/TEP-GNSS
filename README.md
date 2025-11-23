@@ -1,18 +1,18 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.22 (Jaipur) + v0.11 (Cairo Extension)
-**Date:** 20 November 2025
+**Repository Version:** v0.23 (Jaipur) + v0.13 (Cairo Extension)
+**Date:** 23 November 2025
 
 ## Published Papers
 
-### Paper 1: Multi-Center Analysis (v0.22 - Jaipur)
+### Paper 1: Multi-Center Analysis (v0.23 - Jaipur)
 **Title:** Global Time Echoes: Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
 **Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
 
-### Paper 2: 25-Year Temporal Extension (v0.11 - Cairo)
+### Paper 2: 25-Year Temporal Extension (v0.13 - Cairo)
 **Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
@@ -322,7 +322,7 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 
 ### Analytical Configuration
 
-#### v0.22 Configuration Framework (Jaipur Release - Established Methodology)
+#### v0.23 Configuration Framework (Jaipur Release - Established Methodology)
 
 **Core Analysis Parameters:**
 | Parameter | Default Value | Description |
@@ -382,6 +382,108 @@ The TEP-GNSS framework implements a rigorous multi-tier validation approach:
 - **Temporal Consistency:** Seasonal correlation patterns and diurnal variations
 - **Ionospheric Exclusion:** TID analysis demonstrating signal independence from ionospheric effects
 
+## Data Sources and Attribution
+
+### Primary Data Sources
+
+This analysis uses publicly available GNSS clock products from the International GNSS Service (IGS) and its analysis centers. All data sources are freely available for scientific research under IGS Terms of Use.
+
+#### GNSS Clock Products
+
+**Paper 1 (Multi-Center Analysis):**
+- **CODE (Center for Orbit Determination in Europe)**
+  - Provider: Astronomical Institute, University of Bern (AIUB)
+  - Source: http://ftp.aiub.unibe.ch/CODE/
+  - Coverage: January 1, 2023 – June 30, 2025 (912 days)
+  - Station Pairs: 39.0 million measurements
+  - Citation: Steigenberger et al. (2021), Johnston et al. (2017)
+
+- **IGS Combined Products**
+  - Provider: International GNSS Service (multi-center weighted combination)
+  - Source: https://igs.bkg.bund.de/root_ftp/IGS/products/
+  - Coverage: January 1, 2023 – June 30, 2025 (912 days)
+  - Station Pairs: 12.9 million measurements
+  - Citation: Johnston et al. (2017)
+
+- **ESA (European Space Agency)**
+  - Provider: ESA Navigation Support Office
+  - Source: http://navigation-office.esa.int/products/gnss-products/
+  - Coverage: January 1, 2023 – June 30, 2025 (912 days)
+  - Station Pairs: 10.8 million measurements
+  - Citation: Fernández (2016), Johnston et al. (2017)
+
+**Paper 2 (25-Year Analysis):**
+- **CODE (Center for Orbit Determination in Europe)**
+  - Provider: Astronomical Institute, University of Bern (AIUB)
+  - Source: http://ftp.aiub.unibe.ch/CODE/
+  - Coverage: March 1, 2000 – June 30, 2025 (25.3 years, 9,218 days)
+  - Station Pairs: 165.2 million measurements
+  - Unique Stations: 474 physical receivers (814 total station codes)
+  - Citation: Steigenberger et al. (2021), Johnston et al. (2017)
+
+#### Station Coordinates
+
+- **Source:** IGS Network Metadata (ITRF2014/ITRF2020)
+- **Access:** https://files.igs.org/pub/station/general/IGSNetworkWithFormer.json
+- **Format:** JSON with Cartesian coordinates (X, Y, Z)
+- **License:** Freely available under IGS Terms of Use
+- **Citation:** Johnston et al. (2017)
+
+#### Planetary Ephemeris (Paper 2 only)
+
+- **Source:** NASA JPL Development Ephemeris DE432s
+- **Provider:** Jet Propulsion Laboratory via Astropy
+- **Coverage:** 1550-2650 CE with meter-level accuracy
+- **Access:** Via Astropy `solar_system_ephemeris` interface
+- **Citation:** Folkner et al. (2014), Astropy Collaboration (2013, 2022)
+- **License:** Public domain (U.S. Government work)
+
+### Data Format and Access
+
+- **Clock Products:** RINEX 3 CLK format (compressed: .gz or .Z)
+- **Temporal Resolution:** 30-second epochs
+- **Quality Control:** Comprehensive filtering and validation (see Step 2.1)
+- **Terms of Use:** [IGS Data and Product Disclaimer](https://igs.org/wp-content/uploads/2020/09/IGS-Data-and-Product-Disclaimer-and-Terms-of-Use-200805.pdf)
+
+### Required Citations
+
+When using this analysis framework or data, please cite:
+
+1. **This Work:**
+   - Paper 1: Smawfield (2025), DOI: 10.5281/zenodo.17127229
+   - Paper 2: Smawfield (2025), DOI: 10.5281/zenodo.17517141
+
+2. **Data Providers:**
+   - IGS: Johnston et al. (2017), DOI: 10.1007/978-3-319-42928-1_33
+   - CODE: Steigenberger et al. (2021), DOI: 10.1007/s00190-021-01487-8
+   - ESA: Fernández (2016), ION GNSS+ 2016
+   - JPL Ephemeris: Folkner et al. (2014), IPN Progress Report 42-196
+   - Astropy: Astropy Collaboration (2013, 2022)
+
+3. **Software Dependencies:**
+   - Astropy (if using Paper 2 planetary calculations)
+   - NumPy, SciPy, Pandas, Matplotlib
+
+### Key References
+
+- **Johnston, G., Riddell, A., & Hausler, G. (2017).** The International GNSS Service. In *Springer Handbook of Global Navigation Satellite Systems* (pp. 967-982). DOI: 10.1007/978-3-319-42928-1_33
+
+- **Steigenberger, P., Montenbruck, O., Dach, R., et al. (2021).** CODE reprocessing 1995-2020: improved GPS orbits and clocks. *Journal of Geodesy*, 95, 65. DOI: 10.1007/s00190-021-01487-8
+
+- **Folkner, W. M., Williams, J. G., Boggs, D. H., Park, R. S., & Kuchynka, P. (2014).** The Planetary and Lunar Ephemerides DE430 and DE431. *IPN Progress Report 42-196*, JPL.
+
+- **Astropy Collaboration (2022).** The Astropy Project: Sustaining and Growing a Community-oriented Open-source Project and the Latest Major Release (v5.0) of the Core Package. *The Astrophysical Journal*, 935(2), 167. DOI: 10.3847/1538-4357/ac7c74
+
+- **Astropy Collaboration (2013).** Astropy: A community Python package for astronomy. *Astronomy & Astrophysics*, 558, A33. DOI: 10.1051/0004-6361/201322068
+
+### Data Availability Statement
+
+All GNSS clock products and station coordinates used in this analysis are publicly available from the International GNSS Service and its contributing analysis centers. The complete analysis pipeline, including data acquisition scripts, is available in this repository under the MIT License. Processed results and supplementary materials are archived on Zenodo with persistent DOIs.
+
+**Cross-Center Validation:** Paper 1 uses three independent analysis centers (CODE, IGS Combined, ESA) to demonstrate processing-independence with R² = 0.920-0.970 consistency across centers.
+
+**Temporal Depth:** Paper 2 extends the temporal baseline to 25.3 years using CODE data to confirm decadal stability and detect long-period geophysical phenomena.
+
 ## Data Products and Outputs
 
 ### Primary Results Structure
@@ -424,7 +526,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
-  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.22)},
+  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.23)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -438,7 +540,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes25year,
-  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.11)},
+  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.13)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -514,4 +616,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Repository Version:** v0.22 (Jaipur) + v0.11 (Cairo Extension) | **Date:** 20 November 2025 | **Status:** Active Research
+**Repository Version:** v0.23 (Jaipur) + v0.13 (Cairo Extension) | **Date:** 23 November 2025 | **Status:** Active Research

@@ -5,8 +5,8 @@
 ![TEP-GNSS Analysis Overview](./public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.21 (Jaipur)  
-**Date:** 16 October 2025  
+**Version:** v0.23 (Jaipur)  
+**Date:** 23 November 2025  
 **Status:** Preprint (Analysis Package)  
 
 TraderSwift
@@ -310,7 +310,7 @@ BibTeX:
 @misc{Smawfield_TEP_GNSS_2025,
   author       = {Matthew Lukin Smawfield},
   title        = {Global Time Echoes: Distance-Structured Correlations in GNSS
-                  Clocks (Jaipur v0.21)},
+                  Clocks (Jaipur v0.23)},
   year         = {2025},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.17127229},

@@ -147,6 +147,8 @@ class TEPConfig:
         'TEP_ENABLE_MESH_DANCE_ANALYSIS': True,   # NEW: The ultimate "dance" analysis
         'TEP_ENABLE_NUTATION_ANALYSIS': False,  # Requires multi-year data
         'TEP_CHANDLER_PERIOD_DAYS': 425.0,  # Consistent with code default
+        'TEP_CHANDLER_WINDOW_DAYS': 600,      # Window length for high-S/N Chandler fit
+        'TEP_CHANDLER_WINDOW_STEP_DAYS': 60,   # Step between window centers
         'TEP_SPHERICAL_THETA_BINS': 6,
         'TEP_SPHERICAL_PHI_BINS': 12,
         'TEP_BEAT_MIN_PERIOD_DAYS': 7.0,
@@ -169,6 +171,10 @@ class TEPConfig:
         'TEP_ENABLE_LUNAR_STANDSTILL': True,
         
         # NEW: Sampling and Random Seed Configuration
+        'TEP_ENABLE_MONTE_CARLO_ORBITAL_TEST': True,  # Enable Monte Carlo orbital surrogate test by default
+        'TEP_MONTE_CARLO_N_SURROGATES': 10000,        # Default number of surrogate iterations
+        'TEP_MONTE_CARLO_SEED': 42,                   # Monte Carlo test random seed
+        
         'TEP_ANISOTROPY_SAMPLING_FRAC': 1.0,     # Fraction of data to sample for anisotropy analysis
         'TEP_RANDOM_SEED': 42,                   # Random seed for reproducible sampling
         

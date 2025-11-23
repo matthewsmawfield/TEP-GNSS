@@ -189,6 +189,7 @@ Implementation Details: For complete usage instructions, configuration options, 
             <li>Clock products: Official .CLK files from CODE (AIUB FTP), ESA (navigation-office repositories), and IGS (BKG root FTP)</li>
             <li>Quality assurance: Hard-fail policy on missing sources; zero tolerance for synthetic, fallback, or interpolated data</li>
         </ul>
+        <p style="font-style: italic; color: #555;">Note on processing bias: Official IGS and CODE clock products are generated via least-squares / Kalman estimation that minimises per-station residual variance (Kouba &amp; Héroux&nbsp;2001; Steigenberger&nbsp;et&nbsp;al.&nbsp;2021; IGS&nbsp;Technical&nbsp;Report&nbsp;2023). This algorithmic objective suppresses any network-wide amplitude term, so absolute modulation depths in processed products are lower-bound estimates, whereas <em>phase-coherent</em> structure is largely preserved.</p>
         
         <h3>Dataset characteristics</h3>
         <ul>

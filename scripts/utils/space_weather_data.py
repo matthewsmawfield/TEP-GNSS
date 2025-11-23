@@ -24,6 +24,7 @@ import time
 
 # Import the centralized print_status function
 from .logger import print_status
+from .exceptions import TEPDataError
 
 def get_authentic_space_weather_data(start_date: pd.Timestamp, end_date: pd.Timestamp, 
                                    cache_dir: Optional[Path] = None) -> pd.DataFrame:
@@ -57,8 +58,21 @@ def get_authentic_space_weather_data(start_date: pd.Timestamp, end_date: pd.Time
         # Try to fetch real data from multiple sources
         real_data_fetched = False
         
-        # 1. Fetch recent Kp/Ap from NOAA API (last 30 days)
-        noaa_data = fetch_noaa_recent_kp_ap(start_date, end_date)
+        # 0. NEW: Fetch Historical GFZ Kp if range > 30 days (Primary for long spans)
+        if (end_date - start_date).days > 30:
+            gfz_data = fetch_historical_kp_gfz(start_date, end_date)
+            if not gfz_data.empty:
+                space_weather_df = space_weather_df.merge(gfz_data, on='date', how='left', suffixes=('', '_gfz'))
+                space_weather_df['kp_index'] = space_weather_df['kp_index_gfz'].fillna(space_weather_df['kp_index'])
+                space_weather_df['ap_index'] = space_weather_df['ap_index_gfz'].fillna(space_weather_df['ap_index'])
+                space_weather_df = space_weather_df.drop(columns=['kp_index_gfz', 'ap_index_gfz'], errors='ignore')
+                real_data_fetched = True
+        
+        # 1. Fetch recent Kp/Ap from NOAA API (last 30 days) - Only if gaps or short range
+        # If GFZ failed or didn't cover everything, try NOAA
+        noaa_data = pd.DataFrame()
+        if space_weather_df['kp_index'].isna().any():
+            noaa_data = fetch_noaa_recent_kp_ap(start_date, end_date)
         if not noaa_data.empty:
             space_weather_df = space_weather_df.merge(noaa_data, on='date', how='left', suffixes=('', '_noaa'))
             space_weather_df['kp_index'] = space_weather_df['kp_index_noaa'].fillna(space_weather_df['kp_index'])
@@ -93,6 +107,88 @@ def get_authentic_space_weather_data(start_date: pd.Timestamp, end_date: pd.Time
     except Exception as e:
         # Escalate errors to callers to avoid hidden fallbacks
         raise TEPDataError(f"Failed to fetch authentic space weather data: {e}")
+
+def fetch_historical_kp_gfz(start_date: pd.Timestamp, end_date: pd.Timestamp) -> pd.DataFrame:
+    """
+    Fetch historical Kp/Ap indices from GFZ Potsdam (1932-present).
+    
+    Source: https://www-app3.gfz-potsdam.de/kp_index/Kp_ap_since_1932.txt
+    Format: Fixed width
+    """
+    url = "https://www-app3.gfz-potsdam.de/kp_index/Kp_ap_since_1932.txt"
+    print_status(f"Fetching historical Kp data from GFZ Potsdam: {url}", "INFO")
+    
+    try:
+        ssl_context = ssl.create_default_context()
+        # GFZ certificate might need handling, but standard context usually works
+        
+        # Download file
+        with urllib.request.urlopen(url, context=ssl_context, timeout=60) as response:
+            content = response.read().decode('utf-8').splitlines()
+            
+        # Parse fixed width data
+        # Header: # YYYY MM DD hh.h hh._m days days_m Kp ap D
+        # Skip comments
+        data_rows = []
+        for line in content:
+            if line.startswith('#') or not line.strip():
+                continue
+                
+            try:
+                # Example: 1932 01 01 00.0 ...
+                parts = line.split()
+                if len(parts) < 8:
+                    continue
+                    
+                year = int(parts[0])
+                month = int(parts[1])
+                day = int(parts[2])
+                hour_float = float(parts[3])
+                
+                # Kp is column 7 (index 6) or 8 (index 7)? 
+                # Format: YYYY MM DD hh.h hh._m days days_m Kp ap D
+                # 0:YYYY, 1:MM, 2:DD, 3:hh.h, 4:hh._m, 5:days, 6:days_m, 7:Kp, 8:ap
+                kp_val = float(parts[7])
+                ap_val = float(parts[8])
+                
+                # Construct datetime
+                hour = int(hour_float)
+                minute = int((hour_float - hour) * 60)
+                dt = pd.Timestamp(year=year, month=month, day=day, hour=hour, minute=minute)
+                
+                if start_date <= dt <= end_date + pd.Timedelta(days=1):
+                    data_rows.append({
+                        'datetime': dt,
+                        'kp_index': kp_val,
+                        'ap_index': ap_val
+                    })
+            except (ValueError, IndexError):
+                continue
+                
+        if not data_rows:
+            print_status("No Kp data found in requested range from GFZ", "WARNING")
+            return pd.DataFrame()
+            
+        df = pd.DataFrame(data_rows)
+        
+        # Resample to daily max (conservative for filtering) or mean
+        # Standard approach: Use daily Mean Kp or Max Kp?
+        # Usually daily Ap is used, or sum of Kp.
+        # Let's compute Daily Mean Kp
+        daily_kp = df.set_index('datetime').resample('D').agg({
+            'kp_index': 'mean',
+            'ap_index': 'mean'
+        }).reset_index().rename(columns={'datetime': 'date'})
+        
+        # Trim to exact range
+        daily_kp = daily_kp[(daily_kp['date'] >= start_date) & (daily_kp['date'] <= end_date)]
+        
+        print_status(f"Fetched {len(daily_kp)} days of historical Kp data", "SUCCESS")
+        return daily_kp
+        
+    except Exception as e:
+        print_status(f"Failed to fetch GFZ Kp data: {e}", "ERROR")
+        return pd.DataFrame()
 
 def fetch_noaa_recent_kp_ap(start_date: pd.Timestamp, end_date: pd.Timestamp) -> pd.DataFrame:
     """
