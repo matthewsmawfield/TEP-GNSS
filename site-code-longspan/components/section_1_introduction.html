@@ -5,7 +5,7 @@
 
 <div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 20px 0; border-radius: 4px;">
   <h4 style="margin-top: 0; color: #220126;">Methodological Note: Definition of "Coherence"</h4>
-  <p style="margin-bottom: 0;">Throughout this paper, <strong>"coherence"</strong> refers to phase synchronization between timing residuals at different GNSS stations, quantified via magnitude-weighted cross-power spectral density in the 10-500 μHz band (periods of 33 minutes to 28 hours). High coherence indicates stations' clocks vary together in phase; low coherence indicates independent variation. Unlike absolute frequency differences (Δf/f), coherence measures <strong>geometric relationships in the correlation structure</strong>, which GNSS processing preserves even while filtering amplitude effects. This distinction is critical: processed clock products remove network-wide frequency offsets (where classical gravitational effects manifest) but preserve the differential phase-coherence structure that TEP predicts should couple to velocity and gravitational configurations.</p>
+  <p style="margin-bottom: 0;">Throughout this paper, "coherence" refers to phase synchronization between timing residuals at different GNSS stations, quantified via magnitude-weighted cross-power spectral density in the 10-500 μHz band (periods of 33 minutes to 28 hours). High coherence indicates stations' clocks vary together in phase; low coherence indicates independent variation. Unlike absolute frequency differences (Δf/f), coherence measures geometric relationships in the correlation structure, which GNSS processing preserves even while filtering amplitude effects. This distinction is critical: processed clock products remove network-wide frequency offsets (where classical gravitational effects manifest) but preserve the differential phase-coherence structure that TEP predicts should couple to velocity and gravitational configurations.</p>
 </div>
 
 <h3>1.2 Theoretical Context and Interpretive Framework</h3>
@@ -101,21 +101,35 @@
   
   <p style="margin-bottom: 12px;"><strong>Q2. Long-Period Signatures (Extension/Prediction Test):</strong> Can we detect TEP coupling to geophysical cycles that require >20-year baselines?</p>
   <ul style="margin: 0 0 15px 20px; font-size: 0.95em;">
-    <li><strong>18.6-Year Lunar Nutation:</strong> Paper 1 baseline (2.5 years) = 0.13 cycles → untestable. This study: 1.4 cycles → <strong>first test possible</strong></li>
+    <li><strong>18.6-Year Lunar Nutation:</strong> Paper 1 baseline (2.5 years) = 0.13 cycles → untestable. This study: 1.4 cycles → first test possible</li>
     <li><strong>TEP Prediction:</strong> Inertial orientation coupling should produce R² = 0.6-0.7 (based on semiannual nutation analogy)</li>
     <li><strong>Semiannual Nutation:</strong> Expected R² > 0.85 (persistence of Paper 1 short-period nutation coupling)</li>
     <li><strong>Chandler Wobble:</strong> 21+ complete cycles observed → test phase stability and amplitude consistency</li>
   </ul>
   
-  <p style="margin-bottom: 12px;"><strong>Q3. Theoretical Selectivity (Falsification Test):</strong> Does the network respond to ALL periodic signals, or specifically to orbital/inertial dynamics?</p>
+  <p style="margin-bottom: 12px;"><strong>Q3. Reference Frame Identification and Theoretical Selectivity (Falsification Tests):</strong> Can we identify the operative reference frame for orbital modulation, and does the network respond to all periodic signals or specifically to orbital/inertial dynamics?</p>
+  
   <ul style="margin: 0 0 8px 20px; font-size: 0.95em;">
-    <li><strong>Solar Rotation (27-day cycle):</strong> Strong periodic astronomical signal</li>
-    <li><strong>TEP Prediction:</strong> Should show NO coupling (null control) — TEP couples to heliocentric motion, not surface phenomena</li>
-    <li><strong>Alternative (processing artifact):</strong> Any strong periodic signal should couple if this is systematic error or frequency comb artifact</li>
-    <li><strong>Falsification Criterion:</strong> If solar rotation shows R² > 0.10 or p < 0.01, artifact hypothesis gains support</li>
+    <li><strong>A) CMB Frame vs Galactic Frame (Primary Falsification Test):</strong>
+      <ul style="margin: 5px 0 5px 20px; font-size: 0.95em;">
+        <li><strong>Physical Question:</strong> Does orbital modulation occur relative to the Solar System's galactic motion (~20 km/s toward RA=272°, Dec=+30°) or Earth's motion through the Cosmic Microwave Background rest frame (~369 km/s toward RA=168°, Dec=-7°)?</li>
+        <li><strong>Method:</strong> Comprehensive grid search across 703 sky directions to identify which cosmological reference frame best predicts the temporal modulation of spatial anisotropy</li>
+        <li><strong>TEP Prediction:</strong> Coupling should occur at the largest velocity scale (cosmic ~369 km/s, not galactic ~20 km/s), consistent with field-theoretic frameworks where local dynamics couple to the Universe's matter distribution</li>
+        <li><strong>Falsification Power:</strong> Can reject the galactic hypothesis if the CMB frame shows strong correlation while the galactic frame shows none. Variance ratio quantifies relative explanatory power.</li>
+        <li><strong>Expected Outcome:</strong> If galactic: R² ≈ 0.3-0.5. If CMB: R² ≈ 0.3-0.5 with galactic R² ≈ 0. Variance ratio >100 would indicate strong discrimination.</li>
+      </ul>
+    </li>
+    <li><strong>B) Solar Rotation Null Control (Secondary Test):</strong>
+      <ul style="margin: 5px 0 5px 20px; font-size: 0.95em;">
+        <li><strong>Solar Rotation (27-day cycle):</strong> Strong periodic astronomical signal from solar surface phenomena</li>
+        <li><strong>TEP Prediction:</strong> Should show NO coupling (null control)—TEP couples to heliocentric orbital motion and inertial dynamics, not solar surface phenomena</li>
+        <li><strong>Alternative Hypothesis:</strong> If this is a processing artifact or frequency comb effect, any strong periodic signal should couple regardless of physical mechanism</li>
+        <li><strong>Falsification Criterion:</strong> If solar rotation shows R² > 0.10 or p < 0.01, the artifact hypothesis gains support over physical coupling</li>
+      </ul>
+    </li>
   </ul>
   
-  <p style="font-size: 0.95em; margin-top: 15px; padding-top: 12px; border-top: 1px solid #4682B4;"><strong>Study Classification:</strong> This is a <em>replication + extension + falsification</em> study. Q1 tests temporal stability (replication). Q2 tests genuinely new predictions accessible only with this dataset (extension). Q3 tests theoretical specificity (falsification). Together, they distinguish genuine physical coupling from transient processing artifacts.</p>
+  <p style="font-size: 0.95em; margin-top: 15px; padding-top: 12px; border-top: 1px solid #4682B4;"><strong>Study Classification:</strong> This is a <em>replication + extension + falsification</em> study. Q1 tests temporal stability (replication). Q2 tests genuinely new predictions accessible only with this dataset (extension). Q3A provides definitive falsification between competing physical hypotheses (CMB vs galactic frames), while Q3B tests theoretical specificity via null controls (solar rotation). Together, they distinguish genuine physical coupling from transient processing artifacts and identify the operative cosmological scale.</p>
 </div>
 
 <p><strong>Primary Empirical Objectives</strong>:</p>
@@ -123,7 +137,7 @@
 <li><strong>Objective A (Replication):</strong> Document temporal stability of core phenomenology (anisotropy, orbital coupling, event responses) over 25.3 years.</li>
 <li><strong>Objective B (Extension):</strong> Test long-period geophysical signatures (18.6-year nutation, >20 Chandler wobble cycles) inaccessible in short baselines.</li>
 <li><strong>Objective C (Characterization):</strong> Enhance planetary event statistics across two decades with improved seasonal coverage.</li>
-<li><strong>Objective D (Falsification):</strong> Test theoretical selectivity with null controls (solar rotation) and robustness checks (hemisphere stratification).</li>
+<li><strong>Objective D (Falsification):</strong> Identify operative cosmological reference frame (CMB vs galactic) via grid search and test theoretical selectivity with null controls (solar rotation) and robustness checks (hemisphere stratification).</li>
 </ol>
 
 <h3>1.5 Evidence Handoff: Building on Multi-Center Validation</h3>
@@ -147,6 +161,16 @@
       <td><strong>Orbital Velocity Coupling</strong></td>
       <td>r ≈ −0.57 to −0.79 across centers<br>Ionosphere/solar nulls passed<br>Hemisphere & seasonal controls</td>
       <td><strong>Strengthened:</strong> r = −0.888 (5.1σ, p < 2×10⁻⁷; 5 M surrogates)<br>25 complete solar orbits<br>Hemisphere stratification is the proper discriminant (see §3.2.2; partial correlation is inappropriate for coupled orbital variables)</td>
+    </tr>
+    <tr>
+      <td><strong>CMB Frame Alignment</strong></td>
+      <td><em>Not testable (methodology not developed in Paper 1)</em></td>
+      <td><strong>Multi-Resolution Verification:</strong> Grid search across 65,341 sky directions (§2.3.5, §3.2.6)<br>
+          <strong>Best fit:</strong> RA=186°, Dec=-4° (r=0.747, p < 0.0001)<br>
+          <strong>CMB Dipole:</strong> RA=168°, Dec=-7° → 18.2° from best fit<br>
+          <strong>Solar Apex:</strong> RA=272°, Dec=+30° → r=0.007, p=0.97<br>
+          <strong>Variance Ratio: 5,570×</strong> | <strong>Convergence verified</strong> across 10°, 5°, 2.5°, 1° resolutions<br>
+          Identifies cosmic-scale coupling (~369 km/s), resolves hemisphere asymmetry</td>
     </tr>
     <tr>
       <td><strong>Planetary Events</strong></td>

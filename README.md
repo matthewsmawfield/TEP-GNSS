@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.23 (Jaipur) + v0.13 (Cairo Extension)
-**Date:** 23 November 2025
+**Repository Version:** v0.23 (Jaipur) + v0.14 (Cairo)
+**Date:** 24 November 2025
 
 ## Published Papers
 
@@ -12,7 +12,7 @@
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
 **Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
 
-### Paper 2: 25-Year Temporal Extension (v0.13 - Cairo)
+### Paper 2: 25-Year Temporal Extension (v0.14 - Cairo)
 **Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
@@ -38,7 +38,7 @@ This repository implements a comprehensive experimental framework for testing Te
 
 **Paper 1 (Multi-Center Analysis):** Presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields. The analysis further reveals coherent network dynamics coupled to Earth's helical motion (Chandler wobble, |r| = 0.61–0.76) and orbital velocity (r ≈ -0.7 to -0.8), along with systematic diurnal variations and significant coherence modulations corresponding to 11 planetary astronomical events.
 
-**Paper 2 (25-Year Temporal Extension):** Extends the analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pairs. This temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.641, p < 10⁻⁸) and enhanced statistical power for planetary event detection (67 events detected, 38 surviving Bonferroni correction).
+**Paper 2 (25-Year Temporal Extension):** Extends the analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pairs. This temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.641, p < 10⁻⁸) and semiannual nutation (R² = 0.904, p < 10⁻²⁰), with 56/156 planetary events showing significant response (≥2σ), of which 25 survive Bonferroni correction. Multi-resolution reference frame identification (65,341 tested directions) reveals coupling to Earth's motion through the CMB rest frame (r = 0.747, p < 0.0001), with CMB-aligned backgrounds explaining 5,570× more variance than galactic motion, definitively establishing the operative reference frame for anisotropy modulation.
 
 Both studies employ extensive validation—including 24-61× signal enhancement over null tests, temporal/spatial cross-validation, and systematic bias controls—providing substantial evidence of signal authenticity. These findings are theoretically grounded in the Temporal Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive independent investigation.
 
@@ -115,6 +115,9 @@ python scripts/run_step2_only.py
 
 # 25-Year Longspan Analysis (Paper 2)
 python scripts/code_longspan/step_2_2_code_longspan.py
+
+# CMB Frame Validation (Paper 2 - v0.14)
+python scripts/code_longspan/step_2_5_dual_motion_geometry.py
 ```
 
 **Individual Step Execution:**
@@ -163,11 +166,18 @@ Extended analysis of 165.2 million station-pair measurements over 25.3 years con
 
 **Temporal Stability:**
 - **Decadal confirmation:** Original signatures confirmed over 25-year timescale
-- **Orbital coupling:** Strong correlation with Earth's orbital velocity (r = -0.864, p < 10⁻¹⁰)
-- **Enhanced detection:** 67 planetary event responses (38 surviving Bonferroni correction)
+- **Orbital coupling:** Strong correlation with Earth's orbital velocity (r = -0.888, p < 2×10⁻⁷, 5.1σ; validated by 5M Monte Carlo surrogates)
+- **Enhanced detection:** 56/156 planetary events significant (≥2σ), with 25 surviving Bonferroni correction (45% survival rate)
+
+**Reference Frame Identification:**
+- **CMB frame alignment:** Multi-resolution grid search across 65,341 sky directions identifies coupling to Earth's motion through the Cosmic Microwave Background rest frame (r = 0.747, p < 0.0001, 3.5σ permutation test)
+- **Falsification test:** CMB-aligned background explains 5,570× more variance than Solar Apex (galactic motion), definitively rejecting the galactic hypothesis
+- **Coordinate stability:** Best-fit location within 1-2° across four independent resolutions (10°, 5°, 2.5°, 1°), demonstrating robustness
+- **Hemisphere asymmetry resolved:** CMB velocity vector geometry naturally explains Southern Hemisphere dominance (r=-0.79) vs Northern (r=+0.25)
 
 **Long-Period Geophysical Signatures:**
 - **Nutation cycle:** Clear detection of 18.6-year lunar nutation (R² = 0.641, p < 10⁻⁸)
+- **Semiannual nutation:** Strongest geophysical coupling in entire dataset (R² = 0.904, p < 10⁻²⁰)
 - **Chandler wobble:** Confirmed with extended temporal baseline
 - **Seasonal patterns:** Robust annual modulation effects
 
@@ -540,7 +550,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes25year,
-  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.13)},
+  title={Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks (Cairo v0.14)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -616,4 +626,4 @@ This work is designed for reproducibility. All code, data processing steps, and 
 
 ---
 
-**Repository Version:** v0.23 (Jaipur) + v0.13 (Cairo Extension) | **Date:** 23 November 2025 | **Status:** Active Research
+**Repository Version:** v0.23 (Jaipur) + v0.14 (Cairo) | **Date:** 24 November 2025 | **Status:** Active Research

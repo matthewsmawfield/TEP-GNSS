@@ -1,0 +1,33 @@
+[19:01:59] [INFO] Loading: results/outputs/code_longspan/step_2_2_geospatial_temporal_analysis_code.json
+[19:01:59] [INFO] Extracting existing Step 2.2 results...
+[19:01:59] [INFO]   ✓ Extracted 8 sectors
+[19:01:59] [INFO]   ✓ Extracted 34 temporal windows
+[19:01:59] [INFO]   ✓ Hemisphere data: N=34, S=34
+[19:01:59] [INFO] Performing 'Clever' Galactic Vector Search...
+[19:02:00] [SUCCESS]   Best Fit: RA=186.0°, Dec=-4.0° (r=0.7465)
+[19:02:00] [INFO]   Known Apex: RA=271°, Dec=30°
+[19:02:00] [INFO]   Calculating bootstrap confidence intervals...
+[19:02:00] [INFO]   95% CI: [0.5712, 0.8766]
+[19:02:00] [INFO]   Running permutation test (10000 samples)...
+[19:02:01] [INFO] Comparing competing models...
+[19:02:01] [SUCCESS]   CMB Dipole: R²=0.3568 (35.7% variance explained)
+[19:02:01] [INFO]   Solar Apex: R²=0.0001 (0.0% variance explained)
+[19:02:01] [INFO] Comparing background models...
+[19:02:01] [INFO]   Solar Apex               : r =  0.0073, p = 0.967186
+[19:02:01] [SUCCESS]   Best Fit (Grid Search)   : r =  0.7465, p = 0.000000
+[19:02:01] [SUCCESS]   CMB Dipole               : r =  0.5973, p = 0.000192
+[19:02:01] [INFO]   Null (Orbital Only)      : r = -0.0437, p = 0.806360
+[19:02:01] [INFO] Performing geometric angle validation...
+[19:02:01] [INFO]   Time-averaged EW/NS ratio: 0.540
+[19:02:01] [INFO]   Predicted vs Observed EW/NS: r = -0.0292, p = 0.869733
+[19:02:01] [INFO]   Velocity angle vs Observed: r = -0.2567, p = 0.142755
+[19:02:01] [INFO] Running statistical tests...
+[19:02:01] [INFO]   1/4 tests significant
+[19:02:01] [INFO] Assessment: Strong Evidence: CMB Frame Alignment
+[19:02:02] [SUCCESS] Saved ultra-minimal heatmap: results/figures/code_longspan/step_2_5_vector_search_heatmap.png
+[19:02:02] [INFO] Figure caption: (a) Best fit, (b) CMB dipole, (c) Solar apex
+[19:02:02] [INFO] Extracting existing Step 2.2 results...
+[19:02:02] [INFO]   ✓ Extracted 8 sectors
+[19:02:02] [INFO]   ✓ Extracted 34 temporal windows
+[19:02:02] [INFO]   ✓ Hemisphere data: N=34, S=34
+[19:02:03] [SUCCESS] Saved enhanced model comparison: results/figures/code_longspan/step_2_5_model_comparison_timeseries.png

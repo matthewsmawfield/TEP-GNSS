@@ -1,0 +1,29 @@
+{
+  "10.0_deg": {
+    "resolution": 10.0,
+    "grid_points": 703,
+    "best_correlation": 0.7072048173570578,
+    "best_ra": 180,
+    "best_dec": 0,
+    "p_value": 0.0023,
+    "cmb_separation": 13.914280434143912
+  },
+  "5.0_deg": {
+    "resolution": 5.0,
+    "grid_points": 2701,
+    "best_correlation": 0.743586964462057,
+    "best_ra": 190,
+    "best_dec": -5,
+    "p_value": 0.0,
+    "cmb_separation": 22.145139421552535
+  },
+  "2.5_deg": {
+    "resolution": 2.5,
+    "grid_points": 10585,
+    "best_correlation": 0.7439655593195583,
+    "best_ra": 187,
+    "best_dec": -5,
+    "p_value": 0.0004,
+    "cmb_separation": 19.158475931033767
+  }
+}

@@ -7,24 +7,24 @@ This release represents a major strengthening of the statistical validation for 
 ## Key Changes
 
 ### 🔬 Monte Carlo Validation
-- **Added 5M Monte Carlo surrogate validation** for orbital correlation (p < 2×10⁻⁷, 5.1σ)
+- Added 5M Monte Carlo surrogate validation for orbital correlation (p < 2×10⁻⁷, 5.1σ)
 - 0 out of 5,000,000 surrogates exceeded the observed correlation
 - Confirms this is the strongest statistical signature in the dataset
 
 ### 📊 Enhanced Orbital Correlation
-- **Updated orbital correlation from r = -0.864 to r = -0.888** with enhanced significance
+- Updated orbital correlation from r = -0.864 to r = -0.888 with enhanced significance
 - 95% CI: [-0.94, -0.81]
 - ≈19% annual modulation refers to dimensionless anisotropy ratio (λ_EW/λ_NS), not clock frequency changes
 
 ### 🪐 Refined Planetary Event Analysis
-- **Updated to 56 significant events** (≥2σ threshold)
+- Updated to 56 significant events (≥2σ threshold)
 - 25 events survive Bonferroni correction (ultra-conservative)
 - Per-planet statistics:
   - Mercury: 34/80 detections (42.5%)
   - Jupiter: 8/23 detections (34.8%)
   - Saturn: 7/25 detections (28.0%)
-  - Mars: 4/14 detections (28.6%)
-  - Venus: 3/14 detections (21.4%)
+  - Mars: 4/12 detections (33.3%)
+  - Venus: 3/16 detections (18.8%)
 
 ### 📈 Statistical Framework Improvements
 - Enhanced statistical reporting in `step_2_2_code_longspan.py`
@@ -36,12 +36,6 @@ This release represents a major strengthening of the statistical validation for 
 - Added "Addressing the Convenient Shield Critique" callout box in §4.1.3
 - Explained least-squares processing filter effects across independent software packages
 - Enhanced physical interpretations throughout
-
-### 🔄 Site Updates
-- Updated all `site-code-longspan` components with improved scientific framing
-- Consistency updates to Paper 1 including references
-- Regenerated PDF to v0.13 Cairo edition
-- Updated `zenodo.txt` with r = -0.888
 
 ## Scientific Impact
 
@@ -67,7 +61,7 @@ This provides strong empirical evidence consistent with systematic gravitational
 
 - **Analysis Center**: CODE (Center for Orbit Determination in Europe)
 - **Time Span**: 25.3 years (2000-01-01 to 2025-04-14)
-- **Total Pairs**: 165,198,849 station pairs
+- **Total Pairs**: 165,189,605 station pairs
 - **Unique Stations**: 814 GNSS stations worldwide
 - **Temporal Resolution**: 30-second clock products
 
@@ -76,7 +70,7 @@ This provides strong empirical evidence consistent with systematic gravitational
 - **Version**: v0.13
 - **Codename**: Cairo
 - **Date**: 2025-11-23
-- **Previous Version**: v0.9 (Cairo)
+- **Previous Version**: v0.11
 - **DOI**: [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)
 
 ## Resources
@@ -106,5 +100,5 @@ As outlined in the manuscript, critical next steps include:
 1. Independent replication by other research groups
 2. Raw carrier-phase data analysis (unprocessed GNSS measurements)
 3. Multi-constellation testing (GLONASS, Galileo, BeiDou)
-4. Extension to optical clocks for enhanced precision
+4. Extension to optical clocks for enhanced precision and triangle holonomy experiments
 5. Systematic investigation of remaining alternative hypotheses

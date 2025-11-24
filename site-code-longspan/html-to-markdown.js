@@ -214,7 +214,7 @@ class HTMLToMarkdownConverter {
         const version = versionMatch ? versionMatch[1]
             .replace(/<[^>]+>/g, '')
             .replace(/^Version:\s*/i, '')
-            .trim() : 'v0.13 (Cairo)';
+            .trim() : 'v0.14 (Cairo)';
         
         const dateMatch = html.match(/<div[^>]*class=["'][^"']*date[^"']*["'][^>]*>(.*?)<\/div>/i);
         const date = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, '').trim() : 'First published: 17 September 2025 · Last updated: 13 October 2025';
