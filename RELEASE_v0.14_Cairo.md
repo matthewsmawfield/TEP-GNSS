@@ -20,7 +20,7 @@ Global GNSS clock networks exhibit distance-structured temporal correlations tha
 
 **Seven Independent Signatures**: Spatial Anisotropy (EW:NS=2.16, p<10⁻¹⁵) • Orbital Velocity (r=-0.888, p<2×10⁻⁷) • CMB Frame (r=0.747) • Planetary Events (56/156) • 18.6-Year Nutation (R²=0.641) • Semiannual Nutation (R²=0.904, p<10⁻²⁰) • Network Coherence (0.582)
 
-**Dataset**: 25.3 years (2000-2025) • 165.2M station pairs • 814 stations
+**Dataset**: 25.3 years (2000-2025) • 165.2M station pairs • 474 unique receivers 
 
 ## Version & Resources
 

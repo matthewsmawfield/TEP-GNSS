@@ -514,7 +514,20 @@ The best-fit seasonal model captures only ≈18.8 % amplitude modulation of the 
         The correlation peak strongly aligns with the CMB dipole direction and resides 89° from the Solar Apex, inconsistent with the galactic hypothesis. Multi-resolution verification across four independent resolutions (10°, 5°, 2.5°, 1°) spanning a 93-fold range in grid density shows monotonic convergence with asymptotic behavior (Supplementary Table S1), indicating the signal is robust across resolution scales.
         Color scale shows Pearson correlation coefficient. Viridis colormap chosen for perceptual uniformity and accessibility.
     </p>
+    
+    <!-- Interactive Dashboard - Web Only -->
+    <div class="interactive-dashboard" style="margin-top: 25px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+        <iframe src="vector_minimal.html" style="width: 100%; height: 650px; border: none; display: block; zoom: 0.85;"></iframe>
+    </div>
 </div>
+
+<style>
+    @media print {
+        .interactive-dashboard {
+            display: none !important;
+        }
+    }
+</style>
 
 <p><strong>Statistical Validation:</strong></p>
 <ul>

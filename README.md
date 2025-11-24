@@ -18,6 +18,21 @@
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  
 **Analysis:** 165.2 million station pairs from CODE analysis center over 25.3 years (2000-2025)
 
+## Interactive Dashboard
+
+**NEW:** Interactive CMB Correlation Dashboard for exploring 25-year GNSS correlation patterns
+
+![Interactive CMB Correlation Dashboard](site-code-longspan/figures/cmb_correlation_dashboard.png)
+
+**Features:**
+- Real-time visualization of Earth's velocity vs CMB dipole alignment (RA 186°)
+- Interactive orbital mechanics with accurate physics
+- Annual correlation cycle display (peak r=0.746)
+- Measured exponential decay (λ=3210km) visualization
+- Educational celestial coordinate annotations
+
+**Access:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/) (embedded below Figure 7)
+
 ## Theoretical Foundation
 
 The Temporal Equivalence Principle (TEP) represents a fundamental extension of General Relativity, wherein proper time is treated as a dynamical scalar field rather than a fixed kinematic parameter. The theoretical framework employs a two-metric geometric structure where matter fields couple to an effective causal metric:

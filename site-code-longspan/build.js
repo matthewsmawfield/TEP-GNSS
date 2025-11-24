@@ -87,6 +87,14 @@ async function buildStaticSite() {
             }
         }
         
+        // Copy vector_minimal.html for iframe embedding
+        const vectorSrc = path.join(__dirname, 'vector_minimal.html');
+        const vectorDest = path.join(distDir, 'vector_minimal.html');
+        if (fs.existsSync(vectorSrc)) {
+            console.log('📄 Copying vector_minimal.html');
+            fs.copyFileSync(vectorSrc, vectorDest);
+        }
+        
         // Copy manifest.json for reference
         fs.copyFileSync(manifestPath, path.join(distDir, 'manifest.json'));
         
