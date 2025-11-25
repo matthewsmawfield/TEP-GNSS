@@ -453,6 +453,12 @@
                 </div>
                 
                 <div class="widget">
+                    <div class="widget-title">Station Network</div>
+                    <canvas id="globeCanvas" width="160" height="160"></canvas>
+                    <div class="widget-desc"><strong>474 ground stations</strong> analyzed over 25 years. Colors show mean correlation strength. Globe rotates with day of year.</div>
+                </div>
+                
+                <div class="widget">
                     <div class="widget-title">Axial Tilt</div>
                     <canvas id="tiltCanvas" width="160" height="140"></canvas>
                     <div class="widget-desc">Earth's 23.5° axial tilt. <strong>Green arrow</strong> shows Earth's current velocity direction through year.</div>
@@ -596,6 +602,9 @@
         let gridMatrix = null;
         let raVals = null;
         let decVals = null;
+        let stationData = null;
+        let coastlineData = null;
+        let globeRotation = 0;
         let currentDay = 133;
         let isPlaying = false;
         let animationInterval = null;
@@ -628,6 +637,21 @@
                 
                 // Auto-play by default
                 setTimeout(() => togglePlay(), 500);
+            });
+        
+        // Load station coordinate data
+        fetch('./data/station_coordinates.json')
+            .then(r => r.json())
+            .then(data => {
+                stationData = data;
+                console.log(`Loaded ${data.count} stations`);
+            });
+            
+        // Load coastline data
+        fetch('./data/world_coastlines.json')
+            .then(r => r.json())
+            .then(data => {
+                coastlineData = data;
             });
         
         function updateViz(day) {
@@ -743,6 +767,7 @@
             
             // Update all diagrams
             drawOrbit(day);
+            drawGlobe(day);
             drawTilt(day);
             drawProfile(day, earthRA);
             drawAlignment(earthRA);
@@ -945,6 +970,166 @@
             ctx.textAlign = 'center';
             const monthIdx = Math.floor((day - 1) / 30.5);
             ctx.fillText(monthNames[monthIdx % 12], cx, h - 8);
+        }
+        
+        function drawGlobe(day) {
+            const canvas = document.getElementById('globeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = 160, h = 160;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            ctx.scale(dpr, dpr);
+            
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, w, h);
+            
+            const cx = w / 2, cy = h / 2;
+            const radius = 65;
+            
+            // Globe rotation based on day (one full rotation per year)
+            const rotation = (day / 365.25) * 2 * Math.PI;
+            
+            // Draw globe outline
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw latitude lines
+            ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
+            ctx.lineWidth = 0.5;
+            for (let lat = -60; lat <= 60; lat += 30) {
+                const latRad = lat * Math.PI / 180;
+                const y = cy - radius * Math.sin(latRad);
+                const xRadius = radius * Math.cos(latRad);
+                ctx.beginPath();
+                ctx.ellipse(cx, y, xRadius, xRadius * 0.2, 0, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            
+            // Draw longitude lines
+            ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
+            for (let lon = 0; lon < 180; lon += 30) {
+                const lonRad = (lon + rotation * 180 / Math.PI) * Math.PI / 180;
+                ctx.beginPath();
+                for (let lat = -90; lat <= 90; lat += 5) {
+                    const latRad = lat * Math.PI / 180;
+                    const x = cx + radius * Math.cos(latRad) * Math.sin(lonRad);
+                    const y = cy - radius * Math.sin(latRad);
+                    const z = Math.cos(latRad) * Math.cos(lonRad);
+                    if (z > 0) { // Only draw front-facing
+                        if (lat === -90) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+            }
+            
+            // Draw coastlines
+            if (coastlineData && coastlineData.features) {
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                
+                coastlineData.features.forEach(feature => {
+                    if (feature.geometry.type === 'LineString') {
+                        const coords = feature.geometry.coordinates;
+                        let first = true;
+                        
+                        for (let i = 0; i < coords.length; i++) {
+                            const lon = coords[i][0];
+                            const lat = coords[i][1];
+                            
+                            const latRad = lat * Math.PI / 180;
+                            const lonRad = (lon * Math.PI / 180) + rotation;
+                            
+                            const x = cx + radius * Math.cos(latRad) * Math.sin(lonRad);
+                            const y = cy - radius * Math.sin(latRad);
+                            const z = Math.cos(latRad) * Math.cos(lonRad);
+                            
+                            if (z > 0.1) { // Draw if visible (with slight margin)
+                                if (first) {
+                                    ctx.moveTo(x, y);
+                                    first = false;
+                                } else {
+                                    ctx.lineTo(x, y);
+                                }
+                            } else {
+                                first = true; // Break line if goes behind globe
+                            }
+                        }
+                    } else if (feature.geometry.type === 'Polygon') {
+                         feature.geometry.coordinates.forEach(ring => {
+                            let first = true;
+                            for (let i = 0; i < ring.length; i++) {
+                                const lon = ring[i][0];
+                                const lat = ring[i][1];
+                                
+                                const latRad = lat * Math.PI / 180;
+                                const lonRad = (lon * Math.PI / 180) + rotation;
+                                
+                                const x = cx + radius * Math.cos(latRad) * Math.sin(lonRad);
+                                const y = cy - radius * Math.sin(latRad);
+                                const z = Math.cos(latRad) * Math.cos(lonRad);
+                                
+                                if (z > 0.1) {
+                                    if (first) {
+                                        ctx.moveTo(x, y);
+                                        first = false;
+                                    } else {
+                                        ctx.lineTo(x, y);
+                                    }
+                                } else {
+                                    first = true;
+                                }
+                            }
+                        });
+                    }
+                });
+                ctx.stroke();
+            }
+            
+            // Draw stations if data loaded
+            if (stationData && stationData.stations) {
+                const corrMin = stationData.corr_min;
+                const corrMax = stationData.corr_max;
+                const corrRange = corrMax - corrMin;
+                
+                stationData.stations.forEach(station => {
+                    const latRad = station.lat * Math.PI / 180;
+                    const lonRad = (station.lon * Math.PI / 180) + rotation;
+                    
+                    // 3D to 2D projection (orthographic)
+                    const x = cx + radius * Math.cos(latRad) * Math.sin(lonRad);
+                    const y = cy - radius * Math.sin(latRad);
+                    const z = Math.cos(latRad) * Math.cos(lonRad);
+                    
+                    // Only draw if on front side of globe
+                    if (z > 0) {
+                        // Color based on correlation (viridis-like)
+                        const t = (station.mean_corr - corrMin) / corrRange;
+                        const r = Math.floor(68 + t * 150);
+                        const g = Math.floor(1 + t * 180);
+                        const b = Math.floor(84 + t * 80);
+                        
+                        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+            }
+            
+            // Label
+            ctx.fillStyle = '#666';
+            ctx.font = '8px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${stationData ? stationData.count : 0} stations`, cx, h - 5);
         }
         
         function drawTilt(day) {

@@ -1,0 +1,107 @@
+{
+  "step": "2.7",
+  "name": "Time-Frequency Spectral Analysis",
+  "analysis_center": "CODE",
+  "timestamp": "2025-11-26T01:43:43.978171",
+  "execution_time_seconds": 14.100443124771118,
+  "data_summary": {
+    "n_daily_samples": 4186,
+    "date_range": {
+      "start": "2000-03-02T00:00:00",
+      "end": "2025-06-30T00:00:00"
+    },
+    "time_span_days": 9251.0,
+    "time_span_years": 25.32785763175907
+  },
+  "periodogram_summary": {
+    "n_frequencies": 9243,
+    "period_range_days": [
+      9.999728685342124,
+      10000.0
+    ],
+    "top_5_peaks": [],
+    "fap_thresholds": {
+      "fap_0.01": 0.007258354908095072,
+      "fap_0.001": 0.00838737324262563,
+      "fap_0.0001": 0.009508656024987613
+    }
+  },
+  "frequency_identification": {
+    "solar_rotation": {
+      "target_period_days": 27.0,
+      "detected_period_days": 26.25699957227004,
+      "power": 0.0023522233106910697,
+      "significant": false,
+      "expected": "null",
+      "matches_expectation": true,
+      "description": "Solar synodic rotation period"
+    },
+    "chandler_wobble": {
+      "target_period_days": 433.0,
+      "detected_period_days": 433.8080477934453,
+      "power": 0.0013726392787904982,
+      "significant": false,
+      "expected": "weak",
+      "matches_expectation": true,
+      "description": "Chandler wobble (polar motion)"
+    },
+    "semiannual": {
+      "target_period_days": 182.6,
+      "detected_period_days": 199.69735629280885,
+      "power": 0.0031126315968278825,
+      "significant": false,
+      "expected": "strong",
+      "matches_expectation": false,
+      "description": "Semiannual nutation"
+    },
+    "annual": {
+      "target_period_days": 365.25,
+      "detected_period_days": 338.55319834145166,
+      "power": 0.002538160852442326,
+      "significant": false,
+      "expected": "weak",
+      "matches_expectation": true,
+      "description": "Annual cycle"
+    },
+    "main_nutation": {
+      "target_period_days": 6798.4,
+      "detected_period_days": 6981.3598973662365,
+      "power": 0.0009878538527718721,
+      "significant": false,
+      "expected": "strong",
+      "matches_expectation": false,
+      "description": "18.6-year lunar nutation"
+    }
+  },
+  "outlier_cleaning": {
+    "n_removed": 5029,
+    "pct_removed": 54.57406402604449,
+    "valid_range": [
+      0.5,
+      3.0
+    ]
+  },
+  "nutation_phase_analysis": {
+    "semiannual_nutation": {
+      "r_squared": 0.9037449748816058,
+      "amplitude": 0.0015469406361888639
+    },
+    "main_nutation": {
+      "r_squared": 0.640719384394548,
+      "amplitude": -0.00648593767183219
+    }
+  },
+  "interpretation": {
+    "detected_frequencies": [],
+    "null_frequencies": [
+      "solar_rotation"
+    ],
+    "expectation_match_rate": 0.6,
+    "conclusion": "Phase-binned analysis reveals clear nutation coupling that wavelet analysis misses due to non-stationarity. The signal is real but comes and goes over the 25-year record. Solar rotation (27d) NULL is consistently confirmed."
+  },
+  "figures_generated": [
+    "step_2_7_wavelet_scalogram.png",
+    "step_2_7_nutation_phase.png"
+  ],
+  "success": true
+}

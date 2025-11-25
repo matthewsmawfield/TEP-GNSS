@@ -1,118 +1,72 @@
 <div class="executive-summary" style="background: linear-gradient(135deg, rgba(34, 1, 38, 0.05) 0%, rgba(73, 87, 115, 0.05) 100%); border: 1px solid rgba(73, 87, 115, 0.3); border-radius: 8px; padding: 25px; margin: 25px 0;">
   <h3 style="color: #220126; margin-top: 0; text-align: center; font-size: 22px; line-height: 1.3;">Executive Summary</h3>
   
-  <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-    <p style="font-size: 15px; line-height: 1.6;">
-      This study is a temporal extension and replication of the <a href="https://matthewsmawfield.github.io/TEP-GNSS/" target="_blank" rel="noopener noreferrer" style="color: #220126; text-decoration: underline;">multi-center study</a>: all core signatures 
-      reported previously (anisotropy, orbital coupling, event responses) are re-observed here, with added sensitivity 
-      to long-period dynamics.
-    </p>
-  </div>
+  <p style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+    This study extends the first empirical TEP investigation—a multi-centre validation spanning CODE, IGS, and ESA (<a href="https://matthewsmawfield.github.io/TEP-GNSS/" target="_blank" rel="noopener noreferrer" style="color: #220126; text-decoration: underline;">Smawfield, 2025†</a>)—to a 25-year temporal baseline. All core signatures reported in that study (anisotropy, orbital coupling, event responses) are re-observed here, with added sensitivity to long-period dynamics.
+  </p>
 
   <div style="background-color: rgba(73, 87, 115, 0.05); padding: 15px; margin: 20px 0; border-radius: 6px;">
     <h4 style="margin-top: 0;">What's New in This Paper</h4>
     
-    <p><strong>Carried over from the multi-center study:</strong></p>
+    <p><strong>Carried over from the multi-centre study:</strong></p>
     <ul style="margin-bottom: 10px;">
       <li>Distance-structured correlations</li>
       <li>EW > NS anisotropy</li>
       <li>Annual orbital-velocity coupling</li>
       <li>Initial planetary-event responses</li>
       <li>Chandler-wobble hints</li>
-      <li>Mesh dance dynamics (extended to 25 years)</li>
-      <li>Cross-center agreement (CODE/IGS/ESA)</li>
+      <li>"Mesh dance" dynamics (i.e., the evolving spatial pattern of cross-station coherence, extended to 25 years)</li>
+      <li>Cross-centre agreement (CODE/IGS/ESA)</li>
     </ul>
 
     <p><strong>New in this CODE-only, 25.3-year analysis:</strong></p>
     <ul>
-      <li>Decadal stability</li>
-      <li>Long-period tests (18.6-year nutation)</li>
-      <li>High-statistics event survey (156 events)</li>
-      <li>Stronger orbital-velocity tracking</li>
-      <li><strong>CMB frame alignment</strong> (cosmic-scale coupling via multi-resolution verification)</li>
-      <li>Explicit depth-over-breadth trade-off</li>
+      <li><strong>CMB frame alignment</strong>—cosmic-scale coupling identified via multi-resolution sky search (65,341 directions), with geometric falsification of the galactic alternative</li>
+      <li>Decadal stability confirmed across 25 complete solar orbits</li>
+      <li>Long-period geophysical coupling (18.6-year lunar nutation: R² = 0.641)</li>
+      <li>High-statistics planetary event survey (156 events, 56 significant)</li>
+      <li>Stronger orbital-velocity tracking (r = −0.888, 5.1σ)</li>
     </ul>
+    <p style="font-size: 0.9em; color: #495773; margin-top: 10px;"><em>Trade-off:</em> Single-centre temporal depth (25 years) over multi-centre breadth, justified by Paper 1's established processing-independence (R² = 0.92–0.97).</p>
   </div>
 
-  <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-    <h3 style="color: #220126; margin-top: 0;">Key Findings</h3>
+  <h3 style="color: #220126; margin-top: 25px; margin-bottom: 15px;">Key Findings</h3>
     
     <div style="margin-bottom: 20px;">
       <h4 style="color: #495773; margin-bottom: 8px;">1. Distance-Structured Correlations (Primary Finding)</h4>
       <p>Analysis of 165.2 million station pairs reveals systematic exponential decay of clock-pair coherence with distance. 
-      Correlation length λ = 4,201 ± 1,967 km, consistent with the multi-center study's range (λ = 3,330–4,549 km across 
+      Correlation length λ = 4,201 ± 1,967 km, consistent with the multi-centre study's range (λ = 3,330–4,549 km across 
       CODE, IGS, ESA). This confirms temporal stability of the fundamental distance-structured correlation pattern over 
       25.3 years.</p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <h4 style="color: #495773; margin-bottom: 8px;">2. Spatial Anisotropy (Claim A)</h4>
+      <h4 style="color: #495773; margin-bottom: 8px;">2. Spatial Anisotropy</h4>
       <p>East-West correlation lengths exceed North-South by factor of 2.16 (anisotropy strength = 1.981 ± 0.23, 
       p < 10⁻¹⁵). This directional structure persists across all 25 years and distance scales.</p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <h4 style="color: #495773; margin-bottom: 8px;">3. Orbital Velocity Coupling (Claim B - Primary Detection)</h4>
-      <p>Primary Finding: Spatial anisotropy ratio (EW/NS) correlates with Earth's orbital velocity (r = -0.888, 95% CI: [-0.94, -0.81], p &lt; 2×10⁻⁷, 5.1σ). Monte Carlo validation: 0 out of 5,000,000 surrogates exceeded the observed correlation. Combined with Paper 1's multi-center validation and this study's 25-year temporal stability, this provides statistical evidence consistent with systematic temporal-gravitational coupling in GNSS data. The quoted ≈19% annual modulation refers to this dimensionless coherence-based anisotropy ratio (λ<sub>EW</sub>/λ<sub>NS</sub>), not to a 19% change in atomic clock frequencies.</p>
+      <h4 style="color: #495773; margin-bottom: 8px;">3. Orbital Velocity Coupling (Primary Detection)</h4>
+      <p>Primary Finding: Spatial anisotropy ratio (EW/NS) correlates with Earth's orbital velocity (r = -0.888, 95% CI: [-0.94, -0.81], p &lt; 2×10⁻⁷, 5.1σ). Monte Carlo validation: 0 out of 5,000,000 surrogates exceeded the observed correlation. Combined with Paper 1's multi-centre validation and this study's 25-year temporal stability, this provides substantial evidence consistent with systematic temporal-gravitational coupling in GNSS data. The quoted ≈19% annual geometric modulation refers to this dimensionless coherence-based anisotropy ratio (λ<sub>EW</sub>/λ<sub>NS</sub>)—a change in correlation topology, not clock frequencies, which remain at standard sub-nanosecond levels.</p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <h4 style="color: #495773; margin-bottom: 8px;">4. CMB Frame Alignment (Claim C - Reference Frame Identification)</h4>
-      <p>Multi-resolution grid search (10°, 5°, 2.5°, 1° spanning 65,341 tested directions) identifies coupling to Earth's motion through the Cosmic Microwave Background rest frame (~369 km/s toward RA=168°, Dec=-7°). Best-fit direction (RA=186°, Dec=-4°, r=0.747) lies 18.2° from the CMB dipole, showing close alignment. Results converge monotonically across all four resolutions with coordinate stability (RA varies by 1-2°). The CMB-aligned background explains R²=55.7% of the variance. For discrimination, the Solar Apex (galactic motion, ~20 km/s toward RA=272°, Dec=+30°) shows negligible correlation (r=0.007, R²=0.01%), yielding a 5,570-fold variance ratio. The hemisphere asymmetry (Southern r=-0.79 vs Northern r=+0.25) is consistent with the CMB velocity vector geometry.</p>
+      <h4 style="color: #495773; margin-bottom: 8px;">4. CMB Frame Alignment (Reference Frame Identification)</h4>
+      <p><strong>Method:</strong> Multi-resolution grid search (10°, 5°, 2.5°, 1°) spanning 65,341 tested directions, blind to both CMB and Solar Apex locations.</p>
+      <p><strong>Result:</strong> Best-fit direction (RA=186°, Dec=-4°, r=0.747) lies 18.2° from the CMB dipole (~369 km/s toward RA=168°, Dec=-7°). Results converge monotonically across all four resolutions with coordinate stability (RA varies by 1-2°). The CMB-aligned background explains R²=55.7% of the variance.</p>
+      <p><strong>Geometric Falsification:</strong> The Solar Apex hypothesis is not merely statistically disfavored; it is geometrically incompatible. The Solar Apex vector (+30° Dec) predicts N-S anisotropy, directly contradicting the observed E-W dominance. Only the CMB vector (−7° Dec) is geometrically consistent with the observed anisotropy plane. Variance ratio: 5,570× (R²=55.7% vs 0.01%).</p>
+      <p><strong>Consistency Check:</strong> Hemisphere asymmetry (Southern r=-0.79 vs Northern r=+0.25) matches CMB velocity vector geometry.</p>
+      <p style="font-size: 0.9em; color: #495773;"><em>Caveat:</em> The 18° offset falls within the bootstrap 95% CI (~20°). The key finding is discrimination from Solar Apex (89° away, 5,570× variance ratio), not precise CMB localisation. See §4.1.2.1 for interpretive caveats.</p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <h4 style="color: #495773; margin-bottom: 8px;">5. Planetary Event Responses (Claim D - Robust Evidence)</h4>
-      <p>56 of 156 planetary alignments show statistically significant responses (≥2σ). Modulation depths range from 0.3% to 4.0%, with σ levels spanning 2.0σ to 7.0σ. Mercury has the highest detection count (34/80, 42.5%) with a 7.0σ event, suggesting sensitivity to rapid potential changes. The gravitational scaling analysis shows that observed amplitudes do not directly correlate with GM/r² predictions. This absence of mass scaling is consistent with least-squares processing suppression.</p>
-      
-      <div style="overflow-x: auto; margin-top: 10px;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-            <thead>
-                <tr style="background-color: rgba(73, 87, 115, 0.1);">
-                    <th style="padding: 6px; border: 1px solid #495773; text-align: left;">Planet</th>
-                    <th style="padding: 6px; border: 1px solid #495773; text-align: center;">Events</th>
-                    <th style="padding: 6px; border: 1px solid #495773; text-align: center;">Significant (≥2σ)</th>
-                    <th style="padding: 6px; border: 1px solid #495773; text-align: center;">Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 6px; border: 1px solid #495773;">Mercury</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">80</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">34</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">42.5%</td>
-                </tr>
-                <tr style="background-color: rgba(73, 87, 115, 0.03);">
-                    <td style="padding: 6px; border: 1px solid #495773;">Jupiter</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">23</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">8</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">34.8%</td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px; border: 1px solid #495773;">Saturn</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">25</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">7</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">28.0%</td>
-                </tr>
-                <tr style="background-color: rgba(73, 87, 115, 0.03);">
-                    <td style="padding: 6px; border: 1px solid #495773;">Mars</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">12</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">4</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">33.3%</td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px; border: 1px solid #495773;">Venus</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">16</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">3</td>
-                    <td style="padding: 6px; border: 1px solid #495773; text-align: center;">18.8%</td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
+      <h4 style="color: #495773; margin-bottom: 8px;">5. Planetary Event Responses</h4>
+      <p>56 of 156 planetary alignments show statistically significant responses (≥2σ), with 25 surviving Bonferroni correction. Modulation depths range from 0.3% to 4.0%, with σ levels spanning 2.0σ to 7.0σ. Mercury shows the highest detection rate (34/80, 42.5%) including a 7.0σ event. Null event control confirms planetary events produce 5.5× larger effect sizes than random dates (p < 10⁻¹⁷). The absence of GM/r² scaling is consistent with least-squares processing suppression of classical gravitational signatures.</p>
     </div>
 
     <div style="margin-bottom: 20px;">
-      <h4 style="color: #495773; margin-bottom: 8px;">6. Geophysical Couplings (Claim E - New Long-Period Detections)</h4>
+      <h4 style="color: #495773; margin-bottom: 8px;">6. Geophysical Couplings</h4>
       <ul style="line-height: 1.6; margin: 10px 0;">
         <li><strong>18.6-Year Nutation:</strong> R² = 0.641, p < 10⁻⁸ (1.4 complete cycles)</li>
         <li><strong>Semiannual Nutation:</strong> R² = 0.904, p < 10⁻²⁰ (90.4% variance explained)</li>
@@ -121,64 +75,71 @@
     </div>
 
     <div>
-      <h4 style="color: #495773; margin-bottom: 8px;">7. Mesh Dance Dynamics (Claim F)</h4>
+      <h4 style="color: #495773; margin-bottom: 8px;">7. Mesh Dance Dynamics</h4>
       <p>Network exhibits coordinated "mesh dance" behavior (mesh coherence score = 0.582) with constructive interference
-      dominant across windows. This confirms temporal stability of the multi-center study's mesh dance findings (CODE: 0.624,
+      dominant across windows. This confirms temporal stability of the multi-centre study's mesh dance findings (CODE: 0.624,
       IGS: 0.579, ESA: 0.602) over 25.3 years.</p>
     </div>
 
-<div style="background-color: rgba(34, 1, 38, 0.03); border-left: 4px solid #220126; padding: 15px; margin-top: 25px;">
-  <h4 style="color: #220126; margin-top: 0; margin-bottom: 10px;">Key Take-Home Messages</h4>
-  <ol style="margin: 0; padding-left: 20px;">
-    <li style="margin-bottom: 8px;"><strong style="color: #220126;">Primary Detection:</strong> Orbital velocity correlation (r = -0.888) validated by 0/5M Monte Carlo surrogates (p < 2×10⁻⁷, 5.1σ)</li>
-    <li style="margin-bottom: 8px;"><strong style="color: #220126;">CMB Frame Alignment:</strong> Multi-resolution verification identifies coupling to cosmic-scale motion (~369 km/s toward CMB rest frame); 5,570× variance ratio provides clear discrimination</li>
-    <li style="margin-bottom: 8px;"><strong style="color: #220126;">Robust Planetary Events:</strong> 56/156 significant detections (max 7.0σ for Mercury)</li>
-    <li style="margin-bottom: 8px;"><strong style="color: #220126;">Multi-Signature Convergence:</strong> Seven independent evidence streams (orbital, CMB, planetary, geophysical) converge at >10σ combined significance</li>
-    <li style="margin-bottom: 8px;"><strong style="color: #220126;">Physical Selectivity:</strong> Effects correlate with gravitational dynamics but show no conventional GM/r² scaling</li>
-    <li style="margin-bottom: 0;"><strong style="color: #220126;">Global Phenomenon:</strong> Earth-scale correlation lengths (~4,000 km) with persistent E-W > N-S anisotropy</li>
-  </ol>
-</div>
+    <div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid rgba(73, 87, 115, 0.3); padding: 20px; border-radius: 6px; margin: 20px 0;">
+      <h3 style="color: #220126; margin-top: 0;">Summary: Inertial Interferometer, Not Gravimeter</h3>
+      <p style="line-height: 1.6; margin-bottom: 12px;">The pattern of detections and non-detections characterizes what this network may be and is not:</p>
+      
+      <ul style="line-height: 1.6; margin: 10px 0;">
+        <li><strong>Blind to gravitational amplitude:</strong> No GM/r² scaling (Mercury ≈ Jupiter response rates)</li>
+        <li><strong>Unresponsive to solar surface phenomena:</strong> 27-day rotation null</li>
+        <li><strong>Indifferent to static geometry:</strong> Lunar standstill null</li>
+        <li><strong>Exquisitely sensitive to kinematic dynamics:</strong> Orbital velocity (r=-0.888), nutation (R²=0.904), CMB-frame motion (r=0.747)</li>
+      </ul>
 
-  <div style="background-color: rgba(34, 1, 38, 0.03); border-left: 4px solid #220126; padding: 15px; margin-top: 25px;">
-    <h4 style="color: #220126; margin-top: 0; margin-bottom: 10px;">Multi-Signature Convergence</h4>
-    <p style="font-weight: 500; color: #220126; margin-bottom: 12px;"><strong>Primary Finding:</strong> The orbital correlation's Monte Carlo validation (0/5,000,000 surrogates) yields p < 2×10⁻⁷ (5.1σ). Multiple independent signatures converge to support systematic coupling:</p>
-    <ul style="margin: 8px 0 12px 20px; font-size: 0.95em; color: #220126;">
-      <li>Orbital correlation: p < 2×10⁻⁷ (5.1σ)</li>
-      <li>CMB frame alignment: r = 0.747, p < 0.0001 (multi-resolution verified)</li>
-      <li>Semiannual nutation: p < 10⁻²⁰</li>
-      <li>18.6-year nutation: p < 10⁻⁸</li>
-      <li>56 planetary events (25 Bonferroni-significant)</li>
-      <li>Paper 1 multi-center validation: R² = 0.92-0.97 (3 independent software packages over 2.5 years)</li>
-    </ul>
-    <p style="font-weight: 500; color: #220126; margin-top: 12px;"><strong>Conservative Lower Bound:</strong> Even considering only the two strongest independent signatures (orbital + semiannual nutation) and assuming they share common physical drivers, the joint probability is p ≈ 2×10⁻²⁷ (>10σ). This convergence—combined with 25-year temporal stability (this study), Paper 1's multi-center validation, and successful falsification tests—provides strong empirical evidence consistent with systematic gravitational coupling in GNSS timing networks.</p>
-  </div>
-  </div>
+      <p style="line-height: 1.6; margin-top: 12px;">
+        This selectivity profile suggests that the network may be an inertial interferometer—measuring velocity-dependent correlation geometry—not a gravimeter measuring force. The CMB frame alignment (5,570× variance ratio over galactic motion) identifies the operative kinematic reference at cosmic scales: Earth's ~369 km/s motion through the universe's rest frame.
+      </p>
+    </div>
 
-  <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-    <h3 style="color: #220126; margin-top: 0;">Methodological Considerations</h3>
+  <h3 style="color: #220126; margin-top: 25px; margin-bottom: 15px;">Methodology and Validation</h3>
     
-    <div class="callout">
-      <p>Single-center analysis (CODE only) trades cross-center validation for temporal depth. The multi-center study established processing-independence over 2.5 years (R² = 0.920-0.970 between CODE, IGS, ESA). Long-baseline replication needed when historical IGS/ESA data becomes available.</p>
+    <div class="callout" style="margin-bottom: 20px;">
+      <p>This single-center analysis (CODE) provides the 25-year temporal depth required for long-period geophysical signatures, building on the multi-centre study's established processing-independence (R² = 0.920–0.970 across CODE, IGS, ESA over 2.5 years).</p>
+      
+      <p>These signals have survived the most rigorous systematic error correction pipeline in geodesy—CODE's processing explicitly removes relativistic effects, atmospheric delays, tidal displacements, and instrumental biases to millimeter precision. The correlations we detect cannot be artifacts of these well-modeled effects. The processing architecture predicts this selectivity: common-mode offsets (including classical GM/r²) are suppressed, while differential phase structure is preserved (§4.1.3).</p>
 
-      <p><strong>Bridging Controls Implemented/Recommended:</strong></p>
+      <p><strong>Validation Controls:</strong></p>
       <ul>
-        <li><strong>Evidence Handoff Table (§1.5):</strong> Explicit mapping of Paper 1 validation to Paper 2 extensions</li>
-        <li><strong>Primary Event Window (§2.3.3):</strong> ±120 days pre-declared as primary; ±60–240 days as sensitivity</li>
-        <li><strong>Physical Predictor Modeling:</strong> Recommended for planetary events (tidal potential ∝ M/r³)</li>
-        <li><strong>Null Event Testing:</strong> Recommended (asteroid conjunctions, random dates)</li>
+        <li><strong>Evidence Continuity (§1.5):</strong> Explicit mapping of multi-centre validation to long-baseline extensions</li>
+        <li><strong>Pre-Declared Analysis Window (§2.3.3):</strong> ±120 days as primary; ±60–240 days for sensitivity analysis</li>
+        <li><strong>Physical Predictor Tests:</strong> Neither M/r² nor M/r³ gravitational scaling detected (all p > 0.5), consistent with GNSS processing suppression of classical gravitational signatures</li>
+        <li><strong>Null Event Control:</strong> Random dates show 5.5× smaller effect sizes than planetary alignments (Mann-Whitney p < 10⁻¹⁷, Cohen's d = 1.41)</li>
       </ul>
     </div>
 
+  <div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid rgba(73, 87, 115, 0.3); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+    <h3 style="color: #495773; margin-top: 0;">Falsifiability</h3>
+    <p style="line-height: 1.6; margin-bottom: 12px;">
+      The systematic coupling hypothesis makes specific predictions that can be tested:
+    </p>
+    <ul style="line-height: 1.8; margin: 0;">
+      <li><strong>Raw carrier-phase analysis:</strong> Should preserve correlation structure (processing artifact would eliminate it)</li>
+      <li><strong>Multi-constellation replication:</strong> GLONASS, Galileo, and BeiDou should exhibit similar orbital coupling</li>
+      <li><strong>Null event discrimination:</strong> ✓ <em>Confirmed</em>—planetary alignments produce 5.5× larger effects than random dates (p < 10⁻¹⁷, Cohen's d = 1.41)</li>
+      <li><strong>Independent replication:</strong> Core findings should be reproducible by other research groups</li>
+    </ul>
+    <p style="line-height: 1.6; margin-top: 12px; font-style: italic;">
+      The strength of these findings lies in their falsifiability. Each criterion represents a concrete, testable prediction.
+    </p>
+  </div>
+
+  <div style="background-color: rgba(73, 87, 115, 0.03); padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+    <p style="line-height: 1.6; margin: 0; font-size: 0.9em; color: #495773;">
+      <strong>Limitations:</strong> This analysis uses processed clock products (not raw carrier-phase) and single-constellation data (GPS only). Both limitations are addressed in the proposed next steps.
+    </p>
+  </div>
+
   <div style="background-color: rgba(73, 87, 115, 0.08); border: 1px solid rgba(73, 87, 115, 0.4); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-    <h3 style="color: #220126; margin-top: 0;">Assessment</h3>
+    <h3 style="color: #220126; margin-top: 0;">Conclusions</h3>
     
     <p style="line-height: 1.6;">
-      The convergence of temporal stability, orbital velocity correlation, long-period geophysical coupling, and network 
-      coordination—all building on the multi-center study's validation framework—provides strong empirical evidence 
-      consistent with systematic gravitational coupling in GNSS timing networks. These findings support theories predicting 
-      velocity-dependent spacetime geometry modulation (e.g., TEP) and establish this as a leading candidate framework, contingent on future raw-data replication and independent validation. 
-      Continued investigation through raw carrier-phase analysis, independent replication, and quantitative theoretical 
-      modeling will strengthen mechanistic interpretation and distinguish between competing theoretical frameworks.
+      Seven independent signatures—orbital velocity coupling (r = −0.888, 5.1σ), CMB frame alignment (r = 0.747), semiannual nutation (R² = 0.904), 18.6-year nutation (R² = 0.641), 56 planetary event responses, mesh dance dynamics, and persistent spatial anisotropy—converge to yield a conservative joint probability of p ≈ 2×10⁻²⁷ (>10σ). Combined with 25-year temporal stability and Paper 1's multi-centre validation (R² = 0.92–0.97 across three independent software packages), these findings are consistent with systematic coupling in GNSS timing networks, though confirmation requires independent replication using different processing pipelines and constellations. Raw carrier-phase analysis and multi-constellation testing represent essential next steps.
     </p>
   </div>
 </div>

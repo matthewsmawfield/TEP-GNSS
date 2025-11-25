@@ -1,0 +1,87 @@
+{
+  "analysis_center": "CODE",
+  "timestamp": "2025-11-25T18:04:48.771322",
+  "tests_run": [
+    "tidal_scaling",
+    "null_event_control"
+  ],
+  "tidal_scaling": {
+    "success": true,
+    "n_events": 56,
+    "gravitational_scaling": {
+      "linear": {
+        "r": -0.041871613249386944,
+        "p": 0.7592957600379268
+      },
+      "log_log": {
+        "r": -0.06032132217367185,
+        "p": 0.6587606981186732
+      },
+      "spearman": {
+        "rho": -0.08009935828777928,
+        "p": 0.5573154746876743
+      }
+    },
+    "tidal_scaling": {
+      "linear": {
+        "r": -0.0872900677726435,
+        "p": 0.5223618447670537
+      },
+      "log_log": {
+        "r": -0.07814117547841004,
+        "p": 0.5670221174647294
+      },
+      "spearman": {
+        "rho": -0.06904580252794967,
+        "p": 0.6131080257557668
+      }
+    },
+    "best_model": "neither",
+    "neither_significant": "True",
+    "interpretation": "No significant scaling detected - consistent with processing filter suppression"
+  },
+  "null_event_control": {
+    "success": true,
+    "test_type": "null_event_control_effect_size_comparison",
+    "timestamp": "2025-11-25T18:14:42.521746",
+    "parameters": {
+      "n_null_events": 156,
+      "n_analyzed": 155,
+      "n_planetary_events": 40,
+      "window_days": 120,
+      "event_window": 15,
+      "min_pairs_per_day": 100,
+      "random_seed": 42,
+      "method": "Effect size distribution comparison (Mann-Whitney U)"
+    },
+    "null_distribution": {
+      "mean_effect_size": 0.2142568448155406,
+      "std_effect_size": 0.18135238555323538,
+      "median_effect_size": 0.1648927548755492,
+      "n_samples": 155
+    },
+    "planetary_distribution": {
+      "mean_effect_size": 1.1753290974969886,
+      "std_effect_size": 0.9472247630106716,
+      "median_effect_size": 1.0024041426354087,
+      "n_samples": 40
+    },
+    "comparison": {
+      "mann_whitney_u": 5837.0,
+      "p_value": 4.0105721324598655e-18,
+      "cohens_d": 1.4092912069366796,
+      "planetary_significantly_larger": true
+    },
+    "assessment": {
+      "test_passes": "True",
+      "interpretation": "PASS",
+      "conclusion": "Planetary events show significantly larger effect sizes (p=0.0000)"
+    },
+    "execution_time_seconds": 249.24535512924194
+  },
+  "summary": {
+    "tests_passed": 2,
+    "tests_total": 2,
+    "all_passed": true
+  }
+}

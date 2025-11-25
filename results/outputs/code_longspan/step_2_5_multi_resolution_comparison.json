@@ -5,7 +5,7 @@
     "best_correlation": 0.7072048173570578,
     "best_ra": 180,
     "best_dec": 0,
-    "p_value": 0.0023,
+    "p_value": 0.0026,
     "cmb_separation": 13.914280434143912
   },
   "5.0_deg": {
@@ -14,7 +14,7 @@
     "best_correlation": 0.743586964462057,
     "best_ra": 190,
     "best_dec": -5,
-    "p_value": 0.0,
+    "p_value": 0.0002,
     "cmb_separation": 22.145139421552535
   },
   "2.5_deg": {
@@ -23,7 +23,16 @@
     "best_correlation": 0.7439655593195583,
     "best_ra": 187,
     "best_dec": -5,
-    "p_value": 0.0004,
+    "p_value": 0.0003,
     "cmb_separation": 19.158475931033767
+  },
+  "1.0_deg": {
+    "resolution": 1.0,
+    "grid_points": 65341,
+    "best_correlation": 0.7464737214996384,
+    "best_ra": 186,
+    "best_dec": -4,
+    "p_value": 0.0001,
+    "cmb_separation": 18.29773756506525
   }
 }

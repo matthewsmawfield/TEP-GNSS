@@ -99,15 +99,135 @@
 </div>
 
 <p style="margin-top: 15px;"><strong>Spatial Coverage:</strong> Station separations range from 1.83 km (co-located receivers) to 19,946 km (antipodal pairs), enabling multi-scale correlation analysis across five orders of magnitude in distance.</p>
-<h4>2.1.3 The Processing Filter: A High-Pass for Geometric Physics</h4>
-<p>A critical methodological insight of this study is that operational GNSS processing acts as a high-pass filter for physics. Standard least-squares adjustment and Kalman filtering explicitly minimise the squared amplitude of individual clock residuals (Kouba&nbsp;&amp;&nbsp;Héroux&nbsp;2001). This design efficiently removes "energetic" signals—such as mass-dependent gravitational redshifts ($\Delta f/f \propto GM/r^2$)—which manifest as network-wide or slowly varying offsets.</p>
+<h4>2.1.3 The Processing Filter: Systematic Error Removal in IGS Clock Estimation</h4>
 
-<p>Crucially, however, this filter transmits "geometric" signals. The phase-coherent structure <em>between</em> stations (the correlation gradients) is not targeted by the minimization and therefore survives processing (Steigenberger&nbsp;et&nbsp;al.&nbsp;2021). This leads to a clear, testable expectation for TEP-type coupling in processed data:</p>
+<p>A critical methodological insight of this study is that operational GNSS clock products represent the output of the most rigorous systematic error correction pipeline in geodesy. CODE's clock estimation process, implemented using the Bernese GNSS Software (Dach et al. 2015) with undifferenced carrier-phase and pseudorange observations, explicitly models and removes all known physical effects to achieve sub-nanosecond precision. Understanding what has been removed is essential for interpreting what remains in the residuals.</p>
 
-<ul>
-  <li><strong>Expectation 1 (Suppression):</strong> Classical mass-scaling ($GM/r^2$) will be absent, as the energetic component is filtered out.</li>
-  <li><strong>Expectation 2 (Transmission):</strong> Geometric structure (anisotropy, orbital modulation) will be preserved, as the phase-coherence component is transmitted.</li>
-</ul>
+<h5>2.1.3.1 Explicitly Modeled and Removed Effects</h5>
+
+<p>The CODE clock estimation pipeline applies corrections following IERS Conventions 2010 and IGS standards (Petit & Luzum 2010; Kouba 2015). The following effects are modeled to millimeter-level precision and removed from the clock solutions analyzed in this study:</p>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 15px 0; border-radius: 4px;">
+  <h5 style="margin-top: 0; color: #220126;">Relativistic Corrections</h5>
+  <ul style="margin-bottom: 0; font-size: 0.95em;">
+    <li><strong>Constant gravitational redshift:</strong> Factory-adjusted satellite clock frequency accounts for ~38 µs/day difference between orbital altitude and Earth's surface (general relativity)</li>
+    <li><strong>Periodic eccentricity correction:</strong> $-\frac{\sqrt{\mu}}{c^2}e\sqrt{A}\sin E$ removed from clock model (up to 44 ns for GPS satellites). This relativistic effect is explicitly eliminated during orbit and clock determination (Kouba 2015; RTKLIB Manual eq. E.4.37)</li>
+    <li><strong>Sagnac effect:</strong> Earth rotation correction (~133 ns for equatorial stations)</li>
+  </ul>
+</div>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 15px 0; border-radius: 4px;">
+  <h5 style="margin-top: 0; color: #220126;">Atmospheric Delays</h5>
+  <ul style="margin-bottom: 0; font-size: 0.95em;">
+    <li><strong>Ionospheric delay:</strong> Ionosphere-free combination (dual-frequency L1/L2) removes >99% of first-order effect (~2-50 m at zenith). Higher-order terms explicitly modeled in PPP processing</li>
+    <li><strong>Tropospheric hydrostatic component:</strong> ~90% of total tropospheric delay (~2.3 m zenith) modeled using Vienna Mapping Function 1 (VMF1) with surface meteorology</li>
+    <li><strong>Tropospheric wet component:</strong> Estimated as random-walk parameter in Kalman filter with ~cm-level accuracy (process noise typically 1 cm²/hour)</li>
+  </ul>
+</div>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 15px 0; border-radius: 4px;">
+  <h5 style="margin-top: 0; color: #220126;">Site Displacement Effects (IERS Conventions)</h5>
+  <ul style="margin-bottom: 0; font-size: 0.95em;">
+    <li><strong>Solid Earth tides:</strong> Up to 30 cm vertical displacement modeled using Love/Shida numbers (l₂=0.609, h₂=0.085) with Sun/Moon ephemerides</li>
+    <li><strong>Ocean loading:</strong> Up to 10 cm coastal displacement modeled using FES2014b 11-harmonic tidal model (M2, S2, N2, K2, K1, O1, P1, Q1, Mf, Mm, Ssa)</li>
+    <li><strong>Polar tides:</strong> Up to 25 mm displacement from polar motion variations (xₚ, yₚ from IGS Earth rotation products)</li>
+    <li><strong>Atmospheric pressure loading:</strong> Secondary effects (~mm level) often included in high-precision solutions</li>
+  </ul>
+</div>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 15px 0; border-radius: 4px;">
+  <h5 style="margin-top: 0; color: #220126;">Antenna and Instrumental Effects</h5>
+  <ul style="margin-bottom: 0; font-size: 0.95em;">
+    <li><strong>Antenna phase center offset/variation:</strong> IGS ANTEX calibrations (I20.ATX) with mm-level precision for both receiver and satellite antennas</li>
+    <li><strong>Phase wind-up:</strong> Carrier-phase variation due to satellite rotation to maintain solar panel orientation (up to several cycles per orbit)</li>
+    <li><strong>Differential code biases (DCB):</strong> P1-P2, P1-C1 biases estimated and corrected using CODE monthly solutions</li>
+    <li><strong>Satellite antenna attitude:</strong> Modeled using ORBEX attitude files accounting for yaw-steering and eclipse maneuvers</li>
+  </ul>
+</div>
+
+<h5>2.1.3.2 The Least-Squares Suppression Mechanism</h5>
+
+<p>Beyond explicit corrections, the fundamental architecture of GNSS clock estimation creates an implicit filter. CODE's processing uses sequential least-squares filtering (equivalent to Kalman filtering for GNSS positioning) where receiver clock parameters are estimated at each epoch by minimizing the squared residuals across all satellite observations (Dach et al. 2015). This design has a critical consequence:</p>
+
+<div style="background-color: rgba(240,248,255,0.6); border-left: 4px solid #4682B4; padding: 15px; margin: 15px 0; font-size: 14px;">
+  <strong>Filter Behavior:</strong> The least-squares objective function preferentially removes network-wide common-mode signals (where all stations shift together) because these manifest as large squared residuals. Conversely, differential signals (where station pairs show correlated fluctuations but the network average remains near zero) contribute less to the squared residual sum and are therefore less aggressively suppressed.
+</div>
+
+<p>This creates a natural dichotomy in how different physical effects survive processing:</p>
+
+<table style="width: 100%; border-collapse: collapse; font-size: 13px; margin: 15px 0;">
+  <thead>
+    <tr style="background-color: rgba(73, 87, 115, 0.1);">
+      <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Effect Type</th>
+      <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Manifestation</th>
+      <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Processing Behavior</th>
+      <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Survival</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #495773;">Classical gravitational potential (GM/r²)</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Network-wide frequency offset</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Strongly suppressed (large squared residuals)</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Removed</td>
+    </tr>
+    <tr style="background-color: rgba(73, 87, 115, 0.03);">
+      <td style="padding: 8px; border: 1px solid #495773;">Phase-coherent correlation structure</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Differential signal between pairs</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Weakly suppressed (small squared residuals)</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Transmitted</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #495773;">Geometric anisotropy patterns</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Direction-dependent correlations</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Not targeted by minimization</td>
+      <td style="padding: 8px; border: 1px solid #495773;">Preserved</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5>2.1.3.3 Testable Expectations for TEP Coupling</h5>
+
+<p>This processing architecture leads to clear, falsifiable predictions for how TEP-type coupling should manifest in CODE clock products versus raw carrier-phase observations:</p>
+
+<div style="overflow-x: auto; margin: 15px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+    <thead>
+      <tr style="background-color: rgba(73, 87, 115, 0.1);">
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Observable</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">CODE Products (This Study)</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Raw Carrier Phase (Future)</th>
+        <th style="padding: 8px; border: 1px solid #495773; text-align: left;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;">Mass scaling (GM/r²)</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Absent (suppressed by filter)</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Should re-emerge</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Observed: Absent (r=-0.042, p=0.76)</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;">Anisotropy structure</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Preserved (differential signal)</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Should persist</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Observed: Present (strength=1.981)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #495773;">Orbital modulation</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Preserved (geometric coupling)</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Should persist</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Observed: Present (r=-0.888, 5.1σ)</td>
+      </tr>
+      <tr style="background-color: rgba(73, 87, 115, 0.03);">
+        <td style="padding: 8px; border: 1px solid #495773;">Phase coherence</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Preserved (not targeted)</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Should persist</td>
+        <td style="padding: 8px; border: 1px solid #495773;">Observed: Present (56 events ≥2σ)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <p>Consequently, the absence of $GM/r^2$ scaling in this dataset is not a failure of detection; it is fully consistent with the expected behavior of the processing filter. We are not failing to see mass scaling; we are successfully isolating the <em>geometric residual</em> that TEP predicts should remain after the energetic bulk effects are removed.</p>
 
@@ -121,7 +241,7 @@
   <li><strong>Least-Squares Adjustment:</strong> Daily clock parameters are estimated by minimizing the squared amplitude of residuals for each station; this preferentially removes mass-dependent frequency shifts while leaving phase-coherence structure largely intact.</li>
 </ol>
 <h4>2.2.2 Phase-Coherent Correlation Analysis</h4>
-<p>For each station pair (i,j) with common observation epochs, phase-coherent correlations were computed using cross-power spectral density analysis (identical to the method used in the multi-center study):</p>
+<p>For each station pair (i,j) with common observation epochs, phase-coherent correlations were computed using cross-power spectral density analysis (identical to the method used in the multi-centre study):</p>
 
 <ol>
   <li><strong>Detrending:</strong> Linear trends removed from both time series</li>
@@ -131,7 +251,7 @@
   <li><strong>Correlation Metric:</strong> Band-averaged magnitude with representative phase</li>
  </ol>
 
-<p>This frequency-domain approach preserves phase relationships between station pairs while extracting correlation strength, enabling detection of field-mediated timing correlations predicted by TEP theory. The method is identical to that validated across three independent analysis centers (CODE, IGS, ESA) in the original multi-center study.</p>
+<p>This frequency-domain approach preserves phase relationships between station pairs while extracting correlation strength, enabling detection of field-mediated timing correlations predicted by TEP theory. The method is identical to that validated across three independent analysis centers (CODE, IGS, ESA) in the original multi-centre study.</p>
 
 <p><strong>Observable Definition:</strong> All subsequent analyses use this band-averaged coherence and its derived correlation lengths as the primary observable. Coherence is a <em>dimensionless</em> correlation metric on [-1,1]; it quantifies the strength of phase-coherent structure between station residuals rather than the absolute clock frequency shift Δf/f. Reported percentage changes (e.g., the ≈19% annual modulation of the EW/NS ratio, or 1–3% planetary modulation depths) therefore describe relative changes in this coherence-based correlation structure and in ratios of correlation lengths, not 10–20% changes in underlying atomic clock rates, which remain at standard GR levels (≈10⁻¹⁶–10⁻¹⁰).</p>
 
@@ -166,7 +286,7 @@
   <li>Orbital phase (0-2π)</li>
 </ul>
 
-<p><strong>Enhanced Control:</strong> The multi-center study's hemisphere stratification analysis (§3.4) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders. See §3.2.2 for detailed interpretation of why partial correlation analysis is physically inappropriate for variables coupled by Kepler's laws.</p>
+<p><strong>Enhanced Control:</strong> The multi-centre study's hemisphere stratification analysis (§3.4) demonstrated that both Northern and Southern hemisphere stations show identical calendar phasing (peak at perihelion in January), directly falsifying the hypothesis that the correlation arises from local seasonal effects. This test discriminates heliocentric orbital dynamics from seasonal atmospheric/ionospheric confounders. See §3.2.2 for detailed interpretation of why partial correlation analysis is physically inappropriate for variables coupled by Kepler's laws.</p>
 <p><strong>Significance Estimation:</strong> Because the 30-day windows overlap, the EW/NS–velocity correlation uses an autocorrelation-robust Pearson estimator. Let <em>N</em> be the number of overlapping window samples (here <em>N</em> = 34), and let ρ<sub>x</sub>, ρ<sub>y</sub> be the lag‑1 autocorrelations of the orbital‑speed and EW/NS‑ratio series, respectively. We approximate the effective degrees of freedom using a Bartlett-style correction</p>
 <pre style="background:#f7f7f7; padding:6px;">
 N<sub>eff</sub> = N · (1 − ρ<sub>x</sub>ρ<sub>y</sub>) / (1 + ρ<sub>x</sub>ρ<sub>y</sub>)
@@ -176,6 +296,10 @@ N<sub>eff</sub> = N · (1 − ρ<sub>x</sub>ρ<sub>y</sub>) / (1 + ρ<sub>x</sub
 SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
 </pre>
     <p>and the test statistic <em>t</em> = r / SE<sub>corr</sub> is evaluated against a Student‑<em>t</em> distribution with N<sub>eff</sub> − 2 degrees of freedom to obtain the autocorrelation‑corrected p‑value. The autocorrelation-corrected Pearson p-value is p < 2×10⁻⁷ (5.1σ) for reference, but permutation testing provides the stronger bound. A Monte-Carlo surrogate test with 5,000,000 phase-randomised surrogates yields an empirical upper-bound p&nbsp;&lt;&nbsp;2&nbsp;×&nbsp;10⁻⁷ (5.1σ), confirming discovery-level significance.</p>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 12px; margin: 12px 0; border-radius: 4px; font-size: 13px;">
+  <strong>Surrogate Generation Method:</strong> Phase-randomised surrogates preserve the power spectrum (and hence temporal autocorrelation structure) of the original time series while destroying phase relationships. Implementation: (1) compute FFT of the EW/NS ratio time series, (2) randomise phases uniformly on [0, 2π] while preserving magnitudes, (3) inverse FFT to obtain surrogate. This procedure, following Theiler et al. (1992), ensures that any correlation with orbital velocity in the surrogates arises purely from spectral overlap rather than genuine phase coupling.
+</div>
     <h4>2.3.3 Planetary Event Analysis</h4>
 <p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>
 
@@ -187,7 +311,8 @@ SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
   <li><strong>Significance Testing:</strong> Amplitude/standard error ratio (σ level)</li>
   <li><strong>Multiple Testing Correction:</strong> Bonferroni and FDR corrections applied across complete event set</li>
   <li><strong>Amplitude Metric:</strong> Modulation depth = |amplitude| / (|baseline| + |amplitude|) × 100%. This formula quantifies the fraction of the total signal (baseline + perturbation) attributable to the event response, bounded between 0–100%. This formulation prevents physically impossible values (>100%) that can arise from standard percentage-change metrics when the perturbation amplitude exceeds the baseline coherence level.</li>
-  <li><strong>Gravitational Scaling Tests:</strong> Correlation of observed amplitudes with GM/r² predictors (Pearson, Spearman)</li>
+  <li><strong>Scaling Tests:</strong> Correlation of observed amplitudes with both gravitational (GM/r²) and tidal (M/r³) predictors (Pearson, Spearman, log-log transforms). Absence of scaling is expected due to processing filter suppression.</li>
+  <li><strong>Null Event Control:</strong> Effect size distributions compared between planetary events (n=40) and randomly-generated null dates (n=155) using Mann-Whitney U test. This validates that detections are specific to astronomical alignments rather than temporal autocorrelation artifacts.</li>
   </ol>
 
 <h4>2.3.4 Geophysical Coupling Analysis</h4>
@@ -222,6 +347,10 @@ SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
 </ul>
 
 <p><strong>Method - Comprehensive Sky Search:</strong></p>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border-left: 3px solid #495773; padding: 12px; margin: 12px 0; font-size: 14px;">
+  <strong>Methodological Note:</strong> This grid search is a <em>parameter estimation</em> procedure, not hypothesis testing. We are asking "WHICH direction best explains the observed modulation?" (estimating the directional parameter of a single model) rather than "DOES any direction explain it?" (testing 65,341 independent hypotheses). This is analogous to fitting a Gaussian to find its mean—testing many parameter values does not constitute multiple comparisons. The approach follows standard practice in cosmological frame identification (e.g., Planck CMB dipole fitting). Statistical significance is established via permutation testing against random directions, not via the grid search itself.
+</div>
 
 <p>A blind grid search across 2,701 candidate background velocity vectors was performed:</p>
 
@@ -269,6 +398,15 @@ SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
       <li>CMB Dipole: Known physical frame (Planck 2018: RA=167.94°, Dec=-6.94°)</li>
       <li>Solar Apex: Galactic motion frame (RA=271.96°, Dec=+30.0°)</li>
       <li>Null: Orbital-only (background at pole, minimal effect)</li>
+    </ul>
+  </li>
+  
+  <li><strong>Ecliptic Control Test:</strong> To discriminate CMB-specific alignment from generic ecliptic-plane preference:
+    <ul>
+      <li>Ecliptic East Control: RA=90°, Dec=0° (perpendicular to CMB in ecliptic plane)</li>
+      <li>Ecliptic West Control: RA=270°, Dec=0° (opposite to CMB in ecliptic plane)</li>
+      <li>Rationale: If the result merely detects "near ecliptic plane" rather than "CMB frame specifically," these controls should show similar R² to the CMB direction</li>
+      <li>Discrimination metric: Variance ratio (R²_CMB / R²_control) quantifies CMB-specific vs generic ecliptic detection</li>
     </ul>
   </li>
 </ol>
@@ -363,13 +501,13 @@ SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
 </div>
 
 <h4>2.4.5 Leveraging Multi-Center Validation</h4>
-<p>This study builds upon the comprehensive validation framework established in the multi-center study (Paper 1). Rather than repeating the full validation suite, we adopt and extend the previously validated methodology:</p>
+<p>This study builds upon the comprehensive validation framework established in the multi-centre study (Paper 1). Rather than repeating the full validation suite, we adopt and extend the previously validated methodology:</p>
 
 <div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 15px; margin: 15px 0; border-radius: 4px;">
 <h5 style="margin-top: 0; color: #220126;">Adopted from Paper 1 Validation Framework:</h5>
 <ul style="margin-bottom: 0;">
-  <li><strong>Cross-center consistency:</strong> R² = 0.920-0.970 between CODE, IGS, ESA processing centers</li>
-  <li><strong>Ionospheric null controls:</strong> TID (Traveling Ionospheric Disturbance) exclusion; no correlation with F10.7 or Kp indices</li>
+  <li><strong>Cross-center consistency:</strong> R² = 0.920-0.970 between CODE, IGS, ESA processing centres</li>
+  <li><strong>Ionospheric null controls:</strong> TID (Traveling Ionospheric Disturbance) exclusion; weak correlation with F10.7 and Kp indices (r = 0.12-0.13, p > 0.29), well below contamination thresholds</li>
   <li><strong>Comprehensive null testing:</strong> 388 statistical tests across 19 families with temporal/spatial/phase scrambling</li>
   <li><strong>Hemisphere stratification:</strong> Identical calendar phasing in Northern and Southern hemispheres (perihelion peak)</li>
   <li><strong>Bootstrap validation:</strong> LOSO/LODO (Leave-One-Day-Out) robustness confirmed</li>

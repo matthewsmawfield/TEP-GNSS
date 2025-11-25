@@ -1,8 +1,8 @@
 # Temporal Equivalence Principle GNSS Analysis Framework
 
 **Author:** Matthew Lukin Smawfield
-**Repository Version:** v0.23 (Jaipur) + v0.14 (Cairo)
-**Date:** 24 November 2025
+**Repository Version:** v0.23 (Jaipur) + v0.15 (Cairo)
+**Date:** 26 November 2025
 
 ## Published Papers
 
@@ -12,7 +12,7 @@
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
 **Analysis:** 62.7 million station pairs across 3 analysis centers (CODE, IGS, ESA) over 2.5 years
 
-### Paper 2: 25-Year Temporal Extension (v0.14 - Cairo)
+### Paper 2: 25-Year Temporal Extension (v0.15 - Cairo)
 **Title:** Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks  
 **DOI:** [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141)  
 **Website:** [https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/](https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/)  

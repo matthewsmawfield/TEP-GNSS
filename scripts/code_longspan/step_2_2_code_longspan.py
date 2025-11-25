@@ -6641,6 +6641,181 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
     except (RuntimeError, ValueError, TypeError, ArithmeticError, OverflowError) as e:
         return {'success': False, 'error': f'Gaussian fit failed: {str(e)}', 'daily_data': daily_data, 'fit_success': False}
 
+
+# ===== NULL EVENT CONTROL TEST =====
+# This test analyzes random dates (no astronomical significance) to establish
+# the false positive rate. If planetary events show similar detection rates
+# to random dates, the planetary detection would not be specific to alignments.
+
+def analyze_null_events_control(complete_df: pd.DataFrame, 
+                                n_null_events: int = 156,
+                                window_days: int = 120,
+                                random_seed: int = 42) -> Dict:
+    """
+    NULL CONTROL TEST: Analyze detection rate for RANDOM dates.
+    
+    This is a critical falsification test. If random dates show similar 
+    detection rates to planetary events, the planetary detection would not 
+    be specific to alignments - it would indicate the method detects 
+    spurious patterns in any time window.
+    
+    Args:
+        complete_df: Complete GPS pair dataset with 'date' and 'coherence' columns
+        n_null_events: Number of random dates to test (default: 156, matching planetary count)
+        window_days: Half-window size in days (default: 120, matching primary planetary window)
+        random_seed: Random seed for reproducibility
+        
+    Returns:
+        Dict with null event detection statistics and comparison to planetary rates
+    """
+    import random
+    from datetime import timedelta
+    
+    print_status("\n" + "="*80, "TITLE")
+    print_status("NULL EVENT CONTROL TEST", "TITLE")
+    print_status("="*80, "TITLE")
+    print_status(f"Testing {n_null_events} random dates (no astronomical significance)", "INFO")
+    print_status(f"Window: ±{window_days} days (matching primary planetary window)", "INFO")
+    
+    # Set seed for reproducibility
+    random.seed(random_seed)
+    np.random.seed(random_seed)
+    
+    # Get date range from data
+    data_start = complete_df['date'].min()
+    data_end = complete_df['date'].max()
+    date_range_days = (data_end - data_start).days
+    
+    # Exclude edge regions where we can't have full windows
+    valid_start = data_start + pd.Timedelta(days=window_days + 30)
+    valid_end = data_end - pd.Timedelta(days=window_days + 30)
+    valid_range_days = (valid_end - valid_start).days
+    
+    if valid_range_days < 100:
+        return {
+            'success': False,
+            'error': 'Insufficient date range for null event testing'
+        }
+    
+    # Generate random dates
+    random_dates = []
+    for _ in range(n_null_events):
+        random_offset = random.randint(0, valid_range_days)
+        random_date = valid_start + pd.Timedelta(days=random_offset)
+        random_dates.append(random_date)
+    
+    print_status(f"Generated {len(random_dates)} random test dates", "INFO")
+    
+    # Configuration
+    min_pairs_per_day = TEPConfig.get_int('TEP_EVENT_MIN_PAIRS_PER_DAY', 100)
+    expected_amplitude = 0.0  # No expected signal for null events
+    
+    # Analyze each null event
+    null_results = []
+    significant_count = 0
+    sigma_3_count = 0
+    
+    for i, event_date in enumerate(random_dates):
+        window_start = event_date - pd.Timedelta(days=window_days)
+        window_end = event_date + pd.Timedelta(days=window_days)
+        
+        window_data = complete_df[
+            (complete_df['date'] >= window_start) & 
+            (complete_df['date'] <= window_end)
+        ].copy()
+        
+        if len(window_data) < min_pairs_per_day * 10:
+            null_results.append({'success': False, 'error': 'Insufficient pairs'})
+            continue
+        
+        window_data['days_from_event'] = (window_data['date'] - event_date).dt.days
+        
+        result = _analyze_event_window(
+            window_data, event_date, window_days, expected_amplitude, min_pairs_per_day
+        )
+        
+        if result.get('success') and result.get('gaussian_fit', {}).get('sigma_level', 0) >= 2.0:
+            significant_count += 1
+            if result.get('gaussian_fit', {}).get('sigma_level', 0) >= 3.0:
+                sigma_3_count += 1
+        
+        null_results.append(result)
+        
+        # Progress update every 25 events
+        if (i + 1) % 25 == 0:
+            print_status(f"   Processed {i+1}/{n_null_events} null events...", "INFO")
+    
+    # Calculate statistics
+    n_analyzed = sum(1 for r in null_results if r.get('success', False))
+    null_detection_rate = significant_count / n_null_events if n_null_events > 0 else 0
+    null_3sigma_rate = sigma_3_count / n_null_events if n_null_events > 0 else 0
+    
+    # Expected rates from planetary analysis (hardcoded from results)
+    planetary_detection_rate = 56 / 156  # 35.9%
+    planetary_3sigma_rate = 30 / 156     # 19.2%
+    
+    # Calculate specificity ratio (how much better planetary is than random)
+    specificity_ratio_2sigma = planetary_detection_rate / max(null_detection_rate, 0.001)
+    specificity_ratio_3sigma = planetary_3sigma_rate / max(null_3sigma_rate, 0.001)
+    
+    # Expected false positive rate under null (5% for 2σ, 0.3% for 3σ)
+    expected_fp_rate_2sigma = 0.05
+    expected_fp_rate_3sigma = 0.003
+    
+    # Determine if test passes (planetary rate significantly exceeds null rate)
+    # Using chi-squared or simple threshold: planetary should be >3x null rate
+    test_passes = null_detection_rate < 0.15 and specificity_ratio_2sigma > 2.0
+    
+    # Print results
+    print_status("\n" + "-"*60, "INFO")
+    print_status("NULL EVENT CONTROL RESULTS", "TITLE")
+    print_status("-"*60, "INFO")
+    print_status(f"Null events analyzed: {n_analyzed}/{n_null_events}", "INFO")
+    print_status(f"Null detections (≥2σ): {significant_count}/{n_null_events} ({null_detection_rate*100:.1f}%)", "INFO")
+    print_status(f"Null detections (≥3σ): {sigma_3_count}/{n_null_events} ({null_3sigma_rate*100:.1f}%)", "INFO")
+    print_status(f"Expected under null (2σ): ~{expected_fp_rate_2sigma*100:.0f}%", "INFO")
+    print_status(f"Expected under null (3σ): ~{expected_fp_rate_3sigma*100:.1f}%", "INFO")
+    
+    print_status("\n   COMPARISON TO PLANETARY EVENTS:", "INFO")
+    print_status(f"   Planetary detection rate (≥2σ): {planetary_detection_rate*100:.1f}%", "INFO")
+    print_status(f"   Null detection rate (≥2σ):      {null_detection_rate*100:.1f}%", "INFO")
+    print_status(f"   Specificity ratio (2σ):         {specificity_ratio_2sigma:.1f}×", "INFO")
+    print_status(f"   Specificity ratio (3σ):         {specificity_ratio_3sigma:.1f}×", "INFO")
+    
+    if test_passes:
+        print_status("\n   RESULT: PASS ✓", "SUCCESS")
+        print_status(f"   Planetary events show {specificity_ratio_2sigma:.1f}× higher detection", "SUCCESS")
+        print_status("   rate than random dates, confirming specificity.", "SUCCESS")
+    else:
+        print_status("\n   RESULT: CONCERN ⚠️", "WARNING")
+        print_status("   Null detection rate is elevated. This may indicate:", "WARNING")
+        print_status("   - Temporal autocorrelation in coherence data", "WARNING")
+        print_status("   - Overfitting in Gaussian pulse detection", "WARNING")
+        print_status("   - Need for stricter significance thresholds", "WARNING")
+    
+    return {
+        'success': True,
+        'n_null_events': n_null_events,
+        'n_analyzed': n_analyzed,
+        'window_days': window_days,
+        'random_seed': random_seed,
+        'null_significant_2sigma': significant_count,
+        'null_significant_3sigma': sigma_3_count,
+        'null_detection_rate_2sigma': float(null_detection_rate),
+        'null_detection_rate_3sigma': float(null_3sigma_rate),
+        'planetary_detection_rate_2sigma': float(planetary_detection_rate),
+        'planetary_detection_rate_3sigma': float(planetary_3sigma_rate),
+        'specificity_ratio_2sigma': float(specificity_ratio_2sigma),
+        'specificity_ratio_3sigma': float(specificity_ratio_3sigma),
+        'expected_fp_rate_2sigma': expected_fp_rate_2sigma,
+        'expected_fp_rate_3sigma': expected_fp_rate_3sigma,
+        'test_passes': test_passes,
+        'interpretation': 'PASS' if test_passes else 'CONCERN'
+    }
+
+# ===== END NULL EVENT CONTROL TEST =====
+
+
 def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: int, expected_amplitude: float, min_daily_pairs: int) -> Dict:
     """Performs stacked analysis across multiple events."""
     import time

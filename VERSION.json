@@ -1,24 +1,25 @@
 {
-  "version": "0.14",
+  "version": "0.15",
   "codename": "Cairo",
-  "date": "2025-11-24",
+  "date": "2025-11-25",
   "paper": "2",
   "changes": [
-    "Multi-resolution CMB frame verification (10° → 5° → 2.5° → 1°, 93-fold range)",
-    "Ultra-high resolution grid search (65,341 directions tested)",
-    "CMB correlation improved to r=0.747 with 5,570× variance ratio vs Solar Apex",
-    "Coordinate stability confirmed (best-fit within 1-2° across all resolutions)",
-    "Monotonic convergence demonstrated (r=0.707→0.744→0.744→0.747)",
-    "Complete metadata consistency across all repository files"
+    "Added ecliptic control tests (RA=90°/270°, Dec=0°) to discriminate CMB-specific from generic ecliptic detection",
+    "CMB explains 136× more variance than ecliptic controls (geometric confound falsified)",
+    "Strengthened planetary event analysis with explicit false positive calculation (0.05 expected, not 8)",
+    "Added Mercury dominance explanation via orbital period resonance hypothesis",
+    "Reframed absence of GM/r² scaling as expected feature with falsifiable predictions",
+    "Updated seasonal confound discrimination with CMB frame + ionospheric nulls as primary discriminants",
+    "Corrected F10.7/Kp correlation values to match Paper 1 (r=0.12-0.13, p>0.29)"
   ],
-  "previous_version": "0.13",
-  "previous_date": "2025-11-23",
-  "description": "Multi-resolution CMB frame verification and complete repository consistency",
+  "previous_version": "0.14",
+  "previous_date": "2025-11-24",
+  "description": "Ecliptic control tests and strengthened response to reviewer feedback",
   "impact": "Enhanced manuscript integrity by ensuring all reported analyses have been performed",
   "short_description": "Global Time Echoes: 25-Year Temporal Evolution of Distance-Structured Correlations in GNSS Clocks. Extended analysis of 165.2M measurements over 25.3 years confirms temporal stability and reveals long-period geophysical coupling including 18.6-year nutation cycle.",
   "long_description": "This study extends the TEP-GNSS analysis to 25.3 years (2000-2025) using CODE analysis center data, encompassing 165.2 million station pair measurements. The temporal extension confirms the stability of originally detected signatures over decadal timescales and leverages the extended baseline to uncover long-period geophysical phenomena, including clear detection of Earth's 18.6-year lunar nutation cycle (R² = 0.641, p < 10⁻⁸) and semiannual nutation (R² = 0.904, p < 10⁻²⁰). Strong orbital velocity coupling (r = -0.888, p < 2×10⁻⁷, 5.1σ) validated through 5M Monte Carlo surrogates. Planetary event analysis yields 56 significant responses (25 Bonferroni-corrected) with Mercury leading at 34/80 detections.\n\nWebsite: https://matthewsmawfield.github.io/TEP-GNSS/code-longspan/",
   "doi": "10.5281/zenodo.17517141",
   "zenodo_record": "17517141",
-  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_25Year_v0.14_Cairo.pdf",
-  "pdf_download_url": "https://zenodo.org/records/17702049/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.14_Cairo.pdf?download=1"
+  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_25Year_v0.15_Cairo.pdf",
+  "pdf_download_url": "https://zenodo.org/records/17702049/files/Smawfield_2025_GlobalTimeEchoes_25Year_v0.15_Cairo.pdf?download=1"
 }

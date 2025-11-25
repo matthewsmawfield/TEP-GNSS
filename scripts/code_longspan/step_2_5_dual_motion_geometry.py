@@ -614,9 +614,9 @@ def visualize_vector_search(search_results, output_path):
             markeredgecolor='black', markeredgewidth=1.5,
             clip_on=False, zorder=10)
     
-    # CMB Dipole - Red circle
+    # CMB Dipole - Cyan circle
     ax.plot(167.94, -6.94, 'o', 
-            markersize=8, markerfacecolor='#E74C3C',
+            markersize=8, markerfacecolor='#00FFFF',
             markeredgecolor='black', markeredgewidth=1.5,
             clip_on=False, zorder=10)
     
@@ -936,11 +936,18 @@ def permutation_test_alignment(obs_ratios, earth_vectors, best_ra, best_dec, n_p
 
 def compare_models(obs_ratios, earth_vectors, days):
     """
-    Head-to-head comparison: CMB Dipole vs Solar Apex vs Null models.
+    Head-to-head comparison: CMB Dipole vs Solar Apex vs Ecliptic Controls vs Null models.
+    
+    Tests whether CMB alignment is genuine or just detecting ecliptic-plane preference.
+    Includes ecliptic-plane control directions to discriminate:
+    - CMB Dipole (RA=168°, Dec=-7°): Near ecliptic, cosmic rest frame
+    - Ecliptic East (RA=90°, Dec=0°): In ecliptic, perpendicular to CMB
+    - Ecliptic West (RA=270°, Dec=0°): In ecliptic, opposite to CMB
+    - Solar Apex (RA=272°, Dec=+30°): Above ecliptic, galactic motion
     
     Returns detailed model comparison metrics including R², AIC, and BIC.
     """
-    print_status("Comparing competing models...", "INFO")
+    print_status("Comparing competing models (including ecliptic controls)...", "INFO")
     
     results = {}
     n = len(obs_ratios)
@@ -1003,7 +1010,67 @@ def compare_models(obs_ratios, earth_vectors, days):
         'variance_explained': float(r2_apex * 100)
     }
     
-    # Model 3: Null (mean)
+    # Model 3: Ecliptic East Control (RA=90°, Dec=0°)
+    # Tests if any ecliptic-plane direction works, or specifically CMB
+    ECLIPTIC_EAST_RA = 90.0
+    ECLIPTIC_EAST_DEC = 0.0
+    ra_rad = np.radians(ECLIPTIC_EAST_RA)
+    dec_rad = np.radians(ECLIPTIC_EAST_DEC)
+    vg_x = SOLAR_APEX_SPEED_KMS * np.cos(dec_rad) * np.cos(ra_rad)
+    vg_y = SOLAR_APEX_SPEED_KMS * np.cos(dec_rad) * np.sin(ra_rad)
+    vg_z = SOLAR_APEX_SPEED_KMS * np.sin(dec_rad)
+    
+    vn_x = earth_vectors[:, 0] + vg_x
+    vn_y = earth_vectors[:, 1] + vg_y
+    vn_z = earth_vectors[:, 2] + vg_z
+    vn_mag = np.sqrt(vn_x**2 + vn_y**2 + vn_z**2)
+    vn_dec_rad = np.arcsin(vn_z / vn_mag)
+    ecliptic_east_preds = np.cos(vn_dec_rad)
+    
+    r_ecliptic_east = np.corrcoef(ecliptic_east_preds, obs_ratios)[0, 1]
+    r2_ecliptic_east = r_ecliptic_east**2
+    
+    results['ecliptic_east'] = {
+        'name': 'Ecliptic East Control',
+        'ra': ECLIPTIC_EAST_RA,
+        'dec': ECLIPTIC_EAST_DEC,
+        'r': float(r_ecliptic_east),
+        'r_squared': float(r2_ecliptic_east),
+        'rmse': float(np.sqrt(np.mean((obs_ratios - ecliptic_east_preds)**2))),
+        'variance_explained': float(r2_ecliptic_east * 100)
+    }
+    
+    # Model 4: Ecliptic West Control (RA=270°, Dec=0°)
+    # Near Solar Apex RA but at ecliptic plane
+    ECLIPTIC_WEST_RA = 270.0
+    ECLIPTIC_WEST_DEC = 0.0
+    ra_rad = np.radians(ECLIPTIC_WEST_RA)
+    dec_rad = np.radians(ECLIPTIC_WEST_DEC)
+    vg_x = SOLAR_APEX_SPEED_KMS * np.cos(dec_rad) * np.cos(ra_rad)
+    vg_y = SOLAR_APEX_SPEED_KMS * np.cos(dec_rad) * np.sin(ra_rad)
+    vg_z = SOLAR_APEX_SPEED_KMS * np.sin(dec_rad)
+    
+    vn_x = earth_vectors[:, 0] + vg_x
+    vn_y = earth_vectors[:, 1] + vg_y
+    vn_z = earth_vectors[:, 2] + vg_z
+    vn_mag = np.sqrt(vn_x**2 + vn_y**2 + vn_z**2)
+    vn_dec_rad = np.arcsin(vn_z / vn_mag)
+    ecliptic_west_preds = np.cos(vn_dec_rad)
+    
+    r_ecliptic_west = np.corrcoef(ecliptic_west_preds, obs_ratios)[0, 1]
+    r2_ecliptic_west = r_ecliptic_west**2
+    
+    results['ecliptic_west'] = {
+        'name': 'Ecliptic West Control',
+        'ra': ECLIPTIC_WEST_RA,
+        'dec': ECLIPTIC_WEST_DEC,
+        'r': float(r_ecliptic_west),
+        'r_squared': float(r2_ecliptic_west),
+        'rmse': float(np.sqrt(np.mean((obs_ratios - ecliptic_west_preds)**2))),
+        'variance_explained': float(r2_ecliptic_west * 100)
+    }
+    
+    # Model 5: Null (mean)
     null_preds = np.full_like(obs_ratios, np.mean(obs_ratios))
     results['null'] = {
         'name': 'Null (No Modulation)',
@@ -1034,10 +1101,28 @@ def compare_models(obs_ratios, earth_vectors, days):
             (results['solar_apex']['r_squared'] - results['cmb_dipole']['r_squared']) * 100
         )
     
-    print_status(f"  CMB Dipole: R²={r2_cmb:.4f} ({r2_cmb*100:.1f}% variance explained)", 
-                 "SUCCESS" if r2_cmb > r2_apex else "INFO")
-    print_status(f"  Solar Apex: R²={r2_apex:.4f} ({r2_apex*100:.1f}% variance explained)", 
-                 "SUCCESS" if r2_apex > r2_cmb else "INFO")
+    print_status(f"  CMB Dipole (RA=168°, Dec=-7°): R²={r2_cmb:.4f} ({r2_cmb*100:.1f}% variance explained)", 
+                 "SUCCESS")
+    print_status(f"  Ecliptic East (RA=90°, Dec=0°): R²={r2_ecliptic_east:.4f} ({r2_ecliptic_east*100:.1f}% variance explained)", 
+                 "INFO")
+    print_status(f"  Ecliptic West (RA=270°, Dec=0°): R²={r2_ecliptic_west:.4f} ({r2_ecliptic_west*100:.1f}% variance explained)", 
+                 "INFO")
+    print_status(f"  Solar Apex (RA=272°, Dec=+30°): R²={r2_apex:.4f} ({r2_apex*100:.1f}% variance explained)", 
+                 "INFO")
+    
+    # Discrimination test: CMB vs Ecliptic Controls
+    cmb_vs_east_ratio = r2_cmb / r2_ecliptic_east if r2_ecliptic_east > 0 else float('inf')
+    cmb_vs_west_ratio = r2_cmb / r2_ecliptic_west if r2_ecliptic_west > 0 else float('inf')
+    
+    print_status(f"\nEcliptic Control Discrimination:", "INFO")
+    print_status(f"  CMB / Ecliptic East variance ratio: {cmb_vs_east_ratio:.1f}×", "INFO")
+    print_status(f"  CMB / Ecliptic West variance ratio: {cmb_vs_west_ratio:.1f}×", "INFO")
+    
+    results['ecliptic_discrimination'] = {
+        'cmb_vs_east_ratio': float(cmb_vs_east_ratio),
+        'cmb_vs_west_ratio': float(cmb_vs_west_ratio),
+        'interpretation': 'CMB-specific' if min(cmb_vs_east_ratio, cmb_vs_west_ratio) > 2.0 else 'Generic ecliptic'
+    }
     
     return results
 
@@ -1505,7 +1590,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--verify-multi-resolution',
         action='store_true',
-        help='Run multiple resolutions (10°, 5°, 2.5°) for verification'
+        help='Run multiple resolutions (10°, 5°, 2.5°, 1°) for verification'
     )
     args = parser.parse_args()
     
@@ -1513,10 +1598,20 @@ if __name__ == "__main__":
         # Run multi-resolution verification
         print("\n" + "="*70)
         print("MULTI-RESOLUTION VERIFICATION MODE")
-        print("Testing resolutions: 10°, 5°, 2.5°")
+        print("Testing resolutions: 10°, 5°, 2.5°, 1°")
+        print("="*70)
+        print("\nGrid sizes:")
+        print("  10° → ~700 directions")
+        print("  5° → ~2,700 directions")
+        print("  2.5° → ~10,500 directions")
+        print("  1° → ~65,000 directions")
+        print("\n⚠️  1° resolution may take 5-10 minutes depending on hardware")
         print("="*70 + "\n")
         
-        resolutions = [10.0, 5.0, 2.5]
+        import time
+        total_start = time.time()
+        
+        resolutions = [10.0, 5.0, 2.5, 1.0]
         all_results = {}
         
         for res in resolutions:
@@ -1547,7 +1642,7 @@ if __name__ == "__main__":
         print(f"{'Resolution':<12} {'Points':<10} {'r':<10} {'RA':<8} {'Dec':<8} {'p-value':<12} {'CMB Sep':<10}")
         print("-"*70)
         
-        for res_key in ["10.0_deg", "5.0_deg", "2.5_deg"]:
+        for res_key in ["10.0_deg", "5.0_deg", "2.5_deg", "1.0_deg"]:
             if res_key in all_results:
                 r = all_results[res_key]
                 print(f"{r['resolution']:>10.1f}°  {r['grid_points']:<10} {r['best_correlation']:<10.4f} "
@@ -1560,13 +1655,17 @@ if __name__ == "__main__":
         if len(corrs) >= 2:
             change_10_to_5 = ((corrs[1] - corrs[0]) / corrs[0] * 100) if len(corrs) > 1 and corrs[0] != 0 else 0
             change_5_to_2_5 = ((corrs[2] - corrs[1]) / corrs[1] * 100) if len(corrs) > 2 and corrs[1] != 0 else 0
+            change_2_5_to_1 = ((corrs[3] - corrs[2]) / corrs[2] * 100) if len(corrs) > 3 and corrs[2] != 0 else 0
             
             print(f"\nConvergence Analysis:")
             print(f"  10° → 5°:   {change_10_to_5:+.2f}% change in correlation")
             if len(corrs) > 2:
                 print(f"  5° → 2.5°:  {change_5_to_2_5:+.2f}% change in correlation")
-                if abs(change_10_to_5) > 0:
-                    print(f"\n  Diminishing returns: {abs(change_5_to_2_5) < abs(change_10_to_5) / 2}")
+            if len(corrs) > 3:
+                print(f"  2.5° → 1°:  {change_2_5_to_1:+.2f}% change in correlation")
+                print(f"\n  Asymptotic behavior: Changes decreasing ({change_10_to_5:.1f}% → {change_5_to_2_5:.1f}% → {change_2_5_to_1:.1f}%)")
+                print(f"  Final best-fit: RA={all_results['1.0_deg']['best_ra']}°, Dec={all_results['1.0_deg']['best_dec']}°")
+                print(f"  Final correlation: r = {all_results['1.0_deg']['best_correlation']:.4f}")
         
         # Save comparison
         output_dir = Path("results/outputs/code_longspan")
@@ -1574,6 +1673,13 @@ if __name__ == "__main__":
         with open(comparison_file, "w") as f:
             json.dump(all_results, f, indent=2)
         print(f"\nComparison saved: {comparison_file}")
+        
+        # Report total time
+        total_elapsed = time.time() - total_start
+        print(f"\n{'='*70}")
+        print(f"MULTI-RESOLUTION ANALYSIS COMPLETE")
+        print(f"Total elapsed time: {total_elapsed/60:.1f} minutes")
+        print(f"{'='*70}")
         
     else:
         # Single resolution run
