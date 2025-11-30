@@ -2660,8 +2660,7 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None, distance_
         else:
             jackknife_mean = jackknife_std = None
             
-        # Note: Advanced statistical analyses moved to Step 5
-        step_logger.info("Core correlation analysis complete. Run Step 4 for geospatial aggregation, then Step 5 for advanced statistical validation.")
+        step_logger.info("Core correlation analysis complete. Run Step 2.1 for data quality validation, then Step 2.2 for geospatial temporal analysis.")
         
         # Get method information
         use_real_coherency = os.getenv('TEP_USE_REAL_COHERENCY', '0') == '1'
@@ -2735,16 +2734,15 @@ def process_analysis_center(ac: str, coords_df, max_files: int = None, distance_
                 'n_samples': len(jackknife_lambdas) if jackknife_lambdas else 0,
                 'lambda_values': jackknife_lambdas if jackknife_lambdas else []
             },
-            'advanced_analyses_note': 'LOSO/LODO, anisotropy, and temporal analyses moved to Step 5',
-            'bootstrap_ci': None,  # placeholder updated if bootstrap enabled
+            'bootstrap_ci': None,  # Updated below if bootstrap enabled
             'tep_interpretation': {
                 'tep_consistent': bool(1000 < exp_lambda_km < 10000 and exp_r_squared > 0.3),
                 'correlation_length_assessment': 'TEP-consistent' if 1000 < exp_lambda_km < 10000 else 'Outside TEP range',
                 'signal_strength': 'Strong' if exp_r_squared > 0.5 else 'Moderate' if exp_r_squared > 0.3 else 'Weak',
                 'best_model_vs_exponential': f'Best model: {best_result["name"]} (ΔAIC = {best_result["aic"] - exp_result["aic"]:.2f})' if exp_result and "aic" in exp_result else 'Exponential model failed'
             },
-            'loso_analysis': None,  # Moved to Step 5
-            'lodo_analysis': None   # Moved to Step 5
+            'loso_analysis': None,
+            'lodo_analysis': None
         }
         
         step_logger.success("BEST MODEL FIT RESULTS:")

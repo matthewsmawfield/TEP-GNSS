@@ -1289,7 +1289,7 @@ def main():
         results = run_robust_block_bootstrap_analysis(ac)
         
         # Save results
-        output_file = PACKAGE_ROOT / "results/outputs" / f"step_3_1_robust_block_bootstrap_{ac}.json" # Updated from step_5_6_robust_block_bootstrap
+        output_file = PACKAGE_ROOT / "results/outputs" / f"step_3_1_robust_block_bootstrap_{ac}.json"
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
         try:

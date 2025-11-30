@@ -4,13 +4,13 @@ TEP GNSS Analysis - STEP 3.0: Cross-Validation Suite (Comprehensive)
 =====================================================================
 
 Comprehensive cross-validation suite for TEP correlation models including:
-1. Block-wise cross-validation (temporal/spatial) - from original step_5_5
-2. Leave-One-Station-Out (LOSO) analysis - moved from step_5
-3. Leave-One-Day-Out (LODO) analysis - moved from step_5
+1. Block-wise cross-validation (temporal/spatial)
+2. Leave-One-Station-Out (LOSO) analysis
+3. Leave-One-Day-Out (LODO) analysis
 4. Statistical validation - bootstrap significance testing for CV stability
 
-This consolidates all cross-validation methodologies to provide rigorous
-validation of TEP correlation parameters with multiple approaches.
+Provides rigorous validation of TEP correlation parameters with multiple
+complementary approaches.
 
 Note on Bootstrapping:
 For *true block bootstrap* implementations (resampling stations or days to account for dependencies),
@@ -1585,7 +1585,7 @@ def run_comprehensive_cross_validation_analysis(ac: str) -> Dict:
         print_status(error_msg, "ERROR")
         raise TEPAnalysisError(error_msg) # Re-raise a specific exception
 
-# Add LOSO/LODO worker functions and analysis functions moved from step_5
+# LOSO/LODO worker functions and analysis functions
 
 # REMOVED: Worker functions no longer needed with sequential processing
     """Initializer to load heavy context once per worker process for LOSO analysis.

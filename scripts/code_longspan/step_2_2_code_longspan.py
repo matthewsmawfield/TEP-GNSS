@@ -3363,7 +3363,7 @@ def main():
     """Main function with command-line options for different analysis modes."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="TEP GNSS Geospatial Temporal Analysis - Step 5")
+    parser = argparse.ArgumentParser(description="TEP GNSS Geospatial Temporal Analysis - Step 2.2")
     parser.add_argument('--mode', choices=['full', 'helical', 'jupiter', 'saturn', 'mars', 'lunar', 'eclipse', 'astronomical'], default='full',
                         help='Analysis mode: full (complete geospatial temporal analysis) [default], helical (helical motion analyses only), jupiter (Jupiter opposition only), saturn (Saturn opposition only), mars (Mars opposition only), lunar (Lunar Standstill only), or astronomical (Jupiter, Saturn, Mars, Venus, Mercury)')
     parser.add_argument('--center', choices=['code'], default='code',
@@ -3515,7 +3515,7 @@ def main():
         print_status("No successful validations", "ERROR")
         return False
 
-# ===== MISSING FUNCTIONS FROM MAIN BRANCH STEP 5 =====
+# ===== GEOPHYSICAL ANALYSIS FUNCTIONS =====
 
 def run_chandler_wobble_analysis(complete_df: pd.DataFrame) -> Dict:
     """

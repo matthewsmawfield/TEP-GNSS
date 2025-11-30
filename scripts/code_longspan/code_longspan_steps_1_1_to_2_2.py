@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Exploratory driver: CODE-only long-span run (Steps 1.1 -> 2.2) with isolated namespace.
+Exploratory driver: CODE-only long-span run (Steps 1.1 -> 2.8) with isolated namespace.
 This script does not modify the main pipeline or its outputs/logs.
 
 Usage:
@@ -94,8 +94,15 @@ def main():
 
         # Step 2.2 (exploratory copy)
         run_step(ROOT / "scripts/code_longspan/step_2_2_code_longspan.py", args_list=["--center", "code"], env=env)
-        
-        print("\nAll exploratory steps completed successfully (CODE-only long span, full pipeline).\n")
+
+    # Step 2.8: Draconitic Falsification (Critical Validation)
+    print("\n" + "="*60)
+    print("Running Step 2.8: Draconitic Falsification (Critical Check)")
+    print("="*60 + "\n")
+    run_step(ROOT / "scripts/code_longspan/step_2_8_draconitic_falsification.py", env=env)
+    
+    if not skip_steps_2_1_2_2:
+        print("\nAll exploratory steps completed successfully (CODE-only long span, full pipeline: Steps 1.1 -> 2.8).\n")
     else:
         print("\nSteps 1.1, 1.2, and 2.0 completed successfully (CODE-only long span).")
         print("Steps 2.1 and 2.2 skipped (pair-level writing disabled).\n")

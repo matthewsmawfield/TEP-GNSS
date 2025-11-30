@@ -61,7 +61,6 @@ def get_cleanup_targets() -> Dict[str, List[Path]]:
             PROJECT_ROOT / "logs" / "step_3_3_methodology_validation.json",
             PROJECT_ROOT / "logs" / "step_3_4_geographic_bias_validation.json",
             PROJECT_ROOT / "logs" / "step_3_6_control_band_analysis.log",
-            # PROJECT_ROOT / "logs" / "step_3_7_multiple_comparison_corrections.json" # Moved to step_4_7
         ],
         
         # Step 4 log files only
@@ -97,9 +96,6 @@ def get_cleanup_targets() -> Dict[str, List[Path]]:
             PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_code.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_igs_combined.json",
             PROJECT_ROOT / "results" / "outputs" / "step_3_6_multiband_esa_final.json",
-            # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_code.json", # Moved to step_4_7
-            # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_igs_combined.json", # Moved to step_4_7
-            # PROJECT_ROOT / "results" / "outputs" / "step_3_7_multiple_comparison_corrections_esa_final.json" # Moved to step_4_7
         ],
         
         # Step 4 output files only

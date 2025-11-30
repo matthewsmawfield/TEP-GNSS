@@ -99,6 +99,11 @@
 </div>
 
 <p style="margin-top: 15px;"><strong>Spatial Coverage:</strong> Station separations range from 1.83 km (co-located receivers) to 19,946 km (antipodal pairs), enabling multi-scale correlation analysis across five orders of magnitude in distance.</p>
+
+<div style="background-color: rgba(73, 87, 115, 0.05); border-left: 3px solid #495773; padding: 12px; margin: 15px 0; font-size: 13px;">
+  <strong>Temporal Window Selection (34 windows):</strong> The 25.3-year dataset is divided into 34 temporal windows (~9 months each) for orbital velocity correlation analysis. This window size balances temporal resolution against statistical stability per window. Complementary tests address resolution concerns: (1) Monte Carlo validation uses 5M surrogates on the full time series, (2) CMB frame search spans 65,341 sky directions at multiple resolutions, (3) nutation analysis uses daily coherence values (4,186 samples), and (4) planetary event analysis uses ±120-day windows around 156 events. The convergence of these independent methodologies—each with different temporal granularity—strengthens confidence in the orbital coupling detection.
+</div>
+
 <h4>2.1.3 The Processing Filter: Systematic Error Removal in IGS Clock Estimation</h4>
 
 <p>A critical methodological insight of this study is that operational GNSS clock products represent the output of the most rigorous systematic error correction pipeline in geodesy. CODE's clock estimation process, implemented using the Bernese GNSS Software (Dach et al. 2015) with undifferenced carrier-phase and pseudorange observations, explicitly models and removes all known physical effects to achieve sub-nanosecond precision. Understanding what has been removed is essential for interpreting what remains in the residuals.</p>
@@ -279,7 +284,7 @@
 <h4>2.3.2 Temporal Orbital Tracking</h4>
 <p>The East-West to North-South anisotropy ratio was tracked across the year:</p>
 <pre><code>R(t) = λ_EW(t) / λ_NS(t)</code></pre>
-<p>Using 30-day sliding windows centered on each day of year, R(t) was correlated with:</p>
+<p>Using 30-day sliding windows sampled every 10 days of year (yielding N = 34 windows per annual cycle, each aggregating all 25.3 years of data at that phase), R(t) was correlated with:</p>
 <ul>
   <li>Earth's orbital velocity (29.3-30.3 km/s)</li>
   <li>Earth-Sun distance (0.983-1.017 AU)</li>
@@ -298,7 +303,7 @@ SE<sub>corr</sub> = √[(1 − r²) / (N<sub>eff</sub> − 2)]
     <p>and the test statistic <em>t</em> = r / SE<sub>corr</sub> is evaluated against a Student‑<em>t</em> distribution with N<sub>eff</sub> − 2 degrees of freedom to obtain the autocorrelation‑corrected p‑value. The autocorrelation-corrected Pearson p-value is p < 2×10⁻⁷ (5.1σ) for reference, but permutation testing provides the stronger bound. A Monte-Carlo surrogate test with 5,000,000 phase-randomised surrogates yields an empirical upper-bound p&nbsp;&lt;&nbsp;2&nbsp;×&nbsp;10⁻⁷ (5.1σ), confirming discovery-level significance.</p>
 
 <div style="background-color: rgba(73, 87, 115, 0.05); border: 1px solid #495773; padding: 12px; margin: 12px 0; border-radius: 4px; font-size: 13px;">
-  <strong>Surrogate Generation Method:</strong> Phase-randomised surrogates preserve the power spectrum (and hence temporal autocorrelation structure) of the original time series while destroying phase relationships. Implementation: (1) compute FFT of the EW/NS ratio time series, (2) randomise phases uniformly on [0, 2π] while preserving magnitudes, (3) inverse FFT to obtain surrogate. This procedure, following Theiler et al. (1992), ensures that any correlation with orbital velocity in the surrogates arises purely from spectral overlap rather than genuine phase coupling.
+  <strong>Surrogate Generation Method:</strong> Phase-randomised surrogates preserve the power spectrum (and hence temporal autocorrelation structure) of the original time series while destroying phase relationships. Implementation: (1) compute FFT of the EW/NS ratio time series, (2) randomise phases uniformly on [0, 2π] while preserving magnitudes, (3) inverse FFT to obtain surrogate. This procedure, following <a href="references.html#ref-theiler" style="color: #220126; text-decoration: underline;">Theiler et al. (1992)</a>, ensures that any correlation with orbital velocity in the surrogates arises purely from spectral overlap rather than genuine phase coupling.
 </div>
     <h4>2.3.3 Planetary Event Analysis</h4>
 <p><strong>Inference policy:</strong> All primary inferences and multiplicity corrections (Bonferroni across 156 events; FDR q = 0.05) are computed exclusively using the pre-specified ±120-day window. Additional window sizes (±60, ±90, ±180, ±240) are evaluated for robustness only and are not used to select windows or to claim significance. No optimization across windows is performed for any reported p-values. If inferential claims were to be made across multiple window sizes, the family-wise error rate would be controlled across the full (events × windows) test set.</p>

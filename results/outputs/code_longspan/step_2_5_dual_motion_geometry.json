@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-25T20:13:21.719763",
+  "timestamp": "2025-11-30T15:12:44.008801",
   "analysis_type": "dual_motion_geometric_validation",
   "step_2_2_file": "step_2_2_geospatial_temporal_analysis_code.json",
   "physical_constants": {
@@ -24,8 +24,8 @@
     "total_directions": 2701,
     "bootstrap_ci": {
       "r": 0.743586964462057,
-      "ci_lower": 0.5684620884928527,
-      "ci_upper": 0.8759635444356739,
+      "ci_lower": 0.5644788808000593,
+      "ci_upper": 0.877465220732495,
       "confidence_level": 0.95,
       "n_bootstrap": 1000
     },
@@ -13539,11 +13539,11 @@
   },
   "permutation_test": {
     "r_observed": 0.743586964462057,
-    "p_value": 0.0002,
+    "p_value": 0.0001,
     "n_permutations": 10000,
-    "random_r_mean": 0.2972082286836443,
-    "random_r_std": 0.16741085041286113,
-    "random_r_95th": 0.5453391725003537
+    "random_r_mean": 0.29664682739598613,
+    "random_r_std": 0.16662749248467565,
+    "random_r_95th": 0.5420500186234091
   },
   "model_comparison": {
     "cmb_dipole": {

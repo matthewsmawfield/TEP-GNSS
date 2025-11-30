@@ -1,39 +1,39 @@
-[20:13:21] [INFO] Loading: results/outputs/code_longspan/step_2_2_geospatial_temporal_analysis_code.json
-[20:13:21] [INFO] Extracting existing Step 2.2 results...
-[20:13:21] [INFO]   ✓ Extracted 8 sectors
-[20:13:21] [INFO]   ✓ Extracted 34 temporal windows
-[20:13:21] [INFO]   ✓ Hemisphere data: N=34, S=34
-[20:13:21] [INFO] Performing 'Clever' Galactic Vector Search...
-[20:13:21] [SUCCESS]   Best Fit: RA=190.0°, Dec=-5.0° (r=0.7436)
-[20:13:21] [INFO]   Known Apex: RA=271°, Dec=30°
-[20:13:21] [INFO]   Calculating bootstrap confidence intervals...
-[20:13:21] [INFO]   95% CI: [0.5685, 0.8760]
-[20:13:21] [INFO]   Running permutation test (10000 samples)...
-[20:13:22] [INFO] Comparing competing models (including ecliptic controls)...
-[20:13:22] [SUCCESS]   CMB Dipole (RA=168°, Dec=-7°): R²=0.3568 (35.7% variance explained)
-[20:13:22] [INFO]   Ecliptic East (RA=90°, Dec=0°): R²=0.0026 (0.3% variance explained)
-[20:13:22] [INFO]   Ecliptic West (RA=270°, Dec=0°): R²=0.0026 (0.3% variance explained)
-[20:13:22] [INFO]   Solar Apex (RA=272°, Dec=+30°): R²=0.0001 (0.0% variance explained)
-[20:13:22] [INFO] 
+[15:12:43] [INFO] Loading: results/outputs/code_longspan/step_2_2_geospatial_temporal_analysis_code.json
+[15:12:44] [INFO] Extracting existing Step 2.2 results...
+[15:12:44] [INFO]   ✓ Extracted 8 sectors
+[15:12:44] [INFO]   ✓ Extracted 34 temporal windows
+[15:12:44] [INFO]   ✓ Hemisphere data: N=34, S=34
+[15:12:44] [INFO] Performing 'Clever' Galactic Vector Search...
+[15:12:44] [SUCCESS]   Best Fit: RA=190.0°, Dec=-5.0° (r=0.7436)
+[15:12:44] [INFO]   Known Apex: RA=271°, Dec=30°
+[15:12:44] [INFO]   Calculating bootstrap confidence intervals...
+[15:12:44] [INFO]   95% CI: [0.5645, 0.8775]
+[15:12:44] [INFO]   Running permutation test (10000 samples)...
+[15:12:44] [INFO] Comparing competing models (including ecliptic controls)...
+[15:12:44] [SUCCESS]   CMB Dipole (RA=168°, Dec=-7°): R²=0.3568 (35.7% variance explained)
+[15:12:44] [INFO]   Ecliptic East (RA=90°, Dec=0°): R²=0.0026 (0.3% variance explained)
+[15:12:44] [INFO]   Ecliptic West (RA=270°, Dec=0°): R²=0.0026 (0.3% variance explained)
+[15:12:44] [INFO]   Solar Apex (RA=272°, Dec=+30°): R²=0.0001 (0.0% variance explained)
+[15:12:44] [INFO] 
 Ecliptic Control Discrimination:
-[20:13:22] [INFO]   CMB / Ecliptic East variance ratio: 135.9×
-[20:13:22] [INFO]   CMB / Ecliptic West variance ratio: 135.4×
-[20:13:22] [INFO] Comparing background models...
-[20:13:22] [INFO]   Solar Apex               : r =  0.0073, p = 0.967186
-[20:13:22] [SUCCESS]   Best Fit (Grid Search)   : r =  0.7436, p = 0.000000
-[20:13:22] [SUCCESS]   CMB Dipole               : r =  0.5973, p = 0.000192
-[20:13:22] [INFO]   Null (Orbital Only)      : r = -0.0437, p = 0.806360
-[20:13:22] [INFO] Performing geometric angle validation...
-[20:13:22] [INFO]   Time-averaged EW/NS ratio: 0.540
-[20:13:22] [INFO]   Predicted vs Observed EW/NS: r = -0.0292, p = 0.869733
-[20:13:22] [INFO]   Velocity angle vs Observed: r = -0.2567, p = 0.142755
-[20:13:22] [INFO] Running statistical tests...
-[20:13:22] [INFO]   1/4 tests significant
-[20:13:22] [INFO] Assessment: Strong Evidence: CMB Frame Alignment
-[20:13:23] [SUCCESS] Saved ultra-minimal heatmap: results/figures/code_longspan/step_2_5_vector_search_heatmap.png
-[20:13:23] [INFO] Figure caption: (a) Best fit, (b) CMB dipole, (c) Solar apex
-[20:13:23] [INFO] Extracting existing Step 2.2 results...
-[20:13:23] [INFO]   ✓ Extracted 8 sectors
-[20:13:23] [INFO]   ✓ Extracted 34 temporal windows
-[20:13:23] [INFO]   ✓ Hemisphere data: N=34, S=34
-[20:13:24] [SUCCESS] Saved enhanced model comparison: results/figures/code_longspan/step_2_5_model_comparison_timeseries.png
+[15:12:44] [INFO]   CMB / Ecliptic East variance ratio: 135.9×
+[15:12:44] [INFO]   CMB / Ecliptic West variance ratio: 135.4×
+[15:12:44] [INFO] Comparing background models...
+[15:12:44] [INFO]   Solar Apex               : r =  0.0073, p = 0.967186
+[15:12:44] [SUCCESS]   Best Fit (Grid Search)   : r =  0.7436, p = 0.000000
+[15:12:44] [SUCCESS]   CMB Dipole               : r =  0.5973, p = 0.000192
+[15:12:44] [INFO]   Null (Orbital Only)      : r = -0.0437, p = 0.806360
+[15:12:44] [INFO] Performing geometric angle validation...
+[15:12:44] [INFO]   Time-averaged EW/NS ratio: 0.540
+[15:12:44] [INFO]   Predicted vs Observed EW/NS: r = -0.0292, p = 0.869733
+[15:12:44] [INFO]   Velocity angle vs Observed: r = -0.2567, p = 0.142755
+[15:12:44] [INFO] Running statistical tests...
+[15:12:44] [INFO]   1/4 tests significant
+[15:12:44] [INFO] Assessment: Strong Evidence: CMB Frame Alignment
+[15:12:45] [SUCCESS] Saved ultra-minimal heatmap: results/figures/code_longspan/step_2_5_vector_search_heatmap.png
+[15:12:45] [INFO] Figure caption: (a) Best fit, (b) CMB dipole, (c) Solar apex
+[15:12:45] [INFO] Extracting existing Step 2.2 results...
+[15:12:45] [INFO]   ✓ Extracted 8 sectors
+[15:12:45] [INFO]   ✓ Extracted 34 temporal windows
+[15:12:45] [INFO]   ✓ Hemisphere data: N=34, S=34
+[15:12:46] [SUCCESS] Saved enhanced model comparison: results/figures/code_longspan/step_2_5_model_comparison_timeseries.png

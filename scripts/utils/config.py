@@ -116,7 +116,7 @@ class TEPConfig:
         'TEP_LODO_SAMPLE_SIZE': 100,  # Sample size for Leave-One-Day-Out (LODO) cross-validation
         'TEP_BOOTSTRAP_SAMPLES': 100,  # Number of bootstrap samples for general cross-validation (reduced for system stability)
         
-        # Robust Block Bootstrap Configuration (Step 5.6) - Memory Optimized
+        # Robust Block Bootstrap Configuration (Step 3.1) - Memory Optimized
         'TEP_STATION_BOOTSTRAP_SAMPLES': 20,  # Number of bootstrap samples for station-level analysis (reduced for memory)
         'TEP_DAY_BOOTSTRAP_SAMPLES': 30,  # Number of bootstrap samples for day-level analysis (reduced for memory)
         'TEP_HYBRID_BOOTSTRAP_SAMPLES': 20,  # Number of bootstrap samples for hybrid (station-day) analysis (reduced for memory)

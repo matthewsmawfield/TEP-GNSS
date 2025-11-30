@@ -4,7 +4,6 @@ TEP GNSS Analysis - STEP 4.0: Advanced Analysis
 =============================================
 
 This streamlined script focuses on the most valuable, non-redundant advanced analyses.
-Analyses already performed in other steps (e.g., anisotropy in Step 5) have been removed.
 
 Valuable Analyses Included:
 - Elevation dependence analysis (with corrected coordinate mapping)
