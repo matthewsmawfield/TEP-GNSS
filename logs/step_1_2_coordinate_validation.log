@@ -1,0 +1,35 @@
+[05:14:40] [INFO] 
+[05:14:40] [INFO] ================================================================================
+[05:14:40] [INFO] TEP GNSS Analysis Package v0.17 (Jaipur) - STEP 1.2: Coordinate Validation
+[05:14:40] [INFO] ================================================================================
+[05:14:40] [INFO] 
+[05:14:40] [INFO] Checking Step 1.1 completion...
+[05:14:40] [SUCCESS] Step 1.1 completion verified
+[05:14:40] [PROCESS] Validating coordinate data...
+[05:14:40] [INFO] Comprehensive coordinate catalogue: 767 stations
+[05:14:40] [SUCCESS] Verified stations for analysis: 767
+[05:14:40] [PROCESS] Running ECEF coordinate validation for 767 verified stations...
+[05:14:40] [INFO]   Verified stations: 767/767
+[05:14:40] [INFO]   Valid ECEF coords: 767/767
+[05:14:40] [INFO]   ECEF ranges:
+[05:14:40] [INFO]     X: -6327822 to 6347491 m
+[05:14:40] [INFO]     Y: -6377523 to 6246367 m
+[05:14:40] [INFO]     Z: -6214231 to 6302002 m
+[05:14:40] [SUCCESS] Coordinate validation passed - verified stations have valid ECEF
+[05:14:40] [SUCCESS] Coordinate data looks good - no additional processing needed
+[05:14:40] [PROCESS] Running comprehensive station audit for pipeline consistency...
+[05:14:40] [PROCESS] Running comprehensive station ID audit...
+[05:14:40] [SUCCESS] Comprehensive audit complete: 767 verified stations
+[05:14:40] [SUCCESS] Station ID audit complete - pipeline will use verified counts
+[05:14:40] [SUCCESS] Using audit results: 767 verified stations
+[05:14:40] [SUCCESS] Validation summary saved: results/outputs/step_1_2_coordinate_validation.json
+[05:14:40] [SUCCESS] Pipeline configured for 767 verified stations
+[05:14:40] [PROCESS] Validating Step 1.2 completion...
+[05:14:40] [INFO] Using cached coordinate validation result from execution phase
+[05:14:40] [SUCCESS] Step 1.2 summary exists: PASS
+[05:14:40] [SUCCESS] Coordinate file exists: PASS
+[05:14:40] [SUCCESS] Coordinate data valid: PASS
+[05:14:40] [SUCCESS] All validation checks passed
+[05:14:40] [INFO] COORDINATE VALIDATION COMPLETE
+[05:14:40] [INFO] Execution time: 0.0 seconds
+[05:14:40] [SUCCESS] Station coordinates validated and ready for analysis

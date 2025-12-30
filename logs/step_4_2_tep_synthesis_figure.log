@@ -1,0 +1,23 @@
+[07:04:27] [INFO] 
+[07:04:27] [INFO] ================================================================================
+[07:04:27] [INFO] TEP GNSS Analysis Package v0.15 (Jaipur) - STEP 4.2: Synthesis Figure Generation
+[07:04:27] [INFO] ================================================================================
+[07:04:27] [INFO] 
+[07:04:27] [INFO] Creating Panel A (Multi-center reproducibility)...
+[07:04:27] [INFO] Creating Panel A with site theme colors...
+[07:04:27] [DEBUG] Panel A: Plotted CODE (λ=4549km)
+[07:04:27] [DEBUG] Panel A: Plotted IGS_COMBINED (λ=3764km)
+[07:04:27] [DEBUG] Panel A: Plotted ESA_FINAL (λ=3330km)
+[07:04:27] [DEBUG] Panel A created.
+[07:04:27] [INFO] Creating Panel B (Statistical significance)...
+[07:04:27] [INFO] Creating Panel B with site theme...
+[07:04:27] [DEBUG] Panel B: Loaded null test data for CODE
+[07:04:27] [DEBUG] Panel B: Loaded null test data for IGS_COMBINED
+[07:04:27] [DEBUG] Panel B: Loaded null test data for ESA_FINAL
+[07:04:27] [DEBUG] Panel B created.
+[07:04:27] [INFO] Creating Panel C (Signal vs Null Comparison)...
+[07:04:27] [INFO] Creating Panel C with site theme...
+[07:05:10] [DEBUG] Panel C created.
+[07:05:10] [SUCCESS] 
+Saving site-themed figure: /mnt/data/results/figures/step_4_2_tep_synthesis_figure.png
+[07:05:11] [SUCCESS] STEP 4.2 SYNTHESIS FIGURE GENERATION COMPLETE

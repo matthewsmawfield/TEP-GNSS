@@ -1,0 +1,1061 @@
+{
+  "analysis_center": "igs_combined",
+  "timestamp": "2025-10-08T01:29:29.131064",
+  "dataset_info": {
+    "total_pairs": 12879380,
+    "unique_stations": 316,
+    "date_range": {
+      "start": "2023-01-01 00:00:00",
+      "end": "2025-06-30 00:00:00"
+    }
+  },
+  "monthly_cv": {
+    "success": true,
+    "method": "monthly_cross_validation",
+    "n_folds": 10,
+    "lambda_stability": {
+      "mean_lambda_km": 4049.6971492005264,
+      "std_lambda_km": 1778.934979724493,
+      "cv_lambda": 0.4392760530440363,
+      "lambda_estimates": [
+        4114.024223338075,
+        2778.0305603652764,
+        9082.60699323594,
+        4071.6984255369784,
+        3772.7388096061095,
+        3429.11284658189,
+        4012.087653435881,
+        3946.2895410140004,
+        3015.964034882447,
+        2274.418404008664
+      ],
+      "cv_p_value": 0.576,
+      "cv_z_score": 0.5179454761161698,
+      "cv_bootstrap_mean": 0.3626071681401827,
+      "cv_bootstrap_std": 0.14802501120148323,
+      "interpretation": "unstable"
+    },
+    "cv_performance": {
+      "mean_cv_rmse": 0.7167909688543944,
+      "std_cv_rmse": 0.0017705803516348208,
+      "mean_cv_nrmse": 0.3583954844543428,
+      "std_cv_nrmse": 0.00088529018526085,
+      "mean_log_likelihood": -118534.45507250917,
+      "std_log_likelihood": 63302.0843104916
+    },
+    "fold_details": [
+      {
+        "fold_id": "2023-01",
+        "fitted_params": {
+          "amplitude": 0.20105655070342185,
+          "lambda_km": 4114.024223338075,
+          "offset": -0.023078901797854552
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7187445605405717,
+          "cv_nrmse": 0.35937228037709507,
+          "log_likelihood": -46321.669477949894,
+          "mae": 0.6504553697452022,
+          "r_squared": 0.002059623275190603,
+          "n_points": 179335
+        },
+        "training_size": 12700045,
+        "validation_size": 179335
+      },
+      {
+        "fold_id": "2023-09",
+        "fitted_params": {
+          "amplitude": 0.22645949503652044,
+          "lambda_km": 2778.0305603652764,
+          "offset": -0.011473558451162392
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7181686863949396,
+          "cv_nrmse": 0.35908434326267624,
+          "log_likelihood": -45513.020151230296,
+          "mae": 0.6497218456476794,
+          "r_squared": 0.0031579618883263993,
+          "n_points": 176487
+        },
+        "training_size": 12702893,
+        "validation_size": 176487
+      },
+      {
+        "fold_id": "2023-10",
+        "fitted_params": {
+          "amplitude": 0.21923497158242913,
+          "lambda_km": 9082.60699323594,
+          "offset": -0.08436795072114998
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7153355328434107,
+          "cv_nrmse": 0.357667766491523,
+          "log_likelihood": -46634.48415117763,
+          "mae": 0.646223119036522,
+          "r_squared": 0.0038539866745292972,
+          "n_points": 182271
+        },
+        "training_size": 12697109,
+        "validation_size": 182271
+      },
+      {
+        "fold_id": "2024-01",
+        "fitted_params": {
+          "amplitude": 0.18028580945080477,
+          "lambda_km": 4071.6984255369784,
+          "offset": -0.02180330430720357
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7165690679295021,
+          "cv_nrmse": 0.35828453396816756,
+          "log_likelihood": -47890.43459694444,
+          "mae": 0.6480263872655795,
+          "r_squared": 0.0010599582638251004,
+          "n_points": 186536
+        },
+        "training_size": 12692844,
+        "validation_size": 186536
+      },
+      {
+        "fold_id": "2024-04",
+        "fitted_params": {
+          "amplitude": 0.15764163373574203,
+          "lambda_km": 3772.7388096061095,
+          "offset": -0.013685438202809161
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7165545007775652,
+          "cv_nrmse": 0.35827725038922237,
+          "log_likelihood": -144464.13447802275,
+          "mae": 0.6477406550239356,
+          "r_squared": 0.002474517376671259,
+          "n_points": 562719
+        },
+        "training_size": 12316661,
+        "validation_size": 562719
+      },
+      {
+        "fold_id": "2024-06",
+        "fitted_params": {
+          "amplitude": 0.21848132466566464,
+          "lambda_km": 3429.11284658189,
+          "offset": -0.021847118302020883
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.717086078845826,
+          "cv_nrmse": 0.3585430394230511,
+          "log_likelihood": -139226.8759347996,
+          "mae": 0.6479232780432271,
+          "r_squared": 0.0008471749347573887,
+          "n_points": 541515
+        },
+        "training_size": 12337865,
+        "validation_size": 541515
+      },
+      {
+        "fold_id": "2024-12",
+        "fitted_params": {
+          "amplitude": 0.19304917940948646,
+          "lambda_km": 4012.087653435881,
+          "offset": -0.021860449889691973
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7148835379263415,
+          "cv_nrmse": 0.3574417689658583,
+          "log_likelihood": -152847.36804445065,
+          "mae": 0.6455120366996846,
+          "r_squared": 0.0022085157797683275,
+          "n_points": 598160
+        },
+        "training_size": 12281220,
+        "validation_size": 598160
+      },
+      {
+        "fold_id": "2025-01",
+        "fitted_params": {
+          "amplitude": 0.21955326164365627,
+          "lambda_km": 3946.2895410140004,
+          "offset": -0.031113989751565457
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7142670488853666,
+          "cv_nrmse": 0.3571335244588236,
+          "log_likelihood": -147741.51295864282,
+          "mae": 0.6445353227020014,
+          "r_squared": 0.0005025648339498368,
+          "n_points": 579177
+        },
+        "training_size": 12300203,
+        "validation_size": 579177
+      },
+      {
+        "fold_id": "2025-04",
+        "fitted_params": {
+          "amplitude": 0.19408034460116438,
+          "lambda_km": 3015.964034882447,
+          "offset": -0.005371479621779504
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7159571487333173,
+          "cv_nrmse": 0.3579785743682898,
+          "log_likelihood": -192248.10669568036,
+          "mae": 0.64684322981799,
+          "r_squared": 0.001884967386665104,
+          "n_points": 750098
+        },
+        "training_size": 12129282,
+        "validation_size": 750098
+      },
+      {
+        "fold_id": "2025-05",
+        "fitted_params": {
+          "amplitude": 0.2624125890057798,
+          "lambda_km": 2274.418404008664,
+          "offset": -0.01732123163045823
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7203435256671034,
+          "cv_nrmse": 0.3601717628387214,
+          "log_likelihood": -222456.94423619343,
+          "mae": 0.6515589506077532,
+          "r_squared": 0.0001539135993829932,
+          "n_points": 857426
+        },
+        "training_size": 12021954,
+        "validation_size": 857426
+      }
+    ],
+    "outlier_analysis": {
+      "outliers_detected": true,
+      "n_outliers": 1,
+      "outlier_folds": [
+        "2023-10"
+      ],
+      "outlier_lambdas": [
+        9082.60699323594
+      ],
+      "bounds": {
+        "lower": 1712.9344957507137,
+        "upper": 5463.112474568298
+      },
+      "outlier_fraction": 0.1
+    },
+    "convergence_analysis": {
+      "convergence_assessment": "converged",
+      "mean_stability_cv": 0.03395423725877311,
+      "rmse_consistency_cv": 0.002470148800095287,
+      "running_lambda_means": [
+        5324.887258979764,
+        5011.590050619067,
+        4763.819802416476,
+        4541.368643110712,
+        4465.757073157164,
+        4400.8236316392695,
+        4246.950343110733,
+        4049.6971492005264
+      ],
+      "running_lambda_stds": [
+        2712.5096580829104,
+        2410.9638956638523,
+        2212.635963852434,
+        2080.197309990902,
+        1934.773655658666,
+        1817.9507485334839,
+        1768.373470960558,
+        1778.934979724493
+      ],
+      "convergence_criteria": {
+        "mean_stability_threshold": 0.05,
+        "rmse_cv_threshold": 0.3,
+        "mean_stability_met": true,
+        "rmse_consistency_met": true
+      }
+    }
+  },
+  "station_block_cv": {
+    "success": true,
+    "method": "station_block_cross_validation",
+    "n_folds": 31,
+    "lambda_stability": {
+      "mean_lambda_km": 4077.8762247863574,
+      "std_lambda_km": 1852.4416845815233,
+      "cv_lambda": 0.4542662853084939,
+      "lambda_estimates": [
+        7351.410435708362,
+        4846.787490176893,
+        3554.9726105203913,
+        2610.6116838394682,
+        3435.662880494104,
+        2226.140930211349,
+        4444.3865194445625,
+        2959.825427667352,
+        2639.458813947989,
+        2108.5164267835257,
+        6103.5883292493545,
+        2712.592192086656,
+        3654.3596637269793,
+        8451.18189765336,
+        3148.459900364119,
+        1754.9484362016408,
+        3776.999140521666,
+        3659.097182812822,
+        5874.418263677346,
+        4740.116236646554,
+        4369.917623980546,
+        2754.6735512946207,
+        4412.253039039272,
+        3098.240955925245,
+        2468.9722761899666,
+        3556.131968762974,
+        3690.323159596303,
+        3768.2430067026303,
+        2235.6013299261217,
+        9703.536816917931,
+        6302.734778306984
+      ],
+      "cv_p_value": 0.572,
+      "cv_z_score": 0.23057810793720632,
+      "cv_bootstrap_mean": 0.4408687995852774,
+      "cv_bootstrap_std": 0.058103893049833814,
+      "interpretation": "unstable"
+    },
+    "cv_performance": {
+      "mean_cv_rmse": 0.7161588794386312,
+      "std_cv_rmse": 0.0036161541583292385,
+      "mean_cv_nrmse": 0.3580794397214262,
+      "std_cv_nrmse": 0.0018080770786683099,
+      "mean_log_likelihood": -204696.293194218,
+      "std_log_likelihood": 33750.79401661719
+    },
+    "fold_details": [
+      {
+        "fold_id": "stations_01",
+        "fitted_params": {
+          "amplitude": 0.17795429353245754,
+          "lambda_km": 7351.410435708362,
+          "offset": -0.05586209625750882
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.711762226747565,
+          "cv_nrmse": 0.35588111337437117,
+          "log_likelihood": -223869.46266042115,
+          "mae": 0.6419670092481895,
+          "r_squared": 0.0014013047924730238,
+          "n_points": 883802
+        },
+        "training_size": 11995578,
+        "validation_size": 883802
+      },
+      {
+        "fold_id": "stations_02",
+        "fitted_params": {
+          "amplitude": 0.20071311256264987,
+          "lambda_km": 4846.787490176893,
+          "offset": -0.035617668557961536
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7129512605999684,
+          "cv_nrmse": 0.3564756303001094,
+          "log_likelihood": -278200.70328687015,
+          "mae": 0.643198698485412,
+          "r_squared": 0.0003136466747819533,
+          "n_points": 1094633
+        },
+        "training_size": 11784747,
+        "validation_size": 1094633
+      },
+      {
+        "fold_id": "stations_03",
+        "fitted_params": {
+          "amplitude": 0.2360278199222951,
+          "lambda_km": 3554.9726105203913,
+          "offset": -0.023297267595488266
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7139797953970032,
+          "cv_nrmse": 0.35698989770004114,
+          "log_likelihood": -171636.30485860677,
+          "mae": 0.6441886742739379,
+          "r_squared": -0.00010544087862851548,
+          "n_points": 673391
+        },
+        "training_size": 12205989,
+        "validation_size": 673391
+      },
+      {
+        "fold_id": "stations_04",
+        "fitted_params": {
+          "amplitude": 0.22948150603190853,
+          "lambda_km": 2610.6116838394682,
+          "offset": -0.016146291240275865
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7203860893033461,
+          "cv_nrmse": 0.36019304465167745,
+          "log_likelihood": -152658.72635197412,
+          "mae": 0.6516666037342697,
+          "r_squared": 0.0010867312311301225,
+          "n_points": 588330
+        },
+        "training_size": 12291050,
+        "validation_size": 588330
+      },
+      {
+        "fold_id": "stations_05",
+        "fitted_params": {
+          "amplitude": 0.198512213700067,
+          "lambda_km": 3435.662880494104,
+          "offset": -0.01468201200492309
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7169931888993271,
+          "cv_nrmse": 0.3584965944517298,
+          "log_likelihood": -236516.5453270604,
+          "mae": 0.648243694838375,
+          "r_squared": 0.003440625703156841,
+          "n_points": 920156
+        },
+        "training_size": 11959224,
+        "validation_size": 920156
+      },
+      {
+        "fold_id": "stations_06",
+        "fitted_params": {
+          "amplitude": 0.27329771070823283,
+          "lambda_km": 2226.140930211349,
+          "offset": -0.005804252599635562
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7185526290656855,
+          "cv_nrmse": 0.3592763145337053,
+          "log_likelihood": -178887.6235032592,
+          "mae": 0.6498663502436217,
+          "r_squared": 0.003484091060397154,
+          "n_points": 692936
+        },
+        "training_size": 12186444,
+        "validation_size": 692936
+      },
+      {
+        "fold_id": "stations_07",
+        "fitted_params": {
+          "amplitude": 0.1943671540516366,
+          "lambda_km": 4444.3865194445625,
+          "offset": -0.03089978813175217
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7112061632396801,
+          "cv_nrmse": 0.3556030816211646,
+          "log_likelihood": -197130.46493574476,
+          "mae": 0.6413209558029991,
+          "r_squared": 0.0022273772355027033,
+          "n_points": 779458
+        },
+        "training_size": 12099922,
+        "validation_size": 779458
+      },
+      {
+        "fold_id": "stations_08",
+        "fitted_params": {
+          "amplitude": 0.1976392487050539,
+          "lambda_km": 2959.825427667352,
+          "offset": -0.012866726405279957
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7137959389569306,
+          "cv_nrmse": 0.3568979694791533,
+          "log_likelihood": -210797.6104820161,
+          "mae": 0.6442780013919507,
+          "r_squared": 0.00040728657719679706,
+          "n_points": 827461
+        },
+        "training_size": 12051919,
+        "validation_size": 827461
+      },
+      {
+        "fold_id": "stations_09",
+        "fitted_params": {
+          "amplitude": 0.19642572865343913,
+          "lambda_km": 2639.458813947989,
+          "offset": -0.007039768226674628
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7132205859749812,
+          "cv_nrmse": 0.3566102929966691,
+          "log_likelihood": -175998.16852838622,
+          "mae": 0.6437856902018055,
+          "r_squared": 0.0016079483146586027,
+          "n_points": 691975
+        },
+        "training_size": 12187405,
+        "validation_size": 691975
+      },
+      {
+        "fold_id": "stations_10",
+        "fitted_params": {
+          "amplitude": 0.23966005061948856,
+          "lambda_km": 2108.5164267835257,
+          "offset": -0.0021024744084939444
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7084245756398198,
+          "cv_nrmse": 0.3542122878234258,
+          "log_likelihood": -189583.41104753606,
+          "mae": 0.6381250175928248,
+          "r_squared": 0.002021026267944648,
+          "n_points": 755515
+        },
+        "training_size": 12123865,
+        "validation_size": 755515
+      },
+      {
+        "fold_id": "stations_11",
+        "fitted_params": {
+          "amplitude": 0.17783256047881793,
+          "lambda_km": 6103.5883292493545,
+          "offset": -0.04257391056533283
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7192696467373487,
+          "cv_nrmse": 0.3596348233701222,
+          "log_likelihood": -257801.12754271177,
+          "mae": 0.6506440279677366,
+          "r_squared": 0.002343789845066002,
+          "n_points": 996624
+        },
+        "training_size": 11882756,
+        "validation_size": 996624
+      },
+      {
+        "fold_id": "stations_12",
+        "fitted_params": {
+          "amplitude": 0.2254041817811274,
+          "lambda_km": 2712.592192086656,
+          "offset": -0.009621350336909305
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7155814162049944,
+          "cv_nrmse": 0.357790708103068,
+          "log_likelihood": -255588.7808777501,
+          "mae": 0.6461519140180308,
+          "r_squared": 0.0017604269435568254,
+          "n_points": 998283
+        },
+        "training_size": 11881097,
+        "validation_size": 998283
+      },
+      {
+        "fold_id": "stations_13",
+        "fitted_params": {
+          "amplitude": 0.1864888891623925,
+          "lambda_km": 3654.3596637269793,
+          "offset": -0.014579439800380607
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7160474534997284,
+          "cv_nrmse": 0.35802372676065164,
+          "log_likelihood": -211459.92105251877,
+          "mae": 0.6470472548372683,
+          "r_squared": 0.0003700982722727453,
+          "n_points": 824849
+        },
+        "training_size": 12054531,
+        "validation_size": 824849
+      },
+      {
+        "fold_id": "stations_14",
+        "fitted_params": {
+          "amplitude": 0.21472034190157996,
+          "lambda_km": 8451.18189765336,
+          "offset": -0.0807255341531484
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7150666630989859,
+          "cv_nrmse": 0.357533331551117,
+          "log_likelihood": -139499.18014103398,
+          "mae": 0.6453001031383147,
+          "r_squared": -0.00037453029128942106,
+          "n_points": 545643
+        },
+        "training_size": 12333737,
+        "validation_size": 545643
+      },
+      {
+        "fold_id": "stations_15",
+        "fitted_params": {
+          "amplitude": 0.24825005813203493,
+          "lambda_km": 3148.459900364119,
+          "offset": -0.01571801917234455
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7142704181857434,
+          "cv_nrmse": 0.35713520909299534,
+          "log_likelihood": -228990.95751905954,
+          "mae": 0.6445582404985818,
+          "r_squared": 0.001941240684971035,
+          "n_points": 897683
+        },
+        "training_size": 11981697,
+        "validation_size": 897683
+      },
+      {
+        "fold_id": "stations_16",
+        "fitted_params": {
+          "amplitude": 0.31554988743558554,
+          "lambda_km": 1754.9484362016408,
+          "offset": -0.003256535646336743
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7144898937828855,
+          "cv_nrmse": 0.3572449468963888,
+          "log_likelihood": -139652.50956295978,
+          "mae": 0.6449468799715858,
+          "r_squared": 0.0023510169672110726,
+          "n_points": 547125
+        },
+        "training_size": 12332255,
+        "validation_size": 547125
+      },
+      {
+        "fold_id": "stations_17",
+        "fitted_params": {
+          "amplitude": 0.2028945618836351,
+          "lambda_km": 3776.999140521666,
+          "offset": -0.021841865107025255
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7145434771321827,
+          "cv_nrmse": 0.3572717385665116,
+          "log_likelihood": -227575.6402514942,
+          "mae": 0.6450705644287803,
+          "r_squared": 0.0005729262992196782,
+          "n_points": 891453
+        },
+        "training_size": 11987927,
+        "validation_size": 891453
+      },
+      {
+        "fold_id": "stations_18",
+        "fitted_params": {
+          "amplitude": 0.21040167288368178,
+          "lambda_km": 3659.097182812822,
+          "offset": -0.023557946322309817
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7198509020526014,
+          "cv_nrmse": 0.35992545102932955,
+          "log_likelihood": -201865.05099917806,
+          "mae": 0.6512880505340066,
+          "r_squared": 0.0016527522210868506,
+          "n_points": 779123
+        },
+        "training_size": 12100257,
+        "validation_size": 779123
+      },
+      {
+        "fold_id": "stations_19",
+        "fitted_params": {
+          "amplitude": 0.20120306776424263,
+          "lambda_km": 5874.418263677346,
+          "offset": -0.047288318269495686
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7166468454954196,
+          "cv_nrmse": 0.3583234227485034,
+          "log_likelihood": -222501.2311623665,
+          "mae": 0.6476392476559514,
+          "r_squared": 0.0009635528163577378,
+          "n_points": 866467
+        },
+        "training_size": 12012913,
+        "validation_size": 866467
+      },
+      {
+        "fold_id": "stations_20",
+        "fitted_params": {
+          "amplitude": 0.20407695573693074,
+          "lambda_km": 4740.116236646554,
+          "offset": -0.036997912051916854
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7156265820856328,
+          "cv_nrmse": 0.357813291043628,
+          "log_likelihood": -222921.07031633466,
+          "mae": 0.6462230545841042,
+          "r_squared": 0.0001917263167919847,
+          "n_points": 870579
+        },
+        "training_size": 12008801,
+        "validation_size": 870579
+      },
+      {
+        "fold_id": "stations_21",
+        "fitted_params": {
+          "amplitude": 0.24623562709801688,
+          "lambda_km": 4369.917623980546,
+          "offset": -0.045423634903582935
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7269371108565194,
+          "cv_nrmse": 0.363468555428267,
+          "log_likelihood": -186243.5916283371,
+          "mae": 0.6586336643489993,
+          "r_squared": -0.00419554955819712,
+          "n_points": 704884
+        },
+        "training_size": 12174496,
+        "validation_size": 704884
+      },
+      {
+        "fold_id": "stations_22",
+        "fitted_params": {
+          "amplitude": 0.1957731349168937,
+          "lambda_km": 2754.6735512946207,
+          "offset": -0.013067846079780891
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.719789295850501,
+          "cv_nrmse": 0.35989464792637743,
+          "log_likelihood": -215539.0782843582,
+          "mae": 0.6513943148045769,
+          "r_squared": 0.0019595815195753152,
+          "n_points": 832042
+        },
+        "training_size": 12047338,
+        "validation_size": 832042
+      },
+      {
+        "fold_id": "stations_23",
+        "fitted_params": {
+          "amplitude": 0.20008171117482937,
+          "lambda_km": 4412.253039039272,
+          "offset": -0.02975745800638229
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7129129004153235,
+          "cv_nrmse": 0.35645645020890915,
+          "log_likelihood": -220565.03038821457,
+          "mae": 0.6429828658106062,
+          "r_squared": 0.0003964725233303046,
+          "n_points": 867948
+        },
+        "training_size": 12011432,
+        "validation_size": 867948
+      },
+      {
+        "fold_id": "stations_24",
+        "fitted_params": {
+          "amplitude": 0.17406066419637714,
+          "lambda_km": 3098.240955925245,
+          "offset": -0.010389746812867551
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7202778621827383,
+          "cv_nrmse": 0.3601389310916688,
+          "log_likelihood": -223968.63980160002,
+          "mae": 0.6524740550960493,
+          "r_squared": 0.0037512033854339988,
+          "n_points": 863410
+        },
+        "training_size": 12015970,
+        "validation_size": 863410
+      },
+      {
+        "fold_id": "stations_25",
+        "fitted_params": {
+          "amplitude": 0.2402399054905903,
+          "lambda_km": 2468.9722761899666,
+          "offset": -0.014721107140808713
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7172405967610191,
+          "cv_nrmse": 0.35862029838071996,
+          "log_likelihood": -165613.04741278625,
+          "mae": 0.6478881243431124,
+          "r_squared": -0.0008292816230719424,
+          "n_points": 643865
+        },
+        "training_size": 12235515,
+        "validation_size": 643865
+      },
+      {
+        "fold_id": "stations_26",
+        "fitted_params": {
+          "amplitude": 0.147488272061721,
+          "lambda_km": 3556.131968762974,
+          "offset": -0.006955738387218746
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7165878243899453,
+          "cv_nrmse": 0.3582939121949771,
+          "log_likelihood": -163766.35775591395,
+          "mae": 0.6476819370952885,
+          "r_squared": 0.002697258763360022,
+          "n_points": 637846
+        },
+        "training_size": 12241534,
+        "validation_size": 637846
+      },
+      {
+        "fold_id": "stations_27",
+        "fitted_params": {
+          "amplitude": 0.2084165290528397,
+          "lambda_km": 3690.323159596303,
+          "offset": -0.024641883732567163
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.713031731314401,
+          "cv_nrmse": 0.35651586565731724,
+          "log_likelihood": -184558.185806494,
+          "mae": 0.6428419233316183,
+          "r_squared": 0.0001645081407440907,
+          "n_points": 726015
+        },
+        "training_size": 12153365,
+        "validation_size": 726015
+      },
+      {
+        "fold_id": "stations_28",
+        "fitted_params": {
+          "amplitude": 0.2094750543302954,
+          "lambda_km": 3768.2430067026303,
+          "offset": -0.023669622936648073
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7150781321945845,
+          "cv_nrmse": 0.35753906609750236,
+          "log_likelihood": -195480.7101563506,
+          "mae": 0.6455461181056614,
+          "r_squared": 0.0008982934066453785,
+          "n_points": 764587
+        },
+        "training_size": 12114793,
+        "validation_size": 764587
+      },
+      {
+        "fold_id": "stations_29",
+        "fitted_params": {
+          "amplitude": 0.2154208059571518,
+          "lambda_km": 2235.6013299261217,
+          "offset": -0.010292915371692104
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7162317164122611,
+          "cv_nrmse": 0.35811585822251446,
+          "log_likelihood": -213152.36000818506,
+          "mae": 0.6473499745571941,
+          "r_squared": 0.0016409782509868576,
+          "n_points": 831023
+        },
+        "training_size": 12048357,
+        "validation_size": 831023
+      },
+      {
+        "fold_id": "stations_30",
+        "fitted_params": {
+          "amplitude": 0.23914314333339018,
+          "lambda_km": 9703.536816917931,
+          "offset": -0.09542225609386987
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7174585474899006,
+          "cv_nrmse": 0.358729273745928,
+          "log_likelihood": -253110.76570259844,
+          "mae": 0.6482490623010191,
+          "r_squared": -0.0009535934074555996,
+          "n_points": 983438
+        },
+        "training_size": 11895942,
+        "validation_size": 983438
+      },
+      {
+        "fold_id": "stations_31",
+        "fitted_params": {
+          "amplitude": 0.1808051458170098,
+          "lambda_km": 6302.734778306984,
+          "offset": -0.03924910948299037
+        },
+        "cv_metrics": {
+          "cv_rmse": 0.7227137926305434,
+          "cv_nrmse": 0.36135689631567186,
+          "log_likelihood": -200452.83166863682,
+          "mae": 0.655206046799593,
+          "r_squared": 0.003936223760897861,
+          "n_points": 767555
+        },
+        "training_size": 12111825,
+        "validation_size": 767555
+      }
+    ],
+    "outlier_analysis": {
+      "outliers_detected": true,
+      "n_outliers": 2,
+      "outlier_folds": [
+        "stations_14",
+        "stations_30"
+      ],
+      "outlier_lambdas": [
+        8451.18189765336,
+        9703.536816917931
+      ],
+      "bounds": {
+        "lower": -54.29488784174191,
+        "upper": 7380.1791375779385
+      },
+      "outlier_fraction": 0.06451612903225806
+    },
+    "convergence_analysis": {
+      "convergence_assessment": "converged",
+      "mean_stability_cv": 0.02882180016899855,
+      "rmse_consistency_cv": 0.0050493741851861135,
+      "running_lambda_means": [
+        5251.056845468549,
+        4590.945555061278,
+        4359.889020147843,
+        4004.264338491761,
+        4067.1389357707326,
+        3928.72474725781,
+        3785.4729768900525,
+        3617.7773218794,
+        3843.7601407312136,
+        3749.4961450108335,
+        3742.177954142845,
+        4078.5353786793103,
+        4016.530346791631,
+        3875.181477379757,
+        3869.4060457998694,
+        3857.722220078367,
+        3963.864117109892,
+        4002.6767230867254,
+        4020.16438503405,
+        3962.6420744095303,
+        3982.190377219519,
+        3945.359151332257,
+        3886.3036763265654,
+        3873.6047644971964,
+        3866.8165569082744,
+        3863.2960729723586,
+        3807.1686680397297,
+        4003.714273002336,
+        4077.8762247863574
+      ],
+      "running_lambda_stds": [
+        1576.0309480570572,
+        1780.4903563610428,
+        1658.211451106448,
+        1709.892467817419,
+        1590.5268012417484,
+        1532.2085303106123,
+        1500.3266630313333,
+        1509.6286234062763,
+        1607.0099731505484,
+        1570.0372636031411,
+        1508.6560201402845,
+        1893.2090770849923,
+        1843.6691599357057,
+        1867.1806999731255,
+        1811.5786581214045,
+        1761.1969666060795,
+        1772.3857335560663,
+        1735.7723290682354,
+        1695.7447480558726,
+        1677.596066280398,
+        1643.2813043925553,
+        1618.3504832856063,
+        1611.8303677360946,
+        1581.8045791726347,
+        1552.6214020296406,
+        1524.7536874301709,
+        1527.387881769169,
+        1837.232979256993,
+        1852.4416845815233
+      ],
+      "convergence_criteria": {
+        "mean_stability_threshold": 0.05,
+        "rmse_cv_threshold": 0.3,
+        "mean_stability_met": true,
+        "rmse_consistency_met": true
+      }
+    }
+  },
+  "loso_cv": {
+    "success": true,
+    "lambda_mean": 3810.173413413036,
+    "lambda_std": 29.882709471886336,
+    "lambda_min": 3764.910598778376,
+    "lambda_max": 3879.1968536594945,
+    "n_successful_fits": 10,
+    "n_stations_tested": 10,
+    "lambda_values": [
+      3822.4973764504703,
+      3879.1968536594945,
+      3764.910598778376,
+      3819.9299759136625,
+      3789.6328440886336,
+      3790.207991414718,
+      3832.9135629962334,
+      3794.4832536379467,
+      3814.208507895105,
+      3793.7531692957214
+    ],
+    "coefficient_of_variation": 0.007842873861512336
+  },
+  "lodo_cv": {
+    "success": true,
+    "lambda_mean": 3808.4043191108904,
+    "lambda_std": 2.534228990005018,
+    "lambda_min": 3805.4839777006327,
+    "lambda_max": 3814.6308833002663,
+    "n_successful_fits": 10,
+    "n_days_tested": 10,
+    "lambda_values": [
+      3806.6023267911755,
+      3808.6163972571967,
+      3808.946573810836,
+      3807.836397899122,
+      3805.4839777006327,
+      3810.468639069228,
+      3806.7073175521646,
+      3814.6308833002663,
+      3808.7459427786566,
+      3806.004734949623
+    ],
+    "coefficient_of_variation": 0.0006654306574772131
+  },
+  "bootstrap_cv": {
+    "success": false,
+    "error": "Disabled - use Step 3.1 instead"
+  },
+  "summary": {
+    "successful_methods": [
+      "monthly",
+      "station_block",
+      "loso",
+      "lodo"
+    ],
+    "overall_lambda": {
+      "mean_km": 3985.1952751741246,
+      "std_km": 1509.3131703423815,
+      "cv": 0.37873004109602515,
+      "n_estimates": 61
+    },
+    "cross_method_consistency": {
+      "consistency_check": "consistent",
+      "lambda_comparison": {
+        "monthly_lambda_km": 4049.6971492005264,
+        "station_lambda_km": 4077.8762247863574,
+        "absolute_difference_km": 28.179075585831015,
+        "relative_difference": 0.00693419161887138,
+        "combined_uncertainty_km": 2568.2970733275024
+      },
+      "consistency_criteria": {
+        "within_uncertainty": true,
+        "relative_agreement": true,
+        "uncertainty_threshold_sigma": 2.0,
+        "relative_threshold": 0.2
+      },
+      "consistency_score": 0.9653290419056431
+    }
+  },
+  "processing_time_seconds": 148.0734510421753
+}

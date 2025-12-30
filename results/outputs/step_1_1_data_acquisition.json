@@ -1,0 +1,15 @@
+{
+    "script_name": "step_1_1_tep_data_acquisition.py",
+    "timestamp": "2025-10-07T23:36:39.490347",
+    "total_stations_in_catalogue": 767,
+    "stations_with_valid_coordinates": 767,
+    "total_clock_files_downloaded": 2736,
+    "total_clock_files_failed": 0,
+    "total_time_minutes": 4.7547392328580225,
+    "average_download_speed_files_per_second": 9.590431307962673,
+    "final_clock_files_count": {
+        "igs": 912,
+        "code": 912,
+        "esa": 912
+    }
+}

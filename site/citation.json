@@ -1,0 +1,18 @@
+{
+  "id": "smawfield2025globaltime",
+  "type": "article",
+  "title": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
+  "author": [
+    {
+      "family": "Smawfield",
+      "given": "Matthew Lukin"
+    }
+  ],
+  "issued": {
+    "date-parts": [[2025, 9, 17]]
+  },
+  "DOI": "10.5281/zenodo.17127229",
+  "URL": "https://doi.org/10.5281/zenodo.17127229",
+  "publisher": "Zenodo",
+  "note": "Preprint, Version 0.23 (Jaipur)"
+}

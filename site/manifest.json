@@ -1,0 +1,67 @@
+{
+  "title": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
+  "author": "Matthew Lukin Smawfield",
+  "version": "v0.23 (Jaipur)",
+  "sections": [
+    {
+      "id": "abstract",
+      "file": "abstract.html",
+      "title": "Abstract",
+      "order": 1
+    },
+    {
+      "id": "executive_summary",
+      "file": "executive_summary.html",
+      "title": "Executive Summary",
+      "order": 2
+    },
+    {
+      "id": "section_1",
+      "file": "section_1_introduction.html",
+      "title": "1. Introduction",
+      "order": 3
+    },
+    {
+      "id": "section_2",
+      "file": "section_2_methods.html",
+      "title": "2. Methods",
+      "order": 4
+    },
+    {
+      "id": "section_3",
+      "file": "section_3_results.html",
+      "title": "3. Results",
+      "order": 5
+    },
+    {
+      "id": "section_4",
+      "file": "section_4_discussion.html",
+      "title": "4. Discussion",
+      "order": 6
+    },
+    {
+      "id": "section_5",
+      "file": "section_5_conclusions.html",
+      "title": "5. Conclusions",
+      "order": 7
+    },
+    {
+      "id": "section_6",
+      "file": "section_6_analysis_package.html",
+      "title": "6. Analysis Package",
+      "order": 8
+    },
+    {
+      "id": "section_7",
+      "file": "section_7_appendix.html",
+      "title": "7. Appendix",
+      "order": 9
+    },
+    {
+      "id": "references",
+      "file": "references.html",
+      "title": "References & Contact",
+      "order": 10
+    }
+  ]
+}

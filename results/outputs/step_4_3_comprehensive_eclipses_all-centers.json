@@ -1,0 +1,392 @@
+{
+  "success": true,
+  "analysis_type": "all-eclipses_multi_center",
+  "centers_analyzed": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "successful_centers": [
+    "code",
+    "igs_combined",
+    "esa_final"
+  ],
+  "center_results": {
+    "code": {
+      "success": true,
+      "analysis_center": "code",
+      "resolution": "30s",
+      "eclipses_analyzed": [
+        {
+          "date": "2023-04-20",
+          "type": "Hybrid",
+          "location": "Australia/Indonesia",
+          "eclipse_coherence_mean": 0.006458385449652333,
+          "eclipse_coherence_std": 0.7212349123474685,
+          "eclipse_coherence_median": -0.002053502566708005,
+          "n_station_pairs": 42266,
+          "non_zero_pairs": 42266,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2023-10-14",
+          "type": "Annular",
+          "location": "Americas",
+          "eclipse_coherence_mean": 0.03807708100052427,
+          "eclipse_coherence_std": 0.7191364903272773,
+          "eclipse_coherence_median": 0.049679832053285355,
+          "n_station_pairs": 45242,
+          "non_zero_pairs": 45242,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-04-08",
+          "type": "Total",
+          "location": "North America",
+          "eclipse_coherence_mean": -0.0008384908140431069,
+          "eclipse_coherence_std": 0.7239164970392333,
+          "eclipse_coherence_median": -0.013816986153655043,
+          "n_station_pairs": 38669,
+          "non_zero_pairs": 38669,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-10-02",
+          "type": "Annular",
+          "location": "South America",
+          "eclipse_coherence_mean": 0.021791727101873104,
+          "eclipse_coherence_std": 0.7314009652271012,
+          "eclipse_coherence_median": 0.005669687036908386,
+          "n_station_pairs": 41089,
+          "non_zero_pairs": 41089,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2025-03-29",
+          "type": "Partial",
+          "location": "Atlantic/Europe",
+          "eclipse_coherence_mean": 0.05324302704394512,
+          "eclipse_coherence_std": 0.7117449918665576,
+          "eclipse_coherence_median": 0.10222709191607515,
+          "n_station_pairs": 39653,
+          "non_zero_pairs": 39653,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        }
+      ],
+      "eclipse_summary": {
+        "Hybrid": {
+          "eclipses": [
+            0.006458385449652333
+          ],
+          "mean_coherence_avg": 0.006458385449652333,
+          "n_events": 1
+        },
+        "Annular": {
+          "eclipses": [
+            0.03807708100052427,
+            0.021791727101873104
+          ],
+          "mean_coherence_avg": 0.029934404051198685,
+          "n_events": 2
+        },
+        "Total": {
+          "eclipses": [
+            -0.0008384908140431069
+          ],
+          "mean_coherence_avg": -0.0008384908140431069,
+          "n_events": 1
+        },
+        "Partial": {
+          "eclipses": [
+            0.05324302704394512
+          ],
+          "mean_coherence_avg": 0.05324302704394512,
+          "n_events": 1
+        }
+      },
+      "interpretation": "Analyzed 5/5 eclipses using honest TEP cos(phase(CSD)) methodology",
+      "methodology_note": "All eclipses analyzed with identical methodology to baseline TEP analysis - enables valid scale consistency comparisons"
+    },
+    "igs_combined": {
+      "success": true,
+      "analysis_center": "igs_combined",
+      "resolution": "30s",
+      "eclipses_analyzed": [
+        {
+          "date": "2023-04-20",
+          "type": "Hybrid",
+          "location": "Australia/Indonesia",
+          "eclipse_coherence_mean": 0.009721384023210019,
+          "eclipse_coherence_std": 0.7206816805448236,
+          "eclipse_coherence_median": 0.015970280152736317,
+          "n_station_pairs": 2990,
+          "non_zero_pairs": 2990,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2023-10-14",
+          "type": "Annular",
+          "location": "Americas",
+          "eclipse_coherence_mean": 0.03488076051435247,
+          "eclipse_coherence_std": 0.7226989461011206,
+          "eclipse_coherence_median": 0.04847157377710419,
+          "n_station_pairs": 3663,
+          "non_zero_pairs": 3663,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-04-08",
+          "type": "Total",
+          "location": "North America",
+          "eclipse_coherence_mean": 0.06321037273198725,
+          "eclipse_coherence_std": 0.7324252545449801,
+          "eclipse_coherence_median": 0.13146472300133133,
+          "n_station_pairs": 11225,
+          "non_zero_pairs": 11225,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-10-02",
+          "type": "Annular",
+          "location": "South America",
+          "eclipse_coherence_mean": 0.003637238573022754,
+          "eclipse_coherence_std": 0.7206857670385635,
+          "eclipse_coherence_median": -0.004560732917938876,
+          "n_station_pairs": 9653,
+          "non_zero_pairs": 9653,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2025-03-29",
+          "type": "Partial",
+          "location": "Atlantic/Europe",
+          "eclipse_coherence_mean": 0.028821472708871327,
+          "eclipse_coherence_std": 0.7129030192746708,
+          "eclipse_coherence_median": 0.05278085101880999,
+          "n_station_pairs": 12927,
+          "non_zero_pairs": 12927,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        }
+      ],
+      "eclipse_summary": {
+        "Hybrid": {
+          "eclipses": [
+            0.009721384023210019
+          ],
+          "mean_coherence_avg": 0.009721384023210019,
+          "n_events": 1
+        },
+        "Annular": {
+          "eclipses": [
+            0.03488076051435247,
+            0.003637238573022754
+          ],
+          "mean_coherence_avg": 0.01925899954368761,
+          "n_events": 2
+        },
+        "Total": {
+          "eclipses": [
+            0.06321037273198725
+          ],
+          "mean_coherence_avg": 0.06321037273198725,
+          "n_events": 1
+        },
+        "Partial": {
+          "eclipses": [
+            0.028821472708871327
+          ],
+          "mean_coherence_avg": 0.028821472708871327,
+          "n_events": 1
+        }
+      },
+      "interpretation": "Analyzed 5/5 eclipses using honest TEP cos(phase(CSD)) methodology",
+      "methodology_note": "All eclipses analyzed with identical methodology to baseline TEP analysis - enables valid scale consistency comparisons"
+    },
+    "esa_final": {
+      "success": true,
+      "analysis_center": "esa_final",
+      "resolution": "30s",
+      "eclipses_analyzed": [
+        {
+          "date": "2023-04-20",
+          "type": "Hybrid",
+          "location": "Australia/Indonesia",
+          "eclipse_coherence_mean": 0.024941698656552286,
+          "eclipse_coherence_std": 0.7247640505911914,
+          "eclipse_coherence_median": 0.0363247070479351,
+          "n_station_pairs": 7641,
+          "non_zero_pairs": 7641,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2023-10-14",
+          "type": "Annular",
+          "location": "Americas",
+          "eclipse_coherence_mean": 0.03533046102519635,
+          "eclipse_coherence_std": 0.7161595271026113,
+          "eclipse_coherence_median": 0.05399300553121629,
+          "n_station_pairs": 9480,
+          "non_zero_pairs": 9480,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-04-08",
+          "type": "Total",
+          "location": "North America",
+          "eclipse_coherence_mean": -0.003977818081544068,
+          "eclipse_coherence_std": 0.7597376677912208,
+          "eclipse_coherence_median": -0.000917988650977906,
+          "n_station_pairs": 8175,
+          "non_zero_pairs": 8175,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2024-10-02",
+          "type": "Annular",
+          "location": "South America",
+          "eclipse_coherence_mean": 0.002568046789157315,
+          "eclipse_coherence_std": 0.7236763633421375,
+          "eclipse_coherence_median": 0.007172644038451943,
+          "n_station_pairs": 8824,
+          "non_zero_pairs": 8824,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        },
+        {
+          "date": "2025-03-29",
+          "type": "Partial",
+          "location": "Atlantic/Europe",
+          "eclipse_coherence_mean": 0.05421100058621032,
+          "eclipse_coherence_std": 0.7031030216667624,
+          "eclipse_coherence_median": 0.06526747073347672,
+          "n_station_pairs": 13075,
+          "non_zero_pairs": 13075,
+          "methodology": "proper_tep_cos_phase_csd",
+          "frequency_band_hz": [
+            1e-05,
+            0.0005
+          ],
+          "significant_signal": true,
+          "status": "analyzed_with_honest_tep_methodology"
+        }
+      ],
+      "eclipse_summary": {
+        "Hybrid": {
+          "eclipses": [
+            0.024941698656552286
+          ],
+          "mean_coherence_avg": 0.024941698656552286,
+          "n_events": 1
+        },
+        "Annular": {
+          "eclipses": [
+            0.03533046102519635,
+            0.002568046789157315
+          ],
+          "mean_coherence_avg": 0.018949253907176833,
+          "n_events": 2
+        },
+        "Total": {
+          "eclipses": [
+            -0.003977818081544068
+          ],
+          "mean_coherence_avg": -0.003977818081544068,
+          "n_events": 1
+        },
+        "Partial": {
+          "eclipses": [
+            0.05421100058621032
+          ],
+          "mean_coherence_avg": 0.05421100058621032,
+          "n_events": 1
+        }
+      },
+      "interpretation": "Analyzed 5/5 eclipses using honest TEP cos(phase(CSD)) methodology",
+      "methodology_note": "All eclipses analyzed with identical methodology to baseline TEP analysis - enables valid scale consistency comparisons"
+    }
+  },
+  "interpretation": "All-Eclipses analysis completed for 3/3 analysis centers"
+}

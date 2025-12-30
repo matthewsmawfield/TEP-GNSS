@@ -1,0 +1,23 @@
+# robots.txt for TEP-GNSS: Global Time Echoes
+# GitHub Pages mirror - Canonical version at mlsmawfield.com
+User-agent: *
+Disallow: /
+
+# Canonical version
+Sitemap: https://mlsmawfield.com/sitemap.xml
+
+# Disallow access to hidden directories and files
+Disallow: /.*
+
+# Allow all files with these extensions
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.pdf$
+
+# Crawl-delay: 10  # Uncomment if needed to limit crawl rate

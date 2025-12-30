@@ -1,0 +1,61 @@
+[03:56:39] [INFO] 
+[03:56:39] [INFO] ================================================================================
+[03:56:39] [INFO] TEP GNSS Analysis Package v0.15 (Jaipur) - STEP 3.4: Geographic Bias Validation
+[03:56:39] [INFO] ================================================================================
+[03:56:39] [INFO] 
+[03:56:39] [INFO] Using statistical resampling of existing results for efficient validation
+[03:56:39] [PROCESS] Loading existing correlation results and station metadata
+[03:56:39] [INFO] Loaded 767 total station coordinates
+[03:56:39] [WARNING] WARNING: Analysis stations file not found, using all stations
+[03:56:39] [WARNING] This may lead to inaccurate geographic bias validation
+[03:56:39] [INFO] Using 767 stations for geographic bias validation
+[03:56:39] [INFO] Loaded CODE correlation results
+[03:56:39] [INFO] Loaded ESA_FINAL correlation results
+[03:56:39] [INFO] Loaded IGS_COMBINED correlation results
+[03:56:39] [INFO] Loading consolidated data for CODE...
+[03:57:08] [SUCCESS] Loaded 39,068,754 pairs from CODE
+[03:57:08] [INFO] Loading consolidated data for ESA_FINAL...
+[03:57:15] [SUCCESS] Loaded 10,809,085 pairs from ESA_FINAL
+[03:57:15] [INFO] Loading consolidated data for IGS_COMBINED...
+[03:57:24] [SUCCESS] Loaded 12,879,380 pairs from IGS_COMBINED
+[03:57:24] [INFO] Combining data from 3 analysis centers...
+[03:57:26] [SUCCESS] Successfully loaded 62,757,219 total pairs from all centers
+[03:57:26] [INFO] Creating geographic subsets for validation
+[03:57:26] [INFO] Validating correlations using existing results
+[03:57:26] [INFO] Baseline TEP correlation parameters:
+[03:57:26] [INFO]   CODE: λ=4549km, A=0.114, R²=0.920
+[03:57:26] [INFO]   ESA_FINAL: λ=3330km, A=0.250, R²=0.970
+[03:57:26] [INFO]   IGS_COMBINED: λ=3395km, A=0.152, R²=0.968
+[03:57:26] [INFO] Geographic consistency assessment via jackknife resampling
+[03:57:26] [INFO] CODE: lambda=4539±296km (CV=6.5%)
+[03:57:26] [INFO] ESA_FINAL: lambda=3296±117km (CV=3.5%)
+[03:57:26] [INFO] IGS_COMBINED: lambda=3779±152km (CV=4.0%)
+[03:57:26] [INFO] Hemisphere balance validation and bias quantification
+[03:57:26] [INFO] Hemisphere bias: 22.9% (moderate)
+[03:57:26] [INFO] North/South ratio: 2.69
+[03:57:26] [INFO] Elevation independence testing across topographic bands
+[03:57:26] [INFO] sea_level: 347 stations, balance=0.70, strength=0.88
+[03:57:26] [INFO] low_elevation: 219 stations, balance=0.79, strength=0.82
+[03:57:26] [INFO] medium_elevation: 96 stations, balance=0.75, strength=0.82
+[03:57:26] [INFO] high_elevation: 81 stations, balance=0.65, strength=0.74
+[03:57:26] [INFO] Ocean vs land baseline comparison analysis
+[03:57:31] [INFO] Analyzed 62757219 pairs, ocean fraction: 80.3%
+[03:57:31] [INFO] Generating comprehensive validation summary
+[03:57:31] [SUCCESS] Validation results saved to: /mnt/data/results/outputs/step_3_4_geographic_bias_validation.json
+[03:57:31] [INFO] 
+[03:57:31] [INFO] ================================================================================
+[03:57:31] [INFO] VALIDATION SUMMARY
+[03:57:31] [INFO] ================================================================================
+[03:57:31] [INFO] 
+[03:57:31] [INFO] Overall validation score: 0.738
+[03:57:31] [INFO] Confidence level: MODERATE
+[03:57:31] [INFO] Assessment: Reasonable evidence with some geographic concerns
+[03:57:31] [INFO] 
+Key Findings:
+[03:57:31] [INFO]   - CODE: Geographic consistency CV = 6.5% (excellent)
+[03:57:31] [INFO]   - ESA_FINAL: Geographic consistency CV = 3.5% (excellent)
+[03:57:31] [INFO]   - IGS_COMBINED: Geographic consistency CV = 4.0% (excellent)
+[03:57:31] [INFO]   - Hemisphere bias: 22.9% (moderate)
+[03:57:31] [INFO] 
+Recommendations:
+[03:57:31] [INFO]   - Create hemisphere-balanced subsets for validation

@@ -1,0 +1,46 @@
+# Core numerical + scientific stack
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.11.4
+
+# Plotting
+matplotlib==3.8.4
+cmasher==1.9.2
+plotly==6.3.1
+kaleido==1.1.0
+adjustText==1.3.0
+
+# Data formats
+h5py==3.14.0
+pyarrow==17.0.0
+
+# System utilities
+psutil==5.9.8
+
+# Optional but common
+seaborn>=0.13.0,<0.14
+
+# Geomagnetic field calculations (Apex coordinates)
+apexpy>=2.0.0
+
+# Astronomical calculations
+ephem==4.2
+astropy==7.1.0
+jplephem>=2.0
+
+# Pin setuptools/wheel for reproducible builds (optional)
+setuptools==70.0.0
+wheel==0.43.0
+
+pyproj==3.6.1
+PyWavelets==1.6.0
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
+
+cartopy==0.23.0
+statsmodels>=0.14.0,<0.15
+scikit-learn==1.5.0
+
+# HTML to PDF conversion
+playwright==1.48.0
+
