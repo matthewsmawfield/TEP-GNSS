@@ -1,0 +1,105 @@
+[06:58:18] [PROCESS] Executing Step 4.1: TEP Visualization...
+[06:58:18] [INFO] 
+============================================================
+[06:58:18] [INFO] GENERATING STATION DISTANCE MATRIX
+[06:58:18] [INFO] ============================================================
+[06:58:18] [INFO] Generating station distance matrix with proper great-circle distances
+[06:58:18] [INFO] Processing 767 stations with valid coordinates
+[07:01:57] [SUCCESS] Generated station distance matrix with 293761 pairs
+[07:01:57] [SUCCESS] Saved to: /mnt/data/data/processed/step_2_1_station_distances.csv and /mnt/data/data/processed/step_8_station_distances.csv
+[07:01:57] [SUCCESS] Station distance matrix generated: /mnt/data/data/processed/step_2_1_station_distances.csv
+[07:01:57] [SUCCESS] Successfully loaded all prerequisite data.
+[07:01:57] [INFO] 
+------------------------------------------------------------
+[07:01:57] [INFO] 1. RESIDUAL ANALYSIS
+[07:01:57] [INFO] ------------------------------------------------------------
+[07:01:57] [INFO] Creating residual plots
+[07:01:57] [INFO]   Processing residuals for CODE
+[07:01:58] [SUCCESS] Residual plot saved: /mnt/data/results/figures/step_4_1_residuals_code.png
+[07:01:58] [INFO]   Processing residuals for ESA_FINAL
+[07:01:58] [SUCCESS] Residual plot saved: /mnt/data/results/figures/step_4_1_residuals_esa_final.png
+[07:01:58] [INFO]   Processing residuals for IGS_COMBINED
+[07:01:58] [SUCCESS] Residual plot saved: /mnt/data/results/figures/step_4_1_residuals_igs_combined.png
+[07:01:58] [SUCCESS] Residual analysis completed.
+[07:01:58] [INFO] 
+------------------------------------------------------------
+[07:01:58] [INFO] 2. NULL TEST EXPORT
+[07:01:58] [INFO] ------------------------------------------------------------
+[07:01:58] [INFO] Exporting null test results
+[07:01:59] [SUCCESS] Exported null test results: /mnt/data/results/outputs/null_tests_complete.csv
+[07:01:59] [SUCCESS] Null test export completed.
+[07:01:59] [INFO] 
+------------------------------------------------------------
+[07:01:59] [INFO] 3. COHERENCY METHOD COMPARISON
+[07:01:59] [INFO] ------------------------------------------------------------
+[07:01:59] [INFO] Comparing coherency methods
+[07:01:59] [INFO] Analyzing coherency methods for CODE
+[07:01:59] [INFO] Analyzing coherency methods for ESA_FINAL
+[07:01:59] [INFO] Analyzing coherency methods for IGS_COMBINED
+[07:01:59] [SUCCESS] Coherency method comparison completed.
+[07:01:59] [INFO] 
+------------------------------------------------------------
+[07:01:59] [INFO] 4. PUBLICATION FIGURE
+[07:01:59] [INFO] ------------------------------------------------------------
+[07:01:59] [INFO] Creating publication figure
+[07:01:59] [SUCCESS] Publication figure saved: /mnt/data/results/figures/step_4_1_publication_figure.png
+[07:01:59] [SUCCESS] Publication figure generation completed.
+[07:01:59] [INFO] 
+------------------------------------------------------------
+[07:01:59] [INFO] 5. ANISOTROPY VS LONGITUDE ANALYSIS
+[07:01:59] [INFO] ------------------------------------------------------------
+[07:01:59] [INFO] Creating anisotropy vs. longitude plots
+[07:01:59] [PROCESS] Processing CODE for longitude analysis...
+[07:02:43] [SUCCESS] Saved heatmap for code to /mnt/data/results/figures/step_4_1_anisotropy_heatmap_code.png
+[07:02:43] [PROCESS] Processing IGS_COMBINED for longitude analysis...
+[07:02:58] [SUCCESS] Saved heatmap for igs_combined to /mnt/data/results/figures/step_4_1_anisotropy_heatmap_igs_combined.png
+[07:02:58] [PROCESS] Processing ESA_FINAL for longitude analysis...
+[07:03:10] [SUCCESS] Saved heatmap for esa_final to /mnt/data/results/figures/step_4_1_anisotropy_heatmap_esa_final.png
+[07:03:10] [SUCCESS] Anisotropy vs Longitude analysis completed.
+[07:03:10] [INFO] 
+------------------------------------------------------------
+[07:03:10] [INFO] 6. GENERATING STATION LOCATION MAPS
+[07:03:10] [INFO] ------------------------------------------------------------
+[07:03:10] [INFO] Creating 2D station map
+[07:03:10] [WARNING] Analysis stations file not found, using all stations
+[07:03:10] [INFO] Using all 767 total cataloged stations
+[07:03:11] [SUCCESS] Saved station map: /mnt/data/results/figures/step_4_1_gnss_stations_map.png
+[07:03:11] [SUCCESS] Station location maps generated successfully.
+[07:03:11] [INFO] 
+------------------------------------------------------------
+[07:03:11] [INFO] 7. MULTI-BAND FREQUENCY VISUALIZATION
+[07:03:11] [INFO] ------------------------------------------------------------
+[07:03:17] [SUCCESS] Multi-band frequency visualization completed.
+[07:03:17] [INFO] All step 4.8 figures automatically synced to site folder.
+[07:03:17] [INFO] 
+------------------------------------------------------------
+[07:03:17] [INFO] 8. DISTANCE DISTRIBUTION ANALYSIS
+[07:03:17] [INFO] ------------------------------------------------------------
+[07:03:17] [INFO] Creating distance distribution plot with analysis center breakdown
+[07:03:17] [INFO] Loading ALL distance pairs for CODE
+[07:03:46] [SUCCESS] Loaded 39,068,754 distance pairs for CODE
+[07:03:46] [INFO] Loading ALL distance pairs for IGS_COMBINED
+[07:03:54] [SUCCESS] Loaded 12,879,380 distance pairs for IGS_COMBINED
+[07:03:54] [INFO] Loading ALL distance pairs for ESA_FINAL
+[07:04:02] [SUCCESS] Loaded 10,809,085 distance pairs for ESA_FINAL
+[07:04:02] [WARNING] Could not load lambda_km from code results: 'dict' object is not callable
+[07:04:02] [WARNING] Could not load lambda_km from igs_combined results: 'dict' object is not callable
+[07:04:02] [WARNING] Could not load lambda_km from esa_final results: 'dict' object is not callable
+[07:04:02] [WARNING] Could not load correlation lengths from any center
+[07:04:08] [SUCCESS] Saved distance distribution plot to /mnt/data/results/figures/step_4_1_distance_distribution.png
+[07:04:08] [SUCCESS] Synced distance distribution plot to site directory: /mnt/data/site/public/figures/step_4_1_distance_distribution.png
+[07:04:24] [SUCCESS] Distance distribution plot generated successfully.
+[07:04:24] [INFO] 
+------------------------------------------------------------
+[07:04:24] [INFO] 9. BINNED CORRELATION DATA VISUALIZATION
+[07:04:24] [INFO] ------------------------------------------------------------
+[07:04:24] [INFO] Creating binning strategy diagram
+[07:04:24] [INFO] Loaded 28 distance bins for CODE
+[07:04:24] [INFO] Loaded 28 distance bins for IGS_COMBINED
+[07:04:24] [INFO] Loaded 25 distance bins for ESA_FINAL
+[07:04:26] [SUCCESS] Saved binning strategy diagram to /mnt/data/results/figures/step_4_1_binned_correlation_data.png
+[07:04:26] [SUCCESS] Binned correlation data plot generated successfully.
+[07:04:26] [INFO] 
+============================================================
+[07:04:26] [SUCCESS] STEP 4.1 VISUALIZATION AND EXPORT COMPLETE
+[07:04:26] [INFO] ============================================================

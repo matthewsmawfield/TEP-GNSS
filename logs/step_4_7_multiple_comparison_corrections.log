@@ -1,0 +1,46 @@
+[09:46:50] [INFO] 
+[09:46:50] [INFO] 
+[09:46:50] [INFO] ================================================================================
+[09:46:50] [INFO] TEP GNSS Analysis Package v0.15 (Jaipur) - STEP 4.7: Multiple Comparison Corrections
+[09:46:50] [INFO] ================================================================================
+[09:46:50] [INFO] 
+[09:46:50] [INFO] Systematic statistical validation with formal corrections
+[09:46:50] [INFO] 
+[09:46:50] [PROCESS] Collecting statistical tests from analysis pipeline...
+[09:46:50] [WARNING] WARNING: No statistically sound p-value for geographic consistency (CV=0.065) for CODE. Skipping this test.
+[09:46:50] [WARNING] WARNING: No statistically sound p-value for geographic consistency (CV=0.035) for ESA_FINAL. Skipping this test.
+[09:46:50] [WARNING] WARNING: No statistically sound p-value for geographic consistency (CV=0.040) for IGS_COMBINED. Skipping this test.
+[09:46:50] [SUCCESS] Collected 73 statistical tests across 10 analysis families
+[09:46:50] [INFO]   primary_tep: 3 tests
+[09:46:50] [INFO]   cross_validation: 3 tests
+[09:46:50] [INFO]   null_validation: 9 tests
+[09:46:50] [INFO]   advanced_analysis: 55 tests
+[09:46:50] [INFO]   geographic_validation: 3 tests
+[09:46:50] [PROCESS] Applying multiple comparison corrections...
+[09:46:50] [INFO] Applying bonferroni correction...
+[09:46:50] [INFO] Applying fdr_bh correction...
+[09:46:50] [INFO] Applying family_wise correction...
+[09:46:50] [PROCESS] Generating correction summary report...
+[09:46:50] [PROCESS] Creating correction impact visualizations...
+[09:46:52] [SUCCESS] Visualizations saved to results/figures/
+[09:46:52] [INFO] 
+[09:46:52] [INFO] 
+[09:46:52] [INFO] ================================================================================
+[09:46:52] [INFO] MULTIPLE COMPARISON CORRECTION SUMMARY
+[09:46:52] [INFO] ================================================================================
+[09:46:52] [INFO] 
+[09:46:52] [INFO] Total statistical tests analyzed: 73
+[09:46:52] [INFO] Uncorrected significant tests: 68 (93.2%)
+[09:46:52] [SUCCESS] BONFERRONI: 30 significant (41.1%), 55.9% reduction
+[09:46:52] [SUCCESS] FDR_BH: 68 significant (93.2%), 0.0% reduction
+[09:46:52] [SUCCESS] FAMILY_WISE: 33 significant (45.2%), 51.5% reduction
+[09:46:52] [INFO] 
+[09:46:52] [INFO] 
+[09:46:52] [INFO] ================================================================================
+[09:46:52] [INFO] PRIMARY TEP FINDINGS STATUS:
+[09:46:52] [INFO] ================================================================================
+[09:46:52] [INFO] 
+[09:46:52] [SUCCESS] BONFERRONI: ALL primary TEP tests remain significant
+[09:46:52] [SUCCESS] FDR_BH: ALL primary TEP tests remain significant
+[09:46:52] [SUCCESS] FAMILY_WISE: ALL primary TEP tests remain significant
+[09:46:52] [SUCCESS] Multiple comparison corrections completed in 1.6 seconds

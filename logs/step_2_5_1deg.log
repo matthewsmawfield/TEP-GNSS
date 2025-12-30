@@ -1,0 +1,114 @@
+
+Running analysis with 1.0° resolution
+
+======================================================================
+STEP 2.5: DUAL-MOTION GEOMETRIC VALIDATION
+======================================================================
+
+Leveraging existing Step 2.2 computations...
+Adding geometric validation layer...
+
+[0;37m[19:01:59] [INFO] Loading: results/outputs/code_longspan/step_2_2_geospatial_temporal_analysis_code.json[0m
+[0;37m[19:01:59] [INFO] Extracting existing Step 2.2 results...[0m
+[0;37m[19:01:59] [INFO]   ✓ Extracted 8 sectors[0m
+[0;37m[19:01:59] [INFO]   ✓ Extracted 34 temporal windows[0m
+[0;37m[19:01:59] [INFO]   ✓ Hemisphere data: N=34, S=34[0m
+[0;37m[19:01:59] [INFO] Performing 'Clever' Galactic Vector Search...[0m
+Grid search resolution: 1.0°
+  RA steps: 361 (0° to 360° in 1.0° increments)
+  Dec steps: 181 (-90° to +90° in 1.0° increments)
+  Total directions: 65341
+[1;32m[19:02:00] [SUCCESS]   Best Fit: RA=186.0°, Dec=-4.0° (r=0.7465)[0m
+[0;37m[19:02:00] [INFO]   Known Apex: RA=271°, Dec=30°[0m
+[0;37m[19:02:00] [INFO]   Calculating bootstrap confidence intervals...[0m
+[0;37m[19:02:00] [INFO]   95% CI: [0.5712, 0.8766][0m
+[0;37m[19:02:00] [INFO]   Running permutation test (10000 samples)...[0m
+[0;37m[19:02:01] [INFO] Comparing competing models...[0m
+[1;32m[19:02:01] [SUCCESS]   CMB Dipole: R²=0.3568 (35.7% variance explained)[0m
+[0;37m[19:02:01] [INFO]   Solar Apex: R²=0.0001 (0.0% variance explained)[0m
+[0;37m[19:02:01] [INFO] Comparing background models...[0m
+[0;37m[19:02:01] [INFO]   Solar Apex               : r =  0.0073, p = 0.967186[0m
+[1;32m[19:02:01] [SUCCESS]   Best Fit (Grid Search)   : r =  0.7465, p = 0.000000[0m
+[1;32m[19:02:01] [SUCCESS]   CMB Dipole               : r =  0.5973, p = 0.000192[0m
+[0;37m[19:02:01] [INFO]   Null (Orbital Only)      : r = -0.0437, p = 0.806360[0m
+[0;37m[19:02:01] [INFO] Performing geometric angle validation...[0m
+[0;37m[19:02:01] [INFO]   Time-averaged EW/NS ratio: 0.540[0m
+[0;37m[19:02:01] [INFO]   Predicted vs Observed EW/NS: r = -0.0292, p = 0.869733[0m
+[0;37m[19:02:01] [INFO]   Velocity angle vs Observed: r = -0.2567, p = 0.142755[0m
+[0;37m[19:02:01] [INFO] Running statistical tests...[0m
+[0;37m[19:02:01] [INFO]   1/4 tests significant[0m
+[0;37m[19:02:01] [INFO] Assessment: Strong Evidence: CMB Frame Alignment[0m
+
+======================================================================
+VECTOR SEARCH RESULT:
+  Best Fit Vector: RA=186°, Dec=-4°
+  Known Solar Apex: RA=271°, Dec=30°
+    -> Separation from Apex: 88.5°
+  Known CMB Dipole: RA=167°, Dec=-6°
+    -> Separation from CMB:  18.2°
+  Correlation: r=0.7465
+  95% CI: [0.5712, 0.8766]
+======================================================================
+
+
+======================================================================
+PERMUTATION TEST (10,000 random directions):
+  Observed correlation: r=0.7465
+  Random mean: 0.2947
+  Random 95th percentile: 0.5432
+  P-value: 0.000000
+  -> HIGHLY SIGNIFICANT (p < 0.001)
+======================================================================
+
+
+======================================================================
+MODEL COMPARISON:
+  CMB Dipole Model:
+    R² = 0.3568 (35.7% variance explained)
+    RMSE = 0.4957
+    Improvement over null: -136.2%
+  Solar Apex Model:
+    R² = 0.0001 (0.0% variance explained)
+    RMSE = 0.6226
+    Improvement over null: -196.7%
+  Winner: CMB_DIPOLE (advantage: 35.7%)
+======================================================================
+
+
+======================================================================
+BACKGROUND COMPARISON (Geometric Validation Fixed):
+  Testing multiple reference frames with same predictor:
+
+  ✗ FAILED  Solar Apex                    
+       RA=271.96°, Dec= 30.00°
+       r= 0.0073, p=0.967186, R²=0.0001
+       Angular separation from best: 92.4°
+
+  ✓ STRONG  Best Fit (Grid Search)        
+       RA=186.00°, Dec= -4.00°
+       r= 0.7465, p=0.000000, R²=0.5572
+       Angular separation from best: 0.0°
+
+  ○ WEAK  CMB Dipole                    
+       RA=167.94°, Dec= -6.94°
+       r= 0.5973, p=0.000192, R²=0.3568
+       Angular separation from best: 18.3°
+
+  ✗ FAILED  Null (Orbital Only)           
+       RA=  0.00°, Dec= 90.00°
+       r=-0.0437, p=0.806360, R²=0.0019
+       Angular separation from best: 208.4°
+
+======================================================================
+
+[1;32m[19:02:02] [SUCCESS] Saved ultra-minimal heatmap: results/figures/code_longspan/step_2_5_vector_search_heatmap.png[0m
+[0;37m[19:02:02] [INFO] Figure caption: (a) Best fit, (b) CMB dipole, (c) Solar apex[0m
+[0;37m[19:02:02] [INFO] Extracting existing Step 2.2 results...[0m
+[0;37m[19:02:02] [INFO]   ✓ Extracted 8 sectors[0m
+[0;37m[19:02:02] [INFO]   ✓ Extracted 34 temporal windows[0m
+[0;37m[19:02:02] [INFO]   ✓ Hemisphere data: N=34, S=34[0m
+/Users/matthewsmawfield/www/TEP-GNSS/scripts/code_longspan/step_2_5_dual_motion_geometry.py:793: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout(pad=1.5)
+[1;32m[19:02:03] [SUCCESS] Saved enhanced model comparison: results/figures/code_longspan/step_2_5_model_comparison_timeseries.png[0m
+Results saved: results/outputs/code_longspan/step_2_5_dual_motion_geometry.json
+Assessment: Strong Evidence: CMB Frame Alignment

@@ -1,0 +1,207 @@
+[09:26:23] [INFO] TEP GNSS Analysis Package v0.15 (Jaipur) - STEP 4.0: Advanced Analysis
+[09:26:23] [INFO] Focused validation: Elevation, Circular Statistics, Model Comparison, Binning Sensitivity
+[09:26:23] [INFO] 
+------------------------------------------------------------
+[09:26:23] [INFO] 1. ELEVATION DEPENDENCE ANALYSIS (Enhanced with Geomagnetic Stratification)
+[09:26:23] [INFO] ------------------------------------------------------------
+[09:26:23] [INFO] Starting FIXED elevation dependence analysis
+[09:26:23] [INFO] Available memory: 92.2 GB
+[09:26:23] [SUCCESS] Loaded coordinates for 767 ground stations
+[09:26:23] [INFO] Using existing height_m column as elevation
+[09:26:23] [SUCCESS] Created station lookup with 1669 name variants
+[09:26:23] [INFO] Unique stations with geomagnetic coordinates: 718
+[09:26:23] [INFO] Processing elevation analysis for CODE
+[09:26:23] [INFO] Memory before code: 92.2 GB available
+[09:26:23] [INFO] Using Step 2.1 processed data: step_2_1_geospatial_code.csv
+[09:27:08] [SUCCESS] Loaded Step 2.1 processed dataset: 39,047,074 pairs for code
+[09:27:08] [SUCCESS] Loaded 39047074 station pairs for CODE
+[09:27:08] [INFO] Memory after loading code: 84.6 GB available
+[09:28:17] [SUCCESS] Found 39047074 pairs with elevation data for CODE
+[09:28:24] [SUCCESS]   Quintile 1 (-81-79m): λ = 3174 ± 1005 km, R² = 0.829
+[09:28:44] [SUCCESS]   Quintile 2 (79-164m): λ = 4470 ± 2291 km, R² = 0.797
+[09:28:49] [SUCCESS]   Quintile 3 (164-379m): λ = 5287 ± 3982 km, R² = 0.729
+[09:28:54] [SUCCESS]   Quintile 4 (379-713m): λ = 7688 ± 5990 km, R² = 0.824
+[09:29:00] [SUCCESS]   Quintile 5 (713-3688m): λ = 4980 ± 2655 km, R² = 0.800
+[09:29:15] [INFO] Performing geomagnetic-elevation stratified analysis with 39047074 pairs
+[09:29:20] [SUCCESS]   Stratum E1G1 (-81-126m, -80.2-6.9°): λ = 1744 ± 279 km
+[09:29:22] [SUCCESS]   Stratum E1G2 (-81-126m, 6.9-34.9°): λ = 9492 ± 13036 km
+[09:29:25] [SUCCESS]   Stratum E1G3 (-81-126m, 34.9-82.2°): λ = 2087 ± 937 km
+[09:29:27] [SUCCESS]   Stratum E2G1 (126-463m, -80.2-6.9°): λ = 6663 ± 6034 km
+[09:29:29] [SUCCESS]   Stratum E2G2 (126-463m, 6.9-34.9°): λ = 5092 ± 3333 km
+[09:29:32] [SUCCESS]   Stratum E2G3 (126-463m, 34.9-82.2°): λ = 1549 ± 766 km
+[09:29:35] [SUCCESS]   Stratum E3G1 (463-3688m, -80.2-6.9°): λ = 3811 ± 1483 km
+[09:29:38] [SUCCESS]   Stratum E3G2 (463-3688m, 6.9-34.9°): λ = 10575 ± 16461 km
+[09:29:40] [SUCCESS]   Stratum E3G3 (463-3688m, 34.9-82.2°): λ = 2533 ± 1199 km
+[09:29:40] [INFO] Processing elevation analysis for IGS_COMBINED
+[09:29:40] [INFO] Memory before igs_combined: 63.7 GB available
+[09:29:40] [INFO] Using Step 2.1 processed data: step_2_1_geospatial_igs_combined.csv
+[09:29:56] [SUCCESS] Loaded Step 2.1 processed dataset: 12,874,746 pairs for igs_combined
+[09:29:56] [SUCCESS] Loaded 12874746 station pairs for IGS_COMBINED
+[09:29:56] [INFO] Memory after loading igs_combined: 70.5 GB available
+[09:30:19] [SUCCESS] Found 12874746 pairs with elevation data for IGS_COMBINED
+[09:30:21] [SUCCESS]   Quintile 1 (-72-73m): λ = 2616 ± 724 km, R² = 0.834
+[09:30:23] [SUCCESS]   Quintile 2 (73-150m): λ = 2636 ± 697 km, R² = 0.861
+[09:30:24] [SUCCESS]   Quintile 3 (150-372m): λ = 3405 ± 1752 km, R² = 0.698
+[09:30:25] [SUCCESS]   Quintile 4 (372-752m): λ = 5453 ± 3254 km, R² = 0.801
+[09:30:27] [SUCCESS]   Quintile 5 (752-3688m): λ = 5102 ± 2073 km, R² = 0.871
+[09:30:31] [INFO] Performing geomagnetic-elevation stratified analysis with 12874746 pairs
+[09:30:32] [SUCCESS]   Stratum E1G1 (-72-117m, -80.3--0.6°): λ = 2081 ± 377 km
+[09:30:33] [SUCCESS]   Stratum E1G2 (-72-117m, -0.6-24.3°): λ = 4229 ± 1659 km
+[09:30:34] [SUCCESS]   Stratum E1G3 (-72-117m, 24.3-82.2°): λ = 1839 ± 649 km
+[09:30:34] [SUCCESS]   Stratum E2G1 (117-474m, -80.3--0.6°): λ = 3235 ± 1231 km
+[09:30:35] [SUCCESS]   Stratum E2G2 (117-474m, -0.6-24.3°): λ = 14730 ± 41028 km
+[09:30:35] [SUCCESS]   Stratum E2G3 (117-474m, 24.3-82.2°): λ = 1326 ± 533 km
+[09:30:36] [SUCCESS]   Stratum E3G1 (474-3688m, -80.3--0.6°): λ = 5237 ± 2528 km
+[09:30:37] [SUCCESS]   Stratum E3G2 (474-3688m, -0.6-24.3°): λ = 3229 ± 1039 km
+[09:30:37] [SUCCESS]   Stratum E3G3 (474-3688m, 24.3-82.2°): λ = 3351 ± 1838 km
+[09:30:38] [INFO] Processing elevation analysis for ESA_FINAL
+[09:30:38] [INFO] Memory before esa_final: 82.8 GB available
+[09:30:38] [INFO] Using Step 2.1 processed data: step_2_1_geospatial_esa_final.csv
+[09:30:50] [SUCCESS] Loaded Step 2.1 processed dataset: 10,809,084 pairs for esa_final
+[09:30:50] [SUCCESS] Loaded 10809084 station pairs for ESA_FINAL
+[09:30:50] [INFO] Memory after loading esa_final: 83.7 GB available
+[09:31:09] [SUCCESS] Found 10809084 pairs with elevation data for ESA_FINAL
+[09:31:11] [SUCCESS]   Quintile 1 (-72-79m): λ = 2000 ± 517 km, R² = 0.828
+[09:31:12] [SUCCESS]   Quintile 2 (79-166m): λ = 1604 ± 256 km, R² = 0.912
+[09:31:13] [SUCCESS]   Quintile 3 (166-379m): λ = 3478 ± 1493 km, R² = 0.805
+[09:31:14] [SUCCESS]   Quintile 4 (379-754m): λ = 3914 ± 1868 km, R² = 0.811
+[09:31:15] [SUCCESS]   Quintile 5 (754-3688m): λ = 3707 ± 1195 km, R² = 0.875
+[09:31:18] [INFO] Performing geomagnetic-elevation stratified analysis with 10809084 pairs
+[09:31:19] [SUCCESS]   Stratum E1G1 (-72-128m, -80.2--3.3°): λ = 2063 ± 289 km
+[09:31:19] [SUCCESS]   Stratum E1G2 (-72-128m, -3.3-20.7°): λ = 2014 ± 660 km
+[09:31:20] [SUCCESS]   Stratum E1G3 (-72-128m, 20.7-82.2°): λ = 1470 ± 399 km
+[09:31:21] [SUCCESS]   Stratum E2G1 (128-485m, -80.2--3.3°): λ = 3751 ± 1377 km
+[09:31:21] [SUCCESS]   Stratum E2G2 (128-485m, -3.3-20.7°): λ = 20000 ± 76344 km
+[09:31:22] [SUCCESS]   Stratum E2G3 (128-485m, 20.7-82.2°): λ = 1345 ± 491 km
+[09:31:22] [SUCCESS]   Stratum E3G1 (485-3688m, -80.2--3.3°): λ = 9602 ± 8561 km
+[09:31:23] [SUCCESS]   Stratum E3G2 (485-3688m, -3.3-20.7°): λ = 2034 ± 689 km
+[09:31:23] [SUCCESS]   Stratum E3G3 (485-3688m, 20.7-82.2°): λ = 1053 ± 381 km
+[09:31:24] [INFO] Memory after elevation analysis: 92.1 GB available
+[09:31:24] [INFO] 
+------------------------------------------------------------
+[09:31:24] [INFO] 2. REGIONAL JACKKNIFE ANALYSIS (SIMPLIFIED)
+[09:31:24] [INFO] ------------------------------------------------------------
+[09:31:24] [INFO] Running simplified regional jackknife analysis with reduced memory usage
+[09:31:24] [INFO] Starting Simplified Regional Jackknife Analysis
+[09:31:24] [SUCCESS] Loaded coordinates for 767 ground stations
+[09:31:24] [INFO] Simplified regional jackknife analysis for CODE
+[09:31:25] [SUCCESS] Loaded simplified dataset: 1,000,000 pairs for code
+[09:31:27] [INFO] Base dataset: 991789 pairs with coordinates and elevation
+[09:31:27] [INFO]   Testing exclusion of Andes Mountains
+[09:31:27] [INFO]     Excluded 63824 pairs (6.4%)
+[09:31:27] [SUCCESS]     Mean coherence change: -0.0000
+[09:31:27] [INFO] 
+------------------------------------------------------------
+[09:31:27] [INFO] 3. CIRCULAR STATISTICS ANALYSIS
+[09:31:27] [INFO] ------------------------------------------------------------
+[09:31:27] [INFO] Performing circular statistics analysis
+[09:31:27] [INFO] 
+--- Analyzing CODE ---
+[09:31:56] [INFO] Distance | PLV   | Rayleigh p | V-test p | cos(mean) | Current
+[09:31:56] [INFO] ----------------------------------------------------------------------
+[09:31:59] [INFO]      141 | 0.004 |  3.880e-01 |      nan | -0.980 | -0.004
+[09:31:59] [INFO]      236 | 0.120 |  0.000e+00 | 0.000e+00 | +1.000 | +0.120
+[09:31:59] [INFO]      372 | 0.094 |  0.000e+00 | 0.000e+00 | +1.000 | +0.094
+[09:31:59] [INFO]      627 | 0.092 |  0.000e+00 | 0.000e+00 | +0.997 | +0.092
+[09:31:59] [INFO]     1042 | 0.056 |  0.000e+00 | 0.000e+00 | +0.999 | +0.056
+[09:31:59] [INFO]     1730 | 0.058 |  0.000e+00 | 0.000e+00 | +0.996 | +0.058
+[09:31:59] [INFO]     2876 | 0.039 |  0.000e+00 | 0.000e+00 | +0.990 | +0.038
+[09:32:00] [INFO]     4847 | 0.019 |  0.000e+00 | 0.000e+00 | +1.000 | +0.019
+[09:32:01] [INFO]     8112 | 0.002 |  0.000e+00 |      nan | -0.956 | -0.002
+[09:32:01] [INFO] 
+--- Analyzing IGS_COMBINED ---
+[09:32:10] [INFO] Distance | PLV   | Rayleigh p | V-test p | cos(mean) | Current
+[09:32:10] [INFO] ----------------------------------------------------------------------
+[09:32:11] [INFO]      131 | 0.039 |  9.326e-07 | 2.832e-01 | +0.288 | +0.011
+[09:32:11] [INFO]      225 | 0.203 |  0.000e+00 | 1.195e-118 | +0.994 | +0.202
+[09:32:11] [INFO]      361 | 0.131 |  0.000e+00 | 3.842e-198 | +1.000 | +0.131
+[09:32:11] [INFO]      632 | 0.168 |  0.000e+00 | 0.000e+00 | +1.000 | +0.168
+[09:32:11] [INFO]     1055 | 0.110 |  0.000e+00 | 0.000e+00 | +1.000 | +0.110
+[09:32:11] [INFO]     1747 | 0.111 |  0.000e+00 | 0.000e+00 | +0.995 | +0.110
+[09:32:11] [INFO]     2892 | 0.069 |  0.000e+00 | 0.000e+00 | +1.000 | +0.069
+[09:32:11] [INFO]     4840 | 0.032 |  0.000e+00 | 0.000e+00 | +0.992 | +0.031
+[09:32:12] [INFO]     8116 | 0.006 |  0.000e+00 | 3.361e-22 | +0.549 | +0.003
+[09:32:12] [INFO] 
+--- Analyzing ESA_FINAL ---
+[09:32:19] [INFO] Distance | PLV   | Rayleigh p | V-test p | cos(mean) | Current
+[09:32:19] [INFO] ----------------------------------------------------------------------
+[09:32:20] [INFO]      109 | 0.130 |  4.050e-22 | 5.969e-11 | +0.928 | +0.120
+[09:32:20] [INFO]      224 | 0.288 |  0.000e+00 | 1.445e-91 | +0.992 | +0.286
+[09:32:20] [INFO]      381 | 0.218 |  0.000e+00 | 0.000e+00 | +0.999 | +0.218
+[09:32:20] [INFO]      638 | 0.165 |  0.000e+00 | 0.000e+00 | +0.999 | +0.165
+[09:32:20] [INFO]     1056 | 0.159 |  0.000e+00 | 0.000e+00 | +0.999 | +0.159
+[09:32:20] [INFO]     1746 | 0.133 |  0.000e+00 | 0.000e+00 | +0.997 | +0.133
+[09:32:20] [INFO]     2875 | 0.078 |  0.000e+00 | 0.000e+00 | +0.999 | +0.077
+[09:32:20] [INFO]     4837 | 0.031 |  0.000e+00 | 0.000e+00 | +0.975 | +0.030
+[09:32:20] [INFO]     8127 | 0.005 |  0.000e+00 | 1.466e-12 | +0.532 | +0.003
+[09:32:20] [SUCCESS] Circular statistics analysis saved: /mnt/data/results/outputs/step_4_0_circular_statistics_streamlined.json
+[09:32:20] [INFO] 
+------------------------------------------------------------
+[09:32:20] [INFO] 4. RIGOROUS MODEL COMPARISON
+[09:32:20] [INFO] ------------------------------------------------------------
+[09:32:20] [INFO] Starting rigorous model comparison analysis
+[09:32:20] [INFO] 
+------------------------------------------------------------
+[09:32:20] [INFO] 5. BINNING & WEIGHTING SENSITIVITY ANALYSIS
+[09:32:20] [INFO] ------------------------------------------------------------
+[09:32:20] [INFO] Starting comprehensive binning sensitivity analysis
+[09:32:20] [INFO] Processing CODE binning sensitivity
+[09:32:40] [SUCCESS] Loaded 39,088,805 pairs for code sensitivity analysis
+[09:32:40] [PROCESS]   Scenario 1/7: log bins=25, weights=count
+[09:32:43] [SUCCESS]     Success: λ = 4441 km, R² = 0.936
+[09:32:43] [PROCESS]   Scenario 2/7: log bins=40, weights=count
+[09:32:46] [SUCCESS]     Success: λ = 4565 km, R² = 0.912
+[09:32:46] [PROCESS]   Scenario 3/7: log bins=80, weights=count
+[09:32:49] [SUCCESS]     Success: λ = 4480 km, R² = 0.799
+[09:32:49] [PROCESS]   Scenario 4/7: linear bins=40, weights=count
+[09:32:52] [SUCCESS]     Success: λ = 4379 km, R² = 0.923
+[09:32:52] [PROCESS]   Scenario 5/7: quantile bins=40, weights=count
+[09:32:56] [SUCCESS]     Success: λ = 3152 km, R² = 0.933
+[09:32:56] [PROCESS]   Scenario 6/7: log bins=40, weights=sqrt_count
+[09:32:59] [SUCCESS]     Success: λ = 4836 km, R² = 0.757
+[09:32:59] [PROCESS]   Scenario 7/7: log bins=40, weights=none
+[09:33:02] [SUCCESS]     Success: λ = 11122 km, R² = 0.294
+[09:33:02] [SUCCESS] Completed 7 successful fits for code
+[09:33:02] [INFO] Processing IGS_COMBINED binning sensitivity
+[09:33:08] [SUCCESS] Loaded 12,882,748 pairs for igs_combined sensitivity analysis
+[09:33:08] [PROCESS]   Scenario 1/7: log bins=25, weights=count
+[09:33:09] [SUCCESS]     Success: λ = 3765 km, R² = 0.963
+[09:33:09] [PROCESS]   Scenario 2/7: log bins=40, weights=count
+[09:33:10] [SUCCESS]     Success: λ = 3806 km, R² = 0.946
+[09:33:10] [PROCESS]   Scenario 3/7: log bins=80, weights=count
+[09:33:11] [SUCCESS]     Success: λ = 3777 km, R² = 0.887
+[09:33:11] [PROCESS]   Scenario 4/7: linear bins=40, weights=count
+[09:33:12] [SUCCESS]     Success: λ = 3753 km, R² = 0.952
+[09:33:12] [PROCESS]   Scenario 5/7: quantile bins=40, weights=count
+[09:33:14] [SUCCESS]     Success: λ = 2652 km, R² = 0.894
+[09:33:14] [PROCESS]   Scenario 6/7: log bins=40, weights=sqrt_count
+[09:33:15] [SUCCESS]     Success: λ = 4817 km, R² = 0.810
+[09:33:15] [PROCESS]   Scenario 7/7: log bins=40, weights=none
+[09:33:16] [SUCCESS]     Success: λ = 16279 km, R² = 0.324
+[09:33:16] [SUCCESS] Completed 7 successful fits for igs_combined
+[09:33:16] [INFO] Processing ESA_FINAL binning sensitivity
+[09:33:21] [SUCCESS] Loaded 10,809,084 pairs for esa_final sensitivity analysis
+[09:33:21] [PROCESS]   Scenario 1/7: log bins=25, weights=count
+[09:33:22] [SUCCESS]     Success: λ = 3303 km, R² = 0.966
+[09:33:22] [PROCESS]   Scenario 2/7: log bins=40, weights=count
+[09:33:22] [SUCCESS]     Success: λ = 3396 km, R² = 0.941
+[09:33:22] [PROCESS]   Scenario 3/7: log bins=80, weights=count
+[09:33:23] [SUCCESS]     Success: λ = 3343 km, R² = 0.900
+[09:33:23] [PROCESS]   Scenario 4/7: linear bins=40, weights=count
+[09:33:24] [SUCCESS]     Success: λ = 3362 km, R² = 0.941
+[09:33:24] [PROCESS]   Scenario 5/7: quantile bins=40, weights=count
+[09:33:25] [SUCCESS]     Success: λ = 2513 km, R² = 0.914
+[09:33:25] [PROCESS]   Scenario 6/7: log bins=40, weights=sqrt_count
+[09:33:26] [SUCCESS]     Success: λ = 3791 km, R² = 0.837
+[09:33:26] [PROCESS]   Scenario 7/7: log bins=40, weights=none
+[09:33:27] [SUCCESS]     Success: λ = 7357 km, R² = 0.406
+[09:33:27] [SUCCESS] Completed 7 successful fits for esa_final
+[09:33:27] [INFO] CODE Summary: λ CV = 49.8%, R² CV = 29.1%
+[09:33:27] [INFO] IGS_COMBINED Summary: λ CV = 86.0%, R² CV = 27.5%
+[09:33:27] [INFO] ESA_FINAL Summary: λ CV = 41.0%, R² CV = 23.4%
+[09:33:27] [INFO] 
+================================================================================
+[09:33:27] [INFO] STEP 4.0 ADVANCED ANALYSIS COMPLETE
+[09:33:27] [INFO] ================================================================================
+[09:33:27] [SUCCESS] Results saved: /mnt/data/results/outputs/step_4_0_advanced_analysis.json
+[09:33:27] [INFO] Note: Anisotropy/azimuth analyses are performed in Step 2.2.

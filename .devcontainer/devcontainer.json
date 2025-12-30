@@ -1,0 +1,39 @@
+{
+  "name": "TEP-GNSS Analysis Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black"
+      }
+    }
+  },
+  "postCreateCommand": "pip install -r requirements/requirements.txt",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/tep-gnss,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspaces/tep-gnss",
+  "runArgs": [
+    "--shm-size=16g"
+  ],
+  "containerEnv": {
+    "TEP_WORKERS": "32",
+    "TEP_MEMORY_LIMIT_GB": "24",
+    "TEP_BOOTSTRAP_ITER": "2000",
+    "PYTHONUNBUFFERED": "1"
+  }
+}

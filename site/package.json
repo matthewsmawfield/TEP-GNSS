@@ -1,0 +1,42 @@
+{
+  "name": "tep-gnss-site",
+  "version": "1.0.0",
+  "description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "dev:old": "lsof -ti:8347 | xargs kill -9 2>/dev/null || true && python3 -m http.server 8347",
+    "start": "python3 -m http.server 8000",
+    "build": "node build.js",
+    "build:dev": "npm run build && cd dist && python3 -m http.server 8348",
+    "build:markdown": "npm run build && node html-to-markdown.js",
+    "markdown": "node html-to-markdown.js",
+    "serve": "python3 -m http.server",
+    "serve:dist": "cd dist && python3 -m http.server 8349",
+    "deploy": "../deploy.sh",
+    "sync-figures": "../scripts/utils/sync_figures.sh"
+  },
+  "keywords": [
+    "TEP-GNSS",
+    "GNSS",
+    "atomic clocks",
+    "temporal equivalence principle",
+    "physics"
+  ],
+  "author": "Matthew Lukin Smawfield <matthewsmawfield@gmail.com>",
+  "license": "CC-BY-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matthewsmawfield/TEP-GNSS.git"
+  },
+  "homepage": "https://matthewsmawfield.github.io/TEP-GNSS/",
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "live-server": "^1.2.2",
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "python": ">=3.10"
+  }
+}

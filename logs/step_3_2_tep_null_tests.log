@@ -1,0 +1,53 @@
+[00:22:41] [DEBUG] Memory usage in run_null_test_from_file start - station: RSS=256.88 MB, VMS=37921.77 MB
+[00:22:41] [DEBUG]     Loaded 100,000 rows from step_3_2_temp_data_esa_final_station.parquet
+[00:22:41] [INFO]     Applying station scrambling to 100000 station pairs...
+[00:22:41] [PROCESS]     Station scrambling: Processing 912 unique days...
+[00:22:41] [INFO]       Progress: 100/912 days processed...
+[00:22:41] [INFO]       Progress: 200/912 days processed...
+[00:22:41] [INFO]       Progress: 300/912 days processed...
+[00:22:41] [INFO]       Progress: 400/912 days processed...
+[00:22:41] [INFO]       Progress: 500/912 days processed...
+[00:22:41] [INFO]       Progress: 600/912 days processed...
+[00:22:41] [INFO]       Progress: 700/912 days processed...
+[00:22:41] [INFO]       Progress: 800/912 days processed...
+[00:22:41] [INFO]       Progress: 900/912 days processed...
+[00:22:41] [INFO]     Station scrambling completed: 912 days processed
+[00:22:41] [INFO]     Computing great-circle distances for 100000 pairs...
+[00:22:41] [INFO]     Found 100000/100000 pairs with valid coordinates
+[00:22:41] [INFO]     Calculating distances for 100000 pairs (vectorized)...
+[00:22:42] [INFO]     Calculating distances for 100000 pairs using cache...
+[00:22:42] [INFO]     Distance computation completed: 100000 valid pairs
+[00:22:42] [INFO]     Binning 100000 pairs into 40 distance bins...
+[00:22:42] [INFO]     Created 24 bins with sufficient data for fitting
+[00:22:42] [DEBUG] Memory usage in run_null_test_from_file end - station: RSS=401.65 MB, VMS=38712.48 MB
+[00:22:42] [INFO]         Iteration 200: λ = 1919.2 km, R² = 0.081 [HIGH]
+[00:22:42] [DEBUG]     Batch 200 completed, memory cleaned
+[00:22:42] [SUCCESS] Station null: λ = 4009.0 ± 4301.5 km, R² = 0.042 ± 0.065
+[00:22:42] [INFO]     Above baseline: 47/200 (23.5%) exceed R² > 0.06
+[00:22:42] [DEBUG]     Cleaned up temporary file: step_3_2_temp_data_esa_final_station.parquet
+[00:22:42] [DEBUG]     Memory cleaned after station null test completion
+[00:22:42] [INFO] Checkpoint saved: station test completed
+[00:22:42] [INFO] All null tests completed - checkpoint cleaned up
+[00:22:42] [SUCCESS] Validation results saved: /Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_3_2_null_tests_esa_final.json
+[00:22:42] [INFO] 
+================================================================================
+[00:22:42] [INFO] 
+[00:22:42] [INFO] ================================================================================
+[00:22:42] [INFO] NULL HYPOTHESIS TESTING COMPLETE
+[00:22:42] [INFO] ================================================================================
+[00:22:42] [INFO] 
+[00:22:42] [INFO] ================================================================================
+[00:22:42] [SUCCESS] Validation Summary:
+[00:22:42] [INFO]   IGS_COMBINED: Real signal λ = 3763.6 km, R² = 0.966
+[00:22:42] [SUCCESS]     Distance null: SIGNIFICANT difference (p = 0.0050, z = 18.9)
+[00:22:42] [SUCCESS]     Phase null: SIGNIFICANT difference (p = 0.0050, z = 18.6)
+[00:22:42] [SUCCESS]     Station null: SIGNIFICANT difference (p = 0.0050, z = 17.5)
+[00:22:42] [INFO]   ESA_FINAL: Real signal λ = 3329.8 km, R² = 0.970
+[00:22:42] [SUCCESS]     Distance null: SIGNIFICANT difference (p = 0.0050, z = 16.5)
+[00:22:42] [SUCCESS]     Phase null: SIGNIFICANT difference (p = 0.0050, z = 18.3)
+[00:22:42] [SUCCESS]     Station null: SIGNIFICANT difference (p = 0.0050, z = 14.4)
+[00:22:42] [INFO] Execution time: 33520.8 seconds
+[00:22:42] [INFO] Null test analysis: 6/6 scrambling tests show statistically significant signal destruction
+[00:22:42] [SUCCESS] TEP signal validation: CONFIRMED - All scrambling tests show statistically significant signal destruction
+[00:22:42] [SUCCESS] Scientific interpretation: Scrambled data consistently shows much weaker correlations than real data
+[00:22:42] [DEBUG] Memory usage in main function end: RSS=1326.68 MB, VMS=40050.95 MB

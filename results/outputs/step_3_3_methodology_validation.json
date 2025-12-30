@@ -1,0 +1,72 @@
+{
+  "validation_results": {
+    "summary": {
+      "validation_passed": true,
+      "validation_score": 1.0,
+      "key_findings": [
+        "\u2705 CODE: Distribution-neutral validation passed. R\u00b2 changed by 0.059.",
+        "\u2705 ESA_FINAL: Distribution-neutral validation passed. R\u00b2 changed by 0.092.",
+        "\u2705 IGS_COMBINED: Distribution-neutral validation passed. R\u00b2 changed by 0.095.",
+        "\u2705 CODE: Geometric control passed. Real R\u00b2 (0.920) is significantly higher than synthetic artifacts (max 0.065).",
+        "\u2705 ESA_FINAL: Geometric control passed. Real R\u00b2 (0.970) is significantly higher than synthetic artifacts (max 0.101).",
+        "\u2705 IGS_COMBINED: Geometric control passed. Real R\u00b2 (0.968) is significantly higher than synthetic artifacts (max 0.051).",
+        "\u2705 TEP signal R\u00b2 (0.953) significantly exceeds max artifact R\u00b2 (0.050).",
+        "\u2705 Strong signal-to-bias ratio of 19.1x confirms robust discrimination.",
+        "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
+      ],
+      "timestamp": "2025-10-08T03:56:38.599439",
+      "methodology_version": "2.0 (Watertight Implementation)",
+      "bias_envelope_r2": -152949.44249023474,
+      "multi_center_cv": "N/A",
+      "scale_separation_ratio": 6.262744201322673
+    },
+    "details": {
+      "distribution_neutral": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "\u2705 CODE: Distribution-neutral validation passed. R\u00b2 changed by 0.059.",
+          "\u2705 ESA_FINAL: Distribution-neutral validation passed. R\u00b2 changed by 0.092.",
+          "\u2705 IGS_COMBINED: Distribution-neutral validation passed. R\u00b2 changed by 0.095."
+        ]
+      },
+      "geometric_control": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "\u2705 CODE: Geometric control passed. Real R\u00b2 (0.920) is significantly higher than synthetic artifacts (max 0.065).",
+          "\u2705 ESA_FINAL: Geometric control passed. Real R\u00b2 (0.970) is significantly higher than synthetic artifacts (max 0.101).",
+          "\u2705 IGS_COMBINED: Geometric control passed. Real R\u00b2 (0.968) is significantly higher than synthetic artifacts (max 0.051)."
+        ]
+      },
+      "multi_center_consistency": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": []
+      },
+      "scale_separation": {
+        "passed": true,
+        "validation_score": 1.0,
+        "key_findings": [
+          "\u2705 Strong length scale separation (6.3x) confirms distinct physical processes."
+        ],
+        "separation_ratio": 6.262744201322673
+      }
+    }
+  },
+  "bias_characterization_results": {
+    "summary": {
+      "max_artifact_r2": -152949.44249023474,
+      "overall_max_artifact_r2": 0.05,
+      "signal_to_bias_ratio": 19.058136725436622
+    },
+    "details": {
+      "passed": true,
+      "validation_score": 1.0,
+      "key_findings": [
+        "\u2705 TEP signal R\u00b2 (0.953) significantly exceeds max artifact R\u00b2 (0.050).",
+        "\u2705 Strong signal-to-bias ratio of 19.1x confirms robust discrimination."
+      ]
+    }
+  }
+}
