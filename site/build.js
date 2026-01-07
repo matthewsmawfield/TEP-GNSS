@@ -76,7 +76,7 @@ async function buildStaticSite() {
         fs.writeFileSync(outputPath, staticContent, 'utf8');
         
         // Copy necessary static assets to dist
-        const assetDirs = ['public', 'figures', 'data'];
+        const assetDirs = ['public', 'figures', 'data', 'styles'];
         for (const assetDir of assetDirs) {
             const srcPath = path.join(__dirname, assetDir);
             const destPath = path.join(distDir, assetDir);

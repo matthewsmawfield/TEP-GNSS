@@ -4,7 +4,7 @@
 **Version:** v0.23 (Jaipur)  
 **Date:** First published: 17 September 2025 · Last updated: 23 November 2025  
 **DOI:** 10.5281/zenodo.17127229  
-**Generated:** 2026-01-03  
+**Generated:** 2026-01-07  
 
 ---
 
@@ -3472,31 +3472,6 @@ Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4
                 - **Statistical Rigor:** Added comprehensive systematic effects analysis including atmospheric loading, processing artifacts, and autocorrelation corrections
 
                 - **Fresh Pipeline Results:** Complete pipeline re-run with enhanced methodology producing updated figures and validation results across all 23 analysis steps
-
-        [← Home](/)
-        
-### TEP Research Series
-
-        - [Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed 18 Aug 2025](/tep/theory/)
-
-        - [Global Time Echoes: Distance-Structured Correlations in GNSS Clocks 17 Sep 2025](/tep/gnss-i/)
-
-        - [25-Year Temporal Evolution of Distance-Structured Correlations in GNSS 3 Nov 2025](/tep/gnss-ii/)
-
-        - [Global Time Echoes: Raw RINEX Validation 17 Dec 2025](/tep/gnss-iii/)
-
-        - [Temporal-Spatial Coupling in Gravitational Lensing 19 Dec 2025](/tep/gl/)
-
-        - [Global Time Echoes: Empirical Validation of TEP 21 Dec 2025](/tep/gte/)
-
-        - [Universal Critical Density: Unifying Atomic, Galactic, and Compact Object Scales 28 Dec 2025](/tep/ucd/)
-
-        - [The Soliton Wake: Identifying RBH-1 as a Gravitational Soliton 28 Dec 2025](/tep/rbh/)
-
-        - [Global Time Echoes: Optical Validation of TEP via Satellite Laser Ranging 30 Dec 2025](/tep/slr/)
-
-        ← Previous
-        Next →
 
 ---
 
