@@ -3451,28 +3451,6 @@ Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4
 
         [matthewsmawfield@gmail.com](mailto:matthewsmawfield@gmail.com)
 
-**Experimental Section:**
-
-## Version v0.23 Updates
-
-                - **Methodology Clarification:** Updated prediction timeline documentation to clearly establish hypothesis-driven approach
-
-                - **Enhanced Presentation:** Added methodology sections and improved visual formatting for better clarity
-
-## Version v0.23 Updates
-
-                - **Documentation Improvements:** Enhanced site formatting and presentation for better readability
-
-                - **Content Editing:** Refined manuscript content and improved version history organization
-
-## Version v0.23 Updates
-
-                - **Bootstrap Enhancement:** Increased bootstrap iterations from 1,000 to 5,000 for more robust confidence intervals and statistical validation
-
-                - **Statistical Rigor:** Added comprehensive systematic effects analysis including atmospheric loading, processing artifacts, and autocorrelation corrections
-
-                - **Fresh Pipeline Results:** Complete pipeline re-run with enhanced methodology producing updated figures and validation results across all 23 analysis steps
-
 ---
 
 *This document was automatically generated from the TEP-GNSS research site. For the interactive version with figures and enhanced formatting, visit: https://matthewsmawfield.github.io/TEP-GNSS/*
