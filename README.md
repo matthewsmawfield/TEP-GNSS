@@ -156,6 +156,50 @@ python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravita
 - Provides persistent results storage through Google Drive integration
 - Optimized for high-performance cloud computing resources
 
+## Summary of Key Results and Findings
+
+### Primary Results Table
+
+| Metric | Value | Uncertainty | Significance |
+|--------|-------|-------------|--------------|
+| **Dataset Size** | 62.7 million station pairs | — | 364 unique stations |
+| **Temporal Coverage** | 912 days | 2023-01-01 to 2025-06-30 | 2.5 years |
+| **Correlation Length (λ)** | 3,330–4,549 km | CODE: 1,198–5,918 km (95% CI) | Matches TEP prediction (1,000–10,000 km) |
+| **Exponential Fit Quality (R²)** | 0.920–0.970 | Across 3 centers | On distance-bin means (Neff ≈ 25–28) |
+| **Inter-Center Consistency** | CV = 12.9% | CODE, IGS, ESA | Processing-independent |
+
+### Multi-Center Validation
+
+| Analysis Center | Station Pairs | Correlation Length (λ) | R² |
+|-----------------|---------------|------------------------|-----|
+| **CODE** | 39.0 million | 4,201 ± 1,967 km | 0.970 |
+| **IGS Combined** | 12.9 million | 3,330 km | 0.948 |
+| **ESA** | 10.8 million | 4,549 km | 0.920 |
+
+### Geophysical and Astronomical Signatures
+
+| Signature | Correlation/Value | p-value | Status |
+|-----------|-------------------|---------|--------|
+| **Orbital Velocity Coupling** | r = −0.571 to −0.793 | p < 10⁻⁷ | Detected |
+| **Chandler Wobble Modulation** | R² = 0.377–0.471 | p < 10⁻⁵ | Detected |
+| **Planetary Events** | 6 Bonferroni-significant | — | Detected |
+| **Diurnal Temporal Variations** | Synchronized AM peaks | p < 10⁻⁵ | Detected |
+
+### Validation Statistics
+
+| Test | Result | Interpretation |
+|------|--------|----------------|
+| **Null Test Enhancement** | 24–61× | Signal vs randomized controls |
+| **FDR-BH Correction** | 203/388 tests (52.3%) | Survive multiple comparison |
+| **Bonferroni Correction** | 155/388 tests (40.0%) | Survive strictest correction |
+| **TID Exclusion Improvement** | 21–23% | Signal improves when excluding high-ionosphere periods |
+
+### Key Interpretation
+
+These findings reveal a previously undetected structure in global atomic clock networks: timing correlations that decay exponentially with distance at planetary scales. The consistency across three independent analysis centers (CODE, IGS, ESA) rules out center-specific processing artifacts. The correlation length of ~4,000 km—comparable to Earth's radius—matches TEP's a priori prediction for a conformal time-field coupled to gravitational potential gradients. The detection of orbital velocity coupling and planetary event responses suggests the signal is coupled to Earth's motion through the solar system, consistent with a preferred cosmological reference frame (CMB rest frame).
+
+---
+
 ## Principal Results
 
 Analysis of 62.7 million station-pair measurements across 364 total unique stations (selected from 767 total cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
