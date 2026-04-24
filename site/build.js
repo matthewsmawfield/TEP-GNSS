@@ -130,11 +130,12 @@ async function buildStaticSite() {
         console.log('📝 Generating markdown version...');
         const { HTMLToMarkdownConverter } = require('./html-to-markdown.js');
         const converter = new HTMLToMarkdownConverter();
-        await converter.convertSiteToMarkdown();
+        const markdownPath = await converter.convertSiteToMarkdown();
+        const markdownFilename = path.basename(markdownPath);
         
         console.log('✅ Static site built successfully!');
         console.log(`📁 Output: ${outputPath}`);
-        console.log('📄 Markdown: manuscript.md (in root)');
+        console.log(`📄 Markdown: ${markdownFilename} (in root)`);
         console.log(`📊 Generated ${manifest.sections.length} sections`);
         console.log('🚀 Ready for deployment');
         

@@ -180,7 +180,7 @@ class HTMLToMarkdownConverter {
             .trim() : 'v0.18 (Jaipur)';
         
         const dateMatch = html.match(/<div[^>]*class=["'][^"']*date[^"']*["'][^>]*>(.*?)<\/div>/i);
-        const date = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, '').trim() : 'First published: 17 September 2025 · Last updated: 13 October 2025';
+        const date = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, '').trim() : 'First published: 17 September 2025 · Last updated: 24 April 2026';
         
         const doiMatch = html.match(/DOI:\s*<a[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/i);
         const doi = doiMatch ? doiMatch[2] : '10.5281/zenodo.17127229';
@@ -215,6 +215,33 @@ class HTMLToMarkdownConverter {
     }
 
     /**
+     * Get version info from VERSION.json for filename generation
+     */
+    getVersionInfo() {
+        try {
+            const versionPath = path.join(__dirname, '..', 'VERSION.json');
+            if (fs.existsSync(versionPath)) {
+                const versionData = JSON.parse(fs.readFileSync(versionPath, 'utf8'));
+                return {
+                    version: versionData.version || '0.24',
+                    codename: versionData.codename || 'Jaipur'
+                };
+            }
+        } catch (e) {
+            console.warn('⚠️  Could not read VERSION.json, using defaults');
+        }
+        return { version: '0.24', codename: 'Jaipur' };
+    }
+
+    /**
+     * Generate markdown filename based on version info
+     */
+    generateMarkdownFilename() {
+        const { version, codename } = this.getVersionInfo();
+        return `1-TEP-GNSS-v${version}-${codename}.md`;
+    }
+
+    /**
      * Convert the built HTML site to markdown
      */
     async convertSiteToMarkdown() {
@@ -241,8 +268,9 @@ class HTMLToMarkdownConverter {
             // Build the complete markdown document
             const markdown = this.buildMarkdownDocument(metadata, markdownContent);
             
-            // Write to file
-            const outputPath = path.join(__dirname, '..', 'manuscript.md');
+            // Generate dynamic filename based on version
+            const filename = this.generateMarkdownFilename();
+            const outputPath = path.join(__dirname, '..', filename);
             fs.writeFileSync(outputPath, markdown, 'utf8');
             
             console.log('✅ Markdown conversion complete!');
@@ -268,17 +296,24 @@ class HTMLToMarkdownConverter {
         // Clean up the title to remove the author part
         const cleanTitle = metadata.title.replace(' | Matthew Lukin Smawfield', '');
         
+        // Clean up content - remove leading indentation from paragraphs
+        const cleanedContent = content
+            .split('\n')
+            .map(line => line.replace(/^[ \t]+/, ''))  // Remove leading whitespace from each line
+            .join('\n')
+            .replace(/\n{3,}/g, '\n\n');  // Collapse multiple blank lines to double newline
+        
         return `# ${cleanTitle}
-
-**Author:** ${metadata.author}  
-**Version:** ${metadata.version}  
-**Date:** ${metadata.date}  
-**DOI:** ${metadata.doi}  
-**Generated:** ${timestamp}  
+${metadata.author}
+Version: ${metadata.version}
+${metadata.date}
+DOI: ${metadata.doi}
+Paper: 1 (TEP-GNSS I: Multi-Center Analysis)
+Theory Paper: 0 (Smawfield 2025, TEP v0.7 Jakarta, DOI: 10.5281/zenodo.16921911)
 
 ---
 
-${content}
+${cleanedContent}
 
 ---
 
