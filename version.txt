@@ -1,0 +1,5 @@
+v0.24 (Jaipur) - Topology Nomenclature Update
+
+- Adopted continuous Temporal Topology framework (replaces discrete screening terminology)
+- Formalized Temporal Shear nomenclature for field gradient suppression
+- Aligned screening descriptions with continuous geometric profiles per theory paper v0.7
