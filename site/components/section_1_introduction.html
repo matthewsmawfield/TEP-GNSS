@@ -7,7 +7,7 @@
     >
     represents a fundamental extension to Einstein's General Relativity,
     proposing that gravitational fields couple directly to atomic transition
-    frequencies through a conformal rescaling of spacetime. This framework
+    frequencies through a conformal rescaling of the matter metric. This framework
     builds upon extensive theoretical work in scalar-tensor gravity (Damour
     &amp; Polyakov 1994; Damour &amp; Nordtvedt 1993) and varying constants
     theories (Barrow &amp; Magueijo 1999; Uzan 2003). The coupling, if present,
@@ -39,8 +39,8 @@
 
 <p>
     Form and Justification of the Conformal Coupling: The TEP framework posits a
-    conformal factor $A(\phi) = \exp(2\beta\phi/M_{\text{Pl}})$ that rescales
-    the spacetime metric, where $\phi$ is a scalar field, $\beta$ is a
+    conformal factor $A(\phi) = \exp(\beta\phi/M_{\text{Pl}})$, with matter metric $\tilde{g}_{\mu\nu} = A^2(\phi)g_{\mu\nu}$, that rescales
+    the matter metric, where $\phi$ is a scalar field, $\beta$ is a
     dimensionless coupling constant, and $M_{\text{Pl}}$ is the Planck mass.
     This specific exponential form arises from three fundamental requirements:
     (1) <em>Dimensional consistency</em>—β/M<sub>Pl</sub> provides the unique
@@ -50,15 +50,14 @@
     and (3) <em>Observational constraints</em>—this form naturally accommodates
     Parametrized Post-Newtonian (PPN) bounds through the standard scalar-tensor
     relation γ − 1 = −2α₀²/(1+α₀²), where α₀ ≡ (d ln A/dφ)|<sub>today</sub> =
-    2β/M<sub>Pl</sub> in natural units. Near massive bodies, the suppression of
-    Temporal Shear (vanishing field gradient) reduces the effective coupling to
-    α_eff ≪ α₀, cleanly preserving PPN bounds without invoking rigid thin-shell
+    β/M<sub>Pl</sub> in natural units. Near massive bodies, the suppression of
+    Temporal Shear (vanishing field gradient) reduces the locally active scalar charge to
+    α<sub>PPN</sub><sub>eff</sub> ≪ α<sub>0</sub>, cleanly preserving PPN bounds without invoking rigid thin-shell
     approximations (Smawfield 2025, Section 7). The universality of the
     coupling—all matter sees the same modified metric g̃<sub>μν</sub>
-    = A(φ)g<sub>μν</sub>—preserves the equivalence principle in the matter frame
+    = A²(φ)g<sub>μν</sub>—preserves the equivalence principle in the matter frame
     while allowing for testable violations in the gravitational sector. In this
-    modified spacetime, proper time transforms as $d\tau \approx A(\phi)^{1/2}
-    dt$. In the weak-field limit, atomic transition frequencies acquire a
+    modified spacetime, proper time transforms as dτ̃ = A(φ)dτ<sub>g</sub>. In the weak-field limit, atomic transition frequencies acquire a
     fractional frequency shift:
 </p>
 
@@ -69,8 +68,8 @@
 <p>
     For a screened scalar field with exponential correlation function
     $\text{Cov}[\phi(\mathbf{x}), \phi(\mathbf{x}+\mathbf{r})] \propto
-    \exp(-r/\lambda)$, the observable clock frequency correlations inherit the
-    same characteristic length $\lambda$.
+    \exp(-r/\lambda_{\mathrm{T}})$, the observable clock frequency correlations inherit the
+    same characteristic Temporal Topology length $\lambda_{\mathrm{T}}$.
 </p>
 
 <p>
@@ -94,8 +93,8 @@
 </p>
 
 <p>
-    Compton Energy Scale: For the observed correlation lengths λ = 3,330–4,549
-    km, the corresponding field mass is mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (using ħc =
+    Compton Energy Scale: For the observed Temporal Topology correlation lengths
+    λ<sub>T</sub> = 3,330–4,549 km, the corresponding field mass is mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (using ħc =
     197.326 MeV·fm). This mass scale is consistent with the continuous Temporal
     Topology framework, where the effective field mass varies with local matter
     density and electromagnetic field strength in the terrestrial environment.
@@ -103,7 +102,7 @@
 
 <p>
     Theoretical Context: TEP builds upon a two-metric framework where matter
-    couples to a causal metric g̃<sub>μν</sub> = A(φ)g<sub>μν</sub>, while
+    couples to a causal metric g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub>, while
     gravity is described by the standard metric g<sub>μν</sub>. GNSS correlation
     analysis would probe the spatial structure of the underlying φ field,
     providing complementary evidence to direct tests of TEP's primary
@@ -123,26 +122,24 @@
     <p style="margin: 0; font-size: 14px">
         <strong>Historical Context and Prediction Timeline:</strong> The TEP
         theoretical framework was developed independently of the present GNSS
-        analysis, with specific quantitative predictions established in prior
+        analysis, with pre-specified expectations and theoretical search ranges established in prior
         theoretical work (Smawfield, 2025;
         <a href="https://doi.org/10.5281/zenodo.16921911" style="color: #495773"
             >DOI: 10.5281/zenodo.16921911</a
-        >). The predicted correlation length range λ = 1,000–10,000 km was
-        derived from environmental screening theory before any GNSS data
-        analysis. The observed results (λ = 3,330–4,549 km) represent a
-        successful a priori prediction, following the established scientific
-        methodology where theoretical predictions precede experimental
-        confirmation, as demonstrated in Einstein's General Relativity
-        validation. Following this primary confirmation, additional
-        investigations of derived predictions were conducted—a standard approach
-        in physics, as seen in General Relativity's validation where Einstein's
-        initial predictions were confirmed before testing derived consequences.
+        >). The predicted Temporal Topology correlation length range λ<sub>T</sub> = 1,000–10,000 km was
+        specified as a theoretically motivated prior search range before the present GNSS
+        analysis. The observed results (λ<sub>T</sub> = 3,330–4,549 km) represent
+        consistency with the pre-specified theoretically motivated search range. Following this primary consistency check, additional investigations of derived predictions were conducted.
     </p>
 </div>
 
+<p>
+    <strong>Manuscript Series Context:</strong> This paper reports the initial multi-centre validation using 2-year data from CODE, IGS, and ESA. Two companion manuscripts extend this foundation: Paper 2 (TEP-GNSS-II) presents a 25-year longitudinal analysis using CODE data spanning 1999–2025, and Paper 3 (TEP-GNSS-RINEX) validates the signal in raw, unprocessed RINEX data. This separation preserves methodological clarity—each manuscript addresses distinct validation strategies while building a convergent evidence base.
+</p>
+
 <h2>1.2 Testable Predictions</h2>
 <p>
-    The TEP theory makes specific, quantitative predictions testable with
+    The TEP theory establishes testable expectations with
     current technology:
 </p>
 
@@ -231,7 +228,7 @@
                         vertical-align: top;
                     "
                 >
-                    <strong>Correlation Length (λ)</strong>
+                    <strong>Temporal Topology Correlation Length (λ<sub>T</sub>)</strong>
                 </td>
                 <td
                     style="
@@ -240,8 +237,8 @@
                         vertical-align: top;
                     "
                 >
-                    Compton wavelength of environmentally-screened scalar field.
-                    Predicted range: 1,000–10,000 km.
+                    Temporal Topology covariance scale; Compton-mass interpretation is completion-dependent.
+                    Specified range: 1,000–10,000 km.
                 </td>
                 <td
                     style="
@@ -250,8 +247,8 @@
                         vertical-align: top;
                     "
                 >
-                    <strong>Observed:</strong> λ = 3,330–4,549 km, falling
-                    squarely within the predicted range (Sec 3.1.1).
+                    <strong>Observed:</strong> λ<sub>T</sub> = 3,330–4,549 km, falling
+                    within the pre-specified search range (Sec 3.1.1).
                 </td>
             </tr>
             <tr style="background-color: rgba(73, 87, 115, 0.03)">
@@ -303,7 +300,7 @@
                         vertical-align: top;
                     "
                 >
-                    A physical phenomenon should be independent of the
+                    A persistent physical effect should not depend sensitively on a single
                     processing methodology.
                 </td>
                 <td
@@ -314,7 +311,7 @@
                     "
                 >
                     <strong>Observed:</strong> Three independent centers
-                    converge on the same physical parameters (CV of λ = 18.2%),
+                    converge on the same physical parameters (CV of λ<sub>T</sub> = 18.2%),
                     ruling out center-specific artifacts (Sec 3.1.1, 4.1).
                 </td>
             </tr>
@@ -353,6 +350,14 @@
         </tbody>
     </table>
 </div>
+
+<p>
+    The 25-year baseline enables detection of long-period signatures inaccessible
+    in the shorter Paper 1 analysis; the seven signatures are reported together
+    because they all arise from the same dataset and their collective pattern
+    constitutes the discriminating evidence. Individual papers for each signature
+    would fragment the statistical argument.
+</p>
 
 <h2>1.3 Why GNSS Provides an Ideal Test</h2>
 <p>

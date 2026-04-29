@@ -31,7 +31,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #495773;">Correlation Length (λ)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Temporal Topology Correlation Length (λ<sub>T</sub>)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">3,330–4,549 km</td>
                     <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined)</td>
                 </tr>
@@ -107,10 +107,10 @@
         <li>Cross-Center Validation Achievement: Three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns (12 frequency bands), achieving optimal R² values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This represents a crucial validation milestone, substantially reducing center-specific systematic biases and supporting signal authenticity through independent processing methodologies.</li>
         <li>Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
         <li>Venus 2f Harmonic Identified: A dominant ~112-day harmonic consistent with the Venus 2f expectation (112.35 d) is observed across centers with 109–118 d periods (3–5% deviation) (Section 3.3.2). TID exclusion analysis reveals 21–23% coherence improvement potential when excluding high ionospheric activity periods.</li>
-        <li>Statistical Robustness Observed: The analysis demonstrates stability under jackknife cross-validation (CV of λ across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
+        <li>Statistical Robustness Observed: The analysis demonstrates stability under jackknife cross-validation (CV of λ<sub>T</sub> across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
         <li>Validated Independence from Geographic and Instrumental Factors: The correlation strength is consistent across elevation quintiles, hemisphere subsets, and ocean vs. land baselines.</li>
         <li>Instrumental Independence: Consistent results across three independent analysis centers (CODE, IGS Combined, ESA Final) using different processing algorithms and station networks should rule out instrumental artifacts, though multi-constellation validation across GLONASS, Galileo, and BeiDou remains a critical future step.</li>
-        <li>Dynamic Event Consistency: Eclipse and opposition event scales match baseline correlation lengths, providing independent confirmation.</li>
+        <li>Dynamic Event Consistency: Eclipse and opposition event scales match baseline Temporal Topology correlation lengths, providing independent confirmation.</li>
         <li>Non-Linear Coupling Evidence: Mean signal enhancement of 124.4× over null expectation (range: 22.8-226.0×) indicates exotic physics beyond direct gravitational effects, suggesting resonance, tidal amplification, or parametric coupling mechanisms.</li>
         <li>3D Spatial Structure Validation: Complete spherical harmonic decomposition reveals anisotropy strength of 1.98 with dipole (5,715 km) and quadrupole (5,660 km) magnitudes, indicating nearly 2× stronger coupling in preferred directions consistent with Earth's motion through space.</li>
         <li>Multi-Scale Temporal Coupling: Detection of 35 distinct beat frequency patterns spanning four orders of magnitude (0.077–365 days), with strongest patterns corresponding to well-defined astronomical periods (Venus 196.9d: R²=0.82–0.86, lunar fortnight 14.8d: R²=0.60–0.82), demonstrating genuine multi-scale coupling to gravitational field geometry.</li>
@@ -143,7 +143,7 @@
             <li>Signal Amplification: Observe 3.2–17.9× stronger correlations in raw pseudorange/carrier phase data, matching theoretical suppression estimates</li>
             <li>Carrier Phase Coherence: Detect cm-scale (wavelength-level) field-induced timing variations in raw L1/L2 carrier phase measurements</li>
             <li>Real-Time Dynamic Response: Capture sub-second coherence modulations during eclipse/opposition events without processing delays</li>
-            <li>Multi-Constellation Universality: Reproduce identical correlation lengths (λ = 3,330–4,549 km) across GLONASS, Galileo, and BeiDou constellations</li>
+            <li>Multi-Constellation Universality: Reproduce identical Temporal Topology correlation lengths (λ<sub>T</sub> = 3,330–4,549 km) across GLONASS, Galileo, and BeiDou constellations</li>
             <li>Sidereal Independence: Demonstrate that unfiltered signals persist after removing sidereal components, distinguishing from multipath artifacts</li>
         </ol>
     </div>

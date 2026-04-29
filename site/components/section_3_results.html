@@ -13,7 +13,7 @@
 >
     <p style="margin-top: 0; margin-bottom: 12px">
         <strong>Snapshot of core metrics.</strong> Exponential-family fits to
-        distance-binned means yield consistent correlation lengths (λ) and
+        distance-binned means yield consistent Temporal Topology correlation lengths (λ<sub>T</sub>) and
         goodness-of-fit (R²) across independent analysis centers:
     </p>
     <div style="overflow-x: auto">
@@ -144,8 +144,8 @@
         </h4>
         <ol style="margin-bottom: 10px">
             <li>
-                Primary Finding: Correlation Length: A primary correlation
-                length (λ) of 3,330–4,549 km, with bootstrap validation ranges
+                Primary Finding: Temporal Topology Correlation Length: A primary
+                Temporal Topology correlation length (λ<sub>T</sub>) of 3,330–4,549 km, with bootstrap validation ranges
                 of 1,198–5,918 km (CODE), 2,532–3,984 km (ESA Final), and
                 3,197–4,871 km (IGS Combined), is observed. Bootstrap analysis
                 with 5000 iterations achieves 3,555/5,000 (71.1%) success rates,
@@ -155,16 +155,16 @@
             </li>
             <li>
                 Elevation dependence: Systematic quintile stratification from Q1
-                (-81 to 79m: λ = 3,174 km, R² = 0.83) through Q2 (79 to 189m: λ
-                = 4,470 km), Q3 (189 to 379m: λ = 5,287 km), Q4 (379 to 713m: λ
-                = 7,688 km, R² = 0.82), to Q5 (>713m: λ = 4,980 km), showing
+                (-81 to 79m: λ<sub>T</sub> = 3,174 km, R² = 0.83) through Q2 (79 to 189m: λ<sub>T</sub>
+                = 4,470 km), Q3 (189 to 379m: λ<sub>T</sub> = 5,287 km), Q4 (379 to 713m: λ<sub>T</sub>
+                = 7,688 km, R² = 0.82), to Q5 (>713m: λ<sub>T</sub> = 4,980 km), showing
                 systematic elevation effects with complex high-altitude
                 patterns.
             </li>
             <li>
                 Spectral characterization: Broadband coupling (R² > 0.85 from
                 10–100 μHz; 100–200 μHz averages ~0.75, CV of R² across bands =
-                2.9%) with gravitational enhancement (λ = 4,677 km at tidal
+                2.9%) with gravitational enhancement (λ<sub>T</sub> = 4,677 km at tidal
                 frequencies) and persistent post-tidal signals (30–40 μHz: R² =
                 0.946), excluding classical tidal contamination
             </li>
@@ -492,7 +492,7 @@
 <p>
     While different analysis centers favor different optimal models (CODE:
     Exponential, IGS Combined: Matérn ν=1.5, ESA Final: Exponential), all models
-    converge on similar correlation lengths within the TEP-predicted range,
+    converge on similar correlation lengths within the theoretically motivated search range,
     demonstrating robust physical consistency across processing methodologies.
 </p>
 
@@ -2677,7 +2677,7 @@
     </ul>
     <p style="font-size: 13px; color: #666">
         Interpretation relies on σ-levels rather than amplitude-magnitude ratios
-        when expected amplitudes are very small (e.g., Saturn).
+        when expected amplitudes are small (e.g., Saturn).
     </p>
 </div>
 
@@ -2738,8 +2738,8 @@
             Observation 1: Enhancement Factor Distribution
         </h4>
         <p>
-            Using the definition in §2.6, we find statistically significant
-            variation across planets, with Jupiter showing 3.5× enhancement
+            Using the definition in §2.6, statistically significant
+            variation is found across planets, with Jupiter showing 3.5× enhancement
             while Mercury shows 127× enhancement (cross-center means). These
             factors provide mass-independent comparison of observed versus
             predicted gravitational coupling strength.
@@ -2908,8 +2908,8 @@
             Observation 2: Mass Scaling Analysis
         </h4>
         <p>
-            To test whether observed amplitudes follow gravitational scaling, we
-            directly correlate A<sub>obs</sub> with the expected amplitude
+            To test whether observed amplitudes follow gravitational scaling, a
+            direct correlation is computed between A<sub>obs</sub> and the expected amplitude
             (M/d²). This proper test avoids the circular analysis of testing E
             vs mass (since E ≡ A<sub>obs</sub>/(M/d²) by definition).
             Cross-center mass scaling analysis reveals consistent
@@ -3224,7 +3224,7 @@
             Heliospheric Temporal Topology: The continuous spatial profile of
             the φ field may create a radial asymmetry in the solar system as
             Earth's orbital motion traverses regions of varying Temporal Shear,
-            altering the effective coupling for inner vs. outer planets.
+            altering the observable response amplitude for inner vs. outer planets.
         </li>
     </ul>
 
@@ -3313,7 +3313,7 @@
             </li>
             <li>
                 Gravitational Enhancement: Tidal frequencies show enhanced
-                spatial scales - diurnal: λ = 4,577 km mean, semidiurnal: λ =
+                spatial scales - diurnal: λ<sub>T</sub> = 4,577 km mean, semidiurnal: λ<sub>T</sub> =
                 4,676 km mean across centers
             </li>
             <li>
@@ -3958,7 +3958,7 @@
         <ul>
             <li>
                 Tidal enhancement: Both diurnal and semidiurnal tidal bands show
-                identical enhancement (1.52×) with λ = 4,677 ± 954 km,
+                identical enhancement (1.52×) with λ<sub>T</sub> = 4,677 ± 954 km,
                 indicating gravitational forcing maxima
             </li>
             <li>
@@ -4126,7 +4126,7 @@
     <p>
         <strong>Physical Interpretation:</strong> The 77–79%
         ionosphere-independent signal retains all key characteristics:
-        exponential spatial decay (λ = 3,330–4,549 km), cross-center consistency
+        exponential spatial decay (λ<sub>T</sub> = 3,330–4,549 km), cross-center consistency
         (R² = 0.920–0.970), Earth motion coupling, and planetary gravitational
         correlations. This demonstrates that while ionospheric effects
         contribute measurably to signal variability, they cannot account for the
@@ -4552,7 +4552,7 @@
         <li>
             Spectral characterization: Broadband correlation structure (R² >
             0.85 from 10–100 μHz; 100–200 μHz averages ~0.75) with gravitational
-            enhancement in tidal bands (λ = 4,677 km) but persistent post-tidal
+            enhancement in tidal bands (λ<sub>T</sub> = 4,677 km) but persistent post-tidal
             signals (30–40 μHz shows R² = 0.946), suggesting universal coupling
             rather than frequency-selective contamination
         </li>
@@ -4585,7 +4585,7 @@
         Theoretical context: These observations find natural interpretation
         within the Temporal Equivalence Principle, which predicts scalar field
         variations should couple to atomic transition frequencies through
-        conformal metric structure g̃<sub>μν</sub> = A(φ)g<sub>μν</sub> +
+        conformal metric structure g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub> +
         B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ.
     </p>
 

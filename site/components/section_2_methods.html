@@ -211,7 +211,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         <p>A thorough quality validation across 62.73 million station pair measurements demonstrates strong data integrity essential for phase-coherent analysis:</p>
         <ul>
             <li>Filtering efficiency: 99.958% overall data retention across all centers (CODE: 99.944%, IGS: 99.964%, ESA: No removals)</li>
-            <li>Phase quality: Healthy boundary clustering (1.62–1.67% of values within ±0.05 rad distance to ±π under wrap) indicates proper phase wrapping without accumulation artifacts. The expected probability for uniform phase distribution is 0.1/(2π) = 1.59%, confirming the observed values are consistent with proper phase processing. (Note: near +π and near −π are the same region on the circle; we report them separately but evaluate the combined fraction vs 0.1/(2π).)</li>
+            <li>Phase quality: Healthy boundary clustering (1.62–1.67% of values within ±0.05 rad distance to ±π under wrap) indicates proper phase wrapping without accumulation artifacts. The expected probability for uniform phase distribution is 0.1/(2π) = 1.59%, confirming the observed values are consistent with proper phase processing. (Note: near +π and near −π are the same region on the circle; these are reported separately but the combined fraction is evaluated against 0.1/(2π).)</li>
             <li>Temporal completeness: Files present all 912 days; per-day pairs vary by center</li>
             <li>Data integrity: Zero duplicate pairs, all 364 stations successfully matched to coordinates, zero distance outliers (post-filtering)</li>
             <li>Phase distribution: Uniform coverage across full ±π range enables unbiased phase-alignment index analysis</li>
@@ -517,16 +517,16 @@ This frequency band methodology enables discrimination between tidal effects, po
                 <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
                     <li><strong>Method:</strong> Systematically removes ~30% of stations per resample (50 iterations)</li>
                     <li><strong>Purpose:</strong> Tests robustness to network structure and high-connectivity station bias</li>
-                    <li><strong>Effect:</strong> Yields systematically lower λ estimates due to reduced long-distance coverage</li>
+                    <li><strong>Effect:</strong> Yields systematically lower λ<sub>T</sub> estimates due to reduced long-distance coverage</li>
                 </ul>
             </div>
             
-            <h4 style="color: #220126; margin-top: 20px;">Correlation Length (λ) Confidence Intervals</h4>
+            <h4 style="color: #220126; margin-top: 20px;">Temporal Topology Correlation Length (λ<sub>T</sub>) Confidence Intervals</h4>
             <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin: 15px 0;">
                 <thead>
                     <tr style="background-color: rgba(73, 87, 115, 0.05);">
                         <th style="border: 1px solid #495773; padding: 8px; text-align: left;">Analysis Center</th>
-                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">λ (km)</th>
+                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">λ<sub>T</sub> (km)</th>
                         <th style="border: 1px solid #495773; padding: 8px; text-align: center;">Bin-Level 95% CI (km)</th>
                         <th style="border: 1px solid #495773; padding: 8px; text-align: center;">Station-Block 95% CI (km)</th>
                     </tr>
@@ -728,7 +728,7 @@ E ≡ A<sub>obs</sub> / A<sub>exp</sub> = A<sub>obs</sub> / (M/d²)            <
         <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0; border-radius: 5px;">
             <h5 style="margin-top: 0; color: #220126;">Metric 2: Mass Scaling Test (Proper Statistical Test)</h5>
             
-            <p>To test whether observed amplitudes follow gravitational scaling predictions, we directly correlate A<sub>obs</sub> with the gravitational scaling factor (M/d²):</p>
+            <p>To test whether observed amplitudes follow gravitational scaling predictions, a direct correlation is computed between A<sub>obs</sub> and the gravitational scaling factor (M/d²):</p>
             
             <p><strong>Linear Gravitational Scaling:</strong></p>
             <div style="background-color: rgba(255, 255, 255, 0.9); padding: 15px; border-left: 4px solid #495773; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 12px;">
