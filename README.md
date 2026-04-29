@@ -6,19 +6,19 @@
 ![Global Time Echoes](site/public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.24 (Jaipur)  
-**Date:** 24 April 2026  
+**Version:** v0.25 (Jaipur)  
+**Date:** 29 April 2026  
 **Status:** Preprint  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://mlsmawfield.com/tep/gnss-i/](https://mlsmawfield.com/tep/gnss-i/)
 
 ## Abstract
 
-Phase-coherent spectral analysis of 62.7 million station-pair measurements from 364 GNSS stations (2023–2025) reveals systematic distance-structured correlations in clock networks. These correlations follow an exponential decay with a median correlation length λ = 3,330–4,549 km (95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA 2,532–3,984 km) and show strong goodness-of-fit when evaluated on distance-binned means across three independent analysis centres (R² = 0.920–0.970; fits are to bin means, not raw pairs). Cross-center validation, consistent across 12 frequency bands and confirmed through multiple binning schemes and null hypothesis testing, demonstrates these patterns represent genuine physical correlations rather than systematic artifacts. The patterns also show dependencies on station elevation and geomagnetic latitude, consistent with theoretical frameworks involving screened scalar fields.
+Phase-coherent spectral analysis of 62.7 million station-pair measurements from 364 GNSS stations (2023–2025) reveals systematic distance-structured correlations in clock networks. These correlations follow an exponential decay with a median Temporal Topology correlation length λ<sub>T</sub> = 3,330–4,549 km (95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA 2,532–3,984 km) and show strong goodness-of-fit when evaluated on distance-binned means across three independent analysis centres (R² = 0.920–0.970; fits are to bin means, not raw pairs). Cross-center validation, consistent across 12 frequency bands and confirmed through multiple binning schemes and null hypothesis testing, demonstrates these patterns represent persistent empirical correlations not explained by the tested artifacts. The patterns also show dependencies on station elevation and geomagnetic latitude, consistent with theoretical frameworks involving screened scalar fields.
 
-The correlations demonstrate systematic coupling with Earth's orbital motion (r = -0.571 to -0.793 across centers), planetary gravitational influences (6 Bonferroni-significant events), Chandler wobble modulation (R² = 0.377–0.471), and systematic diurnal temporal variations with synchronized early morning coherence peaks (Local Solar Time). Comprehensive validation demonstrates 24-61× signal enhancement over randomized controls (z = 15.8-31.9 across 180 null test iterations), with FDR-BH: 203/388 tests (52.3%), Hierarchical EB: 154/388 (39.7%), and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction across 19 independent validation families. TID exclusion analysis shows 21–23% signal improvement when excluding high-ionosphere periods—the ionosphere suppresses rather than creates the correlation.
+The primary inference rests on cross-centre distance-structured covariance and λ<sub>T</sub>; planetary, Chandler, diurnal, and geomagnetic signatures are treated as secondary or exploratory consistency tests. The correlations demonstrate systematic coupling with Earth's orbital motion (r = -0.571 to -0.793 across centers), planetary gravitational influences (6 Bonferroni-significant events), Chandler wobble modulation (R² = 0.377–0.471), and systematic diurnal temporal variations with synchronized early morning coherence peaks (Local Solar Time). Comprehensive validation demonstrates 24-61× signal enhancement over randomized controls (z = 15.8-31.9 across 180 null test iterations), with FDR-BH: 203/388 tests (52.3%), Hierarchical EB: 154/388 (39.7%), and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction across 19 independent validation families. TID exclusion analysis shows 21–23% signal improvement when excluding high-ionosphere periods—the ionosphere suppresses rather than creates the correlation.
 
-The investigation was structured to test predictions from the Temporal Equivalence Principle (TEP) framework, which suggested a correlation length (λ) of 1,000–10,000 km. The full analysis yielded λ = 3,330–4,549 km, a result consistent with this expectation which motivated tests of derived predictions (diurnal, eclipse, and orbital signatures). While multi-center consistency and extensive validation provide a strong basis for these findings, alternative explanations involving sophisticated systematics cannot be fully excluded. Therefore, definitive physical interpretation awaits critical next steps: raw-data analysis, multi-constellation testing, and independent replication.
+The investigation was structured to test predictions from the Temporal Equivalence Principle (TEP) framework, which suggested a Temporal Topology correlation length ($\lambda_T$) of 1,000–10,000 km. The full analysis yielded λ<sub>T</sub> = 3,330–4,549 km, a result consistent with this expectation which motivated tests of derived predictions (diurnal, eclipse, and orbital signatures). While multi-center consistency and extensive validation provide a strong basis for these findings, alternative explanations involving sophisticated systematics cannot be fully excluded. Therefore, definitive physical interpretation awaits critical next steps: raw-data analysis, multi-constellation testing, and independent replication.
 
 ## Related Papers
 
@@ -34,12 +34,12 @@ The investigation was structured to test predictions from the Temporal Equivalen
 | **Paper 5** | [TEP-GTE](https://github.com/matthewsmawfield/TEP-GTE) | Global Time Echoes: Empirical Validation of the Temporal Equivalence Principle | [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) |
 | **Paper 6** | [TEP-UCD](https://github.com/matthewsmawfield/TEP-UCD) | Universal Critical Density: Unifying Atomic, Galactic, and Compact Object Scales | [10.5281/zenodo.18064366](https://doi.org/10.5281/zenodo.18064366) |
 | **Paper 7** | [TEP-RBH](https://github.com/matthewsmawfield/TEP-RBH) | The Soliton Wake: A Runaway Black Hole as a Gravitational Soliton | [10.5281/zenodo.18059251](https://doi.org/10.5281/zenodo.18059251) |
-| **Paper 8** | [TEP-SLR](https://github.com/matthewsmawfield/TEP-SLR) | Global Time Echoes: Optical Validation of the Temporal Equivalence Principle via Satellite Laser Ranging | [10.5281/zenodo.18064582](https://doi.org/10.5281/zenodo.18064582) |
+| **Paper 8** | [TEP-SLR](https://github.com/matthewsmawfield/TEP-SLR) | Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging | [10.5281/zenodo.18064582](https://doi.org/10.5281/zenodo.18064582) |
 | **Paper 9** | [TEP-EXP](https://github.com/matthewsmawfield/TEP-EXP) | What Do Precision Tests of General Relativity Actually Measure? | [10.5281/zenodo.18109761](https://doi.org/10.5281/zenodo.18109761) |
 | **Paper 10** | [TEP-COS](https://github.com/matthewsmawfield/TEP-COS) | The Temporal Equivalence Principle: Suppressed Density Scaling in Globular Cluster Pulsars | [10.5281/zenodo.18165798](https://doi.org/10.5281/zenodo.18165798) |
 | **Paper 11** | [TEP-H0](https://github.com/matthewsmawfield/TEP-H0) | The Cepheid Bias: Resolving the Hubble Tension | [10.5281/zenodo.18209702](https://doi.org/10.5281/zenodo.18209702) |
 | **Paper 12** | [TEP-JWST](https://github.com/matthewsmawfield/TEP-JWST) | The Temporal Equivalence Principle: A Unified Resolution to the JWST High-Redshift Anomalies | [10.5281/zenodo.19000827](https://doi.org/10.5281/zenodo.19000827) |
-| **Paper 13** | [TEP-WB](https://github.com/matthewsmawfield/TEP-WB) | The Temporal Equivalence Principle: Density-Dependent Screening in Gaia DR3 Wide Binaries | [10.5281/zenodo.19102062](https://doi.org/10.5281/zenodo.19102062) |
+| **Paper 13** | [TEP-WB](https://github.com/matthewsmawfield/TEP-WB) | The Temporal Equivalence Principle: Temporal Shear Recovery in Gaia DR3 Wide Binaries | [10.5281/zenodo.19102062](https://doi.org/10.5281/zenodo.19102062) |
 
 ## Theoretical Foundation
 
@@ -50,14 +50,14 @@ $$\tilde{g}_{\mu\nu} = A(\phi) g_{\mu\nu} + B(\phi) \nabla_\mu\phi \nabla_\nu\ph
 with a universal conformal coupling $A(\phi) = \exp(2\beta\phi/M_{Pl})$.
 
 **Core Prediction:** Precision timing networks exhibit distance-structured correlations following exponential decay:
-$$C(r) = A\cdot\exp(-r/\lambda) + C_0$$
-with characteristic correlation lengths $\lambda = 1,000-10,000$ km for screened scalar field configurations.
+$$C(r) = A\cdot\exp(-r/\lambda_T) + C_0$$
+with characteristic Temporal Topology correlation lengths ($\lambda_T$) of 1,000–10,000 km for screened scalar field configurations.
 
 **Key Consequence:** Clock synchronization procedures exhibit non-integrable properties, yielding measurable synchronization holonomy in closed-loop time transfer protocols.
 
 ## Key Findings
 
-Analysis of 62.7 million station-pair measurements across three independent centers (CODE, IGS, ESA) reveals exponential correlation decay with λ = 3,330–4,549 km (R² = 0.92–0.97). The signal couples to Earth's orbital velocity (r = −0.571 to −0.793), Chandler wobble (R² = 0.38–0.47), and planetary events (6 Bonferroni-significant). Validation demonstrates 24–61× signal enhancement over null tests. Cross-center consistency (CV = 12.9%) and raw RINEX confirmation exclude processing artifacts.
+Analysis of 62.7 million station-pair measurements across three independent centers (CODE, IGS, ESA) reveals exponential correlation decay with λ<sub>T</sub> = 3,330–4,549 km (R² = 0.92–0.97). The signal couples to Earth's orbital velocity (r = −0.571 to −0.793), Chandler wobble (R² = 0.38–0.47), and planetary events (6 Bonferroni-significant). Validation demonstrates 24–61× signal enhancement over null tests. Cross-center consistency (CV = 12.9%) and raw RINEX confirmation exclude processing artifacts.
 
 ---
 
@@ -157,116 +157,6 @@ python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravita
 - Implements robust error handling with automatic retry mechanisms
 - Provides persistent results storage through Google Drive integration
 - Optimized for high-performance cloud computing resources
-
-## Summary of Key Results and Findings
-
-### Primary Results Table
-
-| Metric | Value | Uncertainty | Significance |
-|--------|-------|-------------|--------------|
-| **Dataset Size** | 62.7 million station pairs | — | 364 unique stations |
-| **Temporal Coverage** | 912 days | 2023-01-01 to 2025-06-30 | 2.5 years |
-| **Correlation Length (λ)** | 3,330–4,549 km | CODE: 1,198–5,918 km (95% CI) | Matches TEP prediction (1,000–10,000 km) |
-| **Exponential Fit Quality (R²)** | 0.920–0.970 | Across 3 centers | On distance-bin means (Neff ≈ 25–28) |
-| **Inter-Center Consistency** | CV = 12.9% | CODE, IGS, ESA | Processing-independent |
-
-### Multi-Center Validation
-
-| Analysis Center | Station Pairs | Correlation Length (λ) | R² |
-|-----------------|---------------|------------------------|-----|
-| **CODE** | 39.0 million | 4,201 ± 1,967 km | 0.970 |
-| **IGS Combined** | 12.9 million | 3,330 km | 0.948 |
-| **ESA** | 10.8 million | 4,549 km | 0.920 |
-
-### Geophysical and Astronomical Signatures
-
-| Signature | Correlation/Value | p-value | Status |
-|-----------|-------------------|---------|--------|
-| **Orbital Velocity Coupling** | r = −0.571 to −0.793 | p < 10⁻⁷ | Detected |
-| **Chandler Wobble Modulation** | R² = 0.377–0.471 | p < 10⁻⁵ | Detected |
-| **Planetary Events** | 6 Bonferroni-significant | — | Detected |
-| **Diurnal Temporal Variations** | Synchronized AM peaks | p < 10⁻⁵ | Detected |
-
-### Validation Statistics
-
-| Test | Result | Interpretation |
-|------|--------|----------------|
-| **Null Test Enhancement** | 24–61× | Signal vs randomized controls |
-| **FDR-BH Correction** | 203/388 tests (52.3%) | Survive multiple comparison |
-| **Bonferroni Correction** | 155/388 tests (40.0%) | Survive strictest correction |
-| **TID Exclusion Improvement** | 21–23% | Signal improves when excluding high-ionosphere periods |
-
-### Key Interpretation
-
-These findings reveal a previously undetected structure in global atomic clock networks: timing correlations that decay exponentially with distance at planetary scales. The consistency across three independent analysis centers (CODE, IGS, ESA) rules out center-specific processing artifacts. The correlation length of ~4,000 km—comparable to Earth's radius—matches TEP's a priori prediction for a conformal time-field coupled to gravitational potential gradients. The detection of orbital velocity coupling and planetary event responses suggests the signal is coupled to Earth's motion through the solar system, consistent with a preferred cosmological reference frame (CMB rest frame).
-
----
-
-## Principal Results
-
-Analysis of 62.7 million station-pair measurements across 364 total unique stations (selected from 767 total cataloged stations) reveals significant distance-structured correlations consistent with Temporal Equivalence Principle predictions:
-
-![Distance-structured correlations in GNSS precision timing networks](site/public/figures/figure_1_TEP_site_themed.png)
-
-**Correlation Structure:**
-- **Characteristic lengths:** $\lambda = 3,330-4,549$ km across independent analysis centers (CV = 12.9% inter-center variation)
-- **Statistical robustness:** Strong exponential model fits ($R^2 = 0.920$–$0.970$ on distance-bin means, Neff ≈ 25–28 bins)
-- **Theoretical alignment:** Results within predicted range [1,000–10,000 km], established before data analysis
-
-### Validation Framework
-- **Multi-center consistency:** Comprehensive null hypothesis testing consistent with genuine physical signal (24–61× signal enhancement over randomized controls)
-- **Circular statistics:** Phase Locking Values (PLV) range 0.1–0.4 with Rayleigh test significance $p < 10^{-5}$
-- **Cross-validation:** LOSO/LODO procedures confirming robustness across temporal and spatial sampling
-
-### Key Methodological Notes
-
-- R² values are computed on distance-bin means (Neff ≈ 25–28 bins), not individual station pairs—standard practice in spatial correlation analysis
-- Tidal frequency enhancement is a TEP prediction (gravitational forcing modulates φ field), not contamination; post-tidal band shows R² = 0.946
-- Signal strengthens by 21-23% when high-ionosphere days are excluded, demonstrating the ionosphere suppresses rather than creates the correlation
-- Validation framework includes 11 independent criteria with null tests showing 24-61× signal enhancement over randomized controls
-
-## Experimental Setup and Configuration
-
-### System Requirements
-- **Python:** Version 3.10 or higher
-- **Network connectivity:** Required for acquisition of GNSS precision clock products
-- **Storage allocation:** Approximately 10 GB for complete analysis pipeline execution
-- **Cloud platform access:** Google Cloud Platform account required for high-performance computing deployment
-
-### Installation Procedure
-```bash
-# Clone repository
-git clone https://github.com/matthewsmawfield/TEP-GNSS.git
-cd TEP-GNSS
-
-# Install computational dependencies
-pip install -r requirements/requirements.txt
-
-# Configure computational environment (high-performance deployment)
-cp env.example .env.local
-# Configure .env.local with appropriate cloud platform credentials
-
-# Validate installation integrity
-python scripts/steps/step_1_data_acquisition/step_1_0_provenance_snapshot.py
-```
-
-### Configuration Management
-The analysis framework employs environment variables for computational configuration management. Detailed setup instructions are provided in [SETUP_GUIDE.md](SETUP_GUIDE.md).
-
-**Security Protocol:** All cloud platform credentials are managed exclusively through environment variables. No authentication credentials are stored within the repository structure.
-
-### Computational Dependencies
-**Core Scientific Libraries:**
-- numpy, pandas, scipy, matplotlib
-
-**Geospatial Analysis:**
-- cartopy, pyproj
-
-**Advanced Statistical Methods:**
-- scikit-learn, statsmodels, PyWavelets
-
-**Specialized Geophysical Calculations:**
-- pyIGRF (geomagnetic field modeling)
 
 ## Analysis Pipeline Execution
 
@@ -389,7 +279,6 @@ Comprehensive multiband frequency analysis and visualization framework. Analyzes
 | `TEP_DATE_START` | 2023-01-01 | Analysis temporal window start date |
 | `TEP_DATE_END` | 2025-06-30 | Analysis temporal window end date |
 | `TEP_MIN_EPOCHS` | 20 | Minimum observation epochs per station |
-
 
 **Statistical Validation Parameters:**
 | Parameter | Default Value | Description |
@@ -527,7 +416,7 @@ results/
 
 **Correlation Analysis:**
 - Distance-structured correlation coefficients with exponential decay fits
-- Characteristic correlation lengths (λ = 3,330-4,549 km) across analysis centers
+- Characteristic Temporal Topology correlation lengths (λ<sub>T</sub>) across analysis centers
 - Statistical significance assessment with bootstrap confidence intervals
 
 **Validation Results:**
@@ -546,7 +435,7 @@ results/
 
 ```bibtex
 @article{smawfield2025globaltimeechoes,
-  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.24)},
+  title={Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (Jaipur v0.25)},
   author={Smawfield, Matthew Lukin},
   journal={Zenodo},
   year={2025},
@@ -584,7 +473,7 @@ For complete license terms, see [LICENSE](LICENSE).
 ## Contact and Collaboration
 
 **Author:** Matthew Lukin Smawfield  
-**Email:** matthewsmawfield@gmail.com  
+**Email:** matthew@mlsmawfield.com  
 **ORCID:** [0009-0003-8219-3159](https://orcid.org/0009-0003-8219-3159)
 
 ### Collaboration Invitation
@@ -598,7 +487,7 @@ This research presents findings that warrant independent investigation and colla
 - **Metrology:** Atomic clock network analysis and time transfer protocols
 
 For collaboration inquiries, technical discussions, or independent validation efforts, please contact:  
-📧 **matthewsmawfield@gmail.com**
+📧 **matthew@mlsmawfield.com**
 
 ### Replication and Validation Encouraged
 
@@ -628,5 +517,5 @@ These are working preprints shared in the spirit of open science—all manuscrip
 
 ---
 
-**Contact:** matthewsmawfield@gmail.com  
+**Contact:** matthew@mlsmawfield.com  
 **ORCID:** [0009-0003-8219-3159](https://orcid.org/0009-0003-8219-3159)

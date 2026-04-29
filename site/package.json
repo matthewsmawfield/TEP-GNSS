@@ -1,6 +1,6 @@
 {
   "name": "tep-gnss-site",
-  "version": "1.0.0",
+  "version": "0.25.0",
   "description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "main": "index.html",
   "scripts": {
@@ -23,7 +23,7 @@
     "temporal equivalence principle",
     "physics"
   ],
-  "author": "Matthew Lukin Smawfield <matthewsmawfield@gmail.com>",
+  "author": "Matthew Lukin Smawfield <matthew@mlsmawfield.com>",
   "license": "CC-BY-4.0",
   "repository": {
     "type": "git",

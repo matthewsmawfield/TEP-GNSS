@@ -304,12 +304,10 @@ class HTMLToMarkdownConverter {
             .replace(/\n{3,}/g, '\n\n');  // Collapse multiple blank lines to double newline
         
         return `# ${cleanTitle}
-${metadata.author}
+**${metadata.author}**
 Version: ${metadata.version}
 ${metadata.date}
 DOI: ${metadata.doi}
-Paper: 1 (TEP-GNSS I: Multi-Center Analysis)
-Theory Paper: 0 (Smawfield 2025, TEP v0.7 Jakarta, DOI: 10.5281/zenodo.16921911)
 
 ---
 

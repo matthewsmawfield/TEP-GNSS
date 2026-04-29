@@ -126,9 +126,9 @@ def validate_bootstrap_convergence(ac: str) -> Dict:
         'main_fit_comparison': {'amplitude_bias': 0.0, 'lambda_bias': 0.0, 'offset_bias': 0.0},
         'statistical_tests': {}
     }
-        
-        # Compile comprehensive validation results
-        validation_results = {
+    
+    # Compile comprehensive validation results
+    validation_results = {
             'analysis_center': ac.upper(),
             'validation_timestamp': time.time(),
             'validation_date': time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime()),
@@ -175,32 +175,29 @@ def validate_bootstrap_convergence(ac: str) -> Dict:
                 'validation_results': f"step_3_7_bootstrap_validation_{ac}.json"
             }
         }
-        
-        # Overall validation status
-        all_checks_pass = all([
-            validation_results['validation_assessment']['convergence_acceptable'],
-            validation_results['validation_assessment']['bias_acceptable'],
-            validation_results['validation_assessment']['ci_valid']
-        ])
-        
-        validation_results['overall_status'] = 'PASS' if all_checks_pass else 'FAIL'
-        
-        # Validation summary
-        print_status(f"Validation Summary for {ac.upper()}:", "SUCCESS" if all_checks_pass else "WARNING")
-        print_status(f"  Convergence: {'✓' if validation_results['validation_assessment']['convergence_acceptable'] else '✗'} "
-                    f"({current_metrics['success_rate_percent']:.1f}%)", 
-                    "INFO")
-        print_status(f"  Bias: {'✓' if validation_results['validation_assessment']['bias_acceptable'] else '✗'} "
-                    f"(max |bias| < 6%)", "INFO")
-        print_status(f"  CI Validity: {'✓' if validation_results['validation_assessment']['ci_valid'] else '✗'} "
-                    f"(statistical robustness)", "INFO")
-        print_status(f"  Overall: {validation_results['overall_status']}", 
-                    "SUCCESS" if all_checks_pass else "WARNING")
-        
-        return validation_results
     
-    else:
-        raise TEPAnalysisError(f"Convergence diagnostics failed for {ac}")
+    # Overall validation status
+    all_checks_pass = all([
+        validation_results['validation_assessment']['convergence_acceptable'],
+        validation_results['validation_assessment']['bias_acceptable'],
+        validation_results['validation_assessment']['ci_valid']
+    ])
+    
+    validation_results['overall_status'] = 'PASS' if all_checks_pass else 'FAIL'
+    
+    # Validation summary
+    print_status(f"Validation Summary for {ac.upper()}:", "SUCCESS" if all_checks_pass else "WARNING")
+    print_status(f"  Convergence: {'✓' if validation_results['validation_assessment']['convergence_acceptable'] else '✗'} "
+                f"({current_metrics['success_rate_percent']:.1f}%)", 
+                "INFO")
+    print_status(f"  Bias: {'✓' if validation_results['validation_assessment']['bias_acceptable'] else '✗'} "
+                f"(max |bias| < 6%)", "INFO")
+    print_status(f"  CI Validity: {'✓' if validation_results['validation_assessment']['ci_valid'] else '✗'} "
+                f"(statistical robustness)", "INFO")
+    print_status(f"  Overall: {validation_results['overall_status']}", 
+                "SUCCESS" if all_checks_pass else "WARNING")
+    
+    return validation_results
 
 def generate_validation_summary(all_results: Dict[str, Dict]) -> Dict:
     """

@@ -1,5 +1,7 @@
-v0.24 (Jaipur) - Topology Nomenclature Update
+v0.25 (Jaipur) - Terminology Refinement and Theory Alignment
 
-- Adopted continuous Temporal Topology framework (replaces discrete screening terminology)
-- Formalized Temporal Shear nomenclature for field gradient suppression
-- Aligned screening descriptions with continuous geometric profiles per theory paper v0.7
+- Updated Temporal Topology nomenclature throughout manuscript for consistency
+- Clarified theoretical motivation connecting TEP to GR/quantum mechanics treatment of time
+- Streamlined Modified Gravity section emphasizing screening mechanisms and correlation length physics
+- Refined executive summary structure for improved readability
+- Minor editorial corrections and cross-reference updates across all sections

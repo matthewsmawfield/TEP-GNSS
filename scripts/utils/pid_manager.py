@@ -222,8 +222,8 @@ def kill_all_tep_processes() -> int:
     try:
         # Find all Python processes related to TEP-GNSS
         patterns = [
-            'TEP-GNSS.*\.py',
-            'step_.*\.py',
+            r'TEP-GNSS.*\.py',
+            r'step_.*\.py',
             'multiprocessing.spawn',
             'control_band_analysis',
             'tep.*analysis'
