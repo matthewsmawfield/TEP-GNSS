@@ -478,14 +478,8 @@ class ComprehensiveMultipleComparisonCorrector:
                     if 'hemisphere_stats' in data['geographic_subsets']:
                         hemisphere_stats = data['geographic_subsets']['hemisphere_stats']
                         if 'hemisphere_ratio' in hemisphere_stats and hemisphere_stats['hemisphere_ratio'] is not None:
-                            # This is a synthetic p-value for consistency; needs to be defined if a real test is implemented
-                            # For now, we will use a placeholder or derive from existing stats if possible.
-                            # Since the original intention was to use baseline_correlations within subsets, and those aren't there,
-                            # we'll add a test for hemisphere ratio if it has a direct statistical test result.
-                            # As no direct p-value is found in the provided structure for geographic_subsets itself,
-                            # we will assume the intention was to validate the ratio (e.g., against a null of 1).
-                            # A direct statistical test for this ratio needs to be implemented in step 3.4.
-                            # For the purpose of collection in step 4.7, we will add a placeholder if no explicit p_value is found.
+                            # A direct statistical test for hemisphere ratio needs to be implemented in step 3.4.
+                            # We only use real p-values from the analysis, never synthetic ones.
                             if 'p_value' in hemisphere_stats:
                                 self.test_registry['geographic_validation'].append({
                                     'test_name': 'hemisphere_ratio_validation',
@@ -494,7 +488,9 @@ class ComprehensiveMultipleComparisonCorrector:
                                     'description': 'Validation of hemisphere ratio in geographic subsets'
                                 })
                             else:
-                                # If there's no explicit p-value, we can't create a test here without fabricating data.
+                                # No p-value available from analysis. Do not fabricate synthetic p-value.
+                                # This test will be added when real statistical validation is implemented.
+                                pass
                                 # Log a warning if this is expected to be a statistical test.
                                 print_status("Warning: No explicit p_value for hemisphere_ratio in geographic_subsets. Skipping this test.", "WARNING")
                 
@@ -1206,16 +1202,18 @@ class ComprehensiveMultipleComparisonCorrector:
                     
                     # Add ionospheric validation completion test
                     if iono_data.get('status') == 'completed_with_available_data':
-                        # Create a synthetic p-value based on data availability
+                        # NOTE: Real statistical test required. Do not use synthetic p-values.
+                        # This placeholder must be replaced with actual statistical validation.
+                        # For now, we skip this test to maintain data integrity.
                         tep_days = iono_data.get('data_availability', {}).get('tep_coherence_days', 0)
                         if tep_days > 0:
-                            # High data availability suggests successful validation
-                            p_value = 0.001 if tep_days >= 900 else 0.01
+                            # Data availability is tracked, but no synthetic p-value is assigned
+                            # to avoid compromising statistical integrity.
                             self.test_registry['diurnal_validation'].append({
                                 'test_name': 'ionospheric_validation_completion',
-                                'p_value': p_value,
+                                'p_value': None,  # Must be computed with real statistical test
                                 'test_statistic': tep_days,
-                                'description': 'Ionospheric validation completion test'
+                                'description': 'Ionospheric validation data availability (statistical test pending)'
                             })
                     
                     # Add coherence statistics tests
