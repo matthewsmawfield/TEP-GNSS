@@ -1,6 +1,9 @@
 {
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
-  "@type": "ScholarlyArticle",
+  "@type": [
+    "ScholarlyArticle",
+    "SoftwareSourceCode"
+  ],
   "identifier": "https://doi.org/10.5281/zenodo.17127229",
   "name": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "description": "Phase-coherent GNSS clock analysis across independent centers (CODE, ESA, IGS) with distance-correlation methods testing the Temporal Equivalence Principle.",
@@ -24,5 +27,8 @@
     "distance correlations",
     "phase coherence",
     "temporal equivalence principle"
-  ]
+  ],
+  "developmentStatus": "active",
+  "runtimePlatform": "Python",
+  "applicationCategory": "Scientific/Research"
 }
