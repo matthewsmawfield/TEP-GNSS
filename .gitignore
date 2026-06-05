@@ -128,3 +128,5 @@ site-code-longspan/dist/
 
 # IDE files
 *.code-workspace
+
+.devin

@@ -1,7 +1,7 @@
 {
   "title": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "author": "Matthew Lukin Smawfield",
-  "version": "v0.25 (Jaipur)",
+  "version": "v0.26 (Jaipur)",
   "sections": [
     {
       "id": "abstract",
@@ -63,5 +63,6 @@
       "title": "References & Contact",
       "order": 10
     }
-  ]
+  ],
+  "last_updated": "05 June 2026"
 }

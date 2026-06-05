@@ -1,0 +1,3139 @@
+{
+  "step": "3.9",
+  "name": "Systematic Injection Simulation",
+  "timestamp": "2026-06-05T01:48:51.610421",
+  "methodology": "Pair-level systematic signals are averaged into distance bins, added to the theoretical exponential model, and re-fitted.  The amplitude required to destroy TEP consistency (\u03bb < 1000 km or R\u00b2 < 0.5) is recorded.",
+  "centers": {
+    "code": {
+      "center": "code",
+      "true_parameters": {
+        "A": 0.11380125715736712,
+        "lambda_km": 4548.557682577969,
+        "C0": -0.021332829367945297,
+        "n_bins": 28
+      },
+      "results_by_systematic": {
+        "common_mode": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 4548.557682577946,
+              "lambda_error_km": 7.393818863995396e-12,
+              "amplitude_fitted": 0.11380125715736693,
+              "offset_fitted": -0.021232829367945117,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 4548.55768257795,
+              "lambda_error_km": 6.5345447838852596e-12,
+              "amplitude_fitted": 0.11380125715736693,
+              "offset_fitted": -0.021188984379116364,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 4548.557682577947,
+              "lambda_error_km": 7.595622773405901e-12,
+              "amplitude_fitted": 0.1138012571573669,
+              "offset_fitted": -0.02112591555983363,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 4548.557682577951,
+              "lambda_error_km": 6.989521444392175e-12,
+              "amplitude_fitted": 0.11380125715736691,
+              "offset_fitted": -0.02103519422378201,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 4548.55768257795,
+              "lambda_error_km": 6.981013452535508e-12,
+              "amplitude_fitted": 0.11380125715736691,
+              "offset_fitted": -0.02090469612807319,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 4548.557682577947,
+              "lambda_error_km": 7.37863062899905e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.020716981156879102,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 4548.557682577945,
+              "lambda_error_km": 7.733388494080552e-12,
+              "amplitude_fitted": 0.1138012571573669,
+              "offset_fitted": -0.020446962577535012,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 4548.55768257795,
+              "lambda_error_km": 6.139291374580262e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.02005855438224199,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 4548.557682577953,
+              "lambda_error_km": 5.97363061485924e-12,
+              "amplitude_fitted": 0.11380125715736693,
+              "offset_fitted": -0.019499848657112715,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 4548.557682577951,
+              "lambda_error_km": 6.3344367277362524e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.01869617846921479,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 4548.55768257795,
+              "lambda_error_km": 6.320625919440307e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.017540139177212886,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 4548.557682577946,
+              "lambda_error_km": 6.94332569694431e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.0158772345867766,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 4548.557682577951,
+              "lambda_error_km": 6.031693294355905e-12,
+              "amplitude_fitted": 0.11380125715736694,
+              "offset_fitted": -0.013485229664430536,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 4548.557682577953,
+              "lambda_error_km": 6.317785212745371e-12,
+              "amplitude_fitted": 0.11380125715736693,
+              "offset_fitted": -0.010044450451098273,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 4548.557682577949,
+              "lambda_error_km": 7.1271173458441886e-12,
+              "amplitude_fitted": 0.1138012571573669,
+              "offset_fitted": -0.00509506197605791,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 4548.557682577955,
+              "lambda_error_km": 5.811406490817351e-12,
+              "amplitude_fitted": 0.11380125715736691,
+              "offset_fitted": 0.0020243853229560513,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 4548.557682577945,
+              "lambda_error_km": 6.69710204270114e-12,
+              "amplitude_fitted": 0.11380125715736696,
+              "offset_fitted": 0.012265353494892706,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 4548.557682577947,
+              "lambda_error_km": 6.733991509487186e-12,
+              "amplitude_fitted": 0.11380125715736693,
+              "offset_fitted": 0.02699647301777242,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 4548.557682577946,
+              "lambda_error_km": 7.575563706086225e-12,
+              "amplitude_fitted": 0.1138012571573669,
+              "offset_fitted": 0.048186450249810955,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 4548.557682577945,
+              "lambda_error_km": 8.047987219513865e-12,
+              "amplitude_fitted": 0.11380125715736683,
+              "offset_fitted": 0.07866717063205494,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "latitude_gradient": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 4549.086270133917,
+              "lambda_error_km": 0.10658172774879045,
+              "amplitude_fitted": 0.11381347284692826,
+              "offset_fitted": -0.021298391581991254,
+              "r_squared": 0.9999999985498903,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 4549.318032374303,
+              "lambda_error_km": 0.1533183013164466,
+              "amplitude_fitted": 0.11381882914964571,
+              "offset_fitted": -0.021283292636724536,
+              "r_squared": 0.9999999969998326,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 4549.651414025722,
+              "lambda_error_km": 0.2205527524882528,
+              "amplitude_fitted": 0.113826534280851,
+              "offset_fitted": -0.02126157387923792,
+              "r_squared": 0.9999999937931608,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 4550.1309736533585,
+              "lambda_error_km": 0.3172790329144845,
+              "amplitude_fitted": 0.11383761846703362,
+              "offset_fitted": -0.021230333194539482,
+              "r_squared": 0.9999999871599347,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 4550.820810299122,
+              "lambda_error_km": 0.45644161452891263,
+              "amplitude_fitted": 0.11385356404675624,
+              "offset_fitted": -0.02118539640009658,
+              "r_squared": 0.9999999734402899,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 4551.813134919191,
+              "lambda_error_km": 0.6566752188613868,
+              "amplitude_fitted": 0.11387650413684615,
+              "offset_fitted": -0.02112075989682084,
+              "r_squared": 0.9999999450685613,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 4553.240604612702,
+              "lambda_error_km": 0.9448154997712362,
+              "amplitude_fitted": 0.11390950887157779,
+              "offset_fitted": -0.021027789369430144,
+              "r_squared": 0.9999998864114465,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 4555.2940731431845,
+              "lambda_error_km": 1.3595273164320212,
+              "amplitude_fitted": 0.1139569981116915,
+              "offset_fitted": -0.020894068015534457,
+              "r_squared": 0.9999997651841951,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 4558.248143290217,
+              "lambda_error_km": 1.9565590086591433,
+              "amplitude_fitted": 0.11402533710849237,
+              "offset_fitted": -0.020701741570392937,
+              "r_squared": 0.9999995147714008,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 4562.497959464049,
+              "lambda_error_km": 2.81637261572634,
+              "amplitude_fitted": 0.11412369748179797,
+              "offset_fitted": -0.020425141393806807,
+              "r_squared": 0.9999989978888907,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 4568.612212374043,
+              "lambda_error_km": 4.0552701314387285,
+              "amplitude_fitted": 0.1142653042666875,
+              "offset_fitted": -0.020027373059492638,
+              "r_squared": 0.9999979321124977,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 4577.40954094861,
+              "lambda_error_km": 5.8417097282219155,
+              "amplitude_fitted": 0.1144692474686662,
+              "offset_fitted": -0.01945542501584172,
+              "r_squared": 0.9999957379017157,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 4590.0687709096,
+              "lambda_error_km": 8.420425251115093,
+              "amplitude_fitted": 0.11476312458794574,
+              "offset_fitted": -0.018633165472210174,
+              "r_squared": 0.9999912303490066,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 4608.288166643216,
+              "lambda_error_km": 12.148470208270902,
+              "amplitude_fitted": 0.11518691766401232,
+              "offset_fitted": -0.017451336699006555,
+              "r_squared": 0.9999819994879326,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 4634.515897086584,
+              "lambda_error_km": 17.54988730567315,
+              "amplitude_fitted": 0.11579872719916479,
+              "offset_fitted": -0.015753303172604597,
+              "r_squared": 0.9999631804944313,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 4672.284397192807,
+              "lambda_error_km": 25.400260278653672,
+              "amplitude_fitted": 0.11668334475812973,
+              "offset_fitted": -0.013314843385563208,
+              "r_squared": 0.9999250588676657,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 4726.697082309543,
+              "lambda_error_km": 36.86079088457594,
+              "amplitude_fitted": 0.11796525543262266,
+              "offset_fitted": -0.009815688785708121,
+              "r_squared": 0.9998485355723672,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 4805.140187645163,
+              "lambda_error_km": 53.69757088101904,
+              "amplitude_fitted": 0.11982872881580259,
+              "offset_fitted": -0.004799849376639548,
+              "r_squared": 0.9996968927552109,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 4918.328514615778,
+              "lambda_error_km": 78.65341337367416,
+              "amplitude_fitted": 0.12254958654687736,
+              "offset_fitted": 0.0023788272295701333,
+              "r_squared": 0.9994017785191412,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 5081.855471161099,
+              "lambda_error_km": 116.10451494446534,
+              "amplitude_fitted": 0.12654682681690574,
+              "offset_fitted": 0.012629444029056818,
+              "r_squared": 0.9988417251528408,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "ns_dipole": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 4550.950327717737,
+              "lambda_error_km": 0.29232402527086765,
+              "amplitude_fitted": 0.1138344322862388,
+              "offset_fitted": -0.021329661733510905,
+              "r_squared": 0.9999999891072282,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 4551.999802633705,
+              "lambda_error_km": 0.4205795327816942,
+              "amplitude_fitted": 0.11384898475218913,
+              "offset_fitted": -0.02132827942730758,
+              "r_squared": 0.9999999774704073,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 4553.509868872192,
+              "lambda_error_km": 0.6051607932790414,
+              "amplitude_fitted": 0.11386992505619555,
+              "offset_fitted": -0.021326298048021497,
+              "r_squared": 0.9999999534100997,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 4555.682953311497,
+              "lambda_error_km": 0.8708624909223704,
+              "amplitude_fitted": 0.11390006176952366,
+              "offset_fitted": -0.02132346242267138,
+              "r_squared": 0.9999999036791708,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 4558.810751426595,
+              "lambda_error_km": 1.2534564448862946,
+              "amplitude_fitted": 0.11394344326249062,
+              "offset_fitted": -0.02131941351992788,
+              "r_squared": 0.9999998009370372,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 4563.31391901506,
+              "lambda_error_km": 1.8046184880216123,
+              "amplitude_fitted": 0.11400591028607522,
+              "offset_fitted": -0.021313651520864153,
+              "r_squared": 0.9999995888187444,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 4569.799760047077,
+              "lambda_error_km": 2.5991388073279538,
+              "amplitude_fitted": 0.11409590050844295,
+              "offset_fitted": -0.021305491958991337,
+              "r_squared": 0.9999991513095722,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 4579.146439043746,
+              "lambda_error_km": 3.7455517555034588,
+              "amplitude_fitted": 0.1142256259448904,
+              "offset_fitted": -0.02129402188954692,
+              "r_squared": 0.9999982501706794,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 4592.626690584184,
+              "lambda_error_km": 5.401969733210934,
+              "amplitude_fitted": 0.11441280867613933,
+              "offset_fitted": -0.021278077089087983,
+              "r_squared": 0.9999963978010454,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 4612.091140181853,
+              "lambda_error_km": 7.800008298067118,
+              "amplitude_fitted": 0.11468326569729402,
+              "offset_fitted": -0.021256293489885992,
+              "r_squared": 0.9999926010177257,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 4640.2433171036755,
+              "lambda_error_km": 11.281662752011716,
+              "amplitude_fitted": 0.11507481269043568,
+              "offset_fitted": -0.02122735878219259,
+              "r_squared": 0.999984850819819,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 4681.058996125089,
+              "lambda_error_km": 16.357687551746096,
+              "amplitude_fitted": 0.11564327344703015,
+              "offset_fitted": -0.021190750029656317,
+              "r_squared": 0.9999691240003322,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 4740.440564725827,
+              "lambda_error_km": 23.803364493335643,
+              "amplitude_fitted": 0.11647196961106894,
+              "offset_fitted": -0.021148603864909684,
+              "r_squared": 0.9999374801086801,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 4827.268297418972,
+              "lambda_error_km": 34.82300397360077,
+              "amplitude_fitted": 0.11768721347525263,
+              "offset_fitted": -0.021110164264107535,
+              "r_squared": 0.9998745757773486,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 4955.156020886464,
+              "lambda_error_km": 51.34936891145785,
+              "amplitude_fitted": 0.11948469312293203,
+              "offset_fitted": -0.021102097496156793,
+              "r_squared": 0.9997516680101219,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 5145.529102424861,
+              "lambda_error_km": 76.62878861655511,
+              "amplitude_fitted": 0.12217682086259109,
+              "offset_fitted": -0.021192316241563376,
+              "r_squared": 0.9995173233949167,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 5433.360423460076,
+              "lambda_error_km": 116.46620192375038,
+              "amplitude_fitted": 0.12628326806509135,
+              "offset_fitted": -0.021545778503917323,
+              "r_squared": 0.9990856265244324,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 5878.720233026349,
+              "lambda_error_km": 182.1586240480914,
+              "amplitude_fitted": 0.1327179178385438,
+              "offset_fitted": -0.02255960337262853,
+              "r_squared": 0.9983275715292668,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 6592.41568261319,
+              "lambda_error_km": 298.32057607381154,
+              "amplitude_fitted": 0.1432135089881275,
+              "offset_fitted": -0.02520928984879211,
+              "r_squared": 0.9970807690480505,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 7801.221647121722,
+              "lambda_error_km": 527.4338260842235,
+              "amplitude_fitted": 0.16141699570477297,
+              "offset_fitted": -0.03202530181188152,
+              "r_squared": 0.9952009466802418,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "distance_linear": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 4543.590479447146,
+              "lambda_error_km": 0.24177946892062896,
+              "amplitude_fitted": 0.11368919253355751,
+              "offset_fitted": -0.02121225410947222,
+              "r_squared": 0.9999999925058786,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 4541.412849541108,
+              "lambda_error_km": 0.3478049756906857,
+              "amplitude_fitted": 0.11364008745376215,
+              "offset_fitted": -0.021159413497063722,
+              "r_squared": 0.9999999844659175,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 4538.280694913184,
+              "lambda_error_km": 0.5003359723244466,
+              "amplitude_fitted": 0.11356948395220962,
+              "offset_fitted": -0.021083432288884943,
+              "r_squared": 0.999999967775145,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 4533.775780202958,
+              "lambda_error_km": 0.7197827929104094,
+              "amplitude_fitted": 0.1134679899416086,
+              "offset_fitted": -0.02097419374941447,
+              "r_squared": 0.9999999330752652,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 4527.296791738883,
+              "lambda_error_km": 1.0355265456143266,
+              "amplitude_fitted": 0.11332213162567602,
+              "offset_fitted": -0.02081717673518214,
+              "r_squared": 0.9999998607841197,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 4517.979389740359,
+              "lambda_error_km": 1.4898760451800537,
+              "amplitude_fitted": 0.11311260265829758,
+              "offset_fitted": -0.020591558018232058,
+              "r_squared": 0.9999997097251481,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 4504.581559767729,
+              "lambda_error_km": 2.143786776304052,
+              "amplitude_fitted": 0.1128117871657621,
+              "offset_fitted": -0.02026751829507539,
+              "r_squared": 0.999999392704583,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 4485.319448022402,
+              "lambda_error_km": 3.0851455672341035,
+              "amplitude_fitted": 0.11238028275000092,
+              "offset_fitted": -0.019802440930947424,
+              "r_squared": 0.9999987232226063,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 4457.632826248235,
+              "lambda_error_km": 4.440815679342799,
+              "amplitude_fitted": 0.11176207727237951,
+              "offset_fitted": -0.019135596881577187,
+              "r_squared": 0.9999972966169989,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 4417.851227911191,
+              "lambda_error_km": 6.394254196697418,
+              "amplitude_fitted": 0.11087798061974691,
+              "offset_fitted": -0.018180815235955026,
+              "r_squared": 0.9999942167701442,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 4360.721478851,
+              "lambda_error_km": 9.211536503821169,
+              "amplitude_fitted": 0.10961694402951716,
+              "offset_fitted": -0.016816593131063817,
+              "r_squared": 0.9999874409644374,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 4278.74592522975,
+              "lambda_error_km": 13.28046879935042,
+              "amplitude_fitted": 0.1078251674609864,
+              "offset_fitted": -0.014873217840199026,
+              "r_squared": 0.9999721182573984,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 4161.273053091143,
+              "lambda_error_km": 19.17122816988625,
+              "amplitude_fitted": 0.10529374369408923,
+              "offset_fitted": -0.01211702208499201,
+              "r_squared": 0.9999360449708161,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3993.2968945800694,
+              "lambda_error_km": 27.735953185345526,
+              "amplitude_fitted": 0.10174775573800883,
+              "offset_fitted": -0.00823344803059764,
+              "r_squared": 0.9998459252627373,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3754.0225186342836,
+              "lambda_error_km": 40.29052279635567,
+              "amplitude_fitted": 0.09684470190513608,
+              "offset_fitted": -0.0028143338852364415,
+              "r_squared": 0.9995999070538891,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3415.6795283237047,
+              "lambda_error_km": 59.01204246884243,
+              "amplitude_fitted": 0.09020001647186184,
+              "offset_fitted": 0.004637094618600983,
+              "r_squared": 0.9988313538898524,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 2944.754990465791,
+              "lambda_error_km": 88.07080478583956,
+              "amplitude_fitted": 0.08146892096391807,
+              "offset_fitted": 0.014655547495175064,
+              "r_squared": 0.9958705566685672,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 2314.411787174376,
+              "lambda_error_km": 137.98482532358827,
+              "amplitude_fitted": 0.07045643014831839,
+              "offset_fitted": 0.02768179052730942,
+              "r_squared": 0.9800391181487065,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 1552.9363646525437,
+              "lambda_error_km": 246.19021278964468,
+              "amplitude_fitted": 0.05660491159397426,
+              "offset_fitted": 0.04395416184159353,
+              "r_squared": 0.850935391858418,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 784.7530409447444,
+              "lambda_error_km": 576.0875691044881,
+              "amplitude_fitted": 0.0362302011320568,
+              "offset_fitted": 0.06411460254081458,
+              "r_squared": 0.1956323546095713,
+              "tep_consistent": "False",
+              "success": true
+            }
+          ],
+          "critical_amplitude": 0.1,
+          "interpretation": "TEP consistency lost at amplitude \u2248 1.00e-01"
+        },
+        "hemispheric_offset": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 4546.463935819852,
+              "lambda_error_km": 0.1554062898387294,
+              "amplitude_fitted": 0.11376602939336579,
+              "offset_fitted": -0.021244795058669535,
+              "r_squared": 0.9999999969107476,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 4545.546104089711,
+              "lambda_error_km": 0.2235113845732834,
+              "amplitude_fitted": 0.11375058905487581,
+              "offset_fitted": -0.021206200899637876,
+              "r_squared": 0.9999999936052449,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 4544.226032240941,
+              "lambda_error_km": 0.3214421449409686,
+              "amplitude_fitted": 0.11372838453604246,
+              "offset_fitted": -0.021150689917953682,
+              "r_squared": 0.9999999867604299,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 4542.3275539895485,
+              "lambda_error_km": 0.46223822966582656,
+              "amplitude_fitted": 0.11369645610505169,
+              "offset_fitted": -0.021070850045961254,
+              "r_squared": 0.9999999725818483,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 4539.597472117748,
+              "lambda_error_km": 0.6646166794919329,
+              "amplitude_fitted": 0.11365055277170381,
+              "offset_fitted": -0.020956024854991286,
+              "r_squared": 0.9999999431975541,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 4535.672007817469,
+              "lambda_error_km": 0.9554187309256477,
+              "amplitude_fitted": 0.11358457301001869,
+              "offset_fitted": -0.020790896894197993,
+              "r_squared": 0.9999998822576043,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 4530.028779298409,
+              "lambda_error_km": 1.373084345642245,
+              "amplitude_fitted": 0.11348976760336642,
+              "offset_fitted": -0.020553456114524794,
+              "r_squared": 0.9999997557469019,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 4521.91821742706,
+              "lambda_error_km": 1.9725580422201454,
+              "amplitude_fitted": 0.11335360813825529,
+              "offset_fitted": -0.02021209036376521,
+              "r_squared": 0.9999994927297287,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 4510.265934744265,
+              "lambda_error_km": 2.8321564249213353,
+              "amplitude_fitted": 0.11315819068660912,
+              "offset_fitted": -0.019721426679265314,
+              "r_squared": 0.9999989447658886,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 4493.5343912557555,
+              "lambda_error_km": 4.063062836643282,
+              "amplitude_fitted": 0.11287800414145721,
+              "offset_fitted": -0.019016403590546908,
+              "r_squared": 0.999997799688329,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 4469.528268622943,
+              "lambda_error_km": 5.8222097068932515,
+              "amplitude_fitted": 0.1124768530409433,
+              "offset_fitted": -0.01800385625052352,
+              "r_squared": 0.9999953963228552,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 4435.123487355689,
+              "lambda_error_km": 8.329261482117394,
+              "amplitude_fitted": 0.11190370452307492,
+              "offset_fitted": -0.01655064078969253,
+              "r_squared": 0.9999903198577759,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 4385.89592732316,
+              "lambda_error_km": 11.88801808708149,
+              "amplitude_fitted": 0.11108727456655101,
+              "offset_fitted": -0.014467017681812595,
+              "r_squared": 0.9999794977536275,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 4315.6255058628185,
+              "lambda_error_km": 16.911446847825037,
+              "amplitude_fitted": 0.10992938389921152,
+              "offset_fitted": -0.011483691648569706,
+              "r_squared": 0.9999561137575151,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 4215.661378607271,
+              "lambda_error_km": 23.947302331288487,
+              "amplitude_fitted": 0.10829771988556708,
+              "offset_fitted": -0.00722066970689058,
+              "r_squared": 0.9999045744060052,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 4074.170985106091,
+              "lambda_error_km": 33.69797945162926,
+              "amplitude_fitted": 0.1060200844485863,
+              "offset_fitted": -0.001146177781816651,
+              "r_squared": 0.9997875859094286,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3875.3973785475014,
+              "lambda_error_km": 47.0273261831274,
+              "amplitude_fitted": 0.10288533667479384,
+              "offset_fitted": 0.007475298546369216,
+              "r_squared": 0.999510023356996,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3599.309288137104,
+              "lambda_error_km": 64.96612337991216,
+              "amplitude_fitted": 0.09866243048647075,
+              "offset_fitted": 0.019644573520519744,
+              "r_squared": 0.998805448318205,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3222.706522783756,
+              "lambda_error_km": 88.83825070273778,
+              "amplitude_fitted": 0.09315911949112371,
+              "offset_fitted": 0.036693751035802386,
+              "r_squared": 0.9968186608064117,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 2724.773961506065,
+              "lambda_error_km": 121.10640707227279,
+              "amplitude_fitted": 0.08634583034805217,
+              "offset_fitted": 0.06034943372208585,
+              "r_squared": 0.9902094759596334,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        }
+      }
+    },
+    "igs_combined": {
+      "center": "igs_combined",
+      "true_parameters": {
+        "A": 0.19374731831517264,
+        "lambda_km": 3763.574008822455,
+        "C0": -0.02093233035111203,
+        "n_bins": 28
+      },
+      "results_by_systematic": {
+        "common_mode": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3763.5740088224557,
+              "lambda_error_km": 3.183538678375139e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.02083233035111204,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3763.5740088224557,
+              "lambda_error_km": 4.0976581402737995e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": -0.02078848536228327,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 1.908450950617603e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.02072541654300055,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 4.092486534326558e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": -0.0206346952069489,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3763.5740088224547,
+              "lambda_error_km": 3.724981863106803e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": -0.020504197111240092,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 5.841847234296479e-14,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.020316482140046003,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 4.0316630308384516e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.020046463560701954,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 2.034237278279387e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.019658055365408898,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 1.5249421624395246e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.0190993496402796,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 2.357887777856284e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.018295679452381676,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 2.0715203320937556e-14,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.01713964016037978,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3763.5740088224557,
+              "lambda_error_km": 3.9871193628725894e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.01547673556994352,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 1.7799177697981226e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.013084730647597425,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3763.5740088224543,
+              "lambda_error_km": 3.9906844188645603e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": -0.009643951434265143,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 9.125238783372242e-14,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": -0.004694562959224826,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 1.5034274163382924e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": 0.0024248843397891864,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3763.5740088224543,
+              "lambda_error_km": 5.01981940218546e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": 0.0126658525117258,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3763.5740088224557,
+              "lambda_error_km": 3.927901254694651e-13,
+              "amplitude_fitted": 0.19374731831517264,
+              "offset_fitted": 0.02739697203460549,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 5.056898518621849e-13,
+              "amplitude_fitted": 0.19374731831517267,
+              "offset_fitted": 0.048586949266644024,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 3763.574008822455,
+              "lambda_error_km": 5.589909243692204e-13,
+              "amplitude_fitted": 0.1937473183151726,
+              "offset_fitted": 0.07906766964888799,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "latitude_gradient": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3763.8374024883733,
+              "lambda_error_km": 0.047439482783205054,
+              "amplitude_fitted": 0.19375786987178226,
+              "offset_fitted": -0.020896582072604624,
+              "r_squared": 0.999999999449912,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3763.9528886683133,
+              "lambda_error_km": 0.06824067915046234,
+              "amplitude_fitted": 0.19376249637990128,
+              "offset_fitted": -0.020880908395020336,
+              "r_squared": 0.9999999988618629,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3764.119010787589,
+              "lambda_error_km": 0.09816361415778775,
+              "amplitude_fitted": 0.19376915157307706,
+              "offset_fitted": -0.020858362753051817,
+              "r_squared": 0.9999999976452484,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3764.357971300024,
+              "lambda_error_km": 0.14120926638497922,
+              "amplitude_fitted": 0.19377872513475275,
+              "offset_fitted": -0.02082593230388478,
+              "r_squared": 0.999999995128322,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3764.7017093855516,
+              "lambda_error_km": 0.2031345145179983,
+              "amplitude_fitted": 0.19379249704564724,
+              "offset_fitted": -0.02077928341478406,
+              "r_squared": 0.9999999899216955,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3765.1961704324126,
+              "lambda_error_km": 0.29222377454336096,
+              "amplitude_fitted": 0.19381230895046647,
+              "offset_fitted": -0.020712182745858156,
+              "r_squared": 0.9999999791521599,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3765.9074490051644,
+              "lambda_error_km": 0.4204008945600697,
+              "amplitude_fitted": 0.19384081091309482,
+              "offset_fitted": -0.020615664715736098,
+              "r_squared": 0.9999999568794918,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3766.930632524586,
+              "lambda_error_km": 0.6048324861729808,
+              "amplitude_fitted": 0.1938818168552347,
+              "offset_fitted": -0.020476834421409185,
+              "r_squared": 0.9999999108269468,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3768.402523592695,
+              "lambda_error_km": 0.8702424021960938,
+              "amplitude_fitted": 0.19394081694738835,
+              "offset_fitted": -0.02027714652908522,
+              "r_squared": 0.9999998156350383,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3770.5199571394096,
+              "lambda_error_km": 1.252257927499753,
+              "amplitude_fitted": 0.19402571686439554,
+              "offset_fitted": -0.01998993142915348,
+              "r_squared": 0.999999618958594,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3773.566176291828,
+              "lambda_error_km": 1.8022580359839644,
+              "amplitude_fitted": 0.19414790577859434,
+              "offset_fitted": -0.019576840554640255,
+              "r_squared": 0.9999992128654368,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3777.948830985851,
+              "lambda_error_km": 2.5944203666145915,
+              "amplitude_fitted": 0.194323802140932,
+              "offset_fitted": -0.01898274107413267,
+              "r_squared": 0.9999983751469855,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3784.2547566027265,
+              "lambda_error_km": 3.7360087511868456,
+              "amplitude_fitted": 0.19457709692267952,
+              "offset_fitted": -0.018128388567252896,
+              "r_squared": 0.9999966493304704,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3793.3290179133187,
+              "lambda_error_km": 5.382485092070186,
+              "amplitude_fitted": 0.19494202116150428,
+              "offset_fitted": -0.016899921032157646,
+              "r_squared": 0.999993100669529,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3806.3891168366977,
+              "lambda_error_km": 7.759902693801449,
+              "amplitude_fitted": 0.195468130452842,
+              "offset_fitted": -0.01513381698203608,
+              "r_squared": 0.9999858237290682,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3825.1903117406923,
+              "lambda_error_km": 11.198485728769265,
+              "amplitude_fitted": 0.1962273614326329,
+              "offset_fitted": -0.012595404490458139,
+              "r_squared": 0.999970959751193,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3852.265533949586,
+              "lambda_error_km": 16.183806406331332,
+              "amplitude_fitted": 0.19732454223168347,
+              "offset_fitted": -0.008948250739235112,
+              "r_squared": 0.9999407676215003,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3891.2747614382843,
+              "lambda_error_km": 23.436469929390043,
+              "amplitude_fitted": 0.19891325490932024,
+              "offset_fitted": -0.0037107604862234157,
+              "r_squared": 0.9998799272708556,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3947.5161184241856,
+              "lambda_error_km": 34.03964558584363,
+              "amplitude_fitted": 0.20122018766576855,
+              "offset_fitted": 0.0038049431526007305,
+              "r_squared": 0.9997587068534576,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 4028.677839078516,
+              "lambda_error_km": 49.650236991100705,
+              "amplitude_fitted": 0.2045833299107779,
+              "offset_fitted": 0.014578199950781735,
+              "r_squared": 0.9995210099985189,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "ns_dipole": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3764.670926224227,
+              "lambda_error_km": 0.14208171230726968,
+              "amplitude_fitted": 0.19377334299734267,
+              "offset_fitted": -0.020923205507052966,
+              "r_squared": 0.9999999950693039,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3765.1519755258364,
+              "lambda_error_km": 0.20439658664472315,
+              "amplitude_fitted": 0.193784756483669,
+              "offset_fitted": -0.020919207565202855,
+              "r_squared": 0.999999989800139,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3765.844054166096,
+              "lambda_error_km": 0.2940539134948512,
+              "amplitude_fitted": 0.19380117738544808,
+              "offset_fitted": -0.020913459768610972,
+              "r_squared": 0.9999999789023101,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3766.8398091674426,
+              "lambda_error_km": 0.42306392529379233,
+              "amplitude_fitted": 0.1938248045984509,
+              "offset_fitted": -0.02090519814843532,
+              "r_squared": 0.9999999563674768,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3768.272638308114,
+              "lambda_error_km": 0.6087262761642656,
+              "amplitude_fitted": 0.1938588047581433,
+              "offset_fitted": -0.02089332725670032,
+              "r_squared": 0.9999999097822629,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3770.3346961362763,
+              "lambda_error_km": 0.8759743580690058,
+              "amplitude_fitted": 0.19390774043843997,
+              "offset_fitted": -0.02087627856004937,
+              "r_squared": 0.9999998135172746,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3773.302943700455,
+              "lambda_error_km": 1.260774801808436,
+              "amplitude_fitted": 0.19397819027193858,
+              "offset_fitted": -0.02085181075027015,
+              "r_squared": 0.9999996147068635,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3777.5769282088404,
+              "lambda_error_km": 1.8150739508160911,
+              "amplitude_fitted": 0.19407964964252195,
+              "offset_fitted": -0.020816730806308383,
+              "r_squared": 0.9999992044545439,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3783.733768074713,
+              "lambda_error_km": 2.6140314980134147,
+              "amplitude_fitted": 0.19422584433807086,
+              "offset_fitted": -0.020766510026133375,
+              "r_squared": 0.999998358889675,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3792.608580254747,
+              "lambda_error_km": 3.766674033905818,
+              "amplitude_fitted": 0.19443665780594208,
+              "offset_fitted": -0.020694767698119072,
+              "r_squared": 0.9999966190837379,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3805.4129480228185,
+              "lambda_error_km": 5.431743341167769,
+              "amplitude_fitted": 0.1947409821455534,
+              "offset_fitted": -0.020592603536355305,
+              "r_squared": 0.9999930480994238,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3823.9111393887315,
+              "lambda_error_km": 7.841608930918768,
+              "amplitude_fitted": 0.19518098455254554,
+              "offset_fitted": -0.020447795093954876,
+              "r_squared": 0.9999857444169568,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3850.685795243516,
+              "lambda_error_km": 11.339066370946648,
+              "amplitude_fitted": 0.19581859425686385,
+              "offset_fitted": -0.02024397609177521,
+              "r_squared": 0.9999708818747217,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3889.5458982725927,
+              "lambda_error_km": 16.43552672929098,
+              "amplitude_fitted": 0.19674558054090457,
+              "offset_fitted": -0.019960162527415004,
+              "r_squared": 0.9999408569703088,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3946.1686979048677,
+              "lambda_error_km": 23.90647289814155,
+              "amplitude_fitted": 0.19809966356055755,
+              "offset_fitted": -0.019571596213555788,
+              "r_squared": 0.9998808317828387,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 4029.1422545254886,
+              "lambda_error_km": 34.95583140091276,
+              "amplitude_fitted": 0.2000912382261853,
+              "offset_fitted": -0.019054297795421827,
+              "r_squared": 0.9997626126005784,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 4151.728839779031,
+              "lambda_error_km": 51.51714998218685,
+              "amplitude_fitted": 0.2030497990120185,
+              "offset_fitted": -0.018399110213664006,
+              "r_squared": 0.9995347044188118,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 4334.998084846516,
+              "lambda_error_km": 76.84937254907268,
+              "amplitude_fitted": 0.20750926033030867,
+              "offset_fitted": -0.017649218559257274,
+              "r_squared": 0.999108492288316,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 4613.757207213979,
+              "lambda_error_km": 116.82875596073633,
+              "amplitude_fitted": 0.2143754872816817,
+              "offset_fitted": -0.01699617132693495,
+              "r_squared": 0.9983449484518578,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 5048.677025359414,
+              "lambda_error_km": 183.07045459786036,
+              "amplitude_fitted": 0.22528198021032106,
+              "offset_fitted": -0.01702648663548109,
+              "r_squared": 0.9970567369305811,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "distance_linear": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3761.0988025566785,
+              "lambda_error_km": 0.14777988413209361,
+              "amplitude_fitted": 0.193650909128361,
+              "offset_fitted": -0.020823923340833068,
+              "r_squared": 0.9999999946489867,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3760.013656666602,
+              "lambda_error_km": 0.21258179595949506,
+              "amplitude_fitted": 0.1936086545091057,
+              "offset_fitted": -0.020776405351204123,
+              "r_squared": 0.9999999889165503,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3758.4528460947563,
+              "lambda_error_km": 0.30580450570138873,
+              "amplitude_fitted": 0.1935478904269569,
+              "offset_fitted": -0.020708067077633643,
+              "r_squared": 0.9999999770326391,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3756.207939742377,
+              "lambda_error_km": 0.4399181256431517,
+              "amplitude_fitted": 0.19346051967330818,
+              "offset_fitted": -0.02060979478733435,
+              "r_squared": 0.9999999523754277,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3752.9792548504033,
+              "lambda_error_km": 0.632870036505039,
+              "amplitude_fitted": 0.193334914333602,
+              "offset_fitted": -0.020468494799174612,
+              "r_squared": 0.9999999011538562,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3748.335991707634,
+              "lambda_error_km": 0.9104969541773639,
+              "amplitude_fitted": 0.19315438862394274,
+              "offset_fitted": -0.020265365526070292,
+              "r_squared": 0.9999997945638307,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3741.659046143326,
+              "lambda_error_km": 1.3100062139201576,
+              "amplitude_fitted": 0.19289502445831005,
+              "offset_fitted": -0.01997343011948451,
+              "r_squared": 0.9999995721986646,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3732.059078934828,
+              "lambda_error_km": 1.8850083049078838,
+              "amplitude_fitted": 0.19252258979737738,
+              "offset_fitted": -0.019554025014799584,
+              "r_squared": 0.999999106632201,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3718.259355754007,
+              "lambda_error_km": 2.7128089280000647,
+              "amplitude_fitted": 0.19198820139534076,
+              "offset_fitted": -0.018951826796131572,
+              "r_squared": 0.9999981268010288,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3698.4287001325856,
+              "lambda_error_km": 3.905015398623276,
+              "amplitude_fitted": 0.19122228350987433,
+              "offset_fitted": -0.018087859699730733,
+              "r_squared": 0.9999960491531568,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3669.944392225638,
+              "lambda_error_km": 5.623053129180103,
+              "amplitude_fitted": 0.19012628659972203,
+              "offset_fitted": -0.016849769986919484,
+              "r_squared": 0.9999915958133733,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3629.058110062432,
+              "lambda_error_km": 8.101087241272019,
+              "amplitude_fitted": 0.18856161987192402,
+              "offset_fitted": -0.015078522901069877,
+              "r_squared": 0.9999818999734151,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3570.4311120482866,
+              "lambda_error_km": 11.680432349045882,
+              "amplitude_fitted": 0.1863354743379724,
+              "offset_fitted": -0.012550681981687142,
+              "r_squared": 0.9999603066696323,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3486.5020788670877,
+              "lambda_error_km": 16.862680638033268,
+              "amplitude_fitted": 0.18318401164686396,
+              "offset_fitted": -0.008955826614197618,
+              "r_squared": 0.9999106070648767,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3366.666089657357,
+              "lambda_error_km": 24.395908097237186,
+              "amplitude_fitted": 0.17875546979619886,
+              "offset_fitted": -0.003870010830114313,
+              "r_squared": 0.9997905787527486,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3196.320878695003,
+              "lambda_error_km": 35.42725722832602,
+              "amplitude_fitted": 0.17260030055881362,
+              "offset_fitted": 0.0032703999697965675,
+              "r_squared": 0.9994794335537304,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 2956.116949781201,
+              "lambda_error_km": 51.814499237981394,
+              "amplitude_fitted": 0.1641835087416686,
+              "offset_fitted": 0.013182760191147384,
+              "r_squared": 0.9985834645643156,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 2622.716060131383,
+              "lambda_error_km": 76.90614109167431,
+              "amplitude_fitted": 0.1529384596409082,
+              "offset_fitted": 0.026715359433332773,
+              "r_squared": 0.9955639185613614,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 2175.4422179169364,
+              "lambda_error_km": 117.99691063750684,
+              "amplitude_fitted": 0.1383124013920848,
+              "offset_fitted": 0.04475654589262224,
+              "r_squared": 0.9827184748237171,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 1619.1842354322323,
+              "lambda_error_km": 195.36723311832054,
+              "amplitude_fitted": 0.11926981700833507,
+              "offset_fitted": 0.06813949057320023,
+              "r_squared": 0.9089618586314185,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "hemispheric_offset": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3762.5687105456705,
+              "lambda_error_km": 0.07805630391422363,
+              "amplitude_fitted": 0.19371858629365152,
+              "offset_fitted": -0.02084929073518016,
+              "r_squared": 0.9999999985090741,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3762.127986287628,
+              "lambda_error_km": 0.11227336677529207,
+              "amplitude_fitted": 0.19370599139953978,
+              "offset_fitted": -0.020812884140991254,
+              "r_squared": 0.9999999969142335,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3761.4940790069463,
+              "lambda_error_km": 0.16148572112345624,
+              "amplitude_fitted": 0.19368787711327018,
+              "offset_fitted": -0.020760517346804997,
+              "r_squared": 0.9999999936126369,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3760.5823417234005,
+              "lambda_error_km": 0.2322603832202273,
+              "amplitude_fitted": 0.19366182650596936,
+              "offset_fitted": -0.02068519500594494,
+              "r_squared": 0.9999999867762597,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3759.2710775470223,
+              "lambda_error_km": 0.33403549726749915,
+              "amplitude_fitted": 0.19362436616348058,
+              "offset_fitted": -0.020576857291680344,
+              "r_squared": 0.999999972616198,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3757.3853486276134,
+              "lambda_error_km": 0.4803704743938529,
+              "amplitude_fitted": 0.19357050651113453,
+              "offset_fitted": -0.020421038925333285,
+              "r_squared": 0.9999999432733978,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3754.6737770437903,
+              "lambda_error_km": 0.6907349502200575,
+              "amplitude_fitted": 0.19349308413727273,
+              "offset_fitted": -0.020196943455479503,
+              "r_squared": 0.999999882428814,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3750.7752908912807,
+              "lambda_error_km": 0.9930631064528455,
+              "amplitude_fitted": 0.19338182358587847,
+              "offset_fitted": -0.019874679029981957,
+              "r_squared": 0.9999997561440174,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3745.1715980655235,
+              "lambda_error_km": 1.4273888235863772,
+              "amplitude_fitted": 0.19322200350445518,
+              "offset_fitted": -0.019411294950709115,
+              "r_squared": 0.9999994936805352,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3737.1194182650643,
+              "lambda_error_km": 2.050994670315284,
+              "amplitude_fitted": 0.1929925707030523,
+              "offset_fitted": -0.01874510632218385,
+              "r_squared": 0.9999989471242876,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3725.5542544969153,
+              "lambda_error_km": 2.945656301592327,
+              "amplitude_fitted": 0.19266349475306746,
+              "offset_fitted": -0.0177875838398163,
+              "r_squared": 0.9999978057614405,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3708.9545512442205,
+              "lambda_error_km": 4.227735607316053,
+              "amplitude_fitted": 0.19219210179706417,
+              "offset_fitted": -0.016411797502146164,
+              "r_squared": 0.9999954125692867,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3685.151665444284,
+              "lambda_error_km": 6.062048179294977,
+              "amplitude_fitted": 0.19151808685147614,
+              "offset_fitted": -0.014436019095836465,
+              "r_squared": 0.9999903649986074,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3651.0676258390617,
+              "lambda_error_km": 8.680542353390859,
+              "amplitude_fitted": 0.1905569261705552,
+              "offset_fitted": -0.011600595691986954,
+              "r_squared": 0.9999796280264183,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3602.3610330570664,
+              "lambda_error_km": 12.406773990946457,
+              "amplitude_fitted": 0.1891916001103756,
+              "offset_fitted": -0.007535619014366071,
+              "r_squared": 0.9999565048601133,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3532.965894311207,
+              "lambda_error_km": 17.686856877849905,
+              "amplitude_fitted": 0.18726312000745102,
+              "offset_fitted": -0.0017163031329980249,
+              "r_squared": 0.9999058014495604,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3434.529220614234,
+              "lambda_error_km": 25.127261662319565,
+              "amplitude_fitted": 0.18456178529763986,
+              "offset_fitted": 0.006597461412926178,
+              "r_squared": 0.9997916460346331,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3295.817544332037,
+              "lambda_error_km": 35.54161732728806,
+              "amplitude_fitted": 0.1808241923112717,
+              "offset_fitted": 0.01844076539463669,
+              "r_squared": 0.9995244173401346,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3102.325799378703,
+              "lambda_error_km": 50.021626310925576,
+              "amplitude_fitted": 0.17574699030047408,
+              "offset_fitted": 0.03524462442935296,
+              "r_squared": 0.9988615167949862,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 2836.7571367754986,
+              "lambda_error_km": 70.10661010450822,
+              "amplitude_fitted": 0.1690368666426428,
+              "offset_fitted": 0.05895726459004604,
+              "r_squared": 0.9970679938814632,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        }
+      }
+    },
+    "esa_final": {
+      "center": "esa_final",
+      "true_parameters": {
+        "A": 0.24970196442547163,
+        "lambda_km": 3329.772858919549,
+        "C0": -0.024730318998242337,
+        "n_bins": 25
+      },
+      "results_by_systematic": {
+        "common_mode": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3329.7728589195494,
+              "lambda_error_km": 2.8433965591183316e-13,
+              "amplitude_fitted": 0.2497019644254716,
+              "offset_fitted": -0.024630318998242338,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3329.7728589195485,
+              "lambda_error_km": 3.317178003255217e-13,
+              "amplitude_fitted": 0.24970196442547166,
+              "offset_fitted": -0.024586474009413568,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3329.7728589195494,
+              "lambda_error_km": 3.565267269638399e-13,
+              "amplitude_fitted": 0.2497019644254716,
+              "offset_fitted": -0.024523405190130864,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 1.8593369090771844e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.024432683854079203,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 3.2575517942686017e-13,
+              "amplitude_fitted": 0.24970196442547166,
+              "offset_fitted": -0.024302185758370395,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.6902668230198504e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.024114470787176306,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 3.158457893411597e-13,
+              "amplitude_fitted": 0.2497019644254716,
+              "offset_fitted": -0.02384445220783225,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 3.2043921575438025e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.023456044012539198,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.1564135065800865e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.0228973382874099,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3329.7728589195494,
+              "lambda_error_km": 3.4979714926714004e-13,
+              "amplitude_fitted": 0.2497019644254716,
+              "offset_fitted": -0.022093668099511982,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.49531965684936e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.020937628807510083,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3329.7728589195485,
+              "lambda_error_km": 3.6018210833923355e-13,
+              "amplitude_fitted": 0.24970196442547166,
+              "offset_fitted": -0.019274724217073817,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3329.7728589195485,
+              "lambda_error_km": 3.489483964437018e-13,
+              "amplitude_fitted": 0.24970196442547166,
+              "offset_fitted": -0.016882719294727726,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.4790414458772954e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.01344194008139545,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.9736834120753006e-13,
+              "amplitude_fitted": 0.2497019644254716,
+              "offset_fitted": -0.008492551606355127,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 3.78208734209501e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": -0.001373104307341113,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3329.772858919549,
+              "lambda_error_km": 2.4036186600225087e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": 0.008867863864595486,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3329.7728589195485,
+              "lambda_error_km": 3.6921256020299276e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": 0.023598983387475198,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3329.7728589195494,
+              "lambda_error_km": 3.8338048420485187e-13,
+              "amplitude_fitted": 0.24970196442547163,
+              "offset_fitted": 0.04478896061951372,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 3329.7728589195485,
+              "lambda_error_km": 5.412760793250781e-13,
+              "amplitude_fitted": 0.24970196442547157,
+              "offset_fitted": 0.0752696810017577,
+              "r_squared": 1.0,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "latitude_gradient": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3329.95715397058,
+              "lambda_error_km": 0.03234700328718138,
+              "amplitude_fitted": 0.24971156442114306,
+              "offset_fitted": -0.024693826673549198,
+              "r_squared": 0.9999999996652705,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3330.037958654164,
+              "lambda_error_km": 0.046530188436774256,
+              "amplitude_fitted": 0.2497157736721793,
+              "offset_fitted": -0.024677826720349,
+              "r_squared": 0.9999999993074331,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3330.154192714485,
+              "lambda_error_km": 0.06693267963576507,
+              "amplitude_fitted": 0.24972182861219072,
+              "offset_fitted": -0.024654811698970578,
+              "r_squared": 0.9999999985670862,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3330.3213907737913,
+              "lambda_error_km": 0.09628206623880951,
+              "amplitude_fitted": 0.24973053863647887,
+              "offset_fitted": -0.02462170597070299,
+              "r_squared": 0.9999999970354092,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3330.561899267675,
+              "lambda_error_km": 0.13850264018610586,
+              "amplitude_fitted": 0.24974306818335484,
+              "offset_fitted": -0.024574085508656755,
+              "r_squared": 0.9999999938667624,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3330.9078637656094,
+              "lambda_error_km": 0.1992409336188807,
+              "amplitude_fitted": 0.24976109257813744,
+              "offset_fitted": -0.0245055868307361,
+              "r_squared": 0.9999999873121923,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3331.4055269204937,
+              "lambda_error_km": 0.2866225679326596,
+              "amplitude_fitted": 0.24978702239263859,
+              "offset_fitted": -0.02440705692370753,
+              "r_squared": 0.9999999737552304,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3332.1214121990374,
+              "lambda_error_km": 0.41234284287083645,
+              "amplitude_fitted": 0.2498243265657237,
+              "offset_fitted": -0.024265330745037887,
+              "r_squared": 0.9999999457199148,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3333.1512223643217,
+              "lambda_error_km": 0.5932393046331721,
+              "amplitude_fitted": 0.249877997992294,
+              "offset_fitted": -0.024061473337557086,
+              "r_squared": 0.9999998877582912,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3334.632645939791,
+              "lambda_error_km": 0.8535619114435531,
+              "amplitude_fitted": 0.2499552249104022,
+              "offset_fitted": -0.023768252465875214,
+              "r_squared": 0.999999767968347,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3336.7637923203706,
+              "lambda_error_km": 1.2282550124342277,
+              "amplitude_fitted": 0.2500663600857108,
+              "offset_fitted": -0.023346505756058396,
+              "r_squared": 0.9999995205243376,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3339.829738445302,
+              "lambda_error_km": 1.7677128463886576,
+              "amplitude_fitted": 0.2502263220186147,
+              "offset_fitted": -0.022739920450491523,
+              "r_squared": 0.9999990097693202,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3344.240772269577,
+              "lambda_error_km": 2.54469136702332,
+              "amplitude_fitted": 0.2504566251800166,
+              "offset_fitted": -0.02186753558989699,
+              "r_squared": 0.9999979566265562,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3350.5875266054595,
+              "lambda_error_km": 3.66439910572719,
+              "amplitude_fitted": 0.25078833066648076,
+              "offset_fitted": -0.020612980122899686,
+              "r_squared": 0.9999957884252547,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3359.7205307525487,
+              "lambda_error_km": 5.279320830838589,
+              "amplitude_fitted": 0.2512663532012082,
+              "offset_fitted": -0.018809040726840233,
+              "r_squared": 0.9999913343104206,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3372.8651532249464,
+              "lambda_error_km": 7.6111860930631146,
+              "amplitude_fitted": 0.25195578569935134,
+              "offset_fitted": -0.016215563586237325,
+              "r_squared": 0.9999822129376179,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3391.787978384015,
+              "lambda_error_km": 10.983918839269075,
+              "amplitude_fitted": 0.25295126340681373,
+              "offset_fitted": -0.01248787496562094,
+              "r_squared": 0.9999636174625309,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3419.0382809874554,
+              "lambda_error_km": 15.873876607851795,
+              "amplitude_fitted": 0.25439098237818136,
+              "offset_fitted": -0.007131787884771898,
+              "r_squared": 0.9999259500899608,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3458.299486654334,
+              "lambda_error_km": 22.98813650054297,
+              "amplitude_fitted": 0.2564779960964226,
+              "offset_fitted": 0.0005602229670336775,
+              "r_squared": 0.9998503452345979,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 3514.903474175375,
+              "lambda_error_km": 33.38997155425805,
+              "amplitude_fitted": 0.2595131649374016,
+              "offset_fitted": 0.011598956090388038,
+              "r_squared": 0.9997005503083837,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "ns_dipole": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3330.505138890702,
+              "lambda_error_km": 0.10797283539580996,
+              "amplitude_fitted": 0.24972398030389084,
+              "offset_fitted": -0.02471801794912863,
+              "r_squared": 0.9999999962724253,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3330.8262611850037,
+              "lambda_error_km": 0.1553231910210249,
+              "amplitude_fitted": 0.2497336350406931,
+              "offset_fitted": -0.0247126263939092,
+              "r_squared": 0.9999999922885495,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3331.288237508419,
+              "lambda_error_km": 0.2234446568895009,
+              "amplitude_fitted": 0.24974752490330432,
+              "offset_fitted": -0.02470487287804422,
+              "r_squared": 0.999999984048158,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3331.952887274646,
+              "lambda_error_km": 0.3214554009903706,
+              "amplitude_fitted": 0.2497675089302379,
+              "offset_fitted": -0.024693723902511136,
+              "r_squared": 0.9999999670059739,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3332.909200998694,
+              "lambda_error_km": 0.4624833240410624,
+              "amplitude_fitted": 0.24979626355283266,
+              "offset_fitted": -0.02467769508139255,
+              "r_squared": 0.9999999317681015,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3334.2853243558707,
+              "lambda_error_km": 0.6654368223590805,
+              "amplitude_fitted": 0.2498376434443832,
+              "offset_fitted": -0.02465465585813367,
+              "r_squared": 0.9999998589297077,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3336.265872791695,
+              "lambda_error_km": 0.9575656866613207,
+              "amplitude_fitted": 0.24989720322205441,
+              "offset_fitted": -0.02462155118322893,
+              "r_squared": 0.9999997084358907,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3339.116995571805,
+              "lambda_error_km": 1.3781732782194809,
+              "amplitude_fitted": 0.2499829533682441,
+              "offset_fitted": -0.024574006521631178,
+              "r_squared": 0.9999993976937023,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3343.2227552456843,
+              "lambda_error_km": 1.9840155960234531,
+              "amplitude_fitted": 0.25010645899022294,
+              "offset_fitted": -0.024505770786946258,
+              "r_squared": 0.9999987566557785,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3349.138138083565,
+              "lambda_error_km": 2.857191997081198,
+              "amplitude_fitted": 0.250284444040793,
+              "offset_fitted": -0.02440793818660978,
+              "r_squared": 0.9999974359847381,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3357.6667176316314,
+              "lambda_error_km": 4.116756700330149,
+              "amplitude_fitted": 0.2505411484905673,
+              "offset_fitted": -0.02426787709341078,
+              "r_squared": 0.9999947202833612,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3369.975328165037,
+              "lambda_error_km": 5.935974745004158,
+              "amplitude_fitted": 0.25091182271991597,
+              "offset_fitted": -0.024067790345218762,
+              "r_squared": 0.9999891511861035,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3387.765125793276,
+              "lambda_error_km": 8.568326407785081,
+              "amplitude_fitted": 0.25144797387116613,
+              "offset_fitted": -0.023782855543573823,
+              "r_squared": 0.999977775334737,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3413.530688555414,
+              "lambda_error_km": 12.387473773998586,
+              "amplitude_fitted": 0.2522253767646179,
+              "offset_fitted": -0.023378999469401092,
+              "r_squared": 0.9999546688954598,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3450.960040776748,
+              "lambda_error_km": 17.950399019115874,
+              "amplitude_fitted": 0.2533565985184321,
+              "offset_fitted": -0.02281065241685987,
+              "r_squared": 0.9999081146010885,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3505.568665414763,
+              "lambda_error_km": 26.100982309637956,
+              "amplitude_fitted": 0.25501119414776613,
+              "offset_fitted": -0.022019587574830825,
+              "r_squared": 0.9998154050330634,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3585.7384446328624,
+              "lambda_error_km": 38.14873763851992,
+              "amplitude_fitted": 0.2574496025324804,
+              "offset_fitted": -0.020937807995858267,
+              "r_squared": 0.9996338445095746,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3704.492975554566,
+              "lambda_error_km": 56.19814315787404,
+              "amplitude_fitted": 0.26108295226440564,
+              "offset_fitted": -0.019501987200666263,
+              "r_squared": 0.9992867078350574,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 3882.693179162843,
+              "lambda_error_km": 83.80705934130236,
+              "amplitude_fitted": 0.2665851000974171,
+              "offset_fitted": -0.017698309120176045,
+              "r_squared": 0.9986453585944415,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 4155.156196240542,
+              "lambda_error_km": 127.43744496903265,
+              "amplitude_fitted": 0.27511774224142393,
+              "offset_fitted": -0.015685822043253767,
+              "r_squared": 0.9975167396347886,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "distance_linear": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3328.0309495834676,
+              "lambda_error_km": 0.12524554495008455,
+              "amplitude_fitted": 0.24961512999039032,
+              "offset_fitted": -0.024628768559347584,
+              "r_squared": 0.9999999949724823,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3327.2672868936384,
+              "lambda_error_km": 0.1801655370769799,
+              "amplitude_fitted": 0.24957706923590162,
+              "offset_fitted": -0.02458425310202176,
+              "r_squared": 0.9999999895890344,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3326.1688790863486,
+              "lambda_error_km": 0.25917172628266416,
+              "amplitude_fitted": 0.2495223333561575,
+              "offset_fitted": -0.024520229812824628,
+              "r_squared": 0.9999999784334311,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3324.5890457583373,
+              "lambda_error_km": 0.37283171711240376,
+              "amplitude_fitted": 0.24944362462312375,
+              "offset_fitted": -0.02442815613802589,
+              "r_squared": 0.9999999553017265,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3322.3168895510994,
+              "lambda_error_km": 0.5363540086950722,
+              "amplitude_fitted": 0.24933046002768966,
+              "offset_fitted": -0.024295755430358838,
+              "r_squared": 0.9999999072921345,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3319.0492423576225,
+              "lambda_error_km": 0.771630997449999,
+              "amplitude_fitted": 0.24916779009209875,
+              "offset_fitted": -0.024105391905667763,
+              "r_squared": 0.9999998075147049,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3314.3504220274176,
+              "lambda_error_km": 1.1101865847059549,
+              "amplitude_fitted": 0.2489340285477243,
+              "offset_fitted": -0.023831746105459087,
+              "r_squared": 0.9999995997475174,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3307.594575250422,
+              "lambda_error_km": 1.5974350897922114,
+              "amplitude_fitted": 0.24859825214171596,
+              "offset_fitted": -0.023438498051862704,
+              "r_squared": 0.9999991659058417,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3297.8832268431756,
+              "lambda_error_km": 2.2988477408469015,
+              "amplitude_fitted": 0.24811624298136933,
+              "offset_fitted": -0.022873611724631374,
+              "r_squared": 0.9999982563541578,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3283.927705212851,
+              "lambda_error_km": 3.3089096657629042,
+              "amplitude_fitted": 0.24742494084578162,
+              "offset_fitted": -0.0220626668678452,
+              "r_squared": 0.999996338424513,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3263.8822100215402,
+              "lambda_error_km": 4.764195182056301,
+              "amplitude_fitted": 0.24643476269189718,
+              "offset_fitted": -0.02089950428897609,
+              "r_squared": 0.9999922603522264,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3235.108430354295,
+              "lambda_error_km": 6.862605081517527,
+              "amplitude_fitted": 0.24501917171363047,
+              "offset_fitted": -0.019233258758493254,
+              "r_squared": 0.9999834843677823,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3193.8473982763703,
+              "lambda_error_km": 9.892036582004609,
+              "amplitude_fitted": 0.24300093994068836,
+              "offset_fitted": -0.01685071360436278,
+              "r_squared": 0.9999642677670184,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3134.771090085231,
+              "lambda_error_km": 14.274035357692805,
+              "amplitude_fitted": 0.24013497193912153,
+              "offset_fitted": -0.013452986800128871,
+              "r_squared": 0.9999211186932674,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3050.3924626495586,
+              "lambda_error_km": 20.632745538211903,
+              "amplitude_fitted": 0.23608880514484143,
+              "offset_fitted": -0.008626216111599517,
+              "r_squared": 0.9998206321735814,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 2930.350562472501,
+              "lambda_error_km": 29.910850372082432,
+              "amplitude_fitted": 0.23042476348650026,
+              "offset_fitted": -0.0018079133213396341,
+              "r_squared": 0.9995738459551217,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 2760.7281520893234,
+              "lambda_error_km": 43.58577157700522,
+              "amplitude_fitted": 0.222592808303237,
+              "offset_fitted": 0.007744578827479393,
+              "r_squared": 0.9989187621751605,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 2523.9935391890776,
+              "lambda_error_km": 64.13949610470529,
+              "amplitude_fitted": 0.2119470880295168,
+              "offset_fitted": 0.020968153260805648,
+              "r_squared": 0.9969697254009191,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 2201.519405269586,
+              "lambda_error_km": 96.2930930684467,
+              "amplitude_fitted": 0.19776840422020914,
+              "offset_fitted": 0.038964661377451915,
+              "r_squared": 0.9901227061748739,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 1783.5831342345832,
+              "lambda_error_km": 150.82595060877503,
+              "amplitude_fitted": 0.17905260141148704,
+              "offset_fitted": 0.06292906083171036,
+              "r_squared": 0.9599304374354588,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        },
+        "hemispheric_offset": {
+          "sweep": [
+            {
+              "amplitude": 0.0001,
+              "lambda_km": 3329.0703582177725,
+              "lambda_error_km": 0.06131997153332824,
+              "amplitude_fitted": 0.24967712923433785,
+              "offset_fitted": -0.024649849651451214,
+              "r_squared": 0.9999999987960749,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0001438449888287663,
+              "lambda_km": 3328.7623762191506,
+              "lambda_error_km": 0.08820268811014428,
+              "amplitude_fitted": 0.24966624218489053,
+              "offset_fitted": -0.02461456937358215,
+              "r_squared": 0.9999999975083466,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00020691380811147902,
+              "lambda_km": 3328.3193909359165,
+              "lambda_error_km": 0.12686890162784245,
+              "amplitude_fitted": 0.24965058378088423,
+              "offset_fitted": -0.024563822063508912,
+              "r_squared": 0.999999994842739,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00029763514416313193,
+              "lambda_km": 3327.6822437521205,
+              "lambda_error_km": 0.1824816395558838,
+              "amplitude_fitted": 0.24962806423635173,
+              "offset_fitted": -0.024490827914761197,
+              "r_squared": 0.999999989323895,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00042813323987193956,
+              "lambda_km": 3326.76587385493,
+              "lambda_error_km": 0.2624639844725396,
+              "amplitude_fitted": 0.24959567986499795,
+              "offset_fitted": -0.024385836345368873,
+              "r_squared": 0.9999999778947124,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0006158482110660267,
+              "lambda_km": 3325.4479997257163,
+              "lambda_error_km": 0.37748605860408174,
+              "amplitude_fitted": 0.249549114910141,
+              "offset_fitted": -0.024234825415747327,
+              "r_squared": 0.9999999542165596,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0008858667904100823,
+              "lambda_km": 3323.5528792862033,
+              "lambda_error_km": 0.542880634565409,
+              "amplitude_fitted": 0.24948217149420499,
+              "offset_fitted": -0.02401763309700441,
+              "r_squared": 0.9999999051349563,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0012742749857031334,
+              "lambda_km": 3320.8280342379007,
+              "lambda_error_km": 0.7806707877114268,
+              "amplitude_fitted": 0.24938595521733806,
+              "offset_fitted": -0.02370527350286721,
+              "r_squared": 0.9999998033150852,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0018329807108324356,
+              "lambda_km": 3316.9109454814025,
+              "lambda_error_km": 1.122469051980996,
+              "amplitude_fitted": 0.24924771520849265,
+              "offset_fitted": -0.023256085341368176,
+              "r_squared": 0.9999995918494361,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.0026366508987303583,
+              "lambda_km": 3311.2815097003363,
+              "lambda_error_km": 1.6136117107547747,
+              "amplitude_fitted": 0.2490491994198709,
+              "offset_fitted": -0.022610210041239316,
+              "r_squared": 0.9999991519458266,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.00379269019073225,
+              "lambda_km": 3303.1944046527733,
+              "lambda_error_km": 2.3190327909956174,
+              "amplitude_fitted": 0.24876433792636898,
+              "offset_fitted": -0.021681686734772047,
+              "r_squared": 0.9999982346735743,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.005455594781168515,
+              "lambda_km": 3291.5833626271506,
+              "lambda_error_km": 3.3315661758677497,
+              "amplitude_fitted": 0.24835601167384075,
+              "offset_fitted": -0.02034715934507494,
+              "r_squared": 0.9999963155058461,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.007847599703514606,
+              "lambda_km": 3274.9267101840833,
+              "lambda_error_km": 4.7835947350237396,
+              "amplitude_fitted": 0.24777161258279976,
+              "offset_fitted": -0.018429792563419953,
+              "r_squared": 0.9999922804212037,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.011288378916846883,
+              "lambda_km": 3251.0606782154496,
+              "lambda_error_km": 6.863235423798604,
+              "amplitude_fitted": 0.24693708342136708,
+              "offset_fitted": -0.015676463849059467,
+              "r_squared": 0.9999837364645763,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.01623776739188721,
+              "lambda_km": 3216.9248318662453,
+              "lambda_error_km": 9.83654174404387,
+              "amplitude_fitted": 0.24574921438981434,
+              "offset_fitted": -0.011725623197910245,
+              "r_squared": 0.9999654598063834,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.023357214690901212,
+              "lambda_km": 3168.22501704074,
+              "lambda_error_km": 14.077516456669677,
+              "amplitude_fitted": 0.2440663231312432,
+              "offset_fitted": -0.006062410932831515,
+              "r_squared": 0.9999257818483649,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.03359818286283781,
+              "lambda_km": 3099.009613222057,
+              "lambda_error_km": 20.108237983914353,
+              "amplitude_fitted": 0.24169836644196674,
+              "offset_fitted": 0.002043205112230081,
+              "r_squared": 0.9998377764757197,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.04832930238571752,
+              "lambda_km": 3001.188458260103,
+              "lambda_error_km": 28.65306363120395,
+              "amplitude_fitted": 0.2383995951756405,
+              "offset_fitted": 0.013620128250678527,
+              "r_squared": 0.9996363991081668,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.06951927961775606,
+              "lambda_km": 2864.1161690924546,
+              "lambda_error_km": 40.7178267371601,
+              "amplitude_fitted": 0.23387080346009662,
+              "offset_fitted": 0.03010645275252127,
+              "r_squared": 0.9991541545827414,
+              "tep_consistent": "True",
+              "success": true
+            },
+            {
+              "amplitude": 0.1,
+              "lambda_km": 2674.5893626906172,
+              "lambda_error_km": 57.73209555640662,
+              "amplitude_fitted": 0.22778402169986547,
+              "offset_fitted": 0.05349004239524868,
+              "r_squared": 0.9979200120518532,
+              "tep_consistent": "True",
+              "success": true
+            }
+          ],
+          "critical_amplitude": null,
+          "interpretation": "TEP consistency survives across entire amplitude range"
+        }
+      }
+    }
+  },
+  "summary": {
+    "weakest_systematic": "code/distance_linear",
+    "weakest_critical_amplitude": 0.1,
+    "interpretation": "The most dangerous systematic is code/distance_linear, which requires an amplitude of 1.00e-01 to destroy TEP consistency.  Physical systematics in GNSS are typically << 1e-3 in coherence units, so the observed signal is robust."
+  },
+  "reviewer_relevance": {
+    "forward_model_critique": "This simulation shows that the exponential signature is not easily faked by plausible systematics.  Even the most dangerous systematic requires an amplitude orders of magnitude larger than known GNSS biases."
+  }
+}

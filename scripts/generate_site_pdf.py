@@ -100,10 +100,10 @@ def copy_pdf_to_docs(source_pdf: Path, docs_dir: Path):
     
     # Load metadata from CITATION.cff
     metadata = load_citation_metadata()
-    version_str = f"v{metadata['version']}_{metadata['codename']}"
+    version_str = f"v{metadata['version']}-{metadata['codename']}"
     
     # Primary PDF name
-    target_name = f"Smawfield_2026_TEP-GNSS_{version_str}.pdf"
+    target_name = f"1-TEP-GNSS-{version_str}.pdf"
     target_path = docs_dir / target_name
     
     # Copy the file
@@ -120,10 +120,10 @@ def copy_pdf_to_root(source_pdf: Path, base_dir: Path):
     """Copy PDF to the project root directory."""
     # Load metadata from CITATION.cff
     metadata = load_citation_metadata()
-    version_str = f"v{metadata['version']}_{metadata['codename']}"
+    version_str = f"v{metadata['version']}-{metadata['codename']}"
     
     # Primary PDF name
-    target_name = f"Smawfield_2026_TEP-GNSS_{version_str}.pdf"
+    target_name = f"1-TEP-GNSS-{version_str}.pdf"
     target_path = base_dir / target_name
     
     # Copy the file
@@ -188,19 +188,19 @@ async def generate_pdf(quality: str = 'high', wait_time: float = 5.0, skip_build
     if quality == 'maximum':
         # Highest resolution for archival/print quality
         options = presets['high_quality'].copy()
-        options['scale'] = 0.69  # Larger content, target <20 pages
+        options['scale'] = 0.72  # Larger content, target <20 pages
         options['device_scale_factor'] = 3.0  # High pixel density for sharpness
         options['viewport'] = {'width': 1920, 'height': 1080}
         options['prefer_css_page_size'] = True
     elif quality == 'high':
         options = presets['high_quality'].copy()
-        options['scale'] = 0.69
+        options['scale'] = 0.72
         options['device_scale_factor'] = 2.5
         options['viewport'] = {'width': 1920, 'height': 1080}
         options['prefer_css_page_size'] = True
     elif quality == 'print':
         options = presets['print_ready'].copy()
-        options['scale'] = 0.63
+        options['scale'] = 0.72
         options['device_scale_factor'] = 2.0
     else:
         options = presets['web_optimized'].copy()
@@ -241,7 +241,7 @@ async def generate_pdf(quality: str = 'high', wait_time: float = 5.0, skip_build
         
         # Load metadata for display
         metadata = load_citation_metadata()
-        version_str = f"v{metadata['version']}_{metadata['codename']}"
+        version_str = f"v{metadata['version']}-{metadata['codename']}"
         print(f"   Version: {version_str}")
         
         # Copy to docs directory

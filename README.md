@@ -6,7 +6,7 @@
 ![Global Time Echoes](site/public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.25 (Jaipur)  
+**Version:** v0.26 (Jaipur)  
 **Date:** 29 April 2026  
 **Status:** Preprint  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
