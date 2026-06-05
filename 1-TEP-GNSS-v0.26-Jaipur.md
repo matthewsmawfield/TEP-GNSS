@@ -1,6 +1,6 @@
 # Global Time Echoes: Distance-Structured Correlations in GNSS
 **Matthew Lukin Smawfield**
-Version: v0.25 (Jaipur)
+Version: v0.26 (Jaipur)
 05 June 2026
 DOI: 10.5281/zenodo.17127229
 
