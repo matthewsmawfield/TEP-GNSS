@@ -23,10 +23,13 @@ The observation of matching low-frequency structure in a system devoid of active
 ### 1.1 The Necessity of Independent Testing
 
 The Temporal Equivalence Principle (TEP) posits that proper time is a
-dynamical field governed by a conformal factor $A(\phi) =
-\exp(\beta\phi/M_{\text{Pl}})$, leading to path-dependent
-synchronization effects that manifest as spatial correlations in
-distributed timing networks. Previous analyses of the GNSS network
+dynamical field governed, in its conformal sector, by
+$A(\phi) = \exp(\beta_A\phi/M_{\text{Pl}})$,
+producing distance-structured clock-network covariance and
+optical-domain correlation structure. Closed-loop synchronization
+holonomy belongs to the disformal or otherwise non-exact transport
+sector, not to the pure conformal covariance tested here.
+Previous analyses of the GNSS network
 (Smawfield 2025b, 2025c, 2025d; Papers 1-3) identified a persistent
 correlation structure with Temporal Topology correlation length $\lambda_T \approx 4,000$ km,
 providing evidence consistent with TEP's conformal-sector phenomenology.
@@ -34,6 +37,23 @@ While robust across processing centers (CODE, IGS, ESA; $R^2 =
 0.92-0.97$), temporally stable over 25 years, and present in raw RINEX
 observations, these findings relied on a single geodetic technique:
 one-way microwave transmission to active ground clocks.
+
+Screening in TEP is represented at the theory level by the environmental operator
+*S*&Sigma;(*&Epsilon;*).
+Quantities such as
+&rho;T,
+*R*T(*M*),
+*S*&oplus;(*r*),
+compactness &Phi;/*c*2,
+local stellar density,
+geometric coherence length,
+and channel-specific response coefficients
+are domain-specific projections of *&Epsilon;*,
+not independent screening mechanisms
+and not interchangeable universal thresholds.
+Each is an observational transfer model
+that parameterizes the same underlying operator
+in a regime-appropriate form.
 
 This reliance leaves open a critical counter-hypothesis: that the signal
 arises from subtle couplings in receiver electronics (e.g., thermal
@@ -53,6 +73,8 @@ expected to manifest in these optical residuals—potentially offering a
 physical origin for the persistent "flicker noise" floor and scale
 drifts observed in geodetic time series.
 
+The distance-structured phase correlation analyzed in the SLR network is governed by the same geodetic realization of the abstract environmental operator $\mathcal{S}_\Sigma(\mathcal{E})$ as the microwave GNSS networks. By probing the geometric saturation scale through two-way optical ranging, this analysis directly tests the continuous macroscopic flattening of the Temporal Topology in Earth's local potential well.
+
 ### 1.2 TEP's Two Sectors: Conformal vs. Disformal
 
 The TEP framework (Smawfield 2025a; Paper 0) distinguishes two
@@ -61,7 +83,7 @@ physically distinct sectors with different observational signatures:
 #### Conformal Sector (Clock-Rate Modulation)
 
 **Coupling:** Universal conformal factor $A(\phi) =
-\exp(\beta\phi/M_{\text{Pl}})$ modulates proper time rates:
+\exp(\beta_A\phi/M_{\text{Pl}})$ modulates proper time rates:
 $\mathrm{d}\tau/\mathrm{d}t \propto A(\phi)$.
 
 **Observable:** Spatial correlations in clock
@@ -707,7 +729,7 @@ Smawfield, M. L. (2025). *Temporal-Spatial Coupling in Gravitational Lensing: A 
 
 Smawfield, M. L. (2025). *Global Time Echoes: Empirical Synthesis*. Preprint v0.4 (Singapore). Zenodo. DOI: [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) (Paper 5)
 
-Smawfield, M. L. (2025). *Universal Critical Density: Cross-Scale Consistency of ρ_T*. Preprint v0.3 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6)
+Smawfield, M. L. (2025). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T*. Preprint v0.3 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6)
 
 Smawfield, M. L. (2025). *The Soliton Wake: Exploring RBH-1 as a Temporal Topology Candidate*. Preprint v0.3 (Blantyre). Zenodo. DOI: [10.5281/zenodo.18059250](https://doi.org/10.5281/zenodo.18059250) (Paper 7)
 

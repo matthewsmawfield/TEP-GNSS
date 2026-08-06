@@ -1,4 +1,4 @@
-# Global Time Echoes: 25-Year Analysis of CODE Precise Clock
+# Global Time Echoes: 25-Year Analysis of CODE Precise Clock Products
 **Matthew Lukin Smawfield**
 Version: v0.19 (Cairo)
 First published: 3 November 2025 · Last updated: 4 June 2026
@@ -10,9 +10,11 @@ DOI: 10.5281/zenodo.17517141
 
 Analysis of 25.3 years of global GNSS timing data (165.2 million station pairs) documents persistent velocity-dependent correlations in atomic clock networks. Critically, we propose that standard GNSS processing algorithms, designed to remove energetic (common-mode) errors via datum constraints, inadvertently preserve the subtle, geometry-dependent (differential) correlations that are the focus of this work. Building on the multi-centre study's validation (R²=0.92-0.97 between CODE, IGS, ESA), the extended temporal baseline confirms decadal stability and enables investigation of long-period geophysical phenomena inaccessible in shorter baselines.
 
-Seven convergent signatures are identified: (1) Spatial anisotropy persists with EW>NS (global ratio=2.16, strength=1.981, p<10⁻¹⁵), (2) anisotropy ratio correlates with orbital velocity (r=-0.888, p<2×10⁻⁷, 5.1σ; 5 M surrogates) across 25 solar orbits with ≈19% annual geometric ratio modulation, (3) We identify that the annual modulation peaks coincide with Earth's maximal projection onto its motion vector relative to the Cosmic Microwave Background (CMB) rest frame (correlation r=0.747, p < 0.001), suggesting the GNSS network reveals a secondary covariance-frame signature (rejecting galactic motion with 5,570× variance ratio), (4) 35.9% of planetary events show significant response (56/156 ≥2σ; Mercury leading with 34/80), (5) coupling to 18.6-year lunar nutation (R²=0.641, p<10⁻⁸) and semiannual nutation (R²=0.904), (6) network synchronization (score=0.582) replicates multi-centre range, (7) null results for solar rotation (27-day) and lunar standstill are consistent with selectivity for orbital-gravitational phenomena over surface features. The 19% modulation describes changes in the geometric shape of the correlation field (ratio of spatial correlation lengths), not clock frequency variations, which remain at standard sub-nanosecond levels.
+Seven convergent signatures are identified: (1) Spatial anisotropy persists with EW>NS (global ratio=2.16, strength=1.981, p<10⁻¹⁵), (2) anisotropy ratio correlates with orbital velocity (r=-0.888, p<2×10⁻⁷, 5.1σ; 5 M surrogates) across 25 solar orbits with ≈19% annual geometric ratio modulation, (3) We identify that the annual modulation peaks coincide with Earth's maximal projection onto its motion vector relative to the Cosmic Microwave Background (CMB) rest frame (correlation r=0.747, p < 0.001), suggesting the GNSS network reveals a secondary covariance-frame signature (rejecting galactic motion with 5,570× variance ratio), (4) 35.9% of planetary events show significant response (56/156 ≥2σ; Mercury leading with 34/80), (5) coupling to 18.6-year lunar nutation (R²=0.641, p<10⁻⁸) and semiannual nutation (R²=0.904), (6) network covariance score (0.582) replicates multi-centre range, (7) null results for solar rotation (27-day) and lunar standstill are consistent with selectivity for orbital-gravitational phenomena over surface features. The 19% modulation describes changes in the geometric shape of the correlation field (ratio of spatial correlation lengths), not clock frequency variations, which remain at standard sub-nanosecond levels.
 
 Observed patterns are compatible with key a priori TEP predictions: Temporal Topology correlation length λT=1,000-10,000 km (observed: 4,201±1,967 km), exponential models remain competitive with the best spatial kernel (exponential ΔAIC=12.8 relative to the Gaussian) and strongly outperform simple power-law forms (power-law ΔAIC > 30), velocity-dependent anisotropy (r=-0.888), and geometric alignment (EW/NS=2.16). The absence of GM/r² scaling is physically consistent with the hypothesis that energetic couplings are filtered by processing while geometric information is transmitted; raw carrier-phase analysis will test this transmission mechanism. Raw data validation and multi-constellation replication represent critical next steps.
+
+The empirically derived spatial correlation length $\lambda_T$ (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator $\mathcal{S}_\Sigma(\mathcal{E})$ defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.
 
 The primary result is 25-year persistence of distance-structured covariance
 and EW/NS anisotropy. CMB-frame alignment, planetary event response, and
@@ -544,7 +546,7 @@ First detection at this period |
 | **Semiannual Nutation** | *Not explicitly tested* | **New Detection:** R² = 0.904, p < 10⁻²⁰
 50+
 complete cycles |
-| **Network Synchronization** | Mesh dance detected across 3 centers
+| **Network Covariance Score** | Mesh dance detected across 3 centers
 CODE: 0.624, IGS:
 0.579, ESA: 0.602
 Consistent global coordination | **Replicated:** Index = 0.582
@@ -1705,6 +1707,23 @@ correlations. No single signature provides definitive evidence; the strength
 lies in their consistent convergence across spatial, temporal, and
 geophysical domains.
 
+Screening in TEP is represented at the theory level by the environmental operator
+*S*&Sigma;(*&Epsilon;*).
+Quantities such as
+&rho;T,
+*R*T(*M*),
+*S*&oplus;(*r*),
+compactness &Phi;/*c*²,
+local stellar density,
+geometric coherence length,
+and channel-specific response coefficients
+are domain-specific projections of *&Epsilon;*,
+not independent screening mechanisms
+and not interchangeable universal thresholds.
+Each is an observational transfer model
+that parameterizes the same underlying operator
+in a regime-appropriate form.
+
 #### 4.1.1 Foundational Phenomenology: 3D Spatial Anisotropy
 
 This measurement addresses the question:
@@ -2688,7 +2707,7 @@ cycles
 
 **Replicated (Confirms Temporal Stability)**:
 
-**Network Synchronization (Mesh Dance)**: Index = 0.582,
+**Network Covariance Score (Mesh Dance)**: Index = 0.582,
 consistent with multi-centre range (CODE: 0.624, IGS: 0.579, ESA: 0.602)
 
 **Cross-Centre Validation Status**: The multi-centre study's
@@ -2867,14 +2886,13 @@ is pure phase-coherence geometry, which depends on alignment rather than
 mass.
 
 #### 
-Theoretical Interpretation: The Network as a Holonomy Detector
+Theoretical Interpretation: The Network as a Covariance-Stress Detector
 
 The TEP framework predicts that time is locally integrable (GR-like) but
 globally path-dependent. Standard GNSS processing imposes a global
 synchronization constraint (datum) on this non-integrable field. The
 resulting residuals—the "stress" in the network solution—map the failure
-of global synchronization, directly revealing the non-integrable
-structure (holonomy) of the temporal field.
+of global synchronization, revealing distance-structured synchronization stress consistent with a non-integrable time-transport framework, while direct holonomy remains the target of closed-loop triangle tests.
 
 **Why Processed Data is the Correct Observable:**
 
@@ -3295,7 +3313,9 @@ modeling.
 Clarifying Effect Size: Correlation Topology vs Frequency Shift
 
 The ≈19% annual modulation and 0.3–4% planetary event responses describe
-changes in *correlation structure* (the ratio λEW/λNS
+changes in *correlation structure* (the ratio λEW/λ<sub
+>NS</sub
+>
 and coherence between station pairs), not clock frequency shifts. Individual
 clock frequencies remain at standard GR levels (Δf/f ~ 10⁻¹⁶–10⁻¹⁰). The
 distinction is fundamental: frequency is a scalar quantity measured at
@@ -3325,7 +3345,9 @@ estimated clock bias parameters and removed from the residuals.
 coherence structure represents a macroscopic change in network
 correlation, not a microscopic frequency shift. This structural
 modulation is orders of magnitude above the instrumental noise floor
-(Allan deviation &sigma;y(&tau;) &approx; 10-15
+(Allan deviation &sigma;y(&tau;) &approx; 10<sup
+>-15</sup
+>
 for IGS H-masers), ruling out simple thermal noise or oscillator
 instability as the cause.
 
@@ -3517,7 +3539,7 @@ Earth's orbital plane. Whether this reflects propagation effects,
 processing biases, or a genuine geometric coupling remains to be
 determined through multi-constellation and raw-data analysis.
 
-**Global Coordination:** Network synchronization (index =
+**Global Coordination:** Network covariance score (index =
 0.582) demonstrates coordinated behavior across the 474-station network.
 This could indicate a global field-like influence, though alternative
 explanations (correlated processing, shared reference frames,
@@ -3768,7 +3790,7 @@ The strongest statistical finding is the orbital velocity correlation (r = -0.88
 
 The planetary event analysis documents 56 statistically significant event-associated modulations (25 surviving ultra-conservative Bonferroni correction, 33 surviving dependency-aware BY-FDR), demonstrating repeatability across 25 years. The 45% Bonferroni survival rate under an intentionally conservative correction (α ≈ 0.00089) indicates robust, repeatable event responses. Critically, null event control testing (Step 2.6) confirms that planetary events produce effect sizes 5.5× larger than 155 random dates (Mann-Whitney p < 10⁻¹⁷, Cohen's d = 1.41, ~8.5σ), validating that detected responses are specific to astronomical alignments rather than temporal autocorrelation artifacts.
 
-The nutation coupling (R² = 0.904 semiannual, R² = 0.641 for 18.6-year), network synchronization (index = 0.582), and persistent anisotropic structure (E-W:N-S = 2.16 over 25 years) provide independent evidence for systematic, globally coordinated patterns in the GNSS timing correlation field.
+The nutation coupling (R² = 0.904 semiannual, R² = 0.641 for 18.6-year), network covariance score (index = 0.582), and persistent anisotropic structure (E-W:N-S = 2.16 over 25 years) provide independent evidence for systematic, globally coordinated patterns in the GNSS timing correlation field.
 
 #### Convergence Argument: Multi-Signature Synthesis
 
@@ -4092,14 +4114,14 @@ Smawfield, M. L. (2025). *Global Time Echoes: 25-Year Analysis of CODE Precise C
 Smawfield, M. L. (2025). *Global Time Echoes: Raw RINEX Consistency Test*. Preprint v0.5 (Kathmandu). Zenodo. DOI: [10.5281/zenodo.17860166](https://doi.org/10.5281/zenodo.17860166) (Paper 3)
 Smawfield, M. L. (2025). *Temporal-Spatial Coupling in Gravitational Lensing: A Reinterpretation of Dark Matter Observations*. Preprint v0.5 (Tortola). Zenodo. DOI: [10.5281/zenodo.17982540](https://doi.org/10.5281/zenodo.17982540) (Paper 4)
 Smawfield, M. L. (2025). *Global Time Echoes: Empirical Synthesis*. Preprint v0.4 (Singapore). Zenodo. DOI: [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) (Paper 5)
-Smawfield, M. L. (2025). *Universal Critical Density: Cross-Scale Consistency of ρ_T*. Preprint v0.3 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6)
+Smawfield, M. L. (2025). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T*. Preprint v0.3 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6)
 Smawfield, M. L. (2025). *The Soliton Wake: Exploring RBH-1 as a Temporal Topology Candidate*. Preprint v0.3 (Blantyre). Zenodo. DOI: [10.5281/zenodo.18059250](https://doi.org/10.5281/zenodo.18059250) (Paper 7)
 Smawfield, M. L. (2025). *Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging*. Preprint v0.3 (Mombasa). Zenodo. DOI: [10.5281/zenodo.18064581](https://doi.org/10.5281/zenodo.18064581) (Paper 8)
 Smawfield, M. L. (2025). *What Do Precision Tests of General Relativity Actually Measure?*. Preprint v0.3 (Istanbul). Zenodo. DOI: [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) (Paper 9)
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: Suppressed Density Scaling in Globular Cluster Pulsars*. Preprint v0.6 (Caracas). Zenodo. DOI: [10.5281/zenodo.18165798](https://doi.org/10.5281/zenodo.18165798) (Paper 10)
 Smawfield, M. L. (2026). *The Cepheid Bias: Resolving the Hubble Tension*. Preprint v0.6 (Kingston upon Hull). Zenodo. DOI: [10.5281/zenodo.18209702](https://doi.org/10.5281/zenodo.18209702) (Paper 11)
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: A Unified Resolution to the JWST High-Redshift Anomalies*. Preprint v0.4 (Kos). Zenodo. DOI: [10.5281/zenodo.19000827](https://doi.org/10.5281/zenodo.19000827) (Paper 12)
-Smawfield, M. L. (2026). *Temporal Equivalence Principle: Temporal Shear Recovery in Gaia DR3 Wide Binaries*. Preprint v0.3 (Kilifi). Zenodo. DOI: [10.5281/zenodo.19102061](https://doi.org/10.5281/zenodo.19102061) (Paper 13)
+Smawfield, M. L. (2026). *Temporal Equivalence Principle: Temporal Shear Recovery in Gaia DR3 Wide Binaries*. Preprint v0.4 (Kilifi). Zenodo. DOI: [10.5281/zenodo.19102061](https://doi.org/10.5281/zenodo.19102061) (Paper 13)
 Teunissen, P. J., & Montenbruck, O. (Eds.). (2017). *Springer Handbook of Global Navigation Satellite Systems*. Springer International Publishing.
 Villiger, A., Dach, R., Prange, L., et al. (2019). A flexible strategy for handling the datum and initial bias in GNSS clock estimation. *Journal of Geodesy*, 93, 1773–1786.
 Dach, R., Schaer, S., Arnold, D., Brockmann, E., Kalarus, M., Lasser, M., Stebler, P., & Jäggi, A. (2024). CODE final product series for the IGS. Astronomical Institute, University of Bern. DOI: [10.48350/197025](https://doi.org/10.48350/197025).
