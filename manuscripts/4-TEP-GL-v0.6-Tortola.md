@@ -159,23 +159,31 @@ phenomenology is new.
 
 A unified "Optical Theory" of dark matter is developed here, where the
 phenomenology arises from two distinct optical effects of the scalar field
-\(A(\phi)\): a static refractive index and a dynamic shutter.
+\(A(\phi)\): a static clock-transfer contribution and a dynamic shutter.
 
-#### 1. The Static Refractive Index (Geometric Lensing)
+#### 1. The Static Clock-Transfer Contribution (Geometric Lensing)
 
-The scalar field acts as a locally variable optical factor \(n_{eff} \approx
-A(\phi)\) in the travel-time functional governing image formation.
-The associated excess matter proper-time delay is:
+The conformal clock sector modifies the relation between accumulated
+matter-frame time and the geometry reconstructed under an isochronous
+model. The associated excess matter proper-time delay is:
 
 $\Delta \tilde{\tau}_{\rm static} = \frac{1}{c} \int (A(\phi) - 1)\,
 dl$
 
-This *Static Halo* contributes a source-independent term to the
-arrival-time (Fermat) surface. In multipath configurations, it is therefore
-operationally degenerate with the "bulk" convergence inferred in standard
-reconstructions (Einstein rings, major arcs), even though, as established in
-Axiom 1, the conformal limit preserves null cones and does not generate a
-differential photon–graviton speed.
+This contributes a source-independent term to the arrival-time (Fermat)
+surface. In multipath configurations, it is therefore operationally
+degenerate with the "bulk" convergence inferred in standard
+reconstructions (Einstein rings, major arcs). However, as established in
+Axiom 1, the conformal limit preserves null cones: pure multiplication by
+\(A^2(\phi)\) does not bend a photon onto a new null trajectory. Any
+genuinely new static null-trajectory bending beyond the conformally related
+geometry must arise through gravitational backreaction in \(g_{\mu\nu}\),
+a non-negligible disformal contribution from \(B(\phi)\), or another
+explicitly derived part of the coupled field solution. The observable
+lensing signal in the conformal sector is therefore a clock-transfer
+discrepancy — a difference between the matter-frame time accumulated along
+each path and the time inferred from an isochronous GR lens model — rather
+than a direct refraction of null geodesics.
 
 #### 2. The Dynamic Shutter (Temporal Lensing)
 
@@ -195,9 +203,15 @@ applies even to "static" sources (like elliptical galaxies) due to their
 proper motion \(\vec{v}_s\) across the delay gradient. (See Section 3 for
 the full derivation).
 
-Together, these two mechanisms constitute the TEP framework: the refractive
-index may contribute to the phenomenology conventionally attributed to the dark matter halo,
-and the dynamic shutter may account for part of the apparent "complexity" of substructure.
+Together, these two mechanisms constitute the TEP framework: the
+clock-transfer contribution may contribute to the phenomenology
+conventionally attributed to the dark matter halo, and the dynamic
+shutter may account for part of the apparent "complexity" of
+substructure. Any genuinely new null-trajectory bending beyond the
+conformally related geometry must arise through gravitational
+backreaction in \(g_{\mu\nu}\), a non-negligible disformal
+contribution, or another explicitly derived part of the coupled field
+solution.
 
 ### 2.3 Operational Axioms: The TEP Framework
 
@@ -223,28 +237,40 @@ quantities dependent on the metric model.
 This axiom establishes proper time as the irreducible physical
 observable; all other timing quantities are derived.
 
-**Axiom 3 (Open-path transport and closed-loop holonomy):**
-For any signal trajectory \(\gamma\) connecting an emission event to an
-observation event, define the time-transport functional
-\(\mathcal{T}[\gamma] \equiv \Delta\tilde{\tau}[\gamma]\).
-In strong lensing, two images correspond to two open paths
+**Axiom 3 (Non-local temporal transport):** TEP admits two
+distinct classes of non-local timing observable.
+
+**(a) Synchronization holonomy:** A genuinely closed,
+direction-reversing transport loop can exhibit residual non-closure only
+when the transport connection contains non-exact structure, such as the
+disformal \(B(\phi)\) sector. In the pure conformal limit, the
+\(A(\phi)\) contribution is exact and its residual closed-loop integral
+vanishes.
+
+**(b) Differential path transport:** Distinct open propagation
+paths may accumulate different temporal-transfer corrections. In
+gravitational lensing, two images correspond to two open paths
 \(\gamma_i, \gamma_j\), and the observable is the differential
 transport residual
 \[
 \Delta\mathcal{T}_{ij}^{\rm resid}
 = \left[\mathcal{T}[\gamma_i] - \mathcal{T}[\gamma_j]\right]
-- \left[\mathcal{T}_{\rm GR}[\gamma_i] - \mathcal{T}_{\rm GR}[\gamma_j]\right].
+- \left[\mathcal{T}_{\rm GR}[\gamma_i] - \mathcal{T}_{\rm GR}[\gamma_j]\right],
 \]
-This is an *open-path blind-prediction residual*, not a
-closed-loop synchronization holonomy. Because each image has a single
-observed arrival time, algebraic closure of measured pairwise delays
-around image triplets vanishes identically. True synchronization
-holonomy requires a direction-reversing closed loop or a non-exact
-transport structure such as disformal coupling, non-metricity, or an
-explicitly non-exact covariance term.
-This axiom distinguishes open-path differential residuals
-(the GL observable) from closed-loop holonomy (the domain of
-triangle time-transfer and direction-reversing experiments).
+where \(\mathcal{T}[\gamma] \equiv \Delta\tilde{\tau}[\gamma]\) is the
+time-transport functional. This is an open-path blind-prediction
+residual, not a closed-loop synchronization holonomy. Because each
+image has a single observed arrival time, algebraic closure of measured
+pairwise delays around image triplets vanishes identically. This does
+not cause the algebraic sum of observed image delays to fail to close;
+it alters the relation between lens geometry and observed arrival time
+without violating the algebraic identity among the observed arrival
+times.
+
+This axiom distinguishes open-path differential residuals (the GL
+observable) from closed-loop holonomy (the domain of triangle
+time-transfer and direction-reversing experiments), and is consistent
+with the refined strong-lensing formulation in TEP-LENS (Paper 19).
 
 **Measurement Protocol for the GL Observable.**
 The lensing-sector observable is not algebraic delay closure. It is a
@@ -450,10 +476,10 @@ integrated over halo scales (Mpc).
 
 **Primary observables:** The full phenomenology of
 "dark matter" in lensing—cluster arcs, cosmic shear (via Static
-Refraction).
+Clock-Transfer).
 
 **Dark matter status:** Dark matter is modeled as a
-refractive index artifact. The \(\phi\) field constitutes the
+clock-transfer artifact. The \(\phi\) field constitutes the
 underlying reality.
 
 **Falsification:** CMB-galaxy lensing agreement at <
@@ -528,7 +554,7 @@ This delay is
 However, it implies that the "Dynamic Shutter" effect (temporal smearing) is
 negligible for slowly evolving galaxies. The "Dark Matter" signal for
 galaxies is therefore dominated by the
-**Static Refractive Index** (Mechanism A), while the temporal
+**Static Clock-Transfer Contribution** (Mechanism A), while the temporal
 smearing (Mechanism B) becomes the dominant signal only for fast transients
 (FRBs).
 
@@ -571,51 +597,51 @@ gradients to inferred mass under isochrony.
 
 ## 3. The Phantom Mass Mechanism
 
-### 3.1 Deriving Temporal Shear from the Perturbed Metric
+### 3.1 The Canonical Disformal Metric and Null-Trajectory Structure
 
-The Phantom Mass mechanism is derived from first principles, starting from the TEP line element and obtaining the modified geodesic deviation equation. This places the temporal shear on rigorous geometric footing.
+The Phantom Mass mechanism is derived from the canonical TEP matter metric. The foundational two-metric structure (Jakarta, Paper 0) relates the gravitational metric \(g_{\mu\nu}\) to the causal matter metric \(\tilde{g}_{\mu\nu}\) through the disformal map:
 
-#### 3.1.1 The TEP Line Element
+$\tilde{g}_{\mu\nu} = A^2(\phi)\,g_{\mu\nu} + B(\phi)\,\nabla_\mu\phi\,\nabla_\nu\phi$
 
-In the weak-field limit, the TEP framework modifies the standard Newtonian gauge metric by introducing a scalar-field-dependent conformal factor \(A(\phi)\) in the spatial sector:
+where \(A(\phi)\) is the universal conformal coupling and \(B(\phi)\) is the disformal coupling. This is the canonical metric \(A^2 g_{\mu\nu} + B\,\nabla_\mu\phi\,\nabla_\nu\phi\), not a Newtonian-gauge metric with a conformal factor inserted only in the spatial sector.
 
-$ds^2 = -\left(1 + 2\Psi\right)c^2 dt^2 + \left(1 - 2\Psi\right)A^2(\phi)\, \delta_{ij}\, dx^i dx^j$
+#### 3.1.1 Conformal Invariance of Null Trajectories
 
-where \(\Psi\) is the Newtonian potential and \(A(\phi) = 1 + \alpha(\phi)\) with \(|\alpha| \ll 1\). The scalar field \(\phi\) is sourced by the local matter distribution and varies on galactic/cluster scales. Crucially, \(A(\phi)\) modifies the *proper spatial distance* traversed by photons, which—via the null condition \(ds^2 = 0\)—translates into a modification of the coordinate travel time.
+In the purely conformal subclass (\(B=0\)), the matter metric reduces to \(\tilde{g}_{\mu\nu}=A^2(\phi)\,g_{\mu\nu}\). A standard result of conformal geometry in four dimensions is that null geodesics are preserved: if \(k^\mu\) is tangent to a null geodesic of \(g_{\mu\nu}\), the same path is a null geodesic of \(\tilde{g}_{\mu\nu}\) with a rescaled affine parameter. Therefore:
 
-#### 3.1.2 Null Geodesics and the Effective Refractive Index
+$B = 0 \quad \Longrightarrow \quad d\tilde{s}^2 = 0 \quad \Longleftrightarrow \quad ds^2 = 0.$
 
-For null rays (\(ds^2 = 0\)), the coordinate velocity satisfies:
+This has three immediate consequences for gravitational lensing:
 
-$\frac{|d\vec{x}|}{dt} = c\sqrt{\frac{1 + 2\Psi}{(1 - 2\Psi)A^2(\phi)}} \approx \frac{c}{A(\phi)}\left(1 + 2\Psi\right) \approx c\left(1 + 2\Psi - \alpha(\phi)\right)$
+- \(A^2\) alone does not change the null trajectory. Pure conformal rescaling preserves null cones; it cannot generate a spatial refractive index or bend photons onto new paths.
 
-to first order in \(\Psi\) and \(\alpha\). This defines an effective refractive index:
+- Static geometric bending beyond the conformally related geometry must come from \(g_{\mu\nu}[\phi]\) backreaction — the scalar field modifying the Einstein-frame metric through the coupled field equations — or from \(B \neq 0\), which tilts the matter null cone relative to the gravitational null cone.
 
-$n_{\text{eff}}(\vec{x}) = \frac{c}{v_{\text{coord}}} \approx A(\phi)(1 - 2\Psi) \approx 1 - 2\Psi + \alpha(\phi)$
+- The conformal sector can alter endpoint clock calibration, frequency transport, and timelike source evolution. It acts directly on timelike observables (orbital periods, spectroscopic velocities, standard-candle distance calibration) but cannot generate the printed spatial refractive index \(n_{\rm eff} \simeq 1 - 2\Psi + \alpha(\phi)\) that would follow from inserting \(A^2(\phi)\) into the spatial sector of a Newtonian-gauge metric alone.
 
-The total coordinate time delay along a ray path \(\gamma\) is:
+#### 3.1.2 Separating Null and Timelike Observables
 
-$T = \int_\gamma \frac{n_{\text{eff}}}{c}\, d\ell = T_0 + \underbrace{\frac{2}{c^3}\int |\Psi|\, d\ell}_{\text{Shapiro (geometric)}} + \underbrace{\frac{1}{c}\int \alpha(\phi)\, d\ell}_{\Delta\tilde{\tau}\text{ (TEP)}}$
+The lensing deflection angle decomposes into two physically distinct channels:
 
-The TEP contribution \(\Delta\tilde{\tau}\) is the *excess proper time* accumulated due to the scalar field.
+$\delta\theta_{\rm lens} = \delta\theta_{g[\phi]} + \delta\theta_B$
 
-#### 3.1.3 The Geodesic Deviation Equation
+where \(\delta\theta_{g[\phi]}\) is the deflection from scalar backreaction on the geometric metric \(g_{\mu\nu}\) — the scalar field modifying the Einstein-frame curvature through the coupled Einstein–scalar equations — and \(\delta\theta_B\) is the deflection from the disformal term \(B(\phi)\nabla_\mu\phi\nabla_\nu\phi\), which tilts the matter null cone along the field gradient. The conformal factor \(A(\phi)\) does not appear in \(\delta\theta_{\rm lens}\) at leading order because it cancels from the null condition.
 
-To derive lensing observables, consider a bundle of null geodesics and compute the geodesic deviation—the evolution of the separation vector \(\xi^\mu\) between neighboring rays. In the geometric optics limit, the transverse separation \(\vec{\xi}_\perp\) satisfies:
+The worked backreaction example is the scalar-Gauss-Bonnet (sGB) coupling studied in Bahrain (Paper 28, Appendix L). In shift-symmetric sGB, the scalar field \(\phi \sim Q_s/r\) backreacts on the geometric metric at \(\mathcal{O}(\eta^2)\) (where \(\eta = 3\alpha_{\rm GB}/M^2\)), producing a genuine correction to the null-trajectory bending. The conformal factor \(A = e^{-\phi}\) modifies clock rates at \(\mathcal{O}(\eta)\) — acting on timelike observables such as the ISCO — but does not contribute to the shadow at leading order because null geodesics are conformally invariant. Bahrain Appendix L explicitly isolates this sGB backreaction contribution and demonstrates the different coupling orders of the null and timelike observables: the shadow is sensitive to the geometric metric at \(\mathcal{O}(\eta^2)\) while the ISCO feels the conformal factor at \(\mathcal{O}(\eta)\).
 
-$\frac{d^2 \xi^i_\perp}{d\lambda^2} = -\mathcal{R}^i_{\;\;j}\, \xi^j_\perp$
+#### 3.1.3 The Temporal Composite Observable
 
-where \(\lambda\) is the affine parameter and \(\mathcal{R}^i_{\;\;j}\) is the *optical tidal matrix*, constructed from the Riemann tensor projected onto the screen space orthogonal to the ray.
+The conformal sector produces observable effects through timelike channels: endpoint clock calibration, frequency transport, and source evolution. These are captured by the temporal composite observable, which relates the observed image intensity to the emission-time shift induced by the temporal field:
 
-For the TEP metric, the optical tidal matrix decomposes as:
+$\delta I_{\rm obs} \simeq -\frac{\partial I_{\rm src}}{\partial t_{\rm em}}\,\delta t_{\rm em}$
 
-$\mathcal{R}_{ij} = \mathcal{R}^{(\Psi)}_{ij} + \mathcal{R}^{(\alpha)}_{ij}$
+where \(\delta t_{\rm em}\) is the differential emission-time shift between paths, sourced by the complete metric \(\tilde{g}_{\mu\nu}\) rather than an unmatched spatial conformal factor. The delay must come from the full disformal metric — including \(g_{\mu\nu}[\phi]\) backreaction, the disformal term \(B\), endpoint clock-rate differences through \(A(\phi)\), and frequency transfer — not from a path integral \(\int A(\phi)\,dl/c\) interpreted as photon proper-time accumulation. Null proper time is zero (Jakarta); any measured open-path effect must be formulated through emission and reception clocks, actual coordinate delay from the geometric and disformal metric, or frequency transfer.
 
-where \(\mathcal{R}^{(\Psi)}_{ij}\) is the standard GR contribution (sourced by \(\nabla^2\Psi\)) and the TEP correction is:
+The static clock-transfer contribution from the conformal sector modifies the relation between accumulated matter-frame time and the geometry reconstructed under an isochronous model. The associated excess matter proper-time delay along a path \(\gamma\) is:
 
-$\mathcal{R}^{(\alpha)}_{ij} = \frac{1}{2}\left(\nabla_i \nabla_j \alpha - \frac{1}{2}\delta_{ij}\nabla^2\alpha\right)$
+$\Delta\tilde{\tau}_{\rm static} = \frac{1}{c} \int_\gamma \bigl(A(\phi) - 1\bigr)\,dl$
 
-This term arises from the spatial gradient of the conformal factor and acts as an *additional tidal field* on the light bundle.
+This is a clock-transfer discrepancy — a difference between the matter-frame time accumulated along each path and the time inferred from an isochronous GR lens model — not a direct refraction of null geodesics. It contributes a source-independent term to the arrival-time (Fermat) surface and is operationally degenerate with the bulk convergence inferred in standard reconstructions. The path integral here represents accumulated clock-rate difference along the open path, not photon proper time.
 
 #### 3.1.4 The Amplification Matrix and Jacobian Decomposition
 
@@ -623,41 +649,40 @@ Integrating the geodesic deviation equation along the line of sight yields the a
 
 $\mathcal{A}_{ij} = \frac{\partial \beta_i}{\partial \theta_j} = \delta_{ij} - \int_0^{\chi_s} \frac{(\chi_s - \chi)\chi}{\chi_s}\, \mathcal{R}_{ij}(\chi)\, d\chi$
 
-Substituting the decomposed tidal matrix yields the central result:
+where \(\mathcal{R}_{ij}\) is the optical tidal matrix constructed from the Riemann tensor of the geometric metric \(g_{\mu\nu}[\phi]\), projected onto the screen space. The TEP correction to the optical tidal matrix comes from scalar backreaction on \(g_{\mu\nu}\) and from the disformal sector, not from a spatial conformal factor:
 
-$\mathcal{A}_{ij} = \underbrace{\delta_{ij} - \Psi_{,ij}}_{\text{Geometric (Standard GR)}} - \underbrace{\frac{1}{2}\int \frac{(\chi_s - \chi)\chi}{\chi_s}\left(\alpha_{,ij} - \frac{1}{2}\delta_{ij}\nabla^2\alpha\right) d\chi}_{\text{Temporal (TEP Correction)}}$
+$\mathcal{R}_{ij} = \mathcal{R}^{(\Psi)}_{ij} + \mathcal{R}^{(g[\phi])}_{ij} + \mathcal{R}^{(B)}_{ij}$
 
-where \(\Psi_{,ij}\) denotes the lensing potential Hessian and \(\alpha_{,ij} = \nabla_i\nabla_j\alpha(\phi)\).
+where \(\mathcal{R}^{(\Psi)}_{ij}\) is the standard GR contribution, \(\mathcal{R}^{(g[\phi])}_{ij}\) is the scalar-backreaction correction to the geometric metric, and \(\mathcal{R}^{(B)}_{ij}\) is the disformal correction. The conformal factor does not appear at leading order because it cancels from the null trajectory.
 
-#### 3.1.5 The Lensing Amplification Kernel
+The magnification of an image is \(\mu = (\det\mathcal{A})^{-1}\). To first order in the TEP correction \(\delta\mathcal{A}_{ij}\), the fractional change in magnification is:
 
-The magnification of an image is \(\mu = (\det\mathcal{A})^{-1}\).  To first order in the TEP correction \(\delta\mathcal{A}_{ij}\), the fractional change in magnification is:
+$\frac{\delta\mu}{\mu} = \mathrm{Tr}\left(\mathcal{A}^{-1}_{\rm GR}\,\delta\mathcal{A}\right)$
 
-$\frac{\delta\mu}{\mu} = \mathcal{A}^{-1}_{ji}\,\delta\mathcal{A}_{ij} = \mathrm{Tr}\left(\mathcal{A}^{-1}_{\rm GR}\,\delta\mathcal{A}\right)$
-
-This defines the *lensing amplification kernel* \(\mathcal{P}_\mu\), a projection operator that maps the scalar-field Hessian \(\alpha_{,ij}\) to the observable magnification shift.  The kernel is a tensor contraction weighted by the inverse geometric Jacobian \(\mathcal{A}^{-1}_{\rm GR} = (\delta_{ij} - \Psi_{,ij})^{-1}\).  Near a critical curve, where \(\det\mathcal{A}_{\rm GR} \to 0\), the kernel diverges as \(\mu_{\rm GR}^2\), amplifying small scalar-field corrections into large observable residuals.  This geometric divergence resolves the amplitude under-prediction noted in Paper 19 (SN Refsdal): the factor-of-\(\sim\)90–750 discrepancy between direct potential-sampling and observed delay shifts is the Jacobian amplification of the TEP correction, not a free phenomenological coefficient.
+This defines the lensing amplification kernel \(\mathcal{P}_\mu\), a projection operator that maps the scalar-backreaction and disformal Hessian to the observable magnification shift. Near a critical curve, where \(\det\mathcal{A}_{\rm GR} \to 0\), the kernel diverges as \(\mu_{\rm GR}^2\), amplifying small corrections into large observable residuals. This geometric divergence resolves the amplitude under-prediction noted in Paper 19 (SN Refsdal): the factor-of-\(\sim\)90–750 discrepancy between direct potential-sampling and observed delay shifts is the Jacobian amplification of the TEP correction, not a free phenomenological coefficient.
 
 Formally, the operational response proxy used in the blind-prediction tests (Paper 19, §2.3) is the first-order truncation of this kernel:
 
 $\Gamma_t(i) = 1 + \kappa_{\rm lens}\,\mathcal{P}_\mu\big[\nabla\phi\big](i) \;\approx\; 1 + \kappa_{\rm lens}\log_{10}\!\big(\mu_{\rm norm}(i)\big)$
 
-where the approximation becomes exact in the weak-shear limit (\(\gamma \ll 1 - \kappa\)) and the log-magnification form follows from \(\delta\mu/\mu = \mathrm{Tr}(\mathcal{A}^{-1}\delta\mathcal{A})\) when \(\delta\mathcal{A}\) is proportional to the identity.  The mu–kappa–gamma systematic is therefore not an unresolved ambiguity but the residual error from truncating the full tensor kernel to a scalar log-magnification proxy.  Eliminating it requires direct evaluation of \(\mathcal{P}_\mu\) from high-resolution mass models, which is the definitive next phase identified in Paper 19.
+where the approximation becomes exact in the weak-shear limit and the log-magnification form follows from \(\delta\mu/\mu = \mathrm{Tr}(\mathcal{A}^{-1}\delta\mathcal{A})\) when \(\delta\mathcal{A}\) is proportional to the identity. The mu–kappa–gamma systematic is the residual error from truncating the full tensor kernel to a scalar log-magnification proxy. Eliminating it requires direct evaluation of \(\mathcal{P}_\mu\) from high-resolution mass models, which is the definitive next phase identified in Paper 19.
 
-#### 3.1.6 Interpretation: Geometric vs. Temporal Contributions
+#### 3.1.5 Interpretation: Geometric vs. Temporal Contributions
 
 The Jacobian decomposition reveals two physically distinct contributions to image distortion:
 
 | Term | Source | Physical Origin | Observational Signature |
 | --- | --- | --- | --- |
 | **Geometric** | \(\Psi_{,ij}\) | Spatial curvature from mass | Standard convergence \(\kappa\) and shear \(\gamma\) |
-| **Temporal (Static)** | \(\alpha_{,ij}\) | Gradient of scalar field (refractive index) | Coherent tangential shear mimicking DM halo |
-| **Temporal (Dynamic)** | \(\mu_s^i \nabla_j(\Delta\tilde{\tau})\) | Source motion × time-delay gradient | Stochastic shear noise correlated with kinematics |
+| **Scalar backreaction** | \(g_{\mu\nu}[\phi]\) | Scalar field modifying Einstein-frame curvature | Coherent tangential shear mimicking DM halo |
+| **Disformal** | \(B(\phi)\nabla_\mu\phi\nabla_\nu\phi\) | Null-cone tilt along field gradient | Direction-dependent deflection |
+| **Temporal Composite** | \(\mu_s^i \nabla_j(\Delta\tilde{\tau})\) | Source motion × clock-transfer delay gradient | Stochastic shear noise correlated with kinematics |
 
-The static temporal term produces a coherent, radially-symmetric contribution to the shear field—indistinguishable from a dark matter halo in single-epoch imaging. The dynamic term arises when the source position evolves during the differential light-travel time across the image; for a source with proper motion \(\vec{\mu}_s\), the effective source position becomes:
+The scalar-backreaction and disformal terms produce coherent contributions to the shear field. The temporal composite term arises when the source position evolves during the differential clock-transfer delay across the image; for a source with proper motion \(\vec{\mu}_s\), the effective source position becomes:
 
 $\vec{\beta}_{\text{eff}}(\vec{\theta}) = \vec{\beta}_{\text{geom}}(\vec{\theta}) - \vec{\mu}_s \cdot \Delta\tilde{\tau}(\vec{\theta})$
 
-This adds an asymmetric, source-dependent contribution to the Jacobian that does not average coherently but increases the *variance* of shear measurements.
+This adds an asymmetric, source-dependent contribution to the Jacobian that does not average coherently but increases the variance of shear measurements.
 
 **Principle:**
 
@@ -665,8 +690,8 @@ This adds an asymmetric, source-dependent contribution to the Jacobian that does
 
 The full amplification matrix in TEP is:
 
-$\mathcal{A}_{ij} = \underbrace{\mathcal{A}^{\text{GR}}_{ij}}_{\text{Baryonic Lensing}} + \underbrace{\mathcal{A}^{(\alpha,\text{static})}_{ij}}_{\text{"Dark Matter" (Coherent)}} + \underbrace{\mathcal{A}^{(\alpha,\text{dyn})}_{ij}}_{\text{Shear Noise (Stochastic)}}$
-Standard analyses attribute the sum of the first two terms to total mass. TEP identifies the second term as Phantom Mass—a geometric effect of the scalar field's refractive gradient, not particulate matter. The third term provides the unique observational discriminator: excess shear dispersion correlated with source kinematics.
+$\mathcal{A}_{ij} = \underbrace{\mathcal{A}^{\text{GR}}_{ij}}_{\text{Baryonic Lensing}} + \underbrace{\mathcal{A}^{(g[\phi],\text{static})}_{ij}}_{\text{"Dark Matter" (Coherent)}} + \underbrace{\mathcal{A}^{(\text{dyn})}_{ij}}_{\text{Temporal Composite (Stochastic)}}$
+Standard analyses attribute the sum of the first two terms to total mass. TEP identifies the second term as Phantom Mass — a geometric effect of scalar backreaction on the Einstein-frame metric and disformal null-cone tilt, not particulate matter. The third term provides the unique observational discriminator: excess shear dispersion correlated with source kinematics. The conformal factor \(A(\phi)\) acts on timelike observables and clock calibration but does not generate the null-trajectory bending at leading order.
 
 **Principle:**
 
@@ -781,12 +806,12 @@ gravity \(c_g\) and the speed of light \(c_{\gamma}\) to (e.g., Baker et al.
 Jain 2017):
 
 Screening in TEP is represented at the theory level by the environmental operator
-*S*&Sigma;(*&Epsilon;*).
+*S*<sub>&Sigma;</sub>(*&Epsilon;*).
 Quantities such as
-&rho;T,
-*R*T(*M*),
-*S*&oplus;(*r*),
-compactness &Phi;/*c*2,
+&rho;<sub>T</sub>,
+*R*<sub>T</sub>(*M*),
+*S*<sub>&oplus;</sub>(*r*),
+compactness &Phi;/*c*<sup>2</sup>,
 local stellar density,
 geometric coherence length,
 and channel-specific response coefficients
@@ -1608,6 +1633,22 @@ maintaining a conservative Reference Envelope baseline anchored to existing
 multi-messenger constraints, thereby offering a promising avenue for
 resolving the dark matter problem.
 
+**Principle:**
+
+#### Updated Operational Interpretation
+
+The later dedicated strong-lensing analysis (TEP-LENS, Paper 19) refines
+the observational implementation used here. In particular, ordinary
+image-arrival delays remain algebraically integrable; the strong-lensing
+test is formulated as an observed-versus-GR-predicted transport residual
+rather than a literal closure violation. The framework presented here is
+consistent with that refinement: Axiom 3 already distinguishes open-path
+differential residuals (the GL observable) from closed-loop holonomy,
+and the static clock-transfer contribution is identified as a
+clock-transfer discrepancy rather than a direct refraction of null
+geodesics. Readers should consult TEP-LENS for the current canonical
+strong-lensing time-delay formulation.
+
 ## References
 
 Abbott, B. P., et al. (LIGO/Virgo Collaboration) 2017,
@@ -1736,7 +1777,7 @@ J. 2012, *A&A*, 544, A62
 
 Smette, A., Surdej, J., et al. 1992, *ApJ*, 389, 39
 
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
 
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1)
 
@@ -1877,7 +1918,7 @@ npm run build
 
 The TEP-GL framework derives from three foundational postulates:
 
-- **Two-Metric Postulate:** Clock metric *gμν(clock)* differs from light metric *gμν(light)*
+- **Two-Metric Postulate:** Clock metric *g<sub>μν</sub><sup>(clock)</sup>* differs from light metric *g<sub>μν</sub><sup>(light)</sup>*
 
 - **Isochrony Violation:** Synchronization becomes path-dependent under conformal coupling
 

@@ -3,34 +3,59 @@ title: 'Global Time Echoes: Distance-Structured Correlations in GNSS Clocks'
 message: If you use this software, please cite it as below.
 type: article
 version: v0.26 (Jaipur)
-date-released: 2026-06-05
+date-released: 2025-09-17
 authors:
 - family-names: Smawfield
   given-names: Matthew Lukin
   orcid: https://orcid.org/0009-0003-8219-3159
-abstract: 'This study presents observations of distance-structured correlations in
-  global GNSS atomic clock networks testing the predictions of the Temporal Equivalence
-  Principle (TEP) theoretical framework, analyzing 62.7 million station pair measurements
-  across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent
-  spectral methods, exponential correlation decay patterns with characteristic lengths
-  (λ) of 3,330–4,549 km are identified, consistent with theoretical predictions for
-  screened scalar fields that were established prior to data analysis. The analysis
-  further reveals coherent network dynamics coupled to Earth''s helical motion (Chandler
-  wobble, R² = 0.377–0.471, |r| = 0.61–0.69) and orbital velocity (r ≈ -0.7 to -0.8),
-  along with systematic diurnal variations and significant coherence modulations corresponding
-  to 11 planetary astronomical events. Extensive validation—including 24-61× signal
-  enhancement over null tests (z = 15.8-31.9 across 180 scrambling iterations), temporal/spatial
-  cross-validation, and systematic bias controls—provides substantial evidence of
-  signal authenticity, suggesting that GNSS networks act as sensitive detectors of
-  continental-scale phenomena affecting atomic transition frequencies. These findings,
-  detailed in this package, test the theoretical framework established in the Temporal
-  Equivalence Principle (https://doi.org/10.5281/zenodo.16921911) and warrant comprehensive
-  independent investigation.
+abstract: |
+  Phase-coherent spectral analysis of 62.7 million station-pair
+  measurements from 364 GNSS stations (2023–2025) reveals systematic
+  distance-structured correlations in clock networks. These correlations
+  follow an exponential decay with a median Temporal Topology correlation
+  length λ<sub>T</sub> = 3,330–4,549 km (95 % CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA
+  2,532–3,984 km) and show strong goodness-of-fit when evaluated on
+  distance-binned means across three independent analysis centres (R² =
+  0.920–0.970; fits are to bin means, not raw pairs). Cross-center
+  validation, consistent across 12 frequency bands and confirmed through
+  multiple binning schemes and null hypothesis testing, demonstrates these patterns represent persistent empirical correlations not explained by the tested artifacts. The patterns also show dependencies on station elevation and
+  geomagnetic latitude, consistent with theoretical frameworks involving
+  screened scalar fields via continuous Temporal Topology.
 
-  '
+  The primary inference rests on cross-centre distance-structured covariance
+  and λ<sub>T</sub>; the following planetary, Chandler, diurnal, and geomagnetic
+  signatures are treated as secondary or exploratory consistency tests.
+  The correlations demonstrate systematic coupling with Earth's orbital
+  motion (r = -0.571 to -0.793 across centers), planetary gravitational
+  influences (6 Bonferroni-significant events), Chandler wobble modulation
+  (R² = 0.377–0.471), and systematic diurnal temporal variations with
+  synchronized early morning coherence peaks (Local Solar Time).
+  Comprehensive validation demonstrates 24-61× signal enhancement over
+  randomized controls (z = 15.8-31.9 across 180 null test iterations),
+  with FDR-BH: 203/388 tests (52.3%), Hierarchical EB: 154/388 (39.7%),
+  and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction
+  across 19 independent validation families. TID exclusion analysis shows
+  21–23 % signal improvement when excluding high-ionosphere
+  periods—the ionosphere suppresses rather than creates the correlation.
+
+  The investigation was structured to test predictions from the Temporal
+  Equivalence Principle (TEP) framework, which suggested a Temporal
+  Topology correlation length (λ<sub>T</sub>) of 1,000–10,000 km. The full
+  analysis yielded λ<sub>T</sub> = 3,330–4,549 km, a result consistent with
+  this expectation which motivated tests of
+  derived predictions (diurnal, eclipse, and orbital signatures). While
+  multi-center consistency and extensive validation provide a strong basis
+  for these findings, alternative explanations involving sophisticated
+  systematics cannot be fully excluded. Therefore, definitive physical
+  interpretation awaits critical next steps: raw-data analysis,
+  multi-constellation testing, and independent replication. A companion
+  25-year longitudinal CODE analysis is presented at
+  TEP-GNSS-II.
+
+  The empirically derived spatial correlation length $\lambda_T$ (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator $\mathcal{S}_\Sigma(\mathcal{E})$ defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.
 license: CC-BY-4.0
 repository-code: https://github.com/matthewsmawfield/TEP-GNSS
-url: https://matthewsmawfield.github.io/TEP-GNSS/
+url: https://mlsmawfield.com/tep/gnss-i/
 doi: 10.5281/zenodo.17127229
 preferred-citation:
   type: article

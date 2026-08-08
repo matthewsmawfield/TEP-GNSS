@@ -1,7 +1,7 @@
 # Global Time Echoes: Distance-Structured Correlations in GNSS Clocks
 **Matthew Lukin Smawfield**
 Version: v0.26 (Jaipur)
-05 June 2026
+First published: 17 September 2025 · Last updated: 8 August 2026
 DOI: 10.5281/zenodo.17127229
 
 ---
@@ -158,15 +158,17 @@ analyses suggest temporal and spatial robustness
 The observed patterns show characteristics that are, among various
 possible interpretations, consistent with certain theoretical
 frameworks that propose gravitational field coupling to atomic
-transition frequencies. The correlation lengths correspond to
-effective field masses mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (see §1.1),
-within ranges predicted for some modified gravity theories. The
-apparent inconsistency with existing precision tests (typically
+transition frequencies. The primary empirical quantity is the
+covariance length λ<sub>T</sub> = 3,330–4,549 km. If interpreted as a
+Yukawa/Compton correlation length in a specific scalar completion,
+this corresponds to the heuristic mass scale mφ ≈ (4.34–5.93)×10⁻¹⁴
+eV/c² (see §1.1), within ranges predicted for some modified gravity
+theories; the Compton-mass interpretation is completion-dependent.
+The apparent inconsistency with existing precision tests (typically
 sensitive to ~10⁻¹⁵ eV/c² scales) may be resolved through the
 suppression of Temporal Shear—the local field gradient that is
 flattened in dense environments where most precision tests are
-conducted, while allowing detection in the sparse terrestrial
-environment of GNSS networks. The diurnal analysis provides patterns
+conducted, while allowing a large-baseline GNSS covariance observable to probe a different Earth-scale projection of the environmental response. The diurnal analysis provides patterns
 that could, if confirmed through independent validation, be
 interpretable within frameworks involving variable time flow rates,
 though alternative explanations involving slow environmental
@@ -264,9 +266,9 @@ simultaneity and one-way light speeds across extended regions. TEP resolves
 this by elevating "when" to the same dynamical status that "where" acquired
 in 1915: just as space was geometrized, the rate of time's flow becomes a
 field. This provides a covariant framework where local Lorentz invariance
-remains exact while global simultaneity becomes non-integrable, making
-previously untestable aspects of spacetime geometry accessible to precision
-measurement.
+remains exact while global synchronization can become non-integrable when
+the non-exact sector is active, making previously untestable aspects of
+spacetime geometry accessible to precision measurement.
 
 Form and Justification of the Conformal Coupling: The TEP framework posits a
 conformal factor $A(\phi) = \exp(\beta_A\phi/M_{\text{Pl}})$, with matter metric $\tilde{g}_{\mu\nu} = A^2(\phi)g_{\mu\nu}$, that rescales
@@ -284,13 +286,15 @@ relation γ − 1 = −2α₀²/(1+α₀²), where α₀ ≡ (d ln A/dϕ)|<sub>t
 Temporal Shear (vanishing field gradient) reduces the locally active scalar charge to
 α<sub>PPN</sub><sub>eff</sub> ≪ α<sub>0</sub>, cleanly preserving PPN bounds without invoking rigid thin-shell
 approximations (Smawfield 2025, Section 7). The universality of the
-coupling—all matter sees the same modified metric g̃<sub>μν</sub>
-= A²(ϕ)g<sub>μν</sub>—preserves the equivalence principle in the matter frame
-while allowing for testable violations in the gravitational sector. In this
+coupling—all matter sees the same causal metric g̃<sub>μν</sub>
+= A²(ϕ)g<sub>μν</sub> + B(ϕ)∇<sub>μ</sub>ϕ∇<sub>ν</sub>ϕ—preserves the equivalence principle in the matter frame
+while allowing for testable violations in the gravitational sector. In the conformal-dominant GNSS covariance sector considered here, the leading clock response is carried by A(ϕ). In this
 modified spacetime, proper time transforms as dτ̃ = A(ϕ)dτ<sub>g</sub>. In the weak-field limit, atomic transition frequencies acquire a
 fractional frequency shift:
 
-$y \equiv \frac{\Delta\nu}{\nu} \approx \frac{\beta_A}{M_{\text{Pl}}}\phi$
+\begin{equation} \label{eq:freq_shift}
+y \equiv \frac{\Delta\nu}{\nu} \approx \frac{\beta_A}{M_{\text{Pl}}}\phi
+\end{equation}
 
 For a screened scalar field with exponential correlation function
 $\text{Cov}[\phi(\mathbf{x}), \phi(\mathbf{x}+\mathbf{r})] \propto
@@ -301,7 +305,8 @@ Connection to Modified Gravity Theories: TEP extends established
 scalar-tensor theories of gravity, including Brans-Dicke theory (ω
 approaches ∞ limit), f(R) gravity (scalar degree of freedom), and
 Horndeski/Galileon theories (screening mechanisms). The framework predicts
-that any detectable correlation length would correspond to an effective
+that a detectable correlation length would, if interpreted as a Yukawa/Compton
+scale in a specific scalar completion, correspond to a heuristic effective
 scalar field mass (see Compton Energy Scale calculation below), with the
 continuous spatial profile of the field (Temporal Topology) potentially
 producing correlation lengths in the 1,000–10,000 km range. This scale is
@@ -311,24 +316,25 @@ and the effective field mass varies with local matter density and
 electromagnetic field strength. Rather than operating via discrete boundary
 cutoffs, screening manifests as a continuous geometric profile governed by
 the non-linear superposition of field gradients (Smawfield 2025, Axiom A4).
-Importantly, any measured correlation length represents an effective mass in
-the terrestrial environment, where the field's properties are modified by
-local matter density and electromagnetic fields.
+The primary empirical quantity is the covariance length λ<sub>T</sub> extracted
+from the clock-correlation data; the Compton-mass interpretation is
+completion-dependent and serves as a heuristic reference only.
 
-Compton Energy Scale: For the observed Temporal Topology correlation lengths
-λ<sub>T</sub> = 3,330–4,549 km, the corresponding field mass is m<sub>ϕ</sub> ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (using ħc =
-197.326 MeV·fm). This mass scale is consistent with the continuous Temporal
-Topology framework, where the effective field mass varies with local matter
-density and electromagnetic field strength in the terrestrial environment.
+Compton Energy Scale: If λ<sub>T</sub> is interpreted as a Yukawa/Compton
+correlation length in a specific scalar completion, it corresponds to the
+heuristic mass scale m<sub>ϕ</sub> ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (using ħc =
+197.326 MeV·fm). The primary empirical quantity is the covariance length
+λ<sub>T</sub> = 3,330–4,549 km; the Compton-mass interpretation is
+completion-dependent and is merely a heuristic reference.
 
-Theoretical Context: TEP builds upon a two-metric framework where matter
-couples to a causal metric g̃<sub>μν</sub> = A²(ϕ)g<sub>μν</sub>, while
-gravity is described by the standard metric g<sub>μν</sub>. GNSS correlation
-analysis would probe the spatial structure of the underlying ϕ field,
-providing complementary evidence to direct tests of TEP's primary
-prediction: non-integrable synchronization around closed timing loops. This
-positions GNSS analysis as part of a broader experimental program testing
-dynamical time theories.
+Theoretical Context: TEP builds upon a two-metric framework in which matter
+couples to the causal metric g̃<sub>μν</sub> = A²(ϕ)g<sub>μν</sub> + B(ϕ)∇<sub>μ</sub>ϕ∇<sub>ν</sub>ϕ, while
+gravity is described by the standard metric g<sub>μν</sub>. The present GNSS correlation
+analysis primarily probes the conformal covariance sector. GNSS correlation
+analysis would probe the spatial covariance structure of the underlying ϕ
+field, complementing direct closed-loop tests of the non-exact
+synchronization sector. This positions GNSS analysis as part of a broader
+experimental program testing dynamical time theories.
 
 **Historical Context and Prediction Timeline:** The TEP
 theoretical framework was developed independently of the present GNSS
@@ -735,13 +741,19 @@ GNSS processing might suppress the CSD *magnitudes*, but it largely preserves th
 
 For two zero-mean, wide-sense stationary clock residual processes $x_i(t), x_j(t)$, the cross-spectrum $S_{ij}(f)$ is the Fourier transform of the cross-correlation $R_{ij}(\tau)$ (Wiener–Khinchin):
 
-$S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]$
+\begin{equation} \label{eq:cross_spectrum}
+S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]
+\end{equation}
 Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10–500 μHz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):
 
-$\phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}$
+\begin{equation} \label{eq:phase_bound}
+\phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}
+\end{equation}
 Hence, the physically expected inter-station phase is $\approx 0$ in this band; the information lies in how tightly phases cluster, not in a systematic lag. Writing the unit phasor $U_{ij}(f)=S_{ij}(f)/|S_{ij}(f)|$, the metric uses $\mathrm{Re}\{U_{ij}(f)\}= \cos(\arg S_{ij}(f))$. When averaged over pairs within a distance bin, this estimates the circular mean of phases. If the within-bin phase distribution is von Mises $\mathrm{VM}(\mu\!\approx\!0, \kappa(r))$, the expected value is
 
-$\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)$
+\begin{equation} \label{eq:von_mises}
+\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)
+\end{equation}
 If the underlying field has exponential spatial covariance, $\mathrm{Cov}[\phi(\mathbf{x}),\phi(\mathbf{x}+\mathbf{r})]\propto e^{-r/\lambda}$, then the concentration $\kappa(r)$ (and thus the circular mean above) inherits an exponential distance-decay, matching the fitted form.
 
 This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts through: (i) comprehensive randomization testing (distance, phase, and station scrambling), which destroys the spatial correlation structure in null tests while preserving it in genuine data; and (ii) replication across independent processing chains (CODE, IGS, ESA) with different systematic vulnerabilities. Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore cannot detect the distance-structured phase relationships central to TEP.
@@ -1140,7 +1152,9 @@ High-resolution diurnal and seasonal analysis to detect systematic variations in
 
 To distinguish between energy-based and velocity-based scaling mechanisms in TEP coupling, a discrimination metric is computed as the simple arithmetic difference of Pearson correlations between gravitational-temporal field patterns and Earth motion parameters:
 
-$\text{discrimination} = r_E - r_V$
+\begin{equation} \label{eq:discrimination}
+\text{discrimination} = r_E - r_V
+\end{equation}
 where $r_E$ is the correlation coefficient for energy-based scaling (gravitational potential energy) and $r_V$ is the correlation coefficient for velocity-based scaling (orbital velocity). This metric quantifies the relative preference between energy and velocity coupling mechanisms, with positive values indicating energy-based scaling preference and negative values indicating velocity-based scaling preference.
 
 Implementation: The discrimination is calculated independently across three analysis centers (CODE, ESA Final, IGS Combined) and then aggregated using bootstrap resampling (5000 iterations) to provide robust confidence intervals. With n=3 centers, the bootstrap CI is mostly illustrative; the analysis reveals discrimination = r_E − r_V = −0.057 (bootstrap 95% CI: [−0.143, +0.030]), indicating no statistically significant preference between energy-based and velocity-based scaling mechanisms, supporting complex multi-mechanism coupling in TEP physics.
@@ -3779,14 +3793,17 @@ classical tidal residuals.
 #### Theoretical Interpretation
 
 Within the TEP framework, tidal effects represent gravitational field
-gradients that modulate the φ-field through disformal coupling
-B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ. The observed pattern—longest
-correlation lengths at tidal frequencies but persistent correlations
-across all bands—suggests the φ-field responds to gravitational forcing
-at multiple scales rather than being contaminated by classical tidal
-residuals. The universal conformal term A(φ) provides broadband
-coupling, while the disformal term enhances response to large-scale
-gravitational gradients at tidal frequencies.
+gradients that may modulate the φ-field through gradient-sensitive
+structure associated with the non-exact sector. The observed
+pattern—longest correlation lengths at tidal frequencies but persistent
+correlations across all bands—suggests the φ-field responds to
+gravitational forcing at multiple scales rather than being contaminated
+by classical tidal residuals. The universal conformal term A(φ) provides
+broadband coupling, while the enhanced correlation lengths at tidal
+frequencies may indicate additional gradient-sensitive structure;
+however, the GNSS covariance observable does not by itself isolate the
+disformal term B(φ), which would require a dedicated non-exact transport
+observable.
 
 Conclusion: The multi-band analysis appears to exclude classical tidal
 contamination as the dominant mechanism through four independent lines
@@ -3994,25 +4011,29 @@ evidence presented in Section 4.1.
 
 **Experimental Section:**
 
-### Conformal vs. Disformal Coupling Evidence
+### Conformal Covariance and Possible Gradient-Sensitive Structure
 
 The observed spectral pattern—broadband correlations with gravitational
-enhancement—suggests contributions from both conformal and disformal
-metric modifications:
+enhancement—suggests a conformal covariance response, with possible
+additional gradient-sensitive structure:
 
 Conformal coupling A(φ): Evidenced by broadband response (R² > 0.85
 from 10–100 μHz; 100–200 μHz averages ~0.75, CV of R² across bands =
 2.9%) indicating universal coupling to all frequency modes without
 frequency selectivity
 
-Disformal coupling B(φ): Evidenced by enhanced correlation lengths
-at tidal frequencies (λ<sub>T</sub> = 4,677 km vs 1,502 km post-tidal),
-indicating preferential response to gravitational gradients
+Non-exact/disformal sensitivity: The enhanced correlation lengths
+at tidal frequencies (λ<sub>T</sub> = 4,677 km vs 1,502 km post-tidal)
+may indicate additional gradient-sensitive structure, but the GNSS
+covariance observable does not by itself isolate B(φ). Direct
+discrimination of the disformal sector requires a one-way loop or
+other non-exact transport observable.
 
 Combined metric structure: g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub> +
-B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ appears consistent with observed
-frequency-dependent spatial scales but frequency-independent
-correlation strength
+B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ remains a candidate completion, but
+the frequency-dependent spatial scales with frequency-independent
+correlation strength are consistent with conformal covariance alone
+under environmental modulation.
 
 ### Frequency-Scale Relationship
 
@@ -4162,8 +4183,9 @@ non-significant discrimination indicates that TEP coupling involves
 gravitational field geometry changes and multi-body dynamics (Earth-Moon
 system) beyond simple mechanical energy or kinematic velocity scales.
 This pattern supports sophisticated TEP physics with multiple coupling
-pathways operating simultaneously, consistent with theoretical
-predictions of non-integrable time transport mechanisms. The similar
+pathways operating simultaneously, consistent with TEP's predicted
+dynamical clock/covariance structure and motivating direct tests of
+non-integrable time transport through closed-loop experiments. The similar
 scaling with both energy and velocity suggests the coupling mechanism is
 sensitive to gravitational field curvature rather than simple mass or
 motion parameters.
@@ -4190,24 +4212,29 @@ coupling to the φ-field.
 
 ### 4.5.3 Consistency with Multi-Messenger Astronomy (GW170817)
 
-Context: The observation of 2.75× E-W/N-S spatial anisotropy must be
-consistent with the stringent bound |c_γ − c_g|/c ≲ 10⁻¹⁵ from GW170817,
-which constrains the disformal coupling B(φ)(∂φ)² to be very small on
-cosmological scales.
-
-Resolution Pathways:
-
-A. Conformal Dominance: The observed anisotropy may arise primarily from a
-spatially varying conformal factor A(φ), while the disformal term B(φ)
-remains small. For a coupling constant β ~ 10⁻³ (consistent with Cassini
-data) and a plausible spatial variation of Δφ/𝑀𝑃𝑙 ~ 10⁻³ near Earth, the
-conformal variation ΔA/A ≈ β(Δφ/M<sub>Pl</sub>) ~ 10⁻⁶ could produce the observed
-anisotropy while preserving c_g ≈ c_γ globally.
-
-B. Environmentally Dependent Coupling: The GW170817 constraint applies to
-intergalactic sightlines. The disformal coupling B(φ) may be
-environment-dependent, allowing for a larger value in the near-Earth
-environment while remaining negligible on cosmological scales.
+The observed 2.75× E-W/N-S spatial correlation anisotropy is
+structurally decoupled from, and fully consistent with, the
+GW170817 propagation-speed bound |c_γ − c_g|/c ≲ 10⁻¹⁵. The
+spatial anisotropy is driven entirely by the conformal factor
+A(φ), which modifies clock transition frequencies through the
+local scalar field amplitude without altering the null-cone
+structure. The GW170817 bound constrains the disformal coupling
+B(φ)(∂φ)² on cosmological scales, not the conformal sector that
+governs the GNSS covariance observable. Consequently, the
+conformal-dominant mechanism natively preserves null-cone
+invariance: for a plausible spatial variation of
+Δφ/M<sub>Pl</sub> ~ 10⁻³ near Earth, the conformal variation
+ΔA/A ~ 10⁻⁶ produces the observed anisotropy while maintaining
+c_g ≈ c_γ globally. The PPN bound applies to the
+environmentally screened effective source coupling rather than
+directly fixing the bare conformal parameter β<sub>A</sub>, so
+conversion of the observed coherence amplitude into Δφ is
+completion- and screening-model-dependent. The disformal coupling
+B(φ) may additionally be environment-dependent, remaining
+negligible on cosmological sightlines while permitting
+near-Earth variation—though the conformal pathway alone suffices
+to explain the observation without invoking any disformal
+enhancement.
 
 ### 4.5.4 Chandler Wobble Detection and Processing Systematics
 
@@ -4442,7 +4469,7 @@ coupling than currently measured, advancing understanding of potential
 modifications to spacetime structure and enabling more rigorous tests of
 fundamental physics.
 
-## 4.7 Temporal Dynamics: Direct Evidence for Dynamical Time
+## 4.7 Temporal Dynamics: Evidence Consistent with Dynamical Time
 
 The comprehensive diurnal analysis (Section 3.5.3) provides evidence
 consistent with the Temporal Equivalence Principle's central prediction:
@@ -4478,9 +4505,12 @@ equinox maxima)
 Processing sensitivity: Factor 2× range (CODE vs ESA Final) suggests
 β_eff varies by analysis center
 
-With β ~ 10⁻³ (from PPN constraints), this implies φ variations of ΔφD ~
-10⁻¹¹ 𝑀𝑃𝑙 and ΔφS ~ 10⁻¹⁰ 𝑀𝑃𝑙, consistent with cosmological expectations
-for late-time scalar field dynamics.
+The PPN bound applies to the environmentally screened effective source
+coupling rather than directly fixing the bare conformal parameter
+β<sub>A</sub>. Consequently, conversion of the observed coherence
+amplitude into Δφ is completion- and screening-model-dependent, and
+numerical estimates of Δφ from the diurnal/seasonal amplitudes are not
+pursued here.
 
 ### Physical Coupling Mechanisms
 
@@ -4612,17 +4642,18 @@ phenomena through scale, temporal, and spectral mismatches
 Spectral coupling characterized (Section 4.4): Cross-center
 multiband validation demonstrates remarkable consistency across
 independent processing chains. Multi-band analysis reveals conformal
-(broadband, CV of R² across bands = 2.9%) and disformal
-(gravitational enhancement, λ = 4,627 km mean at tidal frequencies)
-coupling contributions, with systematic effects quantified through
+covariance (broadband, CV of R² across bands = 2.9%) with possible
+gradient-sensitive structure (gravitational enhancement, λ = 4,627 km
+mean at tidal frequencies), with systematic effects quantified through
 control bands showing reduced model fit quality (R² = 0.618, ΔR² ≈
 0.33 from TEP band)
 
 Theoretical insights and future directions (Section 4.5): Observed
 primary correlation lengths (λ<sub>T</sub> = 3,330–4,549 km) fall within
-the pre-specified search range, with derived field mass
-mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (see §1.1) and potential implications
-for fundamental physics including dark matter connections and fifth
+the pre-specified search range, with heuristic field mass
+mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² if interpreted as a Compton scale (see §1.1)
+and potential implications for fundamental physics including dark
+matter connections and fifth
 force constraints. Bootstrap validation shows center-specific ranges
 (see Table in §3.1.1), corresponding to a conservative union mass
 range of m<sub>φ</sub> ≈ 3.65–6.53 × 10<sup>-14</sup> eV/c²,
@@ -4778,13 +4809,13 @@ stronger than measured.
 Scientific Standards and Next Steps: The significant nature of these
 findings necessitates rigorous independent verification—the standard
 scientific practice for novel discoveries. Signal authenticity has
-been established through comprehensive validation, conventional
-explanations have been systematically excluded, and quantitative
-constraints on field properties have been derived. The robustness of
-these measurements to standard processing procedures validates the
-methodological approach. These findings provide a clear experimental
-roadmap for broader community investigation and, if confirmed, could
-have important implications for fundamental physics.
+been strongly tested against the examined alternatives through
+comprehensive validation, and quantitative constraints on field
+properties have been derived. The robustness of these measurements to
+standard processing procedures validates the methodological approach.
+These findings provide a clear experimental roadmap for broader
+community investigation and, if confirmed, could have important
+implications for fundamental physics.
 
 4.10 A Falsifiable Prediction for Optical Clock Networks
 
@@ -4804,13 +4835,11 @@ clear periodicities tied to Earth's motion. A multi-year analysis of
 such a network should reveal a distinct peak in coherence at the
 Chandler wobble period (~433 days), providing a direct test of the
 Earth motion coupling observed in this study. Detection of this
-signature would not only confirm the TEP field's existence but also
-validate its coupling to spacetime geometry. This provides a clear
-experimental target for other research groups and a crucial test of
-the concept of
-synchronization holonomy
-introduced in the foundational TEP theory (Smawfield 2025, v0.8
-Jakarta).
+signature would provide an independent, higher-precision test of the
+covariance-sector phenomenon identified in the GNSS data and would
+substantially strengthen evidence for field-mediated clock
+correlations. Dedicated one-way closed-loop experiments remain the
+direct test of synchronization holonomy.
 
 ## 5. Conclusions
 
@@ -4922,7 +4951,7 @@ The diurnal analysis reveals patterns consistent with TEP’s prediction that pr
 
 #### Temporal Dynamics and Time Variation
 
-Key Finding: The detection of systematic temporal variations with synchronized daily (1.9-7.6% day-night coherence variation) and seasonal patterns across independent analysis centers provides evidence consistent with variable time flow and non-integrable simultaneity, where temporal coordinates become as field-dependent as spatial coordinates in a geometric framework.
+Key Finding: The detection of systematic temporal variations with synchronized daily (1.9-7.6% day-night coherence variation) and seasonal patterns across independent analysis centers provides evidence consistent with dynamical proper-time/covariance structure, while non-integrability requires a dedicated closed-loop test.
 
 Experimental Framework: The observed terrestrial patterns establish benchmarks for potential TEP confirmation through triangle synchronization tests, interplanetary time transfer, and seasonal experimental optimization.
 
@@ -4932,7 +4961,7 @@ Physics Implications: Should future studies corroborate these findings, precisio
 
 ### 5.7 Final Assessment
 
-The significant nature of these findings demands rigorous scrutiny. The most crucial achievement is cross-center validation success: three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined), substantially reducing center-specific systematic biases and providing compelling evidence for signal authenticity through independent processing methodologies. The statistical authenticity of the signal has been demonstrated through multi-layered validation, major conventional explanations have been systematically investigated, and quantitative patterns consistent with theoretical predictions for field coupling mechanisms have been established. The convergence of multiple independent observational domains—spatial, spectral, temporal, and gravitational—reproduced across independent processing chains, demonstrates that global GNSS networks exhibit sensitivity to large-scale phenomena that warrant comprehensive investigation.
+The significant nature of these findings demands rigorous scrutiny. The most crucial achievement is cross-center validation success: three independent GNSS analysis centers demonstrate remarkable consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined), substantially reducing center-specific systematic biases and providing compelling evidence for signal authenticity through independent processing methodologies. The statistical authenticity of the signal has been demonstrated through multi-layered validation, major conventional explanations have been strongly tested against the examined alternatives, and quantitative patterns consistent with theoretical predictions for field coupling mechanisms have been established. The convergence of multiple independent observational domains—spatial, spectral, temporal, and gravitational—reproduced across independent processing chains, demonstrates that global GNSS networks exhibit sensitivity to large-scale phenomena that warrant comprehensive investigation.
 
 Critical requirements for community validation:
 
@@ -5177,7 +5206,7 @@ Purpose: Comprehensive high-resolution astronomical analysis including: (1) Comp
 
 Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_4_gravitational_temporal_field_analysis.py`
 
-Purpose: Comprehensive gravitational-temporal field correlation analysis using NASA/JPL planetary ephemeris (DE-series) to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p = 3.3×10⁻⁴) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination analysis (-0.057, 95% CI: [-0.143, +0.030], n.s.) reveals no significant preference between scaling mechanisms, supporting complex multi-mechanism coupling and validating TEP's core predictions of non-integrable time transport and synchronization holonomy.
+Purpose: Comprehensive gravitational-temporal field correlation analysis using NASA/JPL planetary ephemeris (DE-series) to correlate planetary gravitational influences with GPS clock coherence patterns, revealing strong stacked gravitational pattern correlations (r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p = 3.3×10⁻⁴) with optimal 227-day smoothing window. Includes systematic Earth motion energy hierarchy validation demonstrating sophisticated TEP coupling mechanisms - orbital motion coupling (|r| = 0.7-0.8), Moon-Chandler gravitational field modulation (|r| = 0.6-0.7), and rotational anisotropy (CV of rotational stability = 0.5-0.6). Energy vs velocity scaling discrimination analysis (-0.057, 95% CI: [-0.143, +0.030], n.s.) reveals no significant preference between scaling mechanisms, supporting complex multi-mechanism coupling and supporting TEP's predicted dynamical clock/covariance structure, motivating direct tests of non-integrable time transport through closed-loop experiments.
 
 #### Step 4.5: Comprehensive Diurnal Analysis 1.8 hours
 
@@ -5396,8 +5425,8 @@ Petit, G. & Luzum, B. (2010). IERS Conventions (2010). *IERS Technical Note* No.
 Ray, J., et al. (2008). IGS polar motion measurement accuracy. *Geophysical Research Letters*, 35(3), L03303.
 Rosenband, T., et al. (2008). Frequency ratio of Al+ and Hg+ single-ion optical clocks; metrology at the 17th decimal place. *Science*, 319(5871), 1808-1812.
 Senior, K. L., et al. (2008). Characterization of periodic variations in the GPS satellite clocks. *GPS Solutions*, 12(3), 211-225.
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
-Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1 — this work)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.26 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1 — this work)
 Smawfield, M. L. (2025). *Global Time Echoes: 25-Year Analysis of CODE Precise Clock Products*. Preprint v0.18 (Cairo). Zenodo. DOI: [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141) (Paper 2)
 Smawfield, M. L. (2025). *Global Time Echoes: Raw RINEX Consistency Test*. Preprint v0.5 (Kathmandu). Zenodo. DOI: [10.5281/zenodo.17860166](https://doi.org/10.5281/zenodo.17860166) (Paper 3)
 Smawfield, M. L. (2025). *Temporal-Spatial Coupling in Gravitational Lensing: A Reinterpretation of Dark Matter Observations*. Preprint v0.5 (Tortola). Zenodo. DOI: [10.5281/zenodo.17982540](https://doi.org/10.5281/zenodo.17982540) (Paper 4)
@@ -5509,13 +5538,12 @@ Fernández, M. A. (2016). Geodetic and Time Reference Frames for ESA's Navigatio
 
 ## How to cite
 
-**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. v0.25 (Jaipur). Zenodo. [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
+**Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. v0.26 (Jaipur). Zenodo. [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 **BibTeX:**
 @misc{Smawfield_TEP_GNSS_2025,
 author       = {Matthew Lukin Smawfield},
-title        = {Global Time Echoes: Distance-Structured Correlations in GNSS Clocks
-Clocks (v0.25 Jaipur)},
+title        = {Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (v0.26 Jaipur)},
 year         = {2025},
 publisher    = {Zenodo},
 doi          = {10.5281/zenodo.17127229},

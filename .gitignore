@@ -45,6 +45,7 @@ conda/
 .cursorrules
 .cursor-settings
 .windsurf
+.devin 
 
 # OS
 .DS_Store
@@ -129,4 +130,4 @@ site-code-longspan/dist/
 # IDE files
 *.code-workspace
 
-.devin
+.devin/

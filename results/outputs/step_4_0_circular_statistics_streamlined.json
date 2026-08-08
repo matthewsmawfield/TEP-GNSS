@@ -4,7 +4,7 @@
       "distance_km": 140.93158750948402,
       "plv": 0.003998367289825951,
       "rayleigh_p": 0.3880352305446783,
-      "v_test_p": NaN,
+      "v_test_p": null,
       "cos_mean_direction": -0.9795508917726847,
       "mean_coherence": -0.003916604244383741,
       "n_samples": 29608
@@ -76,7 +76,7 @@
       "distance_km": 8112.040061274689,
       "plv": 0.0015877266095900423,
       "rayleigh_p": 0.0,
-      "v_test_p": NaN,
+      "v_test_p": null,
       "cos_mean_direction": -0.9563246457134431,
       "mean_coherence": -0.0015183820874060039,
       "n_samples": 12519943

@@ -1,7 +1,7 @@
 # Temporal Equivalence Principle: Lunar Laser Ranging and the Nordtvedt Effect
 **Matthew Lukin Smawfield**
 Version: v0.2 (Lucknow)
-First published: 5 June 2026
+First published: 8 August 2026
 DOI: 10.5281/zenodo.19446029
 
 ---
@@ -2837,7 +2837,7 @@ Planck Collaboration, Aghanim, N., et al. 2020, A&A, 641, A6. *Planck 2018 resul
 
 #### TEP Framework (This Series)
 
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
 
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: 10.5281/zenodo.17127229 (Paper 1)
 

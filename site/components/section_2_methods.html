@@ -308,11 +308,17 @@ Implementation Details: For complete usage instructions, configuration options, 
         
         <h3>Physical interpretation of the phase-based approach</h3>
         <p>For two zero-mean, wide-sense stationary clock residual processes $x_i(t), x_j(t)$, the cross-spectrum $S_{ij}(f)$ is the Fourier transform of the cross-correlation $R_{ij}(\tau)$ (Wiener–Khinchin):</p>
-        <div class="equation">$$S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]$$</div>
+        <div class="equation">\begin{equation} \label{eq:cross_spectrum}
+        S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]
+        \end{equation}</div>
         <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10–500 μHz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
-        <div class="equation">$$\phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}$$</div>
+        <div class="equation">\begin{equation} \label{eq:phase_bound}
+        \phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}
+        \end{equation}</div>
         <p>Hence, the physically expected inter-station phase is $\approx 0$ in this band; the information lies in how tightly phases cluster, not in a systematic lag. Writing the unit phasor $U_{ij}(f)=S_{ij}(f)/|S_{ij}(f)|$, the metric uses $\mathrm{Re}\{U_{ij}(f)\}= \cos(\arg S_{ij}(f))$. When averaged over pairs within a distance bin, this estimates the circular mean of phases. If the within-bin phase distribution is von Mises $\mathrm{VM}(\mu\!\approx\!0, \kappa(r))$, the expected value is</p>
-        <div class="equation">$$\mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)$$</div>
+        <div class="equation">\begin{equation} \label{eq:von_mises}
+        \mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)
+        \end{equation}</div>
         <p>If the underlying field has exponential spatial covariance, $\mathrm{Cov}[\phi(\mathbf{x}),\phi(\mathbf{x}+\mathbf{r})]\propto e^{-r/\lambda}$, then the concentration $\kappa(r)$ (and thus the circular mean above) inherits an exponential distance-decay, matching the fitted form.</p>
         <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts through: (i) comprehensive randomization testing (distance, phase, and station scrambling), which destroys the spatial correlation structure in null tests while preserving it in genuine data; and (ii) replication across independent processing chains (CODE, IGS, ESA) with different systematic vulnerabilities. Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore cannot detect the distance-structured phase relationships central to TEP.</p>
         </div>
@@ -865,7 +871,9 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
         
         <h3>Energy-vs-Velocity Discrimination Analysis</h3>
         <p>To distinguish between energy-based and velocity-based scaling mechanisms in TEP coupling, a discrimination metric is computed as the simple arithmetic difference of Pearson correlations between gravitational-temporal field patterns and Earth motion parameters:</p>
-        <div class="equation">$$\text{discrimination} = r_E - r_V$$</div>
+        <div class="equation">\begin{equation} \label{eq:discrimination}
+        \text{discrimination} = r_E - r_V
+        \end{equation}</div>
         <p>where $r_E$ is the correlation coefficient for energy-based scaling (gravitational potential energy) and $r_V$ is the correlation coefficient for velocity-based scaling (orbital velocity). This metric quantifies the relative preference between energy and velocity coupling mechanisms, with positive values indicating energy-based scaling preference and negative values indicating velocity-based scaling preference.</p>
         
         <p>Implementation: The discrimination is calculated independently across three analysis centers (CODE, ESA Final, IGS Combined) and then aggregated using bootstrap resampling (5000 iterations) to provide robust confidence intervals. With n=3 centers, the bootstrap CI is mostly illustrative; the analysis reveals discrimination = r_E − r_V = −0.057 (bootstrap 95% CI: [−0.143, +0.030]), indicating no statistically significant preference between energy-based and velocity-based scaling mechanisms, supporting complex multi-mechanism coupling in TEP physics.</p>

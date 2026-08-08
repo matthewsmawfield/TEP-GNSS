@@ -180,6 +180,21 @@ class HTMLToPDFConverter:
             css_content = self._get_css_for_pdf(options)
             await page.add_style_tag(content=css_content)
             
+            # Force lazy-loaded images to load (headless Chromium doesn't scroll,
+            # so loading="lazy" images never trigger)
+            lazy_count = await page.evaluate("""() => {
+                const imgs = document.querySelectorAll('img[loading="lazy"]');
+                imgs.forEach(img => {
+                    img.removeAttribute('loading');
+                    // Force reload by re-assigning src
+                    const src = img.src;
+                    img.src = src;
+                });
+                return imgs.length;
+            }""")
+            if lazy_count:
+                logger.info(f"Forced {lazy_count} lazy-loaded images to load")
+            
             # Wait for any dynamic content
             if options.get('wait_for_selector'):
                 logger.info(f"Waiting for selector: {options['wait_for_selector']}")
@@ -207,7 +222,7 @@ class HTMLToPDFConverter:
             # Final check for content presence
             try:
                 content_ready = await page.wait_for_function(
-                    "() => { const content = document.getElementById('content'); return content && content.children.length > 0; }",
+                    "() => { const content = document.getElementById('manuscript-content'); return content && content.children.length > 0; }",
                     timeout=10000
                 )
                 logger.info("Content container has content loaded")

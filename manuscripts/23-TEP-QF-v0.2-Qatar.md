@@ -1,7 +1,7 @@
 # Temporal Equivalence Principle: The Dirac Limit of Dynamical Proper Time
 **Matthew Lukin Smawfield**
 Version: v0.2 (Qatar)
-First published: 12 June 2026 · Last updated: 2 July 2026
+First published: 12 June 2026 · Last updated: 8 August 2026
 DOI: 10.5281/zenodo.20572697
 
 ---
@@ -388,7 +388,7 @@ The standard relativistic quantum framework is recovered as the screened limit o
 
 ## References
 
-- Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.9 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
+- Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
 
 - Smawfield, M. L. (2025). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_{T}*. Preprint v0.6 (New Delhi). Zenodo. DOI: 10.5281/zenodo.18064365 (Paper 6)
 

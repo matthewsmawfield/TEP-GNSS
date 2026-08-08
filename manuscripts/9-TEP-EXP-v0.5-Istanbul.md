@@ -1,7 +1,7 @@
 # What Do Precision Tests of General Relativity Actually Measure?
 **Matthew Lukin Smawfield**
-Version: v0.4 (Istanbul)
-First published: 31 December 2025 · Last updated: 2 July 2026
+Version: v0.5 (Istanbul)
+First published: 31 December 2025 · Last updated: 8 August 2026
 DOI: 10.5281/zenodo.18109760
 
 ---
@@ -10,7 +10,7 @@ DOI: 10.5281/zenodo.18109760
 
 Most high-precision tests of general relativity constrain reciprocity-even, largely local observables within single-metric frameworks. This leaves open a specific underdetermination between General Relativity (GR) and a class of two-metric disformal scalar-tensor modifications, exemplified here by the Temporal Equivalence Principle (TEP).
 
-This paper formalizes a measurement taxonomy distinguishing gauge-invariant from convention-dependent observables and identifies six recurring scope limitations in the experimental canon: (1) two-way measurement dominance; (2) local/global conflation; (3) model-dependent calibration; (4) single-path multi-messenger constraints on differential propagation that do not directly test common-mode conformal clock-sector structure; (5) theory-laden data reduction; and (6) the proximity-regime screening blind spot, whereby tests performed in deep potential wells probe only the screened regime where scalar-field gradients are continuously suppressed, leaving the unscreened dilute regime unexplored. These characteristics do not diminish the experimental achievements but indicate that, in many cases, the tests primarily constrain parameter space within assumed frameworks rather than systematically discriminating between alternatives.
+This paper formalizes a measurement taxonomy distinguishing gauge-invariant from convention-dependent observables and identifies six recurring scope limitations in the experimental canon: (1) two-way measurement dominance; (2) local/global conflation; (3) model-dependent calibration; (4) single-path multi-messenger constraints on differential propagation that do not directly test common-mode conformal clock-sector structure; (5) theory-laden data reduction; and (6) the proximity-regime screening blind spot, whereby tests performed in deep potential wells probe only the screened regime where scalar-field gradients are continuously suppressed, leaving the active-shear dilute regime unexplored. These characteristics do not diminish the experimental achievements but indicate that, in many cases, the tests primarily constrain parameter space within assumed frameworks rather than systematically discriminating between alternatives.
 
 Discriminating observables—specifically loop asymmetries, spatial correlations, and proximity-regime screening transitions—are proposed, together with experimental configurations capable of resolving the underdetermination. These include large-area triangle holonomy tests (targeting residual synchronization holonomy $H_{\rm resid}$), interplanetary closed-loop timing, altitude-varying optical clock networks to map continuous geometric screening, and matter-wave interferometry.
 
@@ -259,7 +259,7 @@ The operative quantity for fifth-force coupling and clock-sector effects is the 
 
 $\Sigma_\mu^{\text{obs}} = \mathcal{S}_\Sigma(\mathcal{E}) \, \nabla_\mu \ln A(\phi),$
 
-where the environmental state is $\mathcal{E} = \{\rho, \Phi/c^2, \nabla\rho, \nabla\Phi, \text{compactness}, R_T(M), \text{proximity}, T, z, \text{boundary geometry}, \text{coherence volume}\}.$ This single operator unifies density screening, compactness screening, proximity screening, thermal/epoch screening, lensing/cosmological covariance screening, and wide-binary environmental screening across the entire TEP corpus.
+where the environmental state is $\mathcal{E} = \{\rho, \Phi/c^2, \nabla\rho, \nabla\Phi, \text{compactness}, R_T(M), \text{proximity}, T, z, \text{boundary geometry}, \text{coherence volume}\}.$ This single operator unifies density screening, compactness screening, proximity screening, thermodynamic/environmental-state response, lensing/cosmological covariance screening, and wide-binary environmental screening across the entire TEP corpus.
 
 The experimental consequence is that existing precision tests probe the deeply screened regime, where Temporal Shear vanishes continuously. They are insensitive to the field's behavior in the unscreened dilute regime where large-scale structural effects originate. This creates a proximity-regime blind spot: experiments constrain the screened limit while leaving the unscreened limit largely unexplored.
 
@@ -761,7 +761,7 @@ where b is the impact parameter, has been measured to constrain γ at the 10⁻�
 
 VLBI measures the differential arrival time of radio waves at widely separated antennas. The measurement is sensitive to the angular position of the source, which shifts due to gravitational light bending.
 
-Like Shapiro delay, this constrains the conformal factor in the metric (how spatial distances are modified by gravity) but not the synchronization structure. The PPN γ parameter appears in the spatial part of the metric; synchronization holonomy arises from the temporal part.
+Like Shapiro delay, this constrains the post-Newtonian gravitational/source-charge sector of the metric, but not synchronization structure; a pure conformal $A(\phi)$ does not introduce an additional null-trajectory bending term. The PPN γ parameter appears in the spatial part of the metric; synchronization holonomy arises from the temporal part.
 
 ### 5.3 The PPN Framework and Its Limitations
 
@@ -790,9 +790,9 @@ The PPN framework parameterizes the post-Newtonian limit under the assumption th
 
 - Non-local statistical structure appears in clock residuals (spatial correlations) rather than in PPN light-bending parameters
 
-- Environment-dependent screening of the scalar field gradient (Temporal Shear) is not parameterized by PPN γ, leaving the continuous transition from screened to unscreened regimes unconstrained
+- Environment-dependent screening of the scalar field gradient (Temporal Shear) is not parameterized by PPN γ, leaving the continuous transition from screened to active-shear regimes unconstrained
 
-In TEP, the matter metric is related to the gravitational metric by a disformal map g̃<sub>μν</sub> = A(φ)g<sub>μν</sub> + B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ. The conformal factor A(φ) rescales the matter sector while preserving null cones; the disformal term B(φ) can tilt null cones and is strongly constrained by multi-messenger observations. Consequently, PPN light-propagation tests can leave room for clock-sector effects encoded in A(φ) and for loop/correlation observables that are not representable as a single γ parameter.
+In TEP, the matter metric is related to the gravitational metric by a disformal map g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub> + B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ. The conformal factor A(φ) rescales the matter sector while preserving null cones; the disformal term B(φ) can tilt null cones and is strongly constrained by multi-messenger observations. Consequently, PPN light-propagation tests can leave room for clock-sector effects encoded in A(φ) and for loop/correlation observables that are not representable as a single γ parameter.
 
 A further limitation concerns the environmental setting of PPN tests. The Cassini measurement was performed during solar conjunction, where signals passed through the Sun's deep gravitational potential. In TEP, such deep potential wells correspond to the screened regime: suppression of Temporal Shear (∇φ → 0) by environmental state and boundary conditions decouples local clock rates from the scalar field while the Temporal Topology persists. The PPN constraint on γ therefore probes only the screened limit, where TEP predicts PPN consistency, and remains insensitive to the unscreened dilute regime where the field gradient recovers and large-scale structural effects originate.
 
@@ -800,7 +800,7 @@ A further limitation concerns the environmental setting of PPN tests. The Cassin
 
 In scalar-tensor theories, the physical metric can differ from the gravitational metric through conformal and disformal transformations:
 
-$\tilde{g}_{\mu\nu} = A(\phi)g_{\mu\nu} + B(\phi)\nabla_\mu\phi
+$\tilde{g}_{\mu\nu} = A^2(\phi)g_{\mu\nu} + B(\phi)\nabla_\mu\phi
 \nabla_\nu\phi$
 
 where A(φ) is the conformal factor and B(φ) is the disformal factor.
@@ -933,7 +933,7 @@ Under these conditions, the observed EM–GW arrival-time difference is insensit
 
 #### Why Conformal Coupling Cancels
 
-Under a conformal transformation g̃<sub>μν</sub> = A(φ)g<sub>μν</sub>:
+Under a conformal transformation g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub>:
 
 - Null geodesics remain null: If g<sub>μν</sub>k<sup>μ</sup>k<sup>ν</sup> = 0, then g̃<sub>μν</sub>k<sup>μ</sup>k<sup>ν</sup> = A(φ) × 0 = 0
 
@@ -1377,7 +1377,7 @@ One-way optical links between ground stations and satellites (or between satelli
 
 - Reply: The loop observable $H_{raw}$ is constructed from recorded emission time tags and reception clock readouts; constant clock offsets cancel exactly in the direction-reversed loop difference.
 
-- Reply: Sagnac contributions are geometry-controlled. Using precise IERS Earth-orientation parameters and satellite ephemerides, the modeled Sagnac term can be subtracted to the level set by geodetic uncertainty. The key discriminator is a residual with the predicted geometry dependence, validated across multiple loop configurations.
+- Reply: Sagnac contributions are geometry-controlled. Using precise IERS Earth-orientation parameters and satellite ephemerides, the modeled Sagnac term can be subtracted to the level set by geodetic uncertainty. The key discriminator is a residual with the predicted geometry dependence, testable across multiple loop configurations.
 
 - Reply: Link systematics are handled by two-way optical time transfer (TWTTFT) for synchronization and one-way analysis, plus dual-frequency links. The signal scales with loop area (flux), while many systematics scale with path length or are geometry-independent.
 
@@ -2072,7 +2072,7 @@ Zumalacárregui, M., & García-Bellido, J. (2014). Transforming gravity: From de
 
 ### TEP Research Program
 
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
 
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1)
 
@@ -2090,7 +2090,7 @@ Smawfield, M. L. (2025). *The Soliton Wake: Exploring RBH-1 as a Temporal Topolo
 
 Smawfield, M. L. (2025). *Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging*. Preprint v0.3 (Mombasa). Zenodo. DOI: [10.5281/zenodo.18064581](https://doi.org/10.5281/zenodo.18064581) (Paper 8)
 
-Smawfield, M. L. (2025). *What Do Precision Tests of General Relativity Actually Measure?*. Preprint v0.4 (Istanbul). Zenodo. DOI: [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) (Paper 9 — this work)
+Smawfield, M. L. (2025). *What Do Precision Tests of General Relativity Actually Measure?*. Preprint v0.5 (Istanbul). Zenodo. DOI: [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) (Paper 9 — this work)
 
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: Suppressed Density Scaling in Globular Cluster Pulsars*. Preprint v0.6 (Caracas). Zenodo. DOI: [10.5281/zenodo.18165798](https://doi.org/10.5281/zenodo.18165798) (Paper 10)
 
@@ -2180,7 +2180,7 @@ The repository contains the complete manuscript source, methodological framework
 
 #### Repository Structure
 
-`TEP-EXP/ ├── manuscripts/ # Markdown manuscript sources │ ├── 9-TEP-EXP-v0.4-Istanbul.md # Primary manuscript │ └── [other versions] ├── site/ │ ├── components/ # HTML manuscript sections │ │ ├── 1_abstract.html │ │ ├── 2_introduction.html │ │ ├── 3_methodology.html │ │ ├── 4_redshift_tests.html │ │ ├── 5_time_dilation_tests.html │ │ ├── 6_light_propagation_tests.html │ │ ├── 7_multimessenger.html │ │ ├── 8_resonator_tests.html │ │ ├── 9_discriminating_tests.html │ │ ├── 10_discussion.html │ │ ├── 11_conclusions.html │ │ └── 12_references.html │ ├── public/ # Static assets │ └── manifest.json # Site configuration ├── scripts/ │ └── utils/ # Utility scripts │ └── process_pdf.py # PDF generation helper ├── requirements.txt # Python dependencies ├── CITATION.cff # Citation metadata └── README.md # Repository documentation` ### Data Provenance  This is a theoretical and methodological analysis paper. All experimental data referenced is from published literature with full citations provided. Key referenced experiments include:
+`TEP-EXP/ ├── manuscripts/ # Markdown manuscript sources │ ├── 9-TEP-EXP-v0.5-Istanbul.md # Primary manuscript │ └── [other versions] ├── site/ │ ├── components/ # HTML manuscript sections │ │ ├── 1_abstract.html │ │ ├── 2_introduction.html │ │ ├── 3_methodology.html │ │ ├── 4_redshift_tests.html │ │ ├── 5_time_dilation_tests.html │ │ ├── 6_light_propagation_tests.html │ │ ├── 7_multimessenger.html │ │ ├── 8_resonator_tests.html │ │ ├── 9_discriminating_tests.html │ │ ├── 10_discussion.html │ │ ├── 11_conclusions.html │ │ └── 12_references.html │ ├── public/ # Static assets │ └── manifest.json # Site configuration ├── scripts/ │ └── utils/ # Utility scripts │ └── process_pdf.py # PDF generation helper ├── requirements.txt # Python dependencies ├── CITATION.cff # Citation metadata └── README.md # Repository documentation` ### Data Provenance  This is a theoretical and methodological analysis paper. All experimental data referenced is from published literature with full citations provided. Key referenced experiments include:
 
 - Pound-Rebka-Snider (1960): Gravitational redshift measurements
 
@@ -2223,7 +2223,7 @@ The repository contains the complete manuscript source, methodological framework
 
 ---
 
-*This document was automatically generated from the TEP-EXP research site. For the interactive version with figures and enhanced formatting, visit: https://matthewsmawfield.github.io/TEP-EXP/*
+*This document was automatically generated from the TEP-EXP research site. For the interactive version with figures and enhanced formatting, visit: https://mlsmawfield.com/tep/exp/*
 
 *Related Work:*
 - [TEP Theory](https://doi.org/10.5281/zenodo.16921911) (Foundational framework)

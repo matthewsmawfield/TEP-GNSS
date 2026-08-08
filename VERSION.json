@@ -1,20 +1,20 @@
 {
   "version": "0.26",
   "codename": "Jaipur",
-  "date": "2026-06-05",
+  "date": "2026-08-08",
   "paper": "1",
   "changes": [
-    "Version bump to v0.25",
-    "Updated date to 29 April 2026"
+    "Version bump to v0.26",
+    "Updated date to 8 August 2026"
   ],
   "previous_version": "0.25",
   "previous_date": "2026-06-05",
   "description": "Paper 1: Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "impact": "Clean separation of papers into individual repositories for consistency",
-  "short_description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Multi-center analysis of 62.7M measurements across CODE, IGS, and ESA over 2.5 years. Version 0.25 update.",
-  "long_description": "This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (\u03bb) of 3,330\u20134,549 km, consistent with theoretical predictions for screened scalar fields.\n\nWebsite: https://matthewsmawfield.github.io/TEP-GNSS/",
+  "short_description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Multi-center analysis of 62.7M measurements across CODE, IGS, and ESA over 2.5 years. Version 0.26 update.",
+  "long_description": "This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (\u03bb) of 3,330\u20134,549 km, consistent with theoretical predictions for screened scalar fields.\n\nWebsite: https://mlsmawfield.com/tep/gnss-i/",
   "doi": "10.5281/zenodo.17127229",
   "zenodo_record": "17127229",
-  "pdf_filename": "Smawfield_2025_GlobalTimeEchoes_v0.26_Jaipur.pdf",
-  "pdf_download_url": "https://zenodo.org/records/17127229/files/Smawfield_2025_GlobalTimeEchoes_v0.24_Jaipur.pdf?download=1"
+  "pdf_filename": "1-TEP-GNSS-v0.26-Jaipur.pdf",
+  "pdf_download_url": "https://zenodo.org/records/17127229/files/1-TEP-GNSS-v0.26-Jaipur.pdf?download=1"
 }

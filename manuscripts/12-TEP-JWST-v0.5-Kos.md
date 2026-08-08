@@ -40,9 +40,14 @@ Across these cases, the common structure is the same: stellar masses and ages in
 
 ### 1.2 Challenging Isochrony with TEP
 
-Underlying every photometric inference of stellar age, mass, and star formation rate is the isochrony axiom: the assumption that the clock governing stellar evolution ticks at the universal cosmic rate, regardless of local gravitational environment. Under isochrony, an observed red colour is interpreted as a combination of age, dust, and metallicity, and the resulting mass-to-light ratio ($M/L \propto t^n$) is treated as universal. If this axiom is violated — if stars in deep gravitational potentials accumulate proper time faster than the cosmic mean — then SED-inferred masses and ages are systematically inflated in precisely the environments where JWST finds the largest anomalies.
+Underlying every photometric inference of stellar age, mass, and star formation rate is the isochrony axiom: the assumption that the clock governing stellar evolution ticks at the universal cosmic rate, regardless of local gravitational environment. Under isochrony, an observed red colour is interpreted as a combination of age, dust, and metallicity, and the resulting mass-to-light ratio ($M/L \propto t^n$) is treated as universal. If this axiom is violated — if stars in environments where Temporal Shear remains active accumulate proper time faster than the cosmic mean — then SED-inferred masses and ages are systematically inflated in precisely the environments where JWST finds the largest anomalies.
 
-The Temporal Equivalence Principle (TEP) formalises this possibility within a continuously screened two-metric Temporal Topology framework. In unscreened halos, the Temporal Shear relaxes to values where proper time flows faster than coordinate time, so that a galaxy's effective age $t_{\rm eff} = \Gamma_t\,t_{\rm cosmic}$ exceeds its cosmic age. The resulting bias in $M/L$ inflates inferred stellar masses by $\Gamma_t^n$, directly mimicking a star formation efficiency excess. This effect is physically distinct from standard gravitational redshift: photons still lose energy climbing out of potential wells (kinematic redshift, fully preserved in TEP), while the scalar field coupling independently accelerates atomic processes within the well. Both effects coexist; only the latter biases photometric mass inference.
+
+**Observer-age convention.** Throughout this paper, $t_{\rm cosmic}(z)$ denotes the age assigned to redshift $z$ by the standard FLRW observational reconstruction. It is an observer-frame coordinate used by conventional stellar-population inference, not the fundamental physical age of the universe in TEP. The canonical TEP cosmology has an asymptotic temporal past with unbounded local proper-time history.
+
+
+
+The Temporal Equivalence Principle (TEP) formalises this possibility within a continuously screened two-metric Temporal Topology framework. In massive, active-shear halos, the Temporal Shear relaxes to values where proper time flows faster than coordinate time, so that a galaxy's effective age $\tau_{\star,\rm eff}(z,E) = \Gamma_t(E,z)\,t_{\rm FLRW}^{\rm obs}(z)$ exceeds the standard FLRW age assigned to that redshift. The resulting bias in $M/L$ inflates inferred stellar masses by $\Gamma_t^n$, directly mimicking a star formation efficiency excess. This effect is physically distinct from standard gravitational redshift: photons still lose energy climbing out of potential wells (kinematic redshift, fully preserved in TEP), while the scalar field coupling independently accelerates atomic processes within the well. Both effects coexist; only the latter biases photometric mass inference.
 
 
 **Physics Note: Dilation vs. Enhancement**
@@ -278,7 +283,7 @@ Table 1b: Glossary of Key Terms
 | Temporal Shear | $\Sigma_\mu$ | The locally active gradient of the temporal potential, $\Sigma_\mu = \nabla_\mu \Theta$, where $\Theta = \ln A(\phi)$. High ambient matter density flattens this gradient, suppressing the effective response continuously rather than at a discrete boundary. Observationally proxied by gradients in $\Gamma_t$ across a galaxy or environment. |
 | Isochrony Bias | — | The systematic error in inferred stellar properties (mass, age, SFR) arising from the assumption that stellar clocks tick at the cosmic rate everywhere. Under TEP, this assumption is violated in deep potential wells. |
 | Screening | — | The suppression of TEP effects in regions where the locally observable Temporal Shear/source-charge sector is screened ($\rho_T \approx 20$ g/cm³ is an organizing saturation scale). Two types are distinguished: *Core Screening*—Screening within a single galaxy, where the deep central potential suppresses TEP ($\Gamma_t \to 1$) while the outskirts remain enhanced. Produces bluer cores and redder outskirts. *Environmental Screening*—Screening by the ambient group or cluster potential, causing galaxies in dense environments to appear younger than isolated field galaxies of the same mass. |
-| Effective Time | $t_{\rm eff}$ | The proper time experienced by stellar populations: $t_{\rm eff} = t_{\rm cosmic} \times \Gamma_t$. |
+| Effective Time | $t_{\rm eff}$ | The proper time experienced by stellar populations: $t_{\rm eff} = t_{\rm FLRW}^{\rm obs} \times \Gamma_t$. |
 
 
 
@@ -527,12 +532,13 @@ cosmological constraints:
 
 
 - 
-**BBN:** During the radiation era, $T^\mu_\mu \approx
-0$ for relativistic species, so the scalar field driving force
-vanishes and $\phi$ remains frozen. Numerical integration yields
-$|\Delta H/H|_{\rm max} = 1.7 \times 10^{-13}$ and $\Delta Y_p <
-10^{-14}$—shifts $\sim 10^{12}$ times below observational
-uncertainties (Appendix A.1.6).
+**Early-universe compatibility (historical):** Earlier
+versions verified that a conformal scalar remains perturbatively
+invisible during a conventional radiation-dominated era ($|\Delta
+H/H|_{\rm max} = 1.7 \times 10^{-13}$; $\Delta Y_p <
+10^{-14}$). This is retained as a historical compatibility check;
+the canonical TEP early-universe interpretation is supplied by
+TEP-TH and TEP-BBN (Appendix A.1.7).
 
 
 - 
@@ -605,7 +611,8 @@ the conclusion.
 
 
 An effective time is defined as $t_{\rm eff} = t_{\rm
-cosmic}\,\Gamma_t$, where $t_{\rm cosmic}$ is computed from a fiducial
+FLRW}^{\rm obs}\,\Gamma_t$, where $t_{\rm FLRW}^{\rm obs}$ is the
+observer-frame age coordinate computed from a fiducial
 cosmology (Planck18). Under the isochrony-bias model used here, the
 mass-to-light ratio is assumed to scale as $M/L \propto t^n$ (following
 standard SSP predictions; Bruzual & Charlot 2003; Conroy et al.
@@ -1166,7 +1173,7 @@ A combined kinematic sample of $N = 83$ galaxies ($z = 1.2$–$7.6$) drawn from 
 The cleanest direct kinematic test targets the most massive, brightest galaxies at $z > 7$. Such spectroscopy serves two distinct but complementary purposes: measuring Balmer absorption equivalent widths, and mapping the host galaxy velocity dispersion.
 
 
-**1. Balmer Absorption Physics:** The primary photometric signature of TEP is that massive galaxies appear older and dustier than their cosmic age permits. This can be tested spectroscopically via Balmer absorption lines (e.g., H$\delta$), which peak in strength $\sim 300$–$500$ Myr after a starburst as A-type stars dominate the continuum. Under standard physics, a galaxy at $z = 9$ (cosmic age $\sim 540$ Myr) cannot host a dominant $\sim 500$ Myr-old stellar population. Under TEP, even a moderately massive halo ($\log M_* \gtrsim 9.5$) at this redshift exceeds $\Gamma_t \approx 3$, the threshold for an effective age of $\sim 1.6$ Gyr — readily allowing for strong Balmer absorption. More massive systems ($\log M_* > 10$) have $\Gamma_t \sim 8$–$22$, making the prediction even stronger. Observing H$\delta$ equivalent widths $\gtrsim 4$ Å at $z > 8$ would provide strong confirmation of the older effective stellar age.
+**1. Balmer Absorption Physics:** The primary photometric signature of TEP is that massive galaxies appear older and dustier than the standard FLRW observer-age assigned to their redshift permits. This can be tested spectroscopically via Balmer absorption lines (e.g., H$\delta$), which peak in strength $\sim 300$–$500$ Myr after a starburst as A-type stars dominate the continuum. Under standard physics, a galaxy at $z = 9$ (FLRW observer-age $\sim 540$ Myr) cannot host a dominant $\sim 500$ Myr-old stellar population. Under TEP, even a moderately massive halo ($\log M_* \gtrsim 9.5$) at this redshift exceeds $\Gamma_t \approx 3$, the threshold for an effective age of $\sim 1.6$ Gyr — readily allowing for strong Balmer absorption. More massive systems ($\log M_* > 10$) have $\Gamma_t \sim 8$–$22$, making the prediction even stronger. Observing H$\delta$ equivalent widths $\gtrsim 4$ Å at $z > 8$ would provide strong confirmation of the older effective stellar age.
 
 **2. IFU Kinematics as a Direct Mass Proxy:** As discussed in §4.4.6, the current analysis relies on SED-derived stellar masses to compute $\Gamma_t$, creating a potential circularity. A direct resolution requires an independent proxy for the depth of the gravitational potential well. Spatially resolved kinematics (e.g., from JWST NIRSpec IFU) can map the central velocity dispersion ($\sigma$). Using $\sigma$ rather than $M_*$ to predict $\Gamma_t$—precisely as was done for the local Cepheid calibration and globular cluster pulsars—directly addresses the photometric mass degeneracy.
 
@@ -1190,13 +1197,13 @@ The cleanest direct kinematic test targets the most massive, brightest galaxies 
 The discussion begins from a simple inference. The two primary empirical
 lines, together with the ancillary resolved-screening branch and the
 derived dynamical-mass comparison, converge on one physical
-interpretation: the isochrony axiom fails in massive, unscreened halos
+interpretation: the isochrony axiom fails in massive, active-shear halos
 at $z > 5$. In this picture, TEP quantitatively accounts for the Red Monster star
 formation efficiency anomaly not by introducing new baryonic physics but
 by exposing a systematic bias already built into standard
 stellar-population inference. The mechanism is sequential and concrete.
 Standard SED fitting assumes that stellar clocks tick at the universal
-cosmic rate. Under TEP, stars in massive unscreened halos accumulate
+cosmic rate. Under TEP, stars in massive, active-shear halos accumulate
 extra proper time ($\Gamma_t > 1$). They therefore appear older at fixed
 coordinate age, inferred mass-to-light ratios rise, inferred stellar
 masses rise, inferred specific star formation rates fall, and the
@@ -1808,7 +1815,8 @@ screening: solar system (Temporal Shear suppression reduces the
 effective coupling to $\beta_{\rm eff} \ll \beta$, satisfying
 Cassini bounds), gravitational waves ($c_g = c_\gamma$ in the conformal
 limit), binary pulsars (fully screened at $\rho \sim 10^{14}$ g/cm³),
-and cosmological bounds (BBN satisfied by $\sim 10^{12}\times$ margin;
+and cosmological bounds (early-universe compatibility retained as
+historical check, see Appendix A.1.7;
 $\sigma_8$ preserved by Yukawa suppression with $\beta_{\rm eff} \approx
 0.005$ on $R_8$ scales from the scale-dependent growth calculation in
 §2.3.2.7 and Appendix A.1.8.6). The JWST core screening gradient ($\rho
@@ -2640,10 +2648,13 @@ The exponential form of $\Gamma_t$ creates a natural bifurcation in the
 $z > 8$ galaxy population. Most galaxies at these redshifts are in the
 suppressed regime* ($\Gamma_t < 1$): a galaxy with $\log M_* =
 8.5$ at $z = 9$ yields $\Gamma_t \approx 0.36$, meaning its effective
-age is only $\sim 36\%$ of its cosmic age ($\sim 0.19$ Gyr at $z = 9$) —
+age is only $\sim 36\%$ of the FLRW observer-age assigned to that
+redshift ($\sim 0.19$ Gyr at $z = 9$) —
 below the $\sim 0.3$ Gyr AGB dust-production threshold. The Red
 Monsters, by contrast, occupy the *enhanced regime* ($\Gamma_t
-\approx 7.5$–$13$; Table 3b): their deep potential wells amplify
+\approx 7.5$–$13$; Table 3b): in environments where Temporal Shear
+remains active, potential depth controls the magnitude of the
+clock-response projection, amplifying
 effective time, enabling dust production, accelerated chemical
 enrichment, and inflated apparent $M/L$ ratios. This bifurcation
 resolves the Uniformity Paradox — why low-mass galaxies at $z > 8$ are
@@ -3024,7 +3035,7 @@ residual dependence on host mass ($p = 0.562$, Spearman rank;
 Pearson $p = 0.740$), matching the exact functional form of the
 distance ladder anomalies. The TRGB-Cepheid offset has the correct
 sign ($+0.054$ mag) but is $\sim 5\times$ smaller than the
-unscreened prediction, implying substantial screening in nearby
+active-shear prediction, implying substantial screening in nearby
 calibrators.
 
 
@@ -3813,7 +3824,7 @@ environments (protoclusters) form earlier and evolve faster than field
 galaxies of the same mass ("downsizing"). TEP predicts the opposite:
 dense environments exceed the Temporal Topology reference density $\rho_T$,
 suppressing the scalar field ($\Gamma_t \to 1$), while field galaxies
-remain unscreened ($\Gamma_t > 1$).
+remain in the active-shear regime ($\Gamma_t > 1$).
 
 
 
@@ -3939,7 +3950,7 @@ Follow-up branches strengthen this hierarchy. COSMOS2025 adds blank-field suppor
 
 ### 5.2 Interpretative Framework
 
-The interpretive claim is direct. Physical processes require proper time. Standard inference assumes that proper time and cosmic time can be identified. The JWST anomalies are what appear when that identification fails in deep potentials. Under TEP, time behaves as a local field, and a single parameter ($\Gamma_t$) propagates coherently through stellar ages, mass-to-light ratios, dust buildup, star-formation diagnostics, and dynamical-mass comparisons.
+The interpretive claim is direct. Physical processes require proper time. Standard inference assumes that proper time and the FLRW observer-age coordinate can be identified. The JWST anomalies are what appear when that identification fails in environments where Temporal Shear remains active. Under TEP, time behaves as a local field, and a single parameter ($\Gamma_t$) propagates coherently through stellar ages, mass-to-light ratios, dust buildup, star-formation diagnostics, and dynamical-mass comparisons.
 
 This empirical case moves beyond generalized mass correlations through two especially important lines of evidence:
 
@@ -4153,7 +4164,7 @@ Slob, M., et al. 2025, A&A (in press). *SUSPENSE: Spectroscopy of z = 1–2 mass
 
 Shuntov, M., et al. 2025, ApJS (in press). *COSMOS-Web DR1 / COSMOS2025 catalog.*
 
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: 10.5281/zenodo.16921911 (Paper 0)
 
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: 10.5281/zenodo.17127229 (Paper 1)
 
@@ -4604,50 +4615,25 @@ alternatives.
 
 
 
-#### A.1.7 Cosmological Constraints (BBN & Structure Formation)
+#### A.1.7 Relation to the Canonical TEP Cosmology
 
 
-The compatibility of TEP with early universe constraints is explicitly
-verified below.
-
-
-
-**Big Bang Nucleosynthesis (BBN):** The scalar field
-equation of motion (Eq. 34) is driven by the trace of the matter
-stress-energy tensor $T$. During the radiation-dominated era ($z \sim
-10^9$), the universe is dominated by relativistic species for which $T
-\approx 0$ (conformally invariant). Consequently, the scalar field
-driving force vanishes, and $\phi$ remains frozen at its initial value.
-Numerical integration of the Friedmann equations with the TEP scalar
-energy density yields:
+This paper does not use primordial BBN as an input to the JWST
+inference. Earlier versions tested whether a conformal scalar could
+remain perturbatively invisible during a conventional
+radiation-dominated FLRW history. That calculation is retained only
+as a historical compatibility check and is not the canonical TEP
+early-universe interpretation. In the current framework, redshift
+does not uniquely specify a universal local temperature-density
+history, and the physical early-universe interpretation is supplied
+by the static-space temporal-horizon and local-thermodynamic
+constructions developed in TEP-TH and TEP-BBN.
 
 
 
-- 
-Maximum Hubble rate deviation: $|\Delta H/H|_{\rm max} = 1.7 \times
-10^{-13}$
-
-
-- 
-Deviation at neutron freeze-out: $|\Delta H/H|_{\rm freeze-out}
-\approx 0$ (below numerical precision)
-
-
-- 
-Helium-4 abundance shift: $\Delta Y_p = 1.2 \times 10^{-15}$
-(fractional: $5.0 \times 10^{-15}$)
-
-
-- 
-Deuterium abundance shift: $\Delta(D/H) = -5.0 \times 10^{-19}$
-(fractional: $-2.0 \times 10^{-14}$)
-
-
-
-
-These shifts are $\sim 10^{12}$ times smaller than current observational
-uncertainties ($\sigma_{Y_p} \sim 0.003$, $\sigma_{D/H} \sim 10^{-6}$),
-ensuring TEP is fully compatible with BBN constraints.
+The JWST result tested here requires only the mapping between
+observer-inferred age and locally accumulated stellar proper time.
+It does not depend on a primordial nucleosynthesis hypothesis.
 
 
 
@@ -5897,7 +5883,7 @@ Table C3: Theoretical Consistency Tests
 | Multi-Tracer Consistency | *Removed:* this test used hardcoded synthetic α values, not measured data; result pending real multi-tracer calibration | — N/A |
 | Screening Length Scale | λ_C = 2.5 kpc vs observed 1.5 kpc | ✓ Pass |
 | Screening Transition | Transition spans 2.2 dex; cosmic mean fully unscreened | ✓ Pass |
-| Precision Gravity (Cassini, LLR, pulsars, BBN, CMB) | All satisfied via Temporal Topology (continuous geometric screening) | ✓ Pass |
+| Precision Gravity (Cassini, LLR, pulsars, CMB) | All satisfied via Temporal Topology (continuous geometric screening) | ✓ Pass |
 
 
 

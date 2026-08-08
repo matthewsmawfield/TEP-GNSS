@@ -1,9 +1,4 @@
-v0.26 (Jaipur) — 05 June 2026 — Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
+v0.26 (Jaipur) — 8 August 2026 — Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
 
-v0.25 (Jaipur) - Terminology Refinement and Theory Alignment
-
-- Updated Temporal Topology nomenclature throughout manuscript for consistency
-- Clarified theoretical motivation connecting TEP to GR/quantum mechanics treatment of time
-- Streamlined Modified Gravity section emphasizing screening mechanisms and correlation length physics
-- Refined executive summary structure for improved readability
-- Minor editorial corrections and cross-reference updates across all sections
+- Reframed the Compton-mass interpretation as a completion-dependent heuristic: lambda_T is now presented as the primary empirical quantity, with m_phi serving only as a Yukawa/Compton reference scale under a specific scalar completion
+- Softened disformal coupling claims and clarified PPN screening: GNSS covariance does not by itself isolate B(phi) (direct discrimination requires a non-exact transport observable), and the PPN bound is noted to apply to the environmentally screened effective coupling rather than directly fixing the bare conformal parameter beta_A 

@@ -21858,10 +21858,10 @@
       "n_detections": 1,
       "mean_enhancement": 117.41073655245938,
       "median_enhancement": 117.41073655245938,
-      "std_enhancement": NaN,
+      "std_enhancement": null,
       "min_enhancement": 117.41073655245938,
       "max_enhancement": 117.41073655245938,
-      "cv_enhancement": NaN
+      "cv_enhancement": null
     },
     "temporal_patterns": {},
     "scientific_implications": {

@@ -18,6 +18,9 @@
         Section 1.2). While these consistencies are noteworthy, they do not
         constitute definitive proof and require independent validation.
     </p>
+
+<!-- include: screening_projection_notice.html -->
+
     <ul style="line-height: 1.7; margin: 15px 0 0 20px">
         <li>
             <strong>Exponential decay pattern:</strong> The data show preference
@@ -951,10 +954,10 @@
     </p>
 
     <p>
-        The conformal coupling A(φ) = exp(βφ/M<sub>Pl</sub>) implies that
+        The conformal coupling A(ϕ) = exp(β<sub>A</sub>ϕ/M<sub>Pl</sub>) implies that
         eclipse-induced changes in the electromagnetic environment will manifest
         as measurable variations in atomic clock coherence. Different eclipse
-        types—total, annular, and hybrid—are predicted to produce distinct φ
+        types—total, annular, and hybrid—are predicted to produce distinct ϕ
         field responses based on their differential ionospheric effects. Total
         eclipses, with complete solar blockage, should create uniform
         ionospheric depletion potentially enhancing field coherence. Annular
@@ -1883,14 +1886,17 @@
 
     <p>
         Within the TEP framework, tidal effects represent gravitational field
-        gradients that modulate the φ-field through disformal coupling
-        B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ. The observed pattern—longest
-        correlation lengths at tidal frequencies but persistent correlations
-        across all bands—suggests the φ-field responds to gravitational forcing
-        at multiple scales rather than being contaminated by classical tidal
-        residuals. The universal conformal term A(φ) provides broadband
-        coupling, while the disformal term enhances response to large-scale
-        gravitational gradients at tidal frequencies.
+        gradients that may modulate the φ-field through gradient-sensitive
+        structure associated with the non-exact sector. The observed
+        pattern—longest correlation lengths at tidal frequencies but persistent
+        correlations across all bands—suggests the φ-field responds to
+        gravitational forcing at multiple scales rather than being contaminated
+        by classical tidal residuals. The universal conformal term A(φ) provides
+        broadband coupling, while the enhanced correlation lengths at tidal
+        frequencies may indicate additional gradient-sensitive structure;
+        however, the GNSS covariance observable does not by itself isolate the
+        disformal term B(φ), which would require a dedicated non-exact transport
+        observable.
     </p>
 
     <p>
@@ -2251,12 +2257,12 @@
 </p>
 
 <div class="experimental-section">
-    <h3>Conformal vs. Disformal Coupling Evidence</h3>
+    <h3>Conformal Covariance and Possible Gradient-Sensitive Structure</h3>
 
     <p>
         The observed spectral pattern—broadband correlations with gravitational
-        enhancement—suggests contributions from both conformal and disformal
-        metric modifications:
+        enhancement—suggests a conformal covariance response, with possible
+        additional gradient-sensitive structure:
     </p>
 
     <ul>
@@ -2267,15 +2273,19 @@
             frequency selectivity
         </li>
         <li>
-            Disformal coupling B(φ): Evidenced by enhanced correlation lengths
-            at tidal frequencies (λ<sub>T</sub> = 4,677 km vs 1,502 km post-tidal),
-            indicating preferential response to gravitational gradients
+            Non-exact/disformal sensitivity: The enhanced correlation lengths
+            at tidal frequencies (λ<sub>T</sub> = 4,677 km vs 1,502 km post-tidal)
+            may indicate additional gradient-sensitive structure, but the GNSS
+            covariance observable does not by itself isolate B(φ). Direct
+            discrimination of the disformal sector requires a one-way loop or
+            other non-exact transport observable.
         </li>
         <li>
             Combined metric structure: g̃<sub>μν</sub> = A²(φ)g<sub>μν</sub> +
-            B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ appears consistent with observed
-            frequency-dependent spatial scales but frequency-independent
-            correlation strength
+            B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ remains a candidate completion, but
+            the frequency-dependent spatial scales with frequency-independent
+            correlation strength are consistent with conformal covariance alone
+            under environmental modulation.
         </li>
     </ul>
 
@@ -2476,8 +2486,9 @@
         gravitational field geometry changes and multi-body dynamics (Earth-Moon
         system) beyond simple mechanical energy or kinematic velocity scales.
         This pattern supports sophisticated TEP physics with multiple coupling
-        pathways operating simultaneously, consistent with theoretical
-        predictions of non-integrable time transport mechanisms. The similar
+        pathways operating simultaneously, consistent with TEP's predicted
+        dynamical clock/covariance structure and motivating direct tests of
+        non-integrable time transport through closed-loop experiments. The similar
         scaling with both energy and velocity suggests the coupling mechanism is
         sensitive to gravitational field curvature rather than simple mass or
         motion parameters.
@@ -2512,25 +2523,29 @@
 
 <h3>4.5.3 Consistency with Multi-Messenger Astronomy (GW170817)</h3>
 <p>
-    Context: The observation of 2.75× E-W/N-S spatial anisotropy must be
-    consistent with the stringent bound |c_γ − c_g|/c ≲ 10⁻¹⁵ from GW170817,
-    which constrains the disformal coupling B(φ)(∂φ)² to be very small on
-    cosmological scales.
-</p>
-<p>Resolution Pathways:</p>
-<p>
-    A. Conformal Dominance: The observed anisotropy may arise primarily from a
-    spatially varying conformal factor A(φ), while the disformal term B(φ)
-    remains small. For a coupling constant β ~ 10⁻³ (consistent with Cassini
-    data) and a plausible spatial variation of Δφ/𝑀𝑃𝑙 ~ 10⁻³ near Earth, the
-    conformal variation ΔA/A ≈ β(Δφ/M<sub>Pl</sub>) ~ 10⁻⁶ could produce the observed
-    anisotropy while preserving c_g ≈ c_γ globally.
-</p>
-<p>
-    B. Environmentally Dependent Coupling: The GW170817 constraint applies to
-    intergalactic sightlines. The disformal coupling B(φ) may be
-    environment-dependent, allowing for a larger value in the near-Earth
-    environment while remaining negligible on cosmological scales.
+    The observed 2.75× E-W/N-S spatial correlation anisotropy is
+    structurally decoupled from, and fully consistent with, the
+    GW170817 propagation-speed bound |c_γ − c_g|/c ≲ 10⁻¹⁵. The
+    spatial anisotropy is driven entirely by the conformal factor
+    A(φ), which modifies clock transition frequencies through the
+    local scalar field amplitude without altering the null-cone
+    structure. The GW170817 bound constrains the disformal coupling
+    B(φ)(∂φ)² on cosmological scales, not the conformal sector that
+    governs the GNSS covariance observable. Consequently, the
+    conformal-dominant mechanism natively preserves null-cone
+    invariance: for a plausible spatial variation of
+    Δφ/M<sub>Pl</sub> ~ 10⁻³ near Earth, the conformal variation
+    ΔA/A ~ 10⁻⁶ produces the observed anisotropy while maintaining
+    c_g ≈ c_γ globally. The PPN bound applies to the
+    environmentally screened effective source coupling rather than
+    directly fixing the bare conformal parameter β<sub>A</sub>, so
+    conversion of the observed coherence amplitude into Δφ is
+    completion- and screening-model-dependent. The disformal coupling
+    B(φ) may additionally be environment-dependent, remaining
+    negligible on cosmological sightlines while permitting
+    near-Earth variation—though the conformal pathway alone suffices
+    to explain the observation without invoking any disformal
+    enhancement.
 </p>
 
 <h3>4.5.4 Chandler Wobble Detection and Processing Systematics</h3>
@@ -2897,7 +2912,7 @@
     </p>
 </div>
 
-<h2>4.7 Temporal Dynamics: Direct Evidence for Dynamical Time</h2>
+<h2>4.7 Temporal Dynamics: Evidence Consistent with Dynamical Time</h2>
 
 <p>
     The comprehensive diurnal analysis (Section 3.5.3) provides evidence
@@ -2935,13 +2950,13 @@
             font-size: 12px;
         "
     >
-        dτ̃ = A(φ)dτ<sub>g</sub> where A(φ) = exp(βφ/M<sub>Pl</sub>)<br />
-        where β is the coupling strength and M<sub>Pl</sub> is the Planck mass
+        dτ̃ = A(ϕ)dτ<sub>g</sub> where A(ϕ) = exp(β<sub>A</sub>ϕ/M<sub>Pl</sub>)<br />
+        where β<sub>A</sub> is the bare conformal coupling in the foundational TEP convention and M<sub>Pl</sub> is the Planck mass
     </div>
 
     <p>
-        This predicts that time flows faster when φ is larger and slower when φ
-        is smaller, with variations of order βφ/𝑀𝑃𝑙. The observed diurnal
+        This predicts that time flows faster when ϕ is larger and slower when ϕ
+        is smaller, with variations of order β<sub>A</sub>ϕ/M<sub>Pl</sub>. The observed diurnal
         patterns provide evidence consistent with this fundamental prediction,
         though alternative explanations involving slow environmental covariates
         cannot be excluded pending raw data validation.
@@ -2969,9 +2984,12 @@
     </ul>
 
     <p>
-        With β ~ 10⁻³ (from PPN constraints), this implies φ variations of ΔφD ~
-        10⁻¹¹ 𝑀𝑃𝑙 and ΔφS ~ 10⁻¹⁰ 𝑀𝑃𝑙, consistent with cosmological expectations
-        for late-time scalar field dynamics.
+        The PPN bound applies to the environmentally screened effective source
+        coupling rather than directly fixing the bare conformal parameter
+        β<sub>A</sub>. Consequently, conversion of the observed coherence
+        amplitude into Δφ is completion- and screening-model-dependent, and
+        numerical estimates of Δφ from the diurnal/seasonal amplitudes are not
+        pursued here.
     </p>
 </div>
 
@@ -3251,18 +3269,19 @@
             Spectral coupling characterized (Section 4.4): Cross-center
             multiband validation demonstrates remarkable consistency across
             independent processing chains. Multi-band analysis reveals conformal
-            (broadband, CV of R² across bands = 2.9%) and disformal
-            (gravitational enhancement, λ = 4,627 km mean at tidal frequencies)
-            coupling contributions, with systematic effects quantified through
+            covariance (broadband, CV of R² across bands = 2.9%) with possible
+            gradient-sensitive structure (gravitational enhancement, λ = 4,627 km
+            mean at tidal frequencies), with systematic effects quantified through
             control bands showing reduced model fit quality (R² = 0.618, ΔR² ≈
             0.33 from TEP band)
         </li>
         <li>
             Theoretical insights and future directions (Section 4.5): Observed
             primary correlation lengths (λ<sub>T</sub> = 3,330–4,549 km) fall within
-            the pre-specified search range, with derived field mass
-            mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² (see §1.1) and potential implications
-            for fundamental physics including dark matter connections and fifth
+            the pre-specified search range, with heuristic field mass
+            mφ ≈ (4.34–5.93)×10⁻¹⁴ eV/c² if interpreted as a Compton scale (see §1.1)
+            and potential implications for fundamental physics including dark
+            matter connections and fifth
             force constraints. Bootstrap validation shows center-specific ranges
             (see Table in §3.1.1), corresponding to a conservative union mass
             range of m<sub>φ</sub> ≈ 3.65–6.53 × 10<sup>-14</sup> eV/c²,
@@ -3473,13 +3492,13 @@
             Scientific Standards and Next Steps: The significant nature of these
             findings necessitates rigorous independent verification—the standard
             scientific practice for novel discoveries. Signal authenticity has
-            been established through comprehensive validation, conventional
-            explanations have been systematically excluded, and quantitative
-            constraints on field properties have been derived. The robustness of
-            these measurements to standard processing procedures validates the
-            methodological approach. These findings provide a clear experimental
-            roadmap for broader community investigation and, if confirmed, could
-            have important implications for fundamental physics.
+            been strongly tested against the examined alternatives through
+            comprehensive validation, and quantitative constraints on field
+            properties have been derived. The robustness of these measurements to
+            standard processing procedures validates the methodological approach.
+            These findings provide a clear experimental roadmap for broader
+            community investigation and, if confirmed, could have important
+            implications for fundamental physics.
         </p>
     </div>
 
@@ -3505,19 +3524,11 @@
             such a network should reveal a distinct peak in coherence at the
             Chandler wobble period (~433 days), providing a direct test of the
             Earth motion coupling observed in this study. Detection of this
-            signature would not only confirm the TEP field's existence but also
-            validate its coupling to spacetime geometry. This provides a clear
-            experimental target for other research groups and a crucial test of
-            the concept of
-            <a
-                href="https://matthewsmawfield.github.io/TEP/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style="color: #495773; text-decoration: underline"
-                >synchronization holonomy</a
-            >
-            introduced in the foundational TEP theory (Smawfield 2025, v0.8
-            Jakarta).
+            signature would provide an independent, higher-precision test of the
+            covariance-sector phenomenon identified in the GNSS data and would
+            substantially strengthen evidence for field-mediated clock
+            correlations. Dedicated one-way closed-loop experiments remain the
+            direct test of synchronization holonomy.
         </p>
     </div>
 </div>

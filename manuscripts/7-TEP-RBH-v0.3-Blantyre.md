@@ -111,9 +111,9 @@ Section 2 establishes the theoretical framework for the candidate soliton/wake i
 
 ## 2. Theoretical Framework: The Soliton/Wake Interpretation
 
-The driver of the RBH-1 wake may not be a ballistic projectile, but rather a propagating structure in spacetime itself — explored here as a candidate Temporal Topology soliton/wake.† This *would be* a coherent region of deep gravitational potential moving through the cosmos (consistent with non-topological soliton solutions; see Kusenko 1997). Under this candidate framing, as the structure traverses a gas cloud it does not push atoms kinetically; instead, it alters the local flow of time.
+The driver of the RBH-1 wake may not be a ballistic projectile, but rather a propagating structure in spacetime itself — explored here as a candidate Temporal Topology soliton/wake.<sup>†</sup> This *would be* a coherent region of deep gravitational potential moving through the cosmos (consistent with non-topological soliton solutions; see Kusenko 1997). Under this candidate framing, as the structure traverses a gas cloud it does not push atoms kinetically; instead, it alters the local flow of time.
 
-† *Terminology note:* Here, "soliton" refers specifically to a non-topological defect in a scalar field (a Q-ball or oscillon analog) that saturates at a finite density $\rho_T$, distinct from the vacuum singularity solutions of pure General Relativity. While Schwarzschild and Kerr black holes are sometimes called "gravitational solitons" in the mathematical sense of stationary, localized solutions, the objects considered here have no event horizon and are characterized by a finite core density rather than a central singularity.
+<sup>†</sup> *Terminology note:* Here, "soliton" refers specifically to a non-topological defect in a scalar field (a Q-ball or oscillon analog) that saturates at a finite density $\rho_T$, distinct from the vacuum singularity solutions of pure General Relativity. While Schwarzschild and Kerr black holes are sometimes called "gravitational solitons" in the mathematical sense of stationary, localized solutions, the objects considered here have no event horizon and are characterized by a finite core density rather than a central singularity.
 
 #### Box 2.0: Phenomenological vs. Microphysical Reading
 This section can be read at two levels:
@@ -218,12 +218,12 @@ $\tilde{g}_{\mu\nu} = A^2(\phi) g_{\mu\nu}$. This section derives the required
 field parameters and checks for internal consistency.
 
 Screening in TEP is represented at the theory level by the environmental operator
-*S*&Sigma;(*&Epsilon;*).
+*S*<sub>&Sigma;</sub>(*&Epsilon;*).
 Quantities such as
-&rho;T,
-*R*T(*M*),
-*S*&oplus;(*r*),
-compactness &Phi;/*c*2,
+&rho;<sub>T</sub>,
+*R*<sub>T</sub>(*M*),
+*S*<sub>&oplus;</sub>(*r*),
+compactness &Phi;/*c*<sup>2</sup>,
 local stellar density,
 geometric coherence length,
 and channel-specific response coefficients
@@ -428,7 +428,7 @@ To quantify the strength of the line-width constraint, synthetic injection tests
 
 #### Data Availability Assessment
 JWST NIRSpec IFU data (Program 3149) are publicly available via MAST but have insufficient spectral resolution for a robust decomposition between a σ ≈ 30 km/s narrow component and a σ ≈ 80–90 km/s broad component. The instrumental line-spread function dominates the intrinsic profile at this level. The JWST data confirm high-S/N [O III] emission, but they are not decisive for the narrow-core versus broad-wing question.
-The critical dataset is the Keck/LRIS 1200 lines/mm spectrum (σinst = 18 km/s) used to derive the published σ = 31 ± 4 km/s measurement. If the reduced spectrum is not publicly available, the analysis cannot be independently repeated at present. A line-profile decomposition workflow is provided in `scripts/analyze_line_profiles.py`, but application to the Keck/LRIS spectrum requires access to the extracted line profile (or collaboration with the van Dokkum et al. team).
+The critical dataset is the Keck/LRIS 1200 lines/mm spectrum (σ<sub>inst</sub> = 18 km/s) used to derive the published σ = 31 ± 4 km/s measurement. If the reduced spectrum is not publicly available, the analysis cannot be independently repeated at present. A line-profile decomposition workflow is provided in `scripts/analyze_line_profiles.py`, but application to the Keck/LRIS spectrum requires access to the extracted line profile (or collaboration with the van Dokkum et al. team).
 The narrow line width is in tension with a single-phase thermal shock in which the emitting gas is predominantly at $T \sim 10^7$ K. It is naturally accommodated by a coherent redshift-gradient (metric-shock) hypothesis. Multiphase or rapid-cooling scenarios remain possible under a thermal interpretation. The principal observational discriminant is whether a statistically supported broad wing is present in the high-resolution line profile.
 
 ## 4.2 The Wake Collimation Test
@@ -535,12 +535,12 @@ The check uncertainty derives from two inputs: the mass estimate and the charact
 
 \begin{equation} \label{eq:rt_uncertainty} R_T = (7.8 \pm 1.1) \times 10^7 \text{ km} \quad (1\sigma) \end{equation}
 
-The correspondence $R_T \approx 1.3 R_S$ places the temporal topology scale just outside the Schwarzschild horizon. This would predict a "naked halo" phenomenology if RBH-1 is a soliton: the object interacts with the environment via its metric gradient (the "hair") rather than just its horizon.
+The correspondence $R_T \approx 1.3 R_S$ places the temporal topology scale just outside the Schwarzschild radius. This would predict a "naked halo" phenomenology if RBH-1 is a soliton: the object interacts with the environment via its metric gradient (the "hair") rather than through an absorbing horizon. The canonical TEP strong-field formulation, including the treatment of compact-object interiors and the soliton–horizon distinction, is developed in TEP-BH (Paper 18, Bahrain); the framing here is consistent with that treatment.
 
 ## Explicit Falsification Criteria
 
 The hypothesis that RBH-1 is a candidate Temporal Topology soliton makes specific, falsifiable predictions. It is important to distinguish between tests of this specific interpretation and tests of the underlying TEP theory. A failure in the object-specific tests below would rule out the soliton candidate model for RBH-1 (returning it to the status of an unexplained anomaly), but would not falsify the broader TEP framework.
-- **Mass falsification (Object Specific):** The consistency check $R_T \approx 1.3 R_S$ is sensitive to mass. If future dynamical measurements revise $M_{\text{RBH-1}}$ to > 3 × 10$^7$ $M_\odot$ (where $R_T < R_S$), the predicted temporal topology scale would fall inside the horizon, falsifying the soliton interpretation for this specific object.
+- **Mass falsification (Object Specific):** The consistency check $R_T \approx 1.3 R_S$ is sensitive to mass. If future dynamical measurements revise $M_{\text{RBH-1}}$ to > 3 × 10$^7$ $M_\odot$ (where $R_T < R_S$), the predicted temporal topology scale would fall inside the Schwarzschild radius, falsifying the soliton interpretation for this specific object.
 **Discriminant falsification (Spectroscopy):** If deep spectroscopy reveals:
 - Strong coronal-line emission ([Fe X], [Fe XIV]) or soft X-rays consistent with $T \sim 10^7$ K gas dominating the emission measure, the "no heating" claim is falsified for this object.
 - Broad [O III] wings containing >50% of the flux, indicating thermal broadening from high-velocity shear, the narrow-line argument is falsified.
@@ -580,7 +580,7 @@ One possible formation channel is a major merger or strong interaction. In the T
 
 Two features of the RBH-1 data point to the internal physics of the soliton.
 - Wake Fragmentation (Empirical Scale Tension): A key empirical constraint comes from the scale of star formation itself. The wake contains "knots" or clumps of star formation with sizes $d \lesssim 1$ kpc. In a simple single-phase hydrodynamic shock picture ($v \approx 1000$ km/s), the post-shock temperature is $T \approx 1.4 \times 10^7$ K. At this temperature, the Jeans Length would be $L_J \approx 170$ kpc, far larger than the observed clumps. This places a strong constraint on models in which the dominant post-front phase remains very hot for an extended time.
-- Gravitational Echoes: A future test lies in gravitational waves. When two black holes merge, the resulting "ringdown" signal decays exponentially. If the objects are horizonless solitons, gravitational waves could be partially trapped between the photon sphere and an interior reflective boundary, producing repeating pulses or "gravitational echoes" (Cardoso et al. 2016).
+- Gravitational Echoes: A future test lies in gravitational waves. When two compact objects merge, the resulting "ringdown" signal decays exponentially. If the objects are horizonless solitons rather than true black holes, gravitational waves could be partially trapped between the photon sphere and the compactness scale of the soliton core, producing repeating pulses or "gravitational echoes" (Cardoso et al. 2016). The detailed strong-field prediction depends on the interior solution; the canonical TEP compact-object formulation is developed in TEP-BH (Paper 18, Bahrain).
 
 Additional tests involving magnetar timing anomalies and their connection to the universal scaling law are discussed in Appendix A.
 
@@ -719,7 +719,7 @@ Schive, H.-Y., Chiueh, T., & Broadhurst, T. 2014, *Phys. Rev. Lett.*, 113, 26130
 
 Seidel, E., & Suen, W.-M. 1991, *Phys. Rev. Lett.*, 66, 1659 (DOI: 10.1103/PhysRevLett.66.1659)
 
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.8 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
 
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.25 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1)
 
@@ -964,6 +964,6 @@ Run individual scripts via: `python scripts/figures/XX_script_name.py`
 
 *Related Work:*
 - [**TEP Theory**](https://doi.org/10.5281/zenodo.18059250) (Foundational framework)
-- [**TEP-UCD Paper 6**](https://doi.org/10.5281/zenodo.18064366) (Universal Critical Density)
+- [**TEP-UCD Paper 6**](https://doi.org/10.5281/zenodo.18064366) (Temporal Topology Saturation Scale)
 
 *Source code and data available at: https://github.com/matthewsmawfield/TEP-RBH*

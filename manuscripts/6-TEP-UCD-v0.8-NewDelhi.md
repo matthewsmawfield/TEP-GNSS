@@ -1,7 +1,7 @@
 # Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T
 Matthew Lukin Smawfield
-Version: v0.7 (New Delhi)
-First published: 28 December 2025 · Last updated: 3 July 2026
+Version: v0.8 (New Delhi)
+First published: 28 December 2025 · Last updated: 8 August 2026
 DOI: 10.5281/zenodo.18064365
 
 ---
@@ -114,7 +114,7 @@ The saturation scale parameter $\rho_T \approx 20$ g/cm³ serves as the bulk-mat
 
 where the environmental state is
 $\mathcal{E} = \{\rho, \Phi/c^2, \nabla\rho, \nabla\Phi, \text{compactness}, R_T(M), \text{proximity}, T, z, \text{boundary geometry}, \text{coherence volume}\}.$
-This single operator unifies density screening, compactness screening, proximity screening, thermal/epoch screening, lensing/cosmological covariance screening, and wide-binary environmental screening across the entire TEP corpus.
+This single operator unifies density screening, compactness screening, proximity screening, thermodynamic/environmental-state response, lensing/cosmological covariance screening, and wide-binary environmental screening across the entire TEP corpus.
 
 #### Box 1.1: Joint Constraint Architecture of \(\rho_T\) and \(S_\Sigma(\mathcal{E})\)
 
@@ -1072,7 +1072,10 @@ parameter: it is empirically calibrated, while additional coincidence-level
 reference scales and open derivation targets are recorded for completeness.
 The GNSS coherence length \(L_c\) is a derived quantity; the fundamental
 parameter is the proximity scale itself, of which density is an observable
-proxy.
+proxy. In the canonical TEP framework, the full screening state of any
+system is determined by the environmental operator \(S_\Sigma(E)\);
+\(\rho_T\) is the density projection of that operator, not the complete
+screening description.
 
 ### 5.1 \(\rho_T\) as the Conjectured Fundamental Parameter, \(L_c\) as Derived
 
@@ -1767,7 +1770,8 @@ Paper 11 (TEP-H0) independently calibrates the weakly screened galactic-disk
 response via Cepheid period–luminosity residuals, yielding
 \(\kappa_{\rm Cep} \sim 10^6\) (dimensionless, in the appropriate
 observable basis). Paper 10 (TEP-COS) measures the globular-cluster
-pulsar response \(\kappa_{\rm MSP}^{\rm emp} \approx 3 \times 10^4\)
+pulsar response \(\tilde\kappa_{\rm MSP} \approx 3 \times 10^4\)
+(full response coefficient, step_44_kappa_msp_prior.json)
 after dense-cluster geometric suppression. The two values are consistent
 with the bare TEP geometric-factor estimate (\(\sim 10^6\)–\(10^7\)) only
 after environmental transfer factors are included; they do not assert a
@@ -1783,7 +1787,7 @@ bare scalar couplings. Each channel measures a different projection of
 | --- | --- | --- | --- |
 | **GNSS clocks** | \(L_c \approx 4200\) km | Planetary crust/mantle | Radial covariance scale |
 | **Cepheids (Paper 11)** | \(\kappa_{\rm Cep} \sim 10^6\) | Galactic disk (weakly screened) | Period–luminosity modulation |
-| **Pulsars (Paper 10)** | \(\kappa_{\rm MSP} \sim 10^4\) | Globular cluster (strongly screened) | Spin-down excess (suppressed) |
+| **Pulsars (Paper 10)** | \(\tilde\kappa_{\rm MSP} \sim 10^4\) | Globular cluster (strongly screened) | Spin-down excess (suppressed) |
 | **Wide binaries (Paper 13)** | \(\alpha_{\rm sat} \approx 0.37\) | Galactic halo (unscreened) | Velocity-profile saturation |
 
 The cross-paper comparison is therefore through a shared clock-response
@@ -1963,12 +1967,12 @@ the transfer functions that connect \(\rho_T\) to observables:
 density scaling of spin-down excess (\(\Gamma \approx 0.39\) dex/dex,
 vs. Newtonian \(0.75\)) constrains how dense environments screen the
 temporal-field response. The observable coefficient
-\(\kappa_{\rm MSP}\) is a downstream projection, not a direct
+\(\tilde\kappa_{\rm MSP}\) is a downstream projection, not a direct
 \(\rho_T\) measurement.
 
 **Cepheids (Paper 11):** The Cepheid clock-bias response
 \(\kappa_{\rm Cep} \sim 10^6\) in galactic disks bridges the
-weakly screened regime. It agrees with \(\kappa_{\rm MSP}\) only
+weakly screened regime. It agrees with \(\tilde\kappa_{\rm MSP}\) only
 after environmental transfer factors are applied, demonstrating that
 response coefficients are channel-specific projections.
 
@@ -2061,7 +2065,7 @@ exactly where each paper contributes and where it does not.
 
 ### A Universal Organizing Parameter
 
-This paper identifies the saturation scale $\rho_T \approx 20$ g/cm³ as a candidate organizing parameter for gravitational phenomena across planetary, galactic, compact-object, and RBH-scale regimes. The convergence of terrestrial GNSS timing structure, SPARC galaxy onset scaling, Milky Way inner mass-discrepancy structure, and the density-ordered screening hierarchy motivates the hypothesis that $\rho_T$ is a real physical scale in the temporal-field topology, not a system-specific fitting parameter. The screening hierarchy is not treated as an independent discovery of the $1/3$ exponent; rather, it demonstrates that the same $\rho_T$ coherently recovers GR-like behavior in dense systems while permitting unscreened scalar phenomenology in diffuse regimes.
+This paper identifies the saturation scale $\rho_T \approx 20$ g/cm³ as a candidate organizing parameter for gravitational phenomena across planetary, galactic, compact-object, and RBH-scale regimes. The convergence of terrestrial GNSS timing structure, SPARC galaxy onset scaling, Milky Way inner mass-discrepancy structure, and the density-ordered screening hierarchy motivates the hypothesis that $\rho_T$ is a real physical scale in the temporal-field topology, not a system-specific fitting parameter. The screening hierarchy is not treated as an independent discovery of the $1/3$ exponent; rather, it demonstrates that the same $\rho_T$ coherently recovers GR-like behavior in dense systems while permitting active-shear scalar phenomenology in diffuse regimes.
 
 ### Key Results
 
@@ -2071,7 +2075,7 @@ The primary findings are:
 
 - **Galactic Scaling:** SPARC rotation curves yield $\alpha_{\rm SPARC} = 0.355 \pm 0.043 \text{ (stat)} \pm 0.07 \text{ (definition)}$, consistent with the $M^{1/3}$ expectation within $\sim$0.3$\sigma$.
 
-- **Screening Hierarchy:** 26 objects spanning ~15 orders of magnitude in density reveal a consistency relation $S \propto \rho^{1/3}$, algebraically expected from the $R_T(M)$ construction, explaining why GR tests pass (binary pulsars: $S \sim 29{,}000$) while galactic dynamics are deeply unscreened ($S \sim 10^{-9}$ at $\rho \sim 10^{-24}$ g/cm³).
+- **Screening Hierarchy:** 26 objects spanning ~15 orders of magnitude in density reveal a consistency relation $S \propto \rho^{1/3}$, algebraically expected from the $R_T(M)$ construction, explaining why GR tests pass (binary pulsars: $S \sim 29{,}000$) while galactic dynamics are in the active-shear regime ($S \sim 10^{-9}$ at $\rho \sim 10^{-24}$ g/cm³).
 
 - **Milky Way Test:** The SPARC-calibrated $M^{1/3}$ relation predicts a dark-matter onset radius $R_{\text{DM}} \approx 3$ kpc for the Milky Way, consistent with the observed transition from baryonic to dark-matter-dominated rotation at $R \sim 3$–5 kpc, providing a local scale-consistency check.
 
@@ -2281,7 +2285,7 @@ Olausen, S. A., & Kaspi, V. M. 2014, *ApJS*, 212, 6 (DOI: 10.1088/0067-0049/212/
 
 ### TEP Research Series
 
-Smawfield, M. L. (2025a). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.9 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2026). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.10 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
 
 Smawfield, M. L. (2025b). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.26 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1)
 
@@ -2293,7 +2297,7 @@ Smawfield, M. L. (2025e). *Temporal-Spatial Coupling in Gravitational Lensing: A
 
 Smawfield, M. L. (2025f). *Global Time Echoes: Empirical Synthesis*. Preprint v0.5 (Singapore). Zenodo. DOI: [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) (Paper 5)
 
-Smawfield, M. L. (2025g). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T*. Preprint v0.7 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6 — this work)
+Smawfield, M. L. (2025g). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T*. Preprint v0.8 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6 — this work)
 
 Smawfield, M. L. (2025h). *The Soliton Wake: Exploring RBH-1 as a Temporal Topology Candidate*. Preprint v0.3 (Blantyre). Zenodo. DOI: [10.5281/zenodo.18059250](https://doi.org/10.5281/zenodo.18059250) (Paper 7)
 
@@ -2325,9 +2329,9 @@ GitHub: [github.com/matthewsmawfield](https://github.com/matthewsmawfield)
 
 License: This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
-Version: v0.7 (New Delhi) · Last updated: 3 July 2026
+Version: v0.8 (New Delhi) · Last updated: 8 August 2026
 
-Revision note (v0.7): version bump and consistency revision.
+Revision note (v0.8): consistency revision aligning screening terminology with Jakarta v0.10.
 
 ## Appendix A: GNSS Calibration — Summary of Evidence
 
@@ -2534,7 +2538,7 @@ notation has been ambiguous:
 | \(\alpha_{\rm sat}\) | \(0.366\) | WB (Paper 13) | Wide-binary saturation boost (phenomenological) |
 | \(\beta_{\rm scr}\) | \(0.334\) | UCD (this work) | Screening exponent from \(S(\rho)\) hierarchy |
 | \(\kappa_{\rm Cep}\) | \(\sim 10^6\) | H0 (Paper 11) | Cepheid clock-bias response coefficient |
-| \(\kappa_{\rm MSP}\) | \(\sim 10^4\) | COS (Paper 10) | Pulsar timing response coefficient (suppressed observed value after dense-cluster geometric screening; bare geometric-factor estimate is \(\sim 10^6\)–\(10^7\)) |
+| \(\tilde\kappa_{\rm MSP}\) | \(\sim 10^4\) | COS (Paper 10) | Pulsar timing full response coefficient (suppressed observed value after dense-cluster geometric screening; bare geometric-factor estimate is \(\sim 10^6\)–\(10^7\)) |
 
 These are not the same \(\alpha\). The notation purge across all
 manuscripts has disambiguated them, but the proliferation of

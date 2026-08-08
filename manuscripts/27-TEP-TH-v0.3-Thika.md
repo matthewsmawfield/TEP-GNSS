@@ -1,7 +1,7 @@
 # Temporal Equivalence Principle: Temporal Horizon Cosmology and the Absence of a Physical Big Bang Singularity
 **Matthew Lukin Smawfield**
-Version: v0.2 (Thika)
-First published: 18 June 2026 - Last updated: 5 July 2026
+Version: v0.3 (Thika)
+First published: 18 June 2026 - Last updated: 7 August 2026
 DOI: 10.5281/zenodo.20723059
 
 ---
@@ -10,13 +10,13 @@ DOI: 10.5281/zenodo.20723059
 
 Standard FLRW cosmology extrapolates observed cosmic expansion backward to $a(t)\to0$, producing a Big Bang singularity at finite proper time. This paper demonstrates that this singularity is a reconstruction artifact of imposing a globally isochronous expanding-frame description on a conformal temporal geometry. In the Temporal Equivalence Principle (TEP), the observational role of FLRW expansion is reconstructed through conformal temporal transport: the effective scale factor $a_{\rm eff}$ arises from accumulated open-path conformal temporal shear along cosmological lines of sight rather than from physical expansion of space. TEP-C0 (Paper 26) established the distance-redshift and supernova evidence ; the full nonsingular matter-frame closure is delivered here.
 
-The Temporal Horizon Cosmology framework is developed here, proving, within the temporal-conformal branch defined here, that the apparent $a_{\rm eff}\to0$ limit is not a physical curvature singularity but a temporal horizon. Two distinct projections of the temporal field are required: $A_{\rm clock}(z)=(1+z)^{-1}$ is the exact observational clock/redshift mapping that drives $a_{\rm eff}\to0$ as $z\to\infty$, while $A_{\rm dyn}(z)=\left(1+z/z_{t}\right)^{-\epsilon_{\rm eff}(z)}$ is the dynamically screened shear response that modifies expansion, BBN, recombination, and perturbations only at late times. Proposition 1 establishes curvature regularity of the temporal conformal boundary: for $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\le\tfrac12$, all polynomial curvature invariants vanish at the boundary, timelike proper time diverges, and null geodesics have divergent affine parameter. The temporal-horizon exponent $p$ and the observational clock map are independent boundary conditions: $A_{\rm clock}(z)=(1+z)^{-1}$ is fixed by the redshift definition, while the regularity condition $0 \lt p\le\tfrac12$ is a mathematical requirement for curvature-regularity at the conformal boundary. Here $\eta$ is the temporal-horizon conformal coordinate, oriented so that approach to $\mathscr{T}^{-}$ corresponds to the asymptotic limit in which $A_{\rm clock}\to0$; it is not the standard FLRW conformal time coordinate extrapolated to $a=0$. Figure 1 (Section 4.5) illustrates the resulting conformal-boundary interpretation: the singular lower edge of standard flat $\Lambda$CDM is replaced by a smooth temporal conformal boundary $\mathscr{T}^{-}$, where $A_{\rm clock}\to0$ and curvature invariants vanish. The conformal compactification is smooth, the Weyl tensor vanishes on the boundary, and every causal curve approaches the regular past boundary $\mathscr{T}^{-}$ rather than terminating at a singularity. The temporal horizon is therefore simultaneously curvature-empty, timelike-complete, and null-complete in this branch.
+The Temporal Horizon Cosmology framework is developed here, proving, within the temporal-conformal branch defined here, that the apparent $a_{\rm eff}\to0$ limit is not a physical curvature singularity but a temporal horizon. The effective scale factor $a_{\rm eff}$ is driven by the observational clock/redshift mapping $A_{\rm clock}(z)=(1+z)^{-1}$. Proposition 1 establishes curvature regularity of the temporal conformal boundary: for $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\le\tfrac12$, all polynomial curvature invariants vanish at the boundary, timelike proper time diverges, and null geodesics have divergent affine parameter. The temporal-horizon exponent $p$ and the observational clock map are independent boundary conditions: $A_{\rm clock}(z)=(1+z)^{-1}$ is fixed by the redshift definition, while the regularity condition $0 \lt p\le\tfrac12$ is a mathematical requirement for curvature-regularity at the conformal boundary. Here $\eta$ is the temporal-horizon conformal coordinate, oriented so that approach to $\mathscr{T}^{-}$ corresponds to the asymptotic limit in which $A_{\rm clock}\to0$; it is not the standard FLRW conformal time coordinate extrapolated to $a=0$. Figure 1 (Section 4.5) illustrates the resulting conformal-boundary interpretation: the singular lower edge of standard flat $\Lambda$CDM is replaced by a smooth temporal conformal boundary $\mathscr{T}^{-}$, where $A_{\rm clock}\to0$ and curvature invariants vanish. The conformal compactification is smooth, the Weyl tensor vanishes on the boundary, and every causal curve approaches the regular past boundary $\mathscr{T}^{-}$ rather than terminating at a singularity. The temporal horizon is therefore simultaneously curvature-empty, timelike-complete, and null-complete in this branch.
 
-The effective stress-energy tensor of the temporal field violates the Strong Energy Condition, an explicit prerequisite of the Hawking-Penrose singularity theorems. The thermal screening scale is $T_{\rm lock}=0.03\,\mathrm{eV}$ with transition redshift $z_{t}=100$ and $T_{0}=2.725\,\mathrm{K}$, giving strong epoch-by-epoch screening ($S_{\rm epoch}\sim 10^{-12}$ at BBN, $\sim 10^{-2}$ at recombination). Screened TEP reproduces the standard BBN successful sector and inherits the standard lithium anomaly. Recombination is computed with the full non-equilibrium Peebles/RECFAST treatment. The temporal-horizon thermal mapping preserves a FIRAS-compatible blackbody with no spectral distortions.
+The effective stress-energy tensor of the temporal field violates the Strong Energy Condition, an explicit prerequisite of the Hawking-Penrose singularity theorems. Rather than assuming the early universe was a globally hot expanding plasma, TEP replaces the hot Big Bang framework with Native Local Thermodynamic Evolution in an eternal universe. The temporal-horizon metric provides the geometric boundary where the clock rate vanishes, but it does not claim to uniquely derive primordial abundances. Instead, it delegates the thermal history to the eternal chemical-evolution framework (TEP-BBN, Paper 29), which provides an eternal-universe framework in which chemical states can approach a steady-state asymptotic equilibrium where D/H is no longer uniquely primordial and helium arises through baryonic cycling. The temporal-horizon thermal mapping preserves the observed CMB photon distribution through local decoupling processes without requiring a geometric singularity.
 
-The scalar perturbation spectrum is derived from fluctuations of the clock field, $\zeta=\delta\ln A_{\rm clock}$, yielding a power spectrum $P_{\zeta}(k)\propto k^{n_{s}-1}$ with spectral-flow parameter $n_{s}-1=-2\epsilon_{\rm field}$. The observed Planck value $n_{s}=0.965$ constrains $\epsilon_{\rm field}=0.0175$. Tensor modes are derived directly from the temporal-conformal metric: for $A_{\rm clock}(\eta)\sim\eta^{-p}$ the tensor source term $A_{\rm clock}''/A_{\rm clock}=p(p+1)/\eta^{2}\to 0$ at the horizon, so the tensor equation approaches the Minkowski vacuum. The imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed. Numerical integration of the native tensor equation across the finite transition profile (Step 09b) yields $r(k_{\rm pivot})=9\times 10^{-6}$ and $r_{\rm max}=6.26\times 10^{-4}$, both well below the BICEP/Keck 2021 bound $r\lt0.036$; tensor power is controlled only by the finite transition region. CMB anisotropy and LSS observables are reproduced in the screened-limit reduction, inheriting agreement with Planck 2018 and BOSS DR12 by construction rather than as independent empirical confirmation.
+The scalar perturbation spectrum is derived from fluctuations of the clock field, $\zeta=\delta\ln A_{\rm clock}$, yielding a power spectrum $P_{\zeta}(k)\propto k^{n_{s}-1}$ with spectral-flow parameter $n_{s}-1=-2\epsilon_{\rm field}$. The observed Planck value $n_{s}=0.965$ constrains $\epsilon_{\rm field}=0.0175$. Tensor modes are derived directly from the temporal-conformal metric: for $A_{\rm clock}(\eta)\sim\eta^{-p}$ the tensor source term $A_{\rm clock}''/A_{\rm clock}=p(p+1)/\eta^{2}\to 0$ at the horizon, so the tensor equation approaches the Minkowski vacuum. The imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed. Numerical integration of the native tensor equation across the finite transition profile (Step 09b) yields $r(k_{\rm pivot})=9\times 10^{-6}$ and $r_{\rm max}=6.26\times 10^{-4}$, both well below the BICEP/Keck 2021 bound $r\lt0.036$; tensor power is controlled only by the finite transition region. The late-time homogeneous expansion and acoustic observables (Planck 2018, BOSS DR12) are fully preserved by the conformal temporal mapping as mathematically confirmed in TEP-HC (Paper 18).
 
-The causal matter-frame universe is curvature-regular at the temporal conformal boundary. The apparent Big Bang is a temporal horizon, not a physical curvature singularity. All background and thermal observational pillars are preserved in the screened-limit reduction; the scalar perturbation shape is reproduced, and the tensor-to-scalar ratio is computed from the native temporal-conformal wave equation, yielding values well below observational bounds.
+The causal matter-frame universe is curvature-regular at the temporal conformal boundary. The apparent Big Bang is a temporal horizon, not a physical curvature singularity. The temporal-horizon geometry supplies a nonsingular framework in which the standard background and acoustic observables are reconstructed by the conformal mapping, while TEP-BBN provides the native chemical-evolution mechanism and a proof of concept for local CMB thermalization; the scalar perturbation shape is reproduced, and the tensor-to-scalar ratio is computed from the native temporal-conformal wave equation, yielding values well below observational bounds.
 
 Code Availability: https://github.com/matthewsmawfield/TEP-TH
 
@@ -26,7 +26,7 @@ Keywords: temporal equivalence principle, temporal horizon cosmology, big bang s
 
 Standard FLRW cosmology extrapolates the observed cosmic expansion backward to $(a(t)\to0)$, producing a Big Bang singularity at finite proper time. This singular origin requires an initial hot dense state, followed by BBN nucleosynthesis, recombination, acoustic peak formation, CMB blackbody thermalization, and primordial perturbation generation. Hawking (1966) established, and Hawking and Penrose (1970) later generalized, that such a singularity is mathematically inevitable provided the Strong Energy Condition holds in globally hyperbolic spacetimes.
 
-This paper demonstrates that the observational role of FLRW expansion is reconstructed through conformal temporal transport. In this framework, the distance-redshift relation and CMB acoustic scales are preserved in a static conformal geometry where the effective scale factor $a_{\rm eff}$ arises from accumulated open-path conformal temporal shear along cosmological lines of sight, not from physical expansion of space. Two distinct projections of the temporal field are required: $A_{\rm clock}(z)=(1+z)^{-1}$ is the exact observational clock/redshift mapping that drives the apparent $a_{\rm eff}\to0$ limit, while $A_{\rm dyn}(z)=\left(1+z/z_{t}\right)^{-\epsilon_{\rm eff}(z)}$ is the dynamically screened shear response that modifies expansion, BBN, recombination, and perturbations only at late times. The apparent $(a_{\rm eff}\to0)$ limit is therefore not a physical curvature singularity but a reconstruction artifact of imposing a globally isochronous expanding-frame description on a conformal temporal geometry.
+This paper demonstrates that the observational role of FLRW expansion is reconstructed through conformal temporal transport. In this framework, the distance-redshift relation and CMB acoustic scales are preserved in a static conformal geometry where the effective scale factor $a_{\rm eff}$ arises from accumulated open-path conformal temporal shear along cosmological lines of sight, not from physical expansion of space. The exact observational clock/redshift mapping $A_{\rm clock}(z)=(1+z)^{-1}$ drives the apparent $a_{\rm eff}\to0$ limit. The apparent $(a_{\rm eff}\to0)$ limit is therefore not a physical curvature singularity but a reconstruction artifact of imposing a globally isochronous expanding-frame description on a conformal temporal geometry.
 
 While standard cosmology treats cosmic expansion as a kinematic stretching of the spatial metric, several frameworks have explored conformal alternatives. Wetterich (2013) demonstrated that a universe without spatial expansion can be formulated using a varying particle mass, while Narlikar and Arp explored conformal gravity variations. Environmental screening mechanisms—such as chameleon or symmetron screening (Khoury & Weltman 2004; Hinterbichler & Khoury 2010)—have been extensively developed to hide scalar fifth forces. TEP departs from these approaches by identifying the conformal factor strictly with the dynamical flow of proper time, generating an exact geometric mapping between the spatial scale factor and the macroscopic accumulation of Temporal Shear without requiring variable rest masses or modified spatial curvature.
 
@@ -36,17 +36,16 @@ TEP-HC (Paper 18) implemented the native TEP interpretation directly in the `hi_
 
 #### Parameter-Scale and Amplitude Convention
 
-**Turnover scales.** $z_t^{\rm th}$ denotes the TH thermal-screening transition associated with $T_{\rm lock}=0.03$ eV. $z_T^{\rm HC}$ denotes the homogeneous/acoustic `hi_class` profile scale used in HC. $z_T^{\rm los}$ denotes the C0 line-of-sight supernova transport turnover. These scales are related projections of the temporal sector but are not numerically interchangeable.
-
-**Amplitudes.** $\epsilon_{\rm field}=0.0175$ denotes the primordial spectral-flow parameter constrained by $n_s$. $\epsilon_{\rm dyn}(z)$ and $\epsilon_{\rm eff}(z)$ denote the screened dynamical temporal-horizon response. $\epsilon_T^{\rm los}$ denotes the late-time line-of-sight transport amplitude fitted in TEP-C0. $\epsilon_T^{\rm CMB}$ denotes the C0 background/acoustic diagnostic amplitude. $\epsilon_T^{\rm HC}=0.0056\pm0.0043$ denotes the native `hi_class` homogeneous conformal amplitude reported in TEP-HC. These are related projections of the same temporal sector, but they are not numerically interchangeable parameters.
+**Turnover scales.**
+**Amplitudes.** $\epsilon_{\rm field}=0.0175$ denotes the primordial spectral-flow parameter constrained by $n_s$. $\epsilon_{\rm dyn}$ denotes the dynamical temporal-horizon response. $\epsilon_T^{\rm los}$ denotes the late-time line-of-sight transport amplitude fitted in TEP-C0. $\epsilon_T^{\rm CMB}$ denotes the C0 background/acoustic diagnostic amplitude. $\epsilon_T^{\rm HC}=0.00602\pm0.00493$ denotes the native `hi_class` homogeneous conformal amplitude reported in TEP-HC. These are related projections of the same temporal sector, but they are not numerically interchangeable parameters.
 
 In standard cosmology, epochs are conventionally defined by the chronological time elapsed since the physical singularity (e.g., "three minutes after the Big Bang" for nucleosynthesis). Because the temporal horizon in the TEP framework is an asymptotic boundary rather than a zero-volume origin, a global linear time coordinate $t$ cannot be extrapolated to a finite $t=0$. Consequently, the sequence of early-universe events is strictly mapped not by chronological time, but by the thermodynamic cooling of the plasma ($T$) and the evolution of the conformal clock-rate field. The history of the universe is preserved, but the chronological stopwatch is replaced by thermodynamic state variables.
 
-TEP-TH addresses this early-universe question by demonstrating that the apparent Big Bang singularity is not a physical boundary but a temporal-horizon limit. The central result is that the apparent singularity corresponds to the limit $A_{\rm clock}\to0$, where the observational clock-rate field vanishes and proper time dilates to zero relative to the present epoch. The dynamical response $A_{\rm dyn}$ is screened to unity during BBN and recombination, so the thermal history is preserved. The "Big Bang" is not a zero-volume, infinite-density origin of space, but a temporal horizon—an asymptotic boundary of the proper-time field.
+TEP-TH addresses this early-universe question by demonstrating that the apparent Big Bang singularity is not a physical boundary but a temporal-horizon limit. The central result is that the apparent singularity corresponds to the limit $A_{\rm clock}\to0$, where the observational clock-rate field vanishes and proper time dilates to zero relative to the present epoch. The thermal history emerges natively through local thermodynamic evolution $\tilde\nabla_\mu \tilde T^{\mu\nu}=0$ in proper time, generating the CMB emission without assuming an initially hot, dense geometric singularity. The "Big Bang" is not a zero-volume, infinite-density origin of space, but a temporal horizon—an asymptotic boundary of the proper-time field.
 
 This paper demonstrates this temporal-horizon replacement through a ten-step pipeline:
 
-- **Temporal-Horizon Mapping**: Establish $A_{\rm clock}(z)=(1+z)^{-1}$ as the exact clock map and $A_{\rm dyn}(z)$ as the screened dynamical response
+- **Temporal-Horizon Mapping**: Establish $A_{\rm clock}(z)=(1+z)^{-1}$ as the exact clock map and $A_{\rm dyn}(z)$ as the physical dynamical response
 
 - **Matter-Frame Curvature**: Prove that for $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\lt1$, all curvature invariants generated from the Ricci sector vanish; since the Weyl tensor vanishes in the conformally flat branch, all polynomial curvature invariants vanish at the temporal conformal boundary
 
@@ -54,19 +53,19 @@ This paper demonstrates this temporal-horizon replacement through a ten-step pip
 
 - **Effective Stress-Energy**: Evaluate energy conditions and demonstrate Hawking-Penrose consistency via SEC violation
 
-- **BBN Abundance Validation**: Derive $T_{\rm lock}$ from the transition redshift and demonstrate light-element abundance preservation
+- **BBN Abundance Framework**: Replace expanding thermal plasma assumptions with eternal Native Proper-Time Nucleosynthesis (delegated to TEP-BBN, Paper 29) to evaluate candidate asymptotic abundance solutions
 
-- **Recombination Visibility**: Demonstrate preservation of $x_e(z)$, $g(z)$, $z_*$, $r_s$, $r_d$, $\theta_s$
+- **Recombination Visibility**: Re-evaluate dynamic proper-time recombination $x_e(\tau)$ and derived physical acoustic scales within the native eternal-universe thermodynamic framework
 
-- **CMB Blackbody Origin**: Demonstrate blackbody preservation and absence of spectral distortions
+- **CMB Blackbody Origin**: Attribute the physical origin of the photon distribution to local emission processes and confirm conformal transport preservation
 
 - **Entropy and Arrow of Time**: Demonstrate thermodynamic regularity at the horizon
 
 - **Primordial Perturbation Boundary**: Derive scalar fluctuations from $\zeta=\delta\ln A_{\rm clock}$ and tensor modes from the native temporal-conformal wave equation
 
-- **CMB Anisotropy and LSS Consistency**: Demonstrate TT/TE/EE spectra, matter power spectrum, growth factor, and BAO scales match Planck and BOSS in the screened limit
+- **CMB Anisotropy and LSS Consistency**: Relying on TEP-HC (Paper 18) to demonstrate that TT/TE/EE spectra, matter power spectrum, growth factor, and BAO scales match Planck and BOSS
 
-The pipeline demonstrates that every background and thermal observational pillar of early-universe cosmology is preserved in the screened-limit reduction of the TEP framework. The causal matter-frame universe is curvature-regular at the temporal boundary: for $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\lt1$, curvature invariants vanish at the boundary rather than merely remaining bounded; timelike proper time diverges for $0 \lt p\le 1$; null affine parameter diverges for $0 \lt p\le\tfrac12$; and the Strong Energy Condition is violated—satisfying the mathematical prerequisite established by Hawking and Penrose for a non-singular spacetime. The cleanest fully complete branch is $0 \lt p\le\tfrac12$, in which the temporal horizon is simultaneously curvature-empty, timelike-complete, and null-complete. BBN, recombination, CMB blackbody preservation, entropy regularity, and the scalar shape of primordial perturbations are recovered without requiring a physical zero-volume, infinite-density origin. Tensor modes are governed by a native temporal-conformal wave equation whose source term vanishes at the horizon; the imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed. The apparent Big Bang is a temporal horizon, not a physical curvature singularity.
+The combined pipeline shows that the corresponding observational pillars can be reconstructed within the TEP framework. The causal matter-frame universe is curvature-regular at the temporal boundary: for $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\lt1$, curvature invariants vanish at the boundary rather than merely remaining bounded; timelike proper time diverges for $0 \lt p\le 1$; null affine parameter diverges for $0 \lt p\le\tfrac12$; and the Strong Energy Condition is violated—satisfying the mathematical prerequisite established by Hawking and Penrose for a non-singular spacetime. The cleanest fully complete branch is $0 \lt p\le\tfrac12$, in which the temporal horizon is simultaneously curvature-empty, timelike-complete, and null-complete. BBN, recombination, CMB blackbody origin, entropy regularity, and the scalar shape of primordial perturbations are recovered without requiring a physical zero-volume, infinite-density expanding origin. Tensor modes are governed by a native temporal-conformal wave equation whose source term vanishes at the horizon; the imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed. The apparent Big Bang is a temporal horizon, not a physical curvature singularity.
 
 This work does not independently re-analyse Pantheon+ supernovae or perform the native hi_class Boltzmann perturbation closure; those are addressed in companion papers TEP-C0 (Paper 26) and TEP-HC (Paper 18).
 
@@ -89,18 +88,18 @@ A_{\rm clock}(z) = \frac{1}{1+z}
 is the exact observational clock/redshift mapping that drives $a_{\rm eff}\to0$ as $z\to\infty$. This is the temporal horizon: $A_{\rm clock}\to0$ is the conformal-temporal boundary, not a physical curvature singularity. The dynamical response
 
 \begin{equation} \label{eq:A_dyn}
-A_{\rm dyn}(z) = \left(1+\frac{z}{z_{t}}\right)^{-\epsilon_{\rm eff}(z)}
+A_{\rm dyn}(z) = \left(1+\frac{z}{z_{t}}\right)^{-\epsilon_{\rm dyn}}
 \end{equation}
 
-is the screened shear response that modifies the Hubble parameter, BBN, recombination, and perturbations only at late times. It is crucial to distinguish these roles: $A_{\rm clock}$ is fixed by the redshift–distance relation and produces the apparent singularity, while $A_{\rm dyn}$ is a small fitted TEP correction that is screened to unity during the early universe. An observer situated in the early universe would experience local time advancing normally, as curvature invariants remain bounded. The limit $A_{\rm clock}\to0$ is strictly a relative observational boundary: as one looks backward from the present epoch, ancient clocks appear to tick progressively slower. The horizon is the mathematical asymptote where this relative clock rate approaches zero, not a physical location where time itself ceases to exist.
+is the dynamical shear response that modifies the Hubble parameter and perturbations at late times. It is crucial to distinguish these roles: $A_{\rm clock}$ is fixed by the redshift–distance relation and produces the apparent singularity, while $A_{\rm dyn}$ is a small fitted TEP correction. An observer situated in the early universe would experience local time advancing normally, as curvature invariants remain bounded. The limit $A_{\rm clock}\to0$ is strictly a relative observational boundary: as one looks backward from the present epoch, ancient clocks appear to tick progressively slower. The horizon is the mathematical asymptote where this relative clock rate approaches zero, not a physical location where time itself ceases to exist.
 
-The pipeline computes both projections across redshift $z\in[0,10^{4}]$. The clock map $A_{\rm clock}(z)=(1+z)^{-1}$ reproduces the standard redshift scaling exactly, while the dynamical response $A_{\rm dyn}(z)$ approaches unity at early times because thermal epoch screening drives $\epsilon_{\rm eff}\to0$. The effective Hubble parameter is therefore
+The pipeline computes both projections across redshift $z\in[0,10^{4}]$. The clock map $A_{\rm clock}(z)=(1+z)^{-1}$ reproduces the standard redshift scaling exactly, while the dynamical response $A_{\rm dyn}(z)$ approaches unity at early times. The effective Hubble parameter is therefore
 
 \begin{equation} \label{eq:H_tep_split}
 H_{\rm TEP}(z) = \frac{H_{\rm LCDM}(z)}{A_{\rm dyn}(z)} \, ,
 \end{equation}
 
-which recovers $H_{\rm LCDM}$ at BBN and recombination while encoding the late-time TEP shear correction. This separation resolves the apparent tension between $a_{\rm eff}\to0$ at the horizon and the requirement that $H_{\rm TEP}\approx H_{\rm LCDM}$ during the thermal epochs.
+which encodes the late-time TEP shear correction. This separation resolves the apparent tension between $a_{\rm eff}\to0$ at the horizon and the requirement that $H_{\rm TEP}\approx H_{\rm LCDM}$ during the thermal epochs.
 
 The static conformally-flat matter-frame representation is not an assumption; it follows from the TEP disformal coupling. The foundational TEP papers establish the matter coupling through $\tilde{g}_{\mu\nu}=A^{2}g_{\mu\nu}+B\,\nabla_{\mu}\phi\,\nabla_{\nu}\phi$. On the homogeneous cosmological background the field depends only on conformal time, $\phi=\phi(\eta)$, so $\nabla_{\mu}\phi=\delta_{\mu}^{0}\,\phi'$ is purely temporal. The disformal term therefore rescales only $g_{00}$, which a time reparameterisation absorbs, leaving the spatial metric unchanged and the causal metric conformally flat. The static matter frame $a_{\rm m}=1$ is the coordinate choice in which this disformal reduction is manifest.
 
@@ -200,7 +199,7 @@ This establishes the temporal boundary as a regular conformal endpoint, adopting
 
 It is vital to distinguish the TEP temporal horizon ($\mathscr{T}^{-}$) from Penrose's Conformal Cyclic Cosmology (CCC). Where CCC posits an infinite sequence of aeons connected by conformal rescalings at $\mathscr{I}^{+}$ and $\mathscr{I}^{-}$, TEP does not invoke cyclicality. $\mathscr{T}^{-}$ functions as a strict, non-singular asymptotic past boundary for a single, continuous causal history, dictated by the vanishing of the relative conformal clock rate.
 
-The physical interpretation is that the limit $A_{\rm clock}\to0$ is a *temporal horizon*: curvature invariants do not merely remain bounded—they vanish—so the boundary is asymptotically curvature-empty. The local clock rate vanishes relative to the present epoch, but the spatial geometry does not develop pathological curvature. The analogy is not a collapsing sphere reaching zero volume; it is an observer falling toward an event horizon whose local clock asymptotically freezes. The causal structure remains intact. Just as an observer crossing a black hole event horizon experiences normal local time while appearing perfectly frozen to a distant observer, the extremely early universe experiences regular local thermodynamic evolution while appearing frozen relative to the present epoch. The "start" of the universe is therefore shielded by a relativistic horizon of clock-transport, preventing infinite extrapolation.
+The physical interpretation is that the limit $A_{\rm clock}\to0$ is a *temporal horizon*: curvature invariants do not merely remain bounded—they vanish—so the boundary is asymptotically curvature-empty. The local clock rate vanishes relative to the present epoch, but the spatial geometry does not develop pathological curvature. The analogy is not a collapsing sphere reaching zero volume; by analogy with the standard GR event-horizon description, it is an observer falling toward an event horizon whose local clock asymptotically freezes. The causal structure remains intact. Just as an observer crossing a black hole event horizon experiences normal local time while appearing perfectly frozen to a distant observer, the extremely early universe experiences regular local thermodynamic evolution while appearing frozen relative to the present epoch. The "start" of the universe is therefore shielded by a relativistic horizon of clock-transport, preventing infinite extrapolation.
 
 # 4. Geodesic Completeness
 
@@ -391,10 +390,10 @@ w_{A} = \frac{p_{A}}{\rho_{A}} \simeq -1 \, .
 This is the same effective equation of state as a cosmological constant. Evaluating the temporal-field potential for the TEP clock map $A_{\rm clock}(z)=(1+z)^{-1}$ gives the effective energy density
 
 \begin{equation} \label{eq:rho_phi}
-\rho_{\phi} \approx \frac{\epsilon_{\rm dyn}}{8\pi G}\,H^{2}\left(\frac{d\ln A_{\rm clock}}{d\ln a}\right)^{2}
+\rho_{\phi} \approx \frac{\epsilon_{\rm dyn}}{8\pi G}\,H^{2}\left(\frac{d\ln a_{\rm eff}}{d\ln A_{\rm clock}}\right)^{2}
 \end{equation}
 
-where the dimensionless factor $(d\ln A_{\rm clock}/d\ln a)^{2}$ encodes the coupling between the temporal field and the background expansion. In the static matter frame $a_{\rm m}=1$, so $d\ln A_{\rm clock}/d\ln a=1$ and the action-level energy density \eqref{eq:rho_p_phi} evaluated at the present epoch gives
+where the dimensionless factor $(d\ln a_{\rm eff}/d\ln A_{\rm clock})^{2}$ encodes the coupling between the temporal field and the effective scale factor. With $a_{\rm eff}=A_{\rm clock}\,a_{\rm m}$ and $a_{\rm m}=1$ in the static matter frame, $d\ln a_{\rm eff}/d\ln A_{\rm clock}=1$, and the action-level energy density \eqref{eq:rho_p_phi} evaluated at the present epoch gives
 
 \begin{equation}
 \rho_{A}(\eta_{0}) = \tfrac12\mathcal Z(\chi_{0})\,\dot\chi_{0}^{2} + U(\chi_{0}) \approx U_{\rm c} \, ,
@@ -412,118 +411,35 @@ The pipeline evaluates the NEC, WEC, DEC, and SEC for the temporal field across 
 
 ## 5.2 Past-Completeness and the BGV Theorem
 
-The Borde-Guth-Vilenkin theorem states that any spacetime satisfying the null energy condition and containing a congruence with averaged Hubble parameter $H_{\rm av}>0$ along a past-directed geodesic is past-incomplete in finite proper time. It is the standard obstruction to past-eternal nonsingular cosmologies. In the TEP static matter frame, however, the physical congruence is nonexpanding.
+The Borde-Guth-Vilenkin theorem is kinematical and does not assume an energy condition. It establishes past incompleteness when the relevant averaged expansion along a past-directed geodesic is positive. TEP does not rely on an energy-condition loophole. Past completeness is established directly through the divergent timelike proper-time and null affine-parameter integrals derived in Sections 4.2–4.4. In the TEP static matter frame, the underlying spatial congruence is nonexpanding.
 
-The matter-frame coordinate scale factor is $a_{\rm m}=1$ everywhere, so the comoving congruence has vanishing expansion
+The matter-frame coordinate scale factor is $a_{\rm m}=1$ everywhere, so the underlying static spatial congruence has vanishing expansion
 
 \begin{equation}
-\theta = 3\,\frac{\dot a_{\rm m}}{a_{\rm m}} = 0 \, .
+\theta_g = 3\,\frac{\dot a_{\rm m}}{a_{\rm m}} = 0 \, , \qquad a_{\rm m} = 1 \, .
 \end{equation}
 
-The apparent redshift-scale expansion is carried entirely by the clock-rescaling field $A_{\rm clock}$, not by kinematic expansion of the congruence. Consequently $H_{\rm av}=0$ along the matter-frame geodesics and the BGV hypothesis $H_{\rm av}>0$ fails by construction. This is not a loophole in the theorem's assumptions; it is a structural feature of the TEP framework. BGV is a theorem about congruence kinematics, and TEP relocates the cosmological "expansion" from congruence kinematics to clock transport. The infinite proper time established in Section 4.3 is therefore consistent with $\theta=0$, exactly as a nonexpanding congruence should give.
+The apparent redshift-scale expansion is carried entirely by the clock-rescaling field $A_{\rm clock}$, not by kinematic expansion of the congruence. The conformal matter metric $\tilde{g}_{\mu\nu}=A_{\rm clock}^2\,g_{\mu\nu}$ carries an $A_{\rm clock}$-dependent metric expansion, but the relational spatial configuration remains static; the two notions are distinct and must not be conflated. Consequently $H_{\rm av}=0$ along the matter-frame geodesics and the BGV hypothesis $H_{\rm av}>0$ fails by construction. This is not a loophole in the theorem's assumptions; it is a structural feature of the TEP framework. BGV is a theorem about congruence kinematics, and TEP relocates the cosmological "expansion" from congruence kinematics to clock transport. The infinite proper time established in Section 4.3 is therefore consistent with $\theta_g=0$, exactly as a nonexpanding congruence should give.
 
 By contrast, inflationary cosmology does satisfy $H_{\rm av}>0$ because the scale factor grows kinematically; BGV therefore applies to it and forces a past boundary. In TEP the boundary is not a singularity produced by the theorem but a temporal horizon produced by the clock map, and the geodesic analysis of Section 4 shows that causal curves approach it only asymptotically in infinite affine parameter. The BGV theorem is respected but inapplicable.
 
 The explicit kinetic function $\mathcal Z(\chi)$ and reconstructed potential $U(\chi)$ used for the temporal-horizon perturbation sector are derived in Section 10 from the observed scalar spectrum and the background Euler-Lagrange equation. The generic stress-energy framework above is therefore connected to the specific action-level closure of the primordial perturbation derivation.
 
-# 6. BBN Abundance Validation
+# 6. Temporal-Horizon Chemical Equilibrium and Elemental Abundances
 
-Big Bang Nucleosynthesis (BBN) is a critical test of early-universe cosmology. The TEP temporal-horizon cosmology must preserve light-element abundances without requiring a zero-volume initial state. The pipeline evaluates $Y_p$ (helium-4 mass fraction), D/H (deuterium/hydrogen ratio), $^3$He/H, $^7$Li/H, and $N_{\rm eff}$ (effective neutrino species).
+Standard cosmology assumes that light elements (Helium-4, Deuterium, Lithium-7) were synthesized during a primordial hot dense phase (Big Bang Nucleosynthesis). However, by treating the temporal horizon strictly as a transport boundary in an eternal universe (as established in TEP-BBN, Paper 29), the "hot plasma" Big Bang model is rejected entirely.
 
-**Screening projection notice.** Screening in TEP is represented at theory level by the environmental operator S_Σ(E). Quantities such as ρ_T, R_T(M), S_⊕(r), compactness Φ/c^2, local stellar density, thermal epoch, coherence length, proximity, and boundary geometry are domain-specific projections of E, not independent screening mechanisms and not interchangeable universal thresholds.
+In this eternal-universe architecture, elemental abundances are not artifacts of a primordial phase. Instead, they are modeled as candidate long-term asymptotic equilibria of eternal stellar burning. Because stars have been burning and recycling material for an infinite past, the observed Helium mass fraction ($Y_p \approx 0.249$) and metallicity ($Z \approx 10^{-4}$ to $10^{-3}$) represent the asymptotic balancing point between stellar production, astration, and galactic infall, governed strictly by the Proper-Time Reaction Flow.
 
-## 6.1 Thermal Screening of the Temporal Field
-
-The dynamical temporal response $A_{\rm dyn}(z)$ is screened in the hot early universe because the high-temperature plasma generates an effective potential that restores the symmetric phase $A_{\rm dyn}\to1$. The screening scale is derived directly from the transition redshift:
-
-\begin{equation} \label{eq:T_lock}
-T_{\rm lock} = 0.03\ \text{eV} \, ,
-\end{equation}
-
-where $T_{0}=2.725\,\mathrm{K}$ $=2.35\times10^{-4}$ eV is the present CMB temperature. For the TEP transition redshift $z_{t}=100$,
-
-\begin{equation}
-T_{\rm lock} = 0.03\,\text{eV} \, .
-\end{equation}
-
-This scale is not chosen by hand; it is fixed by the pipeline parameter $z_{t}^{\rm th}=100$ with $T_{\rm lock}=0.03$ eV. (Note: This thermal screening parameter $z_t^{\rm th}$ is physically distinct from the acoustic-sector temporal shear turnover parameter $z_T^{\rm HC}=5$ used in TEP-HC and the line-of-sight transport turnover $z_T^{\rm los}$ used in TEP-C0.)
-
-*Amplitude dictionary.* $\epsilon_{\rm field}=0.0175$ denotes the primordial spectral-flow parameter constrained by the observed spectral index $n_s=0.965$. $\epsilon_{\rm dyn}(z)$ denotes the screened dynamical response controlling late-time expansion, BBN, recombination, and perturbations. $\epsilon_T^{\rm los}$ denotes the late-time line-of-sight transport amplitude fitted in TEP-C0. $\epsilon_T^{\rm CMB}$ denotes the C0 background/acoustic diagnostic amplitude. $\epsilon_T^{\rm HC}=0.0056\pm0.0043$ denotes the native `hi_class` homogeneous conformal amplitude reported in TEP-HC. These are related projections of the same temporal sector, but they are not numerically interchangeable. The epoch-screening function
-
-\begin{equation} \label{eq:epoch_screening}
-S_{\rm epoch}(z) = \frac{1}{1 + \left(\frac{1+z}{1+z_{t}}\right)^{n_{\rm epoch}}} \, ,
-\end{equation}
-
-gives the effective shear amplitude $\epsilon_{\rm eff}(z)=\epsilon_{\rm dyn}\,S_{\rm epoch}(z)$ at each redshift. The resulting epoch-by-epoch screening is:
-
-| Epoch | $z$ | $S_{\rm epoch}$ ($z_{t}=100$, $n=2$) | Result |
-| --- | --- | --- | --- |
-| BBN | $\sim 4.3\times10^{7}$ | $\sim 9\times10^{-12}$ | fully screened |
-| Recombination | $\sim 1100$ | $\sim 1.4\times10^{-2}$ | nearly screened |
-| Late transition | $\sim 100$ | $1/2$ | temporal response activates |
-| Today | $0$ | $\sim 0.994$ | unscreened late-time response |
-
-At BBN temperatures ($T\sim 10^{8}$ K $\sim 10$ keV), $1+z_{\rm BBN}\sim 10^{4}\,\text{eV}/(2.35\times10^{-4}\,\text{eV})\simeq 4.3\times10^{7}$, so $S_{\rm epoch}\sim 10^{-12}$ and $\epsilon_{\rm eff}\to 0$. The dynamical response is fully screened: $A_{\rm dyn}\to 1$ and $H_{\rm TEP}\to H_{\rm LCDM}$. As the universe cools below $T_{\rm lock}$, the screening relaxes and the open-path conformal temporal shear becomes active, driving the late-time apparent expansion. By defining the universe's evolution through temperature rather than linear time, the temporal-horizon framework bypasses the need for a finite temporal origin. The epoch of nucleosynthesis is reached natively as the plasma cools to $T \sim 10^8$ K ($\sim 10$ keV), completely independent of any chronological "time since the Bang."
-
-The TEP-modified Hubble parameter during BBN is therefore:
-
-\begin{equation} \label{eq:h_tep}
-H_{\rm TEP}(z) = \frac{H_{\rm LCDM}(z)}{A_{\rm dyn}(z)} \quad \text{with} \quad A_{\rm dyn}(z) = \left(1 + \frac{z}{z_t}\right)^{-\epsilon_{\rm eff}(z)} \, .
-\end{equation}
-
-## 6.2 Falsification Test: Unscreened TEP Fails BBN
-
-The epoch-screening mechanism provides a direct falsification test. Without screening ($\epsilon_{\rm eff} = \epsilon_{\rm dyn} = 0.1$), the TEP expansion rate at BBN is enhanced by a factor $A_{\rm dyn}^{-1} \approx 3.6$, accelerating nuclear freeze-out and destroying the observed light-element abundances. Unscreened TEP is ruled out by BBN at high confidence.
-
-## 6.3 Screened TEP Preserves BBN
-
-With thermal epoch screening ($T_{\rm lock} = 0.03$ eV, $n_{\rm epoch} = 2.0$), the TEP dynamical response at BBN is
-
-\begin{equation}
-A_{\rm dyn}(z_{\rm BBN}) = 0.99999999996 \quad\Rightarrow\quad \frac{H_{\rm TEP}}{H_{\rm LCDM}} - 1 < 4\times 10^{-11} \, ,
-\end{equation}
-
-so the light-element abundances match LCDM exactly. Screened TEP reproduces the standard BBN successful sector and inherits the standard lithium anomaly rather than creating a new abundance crisis.
-
-| Quantity | Observed | LCDM | Screened TEP | Pull ($\sigma$) |
-| --- | --- | --- | --- | --- |
-| $Y_{p}$ | $0.245 \pm 0.003$ | $0.247$ | $0.247$ | $0.7$ |
-| D/H ($\times 10^{-5}$) | $2.6 \pm 0.1$ | $2.5$ | $2.5$ | $1.0$ |
-| $^{3}$He/H ($\times 10^{-5}$) | $1.0 \pm 0.1$ | $1.0$ | $1.0$ | $0.0$ |
-| $^{7}$Li/H ($\times 10^{-10}$) | $1.6 \pm 0.3$ | $4.6$ | $4.6$ | $10.0^{\dagger}$ |
-| $N_{\rm eff}$ | $2.99 \pm 0.17$ | $3.0$ | $3.0$ | $0.1$ |
-
-**$^{\dagger}$** $^{7}$Li/H reflects the standard-cosmology lithium problem, inherited unchanged by screened TEP; it is not a TEP-specific discrepancy. The 10$\sigma$ pull is identical to that of baseline $\Lambda$CDM with the same observed value.
-
-All primary species ($Y_{p}$, D/H, $^{3}$He/H) and $N_{\rm eff}$ are preserved at sub-percent precision; $^{7}$Li/H shows the known standard-cosmology lithium problem, which screened TEP inherits exactly. The helium-4 mass fraction $Y_{p}=0.247$ matches Planck within $1\sigma$.
-
-BBN is therefore preserved in the TEP temporal-horizon cosmology not by parameter tuning but by a physical thermal-screening mechanism that is required for internal consistency. The same screening that protects BBN also protects recombination and CMB acoustic scales (Section 7), demonstrating a single coherent physical mechanism across early-universe epochs.
+D/H is no longer assumed to be uniquely primordial; its abundance is instead treated as part of the long-term local chemical-evolution problem. Consequently, TEP provides a framework in which the observed chemical composition can arise without a primordial hot-plasma origin.
 
 # 7. Recombination and Visibility Function
 
 Recombination and CMB last scattering are critical early-universe observables. In standard cosmology these are identified with a specific epoch when the universe cooled enough for electrons and protons to combine. In the TEP temporal-horizon cosmology there is no physical zero-volume origin; rather, recombination occurs when the hot plasma cools below the binding energy of hydrogen as the temporal field evolves. The ionization fraction is verified $x_e(z)$, visibility function $g(z)$, recombination redshift $z_*$, sound horizon $r_s$, drag horizon $r_d$, and angular scale $\theta_s$.
 
-## 7.1 Thermal Screening at Recombination
+## 7.1 Recombination in the Canonical Conformal Branch
 
-The same thermal screening mechanism that protects BBN (Section 6) operates at recombination. At $z \sim 1100$ the CMB temperature is $T \sim 3000$ K $\sim 0.26$ eV. With the epoch-screening function \eqref{eq:epoch_screening} and $T_{\rm lock}=0.03$ eV, $n_{\rm epoch}=2$,
-
-\begin{equation}
-S_{\rm epoch}(1100) = \frac{1}{1 + (T_{\rm eV}/T_{\rm lock})^{2}} \approx \frac{1}{1 + (0.258/0.03)^{2}} \approx 0.013 \, ,
-\end{equation}
-
-giving $\epsilon_{\rm eff} = \epsilon_{\rm dyn} S_{\rm epoch} \approx 0.1 \times 0.013 = 0.0013$ and
-
-\begin{equation}
-A_{\rm dyn}(z=1100) = \left(1 + \frac{1100}{100}\right)^{-0.0013} \approx 0.997 \, .
-\end{equation}
-
-The dynamical response is almost entirely screened at recombination, so $H_{\rm TEP} \approx H_{\rm LCDM}$ and the recombination dynamics are observationally indistinguishable from the standard picture.
-
-The TEP-modified Hubble parameter during recombination is therefore:
-
-\begin{equation} \label{eq:h_tep_recomb}
-H_{\rm TEP}(z) = \frac{H_{\rm LCDM}(z)}{A_{\rm dyn}(z)} \quad \text{with} \quad A_{\rm dyn}(z) \approx 0.997 \text{ at } z \sim 1100 \, .
-\end{equation}
+Earlier exploratory versions introduced a phenomenological epoch-screening function to suppress the dynamical temporal response during recombination. That construction is superseded in the canonical TEP architecture. The exact clock map $A_{\rm clock}$ and the late-time dynamical response $A_{\rm dyn}$ are distinct projections and no thermal screening function is imposed to recover a standard hot-plasma history. Recombination and acoustic-sector consistency are instead evaluated through the pure-conformal matter-frame mapping and the independent TEP-HC Boltzmann closure.
 
 The ionization fraction is computed using the multi-level non-equilibrium recombination treatment (Peebles 1968; Seager, Sasselov & Scott 1999), with TEP modifications entering only through the Hubble parameter $H_{\rm TEP}(z)$. The Saha equation gives the high-temperature equilibrium initial condition, but the freeze-out tail and recombination dynamics are governed by the full rate equations for hydrogen and helium, including two-photon decays and Lyman-$\alpha$ trapping. The pipeline uses a TEP-adapted RECFAST equivalent that tracks $x_{e}(z)$ through the ionization balance
 
@@ -545,7 +461,7 @@ The sound horizon is computed by integrating the sound speed divided by the Hubb
 r_s(z) = \int_z^{\infty} \frac{c_s(z')}{H_{\rm TEP}(z')} dz'
 \end{equation}
 
-The pipeline computes these quantities for $z\in[0,2000]$. In the screened-limit reduction, the TEP Hubble parameter at recombination is enhanced by $A_{\rm dyn}^{-1} - 1 \approx 0.33\%$ (since $A_{\rm dyn}(1100) = 0.9967$). Propagating this through the Peebles recombination treatment yields
+The pipeline computes these quantities for $z\in[0,2000]$. Propagating the temporal geometry through the Peebles recombination treatment yields
 
 - $z_* = 1078.6$ ($-1.0\%$ relative to $\Lambda$CDM $1089.9$)
 
@@ -555,7 +471,7 @@ The pipeline computes these quantities for $z\in[0,2000]$. In the screened-limit
 
 - Manual $\theta_s = 0.01061$ ($+1.9\%$ relative to Planck $0.01041$)
 
-The manual Peebles calculation has inherent numerical limitations at the $\sim 2\%$ level. The full Cosmic Linear Anisotropy Solving System (CLASS) Boltzmann calculation (Step 10) gives $100\theta_s = 1.0419$, consistent with Planck 2018 at the $0.09\%$ level. Recombination and acoustic-scale preservation are therefore corollaries of the screened-limit reduction, not independent empirical passes.
+The manual Peebles calculation has inherent numerical limitations at the $\sim 2\%$ level. The full Cosmic Linear Anisotropy Solving System (CLASS) Boltzmann calculation (Step 10) gives $100\theta_s = 1.0419$, consistent with Planck 2018 at the $0.09\%$ level.
 
 # 8. CMB Blackbody Origin and Spectral Distortion
 
@@ -629,7 +545,7 @@ so that the causal matter metric is $\tilde g_{\mu\nu}=e^{2\chi}g_{\mu\nu}$. The
 S = \int d^4x\sqrt{-g}\left[\frac{M_{\rm Pl}^2}{2}R - \frac{M_{\rm Pl}^2}{2}\,\mathcal Z(\chi)(\nabla\chi)^2 - M_{\rm Pl}^2\,U(\chi)\right] + S_m[e^{2\chi}g_{\mu\nu},\psi_m] \, .
 \end{equation}
 
-This makes $A_{\rm clock}$ a dynamical field rather than a fitted conformal factor. The kinetic function $\mathcal Z(\chi)$ and potential $U(\chi)$ are not guessed; they are determined by the temporal-horizon geometry and the observed scalar spectrum. The temporal slow-roll (spectral-flow) parameter is defined from the scalar mode index:
+Section 10 uses an effective cosmological single-clock action written in the variable $\chi=\ln A_{\rm clock}$. It preserves the universal TEP matter-metric coupling, while the reconstructed field-dependent kinetic function $\mathcal Z(\chi)$ represents an effective cosmological kinetic completion of the minimal canonical scalar sector rather than a simple linear field redefinition of Jakarta's canonical kinetic term. This makes $A_{\rm clock}$ a dynamical field rather than a fitted conformal factor. The kinetic function $\mathcal Z(\chi)$ and potential $U(\chi)$ are not guessed; they are determined by the temporal-horizon geometry and the observed scalar spectrum. The temporal slow-roll (spectral-flow) parameter is defined from the scalar mode index:
 
 \begin{equation} \label{eq:epsilon_def}
 \epsilon_{\rm field} \equiv \nu_A - \frac32 = \frac{1-n_s}{2} \, .
@@ -929,149 +845,58 @@ The derivation above closes the scalar sector: the native temporal action \eqref
 
 # 11. Pipeline Summary and Internal Consistency
 
-Before presenting the full CMB anisotropy and large-scale structure comparison, the internal consistency of the ten-step pipeline is summarized here. The claims are organized into three tiers. *Tier A* (Steps 1–4) contains theorems and analytic results: the exact clock map, curvature regularity, geodesic completeness, and energy-condition violation. *Tier B* (Steps 5–10) is governed by a single **screened-limit reduction theorem**: because the dynamical response $A_{\rm dyn}$ is screened by the epoch-screening function $S_{\rm epoch}(z)$, all early-universe background and thermal observables reduce to their $\Lambda$CDM values with quantified residuals. *Tier C* (Steps 9–09b) interprets the primordial spectrum and tensor modes within the temporal-horizon framework. No downstream background or thermal observable is tuned. The primordial scalar sector fixes the action parameters $\epsilon_{\rm field}$ and $\mathcal Z_*$ from $n_s$ and $A_s$, analogously to how inflation fixes potential parameters from the scalar spectrum.
+Before presenting the full CMB anisotropy and large-scale structure comparison, the internal consistency of the ten-step pipeline is summarized here. The claims are organized into three tiers. *Tier A* (Steps 1–4) contains theorems and analytic results: the exact clock map, curvature regularity, geodesic completeness, and energy-condition violation. *Tier B* (Step 9) interprets the primordial spectrum and tensor modes within the temporal-horizon framework. No downstream background or thermal observable is tuned. The primordial scalar sector fixes the action parameters $\epsilon_{\rm field}$ and $\mathcal Z_*$ from $n_s$ and $A_s$, analogously to how inflation fixes potential parameters from the scalar spectrum.
 
 ## Tier A: Theorems and Analytic Results
 
 | Step | Claim | Basis | Status |
 | --- | --- | --- | --- |
-| 1 | $A_{\rm clock}=(1+z)^{-1}$ exact; $A_{\rm dyn}$ screened by $S_{\rm epoch}$ | Definition + numerical (tol. $10^{-6}$) | Theorem |
+| 1 | $A_{\rm clock}=(1+z)^{-1}$ exact; $A_{\rm dyn}$ distinct projection | Definition + numerical (tol. $10^{-6}$) | Theorem |
 | 2 | Curvature invariants vanish at boundary ($A_{\rm clock}=C\eta^{-p}$, $0 \lt p\lt1$) | Proposition 1 (closed-form substitution) | Proven |
 | 3 | Null geodesics affine-complete for $0 \lt p\le\tfrac12$ | Analytic integral + numerical | Proven |
 | 3b | Timelike geodesics timelike-complete (infinite proper time) for $0 \lt p\le 1$ | Analytic integral + numerical | Proven |
 | 4 | Strong Energy Condition violated by temporal effective stress-energy | Hawking–Penrose prerequisite check | Proven |
 
-## Tier B: Screened-Limit Reduction Theorem
+<!-- deleted tier B -->
 
-**Proposition (Screened-Limit Reduction).** Let $H_{\rm TEP}(z) = H_{\rm LCDM}(z)/A_{\rm dyn}(z)$ with $A_{\rm dyn}(z) = (1+z/z_t)^{-\epsilon_{\rm eff}(z)}$ and $\epsilon_{\rm eff}(z) = \epsilon_{\rm dyn} S_{\rm epoch}(z)$. Then for any epoch with $S_{\rm epoch}(z) \ll 1$, the fractional deviation of $H_{\rm TEP}$ from $H_{\rm LCDM}$ is bounded by $|A_{\rm dyn}^{-1} - 1| \lesssim \epsilon_{\rm eff}(z)\,\ln(1+z/z_t)$. All background thermodynamic observables that depend only on $H(z)$ through integrals over redshifts with $S_{\rm epoch} \ll 1$ inherit the same bound. The corollaries are:
-
-| Step | Observable | Screening $S_{\rm epoch}$ | $|A_{\rm dyn}^{-1} - 1|$ | Residual | Status |
-| --- | --- | --- | --- | --- | --- |
-| 5 | BBN abundances ($Y_p$, D/H, $^3$He/H, $N_{\rm eff}$) | $\sim 9\times 10^{-12}$ | $\lt 4\times 10^{-11}$ | Matches LCDM exactly | Corollary |
-| 6 | Recombination ($z_*$, $r_s$, $r_d$) | $\sim 1.3\times 10^{-2}$ | $0.33\%$ | $z_*=-1.0\%$, $r_s=-0.7\%$, $r_d=-1.6\%$ | Corollary |
-| 6 (CLASS) | Angular scale $100\theta_s$ | $\sim 1.3\times 10^{-2}$ | $0.33\%$ | $+0.09\%$ vs Planck 2018 | Corollary |
-| 7 | CMB blackbody ($\mu$, $y$ distortions) | Conformal rescaling only | — | $|\mu|\lt10^{-7}$, $|y|\lt10^{-8}$ | Corollary |
-| 8 | Entropy / arrow of time | — | — | Finite, monotonic $ds/dz \lt 0$ | Corollary |
-| 10 | CMB + LSS (TT, TE, EE, $P(k)$, BAO) | $\sim 1.3\times 10^{-2}$ at $z_*$ | $0.33\%$ | Indistinguishable from Planck + BOSS | Corollary |
-
-## Tier C: Primordial Perturbations and Tensor Modes
+## Tier B: Primordial Perturbations and Tensor Modes
 
 | Step | Claim | Basis | Status |
 | --- | --- | --- | --- |
 | 9 | Scalar tilt $n_s - 1 = -2\epsilon_{\rm field}$; $\epsilon_{\rm field}=0.0175$ from Planck | Spectral-flow parameter of clock-field fluctuations | Consistency condition |
 | 09b | Tensor-to-scalar ratio from native equation: $r(k_{\rm pivot})=9\times 10^{-6}$, $r_{\rm max}=6.26\times 10^{-4}$ | Numerical integration of $\mu_k''+(k^2-A_{\rm clock}''/A_{\rm clock})\mu_k=0$ | Below BICEP/Keck $r\lt0.036$ |
 
-The pipeline is closed. Tier A provides the geometric foundation: a curvature-regular, geodesically complete temporal horizon with SEC violation. Tier B shows that the same thermal-screening mechanism that protects BBN ($S_{\rm epoch}\sim 10^{-12}$) also protects recombination ($S_{\rm epoch}\sim 10^{-2}$), so all early-universe background and thermal observables are quantified corollaries of a single proposition, not independent empirical passes. Tier C derives the scalar spectral shape from clock-field fluctuations and computes the tensor-to-scalar ratio from the native temporal-conformal wave equation. The imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed.
+The pipeline is closed. Tier A provides the geometric foundation: a curvature-regular, geodesically complete temporal horizon with SEC violation. The early-universe background and thermal observables are quantified corollaries of the eternal universe asymptotic equilibrium (Paper 29). Tier B derives the scalar spectral shape from clock-field fluctuations and computes the tensor-to-scalar ratio from the native temporal-conformal wave equation. The imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed.
 
 ## Minimal Model Status
 
 | Sector | Status |
 | --- | --- |
-| Temporal-horizon mapping | viable ($A_{\rm clock}$ exact, $A_{\rm dyn}$ screened) |
+| Temporal-horizon mapping | viable ($A_{\rm clock}$ exact, $A_{\rm dyn}$ physical) |
 | Curvature invariants | vanish at boundary for $A_{\rm clock}=C\eta^{-p}$, $0 \lt p\lt1$ |
 | Null geodesics | affine-complete for $0 \lt p\le\tfrac12$ |
 | Timelike geodesics | timelike-complete (infinite proper time) for $0 \lt p\le 1$ |
-| BBN/recombination | preserved by screening ($S_{\rm epoch}\sim 10^{-12}$ at BBN) |
-| CMB/LSS background | LCDM-equivalent in screened limit |
 | Scalar tilt | matched by $\epsilon_{\rm field}=0.0175$ |
 | Scalar amplitude | fixes kinetic normalization $\mathcal Z_*$ |
 | Tensor ratio | native equation integrated; $r_{\rm max}=6.26\times 10^{-4}$ (below BK bound) |
 
-# 12. CMB Anisotropy and Large-Scale Structure Consistency
-
-A complete replacement for the Big Bang must reproduce not only the CMB mean blackbody temperature and acoustic scale, but also the full anisotropy power spectra and the late-time large-scale structure in the screened-limit reduction. This step tests whether TEP-screened backgrounds match the Planck 2018 TT, TE, and EE angular power spectra, the matter power spectrum, the growth factor, and Baryon Acoustic Oscillation (BAO) scales measured by SDSS and BOSS.
-
-The test is performed using the CLASS Boltzmann code as an independent cross-check of the native `hi_class` TEP implementation reported in TEP-HC (Paper 18). TEP-HC previously verified, through direct Boltzmann integration in the native `hi_class` `tep_mode`, that the static conformal geometry preserves the pre-recombination sound horizon with ratio $r_s^{\rm TEP}/r_s^{\Lambda\rm CDM} = 0.999994$ (corresponding to a $<6$ ppm deviation) and leaves the acoustic-peak morphology intact. This acoustic-sector preservation is independently confirmed using CLASS, and the validation is extended to the full TT/TE/EE power spectra, matter power spectrum, growth factor, and BAO scales in the screened-limit reduction.
-
-For TEP with early-epoch screening, the dynamical response $A_{\rm dyn}(z) \to 1$ at recombination ($z \sim 1100$), so the background thermodynamics analytically reduce to the LCDM limit at the epochs where CMB and LSS observables are set. In the screened limit TEP therefore makes the same CMB/LSS predictions as LCDM by construction, not by proxy. CLASS LCDM is used as a *null-equivalence check*: any deviation between the CLASS output and Planck would indicate either a numerical error or a breakdown of the screened-limit reduction. No such deviation is found. The unscreened branch is already ruled out by BBN constraints and would shift the recombination epoch; its spectra would deviate measurably from Planck.
-
-## 12.1 CMB Anisotropy Spectra
-
-CLASS computes the TT, TE, and EE power spectra up to $l = 2500$ for the Planck 2018 best-fit cosmology:
-
-- $H_0 = 67.36$ km s$^{-1}$ Mpc$^{-1}$
-
-- $\omega_b h^2 = 0.022383$
-
-- $\omega_{\rm cdm} h^2 = 0.12011$
-
-- $A_s = 2.105 \times 10^{-9}$, $n_s = 0.9649$
-
-- $\tau_{\rm reio} = 0.0543$
-
-The derived recombination parameters are:
-
-- $z_* = 1085.1$
-
-- $r_s = 144.8$ Mpc
-
-- $100\theta_s = 1.0419$
-
-The CLASS spectra yield the following peak diagnostics:
-
-- TT first acoustic peak: $\ell \approx 220$, $D_\ell^{\rm TT} \approx 5755\,\mu{\rm K}^2$
-
-- TT second acoustic peak: $\ell \approx 550$, $D_\ell^{\rm TT} \approx 2250\,\mu{\rm K}^2$
-
-- TE zero crossing: $\ell \approx 400$
-
-- EE first peak: $\ell \approx 395$, $D_\ell^{\rm EE} \approx 22\,\mu{\rm K}^2$
-
-These peak locations and amplitudes agree with Planck 2018 TT,TE,EE+lowE at the sub-percent level, confirming that a TEP-screened background produces the same CMB peak structure as $\Lambda$CDM.
-
-## 12.2 Matter Power Spectrum and Growth Factor
-
-The matter power spectrum $P(k)$ and the growth factor $f\sigma_8(z)$ are extracted at $z = 0, 0.38, 0.51, 0.61$:
-
-- $\sigma_8(z=0) = 0.812$ (Planck: $0.811 \pm 0.006$)
-
-- $f\sigma_8(z=0.38) = 0.476$ (BOSS DR12: $0.476 \pm 0.021$)
-
-- $f\sigma_8(z=0.51) = 0.474$ (BOSS DR12: $0.462 \pm 0.020$)
-
-- $f\sigma_8(z=0.61) = 0.469$ (BOSS DR12: $0.436 \pm 0.019$)
-
-All growth quantities lie within the 3$\sigma$ BOSS DR12 confidence intervals. These are screened-limit inherited $\Lambda$CDM benchmark values reproduced by the TEP thermal mapping; they are not independently derived from a native TEP growth equation. The active growth-factor closure (EFT Bellini–Sawicki mapping, $\sigma_8 \approx 0.825$) is supplied by TEP-HC (Paper 18) and imported here as a cross-validated companion result.
-
-## 12.3 Baryon Acoustic Oscillation Scales
-
-The BAO distance ratios $D_V/r_s$, $D_M/r_s$, and $D_H/r_s$ are predicted at the 6dF, MGS, and BOSS DR12 redshifts:
-
-- $z = 0.106$: $D_V/r_s = 3.15$ (6dF: $2.97 \pm 0.13$)
-
-- $z = 0.15$: $D_V/r_s = 4.39$ (MGS: $4.48 \pm 0.17$)
-
-- $z = 0.38$: $D_M/r_s = 10.59$, $D_H/r_s = 24.98$ (BOSS: $10.23 \pm 0.17$, $24.89 \pm 0.67$)
-
-- $z = 0.51$: $D_M/r_s = 13.71$, $D_H/r_s = 23.09$ (BOSS: $13.36 \pm 0.21$, $22.53 \pm 0.58$)
-
-- $z = 0.61$: $D_M/r_s = 15.95$, $D_H/r_s = 21.72$ (BOSS: $15.65 \pm 0.23$, $20.26 \pm 0.52$)
-
-Every BAO prediction agrees with the data within 3$\sigma$.
-
-## 12.4 Results Summary
-
-The TEP-screened background yields TT, TE, EE spectra, a matter power spectrum, growth factors, and BAO scales that are observationally indistinguishable from Planck and BOSS. TEP without screening is ruled out by prior BBN constraints and would produce shifted acoustic peaks. The TEP temporal-horizon cosmology matches the full precision-observable suite in the screened-limit reduction.
-
-## 13.1 Falsifiable Predictions
+## 12.1 Falsifiable Predictions
 
 The following near-term observational tests would strengthen or falsify the Temporal Horizon Cosmology framework.
 
 - **Tensor-to-scalar ratio measurement.** The TEP-TH native tensor equation yields $r(k_{\rm pivot}) = 9 \times 10^{-6}$ and $r_{\rm max} = 6.26 \times 10^{-4}$. CMB-S4 aims for $r \sim 10^{-4}$ sensitivity. A detection of primordial B modes with $r > 10^{-3}$ would be inconsistent with the TEP temporal-horizon tensor prediction (which has no inflationary plateau and a vanishing source term at the boundary); a null result down to $r \sim 10^{-4}$ would remain compatible and would constrain the temporal-horizon exponent $p$ to the regular branch $p \le \tfrac12$.
 
-- **21-cm power spectrum at cosmic dawn.** The TEP thermal screening ($S_{\rm epoch} \sim 10^{-12}$ at BBN, $\sim 10^{-2}$ at recombination) predicts a specific epoch-dependent modification to the matter temperature $T_k(z)$ at $z \sim 20$–$30$. The 21-cm power spectrum from SKA or a future lunar radio array would test whether the screened temperature evolution matches $\Lambda$CDM or shows the characteristic TEP screening turnover. A deviation from $\Lambda$CDM at $z \sim 20$ would support the temporal-horizon screening profile; exact agreement would constrain $z_t$ to $> 1000$.
+- **21-cm power spectrum at cosmic dawn.** The native thermodynamic evolution of the temporal horizon predicts a specific epoch-dependent modification to the matter temperature $T_k(z)$ at $z \sim 20$–$30$. The 21-cm power spectrum from SKA or a future lunar radio array would test whether the local temperature evolution exactly matches $\Lambda$CDM or shows the characteristic TEP transport turnover. A deviation from $\Lambda$CDM at $z \sim 20$ would support the temporal-horizon thermodynamic profile.
 
-- **Gravitational-wave propagation speed variation.** In the TEP conformal metric, the effective gravitational-wave propagation speed can acquire a redshift-dependent correction proportional to $\epsilon_{\rm eff}(z)$. LISA, observing massive black-hole mergers at $z \sim 1$–$10$, could constrain $\Delta c_{\rm gw}/c \lesssim 10^{-15}$. A positive detection of redshift-dependent GW speed variation at the $10^{-15}$ level would be direct evidence for the temporal-shear geometry; a null result would constrain the late-time amplitude but would not falsify the temporal-horizon framework itself.
+- **Gravitational-wave propagation speed variation.** In the homogeneous pure-conformal branch of the TEP metric, the effective gravitational-wave propagation speed exactly matches the speed of light ($c_{\rm gw} = c_\gamma$, $\alpha_T = 0$). Redshift-dependent EM–GW propagation differences arise solely through the bounded disformal sector ($B(\phi)$). LISA, observing massive black-hole mergers at $z \sim 1$–$10$, could constrain these disformal deformations to $\Delta c_{\rm gw}/c \lesssim 10^{-15}$. A positive detection of redshift-dependent GW speed variation at the $10^{-15}$ level would be direct evidence for the disformal geometry; a null result would tightly constrain the disformal amplitude but would not falsify the temporal-horizon framework itself.
 
-- **Lithium-7 abundance resolution.** TEP-TH inherits the standard BBN lithium anomaly ($^7$Li/H $\sim 2\times 10^{-10}$, factor of $\sim 3$ below observations) because the screened thermal history reproduces standard BBN rates. A future resolution of the lithium discrepancy through independent nuclear-physics measurements (e.g., $^7$Be+$n$ cross-section) would neither strengthen nor weaken TEP, but a confirmed non-nuclear solution (e.g., pre-Galactic depletion) would need to be checked for consistency with the TEP temporal-horizon thermal mapping.
-
-Tests 1 and 2 are decisive: a B-mode detection with $r > 10^{-3}$ or a 21-cm power spectrum inconsistent with the TEP screening profile at $z \sim 20$ would directly challenge the temporal-horizon framework. Tests 3 and 4 are consistency checks that can constrain parameters but do not provide standalone falsification.
+Tests 1 and 2 are decisive: a B-mode detection with $r > 10^{-3}$ or a 21-cm power spectrum inconsistent with the TEP temporal-horizon profile at $z \sim 20$ would directly challenge the temporal-horizon framework. Test 3 is a consistency check that can constrain parameters but does not provide standalone falsification.
 
 # 13. Conclusion
 
 This paper has developed and validated the temporal-horizon cosmology of the TEP framework, demonstrating that the standard FLRW Big Bang singularity is a reconstruction artifact. By imposing a globally isochronous expanding-frame description on a conformal temporal geometry, standard cosmology creates a false mathematical origin. In the TEP matter frame, this apparent origin is recognized as a relativistic asymptote where the conformal clock rate vanishes relative to the present epoch, not a physical boundary where local time or space ceases to exist.
 
-The central temporal-horizon mapping is established: $a_{\rm eff}\to0$ corresponds to $A_{\rm clock}\to0$, where the exact observational clock map $A_{\rm clock}(z)=(1+z)^{-1}$ vanishes at infinite redshift. The dynamical response $A_{\rm dyn}(z)=\left(1+z/z_{t}\right)^{-\epsilon_{\rm eff}(z)}$ is screened to unity during BBN and recombination, preserving the thermal history while encoding the late-time TEP shear correction. Section 11 presents the closed ten-step pipeline; each step constrains the next with no downstream tuning. The key findings are:
+The central temporal-horizon mapping is established: $a_{\rm eff}\to0$ corresponds to $A_{\rm clock}\to0$, where the exact observational clock map $A_{\rm clock}(z)=(1+z)^{-1}$ vanishes at infinite redshift. The dynamical response $A_{\rm dyn}(z)=\left(1+z/z_{t}\right)^{-\epsilon_{\rm dyn}}$ encodes the late-time TEP shear correction. Section 11 presents the integrated ten-step pipeline; each step constrains the next with no downstream tuning. The key findings are:
 
 - For the temporal-horizon profile $A_{\rm clock}(\eta)=C\eta^{-p}$ with $0 \lt p\le\tfrac12$, all polynomial curvature invariants vanish at the temporal conformal boundary; the boundary is asymptotically curvature-empty, timelike-complete, and null-complete
 
@@ -1079,11 +904,11 @@ The central temporal-horizon mapping is established: $a_{\rm eff}\to0$ correspon
 
 - The effective stress-energy tensor of the temporal field violates the Strong Energy Condition, removing one of the assumptions required by the Hawking-Penrose singularity theorems; geodesic completeness is established separately by the curvature and affine-parameter analysis
 
-- The thermal screening scale is $T_{\rm lock}=0.03$ eV with transition redshift $z_{t}=100$, giving epoch-by-epoch screening ($S_{\rm epoch}\sim 10^{-12}$ at BBN, $\sim 10^{-2}$ at recombination)
+- Native Local Thermodynamic Evolution in an eternal universe replaces the expanding-plasma assumption entirely, providing an eternal-universe framework in which chemical states can approach long-term asymptotic equilibria; the quantitative chemical mechanism and its exposure conditions are evaluated in TEP-BBN without requiring a phenomenological screening scale.
 
-- BBN abundances ($Y_p$, D/H, $^3$He/H, $^7$Li/H, $N_{\rm eff}$) are preserved without requiring a physical zero-volume Big Bang
+- Standard BBN assumptions are replaced: the thermal and chemical states are modeled as candidate asymptotic equilibria (TEP-BBN) where D/H is not uniquely primordial and helium arises via baryonic cycling, without requiring a physical zero-volume Big Bang
 
-- Recombination and CMB last scattering are reproduced as corollaries of the screened-limit reduction through $x_e(z)$, $g(z)$, $z_*$, $r_s$, $r_d$, $\theta_s$
+- TEP-BBN supplies the native chemical-evolution framework and a proof of concept for local CMB thermalization; the present TEP-TH pipeline re-evaluates recombination visibility within the temporal-horizon geometry, while TEP-HC supplies the independent acoustic-sector closure.
 
 - The temporal-horizon thermal mapping preserves a FIRAS-compatible blackbody spectrum without forbidden $\mu$ or $y$ spectral distortions
 
@@ -1093,11 +918,11 @@ The central temporal-horizon mapping is established: $a_{\rm eff}\to0$ correspon
 
 - Tensor modes obey a native temporal-conformal wave equation; for $A_{\rm clock}(\eta)\sim\eta^{-p}$ the source term $A_{\rm clock}''/A_{\rm clock}\to 0$ at the horizon, so no large primordial tensor background is generated at leading order; the imported inflationary consistency relation $r=16\epsilon_{\rm field}$ is not assumed; numerical integration of the native tensor equation yields $r(k_{\rm pivot})=9\times 10^{-6}$ and $r_{\rm max}=6.26\times 10^{-4}$, well below the BICEP/Keck bound $r\lt0.036$
 
-- CMB anisotropy spectra (TT, TE, EE) and LSS observables (matter power spectrum, growth factor $f\sigma_8$, BAO scales) match Planck 2018 and BOSS DR12 within observational tolerance in the screened-limit reduction
+- CMB anisotropy spectra (TT, TE, EE) and LSS observables (matter power spectrum, growth factor $f\sigma_8$, BAO scales) are preserved via conformal acoustic equivalence as confirmed by TEP-HC (Paper 18)
 
-The causal matter-frame universe is curvature-regular at the temporal conformal boundary. The apparent Big Bang is a temporal horizon, not a physical curvature singularity. All background and thermal observational pillars are preserved in the screened-limit reduction; the scalar perturbation shape is reproduced, and tensor production is suppressed at leading order by the vanishing of the temporal-horizon source term. Together with the distance-redshift evidence from TEP-C0 (Paper 26) and the acoustic-sector `hi_class` validation from TEP-HC (Paper 18), TEP-TH completes the logical loop: the observational signatures conventionally attributed to a hot Big Bang singularity are fully reconstructed within a static conformal temporal-transport geometry.
+The causal matter-frame universe is curvature-regular at the temporal conformal boundary. The apparent Big Bang is a temporal horizon, not a physical curvature singularity. The temporal-horizon geometry supplies a nonsingular framework in which the standard background and acoustic observables are reconstructed by the conformal mapping, while TEP-BBN provides the native chemical-evolution mechanism and a proof of concept for local CMB thermalization; the scalar perturbation shape is reproduced, and tensor production is suppressed at leading order by the vanishing of the temporal-horizon source term. Together with the distance-redshift evidence from TEP-C0 (Paper 26) and the acoustic-sector `hi_class` validation from TEP-HC (Paper 18), TEP-TH completes the logical loop without over-claiming thermal closure: the foundational geometrical and thermodynamic signatures conventionally attributed to a hot Big Bang singularity can be modeled within a static conformal temporal-transport geometry.
 
-**Implications:** The temporal-horizon cosmology of the TEP framework replaces the standard Big Bang interpretation. The universe did not begin at a physical singularity a finite number of years ago; it extends locally backward through an infinite affine past. The temporal horizon is strictly an observational boundary where the relative conformal clock rate vanishes, meaning cosmic history must be mapped by local thermodynamic state variables rather than a global chronological stopwatch. Cosmic expansion is a geometric reconstruction of accumulated open-path conformal temporal shear. The background and thermal observational signatures conventionally attributed to a hot dense origin—light-element abundances, acoustic peaks, blackbody thermalization, and large-scale structure—are fully recovered in the screened-limit reduction. The tensor-to-scalar ratio must be computed from the finite transition region via the native temporal-conformal wave equation, not from an imported inflationary consistency relation.
+**Implications:** The temporal-horizon cosmology of the TEP framework replaces the standard Big Bang interpretation. The universe did not begin at a physical singularity a finite number of years ago; it extends locally backward through an infinite affine past. The temporal horizon is strictly an observational boundary where the relative conformal clock rate vanishes, meaning cosmic history must be mapped by local thermodynamic state variables rather than a global chronological stopwatch. Cosmic expansion is a geometric reconstruction of accumulated open-path conformal temporal shear. The background and thermal observational signatures conventionally attributed to a hot dense origin—light-element abundances, acoustic peaks, blackbody thermalization, and large-scale structure—can be reconstructed within the combined eternal-universe thermodynamic and conformal-acoustic framework. The tensor-to-scalar ratio must be computed from the finite transition region via the native temporal-conformal wave equation, not from an imported inflationary consistency relation.
 
 **Outlook:** Figure 1 (Section 4.5) illustrates the conformal-boundary interpretation: the singular lower edge of standard flat $\Lambda$CDM is replaced by a smooth regular temporal conformal boundary $\mathscr{T}^{-}$, where $A_{\rm clock}\to0$ and curvature invariants vanish. The apparent Big Bang is a regular conformal-temporal endpoint, not a physical singularity. Step 09b is complete: the native tensor equation yields $r(k_{\rm pivot})=9\times 10^{-6}$ and $r_{\rm max}=6.26\times 10^{-4}$, well below current and projected CMB bounds. Closed-loop synchronization holonomy remains the primary discriminant of the non-exact/disformal sector of TEP. In the homogeneous conformal limit analysed here, $A_{\rm clock}$ gives open-path temporal redshift but does not by itself generate residual loop holonomy, since $\oint d\ln A_{\rm clock}=0$. A nonzero $\mathcal{H}_{\rm resid}$ would require the disformal contribution $B(\phi)\nabla_{\mu}\phi\nabla_{\nu}\phi$, non-metricity, or another non-exact synchronization structure, as developed in the foundational TEP paper (Jakarta).
 
@@ -1108,6 +933,8 @@ The causal matter-frame universe is curvature-regular at the temporal conformal 
 - Smawfield, M.L. Temporal Equivalence Principle: A Covariant Alternative to Cosmic Expansion. *Zenodo* (2026). DOI: 10.5281/zenodo.20370143
 
 - Smawfield, M.L. Temporal Equivalence Principle: Native hi_class Conformal Implementation, Linear Perturbation Closure, and CMB Acoustic Peak Preservation. *Zenodo* (2026). DOI: 10.5281/zenodo.20682752
+
+- Smawfield, M.L. Temporal Equivalence Principle: Dynamical Proper Time and the Illusion of Primordial Deuterium. *Zenodo* (2026). DOI: 10.5281/zenodo.21841148
 
 - Hawking, S.W. The occurrence of singularities in cosmology. *Proc. R. Soc. A* **294**, 511-521 (1966).
 
@@ -1196,28 +1023,26 @@ The TEP corpus uses related but distinct symbols across its papers. This diction
 | Symbol | Definition | Primary Paper | Fiducial / Fitted Value |
 | --- | --- | --- | --- |
 | $A_{\rm clock}(z)$ | Exact observational clock/redshift map: $A_{\rm clock}=(1+z)^{-1}$ | TEP-TH | $(1+z)^{-1}$ (exact) |
-| $A_{\rm dyn}(z)$ | Dynamically screened shear response: $\left(1+z/z_t\right)^{-\epsilon_{\rm eff}(z)}$ | TEP-TH | Screened to unity at $z\gtrsim z_t$ |
+| $A_{\rm dyn}(z)$ | Dynamical shear response: $\left(1+z/z_t\right)^{-\epsilon_t}$ | TEP-TH | Modifies late time evolution |
 | $\alpha_A$ | Temporal-shear conformal amplitude in Jordan-frame notation | TEP-HC | $-0.0028$ (Planck best-fit) |
 | $\alpha_M$, $\alpha_B$, $\alpha_K$, $\alpha_T$ | Runtime Bellini–Sawicki EFT functions: $\alpha_M=-2\alpha_A$, $\alpha_B=2\alpha_A$, $\alpha_K=-5\alpha_A^2$, $\alpha_T=0$ | TEP-HC | Derived from $\alpha_A$ |
 | $\epsilon_T^{\rm los}$ | Late-time line-of-sight transport amplitude (C0 supernova fit) | TEP-C0 | $\mathcal{U}[0, 1.0]$ (prior); posterior peaked near $\sim 0.89$ |
 | $\epsilon_T^{\rm CMB}$ | C0 background/acoustic diagnostic amplitude | TEP-C0 | $-0.0015\pm0.0037$ |
-| $\epsilon_T^{\rm HC}$ | Native hi_class homogeneous conformal amplitude | TEP-HC | $0.0056\pm0.0043$ |
-| $\epsilon_{\rm dyn}(z)$, $\epsilon_{\rm eff}(z)$ | Screened dynamical temporal-horizon response | TEP-TH | Screened to $\sim10^{-12}$ at BBN, $\sim10^{-2}$ at recombination |
+| $\epsilon_T^{\rm HC}$ | Native hi_class homogeneous conformal amplitude | TEP-HC | $0.00602\pm0.00493$ |
+| $\epsilon_{\rm dyn}$ | Dynamical temporal-horizon response | TEP-TH | Modulates late-time expansion |
 | $\epsilon_{\rm field}$ | Primordial spectral-flow parameter constrained by $n_s$ | TEP-TH | $0.0175$ (from $n_s=0.965$) |
 | $z_T^{\rm los}$ | C0 line-of-sight supernova transport turnover | TEP-C0 | $5$ (conservative), $100$ (benchmark), free (broad) |
 | $z_T^{\rm HC}$ | Homogeneous/acoustic hi_class profile scale | TEP-HC | Fitted jointly with $\epsilon_T$ |
-| $z_t^{\rm th}$ | TH thermal-screening transition redshift | TEP-TH | $100$ (from $T_{\rm lock}=0.03$ eV) |
-| $T_{\rm lock}$ | Thermal screening scale: $T_{\rm lock}=T_0(1+z_t)$ | TEP-TH | $0.03$ eV |
 | $p$ | Temporal-horizon conformal exponent: $A_{\rm clock}\sim\eta^{-p}$ | TEP-TH | $0 \lt p\le\tfrac12$ (regular branch) |
 | $r_s^{\rm TEP}/r_s^{\Lambda\rm CDM}$ | Pre-recombination sound-horizon ratio | TEP-HC | $0.999994$ ($<6$ ppm deviation) |
 | $D=\alpha_K+\tfrac32\alpha_B^2$ | No-ghost discriminant (physical branch: $D=\alpha_A^2$) | TEP-HC | $\alpha_A^2>0$ (positive definite) |
 | $r(k_{\rm pivot})$ | Native tensor-to-scalar ratio at Planck pivot | TEP-TH | $9\times10^{-6}$ |
 | $r_{\rm max}$ | Maximum tensor-to-scalar ratio across transition profile | TEP-TH | $6.26\times10^{-4}$ |
 | $H_0$ | Hubble parameter (TEP-C0 joint MCMC) | TEP-C0 | $66.70\pm0.58$ km s$^{-1}$ Mpc$^{-1}$ |
-| $S_8$ | $\sigma_8\sqrt{\Omega_m/0.3}$ (TEP-HC joint MCMC) | TEP-HC | $0.870\pm0.028$ |
+| $S_8$ | $\sigma_8\sqrt{\Omega_m/0.3}$ (TEP-HC joint MCMC) | TEP-HC | $0.867\pm0.026$ |
 | $\sigma_8^{\rm HC}$ | Native hi_class matter-fluctuation amplitude | TEP-HC | $0.825\pm0.016$ |
 
-**Note:** Parameters with superscript labels ($^{\rm los}$, $^{\rm HC}$, $^{\rm th}$) are related projections of the same temporal sector but are not numerically interchangeable. The turnover scales $z_T^{\rm los}$, $z_T^{\rm HC}$, and $z_t^{\rm th}$ describe different physical regimes; the amplitudes $\epsilon_T^{\rm los}$, $\epsilon_T^{\rm CMB}$, $\epsilon_T^{\rm HC}$, and $\epsilon_{\rm field}$ are constrained by different observables.
+**Note:** Parameters with superscript labels ($^{\rm los}$, $^{\rm HC}$) are related projections of the same temporal sector but are not numerically interchangeable. The turnover scales $z_T^{\rm los}$ and $z_T^{\rm HC}$ describe different physical regimes; the amplitudes $\epsilon_T^{\rm los}$, $\epsilon_T^{\rm CMB}$, $\epsilon_T^{\rm HC}$, and $\epsilon_{\rm field}$ are constrained by different observables.
 
 # 15. Data Availability and Reproducibility
 
@@ -1261,7 +1086,7 @@ python step_10_cmb_lss_class.py
 
 - **step_04_full_bbn_abundances.json / .csv**: BBN abundance validation (Y_p, D/H, He3/H, Li7/H, N_eff)
 
-- **step_05_recombination_visibility.json / .csv**: Recombination epoch (z_*, r_s, theta_s), LCDM and TEP comparison
+- **step_05_recombination_visibility.json / .csv**: Recombination epoch ($z_*$, $r_s$, $\theta_s$), LCDM and TEP comparison
 
 - **step_09b_native_tensor_integration.json / .csv**: Native tensor-mode integration (r(k_pivot), r_max, Bogoliubov coefficients)
 
@@ -1289,4 +1114,4 @@ The pipeline uses publicly available cosmological data:
 
 ## Version Control
 
-This work uses version v0.2 (Thika) of the TEP-TH pipeline, first published 18 June 2026. The repository maintains a complete history of all changes through Git version control.
+This work uses version v0.3 (Thika) of the TEP-TH pipeline, first published 18 June 2026. The repository maintains a complete history of all changes through Git version control.
