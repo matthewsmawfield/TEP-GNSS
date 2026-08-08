@@ -4,7 +4,7 @@
 # When updated in the main TEP repo, run scripts/bump_papers.py to propagate.
 
 schema_version: 1
-last_updated: "2026-06-05"
+last_updated: "2026-06-06"
 
 parameter_classes:
   fundamental: "Axiomatic or theoretically fixed parameter; changes would alter the framework itself."
@@ -26,7 +26,7 @@ parameters:
 
   - symbol: "rho_c"
     latex: "\\rho_c"
-    meaning: "Temporal Topology saturation proximity scale (observationally proxied by density)"
+    meaning: "Temporal Topology saturation scale (observationally proxied by density)"
     value: 20.0
     units: "g cm^{-3}"
     class: "calibrated"
@@ -42,7 +42,7 @@ parameters:
     class: "calibrated"
     first_paper: 1
     used_in: [1, 2, 3, 6, 14, 17, 21]
-    description: "Characteristic scale over which the scalar field remains correlated. Long-duration multi-center GNSS analysis yields ~4200 km (canonical). MGEX held-out verification (Paper 14) yields ~1396 km and is not interchangeable with this baseline. Lab-scale crustal value is LAB_COHERENCE_LENGTH_M = 50 km."
+    description: "Canonical terrestrial correlation length for all forward analysis (NIST FEM, rho_c chain, etc.). From 25-year multi-center GNSS (Papers 1–2/6). Paper 14 MGEX held-out verification (~1 yr, lambda ~1396 km) confirms the signal but is not adopted for dimensional normalization. Lab-scale crustal value is LAB_COHERENCE_LENGTH_M = 50 km."
 
   - symbol: "alpha_log"
     latex: "\\alpha_{\\log}"
@@ -73,6 +73,16 @@ parameters:
     first_paper: 21
     used_in: [21]
     description: "Threshold mass where phi_mass ~ beta_geom."
+
+  - symbol: "kappa_Gal"
+    latex: "\\kappa_{\\text{Gal}}"
+    meaning: "Canonical galaxy-scale observable response coefficient"
+    value: 9.6e5
+    units: "mag"
+    class: "calibrated"
+    first_paper: 11
+    used_in: [11, 12]
+    description: "Expected bare-scale coupling for Cepheid P-L shifts before environmental screening. Used as prior in multi-anchor regression. Consistent with TEP geometric-factor estimate."
 
   - symbol: "kappa_Cep"
     latex: "\\kappa_{\\text{Cep}}"
@@ -142,7 +152,7 @@ parameters:
     class: "observable_response"
     first_paper: 0
     used_in: [0, 6, 18, 22, 24]
-    description: "Solar-system PPN bound |β| < 3.4×10⁻³ from Cassini time-delay measurements (Bertotti et al. 2003). The lab-scale bare coupling β_A = -1.0 must be screened by a factor ~300 in the solar system; this is achieved by the density-dependent coupling model f(ρ) = 1/[1+(ρ_transition/ρ)^n]."
+    description: "Solar-system PPN bound |β| < 3.4×10⁻³ from Cassini time-delay measurements (Bertotti et al. 2003). The lab-scale bare coupling β_A = -1.0 must be screened by a factor ~300 in the solar system; this is achieved by the environment-dependent coupling model f(ρ) = 1/[1+(ρ_transition/ρ)^n]."
 
   - symbol: "B"
     latex: "B(\\phi)"

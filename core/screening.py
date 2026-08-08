@@ -3,9 +3,15 @@
 TEP Screening Module
 ====================
 
-Version: TEP v0.9 (Jakarta)
+Version: TEP v0.10 (Jakarta)
 
-Density-dependent screening functions for the Temporal Equivalence Principle.
+Environment-dependent Temporal Shear suppression for the Temporal Equivalence Principle.
+
+Screening is the continuous suppression of locally observable Temporal Shear,
+Sigma_mu^obs = S_Sigma(E) Sigma_mu, where E includes density, potential, source
+structure, boundary conditions, and measurement channel. The functions here
+provide domain-appropriate parameterizations of the underlying operator; they
+are transfer models, not separate fundamental laws.
 
 All TEP papers should import from this module to ensure consistent screening
 models across the corpus.
@@ -17,7 +23,7 @@ from . import constants as tep_const
 RHO_C = tep_const.RHO_C
 
 
-def universal_screening_function(rho, rho_threshold, n=2.0, invert=False):
+def universal_screening_function(rho, rho_scale, n=2.0, invert=False):
     """
     Universal TEP density screening function.
 
@@ -25,22 +31,28 @@ def universal_screening_function(rho, rho_threshold, n=2.0, invert=False):
     ----------
     rho : float or ndarray
         Local matter density.
-    rho_threshold : float
-        Transition density threshold (same units as rho).
+    rho_scale : float
+        Transition density scale (same units as rho).
     n : float
         Steepness of the power-law transition. Default is 2.0.
     invert : bool
-        If False (default): factor = 1 / [1 + (rho/rho_threshold)^n].
+        If False (default): factor = 1 / [1 + (rho/rho_scale)^n].
         Used for source and cosmology screening (suppressed at high density).
 
-        If True: factor = 1 / [1 + (rho_threshold/rho)^n].
+        If True: factor = 1 / [1 + (rho_scale/rho)^n].
         Used for chameleon coupling screening (suppressed at low density).
     """
     rho = np.asarray(rho, dtype=float)
+    if np.any(rho <= 0):
+        raise ValueError("rho must be strictly positive")
+    if rho_scale <= 0:
+        raise ValueError("rho_scale must be strictly positive")
+    if n <= 0:
+        raise ValueError("n must be strictly positive")
     if invert:
-        ratio = rho_threshold / rho
+        ratio = rho_scale / rho
     else:
-        ratio = rho / rho_threshold
+        ratio = rho / rho_scale
     return 1.0 / (1.0 + ratio ** n)
 
 
@@ -51,6 +63,12 @@ def screening_factor(rho_local_g_cm3, rho_c=RHO_C):
     When rho_local << rho_c: suppression -> 1 (full TEP effect)
     When rho_local -> rho_c: suppression -> 0.5 (transition)
     When rho_local >> rho_c: suppression -> 0 (saturated, A -> 1)
+
+    WARNING: rho_c = 20.0 g/cm^3 is calibrated for lab/stellar-body densities.
+    For galactic-scale densities (~1e-17 g/cm^3), rho/rho_c ~ 5e-19 and this
+    function returns S ~ 1.0 for every galaxy, making it numerically useless as
+    an environmental discriminant. For galaxy-scale Cepheid-host screening, use
+    the galactic-onset density rho_half ~ 0.5 M_sun/pc^3 (see TEPCosmology).
     """
     return universal_screening_function(rho_local_g_cm3, rho_c, n=2.0, invert=False)
 
