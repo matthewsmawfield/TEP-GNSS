@@ -3,7 +3,7 @@
 TEP Screening Module
 ====================
 
-Version: TEP v0.10 (Jakarta)
+Version: TEP v0.14 (Jakarta)
 
 Environment-dependent Temporal Shear suppression for the Temporal Equivalence Principle.
 
@@ -85,26 +85,70 @@ def coupling_screening_factor(rho_local_g_cm3, rho_transition=1.0, n=4.0):
     return universal_screening_function(rho_local_g_cm3, rho_transition, n=n, invert=True)
 
 
-def beta_screened(rho_local_g_cm3, beta_A=tep_const.BETA_A,
-                  rho_transition=1.0, n=4.0):
+def physical_shear(grad_phi_solved, beta_A=tep_const.BETA_A):
     """
-    Screened conformal coupling beta_eff(rho) = beta_A * f(rho).
+    Physical temporal shear is exactly the gradient of the conformal factor
+    Sigma_mu = nabla_mu ln A(phi) = beta_A * nabla_mu phi
+    for the exact, fully solved (and thus already screened) scalar field.
 
     Parameters
     ----------
-    rho_local_g_cm3 : float or ndarray
-        Local matter density in g/cm^3.
+    grad_phi_solved : float or ndarray
+        The gradient of the fully solved (nonlinear) scalar field.
     beta_A : float
         Bare conformal coupling.
-    rho_transition : float
-        Density at which coupling is half-screened.
-    n : float
-        Steepness of the transition.
 
     Returns
     -------
     float or ndarray
-        Effective conformal coupling after density screening.
+        Physical Temporal Shear.
     """
-    f = coupling_screening_factor(rho_local_g_cm3, rho_transition, n)
-    return beta_A * f
+    return beta_A * np.asarray(grad_phi_solved, dtype=float)
+
+
+def screening_ratio(q_screened, q_reference):
+    """
+    Screening ratio S_Sigma describes how much the nonlinear solution
+    differs from an unscreened reference solution.
+
+    It should not automatically multiply the gradient of an already-screened field.
+
+    Parameters
+    ----------
+    q_screened : float or ndarray
+        Observable quantity (e.g., charge, force, shear) from the nonlinear solved field.
+    q_reference : float or ndarray
+        The same observable from an unscreened reference solution.
+
+    Returns
+    -------
+    float or ndarray
+        The ratio S_Sigma = Q_screened / Q_reference.
+    """
+    q_s = np.asarray(q_screened, dtype=float)
+    q_r = np.asarray(q_reference, dtype=float)
+    # Avoid division by zero warnings
+    return np.divide(q_s, q_r, out=np.zeros_like(q_s), where=q_r!=0)
+
+
+def matter_acceleration(grad_newton, physical_shear_val, c=tep_const.C_LIGHT):
+    """
+    Acceleration directly from the matter metric in the weak-field limit.
+    In the appropriate limit, its scalar contribution is obtained from
+    the physical nabla ln A, not from an additional arbitrary suppression multiplier.
+
+    Parameters
+    ----------
+    grad_newton : float or ndarray
+        The Newtonian gravitational acceleration (grad Phi_N).
+    physical_shear_val : float or ndarray
+        The physical temporal shear (nabla ln A).
+    c : float
+        Speed of light.
+
+    Returns
+    -------
+    float or ndarray
+        Total acceleration.
+    """
+    return - np.asarray(grad_newton, dtype=float) - (c**2) * np.asarray(physical_shear_val, dtype=float)
