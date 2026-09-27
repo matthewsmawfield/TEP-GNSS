@@ -1,4 +1,4 @@
-v0.26 (Jaipur) — 8 August 2026 — Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
+v0.27 (Jaipur) — 13 September 2026 — Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
 
 - Reframed the Compton-mass interpretation as a completion-dependent heuristic: lambda_T is now presented as the primary empirical quantity, with m_phi serving only as a Yukawa/Compton reference scale under a specific scalar completion
 - Softened disformal coupling claims and clarified PPN screening: GNSS covariance does not by itself isolate B(phi) (direct discrimination requires a non-exact transport observable), and the PPN bound is noted to apply to the environmentally screened effective coupling rather than directly fixing the bare conformal parameter beta_A 

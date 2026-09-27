@@ -2,17 +2,21 @@
     <h2>Abstract</h2>
     <p>
         Phase-coherent spectral analysis of 62.7 million station-pair
-        measurements from 364 GNSS stations (2023–2025) reveals systematic
+        measurements from 364 GNSS stations (2023–2025; effective sample size N<sub>eff</sub> ≈ 25–28 independent distance bins after accounting for spatial
+        correlation; see §Methods) reveals systematic
         distance-structured correlations in clock networks. These correlations
         follow an exponential decay with a median Temporal Topology correlation
-        length λ<sub>T</sub> = 3,330–4,549 km (95 % CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA
+        length λ<sub>T</sub> = 3,330–4,549 km (exponential best fit; bootstrap 95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA
         2,532–3,984 km) and show strong goodness-of-fit when evaluated on
-        distance-binned means across three independent analysis centres (R² =
-        0.920–0.970; fits are to bin means, not raw pairs). Cross-center
-        validation, consistent across 12 frequency bands and confirmed through
+        distance-binned means across three distinct analysis center solutions on largely shared raw inputs (CODE, IGS Combined, ESA Final; R² =
+        0.920–0.970; fits are to bin means, not raw pairs). Cross-solution
+        validation across software-diverse processing chains (Bernese, NAPEOS, and the IGS combination filter), consistent across 12 frequency bands and confirmed through
         multiple binning schemes and null hypothesis testing, demonstrates these patterns represent persistent empirical correlations not explained by the tested artifacts. The patterns also show dependencies on station elevation and
-        geomagnetic latitude, consistent with theoretical frameworks involving
-        screened scalar fields via continuous Temporal Topology.
+        geomagnetic latitude, consistent with screened scalar fields via
+        continuous Temporal Topology; these dependencies are also
+        morphologically compatible with residual atmospheric and ionospheric
+        organization, and the two readings are separated only by spatially
+        resolved external controls identified as required follow-up.
     </p>
 
     <p>
@@ -30,17 +34,51 @@
         and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction
         across 19 independent validation families. TID exclusion analysis shows
         21–23&nbsp;% signal improvement when excluding high-ionosphere
-        periods—the ionosphere suppresses rather than creates the correlation.
+        periods—temporal ionospheric variability suppresses rather than creates
+        the correlation, while the static geomagnetic-latitude dependence
+        remains a separately quantified channel — bounded at &lesssim;3% of the
+        coherent signal by the local-night persistence test (Step 4.9), with a
+        spatially resolved GIM/ROTI morphology control identified as the
+        required external closure.
     </p>
 
     <p>
         The investigation was structured to test predictions from the Temporal
         Equivalence Principle (TEP) framework, which suggested a Temporal
-        Topology correlation length (λ<sub>T</sub>) of 1,000–10,000 km. The full
-        analysis yielded λ<sub>T</sub> = 3,330–4,549 km, a result consistent with
-        this expectation which motivated tests of
-        derived predictions (diurnal, eclipse, and orbital signatures). While
-        multi-center consistency and extensive validation provide a strong basis
+        Topology correlation length (λ<sub>T</sub>) of 1,000–10,000 km. The
+        discriminating content is structural rather than the decade-wide prior
+        interval itself: the pooled-band estimate λ<sub>T</sub> = 3,330–4,549 km
+        brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈
+        4,150 km, the correlation is band-localized (control-band R² ≈ 0.6 vs
+        ≈0.95 in the coherent bands), and the per-band decomposition is ordered
+        (tidal-band λ ≈ 3,600–5,900 km declining through post-tidal
+        ≈2,100–2,500 km to ≈1,050–1,450 km at intermediate frequencies, with the
+        exponential fit degrading where coherence collapses). Forward
+        simulation of the satellite-visibility and network-datum channel on
+        the real station geometry bounds its effective decay scale at λ &gsim;
+        6.7×10<sup>3</sup> km; conditioned on the real product — true CODE
+        ephemerides and the estimated satellite-clock content itself — the
+        channel remains broader than every measured λ<sub>T</sub>
+        (no realisation below λ = 5,075 km across 40 conditioned
+        realisations)
+        and produces a profile shape (near-unity correlation within 1 Mm,
+        sign-definite anticorrelation beyond ~5 Mm) that the measured
+        correlation does not contain (§4.6). The R<sub>T</sub> identification
+        calibrates against the corpus's fitted ρ<sub>T</sub> convention (Paper 6);
+        it is consistency with a corpus parameterization, not an independently
+        derived prediction. Across products the fitted scale is conditioned by
+        clock-product construction and estimator band floor: the multi-GNSS
+        MGEX family returns λ = 1,862 ± 155 km, and a controlled decomposition
+        on identical MGEX station-days bounds the spectral-resolution and
+        common-mode contributions at ≲±25% of the fitted scale while
+        reproducing the same band-ordered profile (Paper 14, Step 3.5); the
+        fitted amplitude is likewise a bounded phase-direction index whose
+        cross-product values decompose into statistic saturation plus product
+        and estimator conditioning rather than a coherence-amplitude conflict
+        (Paper 14, Step 3.6). The
+        R<sub>T</sub> bracketing is therefore stated at the cross-product
+        family level (~1.9–4.5×10<sup>3</sup> km). While
+        cross-pipeline consistency across software-diverse solutions and extensive validation provide a strong basis
         for these findings, alternative explanations involving sophisticated
         systematics cannot be fully excluded. Therefore, definitive physical
         interpretation awaits critical next steps: raw-data analysis,

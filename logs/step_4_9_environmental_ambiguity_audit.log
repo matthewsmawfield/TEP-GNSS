@@ -1,0 +1,6 @@
+[00:30:31] [PROCESS] Step 4.9: Environmental ambiguity audit
+[00:30:31] [SUCCESS] Saved /Users/matthewsmawfield/www/Temporal Equivalence Principle/TEP-GNSS/results/outputs/step_4_9_environmental_ambiguity.json
+[00:30:31] [INFO] Geomag: high-maglat band is λ-minimum in 7/9 cells (p=8.3e-03); quiet band max in 5/9
+[00:30:31] [INFO] Troposphere: 22 bands inside 1,000–2,000 km
+[00:30:31] [INFO] Annual: 2.50 cycles — driver-degenerate
+[00:30:31] [INFO] Diurnal persistence: ionospheric fraction bound (annual, ρ=0.25) = code=0.0%, esa_final=1.9%, igs_combined=1.7%

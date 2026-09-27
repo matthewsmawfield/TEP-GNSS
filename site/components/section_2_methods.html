@@ -35,7 +35,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
                 <div style="background-color: rgba(73, 87, 115, 0.08); padding: 15px; border-radius: 5px;">
                     <strong style="color: #220126;">Step 1: Data Collection</strong>
-                    <p style="margin: 5px 0; font-size: 13px;">Download official GPS clock data from three independent analysis centers. Validate that all station coordinates are correct and data quality is high.</p>
+                    <p style="margin: 5px 0; font-size: 13px;">Download official GPS clock products from three analysis centers (CODE, IGS Combined, ESA Final). Validate that all station coordinates are correct and data quality is high.</p>
                 </div>
                 <div style="background-color: rgba(73, 87, 115, 0.08); padding: 15px; border-radius: 5px; border-left: 3px solid #495773;">
                     <strong style="color: #220126;">Step 2: Pattern Detection</strong>
@@ -129,10 +129,10 @@
         <h4 style="color: #220126; margin-top: 20px;">Step 1: Data Acquisition</h4>
         <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
             <li>1.0 Provenance Documentation: Establishes computational provenance with version tracking and execution logging</li>
-            <li>1.1 TEP Data Acquisition: Acquires GNSS clock data from three independent analysis centers (CODE, IGS Combined, ESA) covering 1 January 2023 to 30 June 2025</li>
+            <li>1.1 TEP Data Acquisition: Acquires GNSS clock data from three analysis center solutions (CODE, IGS Combined, ESA Final) covering 1 January 2023 to 30 June 2025</li>
             <li>1.2 Coordinate Validation: Validates station coordinates against ITRF2014 with ECEF validation and spatial analysis</li>
         </ol>
-        <p style="margin-top: 10px; font-style: italic; color: #666;">Establishes computational provenance and acquires GNSS clock data from three independent analysis centers with rigorous quality controls.</p>
+        <p style="margin-top: 10px; font-style: italic; color: #666;">Establishes computational provenance and acquires GNSS clock data from three analysis center solutions with rigorous quality controls.</p>
         
         <h4 style="color: #220126; margin-top: 20px;">Step 2: Core Analysis</h4>
         <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
@@ -169,7 +169,7 @@
         
         <h4 style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #ddd;">Pipeline Validation Framework</h4>
         <ul style="margin: 10px 0; line-height: 1.6;">
-            <li>Multi-Center Consistency: All analyses performed across three independent GNSS analysis centers (CODE, IGS Combined, ESA) with systematic cross-validation to assess coefficient of variation</li>
+            <li>Multi-Center Consistency: All analyses performed across three GNSS analysis centers running different software (CODE, IGS Combined, ESA) on the shared tracking network, with systematic cross-validation to assess coefficient of variation</li>
             <li>Statistical Rigor: Null testing through data scrambling, cross-validation methods, and multiple comparison corrections applied throughout the pipeline</li>
             <li>Reproducibility: Complete computational provenance tracking, version control, execution logging, and open-source analysis scripts ensure full reproducibility</li>
         </ul>
@@ -234,7 +234,7 @@ Implementation Details: For complete usage instructions, configuration options, 
             <li>IGS Combined: CV of daily pair counts = 58.4% (variable: 990-29,618 pairs/day, reflects multi-center combination strategy)</li>
             <li>ESA Final: CV of daily pair counts = 14.1% (consistent: 10,731-16,290 pairs/day)</li>
         </ul>
-        <p><em>The higher temporal variation in IGS Combined reflects its nature as a weighted combination of multiple analysis center solutions, with varying contributor availability over time. Despite this operational difference, IGS demonstrates correlation parameters consistent with independent centers, confirming robustness to temporal sampling patterns (see Section 3.1.1 for detailed results).</em></p>
+        <p><em>The higher temporal variation in IGS Combined reflects its nature as a weighted combination of multiple analysis center solutions, with varying contributor availability over time. Despite this operational difference, IGS demonstrates correlation parameters consistent with CODE and ESA, confirming robustness to temporal sampling patterns across diverse processing architectures (see Section 3.1.1 for detailed results).</em></p>
     </div>
 
     <figure role="img" style="text-align:center; margin: 30px 0;">
@@ -311,7 +311,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         <div class="equation">\begin{equation} \label{eq:cross_spectrum}
         S_{ij}(f)=\mathcal{F}\{R_{ij}(\tau)\}, \quad R_{ij}(\tau)=\mathbb{E}[x_i(t)\,x_j(t+\tau)]
         \end{equation}</div>
-        <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. In the 10–500 μHz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
+        <p>Under TEP, each clock's fractional frequency $y_k(t)$ receives a common field contribution $y_k(t) \propto \phi(\mathbf{x}_k,t)$ plus local noise. The local noise term encompasses per-station oscillator characteristics—crystal aging, individual frequency offset, temperature sensitivity, and drive-level dependence—that are independent between stations. These contributions are uncorrelated across the network by construction: two quartz oscillators in the same room drift independently, and GNSS receiver clocks at different sites share no common oscillator heritage. Prior to cross-spectral analysis, each station's clock time series is linearly detrended to remove the dominant per-station systematic drift (frequency offset and linear aging rate), isolating the stochastic fluctuations in the 10–500 μHz band where TEP signatures are expected. Because uncorrelated per-station noise has no distance dependence by definition, it contributes to the noise floor but cannot generate the distance-structured exponential correlation that distinguishes the TEP signal. In the 10–500 μHz band, any propagation delay across baselines ($\leq 15{,}000$ km) is negligible relative to the periods (33 minutes–28 hours):</p>
         <div class="equation">\begin{equation} \label{eq:phase_bound}
         \phi_{\max}=2\pi f_{\max}\,\tau_{\max} \le 2\pi\,(5\times10^{-4}\,\mathrm{Hz})\;\frac{1.5\times10^7\,\mathrm{m}}{c}\approx1.6\times10^{-4}\ \mathrm{rad}
         \end{equation}</div>
@@ -320,7 +320,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         \mathbb{E}[\cos(\arg S_{ij})]=\frac{I_1(\kappa(r))}{I_0(\kappa(r))}\approx \tfrac{1}{2}\kappa(r)\quad(\kappa\ll1)
         \end{equation}</div>
         <p>If the underlying field has exponential spatial covariance, $\mathrm{Cov}[\phi(\mathbf{x}),\phi(\mathbf{x}+\mathbf{r})]\propto e^{-r/\lambda}$, then the concentration $\kappa(r)$ (and thus the circular mean above) inherits an exponential distance-decay, matching the fitted form.</p>
-        <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts through: (i) comprehensive randomization testing (distance, phase, and station scrambling), which destroys the spatial correlation structure in null tests while preserving it in genuine data; and (ii) replication across independent processing chains (CODE, IGS, ESA) with different systematic vulnerabilities. Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore cannot detect the distance-structured phase relationships central to TEP.</p>
+        <p>This phase-only approach is robust to amplitude artifacts because it normalizes each $S_{ij}$ to unit magnitude before averaging (amplitude invariance). It distinguishes genuine spatial organization from mathematical artifacts through: (i) comprehensive randomization testing (distance, phase, and station scrambling), which destroys the spatial correlation structure in null tests while preserving it in genuine data; and (ii) replication across software-diverse processing chains (CODE, IGS, ESA) with different systematic vulnerabilities on the shared tracking network. Standard magnitude-based metrics ($|\mathrm{CSD}|$ or band-averaged real coherency) discard this directional information and therefore cannot detect the distance-structured phase relationships central to TEP.</p>
         </div>
 
     <h2>2.4 Validation Framework Overview</h2>
@@ -513,7 +513,7 @@ This frequency band methodology enables discrimination between tidal effects, po
                 <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
                     <li><strong>Method:</strong> Block bootstrap resampling of distance bins (5000 iterations, block_size=10)</li>
                     <li><strong>Features:</strong> Data-driven parameter initialization, fallback strategies, enhanced numerical stability (maxfev=5000)</li>
-                    <li><strong>Success Rate:</strong> 71–73% convergence, demonstrating robust parameter estimation (validated via comprehensive bias analysis, see Appendix 7.2)</li>
+                    <li><strong>Success Rate:</strong> 71–73% convergence; the 27–29% non-converged resamples are attributable to block-sampling draws that select predominantly short-baseline or predominantly distant flat bins across the N<sub>eff</sub> ≈ 25–28 distance bins, leaving the exponential decay scale under-constrained in nonlinear optimization (validated via comprehensive bias analysis, see Appendix 7.2)</li>
                     <li><strong>Purpose:</strong> Quantifies uncertainty in correlation function fitting while preserving network topology</li>
                 </ul>
             </div>
@@ -532,8 +532,8 @@ This frequency band methodology enables discrimination between tidal effects, po
                 <thead>
                     <tr style="background-color: rgba(73, 87, 115, 0.05);">
                         <th style="border: 1px solid #495773; padding: 8px; text-align: left;">Analysis Center</th>
-                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">λ<sub>T</sub> (km)</th>
-                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">Bin-Level 95% CI (km)</th>
+                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">λ<sub>T</sub> (exponential best fit, km)</th>
+                        <th style="border: 1px solid #495773; padding: 8px; text-align: center;">Bin-level bootstrap 95% CI (km)</th>
                         <th style="border: 1px solid #495773; padding: 8px; text-align: center;">Station-Block 95% CI (km)</th>
                     </tr>
                 </thead>
@@ -563,8 +563,8 @@ This frequency band methodology enables discrimination between tidal effects, po
             <li>Random seeds: Sequential 0-999 for reproducibility</li>
         </ul>
         
-        <h3>Multi-Center Meta-Analysis</h3>
-        <p>Results from three independent analysis centers (CODE, IGS Combined, ESA Final) are combined using standard meta-analytic techniques. Station network overlap between centers ranges from 83–90%, creating statistical dependence that must be acknowledged when interpreting combined evidence.</p>
+        <h3>Cross-Center Processing Architecture and Network Overlap</h3>
+        <p>Results from three distinct analysis center solutions (CODE, IGS Combined, ESA Final) are evaluated using standard meta-analytic comparisons. These products reflect different processing software packages and estimation strategies (Bernese GNSS Software at CODE, NAPEOS at ESA, and the weighted IGS Combination algorithm), but they operate on largely shared raw tracking inputs, with station network overlap between centers ranging from 83–90%. This creates physical and geometric dependence that must be acknowledged when interpreting combined evidence: cross-center agreement rules out software-specific bugs or implementation artifacts, but cannot rule out common-mode constellation geometry or datum-level systematics.</p>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 15px; margin: 15px 0; border-radius: 5px;">
             <h4 style="margin-top: 0; color: #220126;">Station Network Overlap</h4>
@@ -600,7 +600,7 @@ This frequency band methodology enables discrimination between tidal effects, po
                 </tbody>
             </table>
             
-            <p style="font-size: 12px; color: #666; margin-top: 5px;"><strong>Note:</strong> Overlap percentages calculated as (shared stations / smaller network) × 100. High overlap indicates that center-specific results are not fully independent, and combined statistical evidence should be interpreted as corroboration across independent processing methodologies applied to substantially overlapping networks rather than fully independent replications.</p>
+            <p style="font-size: 12px; color: #666; margin-top: 5px;"><strong>Note:</strong> Overlap percentages calculated as (shared stations / smaller network) × 100. High overlap indicates that center-specific results are not fully independent, and combined statistical evidence should be interpreted as corroboration across independent processing methodologies applied to substantially overlapping networks rather than fully independent replications. The same ecosystem caveat applies across the companion papers: Paper 2 analyses the same CODE final product line over a longer epoch (2000–2025), Paper 14 uses CODE's MGEX combined product (2025–2026), and Paper 33's analysis-centre arms use COD/GFZ/GRG/JPL clock products, so cross-paper agreement among these is corroboration within a shared product ecosystem and a shared tracking network. The estimation-chain-independent axis in the corpus is Paper 3's raw-RINEX broadcast-ephemeris analysis, joined by Paper 33's self-processed SPP arms.</p>
             
             <p style="font-size: 12px; color: #666; margin-top: 5px;"><strong>Meta-analytic approach:</strong> Fisher's Z-transformation is used to pool correlation coefficients across centers, with weights proportional to effective sample size (N<sub>eff</sub> = 25–28 distance bins per center). Heterogeneity is assessed using Cochran's Q-statistic and I² metric.</p>
         </div>
@@ -615,6 +615,7 @@ This frequency band methodology enables discrimination between tidal effects, po
         </ul>
 
         <p><strong>Pre-specified falsification criteria (declared before final analysis):</strong> (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. <strong>Outcomes:</strong> λ = 3,330–4,549 km (PASS); CV of λ = 18.2% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).</p>
+        <p><strong>Structural identification criterion:</strong> The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) the pooled coherent-band estimate must bracket the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km—satisfied by the IGS-final λ<sub>T</sub> = 3,330–4,549 km, with the precise-product family spanning ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning (MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5); raw-SPP channels bound the scale from below at ~0.7–1.1×10<sup>3</sup> km (noise-floor-limited projection) while the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ &gsim; 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ &geq; 5,075 km with a qualitatively different profile shape (§4.6); (d) the R<sub>T</sub> identification calibrates against the fitted ρ<sub>T</sub> ≈ 20 g/cm³ convention (Paper 6), so consistency is with a corpus parameterization rather than an independently derived scale. Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.</p>
 
         <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773;">
             <h4>Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)</h4>
@@ -748,14 +749,14 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
             <ul style="margin: 10px 0; line-height: 1.6;">
                 <li>If r<sub>linear</sub> ≈ +0.8 to +1.0: Strong linear gravitational scaling (Newtonian)</li>
                 <li>If r<sub>quadratic</sub> > r<sub>linear</sub> and r<sub>quadratic</sub> ≈ +0.7 to +0.9: Tidal/quadratic coupling</li>
-                <li>If both r ≈ 0: No gravitational scaling (coupling mechanism mass-independent)</li>
-                <li>If r < 0: Inverse mass hierarchy (smaller planets show stronger signals)</li>
+                <li>If both |r| ≲ 0.2: No significant gravitational scaling, indicating that amplitude-level signals are absorbed by network clock processing or placing an upper bound on single-receiver planetary amplitudes</li>
+                <li>If r ≪ −0.5: Statistically significant inverse correlation (smaller planets showing stronger signals)</li>
             </ul>
             
             <p>This proper test directly examines the relationship between observed phenomena and gravitational predictions without circular normalization.</p>
         </div>
         
-        <p>Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E = A<sub>obs</sub>/(M/d²) already divides by mass. Testing whether E correlates with mass is equivalent to asking "does (X/M) correlate with M?"—the answer is always near-zero by construction, providing no information about gravitational scaling. The proper test examines A<sub>obs</sub> directly (Section 3.4.4).</p>
+        <p>Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E ≡ A<sub>obs</sub>/(M/d²) already divides by mass. Dividing a flat residual floor by M/d² mechanically produces an inverse scaling with mass by construction, providing no independent physical information about gravitational scaling. The proper statistical test examines A<sub>obs</sub> directly (Section 3.3.4).</p>
         
         <h4>Worked Examples: Mercury and Jupiter</h4>
         

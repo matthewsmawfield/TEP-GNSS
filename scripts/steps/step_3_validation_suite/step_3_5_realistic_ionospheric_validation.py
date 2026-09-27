@@ -138,32 +138,29 @@ def perform_synthetic_ionospheric_analysis(station_coords: pd.DataFrame, tep_res
 
 
 def perform_realistic_ionospheric_analysis(station_coords: pd.DataFrame, tep_results: Dict, ionex_path: Path) -> Dict:
-    """Perform realistic ionospheric validation using IONEX data"""
-    print_status("Performing realistic ionospheric validation with IONEX data", "PROCESS")
+    """Report ionospheric validation status for available IONEX data.
 
-    # This would implement actual IONEX file processing
-    # For now, return a placeholder structure based on the log file I saw earlier
+    No IONEX-to-pair-coherence mapping is implemented in this revision, so
+    this function must not emit fabricated correlations. It reports an
+    explicit not-executed status until a real IONEX processing chain exists.
+    """
+    print_status("IONEX directory present, but no IONEX-to-pair-coherence processing chain is implemented; reporting not-executed status", "WARNING")
+
     validation_results = {
         "ionospheric_validation": {
             "method": "realistic_ionex_analysis",
+            "status": "NOT_EXECUTED",
+            "reason": "IONEX-to-pair-coherence processing chain not implemented; no analysis performed and no values computed",
             "data_availability": {
-                "ionex_files": "Limited",
-                "real_tec_data_days": 912,
-                "estimated_coverage": "Partial coverage available"
+                "ionex_path": str(ionex_path),
             },
             "validation_summary": {
-                "overall_assessment": "MODERATE",
-                "conclusion": "Moderate evidence for ionospheric independence from available real data",
-                "confidence_level": "Moderate",
-                "correlation_analysis": {
-                    "tep_ionospheric_correlation": -0.15,
-                    "significance_level": 0.05,
-                    "interpretation": "Weak correlation suggests ionospheric independence"
-                },
+                "overall_assessment": "INCONCLUSIVE",
+                "conclusion": "No ionospheric validation performed; see Step 4.9 environmental ambiguity audit for the stratification-morphology diagnostic",
+                "confidence_level": "None",
                 "recommendations": [
-                    "Expand IONEX data collection for comprehensive validation",
-                    "Cross-reference with Step 4.6 ionospheric analysis",
-                    "Monitor for seasonal ionospheric effects"
+                    "Implement IONEX GIM/ROTI ingestion and per-pair TEC-gradient covariance",
+                    "Cross-reference with Step 4.6 ionospheric analysis and Step 4.9 morphology audit",
                 ]
             }
         }

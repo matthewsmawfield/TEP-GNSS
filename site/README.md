@@ -5,7 +5,7 @@
 ![TEP-GNSS Analysis Overview](./public/og-image.jpg)
 
 **Author:** Matthew Lukin Smawfield  
-**Version:** v0.26 (Jaipur)  
+**Version:** v0.27 (Jaipur)  
 **Date:** 8 August 2026  
 **Status:** Preprint (Analysis Package)  
 

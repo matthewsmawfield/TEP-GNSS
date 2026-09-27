@@ -1,0 +1,591 @@
+{
+  "step": "4.9",
+  "name": "environmental_ambiguity_audit",
+  "timestamp": "2026-09-26T00:30:31.493833",
+  "data_sources": [
+    "results/outputs/step_4_0_advanced_analysis.json (elevation\u00d7geomagnetic grid)",
+    "results/outputs/step_3_6_multiband_{center}.json (frequency-band \u03bb)",
+    "results/outputs/step_4_5_comprehensive_validation_{center}.json (local-solar-time diurnal persistence)"
+  ],
+  "geomagnetic_morphology": {
+    "cells": [
+      {
+        "center": "code",
+        "elevation_tier": 1,
+        "lambda_by_geomag_bin": {
+          "1": 1744.042251033291,
+          "2": 9491.52354991945,
+          "3": 2086.99794644621
+        },
+        "high_maglat_is_min": false,
+        "quiet_band_is_max": true,
+        "suppression_ratio_bin3_over_max": 0.21988018419486735
+      },
+      {
+        "center": "code",
+        "elevation_tier": 2,
+        "lambda_by_geomag_bin": {
+          "1": 6662.809848780849,
+          "2": 5091.794425939866,
+          "3": 1549.121028817082
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": false,
+        "suppression_ratio_bin3_over_max": 0.23250266238658124
+      },
+      {
+        "center": "code",
+        "elevation_tier": 3,
+        "lambda_by_geomag_bin": {
+          "1": 3811.457151142455,
+          "2": 10575.372784212628,
+          "3": 2533.0694160239686
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": true,
+        "suppression_ratio_bin3_over_max": 0.23952530730693897
+      },
+      {
+        "center": "esa_final",
+        "elevation_tier": 1,
+        "lambda_by_geomag_bin": {
+          "1": 2063.035969809272,
+          "2": 2014.2341342696232,
+          "3": 1469.5066999999844
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": false,
+        "suppression_ratio_bin3_over_max": 0.7123029949573979
+      },
+      {
+        "center": "esa_final",
+        "elevation_tier": 2,
+        "lambda_by_geomag_bin": {
+          "1": 3750.7839675416367,
+          "2": 19999.999999999996,
+          "3": 1345.365758454044
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": true,
+        "suppression_ratio_bin3_over_max": 0.06726828792270222
+      },
+      {
+        "center": "esa_final",
+        "elevation_tier": 3,
+        "lambda_by_geomag_bin": {
+          "1": 9602.010683331873,
+          "2": 2034.0348946765394,
+          "3": 1052.9968304184742
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": false,
+        "suppression_ratio_bin3_over_max": 0.10966420108721302
+      },
+      {
+        "center": "igs_combined",
+        "elevation_tier": 1,
+        "lambda_by_geomag_bin": {
+          "1": 2080.5677344218716,
+          "2": 4229.068348636332,
+          "3": 1838.7576387243362
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": true,
+        "suppression_ratio_bin3_over_max": 0.43479023915923365
+      },
+      {
+        "center": "igs_combined",
+        "elevation_tier": 2,
+        "lambda_by_geomag_bin": {
+          "1": 3235.3372254707715,
+          "2": 14729.779292286275,
+          "3": 1326.4223915924085
+        },
+        "high_maglat_is_min": true,
+        "quiet_band_is_max": true,
+        "suppression_ratio_bin3_over_max": 0.09005039147375633
+      },
+      {
+        "center": "igs_combined",
+        "elevation_tier": 3,
+        "lambda_by_geomag_bin": {
+          "1": 5237.202543231686,
+          "2": 3228.996619828569,
+          "3": 3351.1769210758866
+        },
+        "high_maglat_is_min": false,
+        "quiet_band_is_max": false,
+        "suppression_ratio_bin3_over_max": 0.6398791899707583
+      }
+    ],
+    "n_cells": 9,
+    "n_cells_high_maglat_minimum": 7,
+    "n_cells_quiet_band_maximum": 5,
+    "binomial_p_high_maglat_is_min": 0.00828125793832241,
+    "binomial_p_quiet_band_is_max": 0.14484580602550426,
+    "mean_lambda_ratio_highmag_over_quiet": null,
+    "interpretation": "The correlation length is suppressed in the high-geomagnetic-latitude (auroral-leaning) band in 7/9 elevation\u00d7center cells (binomial p = 8.28e-03 under a no-organization null), and the quiet mid-latitude band carries the maximum in 5/9 cells. The stratification is organized on the ionosphere's coordinate, replicating across all three independent analysis centers. The Kp-correlation and TID-exclusion controls test temporal ionospheric variability only and cannot exclude this static geomagnetic-latitude dependence."
+  },
+  "tropospheric_overlap": {
+    "tropospheric_correlation_range_km": [
+      1000.0,
+      2000.0
+    ],
+    "bands": [
+      {
+        "center": "code",
+        "band": "tep_band",
+        "lambda_km": 4548.574267484538,
+        "r_squared": 0.9204831961862696,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "code",
+        "band": "tidal_diurnal",
+        "lambda_km": 5912.178725801307,
+        "r_squared": 0.8808874899842263,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "code",
+        "band": "tidal_semidiurnal",
+        "lambda_km": 5690.475997258158,
+        "r_squared": 0.9304527355857793,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "code",
+        "band": "post_tidal_30_40",
+        "lambda_km": 2403.5763132081597,
+        "r_squared": 0.9398370723752599,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "code",
+        "band": "post_tidal_40_50",
+        "lambda_km": 1355.4704995792845,
+        "r_squared": 0.8918450819478642,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "post_tidal_50_75",
+        "lambda_km": 1190.390357345526,
+        "r_squared": 0.8525188003720252,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "post_tidal_75_100",
+        "lambda_km": 1068.596972955628,
+        "r_squared": 0.8981895621468324,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "intermediate_100_200",
+        "lambda_km": 1212.8593417565276,
+        "r_squared": 0.8971242721297676,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "intermediate_200_350",
+        "lambda_km": 1059.4371705041642,
+        "r_squared": 0.7886820364822699,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "intermediate_350_500",
+        "lambda_km": 1197.699355155772,
+        "r_squared": 0.7322317339697164,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "transition_500_750",
+        "lambda_km": 1372.8679620557216,
+        "r_squared": 0.7438879026279803,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "transition_750_1000",
+        "lambda_km": 1433.382772651465,
+        "r_squared": 0.7542453684463171,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "code",
+        "band": "control_1000_1500",
+        "lambda_km": 1607.449917764628,
+        "r_squared": 0.7286479210817752,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "tep_band",
+        "lambda_km": 3327.675804023996,
+        "r_squared": 0.9702411679300914,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "tidal_diurnal",
+        "lambda_km": 4198.626418745634,
+        "r_squared": 0.9425954305505131,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "tidal_semidiurnal",
+        "lambda_km": 3638.03252211342,
+        "r_squared": 0.9684416156010534,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "post_tidal_30_40",
+        "lambda_km": 2143.0749960986836,
+        "r_squared": 0.9631029078461324,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "post_tidal_40_50",
+        "lambda_km": 1370.199273624778,
+        "r_squared": 0.7919340063729241,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "post_tidal_50_75",
+        "lambda_km": 1325.8239629969507,
+        "r_squared": 0.8598393020430052,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "post_tidal_75_100",
+        "lambda_km": 1047.4802880548066,
+        "r_squared": 0.8714939823089108,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "intermediate_100_200",
+        "lambda_km": 1405.777280388987,
+        "r_squared": 0.8872075418013017,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "intermediate_200_350",
+        "lambda_km": 1931.4476085851957,
+        "r_squared": 0.6244368041764252,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "intermediate_350_500",
+        "lambda_km": 2324.7253855837666,
+        "r_squared": 0.6216107580320755,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "transition_500_750",
+        "lambda_km": 1942.7029543463386,
+        "r_squared": 0.5766128237423018,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "esa_final",
+        "band": "transition_750_1000",
+        "lambda_km": 2194.4302108980232,
+        "r_squared": 0.46881283298421816,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "control_1000_1500",
+        "lambda_km": 2453.5947322533766,
+        "r_squared": 0.511037498473011,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "esa_final",
+        "band": "control_2000_3000",
+        "lambda_km": 2111.395478290422,
+        "r_squared": 0.5528360215633257,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "tep_band",
+        "lambda_km": 3763.5785686815157,
+        "r_squared": 0.9657072614480481,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "tidal_diurnal",
+        "lambda_km": 3919.793133225532,
+        "r_squared": 0.9536923940741875,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "tidal_semidiurnal",
+        "lambda_km": 4701.2912570563085,
+        "r_squared": 0.9702714694748955,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "post_tidal_30_40",
+        "lambda_km": 2453.0773981507655,
+        "r_squared": 0.9348262403897978,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "post_tidal_40_50",
+        "lambda_km": 1409.451011071092,
+        "r_squared": 0.8321841412731837,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "post_tidal_50_75",
+        "lambda_km": 1191.8849038009264,
+        "r_squared": 0.8255432019133666,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "post_tidal_75_100",
+        "lambda_km": 1067.1515886197353,
+        "r_squared": 0.8576765967341742,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "intermediate_100_200",
+        "lambda_km": 1260.2286962971496,
+        "r_squared": 0.8644662448460227,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "intermediate_200_350",
+        "lambda_km": 1382.8254151813044,
+        "r_squared": 0.6254220213419767,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "intermediate_350_500",
+        "lambda_km": 1431.9241537470775,
+        "r_squared": 0.6902827769116275,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "transition_500_750",
+        "lambda_km": 2731.9105717389175,
+        "r_squared": 0.6088615374545177,
+        "inside_tropospheric_range": false
+      },
+      {
+        "center": "igs_combined",
+        "band": "transition_750_1000",
+        "lambda_km": 1953.5394263694209,
+        "r_squared": 0.5435727694603687,
+        "inside_tropospheric_range": true
+      },
+      {
+        "center": "igs_combined",
+        "band": "control_1000_1500",
+        "lambda_km": 2385.6079050833273,
+        "r_squared": 0.6125779357235478,
+        "inside_tropospheric_range": false
+      }
+    ],
+    "n_bands_inside_range": 22,
+    "bands_inside_range": [
+      "code:post_tidal_40_50 \u03bb=1355 km",
+      "code:post_tidal_50_75 \u03bb=1190 km",
+      "code:post_tidal_75_100 \u03bb=1069 km",
+      "code:intermediate_100_200 \u03bb=1213 km",
+      "code:intermediate_200_350 \u03bb=1059 km",
+      "code:intermediate_350_500 \u03bb=1198 km",
+      "code:transition_500_750 \u03bb=1373 km",
+      "code:transition_750_1000 \u03bb=1433 km",
+      "code:control_1000_1500 \u03bb=1607 km",
+      "esa_final:post_tidal_40_50 \u03bb=1370 km",
+      "esa_final:post_tidal_50_75 \u03bb=1326 km",
+      "esa_final:post_tidal_75_100 \u03bb=1047 km",
+      "esa_final:intermediate_100_200 \u03bb=1406 km",
+      "esa_final:intermediate_200_350 \u03bb=1931 km",
+      "esa_final:transition_500_750 \u03bb=1943 km",
+      "igs_combined:post_tidal_40_50 \u03bb=1409 km",
+      "igs_combined:post_tidal_50_75 \u03bb=1192 km",
+      "igs_combined:post_tidal_75_100 \u03bb=1067 km",
+      "igs_combined:intermediate_100_200 \u03bb=1260 km",
+      "igs_combined:intermediate_200_350 \u03bb=1383 km",
+      "igs_combined:intermediate_350_500 \u03bb=1432 km",
+      "igs_combined:transition_750_1000 \u03bb=1954 km"
+    ],
+    "interpretation": "22 of 40 frequency-band fits return \u03bb inside the 1,000\u20132,000 km tropospheric water-vapor correlation range that Section 4 dismisses as insufficient to explain the headline scale. The scale-based tropospheric dismissal applies to the tidal-band \u03bb (~4,700\u20135,900 km) but does not cover the post-tidal and intermediate bands; the dismissal is therefore band-dependent rather than global."
+  },
+  "elevation_confound": {
+    "per_center": {
+      "code": {
+        "elevation_midpoints_m": [
+          -0.8375000000000057,
+          121.325,
+          271.1,
+          545.825,
+          2200.675
+        ],
+        "lambda_km": [
+          3174.3890217046837,
+          4470.19191761863,
+          5286.843857403107,
+          7687.667526568103,
+          4979.696172087915
+        ],
+        "quintile_vs_loglambda_correlation": 0.7162512565883695
+      },
+      "esa_final": {
+        "elevation_midpoints_m": [
+          3.4510000000000005,
+          122.291,
+          272.45725,
+          566.2787500000001,
+          2221.025
+        ],
+        "lambda_km": [
+          1999.6047039421737,
+          1604.48245371415,
+          3477.5499378539844,
+          3914.04431386056,
+          3706.9287800699053
+        ],
+        "quintile_vs_loglambda_correlation": 0.8273232386764774
+      },
+      "igs_combined": {
+        "elevation_midpoints_m": [
+          0.5360000000000014,
+          111.2475,
+          260.75,
+          561.725,
+          2220.05
+        ],
+        "lambda_km": [
+          2615.914558679452,
+          2636.008276036435,
+          3405.4192865493355,
+          5452.742451396561,
+          5101.741325338312
+        ],
+        "quintile_vs_loglambda_correlation": 0.9272209465173087
+      }
+    },
+    "interpretation": "\u03bb rises monotonically with station elevation (log\u2013log correlation reported per center). This ordering is consistent with environmental screening but is equally the fingerprint of altitude-organized tropospheric zenith-delay residuals and atmospheric loading; the two readings are degenerate pending a reanalysis-ZTD covariance control on pair-level phase alignment."
+  },
+  "annual_degeneracy": {
+    "span_days": 912.0,
+    "period_days": 365.25,
+    "n_cycles_observed": 2.4969199178644765,
+    "degenerate_drivers": [
+      "orbital-velocity coupling (Earth speed ~29.3\u201330.3 km/s)",
+      "perihelion solar flux / irradiance",
+      "seasonal ionospheric TEC morphology",
+      "seasonal tropospheric / hydrological loading",
+      "eclipse-season geometry"
+    ],
+    "interpretation": "The record contains 2.50 orbital cycles. All candidate seasonal drivers share the identical 365.25-day period; at this span no frequency separation is possible and phase discrimination is limited. The operative discriminator is the energy-vs-velocity scaling test (Section 3.3.2), which returns near-zero discrimination \u2014 the data do not separate orbital-velocity coupling from energy-scale coupling or from seasonal drivers."
+  },
+  "diurnal_persistence_bound": {
+    "per_center": {
+      "code": {
+        "night_over_day_annual": 1.0681653200851264,
+        "seasonal_night_over_day": {
+          "DJF": 1.2139294168745498,
+          "MAM": 0.9819371260011241,
+          "JJA": 1.1081631529005618,
+          "SON": 0.9592321329708752
+        },
+        "worst_seasonal_cell": "SON",
+        "worst_seasonal_night_over_day": 0.9592321329708752,
+        "ionospheric_fraction_bound_annual": {
+          "rho_0.1": 0.0,
+          "rho_0.25": 0.0,
+          "rho_0.5": 0.0
+        },
+        "ionospheric_fraction_bound_worst_season": {
+          "rho_0.1": 0.04529763003236092,
+          "rho_0.25": 0.0543571560388331,
+          "rho_0.5": 0.08153573405824965
+        }
+      },
+      "esa_final": {
+        "night_over_day_annual": 0.9860966929994606,
+        "seasonal_night_over_day": {
+          "DJF": 1.010916819443754,
+          "MAM": 1.0172171429706256,
+          "JJA": 1.0287035620807172,
+          "SON": 0.8614341512087806
+        },
+        "worst_seasonal_cell": "SON",
+        "worst_seasonal_night_over_day": 0.8614341512087806,
+        "ionospheric_fraction_bound_annual": {
+          "rho_0.1": 0.01544811888948826,
+          "rho_0.25": 0.01853774266738591,
+          "rho_0.5": 0.027806614001078866
+        },
+        "ionospheric_fraction_bound_worst_season": {
+          "rho_0.1": 0.15396205421246595,
+          "rho_0.25": 0.18475446505495915,
+          "rho_0.5": 0.2771316975824387
+        }
+      },
+      "igs_combined": {
+        "night_over_day_annual": 0.9869395806098313,
+        "seasonal_night_over_day": {
+          "DJF": 0.9223087220831337,
+          "MAM": 1.1014820986415905,
+          "JJA": 1.0181792277106785,
+          "SON": 0.8474163463917117
+        },
+        "worst_seasonal_cell": "SON",
+        "worst_seasonal_night_over_day": 0.8474163463917117,
+        "ionospheric_fraction_bound_annual": {
+          "rho_0.1": 0.014511577100187405,
+          "rho_0.25": 0.017413892520224888,
+          "rho_0.5": 0.02612083878033733
+        },
+        "ionospheric_fraction_bound_worst_season": {
+          "rho_0.1": 0.1695373928980981,
+          "rho_0.25": 0.20344487147771773,
+          "rho_0.5": 0.3051673072165766
+        }
+      }
+    },
+    "ionospheric_fraction_bound_annual_rho0.25": {
+      "code": 0.0,
+      "esa_final": 0.01853774266738591,
+      "igs_combined": 0.017413892520224888
+    },
+    "ionospheric_fraction_bound_worst_season_rho0.5": {
+      "code": 0.08153573405824965,
+      "esa_final": 0.2771316975824387,
+      "igs_combined": 0.3051673072165766
+    },
+    "interpretation": "The coherent signal persists through local night: night/day coherence ratios are ~1.0 annually (CODE 1.07, ESA 0.99, IGS 0.99) and never below ~0.84 in any seasonal cell (IGS SON). Since ionospheric electron content \u2014 and hence any residual ionospheric bias in the clock products \u2014 falls by a factor of ~3\u201310 on the same local-solar-time coordinate, a residual ionospheric origin for the coherent signal is bounded at \u2272 3% on the annual means and at \u2272 20% (\u03c1_iono = 0.25) to \u2272 32% (\u03c1_iono = 0.5) in the worst seasonal cell. This is an in-repository quantitative control on the ionospheric channel; a spatially resolved GIM/ROTI morphology control remains the gold-standard closure for the static geomagnetic-latitude dependence."
+  },
+  "overall_assessment": "The geomagnetic stratification is organized on the ionosphere's coordinate (auroral-band \u03bb suppression replicated across centers and elevation tiers), the post-tidal/intermediate band \u03bb values overlap the dismissed tropospheric range, the elevation gradient is degenerate with altitude-organized delay residuals, and the annual modulation is frequency-degenerate with all seasonal drivers at 2.5 cycles. These stratifications are therefore reported as consistent with both the screening interpretation and residual atmospheric/ionospheric organization, pending spatially resolved controls (GIM/ROTI for the static ionospheric field; reanalysis ZTD covariance for the tropospheric channel). Independently, the local-solar-time diurnal persistence bound places a quantitative ceiling on the ionospheric channel: a residual-ionospheric origin for the coherent signal is bounded at \u2272 3% on the annual means."
+}

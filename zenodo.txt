@@ -7,7 +7,7 @@ The investigation was structured to test predictions from the Temporal Equivalen
 The empirically derived spatial correlation length λT (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator S_Σ(E) defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.
 
 Website: https://mlsmawfield.com/tep/gnss-i/
-Code Availability: https://github.com/matthewsmawfield/TEP-GNSS
+Repository: https://github.com/matthewsmawfield/TEP-GNSS
 
 DOI: 10.5281/zenodo.17127229
 
