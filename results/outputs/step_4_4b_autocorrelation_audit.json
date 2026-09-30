@@ -1,0 +1,211 @@
+{
+  "audit_type": "autocorrelation_corrected_significance",
+  "source_data": "site/data/step_4_4/step_4_4_gravitational_temporal_daily.json",
+  "n_days": 912,
+  "note": "Replicates step_4_4 smoothed-window scan and per-planet correlations on the pipeline-exported daily series; all p-values are Bretherton-corrected effective-sample-size statistics.",
+  "window_scan": [
+    {
+      "correlation": -0.362033720474515,
+      "p_value_raw": 1.2557117776615311e-29,
+      "p_value_autocorr_corrected": 0.01265775770474975,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 31
+    },
+    {
+      "correlation": -0.3998704217711472,
+      "p_value_raw": 2.4511469103018224e-36,
+      "p_value_autocorr_corrected": 0.005493307603867681,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 59
+    },
+    {
+      "correlation": -0.4275767023851784,
+      "p_value_raw": 7.821778709126244e-42,
+      "p_value_autocorr_corrected": 0.0027992009668109663,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 91
+    },
+    {
+      "correlation": -0.45435981065313436,
+      "p_value_raw": 1.178085225960696e-47,
+      "p_value_autocorr_corrected": 0.0013801485654170165,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 119
+    },
+    {
+      "correlation": -0.4764774539698519,
+      "p_value_raw": 7.185491278728693e-53,
+      "p_value_autocorr_corrected": 0.0007361783778274678,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 179
+    },
+    {
+      "correlation": -0.5026185765894152,
+      "p_value_raw": 1.5121575103725775e-59,
+      "p_value_autocorr_corrected": 0.0003310303176398133,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 227,
+      "p_value_selection_adjusted": 0.002317212223478693
+    },
+    {
+      "correlation": -0.5026185765894152,
+      "p_value_raw": 1.5121575103725775e-59,
+      "p_value_autocorr_corrected": 0.0003310303176398133,
+      "n_effective": 46.73850197109069,
+      "n_original": 912,
+      "autocorr_x": 0.95,
+      "autocorr_y": 0.95,
+      "smoothing_window": 227
+    }
+  ],
+  "best_window": {
+    "correlation": -0.5026185765894152,
+    "p_value_raw": 1.5121575103725775e-59,
+    "p_value_autocorr_corrected": 0.0003310303176398133,
+    "n_effective": 46.73850197109069,
+    "n_original": 912,
+    "autocorr_x": 0.95,
+    "autocorr_y": 0.95,
+    "smoothing_window": 227,
+    "p_value_selection_adjusted": 0.002317212223478693
+  },
+  "n_windows_tested": 7,
+  "raw_total_vs_coherence_std": {
+    "correlation": -0.16439453331609258,
+    "p_value_raw": 5.98202374103656e-07,
+    "p_value_autocorr_corrected": 2.4691521311348552e-05,
+    "n_effective": 651.7614975894189,
+    "n_original": 912,
+    "autocorr_x": 0.95,
+    "autocorr_y": 0.175177139300096
+  },
+  "planetary_influences": {
+    "sun": {
+      "coherence_std": {
+        "correlation": -0.06473062719391014,
+        "p_value_raw": 0.050678655572698135,
+        "p_value_autocorr_corrected": 0.09871651905651668,
+        "n_effective": 651.7614975894189,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.175177139300096
+      },
+      "coherence_mean": {
+        "correlation": -0.1345580184836753,
+        "p_value_raw": 4.571032748409087e-05,
+        "p_value_autocorr_corrected": 0.00023137872808631776,
+        "n_effective": 744.4843167301043,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.10644972391101003
+      }
+    },
+    "jupiter": {
+      "coherence_std": {
+        "correlation": -0.17482297879958947,
+        "p_value_raw": 1.076773637962748e-07,
+        "p_value_autocorr_corrected": 7.148672480417062e-06,
+        "n_effective": 651.7614975894189,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.175177139300096
+      },
+      "coherence_mean": {
+        "correlation": -0.14432096116739576,
+        "p_value_raw": 1.2124052306777973e-05,
+        "p_value_autocorr_corrected": 7.752594724430573e-05,
+        "n_effective": 744.4843167301043,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.10644972391101003
+      }
+    },
+    "saturn": {
+      "coherence_std": {
+        "correlation": -0.10058088140709634,
+        "p_value_raw": 0.0023577437914940194,
+        "p_value_autocorr_corrected": 0.010188036893653774,
+        "n_effective": 651.7614975894189,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.175177139300096
+      },
+      "coherence_mean": {
+        "correlation": -0.03170610347051677,
+        "p_value_raw": 0.33885473451256193,
+        "p_value_autocorr_corrected": 0.38765810982285576,
+        "n_effective": 744.4843167301043,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.10644972391101003
+      }
+    },
+    "venus": {
+      "coherence_std": {
+        "correlation": -0.0451237241769054,
+        "p_value_raw": 0.1733458777939451,
+        "p_value_autocorr_corrected": 0.24999307478494437,
+        "n_effective": 651.7614975894189,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.175177139300096
+      },
+      "coherence_mean": {
+        "correlation": 0.16934725588066082,
+        "p_value_raw": 2.684331064960229e-07,
+        "p_value_autocorr_corrected": 3.3758652704385383e-06,
+        "n_effective": 744.4843167301043,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.10644972391101003
+      }
+    },
+    "mars": {
+      "coherence_std": {
+        "correlation": -0.0715299901590124,
+        "p_value_raw": 0.030775534670386545,
+        "p_value_autocorr_corrected": 0.06800612401227735,
+        "n_effective": 651.7614975894189,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.175177139300096
+      },
+      "coherence_mean": {
+        "correlation": -0.1363450311904242,
+        "p_value_raw": 3.6089150327708634e-05,
+        "p_value_autocorr_corrected": 0.00019042288241499783,
+        "n_effective": 744.4843167301043,
+        "n_original": 912,
+        "autocorr_x": 0.95,
+        "autocorr_y": 0.10644972391101003
+      }
+    }
+  },
+  "total_influence_vs_coherence_std": {
+    "correlation": -0.06481710468204073,
+    "p_value_raw": 0.050370160103519156,
+    "p_value_autocorr_corrected": 0.09826606284678552,
+    "n_effective": 651.7614975894189,
+    "n_original": 912,
+    "autocorr_x": 0.95,
+    "autocorr_y": 0.175177139300096
+  }
+}

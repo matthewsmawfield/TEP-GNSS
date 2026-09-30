@@ -5,7 +5,7 @@
         measurements from 364 GNSS stations (2023–2025; effective sample size N<sub>eff</sub> ≈ 25–28 independent distance bins after accounting for spatial
         correlation; see §Methods) reveals systematic
         distance-structured correlations in clock networks. These correlations
-        follow an exponential decay with a median Temporal Topology correlation
+        follow an exponential decay with a Temporal Topology correlation
         length λ<sub>T</sub> = 3,330–4,549 km (exponential best fit; bootstrap 95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA
         2,532–3,984 km) and show strong goodness-of-fit when evaluated on
         distance-binned means across three distinct analysis center solutions on largely shared raw inputs (CODE, IGS Combined, ESA Final; R² =
@@ -23,9 +23,10 @@
         The primary inference rests on cross-centre distance-structured covariance
         and λ<sub>T</sub>; the following planetary, Chandler, diurnal, and geomagnetic
         signatures are treated as secondary or exploratory consistency tests.
-        The correlations demonstrate systematic coupling with Earth's orbital
+        The correlations show exploratory associations with Earth's orbital
         motion (r = -0.571 to -0.793 across centers), planetary gravitational
-        influences (6 Bonferroni-significant events), Chandler wobble modulation
+        influences (8 nominally significant event fits, mostly non-event-locked
+        on audit), Chandler wobble modulation
         (R² = 0.377–0.471), and systematic diurnal temporal variations with
         synchronized early morning coherence peaks (Local Solar Time).
         Comprehensive validation demonstrates 24-61× signal enhancement over
@@ -36,8 +37,8 @@
         21–23&nbsp;% signal improvement when excluding high-ionosphere
         periods—temporal ionospheric variability suppresses rather than creates
         the correlation, while the static geomagnetic-latitude dependence
-        remains a separately quantified channel — bounded at &lesssim;3% of the
-        coherent signal by the local-night persistence test (Step 4.9), with a
+        remains a separately quantified channel — bounded at ≲3% of the
+        coherent signal by the local-night persistence test, with a
         spatially resolved GIM/ROTI morphology control identified as the
         required external closure.
     </p>
@@ -48,14 +49,14 @@
         Topology correlation length (λ<sub>T</sub>) of 1,000–10,000 km. The
         discriminating content is structural rather than the decade-wide prior
         interval itself: the pooled-band estimate λ<sub>T</sub> = 3,330–4,549 km
-        brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈
-        4,150 km, the correlation is band-localized (control-band R² ≈ 0.6 vs
+        spans the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈
+        4,150 km, which is calibrated on this scale; the correlation is band-localized (control-band R² ≈ 0.6 vs
         ≈0.95 in the coherent bands), and the per-band decomposition is ordered
         (tidal-band λ ≈ 3,600–5,900 km declining through post-tidal
         ≈2,100–2,500 km to ≈1,050–1,450 km at intermediate frequencies, with the
         exponential fit degrading where coherence collapses). Forward
         simulation of the satellite-visibility and network-datum channel on
-        the real station geometry bounds its effective decay scale at λ &gsim;
+        the real station geometry bounds its effective decay scale at λ ≳
         6.7×10<sup>3</sup> km; conditioned on the real product — true CODE
         ephemerides and the estimated satellite-clock content itself — the
         channel remains broader than every measured λ<sub>T</sub>
@@ -76,17 +77,18 @@
         cross-product values decompose into statistic saturation plus product
         and estimator conditioning rather than a coherence-amplitude conflict
         (Paper 14, Step 3.6). The
-        R<sub>T</sub> bracketing is therefore stated at the cross-product
-        family level (~1.9–4.5×10<sup>3</sup> km). While
+        R<sub>T</sub> comparison is therefore stated at the cross-product
+        family level (~1.0–4.8×10<sup>3</sup> km). While
         cross-pipeline consistency across software-diverse solutions and extensive validation provide a strong basis
         for these findings, alternative explanations involving sophisticated
-        systematics cannot be fully excluded. Therefore, definitive physical
-        interpretation awaits critical next steps: raw-data analysis,
-        multi-constellation testing, and independent replication. A companion
+        systematics cannot be fully excluded. Raw-RINEX/SPP consistency and
+        combined multi-GNSS product tests are now reported in Papers 3 and 14;
+        raw carrier-phase analysis, separately processed per-constellation tests,
+        and independent external replication remain critical next steps. A companion
         25-year longitudinal CODE analysis is presented at
-        <a href="https://matthewsmawfield.github.io/TEP-GNSS-II/">TEP-GNSS-II</a
+        <a href="https://mlsmawfield.com/tep/gnss-ii/">TEP-GNSS-II</a
         >.
     </p>
 
-    <p>The empirically derived spatial correlation length $\lambda_T$ (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator $\mathcal{S}_\Sigma(\mathcal{E})$ defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.</p>
+    <p>The empirically derived correlation length $\lambda_T$ is a GNSS-sector covariance scale obtained after environmental projection and processing transfer. It is not the screening operator $\mathcal{S}_\Sigma(\mathcal{E})$ itself, and it is not the non-exact (disformal) covariance term, which this measurement does not access.</p>
 </div>

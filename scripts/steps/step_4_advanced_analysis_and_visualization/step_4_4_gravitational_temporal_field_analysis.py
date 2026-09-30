@@ -569,10 +569,14 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
                 if metric in combined_df.columns:
                     r, p = stats.pearsonr(combined_df[influence_col], combined_df[metric])
                     rho, p_spear = stats.spearmanr(combined_df[influence_col], combined_df[metric])
+                    robust = autocorr_robust_correlation(
+                        combined_df[influence_col].values, combined_df[metric].values)
                     
                     planet_corr[metric] = {
                         'pearson_r': r,
                         'pearson_p': p,
+                        'pearson_p_autocorr_corrected': robust['p_value_autocorr_corrected'],
+                        'n_effective': robust['n_effective'],
                         'spearman_rho': rho,
                         'spearman_p': p_spear,
                         'n_points': len(combined_df)
@@ -587,10 +591,14 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
         if metric in combined_df.columns:
             r, p = stats.pearsonr(combined_df['total_planetary_influence'], combined_df[metric])
             rho, p_spear = stats.spearmanr(combined_df['total_planetary_influence'], combined_df[metric])
+            robust = autocorr_robust_correlation(
+                combined_df['total_planetary_influence'].values, combined_df[metric].values)
             
             stacked_correlations[metric] = {
                 'pearson_r': r,
                 'pearson_p': p,
+                'pearson_p_autocorr_corrected': robust['p_value_autocorr_corrected'],
+                'n_effective': robust['n_effective'],
                 'spearman_rho': rho,
                 'spearman_p': p_spear,
                 'n_points': len(combined_df)
@@ -604,10 +612,14 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
         if metric in combined_df.columns:
             r, p = stats.pearsonr(combined_df['total_influence'], combined_df[metric])
             rho, p_spear = stats.spearmanr(combined_df['total_influence'], combined_df[metric])
+            robust = autocorr_robust_correlation(
+                combined_df['total_influence'].values, combined_df[metric].values)
             
             total_correlations[metric] = {
                 'pearson_r': r,
                 'pearson_p': p,
+                'pearson_p_autocorr_corrected': robust['p_value_autocorr_corrected'],
+                'n_effective': robust['n_effective'],
                 'spearman_rho': rho,
                 'spearman_p': p_spear,
                 'n_points': len(combined_df)
@@ -660,6 +672,7 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
         best_correlation = 0
         best_window = 31
         best_results = None
+        window_scan = []  # Per-window corrected statistics for audit/reporting
         
         print_status(f"Testing {len(test_windows)} smoothing windows to find optimal correlation...", "INFO")
         
@@ -685,6 +698,17 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
                     smooth_p = robust_corr['p_value_autocorr_corrected']  # Use corrected p-value
                     
                     print_status(f"  Window {adjusted_window}d: r = {smooth_r:.4f}, p_raw = {robust_corr['p_value_raw']:.2e}, p_corrected = {smooth_p:.2e} (N_eff = {robust_corr['n_effective']:.1f})", "INFO")
+                    
+                    window_scan.append({
+                        'smoothing_window': int(adjusted_window),
+                        'correlation': float(smooth_r),
+                        'p_value_raw': float(robust_corr['p_value_raw']),
+                        'p_value_autocorr_corrected': float(smooth_p),
+                        'n_effective': float(robust_corr['n_effective']),
+                        'n_original': int(robust_corr['n_original']),
+                        'autocorr_x': float(robust_corr['autocorr_x']),
+                        'autocorr_y': float(robust_corr['autocorr_y'])
+                    })
                     
                     # Keep track of best correlation
                     if abs(smooth_r) > abs(best_correlation):
@@ -724,6 +748,13 @@ def perform_advanced_correlation_analysis(combined_df: pd.DataFrame) -> Dict:
                     continue
         
         if best_results:
+            best_results['window_scan'] = window_scan
+            best_results['n_windows_tested'] = len(window_scan)
+            # The reported window is selected as the maximum |r| across the scan;
+            # a Bonferroni factor bounds the selection-adjusted significance.
+            if best_results.get('smoothed_p_value') is not None:
+                best_results['p_value_selection_adjusted'] = float(
+                    min(1.0, best_results['smoothed_p_value'] * max(1, len(window_scan))))
             results['advanced_pattern_analysis'] = best_results
             print_status(f"OPTIMAL SMOOTHING WINDOW: {best_window}d with correlation r = {best_correlation:.4f}", "INFO")
         else:

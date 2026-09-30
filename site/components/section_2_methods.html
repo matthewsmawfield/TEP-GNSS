@@ -221,7 +221,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         <h3>Distance Quality Filtering</h3>
         <p>Systematic distance outlier removal ensures geodesic calculation accuracy:</p>
         <ul>
-            <li>CODE: 21,679 outliers removed (&lt;1 km or &gt;20,000 km) from 39,068,754 initial pairs (0.056%)</li>
+            <li>CODE: 21,679 outliers removed ($\lt$ 1 km or &gt;20,000 km) from 39,068,754 initial pairs (0.056%)</li>
             <li>IGS Combined: 4,633 outliers removed from 12,879,380 initial pairs (0.036%)</li>
             <li>ESA Final: 0 outliers removed from 10,809,085 initial pairs (0.000%)</li>
         </ul>
@@ -266,7 +266,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         <ul style="margin: 0; padding-left: 20px;">
             <li><strong>Phase-alignment index:</strong> The primary metric quantifying phase synchronization between station pairs, computed as the cosine of the magnitude-weighted circular mean phase from cross-spectral density analysis. Consistently denoted as "phase-alignment index" throughout this work, with technical implementation as cos(weighted_phase)</li>
             <li><strong>Technical implementation:</strong> compute_cross_power_plateau() returns (avg_magnitude, weighted_phase) where magnitudes serve as weights in circular averaging: weighted_phase = np.angle(np.average(exp(i*phases), weights=magnitudes)). Final phase-alignment index = np.cos(weighted_phase)</li>
-            <li><strong>Mesh dance score:</strong> Composite metric quantifying network-wide coherent dynamics (see Section 2.5.4 for detailed explanation)</li>
+            <li><strong>Mesh dance score:</strong> Composite metric quantifying network-wide coherent dynamics (see Section 2.6 for detailed explanation)</li>
         </ul>
     </div>
     
@@ -614,8 +614,8 @@ This frequency band methodology enables discrimination between tidal effects, po
             <li>Significance threshold: α = 0.05 with correction for multiple testing where appropriate</li>
         </ul>
 
-        <p><strong>Pre-specified falsification criteria (declared before final analysis):</strong> (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. <strong>Outcomes:</strong> λ = 3,330–4,549 km (PASS); CV of λ = 18.2% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).</p>
-        <p><strong>Structural identification criterion:</strong> The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) the pooled coherent-band estimate must bracket the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km—satisfied by the IGS-final λ<sub>T</sub> = 3,330–4,549 km, with the precise-product family spanning ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning (MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5); raw-SPP channels bound the scale from below at ~0.7–1.1×10<sup>3</sup> km (noise-floor-limited projection) while the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ &gsim; 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ &geq; 5,075 km with a qualitatively different profile shape (§4.6); (d) the R<sub>T</sub> identification calibrates against the fitted ρ<sub>T</sub> ≈ 20 g/cm³ convention (Paper 6), so consistency is with a corpus parameterization rather than an independently derived scale. Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.</p>
+        <p><strong>Pre-specified falsification criteria (declared before final analysis):</strong> (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. <strong>Outcomes:</strong> λ = 3,330–4,549 km (PASS); CV of λ ≈ 13% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS in this dataset; the 25-year CODE extension prefers Gaussian-family kernels by ΔAIC = 12.8, which meets this criterion's disfavouring condition; Paper 2); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).</p>
+        <p><strong>Structural identification criterion:</strong> The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) across products the fitted scale is conditioned by clock-product construction and estimator settings (reported product-level values ~1.0–4.8×10<sup>3</sup> km; MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5), and the same band-ordered profile is recovered in each product; the IGS-final values are consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km, which is itself calibrated on this scale (Paper 6), so this is a consistency statement rather than an independent test; raw-SPP channels return shorter, noise-floor-limited scales (~0.7–1.1×10<sup>3</sup> km), and the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ ≳ 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ ≥ 5,075 km with a qualitatively different profile shape (§4.6). Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.</p>
 
         <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773;">
             <h4>Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)</h4>
@@ -729,7 +729,7 @@ A<sub>aniso</sub>(t) = λ<sub>EW</sub>(t) / λ<sub>NS</sub>(t)            </div>
             <div style="background-color: rgba(255, 255, 255, 0.9); padding: 15px; border-left: 4px solid #495773; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 12px;">
 E ≡ A<sub>obs</sub> / A<sub>exp</sub> = A<sub>obs</sub> / (M/d²)            </div>
             
-            <p>The enhancement factor E provides a normalized comparison of observed versus expected coupling strength. However, E should not be tested for correlation with mass—since E already divides by mass, testing whether E correlates with mass is circular and uninformative.</p>
+            <p>The enhancement factor E provides a normalized comparison of observed versus expected coupling strength. However, E should not be tested for correlation with mass—since E already divides by mass, testing whether E correlates with mass is circular and uninformative. A further limitation is documented in Section 3.4.4: when A<sub>obs</sub> sits near the per-event noise floor, E reduces algebraically to ∝ d&sup2;/M, so the metric encodes the Newtonian denominator rather than any measured response. It is retained for provenance and is not used as physical evidence of geometric screening enhancement.</p>
         </div>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0; border-radius: 5px;">
@@ -756,7 +756,7 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
             <p>This proper test directly examines the relationship between observed phenomena and gravitational predictions without circular normalization.</p>
         </div>
         
-        <p>Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E ≡ A<sub>obs</sub>/(M/d²) already divides by mass. Dividing a flat residual floor by M/d² mechanically produces an inverse scaling with mass by construction, providing no independent physical information about gravitational scaling. The proper statistical test examines A<sub>obs</sub> directly (Section 3.3.4).</p>
+        <p>Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E ≡ A<sub>obs</sub>/(M/d²) already divides by mass. Dividing a flat residual floor by M/d² mechanically produces an inverse scaling with mass by construction, providing no independent physical information about gravitational scaling. The proper statistical test examines A<sub>obs</sub> directly (Section 3.4.4).</p>
         
         <h4>Worked Examples: Mercury and Jupiter</h4>
         
@@ -779,7 +779,7 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
             
             <div style="background-color: rgba(73, 87, 115, 0.1); padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <h6 style="margin-top: 0; color: #220126;">Worked Example: Enhancement Factor Computations</h6>
-                <p style="margin-bottom: 0;">The computed enhancement factors shown above for Mercury (248) and Jupiter (5) follow directly from the worked A<sub>obs</sub> and A<sub>exp</sub> values. For completeness of the method demonstration, analogous computations for Saturn (72), Venus (19), and Mars (201) use the same definition E = A<sub>obs</sub>/(M/d²). Cross-center mean values and full statistical treatment are presented in Section 3.4.4.</p>
+                <p style="margin-bottom: 0;">The computed enhancement factors shown above for Mercury (248) and Jupiter (5) follow directly from the worked A<sub>obs</sub> and A<sub>exp</sub> values and are illustrative of the method only. Cross-center mean values computed from the data (Mercury 137&times;, Mars 215&times;, Saturn 59&times;, Venus 18&times;, Jupiter 5.3&times;) and the full statistical treatment are presented in Section 3.4.4.</p>
             </div>
         </div>
         
@@ -841,7 +841,7 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
                 <ul style="font-size: 13px; margin: 10px 0;">
                     <li><strong>Base mesh coherence:</strong> 0.643–0.644 (strong network-wide synchronization)</li>
                     <li><strong>Spiral motion:</strong> Detected across all centers (rotational dynamics)</li>
-                    <li><strong>Collective oscillation:</strong> Annual period (365.25 days, R² = 0.35, p &lt; 10⁻³)</li>
+                    <li><strong>Collective oscillation:</strong> Annual period (365.25 days, R² = 0.35, p $\lt$ 10⁻³)</li>
                     <li><strong>Earth coupling:</strong> Detected through orbital correlations</li>
                 </ul>
                 

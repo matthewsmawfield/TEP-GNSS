@@ -36,7 +36,7 @@
                             text-align: left;
                         "
                     >
-                        λ&nbsp;Median&nbsp;(km)
+                        λ&nbsp;(exponential best fit,&nbsp;km)
                     </th>
                     <th
                         style="
@@ -64,7 +64,7 @@
                         CODE
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        4,181
+                        4,549
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
                         1,198–5,918
@@ -78,7 +78,7 @@
                         IGS&nbsp;Combined
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        3,763
+                        3,764
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
                         3,197–4,871
@@ -106,7 +106,7 @@
     </div>
     <p style="margin-top: 12px">
         Across centers, λ spans 3,330–4,549&nbsp;km; coefficients of
-        variation&nbsp;&lt;20&nbsp;% indicate strong reproducibility. These
+        variation&nbsp;$\lt$20&nbsp;% indicate strong reproducibility. These
         headline metrics are expanded upon in the detailed sections that follow.
     </p>
     <p style="font-size: 0.85em; color: #666; margin-top: 4px;">
@@ -474,7 +474,7 @@
             Processing and network robustness: Algorithmic and software robustness
             across diverse processing chains (Bernese double-difference clock recovery,
             NAPEOS undifferenced global network adjustment, and IGS weighted combination)
-            is confirmed through station-block bootstrap: &lambda; values remain within
+            is confirmed through station-block bootstrap: λ values remain within
             respective bin-level bootstrap CIs despite removing ~30% of stations per
             resample, confirming neither high-connectivity stations nor geographic
             clustering bias drives the correlation signature.
@@ -789,9 +789,9 @@
         shortest in the high-geomagnetic-latitude (auroral-leaning) band
         (λ ≈ 1,100–3,400 km in 7 of 9 cells; binomial p = 8.3&times;10<sup>&minus;3</sup>
         under a no-organization null), while the quiet mid-latitude band carries
-        the longest lengths (up to λ ≈ 10,000&ndash;15,000 km). Because this
-        ordering is organized on geomagnetic latitude &mdash; the coordinate of the
-        ionosphere, not of any screening variable &mdash; the stratification is
+        the longest lengths (up to λ ≈ 10,000–15,000 km). Because this
+        ordering is organized on geomagnetic latitude — the coordinate of the
+        ionosphere, not of any screening variable — the stratification is
         consistent with both the environmental-screening interpretation and a
         residual static ionospheric dependence that the temporal Kp/TID controls
         cannot exclude (Step 4.9). The stratification is therefore reported as
@@ -1413,7 +1413,7 @@
                 </li>
                 <li>
                     <strong>Collective oscillation:</strong> Annual period
-                    (365.25 days) with R² = 0.35, p < 0.001
+                    (365.25 days) with R² = 0.35, $p \lt 0.001$
                 </li>
                 <li>
                     <strong>Earth coupling:</strong> Oscillation period matches
@@ -2272,16 +2272,20 @@
         longer analysis windows:
     </p>
     <ul>
-        <li>31-day window: r = -0.362, p = 1.3×10⁻²⁹</li>
-        <li>59-day window: r = -0.400, p = 2.5×10⁻³⁶</li>
-        <li>91-day window: r = -0.428, p = 7.8×10⁻⁴²</li>
-        <li>119-day window: r = -0.454, p = 1.2×10⁻⁴⁷</li>
-        <li>179-day window: r = -0.477, p = 7.2×10⁻⁵³</li>
+        <li>31-day window: r = -0.362, autocorr-corrected p = 1.3×10⁻²</li>
+        <li>59-day window: r = -0.400, autocorr-corrected p = 5.5×10⁻³</li>
+        <li>91-day window: r = -0.428, autocorr-corrected p = 2.8×10⁻³</li>
+        <li>119-day window: r = -0.454, autocorr-corrected p = 1.4×10⁻³</li>
+        <li>179-day window: r = -0.476, autocorr-corrected p = 7.4×10⁻⁴</li>
         <li>
-            227-day window: r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p
-            = 3.3×10⁻⁴
+            227-day window: r = -0.503, autocorr-corrected p = 3.3×10⁻⁴
+            (raw p = 1.5×10⁻⁵⁹; selection-adjusted across the seven-window
+            scan, p ≃ 2.3×10⁻³)
         </li>
-        <li>Raw correlation: r = -0.164, p = 6.0×10⁻⁷</li>
+        <li>
+            Unsmoothed correlation: r = -0.164, autocorr-corrected p =
+            2.5×10⁻⁵
+        </li>
     </ul>
 
     <p>
@@ -2289,20 +2293,31 @@
         window, indicating gravitational-temporal coupling operates on seasonal
         to annual timescales.
         <em
-            >Note: The 227-day window p-value is autocorrelation-corrected per
-            §2.3.</em
+            >Note: All p-values in this section are autocorrelation-corrected
+            per §2.3 (N<sub>eff</sub> ≃ 47 for the smoothed series;
+            N<sub>eff</sub> ≃ 652 unsmoothed). The optimal window is
+            selected from a fixed seven-window scan; the quoted
+            selection-adjusted value applies a Bonferroni factor over that
+            scan.</em
         >
     </p>
 
     <h3>Individual Planetary Signatures</h3>
     <ul>
         <li>
-            Jupiter: r = -0.256, p = 3.6×10⁻¹⁵ (strongest individual effect)
+            Jupiter: r = -0.175, autocorr-corrected p = 7.2×10⁻⁶ (strongest
+            individual effect)
         </li>
-        <li>Sun: r = -0.230, p = 2.2×10⁻¹² (dominant mass influence)</li>
-        <li>Mars: r = -0.111, p = 8.2×10⁻⁴ (opposition cycle effects)</li>
+        <li>
+            Saturn: r = -0.101, autocorr-corrected p = 1.0×10⁻² (incomplete
+            orbital coverage)
+        </li>
+        <li>
+            Sun: r = -0.065, autocorr-corrected p = 0.10 (dominant mass
+            influence, marginal against temporal variability)
+        </li>
+        <li>Mars: r = -0.072, autocorr-corrected p = 0.068</li>
         <li>Venus: Complex distance-dependent coupling</li>
-        <li>Saturn: Minimal correlation (incomplete orbital coverage)</li>
     </ul>
 
     <p>
@@ -2587,13 +2602,13 @@
                         Saturn Opp. 2023-08-27
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -8.93%
+                        -23.27%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -13.85%
+                        +47.98%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -5.11%
+                        +93.27%
                     </td>
                 </tr>
                 <tr>
@@ -2601,13 +2616,13 @@
                         Saturn Opp. 2024-09-08
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -2.48%
+                        -1.85%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +1.15%
+                        -44.79%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +1.84%
+                        -112.83%
                     </td>
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.03)">
@@ -2615,13 +2630,13 @@
                         Mars Opp. 2025-01-16
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -14.79%
+                        -17.33%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +1.50%
+                        -33.01%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +6.82%
+                        -60.21%
                     </td>
                 </tr>
                 <tr>
@@ -2629,13 +2644,13 @@
                         Jupiter Opp. 2023-11-03
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +0.24%
+                        +21.45%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +24.24%
+                        +2.72%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -1.29%
+                        -48.28%
                     </td>
                 </tr>
                 <tr style="background-color: rgba(73, 87, 115, 0.03)">
@@ -2643,47 +2658,62 @@
                         Jupiter Opp. 2024-12-07
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        -0.24%
+                        +24.02%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +27.71%
+                        -15.57%
                     </td>
                     <td style="padding: 8px; border: 1px solid #495773">
-                        +31.86%
+                        -13.65%
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <p style="font-size: 13px; color: #666">
+        Values are the signed event-locked direct effect: the change in mean
+        daily coherence between the event window (|d| ≤ 2 days) and the
+        local baseline annulus (15 ≤ |d| ≤ 30 days), expressed as a
+        percentage of that baseline. This metric replaces the earlier
+        free-centre Gaussian amplitudes, which could lock onto unrelated
+        excursions tens of days from the event.
+    </p>
+
     <h3>Observed Patterns</h3>
     <ul>
         <li>
-            Jupiter oppositions: Strong positive effects (up to +31.86%),
-            particularly in ESA and IGS centers
+            Mars opposition: Same-signed suppression in all three centers
+            (-17.33% to -60.21%), yet within each center's placebo band
+            (21st–33rd percentile of sliding-center null)
         </li>
         <li>
-            Saturn oppositions: Predominantly negative effects (-13.85% to
-            +1.84%)
+            Saturn oppositions: Strongly divergent; ESA reaches +93.27% (2023,
+            ~99th placebo percentile) but falls to -112.83% (2024), and the
+            2023 excursion is not reproduced by CODE (-23.27%) or IGS
+            (+47.98%)
         </li>
         <li>
-            Mars opposition: Variable center-specific responses (-14.79% to
-            +6.82%)
+            Jupiter oppositions: CODE positive (+21.45% to +24.02%), IGS and
+            ESA mixed-to-negative; all within placebo bands
         </li>
         <li>
-            Center variations: Different processing approaches yield different
-            sensitivities to short-term gravitational events
+            Center variations: Per-center residuals scatter over a range far
+            wider than any candidate signal, indicating that transient
+            event-window fluctuations are dominated by center-specific
+            network-adjustment noise
         </li>
     </ul>
 
     <p>
         Note: These short-term event responses differ from long-term
         gravitational correlations (Section 3.4.1), reflecting different
-        physical timescales and mechanisms. The center-specific variations
-        suggest different processing approaches yield different sensitivities to
-        short-term gravitational events, with IGS and ESA showing stronger
-        responses to Jupiter oppositions while CODE exhibits more consistent
-        patterns across planetary events.
+        physical timescales and mechanisms. Audit of the earlier
+        center-discordant values traced them to unconstrained-centre Gaussian
+        fits rather than to the data themselves; the corrected direct test
+        reported here finds no opposition event with a consistent
+        cross-center, placebo-exceeding response. Full audit:
+        results/outputs/planetary_channel_corrected_audit.json.
     </p>
 </div>
 
@@ -2691,23 +2721,30 @@
     <h3>Window Sensitivity (Default Multi-Window Analysis)</h3>
     <ul>
         <li>
-            Outer planets (Jupiter, Saturn, Mars): responses systematically
-            strengthen with longer windows (±120–±240 days), consistent with
-            seasonal coupling; strongest detections observed at ±180–±240.
+            Outer planets (Jupiter, Saturn, Mars): the earlier observation that
+            fitted amplitudes strengthen with longer windows (±120–±240) is now
+            identified as a fitting artifact—a free-centre Gaussian prefers the
+            largest excursion inside the window, so longer windows admit larger
+            off-event excursions. Event-locked direct effects show no genuine
+            window growth and remain within placebo noise.
         </li>
         <li>
-            Inner planet (Mercury): robust event-locked responses across all
-            windows; multiple significant detections persist from ±60 through
-            ±240.
+            Mercury: nominally significant fits exist in IGS and ESA but are
+            mostly centred 4–65 days off the conjunction; direct effects are
+            discordant across centers and not robust.
         </li>
         <li>
-            Venus: multi-window significance across IGS/ESA (±60–±240) with
-            mixed enhancement/suppression; CODE remains sub‑significant.
+            Venus: the March 2025 conjunction is the strongest surviving
+            event-locked case—ESA fit centred +3.3 days (σ ≈ 4 across all
+            windows, direct effect +140%, 96th–98th placebo percentile), with
+            CODE positive (+72%) but IGS negative (−28%); single-event,
+            non-cross-center.
         </li>
     </ul>
     <p style="font-size: 13px; color: #666">
-        Interpretation relies on σ-levels rather than amplitude-magnitude ratios
-        when expected amplitudes are small (e.g., Saturn).
+        Interpretation now relies on event-locked direct effects with
+        sliding-centre placebo calibration; σ-levels from free-centre fits are
+        not treated as event detections.
     </p>
 </div>
 
@@ -2738,26 +2775,32 @@
         vastly different temporal sampling (Mercury: 7.9 cycles, Jupiter: 2.3
         cycles, Mars: 1.2 cycles), direct correlation between observed event
         amplitudes and Newtonian gravitational scaling (GM/d²) returns a null
-        result (mean r = −0.156). Furthermore, individual opposition events exhibit
-        sign discordance across analysis center solutions (for instance, Mars 2025
-        yields −14.79% in CODE versus +6.82% in ESA; Jupiter 2023 yields +24.24% in
-        IGS Combined versus −1.29% in ESA). Because a physical scalar field modulation
-        imposes a definite sign, this cross-center discordance indicates that
-        transient single-event windows in processed clock products do not isolate
-        coherent planetary detections, but instead provide empirical upper bounds on
-        transient planetary field perturbations. Extended 10+ year observations will
-        be required to place tighter constraints on long-period planetary
-        influences.
+        result (mean r = −0.156). Individual opposition events also exhibit
+        large center-to-center scatter that cannot represent a coherent field
+        response: Saturn 2023 yields −23.27% in CODE but +93.27% in ESA, and
+        Jupiter 2023 yields +21.45% in CODE versus −48.28% in ESA. (The
+        sign-reversed Mars-2025 pair quoted in earlier drafts was an artifact
+        of unconstrained-centre Gaussian fits; the corrected event-locked
+        metric gives same-signed suppression in all centers, within placebo
+        noise.) Because a physical scalar field modulation imposes a definite
+        sign, this cross-center discordance indicates that transient
+        single-event windows in processed clock products do not isolate
+        coherent planetary detections, but instead provide empirical upper
+        bounds on transient planetary field perturbations. Extended 10+ year
+        observations will be required to place tighter constraints on
+        long-period planetary influences.
     </p>
 
     <p style="margin-bottom: 10px">
         Robustness to temporal window choice was assessed using the default
-        multi-window sweep (±30, ±60, ±120, ±180, ±240 days). Enhancement factor
-        rankings and qualitative mass-scaling conclusions remain stable across
-        windows: outer-planet responses strengthen with seasonal windows
-        (±120–±240) while Mercury exhibits persistent event-level significance
-        across all windows. These trends are consistent across IGS Combined and
-        ESA Final, with CODE showing weaker event-scale sensitivity.
+        multi-window sweep (±30, ±60, ±120, ±180, ±240 days). The corrected
+        event-locked direct effect samples only |d| ≤ 30 days of the event
+        series, so it is identical across the longer windows by construction;
+        window sensitivity now enters only through the placebo calibration.
+        Earlier reports that outer-planet responses strengthen with seasonal
+        windows (±120–±240) traced to free-centre Gaussian fits that locked
+        onto off-event excursions inside larger windows; with the centre
+        constrained to the event, that apparent scaling disappears.
     </p>
 
     <div
@@ -2769,14 +2812,19 @@
         "
     >
         <h4 style="margin-top: 0; color: #495773">
-            Observation 1: Enhancement Factor Distribution
+            Observation 1: Enhancement-Factor Distribution (Retired Metric)
         </h4>
         <p>
-            Using the definition in §2.6, statistically significant
-            variation is found across planets, with Jupiter showing 3.5× enhancement
-            while Mercury shows 127× enhancement (cross-center means). These
-            factors provide mass-independent comparison of observed versus
-            predicted gravitational coupling strength.
+            Under the descriptive definition in §2.6, the catalogued values span
+            Jupiter 5.3× to Mercury 137× (cross-center means). These numbers
+            are retained for provenance only: because the per-event residual
+            amplitude A<sub>obs</sub> sits near the baseline noise floor across
+            all planets, E ≡ A<sub>obs</sub>/(M/d&sup2;) reduces
+            algebraically to ∝ d&sup2;/M, so the ordering encodes the
+            Newtonian denominators rather than any measured coupling strength
+            (see the algebraic demonstration below). The estimator is
+            therefore not evidence of geometric screening enhancement and is
+            retired as a physical channel.
         </p>
 
         <table
@@ -2840,7 +2888,7 @@
                             text-align: center;
                         "
                     >
-                        127×
+                        137×
                     </td>
                 </tr>
                 <tr style="background-color: rgba(255, 255, 255, 0.5)">
@@ -2863,7 +2911,7 @@
                             text-align: center;
                         "
                     >
-                        169×
+                        215×
                     </td>
                 </tr>
                 <tr>
@@ -2886,7 +2934,7 @@
                             text-align: center;
                         "
                     >
-                        72×
+                        59×
                     </td>
                 </tr>
                 <tr style="background-color: rgba(255, 255, 255, 0.5)">
@@ -2909,7 +2957,7 @@
                             text-align: center;
                         "
                     >
-                        15×
+                        18×
                     </td>
                 </tr>
                 <tr>
@@ -2932,7 +2980,7 @@
                             text-align: center;
                         "
                     >
-                        3.5×
+                        5.3×
                     </td>
                 </tr>
             </tbody>
@@ -3144,13 +3192,14 @@
 
         <p>
             The apparent "inverse mass hierarchy" reported in descriptive
-            evaluations—wherein Mercury (0.055 M<sub>&oplus;</sub>) exhibits an
-            enhancement factor E &equiv; A<sub>obs</sub>/(M/d&sup2;) of 127&times;
-            compared to 3.5&times; for Jupiter (317.8 M<sub>&oplus;</sub>)—is an
+            evaluations—wherein Mercury (0.055 M<sub>⊕</sub>) exhibits an
+            enhancement factor E ≡ A<sub>obs</sub>/(M/d&sup2;) of 137&times;
+            compared to 5.3&times; for Jupiter (317.8 M<sub>⊕</sub>)—is an
             algebraic consequence of the definition of E. Because the observed
-            residual variance reductions A<sub>obs</sub> hover near the network
-            noise floor across all planetary events (typically 5&ndash;25%),
-            dividing by M/d&sup2; mechanically yields E &prop; d&sup2;/M by
+            residual amplitude A<sub>obs</sub> remains at the per-event noise
+            floor (fractional deviations of order the baseline coherence
+            itself) across all planetary events,
+            dividing by M/d&sup2; mechanically yields E ∝ d&sup2;/M by
             construction. Consequently, planets with minimal Newtonian field
             strengths at Earth naturally register elevated values of E, whereas
             massive bodies like Jupiter register small values. The ratio of
@@ -3171,25 +3220,28 @@
             <strong>Sign Discordance and Empirical Bounds:</strong> A genuine
             scalar-field perturbation would impose a physically consistent sign
             on clock variations during planetary configurations. However,
-            individual events exhibit marked sign discordance across analysis
-            centers: Mars 2025 yields &minus;14.79% in CODE but +6.82% in ESA;
-            Jupiter 2023 yields +24.24% in IGS Combined but &minus;1.29% in ESA.
-            This discordance demonstrates that single-event amplitude
-            fluctuations are dominated by center-specific orbit determination
-            filter dynamics and clock re-absorption. Rather than detecting
-            unscreened scalar perturbations from individual planets, the
-            analysis establishes an empirical upper bound on transient planetary
-            field modulations in processed GNSS products.
+            individual events exhibit marked discordance across analysis
+            centers: Saturn 2023 yields &minus;23.27% in CODE but +93.27% in
+            ESA; Jupiter 2023 yields +21.45% in CODE but &minus;48.28% in ESA.
+            (The earlier-quoted Mars-2025 sign reversal was traced to
+            unconstrained-centre Gaussian fits; with the fit centre fixed on
+            the event, all centers show a same-signed but placebo-consistent
+            suppression.) This discordance demonstrates that single-event
+            amplitude fluctuations are dominated by center-specific orbit
+            determination filter dynamics and clock re-absorption. Rather than
+            detecting unscreened scalar perturbations from individual planets,
+            the analysis establishes an empirical upper bound on transient
+            planetary field modulations in processed GNSS products.
         </p>
 
         <p>
             Within the rigorous formulation of TEP, disformal transport governed
-            by B(&phi;)&nabla;<sub>&mu;</sub>&phi;&nabla;<sub>&nu;</sub>&phi;
+            by B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ
             (Rule 1) cannot be probed through single-receiver clock offsets, which
             are subject to synchronization conventions and network absorption.
             Instead, disformal physics is uniquely and gauge-invariantly tested
             by closed-loop synchronization holonomy H<sub>resid</sub> =
-            &oint;(&sigma;&#771; &minus; &sigma;<sub>GR</sub>) around closed
+            ∮(σ̃ &minus; σ<sub>GR</sub>) around closed
             circuits (Rule 13), which vanishes identically in the purely
             conformal sector.
         </p>
@@ -3213,16 +3265,16 @@
             Closed-Loop Holonomy vs. Open Amplitudes: While single-station clock
             offsets are constrained by network datum absorption and screening,
             non-exact disformal transport governed by
-            B(&phi;)&nabla;<sub>&mu;</sub>&phi;&nabla;<sub>&nu;</sub>&phi;
+            B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ
             generates invariant closed-loop holonomies H<sub>resid</sub> =
-            &oint;(&sigma;&#771; &minus; &sigma;<sub>GR</sub>) across triangular
+            ∮(σ̃ &minus; σ<sub>GR</sub>) across triangular
             clock networks (Rule 13), providing an invariant physical channel for
             future inter-station circuit tests.
         </li>
         <li>
             Heliospheric Temporal Topology: The continuous spatial profile of
             the φ field may create a radial asymmetry in the solar system as
-            Earth's orbital motion traverses regions of varying Temporal Shear,
+            Earth's orbital motion traverses regions of varying ambient field value,
             altering the observable response amplitude for inner vs. outer planets.
         </li>
     </ul>
@@ -3354,8 +3406,8 @@
     signal-localized. Whether the band ordering reflects screening
     stratification or a systematic transfer mixture is the same open
     degeneracy registered in §4.6. The visibility/datum component of that
-    degeneracy is bounded by forward simulation at λ &gsim; 6.7×10<sup>3</sup>
-    km, and at λ &geq; 5,075 km when conditioned on the real
+    degeneracy is bounded by forward simulation at λ ≳ 6.7×10<sup>3</sup>
+    km, and at λ ≥ 5,075 km when conditioned on the real
     product's satellite-clock content and ephemerides (§4.6), above the
     pooled measured scale.
 </p>
@@ -3614,9 +3666,11 @@
     >
         <h4 style="margin-top: 0; color: #220126">Physical Interpretation</h4>
         <p style="margin-bottom: 10px">
-            Mean enhancement >100× suggests potential non-linear coupling
-            mechanisms. Such large amplification relative to null expectation
-            may indicate:
+            A mean signal-to-null ratio >100× indicates that the observed
+            distance-coherence structure lies far outside what the scrambling
+            nulls produce — the correlations are not explainable as
+            distance-independent noise. Candidate physical completions that have
+            been considered include:
         </p>
         <ul style="margin-bottom: 0">
             <li>
@@ -3643,10 +3697,11 @@
             ><strong>Validation Context:</strong> The enhancement factor was
             computed from ESA Final center analysis comparing real vs. null
             distributions. All three centers show comparable signal-to-noise
-            ratios (z = 15.8-31.9), providing independent confirmation of the
-            enhancement magnitude. The >100× amplification represents a
-            fundamental challenge to mundane explanations and strongly supports
-            exotic physics involving non-linear spacetime-matter coupling.</em
+            ratios (z = 15.8-31.9), providing cross-centre confirmation of the
+            signal-over-null margin. The >100× amplification rules out the
+            scrambled-null family as an explanation of the correlation
+            structure; the candidate non-linear coupling interpretations listed
+            above remain hypotheses pending mechanistic derivation.</em
         >
     </p>
 </div>
@@ -3683,7 +3738,7 @@
         <b>(A) Post-tidal 30–40 μHz prominence:</b> Strongest band excludes
         classical tidal contamination while maintaining high correlation quality
         across all analysis centers (mean R² = 0.946, equal to tidal bands).
-        <b>(B) Frequency specificity validation:</b> All enhancement ratios <2×
+        <b>(B) Frequency specificity validation:</b> All enhancement ratios $\lt$2×
         support universal coupling interpretation (classical tidal contamination
         would require >3× ratios), distinguishing TEP from tidal artifacts and
         demonstrating universal broadband coupling extending beyond tidal
@@ -4141,7 +4196,7 @@
                 cutoffs
             </li>
             <li>
-                Universal coupling evidence: All enhancement ratios <2× support
+                Universal coupling evidence: All enhancement ratios $\lt$2× support
                 universal conformal coupling interpretation (classical tidal
                 contamination would require >3-5× ratios)
             </li>
@@ -4418,7 +4473,7 @@
         Cross-Validation: This finding aligns with Step 3.6 multiband analysis
         showing the 112-day period as dominant across all analysis centers, and
         supports the non-ionospheric origin through TID exclusion analysis. The
-        systematic ranking of temporal effects (ESA Final < CODE < IGS Combined)
+        systematic ranking of temporal effects (ESA Final $\lt$ CODE $\lt$ IGS Combined)
         correlates with TID impact scores, suggesting Venus coupling strength
         varies systematically across analysis centers.
     </p>
@@ -4466,7 +4521,7 @@
     <p>
         Temporal analysis scope: Comprehensive hourly temporal analysis across
         all three analysis center solutions reveals systematic diurnal variations
-        consistent with &phi;-field coupling predictions:
+        consistent with φ-field coupling predictions:
     </p>
 
     <div style="overflow-x: auto; margin: 15px 0">
@@ -4766,16 +4821,16 @@
 </div>
 
 <p>
-    Planetary mass scaling: Direct correlation analysis (Section 3.3.4) between
+    Planetary mass scaling: Direct correlation analysis (Section 3.4.4) between
     observed amplitudes and gravitational predictions (M/d&sup2;) reveals no
     statistically significant correlation (r = &minus;0.156 average across three
     centers), establishing an empirical upper bound on unmodeled single-receiver
-    scalar perturbations. Individual opposition events display cross-center sign
-    discordance (e.g. Mars 2025: CODE &minus;14.79% vs ESA +6.82%), confirming
+    scalar perturbations. Individual opposition events display cross-center
+    discordance (e.g. Saturn 2023: CODE &minus;23.27% vs ESA +93.27%), confirming
     that single-event residual amplitudes reflect network adjustment dynamics
     rather than coherent planetary scalar detections. Apparent enhancement factor
-    variations E &equiv; A<sub>obs</sub>/(M/d&sup2;) mechanically mirror the inverse
-    Newtonian denominator (E &prop; d&sup2;/M) against the residual floor,
+    variations E ≡ A<sub>obs</sub>/(M/d&sup2;) mechanically mirror the inverse
+    Newtonian denominator (E ∝ d&sup2;/M) against the residual floor,
     reinforcing that disformal coupling must be probed through closed-loop
     holonomy rather than single-station amplitude ratios.
 </p>

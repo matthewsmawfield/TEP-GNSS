@@ -1,6 +1,6 @@
 {
   "name": "tep-gnss-site",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "main": "index.html",
   "scripts": {
@@ -29,7 +29,7 @@
     "type": "git",
     "url": "https://github.com/matthewsmawfield/TEP-GNSS.git"
   },
-  "homepage": "https://matthewsmawfield.github.io/TEP-GNSS/",
+  "homepage": "https://mlsmawfield.com/tep/gnss-i/",
   "devDependencies": {
     "chokidar": "^4.0.3",
     "live-server": "^1.2.2",

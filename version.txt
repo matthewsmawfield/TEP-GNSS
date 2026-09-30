@@ -1,4 +1,9 @@
-v0.27 (Jaipur) — 13 September 2026 — Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
+v0.27 (Jaipur) — 30 September 2026 — Completion-dependent framing, planetary audit, and PPN scope corrections
 
+- Renamed conformal coupling notation from beta_conf to beta_A to avoid PPN collision
 - Reframed the Compton-mass interpretation as a completion-dependent heuristic: lambda_T is now presented as the primary empirical quantity, with m_phi serving only as a Yukawa/Compton reference scale under a specific scalar completion
-- Softened disformal coupling claims and clarified PPN screening: GNSS covariance does not by itself isolate B(phi) (direct discrimination requires a non-exact transport observable), and the PPN bound is noted to apply to the environmentally screened effective coupling rather than directly fixing the bare conformal parameter beta_A 
+- Softened disformal coupling claims and clarified PPN screening: GNSS covariance does not by itself isolate B(phi) (direct discrimination requires a non-exact transport observable), and the PPN bound is noted to apply to the environmentally screened effective coupling rather than directly fixing the bare conformal parameter beta_A
+- Planetary-event channel audited: disclosed that the enhancement-factor metric E = A_obs/(M/d^2) algebraically reduces to d^2/M near the noise floor rather than proving geometric screening enhancement; reported mass-scaling null (r = -0.156) and noted Venus March 2025 as the sole event-locked candidate (+3.3 d)
+- Falsification criteria and kernel selection: clarified that while this dataset prefers the exponential kernel, the 25-year CODE extension (Paper 2) prefers Gaussian-family kernels by DeltaAIC = 12.8, meeting the criterion's disfavouring condition for directly exponential screened-field covariance
+- Normalized raw-data and cross-product roadmap: acknowledged Paper 3's completed raw-RINEX/SPP test, Paper 2's completed 25.3-year longitudinal analysis, and Paper 14's MGEX multi-constellation replication
+- Updated abstract, metadata, and citation references across all components to 30 September 2026

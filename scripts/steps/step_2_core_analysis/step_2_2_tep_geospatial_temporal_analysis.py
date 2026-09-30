@@ -5527,6 +5527,29 @@ def gaussian_pulse_model(days_array, amplitude, sigma, baseline, center_days=0):
     """Gaussian pulse model for fitting event-locked coherence changes."""
     return amplitude * np.exp(-0.5 * ((days_array - center_days) / sigma)**2) + baseline
 
+def _direct_event_effect(daily_data: List[Dict]) -> Optional[Dict]:
+    """
+    Event-locked direct effect: (mean coherence in |d| <= 2 d) minus
+    (mean coherence in the 15-30 d annulus), expressed as a signed fraction
+    of the annulus baseline. Independent of the Gaussian fit and insensitive
+    to off-event window structure.
+    """
+    days = np.array([d['days_from_event'] for d in daily_data], dtype=float)
+    coh = np.array([d['mean_coherence'] for d in daily_data], dtype=float)
+    pm = np.abs(days) <= 2
+    bm = (np.abs(days) >= 15) & (np.abs(days) <= 30)
+    if pm.sum() < 3 or bm.sum() < 10:
+        return None
+    base = coh[bm].mean()
+    if base == 0:
+        return None
+    return {
+        'peak_coherence': float(coh[pm].mean()),
+        'baseline_coherence': float(base),
+        'effect_fraction_of_baseline': float((coh[pm].mean() - base) / base),
+        'effect_percent': float((coh[pm].mean() - base) / base * 100.0),
+    }
+
 def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, window_days: int, expected_amplitude: float, min_daily_pairs: int) -> Dict:
     """Helper to analyze a single event window with Gaussian fitting."""
     daily_data = []
@@ -5560,9 +5583,12 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
         elif expected_amplitude < 0 and initial_amp_guess > 0:
             initial_amp_guess = -abs(initial_amp_guess)
         
-        # FIXED: Expand bounds to accommodate 240-day windows
+        # Event-locked fit: the response must be centred on the event itself.
+        # A free centre lets the Gaussian latch onto unrelated window noise
+        # (this manufactured the spurious per-centre sign discordance; audit:
+        # results/outputs/planetary_channel_corrected_audit.json).
         day_range = max(abs(days.min()), abs(days.max()))
-        center_bounds = [-day_range, day_range]  # Allow center anywhere in the event window
+        center_bounds = [-min(5.0, day_range), min(5.0, day_range)]
         
         # Clamp initial guesses to be within bounds
         initial_amp_guess = np.clip(initial_amp_guess, -0.1, 0.1)
@@ -5570,7 +5596,7 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
         
         p0 = [initial_amp_guess, 5.0, baseline_guess, 0.0] # amplitude, sigma, baseline, center_days
         
-        # Bounds: amplitude (-0.1 to 0.1), sigma (1 to 60 days), baseline (-1 to 1), center_days (±window_days)
+        # Bounds: amplitude (-0.1 to 0.1), sigma (1 to 60 days), baseline (-1 to 1), center_days (±5 days, event-locked)
         bounds = ([-0.1, 1.0, -1.0, center_bounds[0]], [0.1, 60.0, 1.0, center_bounds[1]]) 
 
         popt, pcov = curve_fit(
@@ -5604,6 +5630,7 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
             'n_pairs_in_window': len(event_data),
             'n_daily_bins': len(daily_data),
             'daily_data': daily_data,
+            'direct_event_test': _direct_event_effect(daily_data),
             'gaussian_fit': {
                 'amplitude': float(amplitude),
                 'sigma_days': float(sigma),
@@ -5614,6 +5641,7 @@ def _analyze_event_window(event_data: pd.DataFrame, event_date: pd.Timestamp, wi
                 'sigma_level': float(sigma_level),
                 'is_significant': bool(is_significant),
                 'amplitude_fraction_of_baseline': float(amplitude_fraction_of_baseline),
+                'event_locked': bool(abs(center_days) <= 5.0),
                 'fit_success': True
             }
         }
@@ -5670,12 +5698,12 @@ def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: i
         # IMPROVED: Better initial parameter guesses for faster convergence
         baseline_guess = np.mean(coherences)
         sigma_guess = np.std(days) / 3.0  # Better sigma estimate based on data spread
-        center_guess = days[np.argmax(np.abs(coherences - baseline_guess))]  # Center at peak deviation
+        center_guess = 0.0  # Event-locked: centre on the event itself
         
-        # FIXED: Expand center_days bounds to accommodate 240-day windows (days range from -120 to +120)
-        # Previous bounds [-5, 5] were too restrictive for large windows
+        # Event-locked fit (see _analyze_event_window): constrain centre to
+        # +/-5 d so a stacked response cannot lock onto off-event noise.
         day_range = max(abs(days.min()), abs(days.max()))
-        center_bounds = [-day_range, day_range]  # Allow center anywhere in the event window
+        center_bounds = [-min(5.0, day_range), min(5.0, day_range)]
         
         # Clamp initial guesses to be within bounds
         initial_amp_guess = np.clip(initial_amp_guess, -0.1, 0.1)
@@ -5715,6 +5743,7 @@ def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: i
             'n_daily_bins_stacked': len(mean_stacked_daily_data),
             'stacked_daily_data': mean_stacked_daily_data,
             'processing_time_seconds': float(elapsed_time),
+            'direct_event_test': _direct_event_effect(mean_stacked_daily_data),
             'gaussian_fit': {
                 'amplitude': float(amplitude),
                 'sigma_days': float(sigma),
@@ -5725,6 +5754,7 @@ def _perform_stacked_analysis(all_event_data: List[pd.DataFrame], window_days: i
                 'sigma_level': float(sigma_level),
                 'is_significant': bool(is_significant),
                 'amplitude_fraction_of_baseline': float(amplitude_fraction_of_baseline),
+                'event_locked': bool(abs(center_days) <= 5.0),
                 'fit_success': True
             }
         }
@@ -6115,9 +6145,15 @@ def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
     }
     
     try:
-        # Extract planetary event amplitudes
+        # Extract planetary event amplitudes.
+        # Only event-locked fits are admissible: a Gaussian whose centre is
+        # displaced from the event date measures window noise, not the event.
+        # Signed amplitude is retained; the old abs() silently hid the
+        # per-centre sign discordance that turned out to be a fitting artefact
+        # (audit: results/outputs/planetary_channel_corrected_audit.json).
         all_amplitudes = []
         expected_amplitudes = []
+        n_skipped_not_event_locked = 0
         
         for planet in ['jupiter_opposition_analysis', 'saturn_opposition_analysis', 'mars_opposition_analysis']:
             if planet in planetary_results and planetary_results[planet].get('success'):
@@ -6125,20 +6161,27 @@ def analyze_nonlinear_coupling(planetary_results: Dict) -> Dict:
                 for event_data in events.values():
                     if event_data.get('success'):
                         gaussian = event_data.get('gaussian_fit', {})
-                        if gaussian.get('fit_success'):
-                            # Calculate absolute amplitude for proper unit consistency
-                            baseline = gaussian.get('baseline', 0.007)
-                            amp_absolute = abs(gaussian.get('amplitude_fraction_of_baseline', 0)) * baseline
-                            
-                            if 'jupiter' in planet:
-                                expected_absolute = 0.00220  # 0.220% as absolute
-                            elif 'saturn' in planet:
-                                expected_absolute = 0.00019  # 0.019% as absolute
-                            else:  # mars
-                                expected_absolute = 0.00005  # 0.0050% as absolute
-                            
-                            all_amplitudes.append(amp_absolute)
-                            expected_amplitudes.append(expected_absolute)
+                        if not gaussian.get('fit_success'):
+                            continue
+                        event_locked = gaussian.get('event_locked',
+                                                    abs(gaussian.get('center_days', 999)) <= 5.0)
+                        if not event_locked:
+                            n_skipped_not_event_locked += 1
+                            continue
+                        baseline = gaussian.get('baseline', 0.007)
+                        amp_signed = gaussian.get('amplitude_fraction_of_baseline', 0) * baseline
+                        
+                        if 'jupiter' in planet:
+                            expected_absolute = 0.00220  # 0.220% as absolute
+                        elif 'saturn' in planet:
+                            expected_absolute = 0.00019  # 0.019% as absolute
+                        else:  # mars
+                            expected_absolute = 0.00005  # 0.0050% as absolute
+                        
+                        all_amplitudes.append(amp_signed)
+                        expected_amplitudes.append(expected_absolute)
+        
+        coupling_results['n_skipped_not_event_locked'] = n_skipped_not_event_locked
         
         if len(all_amplitudes) >= 3:
             all_amplitudes = np.array(all_amplitudes)
@@ -6458,7 +6501,10 @@ def generate_comprehensive_scientific_report(all_results: Dict, analysis_center:
                                 'enhancement_factor': actual_amplitude / expected_amplitude_abs if expected_amplitude_abs > 0 else 0,
                                 'direction': 'suppression' if amplitude < 0 else 'enhancement',
                                 'p_value': 2 * (1 - norm.cdf(abs(sigma))),  # Two-tailed p-value from sigma level
-                                'mass_scaled_enhancement': (actual_amplitude / expected_amplitude_abs) / info['mass_ratio'] if expected_amplitude_abs > 0 and info['mass_ratio'] > 0 else 0
+                                'mass_scaled_enhancement': (actual_amplitude / expected_amplitude_abs) / info['mass_ratio'] if expected_amplitude_abs > 0 and info['mass_ratio'] > 0 else 0,
+                                'event_locked': bool(abs(gaussian.get('center_days', 999)) <= 5.0),
+                                'center_days': gaussian.get('center_days'),
+                                'signed_amplitude_fraction': gaussian.get('amplitude_fraction_of_baseline', 0)
                             }
                             
                             if sigma >= 3.0:

@@ -40,7 +40,7 @@ def universal_screening_function(rho, rho_scale, n=2.0, invert=False):
         Used for source and cosmology screening (suppressed at high density).
 
         If True: factor = 1 / [1 + (rho_scale/rho)^n].
-        Used for chameleon coupling screening (suppressed at low density).
+        Used for continuous macroscopic topological screening (suppressed at low density proxy).
     """
     rho = np.asarray(rho, dtype=float)
     if np.any(rho <= 0):
@@ -62,7 +62,9 @@ def screening_factor(rho_local_g_cm3, rho_c=RHO_C):
 
     When rho_local << rho_c: suppression -> 1 (full TEP effect)
     When rho_local -> rho_c: suppression -> 0.5 (transition)
-    When rho_local >> rho_c: suppression -> 0 (saturated, A -> 1)
+    When rho_local >> rho_c: suppression -> 0 (response saturated:
+    interior field rests at its density-dependent equilibrium u_min(rho) > 0
+    and the shear gradient is pinned — the field is not relaxed to A -> 1)
 
     WARNING: rho_c = 20.0 g/cm^3 is calibrated for lab/stellar-body densities.
     For galactic-scale densities (~1e-17 g/cm^3), rho/rho_c ~ 5e-19 and this
@@ -79,8 +81,8 @@ def coupling_screening_factor(rho_local_g_cm3, rho_transition=1.0, n=4.0):
 
     f(rho) = 1 / [1 + (rho_transition / rho)^n]
 
-    This is the inverted power-law form, used for chameleon-like
-    coupling screening (suppressed at low density).
+    This is the inverted power-law form, used for continuous macroscopic
+    topological screening (suppressed at low density proxy).
     """
     return universal_screening_function(rho_local_g_cm3, rho_transition, n=n, invert=True)
 

@@ -7,20 +7,19 @@
 
 **Author:** Matthew Lukin Smawfield  
 **Version:** v0.27 (Jaipur)  
-**First published:** 17 September 2025 · **Last updated:** 13 September 2026
+**First published:** 17 September 2025 · **Last updated:** 30 September 2026
 **Status:** Preprint  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 **Website:** [https://mlsmawfield.com/tep/gnss-i/](https://mlsmawfield.com/tep/gnss-i/)
 
 ## Abstract
 
-Phase-coherent spectral analysis of 62.7 million station-pair measurements from 364 GNSS stations (2023–2025) reveals systematic distance-structured correlations in clock networks. These correlations follow an exponential decay with a median Temporal Topology correlation length λ<sub>T</sub> = 3,330–4,549 km (95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA 2,532–3,984 km) and show strong goodness-of-fit when evaluated on distance-binned means across three independent analysis centres (R² = 0.920–0.970; fits are to bin means, not raw pairs). Cross-center validation, consistent across 12 frequency bands and confirmed through multiple binning schemes and null hypothesis testing, demonstrates these patterns represent persistent empirical correlations not explained by the tested artifacts. The patterns also show dependencies on station elevation and geomagnetic latitude, consistent with theoretical frameworks involving screened scalar fields via continuous Temporal Topology.
 
-The primary inference rests on cross-centre distance-structured covariance and λ<sub>T</sub>; the following planetary, Chandler, diurnal, and geomagnetic signatures are treated as secondary or exploratory consistency tests. The correlations demonstrate systematic coupling with Earth's orbital motion (r = -0.571 to -0.793 across centers), planetary gravitational influences (6 Bonferroni-significant events), Chandler wobble modulation (R² = 0.377–0.471), and systematic diurnal temporal variations with synchronized early morning coherence peaks (Local Solar Time). Comprehensive validation demonstrates 24-61× signal enhancement over randomized controls (z = 15.8-31.9 across 180 null test iterations), with FDR-BH: 203/388 tests (52.3%), Hierarchical EB: 154/388 (39.7%), and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction across 19 independent validation families. TID exclusion analysis shows 21–23% signal improvement when excluding high-ionosphere periods—the ionosphere suppresses rather than creates the correlation.
 
-The investigation was structured to test predictions from the Temporal Equivalence Principle (TEP) framework, which suggested a Temporal Topology correlation length ($\lambda_T$) of 1,000–10,000 km. The full analysis yielded λ<sub>T</sub> = 3,330–4,549 km, a result consistent with this expectation which motivated tests of derived predictions (diurnal, eclipse, and orbital signatures). While multi-center consistency and extensive validation provide a strong basis for these findings, alternative explanations involving sophisticated systematics cannot be fully excluded. Therefore, definitive physical interpretation awaits critical next steps: raw-data analysis, multi-constellation testing, and independent replication. A companion 25-year longitudinal CODE analysis is presented at [TEP-GNSS-II](https://matthewsmawfield.github.io/TEP-GNSS-II/).
 
-The empirically derived spatial correlation length λ<sub>T</sub> (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator S<sub>Σ</sub>(E) defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.
+
+Phase-coherent spectral analysis of 62.7 million station-pair measurements from 364 GNSS stations (2023–2025; effective sample size N eff ≈ 25–28 independent distance bins after accounting for spatial correlation; see §Methods) reveals systematic distance-structured correlations in clock networks. These correlations follow an exponential decay with a Temporal Topology correlation length λ T = 3,330–4,549 km (exponential best fit; bootstrap 95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA 2,532–3,984 km) and show strong goodness-of-fit when evaluated on distance-binned means across three distinct analysis center solutions on largely shared raw inputs (CODE, IGS Combined, ESA Final; R² = 0.920–0.970; fits are to bin means, not raw pairs). Cross-solution validation across software-diverse processing chains (Bernese, NAPEOS, and the IGS combination filter), consistent across 12 frequency bands and confirmed through multiple binning schemes and null hypothesis testing, demonstrates these patterns represent persistent empirical correlations not explained by the tested artifacts. The patterns also show dependencies on station elevation and geomagnetic latitude, consistent with screened scalar fields via continuous Temporal Topology; these dependencies are also morphologically compatible with residual atmospheric and ionospheric organization, and the two readings are separated only by spatially resolved external controls identified as required follow-up. The primary inference rests on cross-centre distance-structured covariance and λ T ; the following planetary, Chandler, diurnal, and geomagnetic signatures are treated as secondary or exploratory consistency tests. The correlations show exploratory associations with Earth's orbital motion (r = -0.571 to -0.793 across centers), planetary gravitational influences (8 nominally significant event fits, mostly non-event-locked on audit), Chandler wobble modulation (R² = 0.377–0.471), and systematic diurnal temporal variations with synchronized early morning coherence peaks (Local Solar Time). Comprehensive validation demonstrates 24-61 ×  signal enhancement over randomized controls (z = 15.8-31.9 across 180 null test iterations), with FDR-BH: 203/388 tests (52.3%), Hierarchical EB: 154/388 (39.7%), and Bonferroni: 155/388 (40.0%) surviving multiple-comparison correction across 19 independent validation families. TID exclusion analysis shows 21–23 % signal improvement when excluding high-ionosphere periods—temporal ionospheric variability suppresses rather than creates the correlation, while the static geomagnetic-latitude dependence remains a separately quantified channel — bounded at ≲3% of the coherent signal by the local-night persistence test, with a spatially resolved GIM/ROTI morphology control identified as the required external closure. The investigation was structured to test predictions from the Temporal Equivalence Principle (TEP) framework, which suggested a Temporal Topology correlation length (λ T ) of 1,000–10,000 km. The discriminating content is structural rather than the decade-wide prior interval itself: the pooled-band estimate λ T = 3,330–4,549 km spans the geometric saturation radius R T (M ⊕ ) ≈ 4,150 km, which is calibrated on this scale; the correlation is band-localized (control-band R² ≈ 0.6 vs ≈ 0.95 in the coherent bands), and the per-band decomposition is ordered (tidal-band λ ≈ 3,600–5,900 km declining through post-tidal ≈ 2,100–2,500 km to ≈ 1,050–1,450 km at intermediate frequencies, with the exponential fit degrading where coherence collapses). Forward simulation of the satellite-visibility and network-datum channel on the real station geometry bounds its effective decay scale at λ ≳ 6.7 × 10 3 km; conditioned on the real product — true CODE ephemerides and the estimated satellite-clock content itself — the channel remains broader than every measured λ T (no realisation below λ = 5,075 km across 40 conditioned realisations) and produces a profile shape (near-unity correlation within 1 Mm, sign-definite anticorrelation beyond ~5 Mm) that the measured correlation does not contain (§4.6). The R T identification calibrates against the corpus's fitted ρ T convention (Paper 6); it is consistency with a corpus parameterization, not an independently derived prediction. Across products the fitted scale is conditioned by clock-product construction and estimator band floor: the multi-GNSS MGEX family returns λ = 1,862 ± 155 km, and a controlled decomposition on identical MGEX station-days bounds the spectral-resolution and common-mode contributions at ≲ ± 25% of the fitted scale while reproducing the same band-ordered profile (Paper 14, Step 3.5); the fitted amplitude is likewise a bounded phase-direction index whose cross-product values decompose into statistic saturation plus product and estimator conditioning rather than a coherence-amplitude conflict (Paper 14, Step 3.6). The R T comparison is therefore stated at the cross-product family level (~1.0–4.8 × 10 3 km). While cross-pipeline consistency across software-diverse solutions and extensive validation provide a strong basis for these findings, alternative explanations involving sophisticated systematics cannot be fully excluded. Raw-RINEX/SPP consistency and combined multi-GNSS product tests are now reported in Papers 3 and 14; raw carrier-phase analysis, separately processed per-constellation tests, and independent external replication remain critical next steps. A companion 25-year longitudinal CODE analysis is presented at TEP-GNSS-II . The empirically derived correlation length λ_T is a GNSS-sector covariance scale obtained after environmental projection and processing transfer. It is not the screening operator S_Σ(E) itself, and it is not the non-exact (disformal) covariance term, which this measurement does not access.
+
 
 ## Related Papers
 
@@ -37,14 +36,14 @@ The empirically derived spatial correlation length λ<sub>T</sub> (the Temporal 
 | **Paper 6** | [TEP-UCD](https://github.com/matthewsmawfield/TEP-UCD) | Universal Critical Density: Unifying Atomic, Galactic, and Compact Object Scales | [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) |
 | **Paper 7** | [TEP-RBH](https://github.com/matthewsmawfield/TEP-RBH) | The Soliton Wake: A Runaway Black Hole as a Gravitational Soliton | [10.5281/zenodo.18059250](https://doi.org/10.5281/zenodo.18059250) |
 | **Paper 8** | [TEP-SLR](https://github.com/matthewsmawfield/TEP-SLR) | Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging | [10.5281/zenodo.18064581](https://doi.org/10.5281/zenodo.18064581) |
-| **Paper 9** | [TEP-EXP](https://github.com/matthewsmawfield/TEP-EXP) | What Do Precision Tests of General Relativity Actually Measure? | [10.5281/zenodo.18109761](https://doi.org/10.5281/zenodo.18109761) |
+| **Paper 9** | [TEP-EXP](https://github.com/matthewsmawfield/TEP-EXP) | What Do Precision Tests of General Relativity Actually Measure? | [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) |
 | **Paper 10** | [TEP-COS](https://github.com/matthewsmawfield/TEP-COS) | The Temporal Equivalence Principle: Suppressed Density Scaling in Globular Cluster Pulsars | [10.5281/zenodo.18165798](https://doi.org/10.5281/zenodo.18165798) |
 | **Paper 11** | [TEP-H0](https://github.com/matthewsmawfield/TEP-H0) | The Cepheid Bias: Resolving the Hubble Tension | [10.5281/zenodo.18209702](https://doi.org/10.5281/zenodo.18209702) |
 | **Paper 12** | [TEP-JWST](https://github.com/matthewsmawfield/TEP-JWST) | The Temporal Equivalence Principle: A Unified Resolution to the JWST High-Redshift Anomalies | [10.5281/zenodo.19000827](https://doi.org/10.5281/zenodo.19000827) |
 | **Paper 13** | [TEP-WB](https://github.com/matthewsmawfield/TEP-WB) | The Temporal Equivalence Principle: Temporal Shear Recovery in Gaia DR3 Wide Binaries | [10.5281/zenodo.19102061](https://doi.org/10.5281/zenodo.19102061) |
 | **Paper 15** | [TEP-EFA](https://github.com/matthewsmawfield/TEP-EFA) | Temporal Equivalence Principle: Temporal Shear in the Earth Flyby Anomaly | [10.5281/zenodo.19454862](https://doi.org/10.5281/zenodo.19454862) |
 | **Paper 16** | [TEP-J0437](https://github.com/matthewsmawfield/TEP-J0437) | Synchronization Holonomy in Pulsar Scintillation | [10.5281/zenodo.19454620](https://doi.org/10.5281/zenodo.19454620) |
-| **Paper 17** | [TEP-LLR](https://github.com/matthewsmawfield/TEP-LLR) | Lunar Laser Ranging and the Nordtvedt Effect | [10.5281/zenodo.19446029](https://doi.org/10.5281/zenodo.19446029) |
+| **Paper 17** | [TEP-LLR](https://github.com/matthewsmawfield/TEP-LLR) | Lunar Laser Ranging and the Nordtvedt Effect | [10.5281/zenodo.19446028](https://doi.org/10.5281/zenodo.19446028) |
 
 ## Theoretical Foundation
 
@@ -62,7 +61,7 @@ with characteristic Temporal Topology correlation lengths ($\lambda_T$) of 1,000
 
 ## Key Findings
 
-Analysis of 62.7 million station-pair measurements across three independent centers (CODE, IGS, ESA) reveals exponential correlation decay with λ<sub>T</sub> = 3,330–4,549 km (R² = 0.92–0.97). The signal couples to Earth's orbital velocity (r = −0.571 to −0.793), Chandler wobble (R² = 0.38–0.47), and planetary events (6 Bonferroni-significant). Validation demonstrates 24–61× signal enhancement over null tests. Cross-center consistency (CV = 12.9%) and raw RINEX confirmation exclude processing artifacts.
+Analysis of 62.7 million station-pair measurements across three independent centers (CODE, IGS, ESA) reveals exponential correlation decay with λ<sub>T</sub> = 3,330–4,549 km (R² = 0.92–0.97). The signal couples to Earth's orbital velocity (r = −0.571 to −0.793), Chandler wobble (R² = 0.38–0.47), and planetary events (6 Bonferroni-significant). Validation demonstrates 24–61 ×  signal enhancement over null tests. Cross-center consistency (CV = 12.9%) and raw RINEX confirmation exclude processing artifacts.
 
 ---
 
@@ -305,7 +304,7 @@ The TEP-GNSS framework implements a rigorous multi-tier validation approach:
 **Statistical Validation:**
 - **Bootstrap Analysis:** 5,000+ iterations with confidence interval estimation
 - **Cross-Validation:** Leave-One-Station-Out (LOSO) and Leave-One-Day-Out (LODO) procedures
-- **Null Hypothesis Testing:** 500+ scrambling iterations demonstrating 24-61× signal enhancement
+- **Null Hypothesis Testing:** 500+ scrambling iterations demonstrating 24-61 ×  signal enhancement
 
 **Methodological Validation:**
 - **Multi-Center Consistency:** Independent validation across CODE, IGS, and ESA analysis centers
@@ -426,7 +425,7 @@ results/
 
 **Validation Results:**
 - Multi-center consistency metrics (CV = 12.9% inter-center variation)
-- Null test enhancement factors (24-61× signal over randomized controls)
+- Null test enhancement factors (24-61 ×  signal over randomized controls)
 - Cross-validation stability assessments ($R^2 = 0.920$-$0.970$)
 
 **Advanced Analysis:**
@@ -509,7 +508,7 @@ This work is designed for reproducibility. All code, data processing steps, and 
 ### Resources
 
 **Repository:** [https://github.com/matthewsmawfield/TEP-GNSS](https://github.com/matthewsmawfield/TEP-GNSS)  
-**Website:** [https://matthewsmawfield.github.io/TEP-GNSS/](https://matthewsmawfield.github.io/TEP-GNSS/)  
+**Website:** [https://mlsmawfield.com/tep/gnss-i/](https://mlsmawfield.com/tep/gnss-i/)  
 **DOI:** [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)  
 
 ---

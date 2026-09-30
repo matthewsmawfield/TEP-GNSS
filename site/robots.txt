@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://matthewsmawfield.github.io/TEP-GNSS/sitemap.xml
+Sitemap: https://mlsmawfield.com/tep/gnss-i/sitemap.xml

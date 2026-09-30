@@ -1,18 +1,21 @@
 {
   "version": "0.27",
   "codename": "Jaipur",
-  "date": "2026-09-13",
+  "date": "2026-09-30",
   "paper": "1",
   "changes": [
-    "Version bump to v0.26",
-    "Updated date to 8 August 2026"
+    "Reframed the Compton-mass interpretation as a completion-dependent heuristic: λ_T is the primary empirical quantity, with m_ϕ as Yukawa/Compton reference only",
+    "Clarified PPN screening scope and softened disformal coupling claims; GNSS covariance does not by itself isolate B(phi)",
+    "Planetary-event channel audited; disclosed enhancement-factor algebraic degeneracy near the noise floor",
+    "Normalized raw-data wording and acknowledged Paper 2/3/14 completed follow-ups",
+    "Updated abstract, metadata, and references to 30 September 2026"
   ],
   "previous_version": "0.26",
   "previous_date": "2026-06-05",
   "description": "Paper 1: Global Time Echoes: Distance-Structured Correlations in GNSS Clocks",
   "impact": "Clean separation of papers into individual repositories for consistency",
-  "short_description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Multi-center analysis of 62.7M measurements across CODE, IGS, and ESA over 2.5 years. Version 0.26 update.",
-  "long_description": "This study presents observations of distance-structured correlations in global GNSS atomic clock networks, analyzing 62.7 million station pair measurements across three independent analysis centers (CODE, IGS, ESA). Using phase-coherent spectral methods, exponential correlation decay patterns are identified with characteristic lengths (λ) of 3,330–4,549 km, consistent with theoretical predictions for screened scalar fields.\n\nWebsite: https://mlsmawfield.com/tep/gnss-i/",
+  "short_description": "Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. Multi-center analysis of 62.7M station-pair measurements across CODE, IGS, and ESA (2023-2025). Version 0.27 update.",
+  "long_description": "Phase-coherent spectral analysis of 62.7 million station-pair measurements from 364 GNSS stations (2023-2025) reveals systematic distance-structured correlations in clock networks, following an exponential decay with a Temporal Topology correlation length of 3,330-4,549 km and consistent goodness-of-fit across three distinct analysis-center solutions on largely shared raw inputs (CODE, IGS Combined, ESA Final; R2 = 0.920-0.970).\n\nWebsite: https://mlsmawfield.com/tep/gnss-i/",
   "doi": "10.5281/zenodo.17127229",
   "zenodo_record": "17127229",
   "pdf_filename": "1-TEP-GNSS-v0.27-Jaipur.pdf",

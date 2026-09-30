@@ -14,10 +14,10 @@
     would manifest as correlated fluctuations in atomic clock frequencies across
     spatially separated precision timing networks, with correlation structure
     determined by the continuous spatial profile of the underlying scalar
-    field—termed Temporal Topology in the TEP framework—where high ambient
-    density suppresses the local field gradient (Temporal Shear), ensuring
-    short-range Temporal Shear suppression while leaving the field light
-    cosmologically (Smawfield 2025, Section 7).
+    field—termed Temporal Topology in the TEP framework—where the kinetic
+    operator suppresses the local Temporal Shear where the ambient time-gradient
+    is steep — in weak-field language, high-acceleration regions — while leaving
+    the field light cosmologically (Smawfield 2025, Section 7).
 </p>
 
 <p>
@@ -48,12 +48,12 @@
     geometry; (2) <em>Positivity preservation</em>—the exponential ensures A(ϕ)
     > 0 always, maintaining the Lorentzian signature essential for causality;
     and (3) <em>Observational constraints</em>—this form naturally accommodates
-    Parametrized Post-Newtonian (PPN) bounds through the standard scalar-tensor
-    relation γ − 1 = −2α₀²/(1+α₀²), where α₀ ≡ (d ln A/dϕ)|<sub>today</sub> =
-    β<sub>A</sub>/M<sub>Pl</sub> in natural units. Near massive bodies, the suppression of
-    Temporal Shear (vanishing field gradient) reduces the locally active scalar charge to
-    α<sub>PPN</sub><sub>eff</sub> ≪ α<sub>0</sub>, cleanly preserving PPN bounds without invoking rigid thin-shell
-    approximations (Smawfield 2025, Section 7). The universality of the
+    Parametrized Post-Newtonian (PPN) bounds through the screened-source relation
+    $\gamma_{\text{PPN}} - 1 = -4\beta_A^2 S_\Sigma^{(\odot)} / (1 + 2\beta_A^2 S_\Sigma^{(\odot)})$,
+    where $\beta_A = -1.0$ universally. In high-acceleration regions near massive bodies, the kinetic
+    screening operator suppresses the active source charge to $S_\Sigma^{(\odot)} \lesssim 5.8 \times 10^{-6}$,
+    cleanly preserving PPN and Cassini bounds without invoking rigid thin-shell
+    approximations (Paper 0 §7). The universality of the
     coupling—all matter sees the same causal metric g̃<sub>μν</sub>
     = A²(ϕ)g<sub>μν</sub> + B(ϕ)∇<sub>μ</sub>ϕ∇<sub>ν</sub>ϕ—preserves the equivalence principle in the matter frame
     while allowing for testable violations in the gravitational sector. In the conformal-dominant GNSS covariance sector considered here, the leading clock response is carried by A(ϕ). In this
@@ -82,18 +82,19 @@
     that a detectable correlation length corresponds to the geometric saturation
     radius R<sub>T</sub> = (3M/4πρ<sub>T</sub>)<sup>1/3</sup>, with the
     continuous spatial profile of the field (Temporal Topology) potentially
-    producing correlation lengths in the 1,000–10,000 km range. This scale is
-    consistent with the suppression of Temporal Shear in the terrestrial
-    environment, where high ambient matter density suppresses the local field gradient.
+    producing correlation lengths in the 1,000–10,000 km range. In TEP, GNSS clocks
+    read the value of the temporal field $\ln A$ at each station, and the measured
+    covariance describes how that value varies between stations; the screening that
+    keeps local trajectories GR-like acts on the field's effect on matter, not on clock rates (Paper 0 §7).
     Rather than operating via discrete boundary
     cutoffs, screening manifests as a continuous geometric profile governed by
     the non-linear superposition of field gradients (Smawfield 2025, Axiom A4).
     The primary empirical quantity is the covariance length λ<sub>T</sub> extracted
-    from the clock-correlation data; the IGS-final estimates bracket R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km, while the cross-product family spans ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning (Paper 6, UCD; Paper 14, Step 3.5). A chameleon-type Compton-mass interpretation (m<sub>ϕ</sub> ≈ 5×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
+    from the clock-correlation data; the IGS-final estimates are consistent with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km — itself calibrated on this scale, so a consistency statement rather than an independent test — while the cross-product family spans ~1.0–4.8×10<sup>3</sup> km under documented estimator and product conditioning (Paper 6, UCD; Paper 14, Step 3.5). The same numerical length corresponds formally to a Compton scale of order 10⁻¹⁴ eV for comparison with older screened-scalar literature, but TEP does not identify the measured GNSS covariance length with a microscopic Compton wavelength.
 </p>
 
 <p>
-    Geometric Saturation Scale: The covariance length λ<sub>T</sub> = 3,330–4,549 km brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6, UCD), with ρ<sub>T</sub> ≈ 20 g/cm³; across products the fitted scale is conditioned by clock-product construction and spectral-estimator settings, spanning ~1.9–4.5×10<sup>3</sup> km with the same band-ordered profile (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The M<sup>1/3</sup> scaling connects terrestrial and galactic scales. A chameleon-type Compton-mass interpretation (m<sub>ϕ</sub> ≈ (4.34–5.93)×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
+    Geometric Saturation Scale: The covariance length λ<sub>T</sub> = 3,330–4,549 km is consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6, UCD), with ρ<sub>T</sub> ≈ 20 g/cm³ calibrated on this scale (a consistency statement rather than an independent test); across products the fitted scale is conditioned by clock-product construction and spectral-estimator settings, spanning ~1.0–4.8×10<sup>3</sup> km with the same band-ordered profile (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The M<sup>1/3</sup> scaling belongs to the empirical geometric saturation construction R<sub>T</sub>; the derived kinetic Temporal-Shear transition follows r<sub>*</sub> ∝ M<sup>1/2</sup>.
 </p>
 
 <p>
@@ -125,12 +126,12 @@
         >). The predicted Temporal Topology correlation length range λ<sub>T</sub> = 1,000–10,000 km was
         specified as a theoretically motivated prior search range before the present GNSS
         analysis. The observed results (λ<sub>T</sub> = 3,330–4,549 km) represent
-        consistency with the pre-specified theoretically motivated search range; the discriminating content is carried not by the decade-wide interval— which subsumes the leading systematic scales—but by the structural conditions detailed in §2 (bracketing of R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km within the ~1.9–4.5×10<sup>3</sup> km cross-product family, band localization, cross-center reproducibility, and separability from the co-visibility kernel). Following this primary consistency check, additional investigations of derived predictions were conducted.
+        consistency with the pre-specified theoretically motivated search range; the discriminating content is carried not by the decade-wide interval— which subsumes the leading systematic scales—but by the structural conditions detailed in §2 (consistency with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km within the ~1.0–4.8×10<sup>3</sup> km cross-product family, band localization, cross-center reproducibility, and separability from the co-visibility kernel). Following this primary consistency check, additional investigations of derived predictions were conducted.
     </p>
 </div>
 
 <p>
-    <strong>Manuscript Series Context:</strong> This paper reports the initial multi-centre validation using 2-year data from CODE, IGS, and ESA. Two companion manuscripts extend this foundation: Paper 2 (TEP-GNSS-II) presents a 25-year longitudinal analysis using CODE data spanning 1999–2025, and Paper 3 (TEP-GNSS-RINEX) validates the signal in raw, unprocessed RINEX data. This separation preserves methodological clarity—each manuscript addresses distinct validation strategies while building a convergent evidence base.
+    <strong>Manuscript Series Context:</strong> This paper reports the initial multi-centre validation using 2-year data from CODE, IGS, and ESA. Two companion manuscripts extend this foundation: Paper 2 (TEP-GNSS-II) presents a 25-year longitudinal analysis using CODE data spanning 1999–2025, and Paper 3 (TEP-GNSS-RINEX) tests the signal in raw RINEX pseudorange observations processed independently with SPP and broadcast ephemerides. This separation preserves methodological clarity—each manuscript addresses distinct validation strategies while building a convergent evidence base.
 </p>
 
 <h2>1.2 Testable Predictions</h2>
@@ -234,12 +235,12 @@
                     "
                 >
                     Temporal Topology covariance scale; the IGS-final estimates
-                    bracket the geometric saturation radius R_T(M_⊕) ≈ 4,150 km
-                    (Paper 6) within a ~1.9–4.5×10³ km cross-product family
+                    are consistent with the geometric saturation radius R_T(M_⊕) ≈ 4,150 km
+                    (Paper 6; calibrated on this scale) within a ~1.0–4.8×10³ km cross-product family
                     (Paper 14, Step 3.5).
                     Specified range: 1,000–10,000 km (prior search interval;
                     non-discriminating alone). Structural criterion: pooled-band
-                    λ<sub>T</sub> brackets R<sub>T</sub>(M<sub>⊕</sub>) and is separable
+                    λ<sub>T</sub> is consistent with R<sub>T</sub>(M<sub>⊕</sub>) and is separable
                     from the co-visibility kernel (§2).
                 </td>
                 <td
@@ -314,7 +315,7 @@
                 >
                     <strong>Observed:</strong> Three distinct processing chains (CODE,
                     IGS Combined, ESA Final) converge on the same physical parameters
-                    (CV of λ<sub>T</sub> = 18.2%), ruling out software- and
+                    (CV of λ<sub>T</sub> ≈ 13%), ruling out software- and
                     center-specific implementation artifacts (Sec 3.1.1, 4.1).
                 </td>
             </tr>
@@ -335,7 +336,7 @@
                         vertical-align: top;
                     "
                 >
-                    λ &lt; 500 km or λ &gt; 20,000 km would rule out model. CV
+                    λ $\lt$ 500 km or λ &gt; 20,000 km would rule out model. CV
                     &gt; 20% would indicate artifacts.
                 </td>
                 <td

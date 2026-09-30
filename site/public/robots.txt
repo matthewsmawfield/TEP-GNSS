@@ -4,7 +4,7 @@ User-agent: *
 Allow: /
 
 # Canonical version
-Sitemap: https://matthewsmawfield.github.io/TEP-GNSS/sitemap.xml
+Sitemap: https://mlsmawfield.com/tep/gnss-i/sitemap.xml
 
 # Disallow access to hidden directories and files
 Disallow: /.*

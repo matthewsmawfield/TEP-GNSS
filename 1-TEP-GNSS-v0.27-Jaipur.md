@@ -1,7 +1,7 @@
 # Global Time Echoes: Distance-Structured Correlations in GNSS Clocks
 **Matthew Lukin Smawfield**
 Version: v0.27 (Jaipur)
-First published: 17 September 2025 · Last updated: 13 September 2026
+First published: 17 September 2025 · Last updated: 30 September 2026
 DOI: 10.5281/zenodo.17127229
 
 ---
@@ -12,7 +12,7 @@ Phase-coherent spectral analysis of 62.7 million station-pair
 measurements from 364 GNSS stations (2023–2025; effective sample size N<sub>eff</sub> ≈ 25–28 independent distance bins after accounting for spatial
 correlation; see §Methods) reveals systematic
 distance-structured correlations in clock networks. These correlations
-follow an exponential decay with a median Temporal Topology correlation
+follow an exponential decay with a Temporal Topology correlation
 length λ<sub>T</sub> = 3,330–4,549 km (exponential best fit; bootstrap 95% CIs: CODE 1,198–5,918 km; IGS 3,197–4,871 km; ESA
 2,532–3,984 km) and show strong goodness-of-fit when evaluated on
 distance-binned means across three distinct analysis center solutions on largely shared raw inputs (CODE, IGS Combined, ESA Final; R² =
@@ -28,9 +28,10 @@ resolved external controls identified as required follow-up.
 The primary inference rests on cross-centre distance-structured covariance
 and λ<sub>T</sub>; the following planetary, Chandler, diurnal, and geomagnetic
 signatures are treated as secondary or exploratory consistency tests.
-The correlations demonstrate systematic coupling with Earth's orbital
+The correlations show exploratory associations with Earth's orbital
 motion (r = -0.571 to -0.793 across centers), planetary gravitational
-influences (6 Bonferroni-significant events), Chandler wobble modulation
+influences (8 nominally significant event fits, mostly non-event-locked
+on audit), Chandler wobble modulation
 (R² = 0.377–0.471), and systematic diurnal temporal variations with
 synchronized early morning coherence peaks (Local Solar Time).
 Comprehensive validation demonstrates 24-61× signal enhancement over
@@ -41,8 +42,8 @@ across 19 independent validation families. TID exclusion analysis shows
 21–23 % signal improvement when excluding high-ionosphere
 periods—temporal ionospheric variability suppresses rather than creates
 the correlation, while the static geomagnetic-latitude dependence
-remains a separately quantified channel — bounded at &lesssim;3% of the
-coherent signal by the local-night persistence test (Step 4.9), with a
+remains a separately quantified channel — bounded at ≲3% of the
+coherent signal by the local-night persistence test, with a
 spatially resolved GIM/ROTI morphology control identified as the
 required external closure.
 
@@ -51,14 +52,14 @@ Equivalence Principle (TEP) framework, which suggested a Temporal
 Topology correlation length (λ<sub>T</sub>) of 1,000–10,000 km. The
 discriminating content is structural rather than the decade-wide prior
 interval itself: the pooled-band estimate λ<sub>T</sub> = 3,330–4,549 km
-brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈
-4,150 km, the correlation is band-localized (control-band R² ≈ 0.6 vs
+spans the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈
+4,150 km, which is calibrated on this scale; the correlation is band-localized (control-band R² ≈ 0.6 vs
 ≈0.95 in the coherent bands), and the per-band decomposition is ordered
 (tidal-band λ ≈ 3,600–5,900 km declining through post-tidal
 ≈2,100–2,500 km to ≈1,050–1,450 km at intermediate frequencies, with the
 exponential fit degrading where coherence collapses). Forward
 simulation of the satellite-visibility and network-datum channel on
-the real station geometry bounds its effective decay scale at λ &gsim;
+the real station geometry bounds its effective decay scale at λ ≳
 6.7×10<sup>3</sup> km; conditioned on the real product — true CODE
 ephemerides and the estimated satellite-clock content itself — the
 channel remains broader than every measured λ<sub>T</sub>
@@ -79,17 +80,18 @@ fitted amplitude is likewise a bounded phase-direction index whose
 cross-product values decompose into statistic saturation plus product
 and estimator conditioning rather than a coherence-amplitude conflict
 (Paper 14, Step 3.6). The
-R<sub>T</sub> bracketing is therefore stated at the cross-product
-family level (~1.9–4.5×10<sup>3</sup> km). While
+R<sub>T</sub> comparison is therefore stated at the cross-product
+family level (~1.0–4.8×10<sup>3</sup> km). While
 cross-pipeline consistency across software-diverse solutions and extensive validation provide a strong basis
 for these findings, alternative explanations involving sophisticated
-systematics cannot be fully excluded. Therefore, definitive physical
-interpretation awaits critical next steps: raw-data analysis,
-multi-constellation testing, and independent replication. A companion
+systematics cannot be fully excluded. Raw-RINEX/SPP consistency and
+combined multi-GNSS product tests are now reported in Papers 3 and 14;
+raw carrier-phase analysis, separately processed per-constellation tests,
+and independent external replication remain critical next steps. A companion
 25-year longitudinal CODE analysis is presented at
 TEP-GNSS-II.
 
-The empirically derived spatial correlation length $\lambda_T$ (the Temporal Topology covariance scale) serves as the geodetic realization of the abstract environmental operator $\mathcal{S}_\Sigma(\mathcal{E})$ defined in the foundational TEP framework. In the near-Earth environment, this correlation length acts as the macroscopic geometric proxy for the continuous saturation of Temporal Topology, anchoring the differential clock correlations without committing to specific subatomic microphysics.
+The empirically derived correlation length $\lambda_T$ is a GNSS-sector covariance scale obtained after environmental projection and processing transfer. It is not the screening operator $\mathcal{S}_\Sigma(\mathcal{E})$ itself, and it is not the non-exact (disformal) covariance term, which this measurement does not access.
 
 ## Executive Summary
 
@@ -165,7 +167,10 @@ mean across centers)
 
 Statistical robustness: Distance-binned fits R² = 0.920–0.970 on
 ~28 bins vs. null mean 0.015–0.040 (ΔR² = 0.89–0.95; z =
-15.8–31.9, all p 
+15.8–31.9, all p $\lt$ 10⁻¹⁵; 24–61× signal-to-null ratios across 180
+scrambling iterations), with comprehensive multiple comparison
+corrections across 388 statistical tests showing 52% FDR-BH
+survival (40% under ultra-conservative Bonferroni correction)
 
 Rigorous uncertainty quantification: Dual bootstrap approaches
 provide comprehensive validation — (1) 5000-iteration block
@@ -196,19 +201,14 @@ The observed patterns show characteristics that are, among various
 possible interpretations, consistent with certain theoretical
 frameworks that propose gravitational field coupling to atomic
 transition frequencies. The primary empirical quantity is the
-covariance length λ<sub>T</sub> = 3,330–4,549 km, bracketing the
-geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (Paper 6, UCD)
-within a ~1.9–4.5×10<sup>3</sup> km cross-product family (Paper 14, Step 3.5).
-A chameleon-type Compton-mass interpretation (m<sub>φ</sub> ≈ 5×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
-The apparent inconsistency with existing precision tests (typically
-sensitive to ~10⁻¹⁵ eV/c² scales) may be resolved through the
-suppression of Temporal Shear—the local field gradient that is
-flattened in dense environments where most precision tests are
-conducted, while allowing a large-baseline GNSS covariance observable to probe a different Earth-scale projection of the environmental response. The diurnal analysis provides patterns
+covariance length λ<sub>T</sub> = 3,330–4,549 km, consistent with the
+geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (Paper 6, UCD; itself calibrated on this scale)
+within a ~1.0–4.8×10<sup>3</sup> km cross-product family (Paper 14, Step 3.5) — a consistency statement rather than an independent test.
+Precision tests constrain the local shear response, which is pairwise-screened where the ambient time-gradient is steep (the $\mathcal{S}_\Sigma(\mathcal{E})$ gradient branch; weak-field: $g \gg g_t$); GNSS measures a distinct clock-covariance projection rather than a microscopic Compton wavelength. The diurnal analysis provides patterns
 that could, if confirmed through independent validation, be
 interpretable within frameworks involving variable time flow rates,
 though alternative explanations involving slow environmental
-covariates remain plausible pending raw data validation.
+covariates remain plausible pending raw carrier-phase analysis — raw-RINEX/SPP consistency and combined multi-GNSS product tests are now reported in Papers 3 and 14, while separately processed per-constellation tests and independent external replication remain outstanding.
 
 If validated through independent replication and found to persist
 after systematic investigation of conventional explanations, these
@@ -229,7 +229,7 @@ include:
 Independent replication by other research groups using different
 methodologies and analysis approaches
 
-Raw data analysis of unprocessed GNSS measurements to quantify
+Analysis of raw GNSS observations through independent minimal-processing chains to quantify
 processing effects and reveal full signal characteristics
 
 Multi-constellation testing across GLONASS, Galileo, and BeiDou
@@ -286,10 +286,10 @@ theories (Barrow & Magueijo 1999; Uzan 2003). The coupling, if present,
 would manifest as correlated fluctuations in atomic clock frequencies across
 spatially separated precision timing networks, with correlation structure
 determined by the continuous spatial profile of the underlying scalar
-field—termed Temporal Topology in the TEP framework—where high ambient
-density suppresses the local field gradient (Temporal Shear), ensuring
-short-range Temporal Shear suppression while leaving the field light
-cosmologically (Smawfield 2025, Section 7).
+field—termed Temporal Topology in the TEP framework—where the kinetic
+operator suppresses the local Temporal Shear where the ambient time-gradient
+is steep — in weak-field language, high-acceleration regions — while leaving
+the field light cosmologically (Smawfield 2025, Section 7).
 
 Theoretical Motivation: TEP addresses a fundamental conceptual problem that
 has persisted since the development of quantum mechanics and general
@@ -316,12 +316,12 @@ dimensionless coupling strength linking a scalar field ϕ to spacetime
 geometry; (2) *Positivity preservation*—the exponential ensures A(ϕ)
 > 0 always, maintaining the Lorentzian signature essential for causality;
 and (3) *Observational constraints*—this form naturally accommodates
-Parametrized Post-Newtonian (PPN) bounds through the standard scalar-tensor
-relation γ − 1 = −2α₀²/(1+α₀²), where α₀ ≡ (d ln A/dϕ)|<sub>today</sub> =
-β<sub>A</sub>/M<sub>Pl</sub> in natural units. Near massive bodies, the suppression of
-Temporal Shear (vanishing field gradient) reduces the locally active scalar charge to
-α<sub>PPN</sub><sub>eff</sub> ≪ α<sub>0</sub>, cleanly preserving PPN bounds without invoking rigid thin-shell
-approximations (Smawfield 2025, Section 7). The universality of the
+Parametrized Post-Newtonian (PPN) bounds through the screened-source relation
+$\gamma_{\text{PPN}} - 1 = -4\beta_A^2 S_\Sigma^{(\odot)} / (1 + 2\beta_A^2 S_\Sigma^{(\odot)})$,
+where $\beta_A = -1.0$ universally. In high-acceleration regions near massive bodies, the kinetic
+screening operator suppresses the active source charge to $S_\Sigma^{(\odot)} \lesssim 5.8 \times 10^{-6}$,
+cleanly preserving PPN and Cassini bounds without invoking rigid thin-shell
+approximations (Paper 0 §7). The universality of the
 coupling—all matter sees the same causal metric g̃<sub>μν</sub>
 = A²(ϕ)g<sub>μν</sub> + B(ϕ)∇<sub>μ</sub>ϕ∇<sub>ν</sub>ϕ—preserves the equivalence principle in the matter frame
 while allowing for testable violations in the gravitational sector. In the conformal-dominant GNSS covariance sector considered here, the leading clock response is carried by A(ϕ). In this
@@ -344,16 +344,17 @@ Horndeski/Galileon theories (screening mechanisms). The framework predicts
 that a detectable correlation length corresponds to the geometric saturation
 radius R<sub>T</sub> = (3M/4πρ<sub>T</sub>)<sup>1/3</sup>, with the
 continuous spatial profile of the field (Temporal Topology) potentially
-producing correlation lengths in the 1,000–10,000 km range. This scale is
-consistent with the suppression of Temporal Shear in the terrestrial
-environment, where high ambient matter density suppresses the local field gradient.
+producing correlation lengths in the 1,000–10,000 km range. In TEP, GNSS clocks
+read the value of the temporal field $\ln A$ at each station, and the measured
+covariance describes how that value varies between stations; the screening that
+keeps local trajectories GR-like acts on the field's effect on matter, not on clock rates (Paper 0 §7).
 Rather than operating via discrete boundary
 cutoffs, screening manifests as a continuous geometric profile governed by
 the non-linear superposition of field gradients (Smawfield 2025, Axiom A4).
 The primary empirical quantity is the covariance length λ<sub>T</sub> extracted
-from the clock-correlation data; the IGS-final estimates bracket R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km, while the cross-product family spans ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning (Paper 6, UCD; Paper 14, Step 3.5). A chameleon-type Compton-mass interpretation (m<sub>ϕ</sub> ≈ 5×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
+from the clock-correlation data; the IGS-final estimates are consistent with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km — itself calibrated on this scale, so a consistency statement rather than an independent test — while the cross-product family spans ~1.0–4.8×10<sup>3</sup> km under documented estimator and product conditioning (Paper 6, UCD; Paper 14, Step 3.5). The same numerical length corresponds formally to a Compton scale of order 10⁻¹⁴ eV for comparison with older screened-scalar literature, but TEP does not identify the measured GNSS covariance length with a microscopic Compton wavelength.
 
-Geometric Saturation Scale: The covariance length λ<sub>T</sub> = 3,330–4,549 km brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6, UCD), with ρ<sub>T</sub> ≈ 20 g/cm³; across products the fitted scale is conditioned by clock-product construction and spectral-estimator settings, spanning ~1.9–4.5×10<sup>3</sup> km with the same band-ordered profile (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The M<sup>1/3</sup> scaling connects terrestrial and galactic scales. A chameleon-type Compton-mass interpretation (m<sub>ϕ</sub> ≈ (4.34–5.93)×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
+Geometric Saturation Scale: The covariance length λ<sub>T</sub> = 3,330–4,549 km is consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6, UCD), with ρ<sub>T</sub> ≈ 20 g/cm³ calibrated on this scale (a consistency statement rather than an independent test); across products the fitted scale is conditioned by clock-product construction and spectral-estimator settings, spanning ~1.0–4.8×10<sup>3</sup> km with the same band-ordered profile (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The M<sup>1/3</sup> scaling belongs to the empirical geometric saturation construction R<sub>T</sub>; the derived kinetic Temporal-Shear transition follows r<sub>*</sub> ∝ M<sup>1/2</sup>.
 
 Theoretical Context: TEP builds upon a two-metric framework in which matter
 couples to the causal metric g̃<sub>μν</sub> = A²(ϕ)g<sub>μν</sub> + B(ϕ)∇<sub>μ</sub>ϕ∇<sub>ν</sub>ϕ, while
@@ -371,9 +372,9 @@ theoretical work (Smawfield, 2025;
 DOI: 10.5281/zenodo.16921911). The predicted Temporal Topology correlation length range λ<sub>T</sub> = 1,000–10,000 km was
 specified as a theoretically motivated prior search range before the present GNSS
 analysis. The observed results (λ<sub>T</sub> = 3,330–4,549 km) represent
-consistency with the pre-specified theoretically motivated search range; the discriminating content is carried not by the decade-wide interval— which subsumes the leading systematic scales—but by the structural conditions detailed in §2 (bracketing of R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km within the ~1.9–4.5×10<sup>3</sup> km cross-product family, band localization, cross-center reproducibility, and separability from the co-visibility kernel). Following this primary consistency check, additional investigations of derived predictions were conducted.
+consistency with the pre-specified theoretically motivated search range; the discriminating content is carried not by the decade-wide interval— which subsumes the leading systematic scales—but by the structural conditions detailed in §2 (consistency with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km within the ~1.0–4.8×10<sup>3</sup> km cross-product family, band localization, cross-center reproducibility, and separability from the co-visibility kernel). Following this primary consistency check, additional investigations of derived predictions were conducted.
 
-**Manuscript Series Context:** This paper reports the initial multi-centre validation using 2-year data from CODE, IGS, and ESA. Two companion manuscripts extend this foundation: Paper 2 (TEP-GNSS-II) presents a 25-year longitudinal analysis using CODE data spanning 1999–2025, and Paper 3 (TEP-GNSS-RINEX) validates the signal in raw, unprocessed RINEX data. This separation preserves methodological clarity—each manuscript addresses distinct validation strategies while building a convergent evidence base.
+**Manuscript Series Context:** This paper reports the initial multi-centre validation using 2-year data from CODE, IGS, and ESA. Two companion manuscripts extend this foundation: Paper 2 (TEP-GNSS-II) presents a 25-year longitudinal analysis using CODE data spanning 1999–2025, and Paper 3 (TEP-GNSS-RINEX) tests the signal in raw RINEX pseudorange observations processed independently with SPP and broadcast ephemerides. This separation preserves methodological clarity—each manuscript addresses distinct validation strategies while building a convergent evidence base.
 
 ## 1.2 Testable Predictions
 
@@ -382,19 +383,19 @@ current technology:
 
 **Experimental Section:**
 
-Key Theoretical Predictions and Observational Confirmations
+### Key Theoretical Predictions and Observational Confirmations
 
 | Prediction | Theoretical Basis | Observational Confirmation |
 | --- | --- | --- |
 | **Exponential Decay** | Screened scalar field coupling to atomic frequencies. | **Observed:** Exponential models show optimal
 fit (Sec 3.1.2) with R² = 0.92–0.97 across all centers. |
 | **Temporal Topology Correlation Length (λT)** | Temporal Topology covariance scale; the IGS-final estimates
-bracket the geometric saturation radius R_T(M_⊕) ≈ 4,150 km
-(Paper 6) within a ~1.9–4.5×10³ km cross-product family
+are consistent with the geometric saturation radius R_T(M_⊕) ≈ 4,150 km
+(Paper 6; calibrated on this scale) within a ~1.0–4.8×10³ km cross-product family
 (Paper 14, Step 3.5).
 Specified range: 1,000–10,000 km (prior search interval;
 non-discriminating alone). Structural criterion: pooled-band
-λT brackets RT(M⊕) and is separable
+λT is consistent with RT(M⊕) and is separable
 from the co-visibility kernel (§2). | **Observed:** λT = 3,330–4,549 km, falling
 within the pre-specified search range (Sec 3.1.1). |
 | **Universal Coupling** | Universal conformal coupling should produce broadband
@@ -404,9 +405,9 @@ with frequency-selective tidal artifacts (Sec 3.5.1). |
 | **Multi-Center Consistency** | A persistent physical effect should not depend sensitively on a single
 processing methodology. | **Observed:** Three distinct processing chains (CODE,
 IGS Combined, ESA Final) converge on the same physical parameters
-(CV of λT = 18.2%), ruling out software- and
+(CV of λT ≈ 13%), ruling out software- and
 center-specific implementation artifacts (Sec 3.1.1, 4.1). |
-| **Falsification Criteria** | λ < 500 km or λ > 20,000 km would rule out model. CV
+| **Falsification Criteria** | λ $\lt$ 500 km or λ > 20,000 km would rule out model. CV
 > 20% would indicate artifacts. | **Passed.** The observed λ and CV fall within
 the passing criteria, successfully surviving the
 pre-specified falsification tests. |
@@ -507,7 +508,8 @@ Key insight: If a field is influencing both clocks, their waves should tend to b
 
 #### Conceptual Framework: Magnitude-Weighted Phase Correlation Method
 
-(a) Time Series Input
+##### (a) Time Series Input
+
 Two atomic clock residual signals: x<sub>i</sub>(t), x<sub>j</sub>(t)
 
 Signal + Noise
@@ -516,7 +518,8 @@ Signal + Noise
 
 ∵∵∵ Random Noise
 
-(b) Cross-Spectral Analysis
+##### (b) Cross-Spectral Analysis
+
 Complex CSD → Phasor representation
 
 Strong Signal: |CSD|↑, φ clustered
@@ -525,7 +528,8 @@ Weak Noise: |CSD|↓, φ random
 
 Quality = Magnitude
 
-(c) Weighted Averaging
+##### (c) Weighted Averaging
+
 Phase-alignment index: cos(φ<sub>weighted</sub>)
 
 High |CSD| → High weight
@@ -684,7 +688,7 @@ A thorough quality validation across 62.73 million station pair measurements dem
 
 Systematic distance outlier removal ensures geodesic calculation accuracy:
 
-- CODE: 21,679 outliers removed (<1 km or >20,000 km) from 39,068,754 initial pairs (0.056%)
+- CODE: 21,679 outliers removed ($\lt$ 1 km or >20,000 km) from 39,068,754 initial pairs (0.056%)
 
 - IGS Combined: 4,633 outliers removed from 12,879,380 initial pairs (0.036%)
 
@@ -728,7 +732,7 @@ For analyses involving smoothed time series (e.g., gravitational-temporal correl
 
 - **Technical implementation:** compute_cross_power_plateau() returns (avg_magnitude, weighted_phase) where magnitudes serve as weights in circular averaging: weighted_phase = np.angle(np.average(exp(i*phases), weights=magnitudes)). Final phase-alignment index = np.cos(weighted_phase)
 
-- **Mesh dance score:** Composite metric quantifying network-wide coherent dynamics (see Section 2.5.4 for detailed explanation)
+- **Mesh dance score:** Composite metric quantifying network-wide coherent dynamics (see Section 2.6 for detailed explanation)
 
 Standard signal processing techniques using band-averaged coherency fail to detect TEP signals due to phase averaging effects and amplitude suppression from GNSS processing. A magnitude-weighted phase correlation approach was developed that uses both magnitude and phase information from complex cross-spectral density: magnitudes weight the circular averaging of phases, then the phase-alignment index is extracted as cos(weighted_phase).
 
@@ -897,7 +901,7 @@ Two complementary bootstrap approaches assess different aspects of exponential c
 
 - **Effect:** Yields systematically lower λ<sub>T</sub> estimates due to reduced long-distance coverage
 
-#### Temporal Topology Correlation Length (λ<sub>T</sub>) Confidence Intervals
+#### Temporal Topology Correlation Length (λT) Confidence Intervals
 
 | Analysis Center | λT (exponential best fit, km) | Bin-level bootstrap 95% CI (km) | Station-Block 95% CI (km) |
 | --- | --- | --- | --- |
@@ -945,9 +949,9 @@ Analysis centers share substantial station overlap, requiring careful interpreta
 
 - Significance threshold: α = 0.05 with correction for multiple testing where appropriate
 
-**Pre-specified falsification criteria (declared before final analysis):** (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. **Outcomes:** λ = 3,330–4,549 km (PASS); CV of λ = 18.2% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).
+**Pre-specified falsification criteria (declared before final analysis):** (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. **Outcomes:** λ = 3,330–4,549 km (PASS); CV of λ ≈ 13% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS in this dataset; the 25-year CODE extension prefers Gaussian-family kernels by ΔAIC = 12.8, which meets this criterion's disfavouring condition; Paper 2); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).
 
-**Structural identification criterion:** The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) the pooled coherent-band estimate must bracket the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km—satisfied by the IGS-final λ<sub>T</sub> = 3,330–4,549 km, with the precise-product family spanning ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning (MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5); raw-SPP channels bound the scale from below at ~0.7–1.1×10<sup>3</sup> km (noise-floor-limited projection) while the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ &gsim; 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ &geq; 5,075 km with a qualitatively different profile shape (§4.6); (d) the R<sub>T</sub> identification calibrates against the fitted ρ<sub>T</sub> ≈ 20 g/cm³ convention (Paper 6), so consistency is with a corpus parameterization rather than an independently derived scale. Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.
+**Structural identification criterion:** The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) across products the fitted scale is conditioned by clock-product construction and estimator settings (reported product-level values ~1.0–4.8×10<sup>3</sup> km; MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5), and the same band-ordered profile is recovered in each product; the IGS-final values are consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km, which is itself calibrated on this scale (Paper 6), so this is a consistency statement rather than an independent test; raw-SPP channels return shorter, noise-floor-limited scales (~0.7–1.1×10<sup>3</sup> km), and the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ ≳ 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ ≥ 5,075 km with a qualitatively different profile shape (§4.6). Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.
 
 **Experimental Section:**
 
@@ -957,7 +961,7 @@ Critical Methodological Point: This analysis performs *spatial correlation analy
 
 Statistical Unit: The analysis operates on independent distance bins, not individual station pair comparisons. Each bin aggregates thousands of pairs, providing robust statistics while controlling effective sample size.
 
-Why Multiple Comparison Corrections Are Not Applied to Primary Analysis:
+##### Why Multiple Comparison Corrections Are Not Applied to Primary Analysis:
 
 - Single hypothesis test: Tests one exponential correlation model across distance bins
 
@@ -967,7 +971,7 @@ Why Multiple Comparison Corrections Are Not Applied to Primary Analysis:
 
 - Cross-validation framework: LOSO/LODO methods test robustness to data structure
 
-When Multiple Comparison Corrections Are Applied:
+##### When Multiple Comparison Corrections Are Applied:
 
 - Astronomical event analysis: Multiple planetary tests use Bonferroni and FDR corrections
 
@@ -1072,7 +1076,7 @@ Multi-window smoothing analysis correlating planetary gravitational influences w
 
 Two complementary metrics quantify coupling strength and test gravitational scaling predictions:
 
-Metric 1: Enhancement Factor (Descriptive)
+##### Metric 1: Enhancement Factor (Descriptive)
 
 A<sub>obs</sub> (Observed Amplitude): The measured TEP correlation amplitude during planetary gravitational events, expressed as a dimensionless fraction of the baseline correlation strength. Units: dimensionless (fractional amplitude).
 
@@ -1082,9 +1086,9 @@ Enhancement Factor:
 
 E ≡ A<sub>obs</sub> / A<sub>exp</sub> = A<sub>obs</sub> / (M/d²)            
 
-The enhancement factor E provides a normalized comparison of observed versus expected coupling strength. However, E should not be tested for correlation with mass—since E already divides by mass, testing whether E correlates with mass is circular and uninformative.
+The enhancement factor E provides a normalized comparison of observed versus expected coupling strength. However, E should not be tested for correlation with mass—since E already divides by mass, testing whether E correlates with mass is circular and uninformative. A further limitation is documented in Section 3.4.4: when A<sub>obs</sub> sits near the per-event noise floor, E reduces algebraically to ∝ d²/M, so the metric encodes the Newtonian denominator rather than any measured response. It is retained for provenance and is not used as physical evidence of geometric screening enhancement.
 
-Metric 2: Mass Scaling Test (Proper Statistical Test)
+##### Metric 2: Mass Scaling Test (Proper Statistical Test)
 
 To test whether observed amplitudes follow gravitational scaling predictions, a direct correlation is computed between A<sub>obs</sub> and the gravitational scaling factor (M/d²):
 
@@ -1108,11 +1112,11 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)
 
 This proper test directly examines the relationship between observed phenomena and gravitational predictions without circular normalization.
 
-Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E ≡ A<sub>obs</sub>/(M/d²) already divides by mass. Dividing a flat residual floor by M/d² mechanically produces an inverse scaling with mass by construction, providing no independent physical information about gravitational scaling. The proper statistical test examines A<sub>obs</sub> directly (Section 3.3.4).
+Critical Methodological Note: Earlier analysis draft versions tested whether E correlated with mass. This approach is mathematically circular because E ≡ A<sub>obs</sub>/(M/d²) already divides by mass. Dividing a flat residual floor by M/d² mechanically produces an inverse scaling with mass by construction, providing no independent physical information about gravitational scaling. The proper statistical test examines A<sub>obs</sub> directly (Section 3.4.4).
 
 #### Worked Examples: Mercury and Jupiter
 
-Mercury Example
+##### Mercury Example
 
 - Planetary mass: M<sub>Mercury</sub> = 0.055 M<sub>⊕</sub>
 
@@ -1122,7 +1126,7 @@ Mercury Example
 
 - Enhancement factor: E = A<sub>obs</sub>/A<sub>exp</sub> = 0.0248/0.00010 = 248
 
-Jupiter Example
+##### Jupiter Example
 
 - Planetary mass: M<sub>Jupiter</sub> = 317.8 M<sub>⊕</sub>
 
@@ -1132,8 +1136,9 @@ Jupiter Example
 
 - Enhancement factor: E = A<sub>obs</sub>/A<sub>exp</sub> = 0.0110/0.00220 = 5
 
-Worked Example: Enhancement Factor Computations
-The computed enhancement factors shown above for Mercury (248) and Jupiter (5) follow directly from the worked A<sub>obs</sub> and A<sub>exp</sub> values. For completeness of the method demonstration, analogous computations for Saturn (72), Venus (19), and Mars (201) use the same definition E = A<sub>obs</sub>/(M/d²). Cross-center mean values and full statistical treatment are presented in Section 3.4.4.
+###### Worked Example: Enhancement Factor Computations
+
+The computed enhancement factors shown above for Mercury (248) and Jupiter (5) follow directly from the worked A<sub>obs</sub> and A<sub>exp</sub> values and are illustrative of the method only. Cross-center mean values computed from the data (Mercury 137×, Mars 215×, Saturn 59×, Venus 18×, Jupiter 5.3×) and the full statistical treatment are presented in Section 3.4.4.
 
 ### Mesh Dance Analysis
 
@@ -1141,7 +1146,8 @@ Investigation of collective network behavior to detect unified detector response
 
 #### Understanding Mesh Dance: Network-Wide Coherence
 
-Conceptual Foundation
+##### Conceptual Foundation
+
 While phase-alignment index measures whether *two stations* are synchronized, mesh dance asks: does the *entire 364-station network* behave as a single, dynamically-coherent detector? Think of it as the difference between asking "are these two clocks ticking together?" versus "is the whole global network breathing, rotating, and oscillating as one unified system?"
 
 The mesh dance score quantifies four distinct signatures of collective network behavior:
@@ -1153,20 +1159,22 @@ The mesh dance score quantifies four distinct signatures of collective network b
 | **Collective Oscillation** | Does the whole mesh "breathe" in-and-out with a common period? Tests for synchronized temporal variations. | 30 days | 17% |
 | **Earth Coupling** | Is the network synchronized with known Earth motions (rotation, orbit, Chandler wobble)? Tests for planetary coupling. | 90 days | 16% |
 
-Component-Based Analysis
+##### Component-Based Analysis
+
 **Primary approach:** Each mesh dance component is analyzed and reported independently to avoid assumptions about relative importance:
 
 - **Base mesh coherence:** 0.643–0.644 (strong network-wide synchronization)
 
 - **Spiral motion:** Detected across all centers (rotational dynamics)
 
-- **Collective oscillation:** Annual period (365.25 days, R² = 0.35, p < 10⁻³)
+- **Collective oscillation:** Annual period (365.25 days, R² = 0.35, p $\lt$ 10⁻³)
 
 - **Earth coupling:** Detected through orbital correlations
 
 **Window optimization:** 90-day windows provide adequate statistical power (10 samples over 912 days) for coherence metrics, while 30-day windows (30 samples) enable better temporal resolution for detecting oscillations and spiral dynamics. These choices balance statistical robustness against temporal resolution requirements.
 
-Why This Matters
+##### Why This Matters
+
 The detection of coordinated network dynamics indicates the network is not just a collection of independent correlations, but exhibits *organized collective behavior*. This is significant because:
 
 - GNSS processing is designed to *remove* spatially correlated signals—observing coherent network dynamics despite this suppression suggests a robust underlying phenomenon
@@ -1258,14 +1266,14 @@ This methodological diversity makes it highly unlikely that the observed pattern
 distance-binned means yield consistent Temporal Topology correlation lengths (λ<sub>T</sub>) and
 goodness-of-fit (R²) across distinct analysis center solutions:
 
-| Center | λ Median (km) | 95 % CI (km) | R² (pooled) |
+| Center | λ (exponential best fit, km) | 95 % CI (km) | R² (pooled) |
 | --- | --- | --- | --- |
-| CODE | 4,181 | 1,198–5,918 | 0.920 |
-| IGS Combined | 3,763 | 3,197–4,871 | 0.966 |
+| CODE | 4,549 | 1,198–5,918 | 0.920 |
+| IGS Combined | 3,764 | 3,197–4,871 | 0.966 |
 | ESA Final | 3,330 | 2,532–3,984 | 0.970 |
 
 Across centers, λ spans 3,330–4,549 km; coefficients of
-variation <20 % indicate strong reproducibility. These
+variation $\lt$20 % indicate strong reproducibility. These
 headline metrics are expanded upon in the detailed sections that follow.
 
 **Experimental Section:**
@@ -1279,7 +1287,7 @@ atomic clock residuals. The patterns exhibit substantial multi-center
 consistency and demonstrate sensitivity to Earth's motion, gravitational
 fields, and temporal structure.
 
-Core Observational Evidence
+#### Core Observational Evidence
 
 Primary Finding: Temporal Topology Correlation Length: A primary
 Temporal Topology correlation length (λ<sub>T</sub>) of 3,330–4,549 km, with bootstrap validation ranges
@@ -1451,7 +1459,7 @@ distance-bin means, N<sub>eff</sub> ≈ 25–28)
 Processing and network robustness: Algorithmic and software robustness
 across diverse processing chains (Bernese double-difference clock recovery,
 NAPEOS undifferenced global network adjustment, and IGS weighted combination)
-is confirmed through station-block bootstrap: &lambda; values remain within
+is confirmed through station-block bootstrap: λ values remain within
 respective bin-level bootstrap CIs despite removing ~30% of stations per
 resample, confirming neither high-connectivity stations nor geographic
 clustering bias drives the correlation signature.
@@ -1540,9 +1548,9 @@ and all elevation tiers, the correlation length is systematically
 shortest in the high-geomagnetic-latitude (auroral-leaning) band
 (λ ≈ 1,100–3,400 km in 7 of 9 cells; binomial p = 8.3×10<sup>−3</sup>
 under a no-organization null), while the quiet mid-latitude band carries
-the longest lengths (up to λ ≈ 10,000&ndash;15,000 km). Because this
-ordering is organized on geomagnetic latitude &mdash; the coordinate of the
-ionosphere, not of any screening variable &mdash; the stratification is
+the longest lengths (up to λ ≈ 10,000–15,000 km). Because this
+ordering is organized on geomagnetic latitude — the coordinate of the
+ionosphere, not of any screening variable — the stratification is
 consistent with both the environmental-screening interpretation and a
 residual static ionospheric dependence that the temporal Kp/TID controls
 cannot exclude (Step 4.9). The stratification is therefore reported as
@@ -1622,7 +1630,7 @@ directional analysis to capture the true complexity of the spatial field.
 
 ### Spherical Harmonic Analysis Results
 
-Harmonic Decomposition (CODE)
+#### Harmonic Decomposition (CODE)
 
 **Analysis Configuration:** 16 spherical bins (azimuth
 × elevation grid), 39.0M station pairs analyzed
@@ -1748,7 +1756,7 @@ wobble, and gravitational field variations.
 
 ### Mesh Dance Foundation
 
-Collective Network Dynamics
+#### Collective Network Dynamics
 
 **Key Finding:** The global GNSS network exhibits
 coordinated dynamics as a unified detector system, not just
@@ -1764,7 +1772,7 @@ network-wide synchronization)
 (rotational dynamics)
 
 **Collective oscillation:** Annual period
-(365.25 days) with R² = 0.35, p 
+(365.25 days) with R² = 0.35, $p \lt 0.001$
 
 **Earth coupling:** Oscillation period matches
 Earth's orbital motion (period shared by all seasonal
@@ -2001,38 +2009,47 @@ dependencies.
 Gravitational-temporal correlations strengthen systematically with
 longer analysis windows:
 
-- 31-day window: r = -0.362, p = 1.3×10⁻²⁹
+- 31-day window: r = -0.362, autocorr-corrected p = 1.3×10⁻²
 
-- 59-day window: r = -0.400, p = 2.5×10⁻³⁶
+- 59-day window: r = -0.400, autocorr-corrected p = 5.5×10⁻³
 
-- 91-day window: r = -0.428, p = 7.8×10⁻⁴²
+- 91-day window: r = -0.428, autocorr-corrected p = 2.8×10⁻³
 
-- 119-day window: r = -0.454, p = 1.2×10⁻⁴⁷
+- 119-day window: r = -0.454, autocorr-corrected p = 1.4×10⁻³
 
-- 179-day window: r = -0.477, p = 7.2×10⁻⁵³
+- 179-day window: r = -0.476, autocorr-corrected p = 7.4×10⁻⁴
 
-227-day window: r = -0.503, raw p = 1.5×10⁻⁵⁹, autocorr-corrected p
-= 3.3×10⁻⁴
+227-day window: r = -0.503, autocorr-corrected p = 3.3×10⁻⁴
+(raw p = 1.5×10⁻⁵⁹; selection-adjusted across the seven-window
+scan, p ≃ 2.3×10⁻³)
 
-- Raw correlation: r = -0.164, p = 6.0×10⁻⁷
+Unsmoothed correlation: r = -0.164, autocorr-corrected p =
+2.5×10⁻⁵
 
 Pattern: Correlation strength increases systematically with smoothing
 window, indicating gravitational-temporal coupling operates on seasonal
 to annual timescales.
-Note: The 227-day window p-value is autocorrelation-corrected per
-§2.3.
+Note: All p-values in this section are autocorrelation-corrected
+per §2.3 (N<sub>eff</sub> ≃ 47 for the smoothed series;
+N<sub>eff</sub> ≃ 652 unsmoothed). The optimal window is
+selected from a fixed seven-window scan; the quoted
+selection-adjusted value applies a Bonferroni factor over that
+scan.
 
 ### Individual Planetary Signatures
 
-Jupiter: r = -0.256, p = 3.6×10⁻¹⁵ (strongest individual effect)
+Jupiter: r = -0.175, autocorr-corrected p = 7.2×10⁻⁶ (strongest
+individual effect)
 
-- Sun: r = -0.230, p = 2.2×10⁻¹² (dominant mass influence)
+Saturn: r = -0.101, autocorr-corrected p = 1.0×10⁻² (incomplete
+orbital coverage)
 
-- Mars: r = -0.111, p = 8.2×10⁻⁴ (opposition cycle effects)
+Sun: r = -0.065, autocorr-corrected p = 0.10 (dominant mass
+influence, marginal against temporal variability)
+
+- Mars: r = -0.072, autocorr-corrected p = 0.068
 
 - Venus: Complex distance-dependent coupling
-
-- Saturn: Minimal correlation (incomplete orbital coverage)
 
 Anti-phase seasonal anti-correlations: Higher gravitational influence
 correlates with lower temporal phase-alignment index across all analysis
@@ -2118,96 +2135,127 @@ are evaluated across a default multi-window sweep (±30, ±60, ±120, ±180,
 
 | Event | CODE | IGS | ESA |
 | --- | --- | --- | --- |
-| Saturn Opp. 2023-08-27 | -8.93% | -13.85% | -5.11% |
-| Saturn Opp. 2024-09-08 | -2.48% | +1.15% | +1.84% |
-| Mars Opp. 2025-01-16 | -14.79% | +1.50% | +6.82% |
-| Jupiter Opp. 2023-11-03 | +0.24% | +24.24% | -1.29% |
-| Jupiter Opp. 2024-12-07 | -0.24% | +27.71% | +31.86% |
+| Saturn Opp. 2023-08-27 | -23.27% | +47.98% | +93.27% |
+| Saturn Opp. 2024-09-08 | -1.85% | -44.79% | -112.83% |
+| Mars Opp. 2025-01-16 | -17.33% | -33.01% | -60.21% |
+| Jupiter Opp. 2023-11-03 | +21.45% | +2.72% | -48.28% |
+| Jupiter Opp. 2024-12-07 | +24.02% | -15.57% | -13.65% |
+
+Values are the signed event-locked direct effect: the change in mean
+daily coherence between the event window (|d| ≤ 2 days) and the
+local baseline annulus (15 ≤ |d| ≤ 30 days), expressed as a
+percentage of that baseline. This metric replaces the earlier
+free-centre Gaussian amplitudes, which could lock onto unrelated
+excursions tens of days from the event.
 
 ### Observed Patterns
 
-Jupiter oppositions: Strong positive effects (up to +31.86%),
-particularly in ESA and IGS centers
+Mars opposition: Same-signed suppression in all three centers
+(-17.33% to -60.21%), yet within each center's placebo band
+(21st–33rd percentile of sliding-center null)
 
-Saturn oppositions: Predominantly negative effects (-13.85% to
-+1.84%)
+Saturn oppositions: Strongly divergent; ESA reaches +93.27% (2023,
+~99th placebo percentile) but falls to -112.83% (2024), and the
+2023 excursion is not reproduced by CODE (-23.27%) or IGS
+(+47.98%)
 
-Mars opposition: Variable center-specific responses (-14.79% to
-+6.82%)
+Jupiter oppositions: CODE positive (+21.45% to +24.02%), IGS and
+ESA mixed-to-negative; all within placebo bands
 
-Center variations: Different processing approaches yield different
-sensitivities to short-term gravitational events
+Center variations: Per-center residuals scatter over a range far
+wider than any candidate signal, indicating that transient
+event-window fluctuations are dominated by center-specific
+network-adjustment noise
 
 Note: These short-term event responses differ from long-term
 gravitational correlations (Section 3.4.1), reflecting different
-physical timescales and mechanisms. The center-specific variations
-suggest different processing approaches yield different sensitivities to
-short-term gravitational events, with IGS and ESA showing stronger
-responses to Jupiter oppositions while CODE exhibits more consistent
-patterns across planetary events.
+physical timescales and mechanisms. Audit of the earlier
+center-discordant values traced them to unconstrained-centre Gaussian
+fits rather than to the data themselves; the corrected direct test
+reported here finds no opposition event with a consistent
+cross-center, placebo-exceeding response. Full audit:
+results/outputs/planetary_channel_corrected_audit.json.
 
 **Experimental Section:**
 
 ### Window Sensitivity (Default Multi-Window Analysis)
 
-Outer planets (Jupiter, Saturn, Mars): responses systematically
-strengthen with longer windows (±120–±240 days), consistent with
-seasonal coupling; strongest detections observed at ±180–±240.
+Outer planets (Jupiter, Saturn, Mars): the earlier observation that
+fitted amplitudes strengthen with longer windows (±120–±240) is now
+identified as a fitting artifact—a free-centre Gaussian prefers the
+largest excursion inside the window, so longer windows admit larger
+off-event excursions. Event-locked direct effects show no genuine
+window growth and remain within placebo noise.
 
-Inner planet (Mercury): robust event-locked responses across all
-windows; multiple significant detections persist from ±60 through
-±240.
+Mercury: nominally significant fits exist in IGS and ESA but are
+mostly centred 4–65 days off the conjunction; direct effects are
+discordant across centers and not robust.
 
-Venus: multi-window significance across IGS/ESA (±60–±240) with
-mixed enhancement/suppression; CODE remains sub‑significant.
+Venus: the March 2025 conjunction is the strongest surviving
+event-locked case—ESA fit centred +3.3 days (σ ≈ 4 across all
+windows, direct effect +140%, 96th–98th placebo percentile), with
+CODE positive (+72%) but IGS negative (−28%); single-event,
+non-cross-center.
 
-Interpretation relies on σ-levels rather than amplitude-magnitude ratios
-when expected amplitudes are small (e.g., Saturn).
+Interpretation now relies on event-locked direct effects with
+sliding-centre placebo calibration; σ-levels from free-centre fits are
+not treated as event detections.
 
 ## 3.4.4 Planetary Mass Scaling Analysis
 
-Preliminary Observation: Planetary Enhancement Factor Analysis
+### Preliminary Observation: Planetary Enhancement Factor Analysis
 
 **Statistical Power Considerations:** With n=5 planets and
 vastly different temporal sampling (Mercury: 7.9 cycles, Jupiter: 2.3
 cycles, Mars: 1.2 cycles), direct correlation between observed event
 amplitudes and Newtonian gravitational scaling (GM/d²) returns a null
-result (mean r = −0.156). Furthermore, individual opposition events exhibit
-sign discordance across analysis center solutions (for instance, Mars 2025
-yields −14.79% in CODE versus +6.82% in ESA; Jupiter 2023 yields +24.24% in
-IGS Combined versus −1.29% in ESA). Because a physical scalar field modulation
-imposes a definite sign, this cross-center discordance indicates that
-transient single-event windows in processed clock products do not isolate
-coherent planetary detections, but instead provide empirical upper bounds on
-transient planetary field perturbations. Extended 10+ year observations will
-be required to place tighter constraints on long-period planetary
-influences.
+result (mean r = −0.156). Individual opposition events also exhibit
+large center-to-center scatter that cannot represent a coherent field
+response: Saturn 2023 yields −23.27% in CODE but +93.27% in ESA, and
+Jupiter 2023 yields +21.45% in CODE versus −48.28% in ESA. (The
+sign-reversed Mars-2025 pair quoted in earlier drafts was an artifact
+of unconstrained-centre Gaussian fits; the corrected event-locked
+metric gives same-signed suppression in all centers, within placebo
+noise.) Because a physical scalar field modulation imposes a definite
+sign, this cross-center discordance indicates that transient
+single-event windows in processed clock products do not isolate
+coherent planetary detections, but instead provide empirical upper
+bounds on transient planetary field perturbations. Extended 10+ year
+observations will be required to place tighter constraints on
+long-period planetary influences.
 
 Robustness to temporal window choice was assessed using the default
-multi-window sweep (±30, ±60, ±120, ±180, ±240 days). Enhancement factor
-rankings and qualitative mass-scaling conclusions remain stable across
-windows: outer-planet responses strengthen with seasonal windows
-(±120–±240) while Mercury exhibits persistent event-level significance
-across all windows. These trends are consistent across IGS Combined and
-ESA Final, with CODE showing weaker event-scale sensitivity.
+multi-window sweep (±30, ±60, ±120, ±180, ±240 days). The corrected
+event-locked direct effect samples only |d| ≤ 30 days of the event
+series, so it is identical across the longer windows by construction;
+window sensitivity now enters only through the placebo calibration.
+Earlier reports that outer-planet responses strengthen with seasonal
+windows (±120–±240) traced to free-centre Gaussian fits that locked
+onto off-event excursions inside larger windows; with the centre
+constrained to the event, that apparent scaling disappears.
 
-Observation 1: Enhancement Factor Distribution
+#### Observation 1: Enhancement-Factor Distribution (Retired Metric)
 
-Using the definition in §2.6, statistically significant
-variation is found across planets, with Jupiter showing 3.5× enhancement
-while Mercury shows 127× enhancement (cross-center means). These
-factors provide mass-independent comparison of observed versus
-predicted gravitational coupling strength.
+Under the descriptive definition in §2.6, the catalogued values span
+Jupiter 5.3× to Mercury 137× (cross-center means). These numbers
+are retained for provenance only: because the per-event residual
+amplitude A<sub>obs</sub> sits near the baseline noise floor across
+all planets, E ≡ A<sub>obs</sub>/(M/d²) reduces
+algebraically to ∝ d²/M, so the ordering encodes the
+Newtonian denominators rather than any measured coupling strength
+(see the algebraic demonstration below). The estimator is
+therefore not evidence of geometric screening enhancement and is
+retired as a physical channel.
 
 | Planet | Mass (M⊕) | Cross-Center Mean Enhancement |
 | --- | --- | --- |
-| Mercury | 0.055 | 127× |
-| Mars | 0.107 | 169× |
-| Saturn | 95.2 | 72× |
-| Venus | 0.815 | 15× |
-| Jupiter | 317.8 | 3.5× |
+| Mercury | 0.055 | 137× |
+| Mars | 0.107 | 215× |
+| Saturn | 95.2 | 59× |
+| Venus | 0.815 | 18× |
+| Jupiter | 317.8 | 5.3× |
 
-Observation 2: Mass Scaling Analysis
+#### Observation 2: Mass Scaling Analysis
 
 To test whether observed amplitudes follow gravitational scaling, a
 direct correlation is computed between A<sub>obs</sub> and the expected amplitude
@@ -2239,13 +2287,14 @@ the expected ~10<sup>−16</sup> planetary signatures, while
 preserving phase-coherent timing structure across the network.
 
 The apparent "inverse mass hierarchy" reported in descriptive
-evaluations—wherein Mercury (0.055 M<sub>&oplus;</sub>) exhibits an
-enhancement factor E &equiv; A<sub>obs</sub>/(M/d²) of 127×
-compared to 3.5× for Jupiter (317.8 M<sub>&oplus;</sub>)—is an
+evaluations—wherein Mercury (0.055 M<sub>⊕</sub>) exhibits an
+enhancement factor E ≡ A<sub>obs</sub>/(M/d²) of 137×
+compared to 5.3× for Jupiter (317.8 M<sub>⊕</sub>)—is an
 algebraic consequence of the definition of E. Because the observed
-residual variance reductions A<sub>obs</sub> hover near the network
-noise floor across all planetary events (typically 5&ndash;25%),
-dividing by M/d² mechanically yields E &prop; d²/M by
+residual amplitude A<sub>obs</sub> remains at the per-event noise
+floor (fractional deviations of order the baseline coherence
+itself) across all planetary events,
+dividing by M/d² mechanically yields E ∝ d²/M by
 construction. Consequently, planets with minimal Newtonian field
 strengths at Earth naturally register elevated values of E, whereas
 massive bodies like Jupiter register small values. The ratio of
@@ -2256,23 +2305,26 @@ disformal coupling mechanism.
 **Sign Discordance and Empirical Bounds:** A genuine
 scalar-field perturbation would impose a physically consistent sign
 on clock variations during planetary configurations. However,
-individual events exhibit marked sign discordance across analysis
-centers: Mars 2025 yields −14.79% in CODE but +6.82% in ESA;
-Jupiter 2023 yields +24.24% in IGS Combined but −1.29% in ESA.
-This discordance demonstrates that single-event amplitude
-fluctuations are dominated by center-specific orbit determination
-filter dynamics and clock re-absorption. Rather than detecting
-unscreened scalar perturbations from individual planets, the
-analysis establishes an empirical upper bound on transient planetary
-field modulations in processed GNSS products.
+individual events exhibit marked discordance across analysis
+centers: Saturn 2023 yields −23.27% in CODE but +93.27% in
+ESA; Jupiter 2023 yields +21.45% in CODE but −48.28% in ESA.
+(The earlier-quoted Mars-2025 sign reversal was traced to
+unconstrained-centre Gaussian fits; with the fit centre fixed on
+the event, all centers show a same-signed but placebo-consistent
+suppression.) This discordance demonstrates that single-event
+amplitude fluctuations are dominated by center-specific orbit
+determination filter dynamics and clock re-absorption. Rather than
+detecting unscreened scalar perturbations from individual planets,
+the analysis establishes an empirical upper bound on transient
+planetary field modulations in processed GNSS products.
 
 Within the rigorous formulation of TEP, disformal transport governed
-by B(&phi;)&nabla;<sub>&mu;</sub>&phi;&nabla;<sub>&nu;</sub>&phi;
+by B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ
 (Rule 1) cannot be probed through single-receiver clock offsets, which
 are subject to synchronization conventions and network absorption.
 Instead, disformal physics is uniquely and gauge-invariantly tested
 by closed-loop synchronization holonomy H<sub>resid</sub> =
-&oint;(&sigma;&#771; − &sigma;<sub>GR</sub>) around closed
+∮(σ̃ − σ<sub>GR</sub>) around closed
 circuits (Rule 13), which vanishes identically in the purely
 conformal sector.
 
@@ -2290,15 +2342,15 @@ would naturally favor planets with specific orbital periods.
 Closed-Loop Holonomy vs. Open Amplitudes: While single-station clock
 offsets are constrained by network datum absorption and screening,
 non-exact disformal transport governed by
-B(&phi;)&nabla;<sub>&mu;</sub>&phi;&nabla;<sub>&nu;</sub>&phi;
+B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ
 generates invariant closed-loop holonomies H<sub>resid</sub> =
-&oint;(&sigma;&#771; − &sigma;<sub>GR</sub>) across triangular
+∮(σ̃ − σ<sub>GR</sub>) across triangular
 clock networks (Rule 13), providing an invariant physical channel for
 future inter-station circuit tests.
 
 Heliospheric Temporal Topology: The continuous spatial profile of
 the φ field may create a radial asymmetry in the solar system as
-Earth's orbital motion traverses regions of varying Temporal Shear,
+Earth's orbital motion traverses regions of varying ambient field value,
 altering the observable response amplitude for inner vs. outer planets.
 
 These observations indicate systematic sensitivity of global GNSS
@@ -2383,8 +2435,8 @@ outside the coherent spectrum argues the decay's carrier is
 signal-localized. Whether the band ordering reflects screening
 stratification or a systematic transfer mixture is the same open
 degeneracy registered in §4.6. The visibility/datum component of that
-degeneracy is bounded by forward simulation at λ &gsim; 6.7×10<sup>3</sup>
-km, and at λ &geq; 5,075 km when conditioned on the real
+degeneracy is bounded by forward simulation at λ ≳ 6.7×10<sup>3</sup>
+km, and at λ ≥ 5,075 km when conditioned on the real
 product's satellite-clock content and ephemerides (§4.6), above the
 pooled measured scale.
 
@@ -2420,7 +2472,7 @@ designated the primary corpus scale.
 
 **Experimental Section:**
 
-Signal Enhancement Over Null Expectation
+### Signal Enhancement Over Null Expectation
 
 Comprehensive comparison with 180 null hypothesis iterations (60 per
 scrambling type × 3 centers) quantifies the authenticity and strength of
@@ -2436,9 +2488,11 @@ the observed correlations:
 
 #### Physical Interpretation
 
-Mean enhancement >100× suggests potential non-linear coupling
-mechanisms. Such large amplification relative to null expectation
-may indicate:
+A mean signal-to-null ratio >100× indicates that the observed
+distance-coherence structure lies far outside what the scrambling
+nulls produce — the correlations are not explainable as
+distance-independent noise. Candidate physical completions that have
+been considered include:
 
 **Resonance effects:** Network may be resonantly
 coupled to specific Earth motion frequencies
@@ -2455,10 +2509,11 @@ Earth's natural oscillation modes
 **Validation Context:** The enhancement factor was
 computed from ESA Final center analysis comparing real vs. null
 distributions. All three centers show comparable signal-to-noise
-ratios (z = 15.8-31.9), providing independent confirmation of the
-enhancement magnitude. The >100× amplification represents a
-fundamental challenge to mundane explanations and strongly supports
-exotic physics involving non-linear spacetime-matter coupling.
+ratios (z = 15.8-31.9), providing cross-centre confirmation of the
+signal-over-null margin. The >100× amplification rules out the
+scrambled-null family as an explanation of the correlation
+structure; the candidate non-linear coupling interpretations listed
+above remain hypotheses pending mechanistic derivation.
 
 **Figure 9. Multi-Band Spectral Analysis Overview.**
 **(A) Spectral correlation structure:** R² > 0.85 from tidal to
@@ -2474,11 +2529,13 @@ excellent agreement.
 **(A) Post-tidal 30–40 μHz prominence:** Strongest band excludes
 classical tidal contamination while maintaining high correlation quality
 across all analysis centers (mean R² = 0.946, equal to tidal bands).
-**(B) Frequency specificity validation:** All enhancement ratios 3× ratios), distinguishing TEP from tidal artifacts and
+**(B) Frequency specificity validation:** All enhancement ratios $\lt$2×
+support universal coupling interpretation (classical tidal contamination
+would require >3× ratios), distinguishing TEP from tidal artifacts and
 demonstrating universal broadband coupling extending beyond tidal
 frequencies.
 
-3.5.2 Ionospheric Interference Assessment
+## 3.5.2 Ionospheric Interference Assessment
 
 To quantify potential ionospheric contamination of the TEP correlation
 signals, comprehensive Traveling Ionospheric Disturbance (TID) exclusion
@@ -2547,7 +2604,9 @@ systematically from 1.53× (post-tidal) to 1.12× (transition),
 indicating broadband coupling rather than sharp frequency
 cutoffs
 
-Universal coupling evidence: All enhancement ratios 3-5× ratios)
+Universal coupling evidence: All enhancement ratios $\lt$2× support
+universal conformal coupling interpretation (classical tidal
+contamination would require >3-5× ratios)
 
 Spatial scale transition: Mean transition ratio of 3.1× between
 tidal (4,677 km) and post-tidal (1,502 km) correlation lengths
@@ -2653,10 +2712,11 @@ structure.
 Cross-Validation: This finding aligns with Step 3.6 multiband analysis
 showing the 112-day period as dominant across all analysis centers, and
 supports the non-ionospheric origin through TID exclusion analysis. The
-systematic ranking of temporal effects (ESA Final 
+systematic ranking of temporal effects (ESA Final $\lt$ CODE $\lt$ IGS Combined)
+correlates with TID impact scores, suggesting Venus coupling strength
+varies systematically across analysis centers.
 
-3.5.3 Comprehensive Diurnal Analysis: Associations Consistent with Dynamical
-Time
+## 3.5.3 Comprehensive Diurnal Analysis: Associations Consistent with Dynamical Time
 
 Comprehensive hourly temporal analysis spanning January 2023 to June 2025
 reveals systematic diurnal variations consistent with Temporal Equivalence
@@ -2687,7 +2747,7 @@ ratio
 
 Temporal analysis scope: Comprehensive hourly temporal analysis across
 all three analysis center solutions reveals systematic diurnal variations
-consistent with &phi;-field coupling predictions:
+consistent with φ-field coupling predictions:
 
 | Center | Stations | Temporal Stability | Diurnal Modulation | φ-Field Sensitivity |
 | --- | --- | --- | --- | --- |
@@ -2707,7 +2767,7 @@ The analysis reveals systematic seasonal variations in diurnal peak timing
 and day-night asymmetries, providing evidence for annual φ-field modulation
 driven by Earth's orbital dynamics and solar angle effects:
 
-Winter (DJF): Dawn Acceleration Phase
+#### Winter (DJF): Dawn Acceleration Phase
 
 - Peak Hours: 4-5 AM (consistent early morning)
 
@@ -2721,7 +2781,7 @@ center-specific sensitivity to axial tilt effects
 Interpretation: φ-field maxima at dawn when solar angle is
 optimal; screening effects vary by latitude
 
-Spring (MAM): Maximum Gradient Phase
+#### Spring (MAM): Maximum Gradient Phase
 
 - Peak Hours: Variable (CODE H8, IGS H7, ESA H20)
 
@@ -2731,7 +2791,7 @@ effects (1.074-1.292)
 Interpretation: Spring equinox creates maximum φ-gradients via
 solar coupling; complex multi-modal structure
 
-Summer (JJA): Stability Phase
+#### Summer (JJA): Stability Phase
 
 - Peak Hours: 3-9 AM (morning convergence)
 
@@ -2740,7 +2800,7 @@ Summer (JJA): Stability Phase
 Interpretation: Summer solstice minimizes φ-variations;
 ionospheric TEC minimum correlates with reduced field variations
 
-Autumn (SON): Transition Phase
+#### Autumn (SON): Transition Phase
 
 - Peak Hours: 9-10 AM (coherent morning consensus)
 
@@ -2815,16 +2875,16 @@ with consistent reproduction across analysis centers, indicates that
 global GNSS networks exhibit sensitivity to large-scale spacetime
 structure at previously unexplored scales.
 
-Planetary mass scaling: Direct correlation analysis (Section 3.3.4) between
+Planetary mass scaling: Direct correlation analysis (Section 3.4.4) between
 observed amplitudes and gravitational predictions (M/d²) reveals no
 statistically significant correlation (r = −0.156 average across three
 centers), establishing an empirical upper bound on unmodeled single-receiver
-scalar perturbations. Individual opposition events display cross-center sign
-discordance (e.g. Mars 2025: CODE −14.79% vs ESA +6.82%), confirming
+scalar perturbations. Individual opposition events display cross-center
+discordance (e.g. Saturn 2023: CODE −23.27% vs ESA +93.27%), confirming
 that single-event residual amplitudes reflect network adjustment dynamics
 rather than coherent planetary scalar detections. Apparent enhancement factor
-variations E &equiv; A<sub>obs</sub>/(M/d²) mechanically mirror the inverse
-Newtonian denominator (E &prop; d²/M) against the residual floor,
+variations E ≡ A<sub>obs</sub>/(M/d²) mechanically mirror the inverse
+Newtonian denominator (E ∝ d²/M) against the residual floor,
 reinforcing that disformal coupling must be probed through closed-loop
 holonomy rather than single-station amplitude ratios.
 
@@ -2841,7 +2901,7 @@ effects consistent with scalar field coupling.
 
 **Experimental Section:**
 
-4.1 Observations and Theoretical Context
+## 4.1 Observations and Theoretical Context
 
 The observed patterns show characteristics consistent with predictions
 from the Temporal Equivalence Principle framework (see Table 1 in
@@ -2849,16 +2909,16 @@ Section 1.2). While these consistencies are noteworthy, they do not
 constitute definitive proof and require independent validation.
 
 Screening in TEP is represented at the theory level by the environmental operator
-*S*<sub>&Sigma;</sub>(*&Epsilon;*).
+$S_\Sigma(\mathcal{E})$.
 Quantities such as
-&rho;<sub>T</sub>,
-*R*<sub>T</sub>(*M*),
-*S*<sub>&oplus;</sub>(*r*),
-compactness &Phi;/*c*<sup>2</sup>,
+$\rho_T$,
+$R_T(M)$,
+$S_\oplus(r)$,
+compactness $\Phi/c^2$,
 local stellar density,
 geometric coherence length,
 and channel-specific response coefficients
-are domain-specific projections of *&Epsilon;*,
+are domain-specific projections of $\mathcal{E}$,
 not independent screening mechanisms
 and not interchangeable universal thresholds.
 Each is an observational transfer model
@@ -2882,11 +2942,11 @@ centers (§3.5.1, Table 8a). The R<sub>T</sub> identification
 calibrates against the corpus's fitted ρ<sub>T</sub> convention
 (Paper 6); across products the fitted scale is conditioned by
 product construction and estimator settings within a
-~1.9–4.5×10<sup>3</sup> km family (MGEX 1,862 ± 155 km; the
+~1.0–4.8×10<sup>3</sup> km family (MGEX 1,862 ± 155 km; the
 estimator-conditioned share is ≲±25% on identical station-days
 and the same band-ordered profile is recovered in both product
 families; Paper 14, Step 3.5), and the co-visibility kernel is bounded by forward
-simulation at λ &gsim; 6.7×10<sup>3</sup> km—and at λ &geq;
+simulation at λ ≳ 6.7×10<sup>3</sup> km—and at λ ≥
 5,075 km when conditioned on the real product's
 ephemerides and satellite-clock content—broader than the
 measured scale (§4.6).
@@ -2897,7 +2957,7 @@ ratios—is consistent with universal coupling rather than
 frequency-selective artifacts.
 
 **Multi-center consistency:** The convergence of three
-distinct analysis center solutions (CV of λ<sub>T</sub> = 18.2%) on similar physical
+distinct analysis center solutions (CV of λ<sub>T</sub> ≈ 13%, population σ/μ across the three centre exponential fits) on similar physical
 parameters demonstrates that the spatial decay is not an artifact of a single
 software implementation (Bernese vs NAPEOS vs IGS combination), though
 shared-constellation and network-level common modes cannot be fully excluded without raw
@@ -2920,12 +2980,12 @@ quantitative criteria for assessing signal authenticity.
 
 **Experimental Section:**
 
-Validation Framework: 11 Independent Criteria
+### Validation Framework: 11 Independent Criteria
 
 | Test | Metric | Result | Rules Out |
 | --- | --- | --- | --- |
 | 1. Null Hypothesis Testing | ΔR² (signal vs null) | 0.89–0.95 (z=15.8–31.9) | Random artifacts, noise |
-| 2. Cross-Center Consistency | CV of λ | 18.2% | Center-specific artifacts |
+| 2. Cross-Center Consistency | CV of λ | ≈13% | Center-specific artifacts |
 | 3. Multi-Band Frequency | Enhancement ratio | 1.58× (vs >3× expected) | Classical tidal contamination |
 | 4. Signal-Artifact Discrimination | Control band ΔR² | 0.334 | Broadband processing noise |
 | 5. Geometric Controls | Synthetic vs real ΔR² | 0.85-0.90 | Network topology bias |
@@ -2950,7 +3010,7 @@ patterns result from systematic bias or Earth-geometry artifacts.
 
 **Experimental Section:**
 
-Detailed Validation Descriptions
+### Detailed Validation Descriptions
 
 #### 1. Null Hypothesis Testing
 
@@ -3019,14 +3079,14 @@ TEP theoretical predictions are statistically robust across 19
 independent validation approaches, though alternative explanations
 remain to be fully excluded.
 
-2. Cross-Center Consistency
+#### 2. Cross-Center Consistency
 
 Test: Compare results across CODE, IGS Combined, and ESA Final using
 different algorithms, software implementations, and station network
 configurations.
 
 Result: λ<sub>T</sub> = 3,330–4,549 km with CV of correlation lengths across centers
-= 18.2% consistency across fundamentally different processing
+≈ 13% consistency across fundamentally different processing
 approaches.
 
 Interpretation: The convergence of independent processing methodologies
@@ -3038,7 +3098,7 @@ strategies would be expected to produce different artifacts if the
 signal were methodological in origin. The observed consistency supports
 a genuine physical phenomenon.
 
-3. Multi-Band Frequency Specificity
+#### 3. Multi-Band Frequency Specificity
 
 Test: Analyze correlation patterns across 12 independent frequency bands
 (10–3000 μHz, representing 506M cumulative pair-band evaluations for
@@ -3078,7 +3138,7 @@ scales. The quantitative separation between TEP (R² ≈ 0.95) and control
 (R² ≈ 0.618) bands establishes robust discrimination criteria for
 physical correlations vs. systematic effects.
 
-4. Signal-Artifact Discrimination
+#### 4. Signal-Artifact Discrimination
 
 Test: Apply comprehensive null tests using three independent scrambling
 approaches (20 iterations per center, 180 total tests): distance
@@ -3135,7 +3195,7 @@ artifacts. This synthetic data analysis establishes quantitative
 baselines that must be exceeded for genuine physical effects, which the
 TEP signals consistently achieve.
 
-6. Ionospheric Independence
+#### 6. Ionospheric Independence
 
 **Test:** Two-stage ionospheric validation: (1) Correlate
 TEP signals with external space weather indices (Kp, F10.7) to test for
@@ -3181,8 +3241,8 @@ coherent signal persists through local night with a night/day ratio of
 cell, whereas the ionospheric electron content — and hence any residual
 ionospheric bias in the clock products — collapses by a factor of
 ~3–10 on the same coordinate. The residual-ionospheric fraction of the
-coherent signal is thereby bounded at &lesssim;3% on the annual means
-and &lesssim;20–32% in the worst seasonal cell (results/outputs/
+coherent signal is thereby bounded at ≲3% on the annual means
+and ≲20–32% in the worst seasonal cell (results/outputs/
 step_4_9_environmental_ambiguity.json, diurnal_persistence_bound). A
 spatially resolved control (GIM/ROTI maps) remains the gold-standard
 closure test for the static geomagnetic-latitude dependence itself.
@@ -3214,7 +3274,7 @@ Interpretation: Clear quantitative thresholds distinguish genuine
 signals from artifacts. The discrimination factor provides a robust
 statistical foundation for signal authenticity claims.
 
-9. Binning & Weighting Sensitivity
+#### 9. Binning & Weighting Sensitivity
 
 Test: To ensure the results are not artifacts of specific methodological
 choices, a sensitivity analysis was performed as part of the main
@@ -3237,7 +3297,7 @@ is a fundamental property of the data, not an artifact of the chosen
 methodology. This is consistent with genuine signal detection rather
 than methodological bias.
 
-10. Phase Distribution Quality
+#### 10. Phase Distribution Quality
 
 Test: Validate phase boundary handling through boundary clustering
 analysis to detect phase wrapping artifacts or accumulation errors.
@@ -3296,7 +3356,7 @@ excellent fits (R² = 0.81–0.91) despite having the smallest dataset
 (10.8M pairs), while CODE shows systematic elevation trends across the
 largest dataset (39.0M pairs).
 
-12. Spatial GLS Re-fit (Covariance Structure)
+#### 12. Spatial GLS Re-fit (Covariance Structure)
 
 Test: The original WLS fit assumes independent bin errors.  Nearby
 distance bins may have correlated residuals from common-mode
@@ -3306,13 +3366,13 @@ station network and adds a parametric spatial nuisance kernel to the
 covariance matrix.
 
 Result: Under realistic residual spatial correlations (common-mode
-fraction f &le; 0.001, correlation length &le; 3,000 km), the λ error
+fraction f ≤ 0.001, correlation length ≤ 3,000 km), the λ error
 bar inflates by at most ~4× relative to the WLS value; for very
-small systematics (f &le; 0.0005) the inflation is < 1.5×.
+small systematics (f ≤ 0.0005) the inflation is $\lt$ 1.5×.
 Even under the most extreme physically plausible nuisance levels
 studied (f = 0.002, l = 5,000 km), the adjusted λ remains within the
-TEP-consistent 1,000&ndash;10,000 km range (CODE: 1,492&ndash;16,991 km;
-IGS Combined: 582&ndash;9,877 km; ESA Final: 485&ndash;8,811 km).
+TEP-consistent 1,000–10,000 km range (CODE: 1,492–16,991 km;
+IGS Combined: 582–9,877 km; ESA Final: 485–8,811 km).
 
 Interpretation: The TEP-consistent conclusion survives conservative
 spatial-correlation assumptions.  The WLS λ uncertainty reported in
@@ -3320,20 +3380,20 @@ the primary analysis is not an artifact of ignoring bin-to-bin
 covariance, and the correlation length remains statistically robust
 even when the covariance structure is deliberately inflated.
 
-13. Systematic Injection Simulation
+#### 13. Systematic Injection Simulation
 
 Test: Quantify how large a distance-dependent systematic bias would
 be required to shift the fitted λ outside the TEP-consistent regime
-(&lambda; < 1,000 km or R² < 0.5).  Five physically motivated
+(λ $\lt$ 1,000 km or R² $\lt$ 0.5).  Five physically motivated
 systematic types were injected at the pair level and averaged into
 bins: common-mode offset, latitude gradient, N-S dipole,
 distance-linear trend, and hemispheric offset.
 
-Result: Only a distance-linear systematic with amplitude &asymp; 0.1
+Result: Only a distance-linear systematic with amplitude ≃ 0.1
 (in coherence units) pushes λ below the 1,000 km threshold for CODE;
 latitude gradients, N-S dipoles, common-mode offsets, and hemispheric
 biases do not destroy TEP consistency even at amplitudes up to 0.1.
-Known GNSS biases are typically << 10<sup>−3</sup> in coherence units,
+Known GNSS biases are typically $\ll$ 10<sup>−3</sup> in coherence units,
 orders of magnitude below the critical amplitude.
 
 Interpretation: The exponential signature is robust against plausible
@@ -3352,13 +3412,13 @@ testing, bootstrap validation, and band diagnostic verification.
 
 **Experimental Section:**
 
-Additional Supporting Evidence
+### Additional Supporting Evidence
 
 Beyond the 11 core validation criteria, additional analyses provide
 supporting evidence for signal authenticity and physical scale
 consistency:
 
-Eclipse Scale Consistency and Dynamic Field Predictions
+#### Eclipse Scale Consistency and Dynamic Field Predictions
 
 While the primary evidence for TEP comes from persistent baseline
 correlations, the framework predicts that astronomical events should
@@ -3394,15 +3454,15 @@ control yields the same ordering
 Limitations: Five eclipses with 1-2 events per type provide
 preliminary evidence requiring independent replication
 
-Opposition Event Scale Consistency
+#### Opposition Event Scale Consistency
 
 Temporal scope: Measures short-term coherence changes (±30–60 day
 windows), distinct from long-term correlations (Section 3.4.1)
 
-Center-specific responses: Varying sensitivities (CODE: -14.79% to
-+0.24%, IGS Combined: up to +27.71%, ESA: up to +31.86%) reflect
-different processing approaches to short-term gravitational
-perturbations
+Center-specific responses: Varying sensitivities (CODE: -23.27% to
++24.02%, IGS Combined: -44.79% to +47.98%, ESA: -112.83% to
++93.27%) reflect different processing approaches to short-term
+gravitational perturbations
 
 Physical interpretation: Short-term event enhancements can coexist
 with long-term anti-phase coupling, representing different physical
@@ -3417,19 +3477,19 @@ strategies (CODE: double-difference network solutions with zero-difference clock
 the IGS global tracking network. If software-specific algorithmic bugs or parameterization choices were
 responsible, center-specific λ values reflecting their individual
 software implementations would be expected, not the observed convergence to λ
-= 3,330–4,549 km (CV of λ across centers = 18.2%). This convergence
+= 3,330–4,549 km (CV of λ across centers ≈ 13%). This convergence
 across distinct processing pipelines demonstrates that the spatial decay is robust against software and algorithmic choices, while shared-constellation common modes are systematically addressed in Paper 14 and Paper 3.
 
 **Experimental Section:**
 
-Study Limitations and Research Context
+### Study Limitations and Research Context
 
 Although all three centers analyze IGS data, their pipelines have
 orthogonal systematic tendencies—CODE's network constraints suppress
 global coherence, ESA's precise point positioning removes network-level
 correlations, and IGS is a weighted multi-center combination—so
 processing artifacts should diverge across centers; instead, the
-observed convergence of λ<sub>T</sub> (3,330–4,549 km; CV of λ<sub>T</sub> = 18.2%) and nearly
+observed convergence of λ<sub>T</sub> (3,330–4,549 km; CV of λ<sub>T</sub> ≈ 13%) and nearly
 identical multiband patterns (optimal R² = 0.970/0.966/0.920) is a
 discriminator in favor of a physical signal. The phase-coherent approach
 leverages this orthogonality: amplitude-suppressing steps remove
@@ -3486,7 +3546,7 @@ critical test. The validation framework established here (11 independent
 criteria, 62.7M measurements, multi-modal physical validation) provides
 the foundation for rigorous peer scrutiny and replication efforts.
 
-Validation Framework Strength
+#### Validation Framework Strength
 
 While acknowledging these limitations, the analysis achieves
 significant validation depth through:
@@ -3505,7 +3565,7 @@ gravitational influences, and temporal dynamics
 Software and model diversity: Distinct processing software
 and observation models (Bernese double-difference clock recovery vs NAPEOS
 undifferenced global network adjustment vs IGS weighted combination)
-yielding consistent results (CV of λ across centers = 18.2%)
+yielding consistent results (CV of λ across centers ≈ 13%)
 
 Frequency domain discrimination: Post-tidal signal persistence
 and broadband coupling characteristics distinguishing from
@@ -3529,12 +3589,12 @@ section provides comprehensive evaluation of conventional explanations,
 though some sophisticated systematic effects may require additional
 investigation.
 
-Additional Systematic Effects Requiring Investigation
+### Additional Systematic Effects Requiring Investigation
 
 While this analysis addresses primary alternative explanations, several
 sophisticated systematic effects warrant future investigation:
 
-Atmospheric Loading Effects
+#### Atmospheric Loading Effects
 
 Surface pressure variations can induce correlated clock
 signals
@@ -3543,15 +3603,16 @@ signals
 
 - Discrimination: Pressure correlation analysis needed
 
-Multipath Systematic Effects
+#### Multipath Systematic Effects
 
 Site-dependent multipath signatures could create
 distance-structured patterns
 
-- Expected scale: Site-specific (typically 
+- Expected scale: Site-specific (typically $\lt$100 km)
+
 Discrimination: Carrier-phase analysis at raw level needed
 
-Reference Frame Instabilities
+#### Reference Frame Instabilities
 
 ITRF2014 coordinate drift could introduce systematic
 correlations
@@ -3560,7 +3621,7 @@ correlations
 
 - Discrimination: Multi-frame analysis required
 
-Advanced Processing Artifacts
+#### Advanced Processing Artifacts
 
 Global network adjustment and orbit-clock coupling could create long-range
 correlations
@@ -3572,12 +3633,12 @@ correlations
 **Critical Need:** Raw data analysis would provide
 definitive discrimination between these conventional explanations and
 potential TEP effects, as processing artifacts would be absent in
-unprocessed measurements while genuine field coupling should amplify.
+minimally processed raw observations while genuine field coupling should amplify.
 
 | Alternative Hypothesis | Key Discriminator | Conclusion |
 | --- | --- | --- |
 | **Methodological Artifacts** | Null Tests & Multi-Center Consistency | Ruled out (ΔR² = 0.89-0.95 signal vs. null, z = 15.8-31.9;
-CV of λT = 18.2% across centers). |
+CV of λT ≈ 13% across centers). |
 | **Classical Tidal Effects** | Multi-Band Spectral Analysis | Inconsistent; Signal is broadband with modest enhancement
 (1.58×), unlike frequency-selective tides. |
 | **Ionospheric Disturbances (TIDs)** | Spatial Structure & Processing Immunity | Inconsistent; Isotropic exponential decay conflicts with TID
@@ -3598,7 +3659,7 @@ Key discriminators against methodological bias:
 
 Multi-center consistency: Three distinct analysis center solutions with different
 algorithms converge on λ<sub>T</sub> = 3,330–4,549 km (CV of λ<sub>T</sub> across centers =
-18.2%), ruling out software-specific analytical artifacts
+≈13%), ruling out software-specific analytical artifacts
 
 Null hypothesis testing: Comprehensive randomization tests destroy
 correlations (ΔR² = 0.89–0.95 separation, z = 15.8–31.9 across all
@@ -3611,7 +3672,7 @@ Scale separation: TEP λ<sub>T</sub> (3,330–4,549 km) >> methodological bias s
 Temporal stability: Consistent across 2.5-year dataset, inconsistent
 with processing artifacts
 
-4.3.2 Processing Independence: Convergence Across Divergent Methodologies
+### 4.3.2 Processing Independence: Convergence Across Divergent Methodologies
 
 A primary consideration in any multi-center analysis is the potential for
 common processing artifacts to arise from shared systematic dependencies.
@@ -3653,7 +3714,7 @@ through multi-constellation analysis and raw data investigation.
 The analysis was designed to provide multiple lines of evidence for
 genuine signal detection despite these systematic dependencies:
 
-1. Software and Observation Model Diversity
+##### 1. Software and Observation Model Diversity
 
 CODE (Network Solution): Formulates double-difference phase observations
 across baselines via the Bernese GNSS Software to determine orbits and station
@@ -3676,7 +3737,7 @@ solvers, datum constraint formulations, or software bugs. Both CODE and ESA
 solve global network adjustments, but with distinct observation equations
 (double-differenced vs undifferenced), parameter spaces, and codebases.
 The close convergence on λ<sub>T</sub> = 3,330–4,549 km (CV of
-λ<sub>T</sub> across centers = 18.2%) demonstrates robustness across distinct
+λ<sub>T</sub> across centers ≈ 13%) demonstrates robustness across distinct
 geodetic processing engines.
 
 **Multi-level Robustness Validation:** Three
@@ -3692,7 +3753,7 @@ Consistent parameters across elevation quintiles, geomagnetic regions,
 and continental baselines demonstrate independence from station-specific
 systematic effects.
 
-Quantitative Robustness Metrics
+##### Quantitative Robustness Metrics
 
 Three quantitative tests evaluate solution robustness and center-specific effects:
 
@@ -3704,7 +3765,7 @@ ESA: Undifferenced global network batch least-squares adjustment via NAPEOS
 
 IGS: Multi-center weighted combination across heterogeneous contributing pipelines
 
-Observed: λ values converge across software architectures (CV = 18.2%, bootstrap CIs overlapping)
+Observed: λ values converge across software architectures (CV ≈ 13%, bootstrap CIs overlapping)
 
 Scope: Rules out software-specific bugs and center-specific numerical artifacts; shared-constellation common modes are evaluated in Paper 14 and Paper 3
 
@@ -3712,7 +3773,7 @@ Scope: Rules out software-specific bugs and center-specific numerical artifacts;
 
 - Removed top 20% highest-degree stations (hub removal)
 
-- Result: λ shifts < 8% (well within bootstrap CIs)
+- Result: λ shifts $\lt$ 8% (well within bootstrap CIs)
 
 - Shared network hub artifacts would show > 30% shift
 
@@ -3736,7 +3797,7 @@ function uncertainty. This demonstrates that neither network
 connectivity effects nor geographic clustering biases can account for
 the observed TEP signature.
 
-2. Signal Survival Through Processing Suppression
+##### 2. Signal Survival Through Processing Suppression
 
 A key indicator of authenticity: GNSS processing is explicitly designed
 to remove spatially correlated signals through network constraints,
@@ -3745,7 +3806,7 @@ persistence of strong correlations (R² = 0.920-0.970) through processing
 designed to eliminate such signals is consistent with signal robustness
 rather than processing artifacts.
 
-3. Comprehensive Systematic Validation
+##### 3. Comprehensive Systematic Validation
 
 Null hypothesis testing: Substantial signal separation (ΔR² =
 0.89-0.95, z = 15.8-31.9, 24-61× signal-to-null ratios) over
@@ -3759,7 +3820,7 @@ Physical dependencies: Systematic variations with elevation, orbital
 velocity, and gravitational fields represent characteristics
 unexpected from shared processing algorithms
 
-4. Systematic Environmental Dependencies
+##### 4. Systematic Environmental Dependencies
 
 A key physical discriminator: A processing artifact arising from shared
 models would not be expected to show systematic dependencies on the
@@ -3781,7 +3842,7 @@ This coupling to the local physical and electromagnetic environment is a
 signature of a genuine physical phenomenon interacting with the Earth
 system, not an artifact of data processing algorithms.
 
-5. Coherence with External Physical Phenomena
+##### 5. Coherence with External Physical Phenomena
 
 The key discriminator: Perhaps the most compelling evidence against
 processing artifacts is the signal's coherence with independent,
@@ -3789,14 +3850,20 @@ external physical phenomena that are not inputs to the GNSS processing
 chain. A self-contained systematic error would be blind to these
 external drivers. The analysis reveals multiple such correlations:
 
-Planetary Ephemeris: The detection of 11 significant coherence
-modulations (σ > 3.0) time-locked to planetary events—such as the
-5.98σ Saturn opposition—links the signal to the gravitational
-dynamics of the solar system.
+Planetary Ephemeris: Eight coherence modulations nominally exceed
+σ = 3 near planetary events. A dedicated event-locking audit
+(Section 3.4.4) shows that the largest of these—such as the 5.98σ
+Saturn-2024 fit—are centred tens of days away from the event and
+therefore do not constitute event responses; the clearest
+surviving event-locked case is the March 2025 Venus conjunction
+(ESA: +140%, σ ≈ 4, fit centred 3.3 days post-conjunction),
+partially corroborated by CODE (+72%) but not IGS. The channel
+thus provides at most suggestive ephemeris linkage.
 
 Geophysical Oscillations: The significant detection of the 433-day
 Chandler wobble (coefficient of determination R² = 0.377–0.471, all
-p
+$p \lt 0.01$) demonstrates that the signal is coupled to the physical
+motion of the Earth itself.
 
 Orbital Dynamics: The robust negative correlation between anisotropy
 ratios and Earth's orbital velocity (r = -0.571 to -0.793 across
@@ -3825,7 +3892,7 @@ study's design support genuine signal detection:
 
 Software and model diversity: Distinct processing software (Bernese
 vs NAPEOS vs IGS combination) with different parameterizations and datum
-constraints yield consistent results (CV = 18.2%)
+constraints yield consistent results (CV ≈ 13%)
 
 Processing suppression paradox: Signal persistence despite
 suppression designed to remove correlated signals
@@ -4000,12 +4067,12 @@ and common-mode signal removal specifically designed to mitigate TID
 effects. The persistence of strong correlations (R² = 0.920-0.970) after
 these corrections indicates the signal originates below the ionosphere,
 in the atomic clock frequencies themselves. Multi-center λ consistency
-(CV of λ across centers = 18.2%) across different correction approaches
+(CV of λ across centers ≈ 13%) across different correction approaches
 further supports non-ionospheric origin.
 Injection tests on 30 days of raw CODE R5 data indicate that a
 synthetic 10<sup>−15</sup> sinusoidal frequency offset is attenuated
 by ≈96 % in the published clock products, whereas the
-cross-station phase-coherence metric changes by < 1 %,
+cross-station phase-coherence metric changes by $\lt$ 1 %,
 empirically confirming that standard processing suppresses amplitude
 signals while transmitting geometry-dependent phase structure (Kouba
 & Héroux 2001;
@@ -4023,8 +4090,8 @@ Conclusion: While TIDs operate in an overlapping frequency band, the
 observed signals are distinguished through (1) spatial structure
 incompatibility (plane-wave vs exponential decay), (2) survival through
 aggressive ionospheric processing, (3) independence from space weather
-drivers, and (4) multi-center convergence on identical correlation
-lengths. These discriminators provide strong evidence against TID
+drivers, and (4) multi-center convergence on a common correlation-length
+family. These discriminators provide strong evidence against TID
 contamination.
 
 ### 4.3.5 Trans-equatorial Propagation (TEQ)
@@ -4079,7 +4146,7 @@ atmospheric mass redistribution affects local gravity and influences
 atomic clock rates through gravitational redshift (δν/ν ≈ δg/g ≈ 10⁻⁹
 for mb-scale pressure changes).
 
-Theoretical Expectations vs. Observations
+##### Theoretical Expectations vs. Observations
 
 | Parameter | Atmospheric Loading | Observed TEP | Match |
 | --- | --- | --- | --- |
@@ -4103,12 +4170,13 @@ Orbital velocity coupling: The observed negative correlation with
 Earth's orbital speed (r = -0.701 to -0.793) represents a signature
 absent from atmospheric loading mechanisms
 
-Planetary correlations: Detection of 6 Bonferroni-significant
-astronomical events with mass scaling analysis showing no
-significant correlation (r = -0.156), inconsistent with simple
-Newtonian mass-distance mechanisms. Limited statistical power (n≈5
-planets, 2.5 y) requires cautious interpretation, though pattern
-does not support terrestrial atmospheric origin
+Planetary correlations: Eight Bonferroni-significant astronomical
+event fits (mostly non-event-locked on audit) with mass scaling
+analysis showing no significant correlation (r = -0.156),
+inconsistent with simple Newtonian mass-distance mechanisms.
+Limited statistical power (n≈5 planets, 2.5 y) requires cautious
+interpretation, though pattern does not support terrestrial
+atmospheric origin
 
 #### 2. Other Geophysical Phenomena: Scale and Physics Analysis
 
@@ -4121,7 +4189,7 @@ Ionospheric traveling disturbances: Large-scale TIDs propagate at
 400–1000 km/h with wavelengths of 1,000–3,000 km (Hunsucker &
 Hargreaves 2003), but show strong diurnal and solar cycle
 dependencies systematically excluded through comprehensive TID
-analysis (Section 4.2.5)
+analysis (Section 4.3.4)
 
 Magnetospheric current systems: Ring current and field-aligned
 currents create magnetic field variations at 2,000–5,000 km scales
@@ -4228,7 +4296,7 @@ TEP predictions, several observations reveal a rich phenomenology that
 challenges simple models and illuminates key areas for future theoretical
 and experimental investigation.
 
-4.5.1 Mass Scaling Analysis, Enhancement Ratios, and Disformal Coupling Bounds
+### 4.5.1 Mass Scaling Analysis, Enhancement Ratios, and Disformal Coupling Bounds
 
 **Key Finding:** Mass-scaling analysis directly correlating
 observed variance reductions A<sub>obs</sub> with Newtonian gravitational
@@ -4246,40 +4314,48 @@ scaling cannot be recovered from processed clock products.
 #### Methodological Assessment of Enhancement Factors
 
 Earlier descriptive formulations evaluated an enhancement factor defined as
-E &equiv; A<sub>obs</sub>/(M/d²), which yielded large values for Mercury
-(127×) and Mars (169×) versus Jupiter (3.5×). Rigorous
+E ≡ A<sub>obs</sub>/(M/d²), which yields large values for Mercury
+(137×) and Mars (215×) versus Jupiter (5.3×). Rigorous
 examination confirms that this ordering is an arithmetic artifact of the
-definition: because observed residual amplitudes A<sub>obs</sub> hover near
-the network noise floor (~5&ndash;25%) across all planetary events, dividing
-by M/d² mechanically imposes E &prop; d²/M. Planets with small
+definition: because observed residual amplitudes A<sub>obs</sub> remain at
+the per-event noise floor (fractional deviations of order the baseline
+coherence itself) across all planetary events, dividing
+by M/d² mechanically imposes E ∝ d²/M. Planets with small
 Newtonian field strengths at Earth necessarily yield large enhancement
 ratios, while massive bodies yield small ratios. Testing whether E
 correlates with mass, or citing the E-ratio as evidence for an "inverse mass
 hierarchy", is mathematically circular. The informative statistical quantity
 is A<sub>obs</sub> itself, which exhibits a null correlation with M/d²
-(r &approx; −0.16).
+(r ≈ −0.16).
 
 #### Cross-Center Sign Discordance as an Empirical Constraint
 
 The interpretation of planetary events as coherent field detections is
-further constrained by cross-center sign discordance. While physical
+further constrained by cross-center discordance. While physical
 scalar-field modulations impose a definite sign, individual opposition
-events exhibit conflicting signs across processing chains: Mars 2025 yields
-−14.79% in CODE but +6.82% in ESA; Jupiter 2023 yields +24.24% in IGS
-Combined but −1.29% in ESA. Such discordance confirms that single-event
-amplitude fluctuations reflect center-specific orbit determination dynamics
-and clock re-absorption rather than coherent physical imprints. The data thus
-bound transient planetary scalar perturbations rather than resolving them.
+events exhibit conflicting responses across processing chains: Saturn 2023
+yields −23.27% in CODE but +93.27% in ESA; Jupiter 2023 yields
++21.45% in CODE but −48.28% in ESA. (The Mars-2025 pair quoted in
+earlier drafts, −14.79% versus +6.82%, was an artifact of
+unconstrained-centre Gaussian fits; under the corrected event-locked
+metric all centers suppress, within placebo noise.) Such discordance
+confirms that single-event amplitude fluctuations reflect center-specific
+orbit determination dynamics and clock re-absorption rather than coherent
+physical imprints. The data thus bound transient planetary scalar
+perturbations rather than resolving them. Planetary-event fits are
+accordingly retained as secondary exploratory structure; later
+season-preserving RINEX controls (Paper 3) show that much of the event
+excess can arise from calendar-position sampling.
 
 #### Disformal Transport and Closed-Loop Holonomy
 
 Within the rigorous framework of TEP, genuine disformal interactions governed
-by B(&phi;)&nabla;<sub>&mu;</sub>&phi;&nabla;<sub>&nu;</sub>&phi; (Rule 1)
+by B(φ)∇<sub>μ</sub>φ∇<sub>ν</sub>φ (Rule 1)
 cannot be cleanly extracted from unclosed, single-receiver clock offsets,
 which are vulnerable to synchronization conventions and network parameter
 absorption. Instead, Rule 13 dictates that disformal transport is uniquely
 and gauge-invariantly probed by closed-loop synchronization holonomy
-H<sub>resid</sub> = &oint;(&sigma;&#771; − &sigma;<sub>GR</sub>) around
+H<sub>resid</sub> = ∮(σ̃ − σ<sub>GR</sub>) around
 closed circuits. While purely conformal couplings leave H<sub>resid</sub>
 identically zero, non-exact disformal transport generates non-zero
 circulation. Closed-loop inter-station circuits, rather than single-station
@@ -4304,45 +4380,50 @@ motion parameters.
 
 ### 4.5.2 Re-evaluating the Saturn Opposition Residual
 
-Observation: The Saturn opposition of September 2024 was detected at 5.98&sigma;
-(p = 2.3×10<sup>−9</sup>) in CODE with an apparent enhancement ratio of
-71× relative to simple M/d² scaling, and was independently detected at 2.71&sigma;
-in ESA.
+Observation: A 5.98σ Gaussian-fit amplitude was reported for the Saturn
+opposition of September 2024 in IGS Combined, with an apparent enhancement
+ratio of 59× relative to simple M/d² scaling. The event-locking audit
+shows this fit is centred ~80 days away from the opposition date
+(σ<sub>width</sub> ≈ 60 days): it is a window-edge excursion, not an
+event response. Under the corrected direct test the Saturn-2024 peak window
+shows suppression in all centers (CODE −1.85%, IGS −44.79%, ESA
+−112.83%), within placebo noise; the single high-percentile Saturn
+excursion (2023, ESA, +93.27%) is not reproduced by the other centers.
 
 Interpretation: While initial speculation entertained the hypothesis that Saturn's ring
-system or extensive magnetosphere might enhance local coupling to the &phi;-field, rigorous
-methodological evaluation demonstrates that the 71× ratio is primarily an algebraic
-artifact of the small Newtonian denominator. Saturn's Newtonian acceleration at Earth
-(M/d² &approx; 0.0104 × 10<sup>−10</sup> m/s²) is roughly 80 times
-smaller than that of Jupiter. When a typical network residual fluctuation of order ~10%
-is divided by this small baseline value, an apparent enhancement factor of order ~70 is
-mechanically generated. Invoking ad hoc ring or magnetospheric coupling mechanisms is
-unnecessary; the observation is consistent with a bounded network residual fluctuation
-near the noise floor, reinforcing the principle that disformal coupling must be isolated
-through closed-loop holonomies rather than unclosed single-station amplitude ratios.
+system or extensive magnetosphere might enhance local coupling to the φ-field, rigorous
+methodological evaluation demonstrates that the enhancement ratio is primarily an algebraic
+artifact of the small Newtonian denominator, and the underlying fit significance is an
+artifact of an unconstrained event centre. Saturn's Newtonian acceleration at Earth
+(M/d² ≈ 0.0104 × 10<sup>−10</sup> m/s²) is roughly 80 times
+smaller than that of Jupiter, so a bounded network residual fluctuation divided by this
+small baseline mechanically generates a large enhancement factor. Invoking ad hoc ring or
+magnetospheric coupling mechanisms is unnecessary, reinforcing the principle that
+disformal coupling must be isolated through closed-loop holonomies rather than unclosed
+single-station amplitude ratios.
 
 ### 4.5.3 Consistency with Multi-Messenger Astronomy (GW170817)
 
-The observed 2.75× E-W/N-S spatial correlation anisotropy is
+The observed E-W/N-S spatial correlation anisotropy (typical directional range 0.55–2.03, with sector peaks to ≈4.75; integrated 25-year ratio 2.16 ± 0.23, Paper 2) is
 structurally decoupled from, and fully consistent with, the
-GW170817 propagation-speed bound |c_&gamma; − c_g|/c &lesssim; 10<sup>−15</sup>. The
+GW170817 propagation-speed bound |c_γ − c_g|/c ≲ 10<sup>−15</sup>. The
 spatial anisotropy is driven entirely by the conformal factor
-A(&phi;), which modifies clock transition frequencies through the
+A(φ), which modifies clock transition frequencies through the
 local scalar field amplitude without altering the null-cone
 structure. The GW170817 bound constrains the disformal coupling
-B(&phi;)(&part;&phi;)² on cosmological scales, not the conformal sector that
+B(φ)(∂φ)² on cosmological scales, not the conformal sector that
 governs the GNSS covariance observable. Consequently, the
 conformal-dominant mechanism natively preserves null-cone
 invariance: for a spatial variation of
-&Delta;&phi;/M<sub>Pl</sub> ~ 10<sup>−6</sup> near Earth (governed by universal
-coupling &beta;<sub>A</sub> = −1), the conformal variation
-&Delta;A/A ~ 10<sup>−6</sup> produces the observed terrestrial clock rate
-modulation while maintaining c_g &approx; c_&gamma; globally. The PPN bound applies to the
+Δφ/M<sub>Pl</sub> ~ 10<sup>−6</sup> near Earth (governed by universal
+coupling β<sub>A</sub> = −1), the conformal variation
+ΔA/A ~ 10<sup>−6</sup> produces the observed terrestrial clock rate
+modulation while maintaining c_g ≈ c_γ globally. The PPN bound applies to the
 environmentally screened effective source coupling rather than
-directly fixing the bare conformal parameter &beta;<sub>A</sub>, so
-conversion of the observed coherence amplitude into &Delta;&phi; is
+directly fixing the bare conformal parameter β<sub>A</sub>, so
+conversion of the observed coherence amplitude into Δφ is
 completion- and screening-model-dependent. The disformal coupling
-B(&phi;) may additionally be environment-dependent, remaining
+B(φ) may additionally be environment-dependent, remaining
 negligible on cosmological sightlines while permitting
 near-Earth variation—though the conformal pathway alone suffices
 to explain the observation without invoking any disformal
@@ -4351,8 +4432,8 @@ enhancement.
 ### 4.5.4 Chandler Wobble Detection and Geodetic Reference Frame Coupling
 
 Observation: A significant Chandler wobble signature is detected across all
-centers: CODE (R² = 0.377, p < 0.01), ESA (R² = 0.453, p < 0.01), and IGS Combined
-(R² = 0.471, p < 0.01), correlating network mesh dynamics with the Chandler wobble
+centers: CODE (R² = 0.377, $p \lt 0.01$), ESA (R² = 0.453, $p \lt 0.01$), and IGS Combined
+(R² = 0.471, $p \lt 0.01$), correlating network mesh dynamics with the Chandler wobble
 phase (~433-day period).
 
 Interpretation: In global GNSS processing, Earth Orientation Parameters (EOP: polar motion
@@ -4380,12 +4461,12 @@ demonstrate substantial robustness.
 
 **Experimental Section:**
 
-Key Insight: Signal Persistence Despite Processing
+### Key Insight: Signal Persistence Despite Processing
 
 The robustness of TEP correlations to GNSS processing provides critical
 evidence for signal authenticity through three key observations:
 
-1. GNSS Processing Removes Correlated Signals
+#### 1. GNSS Processing Removes Correlated Signals
 
 Network constraints, environmental corrections, and quality
 control are specifically designed to remove spatially correlated
@@ -4414,12 +4495,12 @@ suggests signal robustness, though true coupling strength
 remains to be determined through raw pseudorange and carrier
 phase analysis.
 
-2. Strong Correlations Nevertheless Persist
+#### 2. Strong Correlations Nevertheless Persist
 
 Despite aggressive filtering, R² = 0.920-0.970 correlations
 persist with λ = 3,330-4,549 km across all three analysis center solutions.
 
-3. Implications for Signal Authenticity
+#### 3. Implications for Signal Authenticity
 
 Robustness demonstrates genuineness: Processing artifacts
 would be eliminated by these corrections
@@ -4507,7 +4588,7 @@ bounds on true field coupling strength:
 
 #### Processing-Dependent Signal Strength
 
-Center-specific variations: The CV of λ across centers = 18.2%
+Center-specific variations: The CV of λ across centers ≈ 13%
 likely reflects different degrees of signal suppression rather than
 measurement noise
 
@@ -4533,7 +4614,7 @@ screening effects that would be amplified in raw data
 
 Astronomical modulations: Detection of eclipse and supermoon effects
 despite processing suggests stronger signatures may exist in
-unprocessed data
+minimally processed raw data
 
 #### Phase Information Preservation
 
@@ -4559,8 +4640,9 @@ promising avenues for future investigation:
 
 #### Immediate Research Priorities
 
-Raw pseudorange analysis: Direct analysis of unprocessed GPS
-pseudorange measurements before any corrections or constraints
+Raw pseudorange analysis: direct analysis of raw GPS pseudorange
+observations through independent minimal processing — the first
+such consistency test is reported in Paper 3
 
 Carrier phase coherence: High-precision analysis of raw carrier
 phase data to detect field-induced timing variations at the
@@ -4574,8 +4656,8 @@ networks bypassing standard GNSS processing chains
 
 #### Expected Raw Data Advantages
 
-Signal characterization: Direct analysis of unprocessed measurements
-could provide additional insights
+Signal characterization: direct analysis of raw measurements under
+minimal processing could provide additional insights
 
 Temporal resolution: Sub-second detection of rapid field variations
 during astronomical events
@@ -4600,7 +4682,7 @@ proper time flow rates are dynamically variable. This section interprets the
 temporal findings within the TEP theoretical framework and assesses their
 implications for fundamental physics.
 
-TEP Theoretical Framework for Time Rate Variations
+### TEP Theoretical Framework for Time Rate Variations
 
 According to TEP, the rate at which proper time accrues is governed by
 the scalar field φ through the conformal coupling:
@@ -4674,15 +4756,13 @@ ratios 1.074-1.292), summer showing most balanced patterns (ratios
 #### Screening Modulation
 
 Mechanism: The continuous spatial profile of the field (Temporal
-Topology) maintains its structure in dense environments, but the local
-gradient (Temporal Shear) is suppressed—flattening the slope while
-preserving the field value. This continuous geometric screening
-varies with atmospheric conditions and Earth's local gravitational
-environment.
+Topology) maintains its structure in dense environments, while the local
+Earth-vicinity Temporal Shear is pairwise-screened. The clock-sector
+response is governed by the terrestrial amplitude factor $S_A^{(\oplus)} \approx 0.65$.
 
 Evidence: Processing-dependent sensitivity (ESA Final 2× CODE
 levels) suggests different observable response amplitudes, consistent
-with variations in Temporal Shear.
+with variations in the clock-sector coupling.
 
 ### Cross-Center Analysis: Processing as φ-Field Probe
 
@@ -4777,10 +4857,9 @@ the pre-specified search range, with geometric saturation scale
 R_T(M_⊕) ≈ 4,150 km (see §1.1)
 and potential implications for fundamental physics including dark
 matter connections and fifth
-force constraints. Bootstrap validation shows center-specific ranges
-(see Table in §3.1.1), corresponding to a conservative union mass
-range of m<sub>φ</sub> ≈ 3.65–6.53 × 10<sup>-14</sup> eV/c²,
-encompassing the primary range from §1.1.
+force constraints. Bootstrap validation shows center-specific
+covariance-length ranges (see Table in §3.1.1); these do not
+measure a microscopic scalar mass.
 
 Robustness to processing effects (Section 4.6): GNSS processing is
 designed to remove spatially correlated signals; the survival of
@@ -4799,9 +4878,7 @@ confirmation
 
 ### Physical Parameter Space Constraints
 
-The observed Temporal Topology correlation length λ<sub>T</sub> = 3,330-4,549 km brackets the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6); across products the fitted scale spans ~1.9–4.5×10<sup>3</sup> km under documented estimator and product conditioning, with the same band-ordered profile recovered in both families (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). A chameleon-type Compton-mass interpretation (m<sub>φ</sub> ≈ 5×10⁻¹⁴ eV/c²) is retained as a cross-reference to chameleon-literature conventions.
-This mass scale requires systematic comparison with existing constraints
-from established physics:
+The observed Temporal Topology correlation length λ<sub>T</sub> = 3,330-4,549 km is consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6; itself calibrated on this scale, so a consistency statement rather than an independent test); across products the fitted scale spans ~1.0–4.8×10<sup>3</sup> km under documented estimator and product conditioning, with the same band-ordered profile recovered in each product (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The measured covariance scale is not a scalar Compton-wavelength measurement. Precision constraints instead apply to the observable clock-covariance and shear channels separately:
 
 **Optical clock comparisons:** Current fractional
 stability limits (~10⁻¹⁸-10⁻¹⁹) provide stringent tests of coupling
@@ -4817,12 +4894,7 @@ similar tests limit differential coupling to matter composition
 **PPN parameter bounds:** Solar system tests constrain
 deviations from General Relativity through γ-1 and other parameters
 
-Critical research priority: Map the (β, m, screening law) parameter
-space that simultaneously reproduces the observed λ and correlation
-amplitudes while remaining consistent with established constraints.
-Screening mechanisms may provide sufficient suppression at laboratory
-scales while permitting continental-scale effects, but quantitative
-modeling is essential for theoretical validation.
+Critical research priority: derive the transfer from the solved $C_A(\mathbf r,t)$ field to the observed GNSS covariance amplitude, anisotropy and orbital modulation, while testing the clock-covariance and shear channels against their respective precision constraints.
 
 ### Open Questions: Next-Generation Alternative Testing
 
@@ -4848,17 +4920,17 @@ Bound established (Steps 5.0, 5.2): Synthetic station clocks
 retaining only the satellite-visibility and zero-sum datum
 structure on the real 768-station network, propagated through
 the same band-limited correlation estimator, yield fitted decay
-scales of λ &gsim; 6.7×10<sup>3</sup> km in every realisation
+scales of λ ≳ 6.7×10<sup>3</sup> km in every realisation
 (medians 7.3–12.8×10<sup>3</sup> km across elevation-mask and
 datum configurations; pure geometric overlap kernel:
-&gsim;1.3×10<sup>4</sup> km). The bound is then conditioned on
+≳1.3×10<sup>4</sup> km). The bound is then conditioned on
 the real product (Step 5.2): recomputing the kernel on true
 CODE SP3 ephemerides reproduces the nominal-constellation kernel
 essentially exactly (λ = 13.4–21.6×10<sup>3</sup> km, matching
 the Paper 14 product kernel band for band), and replacing the
 synthetic satellite noise with the product's own estimated
 satellite clocks (CODE MGEX 30 s AS records, four days) leaves
-every conditioned realisation at λ &geq; 5,075
+every conditioned realisation at λ ≥ 5,075
 km — still above every measured λ<sub>T</sub> = 3,330–4,549 km.
 The discrimination is in fact stronger than the scale bound
 alone: the conditioned channel projects near-unity correlation
@@ -4937,7 +5009,7 @@ interpretation through comprehensive process of elimination, while
 positive findings would redirect theoretical development—either outcome
 advances fundamental understanding.
 
-Critical Priorities and Path Forward
+### Critical Priorities and Path Forward
 
 While the evidence is substantial, several critical steps are
 essential before strong conclusions:
@@ -4945,9 +5017,9 @@ essential before strong conclusions:
 Independent replication: Analysis by other research groups using
 different methodologies and data sources
 
-Raw data validation: Direct analysis of unprocessed GNSS
-measurements to quantify processing suppression and reveal full
-signal magnitude
+Raw data validation: direct analysis of raw GNSS observations
+through independent minimal processing to quantify processing
+suppression and reveal full signal magnitude
 
 Multi-constellation testing: Extension to GLONASS, Galileo, and
 BeiDou for technology-independent confirmation
@@ -4976,7 +5048,7 @@ These findings provide a clear experimental roadmap for broader
 community investigation and, if confirmed, could have important
 implications for fundamental physics.
 
-4.10 A Falsifiable Prediction for Optical Clock Networks
+## 4.10 A Falsifiable Prediction for Optical Clock Networks
 
 This work's findings enable a transition from discovery to
 predictive science. The parameters derived from the GNSS analysis
@@ -4990,14 +5062,14 @@ these clocks should observe distance-structured correlations with
 enhanced sensitivity over continental baselines (1,000–5,000 km).
 
 Furthermore, the temporal signature of this signal should exhibit
-clear periodicities tied to Earth's motion. A multi-year analysis of
-such a network should reveal a distinct peak in coherence at the
-Chandler wobble period (~433 days), providing a direct test of the
-Earth motion coupling observed in this study. Detection of this
-signature would provide an independent, higher-precision test of the
-covariance-sector phenomenon identified in the GNSS data and would
-substantially strengthen evidence for field-mediated clock
-correlations. Dedicated one-way closed-loop experiments remain the
+clear periodicities tied to Earth's orbital kinematics. A multi-year analysis of
+such a network should reveal an annual orbital-phase modulation of the EW/NS
+covariance anisotropy peaking at aphelion, alongside distance-structured spatial
+decay free from satellite-orbit systematics, with secondary inspection at the
+Chandler wobble period (~433 days). Detection of this
+signature in fiber-linked or transportable optical clock networks would provide an
+independent, orbit-free, higher-precision test of the
+conformal covariance phenomenon identified in the GNSS data. Dedicated one-way closed-loop experiments remain the
 direct test of synchronization holonomy.
 
 ## 5. Conclusions
@@ -5026,14 +5098,14 @@ Analysis of 62.7 million station pair measurements from 364 unique stations (249
 
 | Observable | Measured Value | Significance |
 | --- | --- | --- |
-| Temporal Topology Correlation Length (λT) | 3,330–4,549 km (pooled coherent band; band-ordered per sub-band, Table 8a) | Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); brackets RT(M⊕) ≈ 4,150 km; cross-product family ~1.9–4.5×103 km (Paper 14, Step 3.5) |
+| Temporal Topology Correlation Length (λT) | 3,330–4,549 km (pooled coherent band; band-ordered per sub-band, Table 8a) | Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); consistent with RT(M⊕) ≈ 4,150 km (calibrated on this scale; consistency statement); cross-product family ~1.0–4.8×103 km (Paper 14, Step 3.5) |
 | Multiband Validation | 12 frequency bands (10–3000 μHz) | Cross-center consistency substantially reduces likelihood of systematic biases |
 | Diurnal Time Variations | 1.9–7.6% day-night variation | 72.4M records, >6σ combined significance |
-| Orbital Velocity Coupling | r = -0.571 to -0.793 | p |
-| Planetary Coupling | 6 Bonferroni-significant events | Up to 5.98σ (p |
+| Orbital Velocity Coupling | r = -0.571 to -0.793 | p $\lt$ 10⁻⁷ (IGS Combined), consistent across centers |
+| Planetary Coupling | 8 nominally significant event fits; event-locking audit finds most off-centre | Clearest event-locked case: Venus 2025 in ESA (+140%, σ ≈ 4); null mass scaling (r = −0.156) bounds transient planetary perturbations |
 | Chandler Wobble Modulation | R² = 0.377–0.471 | Observed across centers (FDR-BH: 3/3 significant; family-wise: 2/3) |
 | Beat Frequency Detection | 11 of 12 Earth motion patterns | R² up to 0.899, multi-center consistent |
-| Mesh Dance Dynamics | Annual oscillation (p | High network synchronization across individual components |
+| Mesh Dance Dynamics | Annual oscillation (p $\lt$ 10⁻³), coherence=0.643–0.644 | High network synchronization across individual components |
 | 3D Spatial Structure | Anisotropy strength = 1.98 | Dipole: 5,715 km, Quadrupole: 5,660 km, 6.6× dynamic range |
 | Multi-Frequency Beat Patterns | 35 detected, 7 FDR significant | Venus sub-harmonic (196.9d, R²=0.82-0.86), lunar fortnight (14.8d, R²=0.60-0.82); hierarchical strength pattern validates genuine signal |
 | Signal Enhancement Factor | Mean: 124.4× over null | Range: 22.8–226.0×, indicates non-linear coupling mechanism |
@@ -5046,7 +5118,7 @@ The signal's authenticity is supported by a multi-layered validation framework:
 
 - Cross-Center Validation Achievement: Three distinct GNSS analysis center solutions demonstrate remarkable consistency in multiband patterns (12 frequency bands), achieving optimal R² values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This represents a crucial validation milestone, substantially reducing center-specific systematic biases and supporting signal authenticity across software-diverse processing methodologies.
 
-- Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.
+- Rigorous Statistical Framework: Systematic validation across eleven complementary criteria establishes robustness across multiple null and systematic-error tests through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.
 
 - Venus 2f Harmonic Identified: A dominant ~112-day harmonic consistent with the Venus 2f expectation (112.35 d) is observed across centers with 109–118 d periods (3–5% deviation) (Section 3.3.2). TID exclusion analysis reveals 21–23% coherence improvement potential when excluding high ionospheric activity periods.
 
@@ -5058,7 +5130,7 @@ The signal's authenticity is supported by a multi-layered validation framework:
 
 - Dynamic Event Consistency: Eclipse and opposition event scales match baseline Temporal Topology correlation lengths, providing independent confirmation.
 
-- Non-Linear Coupling Evidence: Mean signal enhancement of 124.4× over null expectation (range: 22.8-226.0×) indicates exotic physics beyond direct gravitational effects, suggesting resonance, tidal amplification, or parametric coupling mechanisms.
+- Signal-Over-Null Margin: Mean signal enhancement of 124.4× over scrambled-null expectation (range: 22.8-226.0×) excludes distance-independent noise as the origin of the correlation structure; candidate non-linear coupling completions (resonance, tidal amplification, parametric coupling) remain hypotheses pending mechanistic derivation.
 
 - 3D Spatial Structure Validation: Complete spherical harmonic decomposition reveals anisotropy strength of 1.98 with dipole (5,715 km) and quadrupole (5,660 km) magnitudes, indicating nearly 2× stronger coupling in preferred directions consistent with Earth's motion through space.
 
@@ -5078,13 +5150,13 @@ The validation framework was designed to systematically test and exclude the mos
 
 - **Independent Replication (Critical):** Analysis by multiple research groups using different methodologies, software, and theoretical frameworks
 
-- **Raw Data Validation (Critical):** Direct analysis of unprocessed GNSS measurements to quantify processing suppression effects
+- **Raw Data Validation:** Paper 3 has completed the first raw-RINEX/SPP consistency test, demonstrating signal recovery in raw RINEX pseudorange observations processed independently with SPP and broadcast ephemerides and strongly constraining precise-product processing as the sole origin; raw carrier-phase processing, orbit-independent optical clock links, and external replication remain outstanding
 
-- **Multi-Constellation Testing (Critical):** Reproduction across GLONASS, Galileo, and BeiDou systems to exclude GPS-specific artifacts
+- **Multi-Constellation Testing:** Paper 14 has confirmed isotropic scale recovery on MGEX combined clocks (GPS+GLO+GAL+BDS); multi-constellation carrier-phase analysis remains open
 
-- **Extended Temporal Baseline (Important):** Analysis spanning 5+ years to properly sample astronomical cycles and reduce temporal sampling bias
+- **Extended Temporal Baseline:** Paper 2 has completed the 25.3-year longitudinal analysis (2000–2025), isolating decadal cycles and draconitic cancellation
 
-Direct analysis of unprocessed GNSS measurements would provide the highest-priority validation through several key tests:
+Analysis of raw GNSS observations through independent minimal-processing chains remains a high-priority validation route for the following tests:
 
 **Experimental Section:**
 
@@ -5096,7 +5168,7 @@ Direct analysis of unprocessed GNSS measurements would provide the highest-prior
 
 - Real-Time Dynamic Response: Capture sub-second coherence modulations during eclipse/opposition events without processing delays
 
-- Multi-Constellation Universality: Reproduce identical Temporal Topology correlation lengths (λ<sub>T</sub> = 3,330–4,549 km) across GLONASS, Galileo, and BeiDou constellations
+- Multi-Constellation Universality: Recover the same finite, thousands-of-kilometres covariance family and band ordering across independently processed GLONASS, Galileo, and BeiDou constellations, allowing product- and estimator-dependent scale shifts
 
 - Sidereal Independence: Demonstrate that unfiltered signals persist after removing sidereal components, distinguishing from multipath artifacts
 
@@ -5126,7 +5198,7 @@ Critical requirements for community validation:
 
 - Independent replication by other research groups
 
-- Raw data validation to quantify processing suppression and reveal full signal magnitude
+- Raw carrier-phase validation (pseudorange-level SPP consistency already established in Paper 3) to quantify processing suppression and reveal full signal magnitude
 
 - Multi-constellation testing across GLONASS, Galileo, and BeiDou
 
@@ -5305,7 +5377,9 @@ Purpose: Advanced bootstrap validation with temporal block structure preservatio
 
 Command: `python scripts/steps/step_3_validation_suite/step_3_2_tep_null_tests.py`
 
-Purpose: Critical validation step that establishes signal authenticity through comprehensive randomization testing. Implements three independent scrambling approaches—distance scrambling (20 iterations per center), phase scrambling (20 iterations per center), and station scrambling (20 iterations per center)—to verify that observed correlations depend on genuine physical relationships rather than analysis artifacts. Distance scrambling randomizes both distances and coherences independently to destroy distance-coherence relationships. Quantifies signal enhancement over null distributions (24-61× signal-to-null ratios) and establishes statistical significance through permutation testing and z-score analysis (z = 15.8-31.9, all p 6.0 minutes
+Purpose: Critical validation step that establishes signal authenticity through comprehensive randomization testing. Implements three independent scrambling approaches—distance scrambling (20 iterations per center), phase scrambling (20 iterations per center), and station scrambling (20 iterations per center)—to verify that observed correlations depend on genuine physical relationships rather than analysis artifacts. Distance scrambling randomizes both distances and coherences independently to destroy distance-coherence relationships. Quantifies signal enhancement over null distributions (24-61× signal-to-null ratios) and establishes statistical significance through permutation testing and z-score analysis (z = 15.8-31.9, all p $\lt$ 10⁻¹⁵).
+
+#### Step 3.3: Methodology Validation 6.0 minutes
 
 Command: `python scripts/steps/step_3_validation_suite/step_3_3_methodology_validation.py`
 
@@ -5343,7 +5417,9 @@ Advanced analyses, astronomical correlations, and publication-quality visualizat
 
 Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_0_tep_advanced_analysis.py`
 
-Purpose: Conducts specialized analyses including circular statistics validation (Phase-Locking Value, Rayleigh tests), elevation-dependent screening analysis, geomagnetic stratification studies, and temporal orbital tracking analysis. Circular statistics: Phase Locking Values (PLV) in 0.1-0.4 range, Rayleigh test significance (p 6.0 minutes
+Purpose: Conducts specialized analyses including circular statistics validation (Phase-Locking Value, Rayleigh tests), elevation-dependent screening analysis, geomagnetic stratification studies, and temporal orbital tracking analysis. Circular statistics: Phase Locking Values (PLV) in 0.1-0.4 range, Rayleigh test significance (p $\lt$ 10⁻⁵), von Mises concentration parameter validation. Investigates directional anisotropy patterns and their correlation with Earth's orbital motion to test velocity-dependent spacetime coupling predictions.
+
+#### Step 4.1: Visualization 6.0 minutes
 
 Command: `python scripts/steps/step_4_advanced_analysis_and_visualization/step_4_1_tep_visualization.py`
 
@@ -5442,7 +5518,7 @@ Complete specification of temporal windows, detrending methods, and multi-center
 
 Event Dates: Jupiter (3 November 2023, 7 December 2024), Saturn (27 August 2023, 8 September 2024)*, Mars (16 January 2025), Venus (13 August 2023, 23 March 2025), Mercury (8 conjunctions 2023-2025), Eclipses (20 April 2023, 14 October 2023, 8 April 2024, 2 October 2024, 29 March 2025), Supermoons (11 events 2023-2025), Lunar Standstill (1 June 2025).
 
-**Note: Saturn opposition on 21 September 2025 falls outside the v0.18 analysis window (ends 30 June 2025) and is marked as planned for future analysis.*
+**Note: Saturn opposition on 21 September 2025 falls outside the current analysis window (ends 30 June 2025) and is marked as planned for future analysis.*
 
 ### 7.2 TID Exclusion: Implementation Details
 
@@ -5526,7 +5602,7 @@ The correlation parameter bootstrap analysis (Step 2.0) achieves convergence rat
 Comprehensive statistical testing confirms that discarding non-converged bootstrap iterations does not introduce systematic bias in parameter estimates:
 
 **✓ Parameter Bias Assessment**
-All parameter biases < 6%: |λ bias| < 4%, |A bias| < 6%, well within acceptable tolerances for uncertainty quantification.
+All parameter biases $\lt$ 6%: |λ bias| $\lt$ 4%, |A bias| $\lt$ 6%, well within acceptable tolerances for uncertainty quantification.
 
 **✓ Failure Pattern Analysis**
 Failed iterations represent challenging optimization cases with poor coherence variation, not systematically biased physical subsets.
@@ -5584,20 +5660,22 @@ Petit, G. & Luzum, B. (2010). IERS Conventions (2010). *IERS Technical Note* No.
 Ray, J., et al. (2008). IGS polar motion measurement accuracy. *Geophysical Research Letters*, 35(3), L03303.
 Rosenband, T., et al. (2008). Frequency ratio of Al+ and Hg+ single-ion optical clocks; metrology at the 17th decimal place. *Science*, 319(5871), 1808-1812.
 Senior, K. L., et al. (2008). Characterization of periodic variations in the GPS satellite clocks. *GPS Solutions*, 12(3), 211-225.
-Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.14 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
+Smawfield, M. L. (2025). *Temporal Equivalence Principle: Dynamic Time & Emergent Light Speed*. Preprint v0.15 (Jakarta). Zenodo. DOI: [10.5281/zenodo.16921911](https://doi.org/10.5281/zenodo.16921911) (Paper 0)
 Smawfield, M. L. (2025). *Global Time Echoes: Distance-Structured Correlations in GNSS Clocks*. Preprint v0.27 (Jaipur). Zenodo. DOI: [10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229) (Paper 1 — this work)
 Smawfield, M. L. (2025). *Global Time Echoes: 25-Year Analysis of CODE Precise Clock Products*. Preprint v0.20 (Cairo). Zenodo. DOI: [10.5281/zenodo.17517141](https://doi.org/10.5281/zenodo.17517141) (Paper 2)
-Smawfield, M. L. (2025). *Global Time Echoes: Raw RINEX Consistency Test*. Preprint v0.6 (Kathmandu). Zenodo. DOI: [10.5281/zenodo.17860166](https://doi.org/10.5281/zenodo.17860166) (Paper 3)
+Smawfield, M. L. (2025). *Global Time Echoes: Raw RINEX Consistency Test*. Preprint v0.8 (Kathmandu). Zenodo. DOI: [10.5281/zenodo.17860166](https://doi.org/10.5281/zenodo.17860166) (Paper 3)
 Smawfield, M. L. (2025). *Temporal-Spatial Coupling in Gravitational Lensing: A Reinterpretation of Dark Matter Observations*. Preprint v0.8 (Tortola). Zenodo. DOI: [10.5281/zenodo.17982540](https://doi.org/10.5281/zenodo.17982540) (Paper 4)
-Smawfield, M. L. (2025). *Global Time Echoes: Empirical Synthesis*. Preprint v0.6 (Singapore). Zenodo. DOI: [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) (Paper 5)
+Smawfield, M. L. (2025). *Global Time Echoes: Empirical Synthesis*. Preprint v0.7 (Singapore). Zenodo. DOI: [10.5281/zenodo.18004832](https://doi.org/10.5281/zenodo.18004832) (Paper 5)
 Smawfield, M. L. (2025). *Temporal Topology Saturation Scale: Cross-Scale Consistency of ρ_T*. Preprint v0.8 (New Delhi). Zenodo. DOI: [10.5281/zenodo.18064365](https://doi.org/10.5281/zenodo.18064365) (Paper 6)
 Smawfield, M. L. (2025). *The Soliton Wake: Exploring RBH-1 as a Temporal Topology Candidate*. Preprint v0.4 (Blantyre). Zenodo. DOI: [10.5281/zenodo.18059250](https://doi.org/10.5281/zenodo.18059250) (Paper 7)
-Smawfield, M. L. (2025). *Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging*. Preprint v0.4 (Mombasa). Zenodo. DOI: [10.5281/zenodo.18064581](https://doi.org/10.5281/zenodo.18064581) (Paper 8)
-Smawfield, M. L. (2025). *What Do Precision Tests of General Relativity Actually Measure?*. Preprint v0.7 (Istanbul). Zenodo. DOI: [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) (Paper 9)
+Smawfield, M. L. (2025). *Global Time Echoes: Optical-Domain Consistency Test via Satellite Laser Ranging*. Preprint v0.6 (Mombasa). Zenodo. DOI: [10.5281/zenodo.18064581](https://doi.org/10.5281/zenodo.18064581) (Paper 8)
+Smawfield, M. L. (2025). *What Do Precision Tests of General Relativity Actually Measure?*. Preprint v0.8 (Istanbul). Zenodo. DOI: [10.5281/zenodo.18109760](https://doi.org/10.5281/zenodo.18109760) (Paper 9)
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: Suppressed Density Scaling in Globular Cluster Pulsars*. Preprint v0.9 (Caracas). Zenodo. DOI: [10.5281/zenodo.18165798](https://doi.org/10.5281/zenodo.18165798) (Paper 10)
 Smawfield, M. L. (2026). *The Cepheid Bias: Resolving the Hubble Tension*. Preprint v0.10 (Kingston upon Hull). Zenodo. DOI: [10.5281/zenodo.18209702](https://doi.org/10.5281/zenodo.18209702) (Paper 11)
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: A Unified Resolution to the JWST High-Redshift Anomalies*. Preprint v0.7 (Kos). Zenodo. DOI: [10.5281/zenodo.19000827](https://doi.org/10.5281/zenodo.19000827) (Paper 12)
 Smawfield, M. L. (2026). *Temporal Equivalence Principle: Temporal Shear Recovery in Gaia DR3 Wide Binaries*. Preprint v0.6 (Kilifi). Zenodo. DOI: [10.5281/zenodo.19102061](https://doi.org/10.5281/zenodo.19102061) (Paper 13)
+Smawfield, M. L. (2026). *Global Time Echoes: MGEX Multi-GNSS Clock Replication, 2025–2026*. Preprint v0.3 (Suva). Zenodo. DOI: [10.5281/zenodo.20572726](https://doi.org/10.5281/zenodo.20572726) (Paper 14)
+Smawfield, M. L. (2026). *TEP-PPP: Operational Time Echoes — Phase-Resolved Spatial Clock Priors for GNSS Outage Bridging*. Preprint v0.1 (Pune). Zenodo. DOI: [10.5281/zenodo.18064582](https://doi.org/10.5281/zenodo.18064582) (Paper 33)
 Takamoto, M., et al. (2020). Test of general relativity by a pair of transportable optical lattice clocks. *Nature Photonics*, 14(7), 411-415.
 Touboul, P., et al. (2017). MICROSCOPE mission: first results of a space test of the equivalence principle. *Physical Review Letters*, 119(23), 231101.
 Uzan, J. P. (2003). The fundamental constants and their variation: observational and theoretical status. *Reviews of Modern Physics*, 75(2), 403.
@@ -5700,15 +5778,18 @@ Fernández, M. A. (2016). Geodetic and Time Reference Frames for ESA's Navigatio
 **Cite as:** Smawfield, M. L. (2025). Global Time Echoes: Distance-Structured Correlations in GNSS Clocks. v0.27 (Jaipur). Zenodo. [https://doi.org/10.5281/zenodo.17127229](https://doi.org/10.5281/zenodo.17127229)
 
 **BibTeX:**
+
+```
 @misc{Smawfield_TEP_GNSS_2025,
-author       = {Matthew Lukin Smawfield},
-title        = {Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (v0.27 Jaipur)},
-year         = {2025},
-publisher    = {Zenodo},
-doi          = {10.5281/zenodo.17127229},
-url          = {https://doi.org/10.5281/zenodo.17127229},
-note         = {Preprint}
+  author       = {Matthew Lukin Smawfield},
+  title        = {Global Time Echoes: Distance-Structured Correlations in GNSS Clocks (v0.27 Jaipur)},
+  year         = {2025},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.17127229},
+  url          = {https://doi.org/10.5281/zenodo.17127229},
+  note         = {Preprint}
 }
+```
 
 ## Declarations
 
@@ -5728,6 +5809,6 @@ For questions, comments, or collaboration opportunities regarding this work, ple
 
 ---
 
-*This document was automatically generated from the TEP-GNSS research site. For the interactive version with figures and enhanced formatting, visit: https://matthewsmawfield.github.io/TEP-GNSS/*
+*This document was automatically generated from the TEP-GNSS research site. For the interactive version with figures and enhanced formatting, visit: https://mlsmawfield.com/tep/gnss-i/*
 
 *Source code and data available at: https://github.com/matthewsmawfield/TEP-GNSS*

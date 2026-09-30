@@ -33,7 +33,7 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Temporal Topology Correlation Length (λ<sub>T</sub>)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">3,330–4,549 km (pooled coherent band; band-ordered per sub-band, Table 8a)</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); brackets R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km; cross-product family ~1.9–4.5×10<sup>3</sup> km (Paper 14, Step 3.5)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); consistent with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (calibrated on this scale; consistency statement); cross-product family ~1.0–4.8×10<sup>3</sup> km (Paper 14, Step 3.5)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Multiband Validation</td>
@@ -48,12 +48,12 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Orbital Velocity Coupling</td>
                     <td style="padding: 8px; border: 1px solid #495773;">r = -0.571 to -0.793</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">p < 10⁻⁷ (IGS Combined), consistent across centers</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">p $\lt$ 10⁻⁷ (IGS Combined), consistent across centers</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Planetary Coupling</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">6 Bonferroni-significant events</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Up to 5.98σ (p < 10⁻⁹), multi-center confirmed</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">8 nominally significant event fits; event-locking audit finds most off-centre</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Clearest event-locked case: Venus 2025 in ESA (+140%, σ ≈ 4); null mass scaling (r = −0.156) bounds transient planetary perturbations</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Chandler Wobble Modulation</td>
@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Mesh Dance Dynamics</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p < 10⁻³), coherence=0.643–0.644</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p $\lt$ 10⁻³), coherence=0.643–0.644</td>
                     <td style="padding: 8px; border: 1px solid #495773;">High network synchronization across individual components</td>
                 </tr>
                 <tr>
@@ -105,13 +105,13 @@
     
     <ul>
         <li>Cross-Center Validation Achievement: Three distinct GNSS analysis center solutions demonstrate remarkable consistency in multiband patterns (12 frequency bands), achieving optimal R² values of 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined). This represents a crucial validation milestone, substantially reducing center-specific systematic biases and supporting signal authenticity across software-diverse processing methodologies.</li>
-        <li>Rigorous Statistical Framework: Systematic validation across eleven independent criteria establishes signal authenticity through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
+        <li>Rigorous Statistical Framework: Systematic validation across eleven complementary criteria establishes robustness across multiple null and systematic-error tests through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
         <li>Venus 2f Harmonic Identified: A dominant ~112-day harmonic consistent with the Venus 2f expectation (112.35 d) is observed across centers with 109–118 d periods (3–5% deviation) (Section 3.3.2). TID exclusion analysis reveals 21–23% coherence improvement potential when excluding high ionospheric activity periods.</li>
         <li>Statistical Robustness Observed: The analysis demonstrates stability under jackknife cross-validation (CV of λ<sub>T</sub> across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
         <li>Geographic and Instrumental Characterization: The correlation strength is consistent across hemisphere subsets and ocean vs. land baselines; the fitted correlation length is stratified by station elevation and geomagnetic latitude (Section 3.2.1), a pattern compatible with both environmental screening and residual atmospheric/ionospheric organization pending spatially resolved external controls.</li>
         <li>Software and Algorithmic Diversity: Consistent results across three distinct analysis center solutions (CODE, IGS Combined, ESA Final) using different processing software (Bernese vs NAPEOS vs IGS combination) and station subnetworks rules out software-specific bugs and implementation artifacts, though multi-constellation validation across GLONASS, Galileo, and BeiDou (Paper 14) and raw carrier-phase processing (Paper 3) remain critical steps to exclude constellation-level common modes.</li>
         <li>Dynamic Event Consistency: Eclipse and opposition event scales match baseline Temporal Topology correlation lengths, providing independent confirmation.</li>
-        <li>Non-Linear Coupling Evidence: Mean signal enhancement of 124.4× over null expectation (range: 22.8-226.0×) indicates exotic physics beyond direct gravitational effects, suggesting resonance, tidal amplification, or parametric coupling mechanisms.</li>
+        <li>Signal-Over-Null Margin: Mean signal enhancement of 124.4× over scrambled-null expectation (range: 22.8-226.0×) excludes distance-independent noise as the origin of the correlation structure; candidate non-linear coupling completions (resonance, tidal amplification, parametric coupling) remain hypotheses pending mechanistic derivation.</li>
         <li>3D Spatial Structure Validation: Complete spherical harmonic decomposition reveals anisotropy strength of 1.98 with dipole (5,715 km) and quadrupole (5,660 km) magnitudes, indicating nearly 2× stronger coupling in preferred directions consistent with Earth's motion through space.</li>
         <li>Multi-Scale Temporal Coupling: Detection of 35 distinct beat frequency patterns spanning four orders of magnitude (0.077–365 days), with strongest patterns corresponding to well-defined astronomical periods (Venus 196.9d: R²=0.82–0.86, lunar fortnight 14.8d: R²=0.60–0.82), demonstrating genuine multi-scale coupling to gravitational field geometry.</li>
     </ul>
@@ -130,12 +130,12 @@
 
     <ul>
         <li><strong>Independent Replication (Critical):</strong> Analysis by multiple research groups using different methodologies, software, and theoretical frameworks</li>
-        <li><strong>Raw Data Validation (Critical):</strong> Direct analysis of unprocessed GNSS measurements to quantify processing suppression effects</li>
-        <li><strong>Multi-Constellation Testing (Critical):</strong> Reproduction across GLONASS, Galileo, and BeiDou systems to exclude GPS-specific artifacts</li>
-        <li><strong>Extended Temporal Baseline (Important):</strong> Analysis spanning 5+ years to properly sample astronomical cycles and reduce temporal sampling bias</li>
+        <li><strong>Raw Data Validation:</strong> Paper 3 has completed the first raw-RINEX/SPP consistency test, demonstrating signal recovery in raw RINEX pseudorange observations processed independently with SPP and broadcast ephemerides and strongly constraining precise-product processing as the sole origin; raw carrier-phase processing, orbit-independent optical clock links, and external replication remain outstanding</li>
+        <li><strong>Multi-Constellation Testing:</strong> Paper 14 has confirmed isotropic scale recovery on MGEX combined clocks (GPS+GLO+GAL+BDS); multi-constellation carrier-phase analysis remains open</li>
+        <li><strong>Extended Temporal Baseline:</strong> Paper 2 has completed the 25.3-year longitudinal analysis (2000–2025), isolating decadal cycles and draconitic cancellation</li>
     </ul>
     
-    <p>Direct analysis of unprocessed GNSS measurements would provide the highest-priority validation through several key tests:</p>
+    <p>Analysis of raw GNSS observations through independent minimal-processing chains remains a high-priority validation route for the following tests:</p>
     
     <div class="experimental-section">
         <h4>Success Criteria for Raw Data Analysis</h4>
@@ -143,7 +143,7 @@
             <li>Signal Amplification: Observe 3.2–17.9× stronger correlations in raw pseudorange/carrier phase data, matching theoretical suppression estimates</li>
             <li>Carrier Phase Coherence: Detect cm-scale (wavelength-level) field-induced timing variations in raw L1/L2 carrier phase measurements</li>
             <li>Real-Time Dynamic Response: Capture sub-second coherence modulations during eclipse/opposition events without processing delays</li>
-            <li>Multi-Constellation Universality: Reproduce identical Temporal Topology correlation lengths (λ<sub>T</sub> = 3,330–4,549 km) across GLONASS, Galileo, and BeiDou constellations</li>
+            <li>Multi-Constellation Universality: Recover the same finite, thousands-of-kilometres covariance family and band ordering across independently processed GLONASS, Galileo, and BeiDou constellations, allowing product- and estimator-dependent scale shifts</li>
             <li>Sidereal Independence: Demonstrate that unfiltered signals persist after removing sidereal components, distinguishing from multipath artifacts</li>
         </ol>
     </div>
@@ -175,7 +175,7 @@
     <p>Critical requirements for community validation:</p>
     <ul>
         <li>Independent replication by other research groups</li>
-        <li>Raw data validation to quantify processing suppression and reveal full signal magnitude</li>
+        <li>Raw carrier-phase validation (pseudorange-level SPP consistency already established in Paper 3) to quantify processing suppression and reveal full signal magnitude</li>
         <li>Multi-constellation testing across GLONASS, Galileo, and BeiDou</li>
         <li>Systematic investigation of next-generation alternative hypotheses</li>
         <li>Extension to optical clock networks for enhanced precision</li>
