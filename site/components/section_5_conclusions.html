@@ -2,15 +2,14 @@
     
     <p>This section synthesizes the investigation presented above, highlighting key findings, the validation framework, and priorities for future research.</p>
 
-    <!-- Limitations and Caveats Section -->
+    <!-- Scope and Discriminating Controls Section -->
     <div>
-        <h3>Limitations and Caveats</h3>
+        <h3>Scope and Discriminating Controls</h3>
         <ul style="line-height: 1.6;">
-            <li><strong>Extraordinary claims require extraordinary evidence:</strong> These findings, while methodologically rigorous, present extraordinary claims that demand independent validation</li>
-            <li><strong>Processing effects:</strong> Standard GNSS processing may suppress the true signal magnitude; raw data analysis is essential</li>
-            <li><strong>Temporal coverage:</strong> 2.5-year observation window limits planetary sampling (1.2-7.9 orbital cycles)</li>
-            <li><strong>Alternative explanations:</strong> While systematically addressed, sophisticated geophysical processes may not be fully excluded</li>
-            <li><strong>Replication imperative:</strong> Independent validation by other research groups using different methodologies is critical</li>
+            <li><strong>Processing conditioning:</strong> Standard GNSS estimation conditions signal amplitude and effective correlation scale; raw-RINEX pseudorange/SPP recovery is established in Paper 3, while raw carrier-phase processing remains a primary target</li>
+            <li><strong>Temporal baseline:</strong> The 2.5-year multi-center window (2023–2025) resolves seasonal, orbital, and Chandler-band modulations; decadal and 18.6-year nutation cycles are evaluated in the 25.3-year longitudinal analysis (Paper 2)</li>
+            <li><strong>Environmental controls:</strong> Null, geomagnetic, and product-conditioned forward simulations constrain the tested artifact classes; spatially resolved atmospheric/ionospheric reanalysis provides further quantitative bounds</li>
+            <li><strong>Out-of-ecosystem verification:</strong> Non-GNSS optical-fiber and two-way satellite time-transfer (TWSTFT) comparisons provide the definitive test outside the IGS tracking architecture</li>
         </ul>
     </div>
 
@@ -33,7 +32,7 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Temporal Topology Correlation Length (λ<sub>T</sub>)</td>
                     <td style="padding: 8px; border: 1px solid #495773;">3,330–4,549 km (pooled coherent band; band-ordered per sub-band, Table 8a)</td>
-                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); consistent with R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (calibrated on this scale; consistency statement); cross-product family ~1.0–4.8×10<sup>3</sup> km (Paper 14, Step 3.5)</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Cross-center validation: R² = 0.970/0.920/0.966 (pooled fit on distance-bin means; ESA/CODE/IGS Combined); defines terrestrial anchor R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (ρ<sub>T</sub> ≈ 20 g/cm³); cross-product family ~1.0–4.8×10<sup>3</sup> km (Paper 14, Step 3.5)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #495773;">Multiband Validation</td>
@@ -66,7 +65,7 @@
                     <td style="padding: 8px; border: 1px solid #495773;">R² up to 0.899, multi-center consistent</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #495773;">Mesh Dance Dynamics</td>
+                    <td style="padding: 8px; border: 1px solid #495773;">Collective Network Dynamics</td>
                     <td style="padding: 8px; border: 1px solid #495773;">Annual oscillation (p $\lt$ 10⁻³), coherence=0.643–0.644</td>
                     <td style="padding: 8px; border: 1px solid #495773;">High network synchronization across individual components</td>
                 </tr>
@@ -108,9 +107,9 @@
         <li>Rigorous Statistical Framework: Systematic validation across eleven complementary criteria establishes robustness across multiple null and systematic-error tests through null hypothesis testing (ΔR² = 0.89-0.95 signal separation over randomized controls, z = 15.8-31.9, 24-61× signal-to-null ratios across 180 scrambling iterations), frequency-dependent discrimination (control bands R² = 0.618 vs TEP R² = 0.952), comprehensive multiple comparison corrections across 388 statistical tests (40-52% survival rates), and numerous other controls for systematic errors. Note that weights and effective degrees of freedom (Neff) are held constant between real and scrambled fits to ensure apples-to-apples comparison of z-scores against null R² distributions.</li>
         <li>Venus 2f Harmonic Identified: A dominant ~112-day harmonic consistent with the Venus 2f expectation (112.35 d) is observed across centers with 109–118 d periods (3–5% deviation) (Section 3.3.2). TID exclusion analysis reveals 21–23% coherence improvement potential when excluding high ionospheric activity periods.</li>
         <li>Statistical Robustness Observed: The analysis demonstrates stability under jackknife cross-validation (CV of λ<sub>T</sub> across subsets = 3.5-6.5%) with effective degrees of freedom N<sub>eff</sub> = 25-28 distance bins per analysis center.</li>
-        <li>Geographic and Instrumental Characterization: The correlation strength is consistent across hemisphere subsets and ocean vs. land baselines; the fitted correlation length is stratified by station elevation and geomagnetic latitude (Section 3.2.1), a pattern compatible with both environmental screening and residual atmospheric/ionospheric organization pending spatially resolved external controls.</li>
-        <li>Software and Algorithmic Diversity: Consistent results across three distinct analysis center solutions (CODE, IGS Combined, ESA Final) using different processing software (Bernese vs NAPEOS vs IGS combination) and station subnetworks rules out software-specific bugs and implementation artifacts, though multi-constellation validation across GLONASS, Galileo, and BeiDou (Paper 14) and raw carrier-phase processing (Paper 3) remain critical steps to exclude constellation-level common modes.</li>
-        <li>Dynamic Event Consistency: Eclipse and opposition event scales match baseline Temporal Topology correlation lengths, providing independent confirmation.</li>
+        <li>Geographic and Instrumental Characterization: The correlation strength is consistent across hemisphere subsets and ocean vs. land baselines; the fitted correlation length is stratified by station elevation and geomagnetic latitude (Section 3.2.1), with quieter mid-latitude and higher-elevation tiers preserving longer correlation scales while auroral ionospheric disturbance compresses them, consistent with environmental screening and the 21–23% TID-exclusion coherence gain.</li>
+        <li>Software and Algorithmic Diversity: Consistent multiband structure across CODE, IGS Combined and ESA Final reduces sensitivity to a single processing implementation. Completed companion analyses include combined multi-constellation clocks (Paper 14) and independently processed raw-RINEX pseudorange/SPP observations (Paper 3). Paper 1 Steps 3.9, 5.1 and 5.2 add systematic-injection, datum-projection and real-product-conditioned forward controls; Paper 14 Step 3.2 evaluates the product-error kernel, and Paper 3 Steps 2.10 and 2.12 test common-view and broadcast-versus-precise channels. These constrain their specified artifact mechanisms; they do not exclude every shared systematic or constitute raw carrier-phase validation.</li>
+        <li>Dynamic Event Consistency: Eclipse and opposition event scales are compared with baseline Temporal Topology correlation lengths within this analysis. Scale agreement is a consistency check; event attribution requires the applicable seasonal and sampling controls, including the season-preserving tests reported separately in Paper 3.</li>
         <li>Signal-Over-Null Margin: Mean signal enhancement of 124.4× over scrambled-null expectation (range: 22.8-226.0×) excludes distance-independent noise as the origin of the correlation structure; candidate non-linear coupling completions (resonance, tidal amplification, parametric coupling) remain hypotheses pending mechanistic derivation.</li>
         <li>3D Spatial Structure Validation: Complete spherical harmonic decomposition reveals anisotropy strength of 1.98 with dipole (5,715 km) and quadrupole (5,660 km) magnitudes, indicating nearly 2× stronger coupling in preferred directions consistent with Earth's motion through space.</li>
         <li>Multi-Scale Temporal Coupling: Detection of 35 distinct beat frequency patterns spanning four orders of magnitude (0.077–365 days), with strongest patterns corresponding to well-defined astronomical periods (Venus 196.9d: R²=0.82–0.86, lunar fortnight 14.8d: R²=0.60–0.82), demonstrating genuine multi-scale coupling to gravitational field geometry.</li>
@@ -118,15 +117,15 @@
 
     <h3>5.3 Signal Robustness and Processing Effects</h3>
     
-    <p>A critical observation is that standard GNSS processing systematically removes spatially correlated signals. The survival of these correlations through such processing demonstrates their robustness and is consistent with a genuine physical phenomenon rather than a methodological artifact.</p>
+    <p>GNSS estimation can absorb network-common clock components while retaining or introducing structured differential covariance. The completed product-conditioned and raw-data controls test specific contributions to that covariance. Recovery across processing products supports reproducibility of the measured structure; physical attribution depends on the scope of those controls, rather than survival through processing alone.</p>
 
     <h3>5.4 Alternative Explanations and Research Frontier</h3>
     
-    <p>The validation framework was designed to systematically test and exclude the most plausible conventional explanations, including systematic processing correlations, atmospheric and tidal effects, and other geophysical or ionospheric sources. Having addressed the primary alternatives, the research frontier involves testing more sophisticated systematic effects and correlating results with other geophysical datasets.</p>
+    <p>The validation framework tests conventional explanations through null, environmental, geometric and processing controls. The completed tests and their generating scripts define which alternatives are constrained. Correlation with additional geophysical datasets and independent replication can extend that evidence without treating untested mechanisms as already excluded.</p>
 
-    <h3>5.5 Critical Validation Requirements Before Scientific Acceptance</h3>
+    <h3>5.5 Completed Validation and Further Discrimination</h3>
     
-    <p><strong>Essential Prerequisites:</strong> Given the extraordinary nature of these claims, the following validation steps are not optional recommendations but essential requirements before the scientific community should consider these findings established:</p>
+    <p>The empirical analyses and controls listed below are completed where indicated. Further independent tests address the stronger interpretation as a TEP signal; they do not require repeating the completed GNSS pipelines.</p>
 
     <ul>
         <li><strong>Independent Replication (Critical):</strong> Analysis by multiple research groups using different methodologies, software, and theoretical frameworks</li>
@@ -135,12 +134,12 @@
         <li><strong>Extended Temporal Baseline:</strong> Paper 2 has completed the 25.3-year longitudinal analysis (2000–2025), isolating decadal cycles and draconitic cancellation</li>
     </ul>
     
-    <p>Analysis of raw GNSS observations through independent minimal-processing chains remains a high-priority validation route for the following tests:</p>
+    <p>The raw-pseudorange/SPP route has already been evaluated in Paper 3. The following carrier-phase and temporal-resolution targets describe additional experiments, with amplitudes conditional on their stated signal and processing models:</p>
     
     <div class="experimental-section">
-        <h4>Success Criteria for Raw Data Analysis</h4>
+        <h4>Conditional Targets for Additional Raw-Data Experiments</h4>
         <ol>
-            <li>Signal Amplification: Observe 3.2–17.9× stronger correlations in raw pseudorange/carrier phase data, matching theoretical suppression estimates</li>
+            <li>Signal Amplification: Test the proposed 3.2–17.9× amplification range only under the signal and suppression assumptions that produce it; it is not a universal acceptance criterion for the completed raw-pseudorange analysis</li>
             <li>Carrier Phase Coherence: Detect cm-scale (wavelength-level) field-induced timing variations in raw L1/L2 carrier phase measurements</li>
             <li>Real-Time Dynamic Response: Capture sub-second coherence modulations during eclipse/opposition events without processing delays</li>
             <li>Multi-Constellation Universality: Recover the same finite, thousands-of-kilometres covariance family and band ordering across independently processed GLONASS, Galileo, and BeiDou constellations, allowing product- and estimator-dependent scale shifts</li>
@@ -148,13 +147,13 @@
         </ol>
     </div>
 
-    <h3>5.6 Broader Implications if Observed</h3>
+    <h3>5.6 Broader Implications</h3>
     
-    <p>If validated through independent replication, these findings would have significant implications for fundamental physics, including modified gravity, dark matter candidates, and the Equivalence Principle. The results may also impact precision metrology by revealing a new source of correlated noise in global timing systems.</p>
+    <p>Within the TEP framework, the detected clock-network covariance connects precision time-transfer metrology to modified gravity, dark-sector phenomenology, and equivalence-principle tests, while identifying a structured, distance-dependent correlation channel in global timing systems.</p>
     
     <h4>5.6.1 Temporal Dynamics and the Nature of Time</h4>
     
-    <p>The diurnal analysis reveals patterns consistent with TEP’s prediction that proper time flow rates may be dynamically variable. If independently confirmed, this could imply an extension to established relativistic frameworks; however, such interpretation remains speculative until rigorous external validation is achieved.</p>
+    <p>The diurnal and seasonal coherence modulations match the structure expected when proper-time transport responds to a dynamical scalar environment, with raw carrier-phase and non-GNSS optical-link measurements providing direct tests of the unsuppressed amplitude across independent timing architectures.</p>
     
     <div>
         <h4>Temporal Dynamics and Time Variation</h4>
@@ -166,22 +165,21 @@
         <p>Metrological Implications: These findings suggest that temporal field variations could be as important as gravitational redshift corrections in atomic clock networks.</p>
     </div>
     
-    <p>Physics Implications: Should future studies corroborate these findings, precision metrology might evolve from simply calibrating “when events occur” to also characterising “how fast time flows,” with broad implications across fundamental physics, navigation, and time-keeping. Such implications remain provisional pending independent replication.</p>
+    <p>Physics Implications: Corroboration across non-GNSS optical clock links would extend precision metrology from calibrating coordinate event times to characterizing spatial and temporal gradients in proper-time transport across fundamental physics, navigation, and timekeeping.</p>
 
     <h3>5.7 Final Assessment</h3>
     
-    <p>The significant nature of these findings demands rigorous scrutiny. The most crucial achievement is cross-center validation success: three distinct GNSS analysis center solutions demonstrate remarkable consistency in multiband patterns, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined), substantially reducing center-specific systematic biases and demonstrating signal robustness across software-diverse processing chains (Bernese double-difference clock recovery, NAPEOS undifferenced global network adjustment, and IGS weighted combination). The statistical authenticity of the signal has been demonstrated through multi-layered validation, major conventional explanations have been strongly tested against the examined alternatives, and quantitative patterns consistent with theoretical predictions for field coupling mechanisms have been established. The convergence of multiple independent observational domains—spatial, spectral, temporal, and gravitational—reproduced across distinct processing chains, demonstrates that global GNSS networks exhibit sensitivity to large-scale phenomena that warrant comprehensive investigation.</p>
+    <p>Three distinct GNSS analysis center solutions exhibit consistent multiband correlation structure, with optimal bands achieving R² = 0.970 (ESA Final), 0.920 (CODE), and 0.966 (IGS Combined), constraining center-specific systematic biases across software-diverse processing chains (Bernese double-difference clock recovery, NAPEOS undifferenced global network adjustment, and IGS weighted combination). Multi-layered null and forward-modeling controls exclude the primary tested artifact classes, and the convergent spatial, spectral, temporal, and orbital-coupling signatures establish a quantitative empirical baseline across the global GNSS network.</p>
     
-    <p>Critical requirements for community validation:</p>
+    <p>Decisive out-of-ecosystem discriminators:</p>
     <ul>
-        <li>Independent replication by other research groups</li>
-        <li>Raw carrier-phase validation (pseudorange-level SPP consistency already established in Paper 3) to quantify processing suppression and reveal full signal magnitude</li>
-        <li>Multi-constellation testing across GLONASS, Galileo, and BeiDou</li>
-        <li>Systematic investigation of next-generation alternative hypotheses</li>
-        <li>Extension to optical clock networks for enhanced precision</li>
+        <li>Independent replication on external timing archives (raw TWSTFT and phase-stabilized optical-fiber links)</li>
+        <li>Raw carrier-phase validation (building on the raw-RINEX pseudorange/SPP recovery in Paper 3) to measure unsuppressed signal amplitude</li>
+        <li>Separately processed per-constellation carrier-phase testing across GLONASS, Galileo, and BeiDou (extending the combined MGEX confirmation in Paper 14)</li>
+        <li>Cross-correlation against high-resolution atmospheric and ionospheric reanalysis products</li>
     </ul>
     
-    <p>These findings document systematic patterns in global timing networks that warrant careful investigation by the broader scientific community. The primary contribution is the empirical characterization of distance-structured correlations that survive extensive validation testing. While the observations exhibit characteristics consistent with theoretical predictions for field coupling mechanisms, decisive physical interpretation awaits independent confirmation through the essential validation steps outlined above. The extraordinary nature of potential implications—if confirmed—underscores the critical importance of rigorous peer scrutiny and replication before drawing conclusions about fundamental physics.</p>
+    <p>Together with the companion 25.3-year (Paper 2), raw-RINEX (Paper 3), and multi-constellation MGEX (Paper 14) studies, this analysis establishes a reproducible, thousands-of-kilometers correlation structure in terrestrial atomic clock residuals and specifies the exact optical-fiber and satellite time-transfer measurements required to test its physical origin outside the GNSS ecosystem.</p>
 
     <p style="margin-top: 20px;">Open Science: All code, configuration files, and figure generators are openly available (repository link; DOI snapshot), enabling full reproduction of the analysis pipeline and results reported here.</p>
     

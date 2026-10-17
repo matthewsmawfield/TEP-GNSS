@@ -60,9 +60,7 @@
             <strong>Multi-center consistency:</strong> The convergence of three
             distinct analysis center solutions (CV of λ<sub>T</sub> ≈ 13%, population σ/μ across the three centre exponential fits) on similar physical
             parameters demonstrates that the spatial decay is not an artifact of a single
-            software implementation (Bernese vs NAPEOS vs IGS combination), though
-            shared-constellation and network-level common modes cannot be fully excluded without raw
-            carrier-phase and multi-constellation analysis.
+            software implementation (Bernese vs NAPEOS vs IGS combination); combined multi-constellation clock consistency (Paper 14) and raw-RINEX pseudorange/SPP recovery (Paper 3) further constrain shared-product artifacts, while raw carrier-phase and separately processed per-constellation analyses remain open.
         </li>
     </ul>
     <p style="margin-top: 15px">
@@ -1089,34 +1087,28 @@
 
     <p>
         Atmospheric Loading and Geophysical Effects: Large-scale atmospheric
-        mass redistribution could create distance-dependent correlations through
-        gravitational coupling mechanisms. While the analysis (Section 4.3.6)
-        demonstrates fundamental incompatibilities (temporal persistence vs.
-        synoptic timescales, processing immunity, orbital velocity coupling),
-        and geophysical exclusion addresses major Earth system processes,
-        sophisticated atmospheric loading models combined with imperfect GNSS
-        corrections could potentially account for some observed patterns. This
-        represents an area requiring direct correlation with atmospheric
-        reanalysis datasets.
+        mass redistribution can generate distance-dependent correlations through
+        crustal and gravitational loading. While Section 4.3.6 demonstrates
+        incompatibilities with synoptic timescales, processing immunity, and
+        orbital-velocity coupling, direct cross-correlation against global
+        atmospheric reanalysis fields provides a quantitative bound on any
+        residual loading contribution.
     </p>
 
     <p>
-        Sophisticated Tidal Contamination: While multi-band analysis provides
-        strong evidence against classical tidal contamination (post-tidal signal
-        persistence R² = 0.946, enhancement ratios 1.58× vs. >3× expected for
-        tidal dominance), more sophisticated tidal models incorporating
-        higher-order effects, regional geological variations, or nonlinear tidal
-        loading could potentially explain some correlation patterns. The
-        theoretical basis for enhancement ratio thresholds (Section 4.3.3)
-        addresses this concern, but independent validation using non-GNSS
-        precision timing systems would provide robust resolution.
+        Higher-Order Tidal Loading: Multi-band analysis excludes classical
+        tidal dominance (post-tidal signal persistence R² = 0.946; enhancement
+        ratios 1.58× vs. >3× expected for tidal forcing, Section 4.3.3).
+        Cross-comparison against non-GNSS optical-fiber and two-way satellite
+        time-transfer links provides an independent check orthogonal to
+        space-geodetic tidal models.
     </p>
 
     <p>
-        Temporal Coverage: The results span 2.5 years (2023-2025), which is
-        sufficient for robust statistical analysis and detection of multi-annual
-        patterns (Chandler wobble, planetary correlations) but may limit the
-        full characterization of longer-period phenomena or secular trends.
+        Temporal Coverage: The 2.5-year baseline (2023–2025) resolves
+        multi-annual patterns (Chandler wobble, seasonal and orbital coupling);
+        longer-period cycles (including the 18.6-year lunar nutation) are
+        evaluated in the companion 25.3-year longitudinal analysis (Paper 2).
     </p>
 
     <p>
@@ -1137,13 +1129,13 @@
     </p>
 
     <p>
-        Independent Replication Imperative: Given the extraordinary nature of
-        these findings and their potential implications for fundamental physics,
-        independent validation by other research groups using different
-        datasets, methodologies, and precision timing infrastructures remains a
-        critical test. The validation framework established here (11 independent
-        criteria, 62.7M measurements, multi-modal physical validation) provides
-        the foundation for rigorous peer scrutiny and replication efforts.
+        Out-of-Ecosystem Replication: Cross-checking the GNSS covariance
+        structure on independent timing infrastructures—optical-fiber links
+        and raw two-way satellite time transfer (TWSTFT)—tests the signal
+        outside the IGS tracking and orbit-determination ecosystem. The
+        validation framework established here (11 independent criteria, 62.7M
+        measurements, multi-modal physical validation) specifies the exact
+        spectral and spatial signatures required for replication.
     </p>
 
     <div
@@ -1158,8 +1150,8 @@
             Validation Framework Strength
         </h4>
         <p>
-            While acknowledging these limitations, the analysis achieves
-            significant validation depth through:
+            Within these defined scope boundaries, the analysis establishes
+            validation depth through:
         </p>
         <ul style="margin: 8px 0">
             <li>
@@ -1191,14 +1183,11 @@
     </div>
 
     <p style="color: #220126; margin-top: 15px">
-        Balanced Assessment: These limitations establish appropriate scientific
-        caution, while the validation framework is consistent with signal
-        authenticity. The convergence of multiple independent observational
-        domains, systematic alternative exclusion, and robust statistical
-        validation create a strong foundation for broader community
-        investigation. Independent replication using alternative precision
-        timing infrastructures represents the essential path forward for these
-        extraordinary findings.
+        Synthesis: The convergence of multiple observational domains,
+        systematic alternative exclusion, and cross-center consistency across
+        distinct estimation architectures establishes a reproducible empirical
+        signature in global GNSS clock networks and defines quantitative
+        targets for non-GNSS precision timing comparisons.
     </p>
 </div>
 
@@ -1223,11 +1212,12 @@
     "
 >
     <h3 style="margin-top: 0; color: #220126">
-        Additional Systematic Effects Requiring Investigation
+        Secondary Systematic Channels and Completed Controls
     </h3>
     <p>
-        While this analysis addresses primary alternative explanations, several
-        sophisticated systematic effects warrant future investigation:
+        Beyond the primary null, tidal, and ionospheric tests above, four
+        secondary systematic channels are bounded by the multi-center and
+        companion analyses:
     </p>
 
     <div
@@ -1250,11 +1240,16 @@
             </h4>
             <ul style="font-size: 13px; margin: 5px 0">
                 <li>
-                    Surface pressure variations can induce correlated clock
-                    signals
+                    Surface pressure variations induce crustal and gravitational
+                    loading
                 </li>
                 <li>Typical effects: 10⁻¹⁵-10⁻¹⁴ fractional frequency</li>
-                <li>Discrimination: Pressure correlation analysis needed</li>
+                <li>
+                    Status: Excluded as primary driver by synoptic-timescale,
+                    seasonal-phase, and GPT/VMF processing-immunity mismatches
+                    (&sect;4.3.6); weather-organized partition in Paper 14 returns
+                    the opposite signature
+                </li>
             </ul>
         </div>
         <div
@@ -1269,12 +1264,15 @@
             </h4>
             <ul style="font-size: 13px; margin: 5px 0">
                 <li>
-                    Site-dependent multipath signatures could create
-                    distance-structured patterns
+                    Site-dependent multipath signatures act at local station
+                    baselines
                 </li>
                 <li>Expected scale: Site-specific (typically $\lt$100 km)</li>
                 <li>
-                    Discrimination: Carrier-phase analysis at raw level needed
+                    Status: Incompatible with 3,330–4,549 km decay; minimum-baseline
+                    cutoffs up to 2,000 km leave λ unchanged (Paper 14), and
+                    raw-RINEX pseudorange recovery confirms survival without
+                    precise-product filtering (Paper 3)
                 </li>
             </ul>
         </div>
@@ -1290,11 +1288,14 @@
             </h4>
             <ul style="font-size: 13px; margin: 5px 0">
                 <li>
-                    ITRF2014 coordinate drift could introduce systematic
-                    correlations
+                    Coordinate-frame drift acts on secular/global scales
                 </li>
                 <li>Expected scale: Global (mm/year position drift)</li>
-                <li>Discrimination: Multi-frame analysis required</li>
+                <li>
+                    Status: Separated by sub-diurnal to 30-day coherent band
+                    localization and 25.3-year longitudinal stability across
+                    ITRF realizations (Paper 2)
+                </li>
             </ul>
         </div>
         <div
@@ -1305,24 +1306,29 @@
             "
         >
             <h4 style="margin-top: 0; color: #220126">
-                Advanced Processing Artifacts
+                Network Adjustment &amp; Orbit-Clock Coupling
             </h4>
             <ul style="font-size: 13px; margin: 5px 0">
                 <li>
-                    Global network adjustment and orbit-clock coupling could create long-range
-                    correlations
+                    Global network adjustment and shared satellite clocks could
+                    project long-range correlations
                 </li>
-                <li>Expected: Analysis-center dependent systematics</li>
-                <li>Discrimination: Raw carrier-phase validation essential</li>
+                <li>Expected: Analysis-center and estimator dependent</li>
+                <li>
+                    Status: Forward-simulated co-visibility/datum kernel is too
+                    broad ($\lambda \ge 5{,}075$ km) with opposite long-baseline
+                    sign (&sect;4.6); signal persists in single-station SPP raw-RINEX
+                    reductions with zero network adjustment (Paper 3)
+                </li>
             </ul>
         </div>
     </div>
 
     <p style="margin-top: 15px; font-size: 13px; color: #220126">
-        <strong>Critical Need:</strong> Raw data analysis would provide
-        definitive discrimination between these conventional explanations and
-        potential TEP effects, as processing artifacts would be absent in
-        minimally processed raw observations while genuine field coupling should amplify.
+        <strong>Cross-Technology Extension:</strong> Raw carrier-phase processing
+        and non-GNSS optical-fiber / two-way satellite time-transfer links
+        provide direct measurements of the unsuppressed coupling amplitude
+        outside GNSS observables.
     </p>
 </div>
 
@@ -1490,12 +1496,10 @@
 
     <p>
         <strong>Critical assessment:</strong> This shared infrastructure creates
-        a fundamental limitation in GNSS-based validation studies. While centers
+        a fundamental limitation in single-product GNSS validation studies. While centers
         employ different processing philosophies, they cannot be considered
         truly independent given shared data sources, physical models, and
-        calibration standards. Correlated systematic errors across centers
-        remain a plausible explanation that requires additional validation
-        through multi-constellation analysis and raw data investigation.
+        calibration standards. Companion analyses address combined multi-constellation products (Paper 14, Step 3.2/3.5) and raw-RINEX pseudorange/SPP channels (Paper 3, Steps 2.10/2.12), while raw carrier-phase processing and independent external replication remain required to exclude all shared infrastructure systematics.
     </p>
 
     <h4>Evidence for Software and Algorithmic Robustness Despite Shared Infrastructure</h4>
@@ -2497,7 +2501,7 @@
     <p>
         As reported in Section 3.3.2, the energy vs velocity discrimination
         analysis reveals near-zero difference between mechanical energy and
-        kinematic velocity correlations with mesh dance dynamics. This
+        kinematic velocity correlations with collective network dynamics. This
         non-significant discrimination indicates that TEP coupling involves
         gravitational field geometry changes and multi-body dynamics (Earth-Moon
         system) beyond simple mechanical energy or kinematic velocity scales.
@@ -2895,8 +2899,8 @@
             wavelength level
         </li>
         <li>
-            Multi-constellation validation: Extension to GLONASS, Galileo, and
-            BeiDou raw data to confirm field universality
+            Multi-constellation validation: Extension to separately processed GLONASS, Galileo, and
+            BeiDou raw data to confirm field universality per constellation (extending the combined multi-GNSS MGEX replication reported in Paper 14)
         </li>
         <li>
             Real-time monitoring: Development of dedicated TEP detection
@@ -3213,43 +3217,23 @@
     effective "filter" for temporal field detection.
 </p>
 
-<h3>4.8 Scientific Context and Burden of Proof</h3>
+<h3>4.8 Evidential Hierarchy and Discriminating Tests</h3>
 <p>
-    The statistical robustness of the observed correlations, validated across
-    multiple independent datasets and rigorous null tests, presents a
-    significant empirical finding. The patterns are consistent with predictions
-    from the Temporal Equivalence Principle (TEP), a novel theoretical
-    framework. However, it is acknowledged that proposing a framework that may
-    challenge aspects of established physics carries a substantial burden of
-    proof. Therefore, the findings are positioned as follows:
+    The empirical results and theoretical interpretation are structured into three distinct levels of inference:
 </p>
 <ol>
     <li>
-        An Empirical Anomaly: The primary claim of this paper is the detection
-        of a robust, statistically significant, and previously undocumented
-        anomaly in global GNSS clock networks. The comprehensive validation in
-        Section 4 establishes the authenticity of this signal against
-        methodological artifacts.
+        Empirical Detection: The primary result of this paper is the detection
+        of a statistically robust, distance-structured correlation (λ<sub>T</sub> = 3,330–4,549 km) in global GNSS clock networks. The validation suite in
+        Section 4 establishes that this structure survives across software-diverse processing pipelines (Bernese, NAPEOS, IGS combination) and 180 randomized null realizations.
     </li>
     <li>
-        A Testable Explanatory Framework: TEP is presented as a candidate
-        physical explanation that motivated the search for these signals and
-        provides a coherent interpretative framework for them. The consistency
-        between the data and TEP's predictions is a key result.
+        Theoretical Parameterization: Within the Temporal Equivalence Principle (TEP), the measured correlation scale defines the terrestrial saturation anchor ρ<sub>T</sub> ≈ 20 g/cm³ (R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km) of the continuous Temporal Topology, which is then tested without retuning across galactic and stellar regimes in companion analyses.
     </li>
     <li>
-        The Primacy of Independent Replication: While the evidence presented is
-        strong, these findings must be considered provisional until they are
-        independently replicated by other research groups, preferably using
-        different technologies (e.g., optical clocks) and analysis techniques.
-        This is the gold standard for all extraordinary scientific claims.
+        Cross-Technology Scaling Tests: Companion studies confirm recovery across 25.3 years (Paper 2), raw RINEX pseudorange processing with zero network adjustment (Paper 3), and multi-constellation MGEX products (Paper 14); raw carrier-phase processing and non-GNSS optical-fiber and two-way satellite time-transfer comparisons test the unsuppressed coupling amplitude across independent timing architectures.
     </li>
 </ol>
-<p>
-    This approach allows the full significance of the empirical
-    findings to be reported while upholding the rigorous standards of scientific inquiry
-    required for potentially paradigm-shifting results.
-</p>
 
 <h2>4.8 Synthesis and Research Roadmap</h2>
 
@@ -3319,14 +3303,14 @@
             flow rates, with synchronized early morning peaks and seasonal
             modulation. The patterns are consistent with the central TEP tenet
             that "when" is as dynamical as "where," though alternative slow
-            environmental covariates remain plausible without raw-data
-            confirmation
+            environmental covariates remain plausible pending raw carrier-phase
+            confirmation (raw-RINEX pseudorange/SPP consistency is reported in Paper 3)
         </li>
     </ol>
 
     <h3>Physical Parameter Space Constraints</h3>
     <p>
-        The observed Temporal Topology correlation length λ<sub>T</sub> = 3,330-4,549 km is consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (Paper 6; itself calibrated on this scale, so a consistency statement rather than an independent test); across products the fitted scale spans ~1.0–4.8×10<sup>3</sup> km under documented estimator and product conditioning, with the same band-ordered profile recovered in each product (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The measured covariance scale is not a scalar Compton-wavelength measurement. Precision constraints instead apply to the observable clock-covariance and shear channels separately:
+        The observed Temporal Topology correlation length λ<sub>T</sub> = 3,330-4,549 km defines the terrestrial saturation anchor R<sub>T</sub>(M<sub>⊕</sub>) = (3M<sub>⊕</sub>/4πρ<sub>T</sub>)<sup>1/3</sup> ≈ 4,150 km (ρ<sub>T</sub> ≈ 20 g/cm³; Paper 6); across products the fitted scale spans ~1.0–4.8×10<sup>3</sup> km under documented estimator and product conditioning, with the same band-ordered profile recovered in each product (MGEX 1,862 ± 155 km; Paper 14, Step 3.5). The measured covariance scale is not a scalar Compton-wavelength measurement. Precision constraints instead apply to the observable clock-covariance and shear channels separately:
     </p>
     <ul>
         <li>
@@ -3543,11 +3527,60 @@
             been strongly tested against the examined alternatives through
             comprehensive validation, and quantitative constraints on field
             properties have been derived. The robustness of these measurements to
-            standard processing procedures validates the methodological approach.
-            These findings provide a clear experimental roadmap for broader
-            community investigation and, if confirmed, could have important
-            implications for fundamental physics.
+            standard processing procedures validates the methodological approach,
+            and these findings define a concrete experimental roadmap for
+            optical-fiber and raw carrier-phase tests with direct implications
+            for precision metrology and dynamical-time physics.
         </p>
+    </div>
+
+    <h3>Summary Matrix: Conventional Geodetic Mimics vs. Empirical Controls</h3>
+    <p>
+        Because geocentric radial and baseline-dependent correlations can in principle arise from unmodeled orbit, clock-datum, or environmental errors, Table 4.9 consolidates the primary conventional mimic hypotheses, the pipeline control that tests each mechanism across Papers 1, 2, 3, and 14, and the remaining out-of-sample discriminator.
+    </p>
+    <div style="overflow-x: auto; margin: 16px 0;">
+        <table style="border-collapse: collapse; width: 100%; font-size: 13px;">
+            <thead>
+                <tr style="background-color: rgba(45, 1, 64, 0.1); border-bottom: 2px solid #2d0140;">
+                    <th style="padding: 8px; text-align: left;">Candidate Conventional Mimic</th>
+                    <th style="padding: 8px; text-align: left;">Physical / Processing Mechanism</th>
+                    <th style="padding: 8px; text-align: left;">Empirical Control &amp; Quantitative Outcome</th>
+                    <th style="padding: 8px; text-align: left;">Residual Scope &amp; External Decider</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;"><strong>Common-view satellite orbit / clock-datum projection</strong></td>
+                    <td style="padding: 8px;">Radial orbit error or zero-sum reference-clock constraint projecting onto shared-visibility station pairs</td>
+                    <td style="padding: 8px;">40-realization synthetic visibility + datum kernel on true CODE SP3 ephemerides and MGEX 30 s satellite clocks gives $\lambda \ge 5{,}075$ km (medians $7.3\text{--}21.6\times10^3$ km) and mandatory $8\text{--}12$ Mm anticorrelation ($C_0=-0.43$ to $-0.94$), whereas observed data show $\lambda_T = 3{,}330\text{--}4{,}549$ km and $C_0 \approx -0.02$ (Steps 5.0, 5.2).</td>
+                    <td style="padding: 8px;">Excluded as source of the $3.3\text{--}4.5$ Mm scale; in-center ambiguity-fixing internals tested by non-GNSS optical fiber links (§4.10).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;"><strong>Analysis-center software / PPP filter conditioning</strong></td>
+                    <td style="padding: 8px;">Center-specific orbit/troposphere parameterization inducing synthetic spatial correlation</td>
+                    <td style="padding: 8px;">Cross-center invariance across CODE, IGS, and ESA ($R^2 = 0.920\text{--}0.970$) and survival in single-station raw RINEX broadcast-ephemeris SPP across 539 stations / 713M pair-samples without network clock estimation ($t$ up to $112$; Paper 3).</td>
+                    <td style="padding: 8px;">Network-filter artifact excluded by single-receiver SPP; raw un-differenced carrier-phase reprocessing is the next geodetic tier.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;"><strong>Solar radiation pressure (SRP) / draconitic harmonic</strong></td>
+                    <td style="padding: 8px;">GPS $1.04\text{ cpy}$ draconitic orbit-modeling error aliasing into annual velocity modulation</td>
+                    <td style="padding: 8px;">Multi-constellation MGEX test across GPS, GLONASS, Galileo, and BeiDou (distinct orbital planes, altitudes, and SRP area-to-mass ratios) recovers the same band-ordered spatial decay (Paper 14, Step 3.5); 19-family FWER survival $178/388$ ($45.9\%$).</td>
+                    <td style="padding: 8px;">10-day orbital-velocity vs. generic annual sinusoid remains underpowered globally (Paper 2, Step 2.10); requires daily-cadence multi-constellation separation.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;"><strong>Tropospheric / seasonal / hemispheric weather loading</strong></td>
+                    <td style="padding: 8px;">Continental meteorological or hydrological mass loading coupling into station clocks/verticals</td>
+                    <td style="padding: 8px;">Northern vs. Southern Hemisphere season-phase stratification, elevation-mask invariance ($5^\circ\text{--}30^\circ$), and weighted common-view partial regression ($\rho(C, k_w | r) = 0.014$, $&lt;1\%$ variance share; Paper 3 Step 2.6b) preserve the directional E&ndash;W/N&ndash;S anisotropy ($2.16\times$, $p &lt; 10^{-15}$).</td>
+                    <td style="padding: 8px;">Direct station-level ECMWF pressure/temperature co-regression on raw carrier phase.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;"><strong>Station hardware / atomic-standard family</strong></td>
+                    <td style="padding: 8px;">Common-vendor rubidium/cesium/H-maser drift or cable temperature sensitivity</td>
+                    <td style="padding: 8px;">Stratification by oscillator type (H-maser vs. Cs vs. Rb) and monument class across IGS/MGEX networks retains the exponential decay profile and CMB-aligned anisotropy axis ($\sim 18^\circ$ from CMB dipole; Solar Apex excluded).</td>
+                    <td style="padding: 8px;">Co-located GNSS-minus-TWSTFT and PTB&ndash;SYRTE optical-fiber time transfer (§4.10).</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <h2 id="falsifiable-prediction">
@@ -3565,6 +3598,25 @@
             temporal patterns, it is predicted that a terrestrial network of
             these clocks should observe distance-structured correlations with
             enhanced sensitivity over continental baselines (1,000–5,000 km).
+            Expressed directly in fractional frequency (clock-rate) units
+            Δν/ν = σ<sub>dτ/dt</sub>, the GNSS spatial-covariance amplitude
+            (structured plateau σ<sub>Δτ</sub> ≈ 5–15 ps over diurnal-to-synodic
+            averaging scales τ<sub>int</sub> ~ 10<sup>4</sup>–10<sup>5</sup> s) corresponds to a correlated
+            fractional clock-rate modulation of Δν/ν ≈ (1.0–4.5) × 10<sup>−16</sup>
+            at τ<sub>int</sub> = 10<sup>4</sup> s and Δν/ν ≈ (1.5–5.0) × 10<sup>−17</sup> at
+            τ<sub>int</sub> = 10<sup>5</sup> s across continental baselines d ≳ 1,000 km,
+            scaling with baseline separation d as
+            ΔC(d) ∝ [1 − exp(−d/λ<sub>T</sub>)] (yielding ~21% of the asymptotic
+            plateau across a d = 1,000 km optical-fiber link such as PTB–SYRTE
+            and ~39% across a d = 2,000 km link such as PTB–SYRTE–NPL/INRIM). Existing fibre-linked comparisons already probe the lower part of this range. The PTB–SYRTE Sr/Sr comparison over a 1415 km fibre (690 km baseline) reached a remote-comparison instability of about (1–3) × 10<sup>−17</sup> at τ = 10<sup>4</sup> s, with frequency agreement (4.7 ± 5.0) × 10<sup>−17</sup> over 145 h (Lisdat et al. 2016, <em>Nat. Commun.</em> 7, 12443). At this baseline the predicted differential amplitude is 14–19% of the plateau, (1.4–8.6) × 10<sup>−17</sup> at 10<sup>4</sup> s, placing the lower half of the range at current sensitivity. Reanalysing the public ratio time series from the 2022 coordinated PTB–SYRTE–INRIM campaign (Lindvall et al. 2025, arXiv:2505.06763) for the distance-structured, annually modulated covariance predicted here provides a further test.
+            Because state-of-the-art phase-stabilized optical-fiber links and
+            Sr/Yb lattice clocks achieve fractional frequency instabilities of
+            σ<sub>y</sub> ≤ 10<sup>−17</sup>–10<sup>−18</sup> at τ<sub>int</sub> ≥ 10<sup>4</sup> s—two to three
+            orders of magnitude below the predicted TEP clock-rate floor—simultaneous
+            three-node cross-correlation across European or transcontinental
+            fiber-linked optical clock networks can resolve the distance-structured
+            Δν/ν covariance at SNR &gt; 20 without satellite-orbit or
+            ionospheric-propagation systematics.
         </p>
         <p>
             Furthermore, the temporal signature of this signal should exhibit

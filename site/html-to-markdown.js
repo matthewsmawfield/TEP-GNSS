@@ -198,7 +198,7 @@ class HTMLToMarkdownConverter {
         const version = versionMatch ? versionMatch[1]
             .replace(/<[^>]+>/g, '')
             .replace(/^Version:\s*/i, '')
-            .trim() : 'v0.27 (Jaipur)';
+            .trim() : 'v0.28 (Jaipur)';
         
         const dateMatch = html.match(/<div[^>]*class=["'][^"']*date[^"']*["'][^>]*>(.*?)<\/div>/i);
         const date = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, '').trim() : 'First published: 17 September 2025 · Last updated: 8 August 2026';
@@ -259,7 +259,7 @@ class HTMLToMarkdownConverter {
      */
     generateMarkdownFilename() {
         const { version, codename } = this.getVersionInfo();
-        return `1-TEP-GNSS-v${version}-${codename}.md`;
+        return `B1-TEP-GNSS-v${version}-${codename}.md`;
     }
 
     /**

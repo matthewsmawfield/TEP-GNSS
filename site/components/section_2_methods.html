@@ -15,7 +15,7 @@
             <p>GPS satellites need incredibly precise timing—errors of even a billionth of a second would make navigation useless. This means:</p>
             <ul style="line-height: 1.8;">
                 <li>Extreme precision: GPS clocks are stable to better than one part in a trillion</li>
-                <li>Global coverage: ~360 unique stations provide comprehensive spatial sampling with strong Northern Hemisphere representation
+                <li>Global coverage: ~360 unique stations provide comprehensive spatial sampling with strong Northern Hemisphere representation</li>
                 <li>Continuous monitoring: Data collected every 30 seconds for years</li>
                 <li>Multiple independent systems: Three different analysis centers process the data independently</li>
                 <li>Public data: All data is freely available, enabling independent verification</li>
@@ -266,7 +266,7 @@ Implementation Details: For complete usage instructions, configuration options, 
         <ul style="margin: 0; padding-left: 20px;">
             <li><strong>Phase-alignment index:</strong> The primary metric quantifying phase synchronization between station pairs, computed as the cosine of the magnitude-weighted circular mean phase from cross-spectral density analysis. Consistently denoted as "phase-alignment index" throughout this work, with technical implementation as cos(weighted_phase)</li>
             <li><strong>Technical implementation:</strong> compute_cross_power_plateau() returns (avg_magnitude, weighted_phase) where magnitudes serve as weights in circular averaging: weighted_phase = np.angle(np.average(exp(i*phases), weights=magnitudes)). Final phase-alignment index = np.cos(weighted_phase)</li>
-            <li><strong>Mesh dance score:</strong> Composite metric quantifying network-wide coherent dynamics (see Section 2.6 for detailed explanation)</li>
+            <li><strong>Network covariance score (collective network dynamics, termed "mesh dance" in pipeline outputs):</strong> Composite metric quantifying network-wide coherent dynamics (see Section 2.6 for detailed explanation)</li>
         </ul>
     </div>
     
@@ -615,7 +615,7 @@ This frequency band methodology enables discrimination between tidal effects, po
         </ul>
 
         <p><strong>Pre-specified falsification criteria (declared before final analysis):</strong> (i) λ outside [500, 20,000] km would falsify the theory-relevant regime; (ii) cross-center CV of λ > 20% would indicate processing artifacts; (iii) non-exponential families (e.g., squared exponential/Gaussian RBF) outperforming exponential/Matérn(ν=1.5) by AIC/BIC would disfavor screened-field interpretations; (iv) lack of control-band degradation at 1000–1500 μHz would indicate broadband artifacts. <strong>Outcomes:</strong> λ = 3,330–4,549 km (PASS); CV of λ ≈ 13% (PASS); exponential family preferred with Matérn(ν=1.5) competitive (PASS in this dataset; the 25-year CODE extension prefers Gaussian-family kernels by ΔAIC = 12.8, which meets this criterion's disfavouring condition; Paper 2); control band R² = 0.618 vs TEP-band ≈ 0.95 (PASS).</p>
-        <p><strong>Structural identification criterion:</strong> The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) across products the fitted scale is conditioned by clock-product construction and estimator settings (reported product-level values ~1.0–4.8×10<sup>3</sup> km; MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5), and the same band-ordered profile is recovered in each product; the IGS-final values are consistent with the geometric saturation radius R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km, which is itself calibrated on this scale (Paper 6), so this is a consistency statement rather than an independent test; raw-SPP channels return shorter, noise-floor-limited scales (~0.7–1.1×10<sup>3</sup> km), and the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ ≳ 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ ≥ 5,075 km with a qualitatively different profile shape (§4.6). Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.</p>
+        <p><strong>Structural identification criterion:</strong> The interval condition (i) is a prior search bound, not a discriminating test—the [500, 20,000] km window subsumes the leading systematic scales (tropospheric ~1,000–3,000 km, co-visibility ~3,000–8,000 km). The falsifying content of the λ<sub>T</sub> measurement is therefore structural: (a) across products the fitted scale is conditioned by clock-product construction and estimator settings (reported product-level values ~1.0–4.8×10<sup>3</sup> km; MGEX 1,862 ± 155 km; estimator axes ≲±25% on identical station-days; Paper 14, Step 3.5), and the same band-ordered profile is recovered in each product, with the IGS-final values defining the terrestrial saturation anchor R<sub>T</sub>(M<sub>⊕</sub>) ≈ 4,150 km (Paper 6); raw-SPP channels return shorter, noise-floor-limited scales (~0.7–1.1×10<sup>3</sup> km), and the raw ionofree channel returns 4,767 ± 835 km (Paper 3); (b) the correlation must be band-localized, i.e., the exponential fit must degrade where the coherent signal is absent—satisfied (control-band R² ≈ 0.5–0.6); (c) the fitted decay must be separable from the co-visibility kernel—forward simulation of the visibility/datum channel on the real station network bounds its effective scale at λ ≳ 6.7×10<sup>3</sup> km, and conditioning the same channel on real ephemerides and the estimated satellite-clock content of the product itself leaves the bound at λ ≥ 5,075 km with a qualitatively different profile shape (§4.6). Per-band λ<sub>T</sub> values are reported in §3.5.1: they are band-ordered within the coherent spectrum rather than a single universal number.</p>
 
         <div class="experimental-section" style="margin: 15px 0; padding: 15px; background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773;">
             <h4>Statistical Framework: Spatial Correlation Analysis (Not Multiple Comparisons)</h4>
@@ -783,17 +783,17 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
             </div>
         </div>
         
-        <h3>Mesh Dance Analysis</h3>
+        <h3>Collective Network Dynamics (Network Covariance Analysis)</h3>
         <p>Investigation of collective network behavior to detect unified detector responses and systematic motion signatures.</p>
         
         <div style="background-color: rgba(73, 87, 115, 0.08); border: 2px solid #495773; padding: 20px; margin: 20px 0; border-radius: 5px;">
-            <h4 style="margin-top: 0; color: #220126;">Understanding Mesh Dance: Network-Wide Coherence</h4>
+            <h4 style="margin-top: 0; color: #220126;">Understanding Collective Network Dynamics: Network-Wide Coherence</h4>
             
             <div style="background-color: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 5px; margin-bottom: 15px;">
                 <h5 style="margin-top: 0; color: #220126;">Conceptual Foundation</h5>
-                <p>While phase-alignment index measures whether <em>two stations</em> are synchronized, mesh dance asks: does the <em>entire 364-station network</em> behave as a single, dynamically-coherent detector? Think of it as the difference between asking "are these two clocks ticking together?" versus "is the whole global network breathing, rotating, and oscillating as one unified system?"</p>
+                <p>While the phase-alignment index measures whether <em>two stations</em> are synchronized, the network covariance score (referred to in pipeline outputs as the "mesh dance" score) tests whether the <em>entire 364-station network</em> behaves as a single, dynamically coherent detector—distinguishing pairwise clock synchronization from collective network oscillation and rotational phase structure.</p>
                 
-                <p>The mesh dance score quantifies four distinct signatures of collective network behavior:</p>
+                <p>The network covariance score quantifies four distinct signatures of collective network behavior:</p>
             </div>
             
             <div style="overflow-x: auto; margin: 15px 0;">
@@ -837,7 +837,7 @@ r<sub>quadratic</sub> = correlation(A<sub>obs</sub>, (M/d²)²)            </div
             
             <div style="background-color: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 5px; margin-top: 15px;">
                 <h5 style="margin-top: 0; color: #220126;">Component-Based Analysis</h5>
-                <p><strong>Primary approach:</strong> Each mesh dance component is analyzed and reported independently to avoid assumptions about relative importance:</p>
+                <p><strong>Primary approach:</strong> Each collective network component is analyzed and reported independently to avoid assumptions about relative importance:</p>
                 <ul style="font-size: 13px; margin: 10px 0;">
                     <li><strong>Base mesh coherence:</strong> 0.643–0.644 (strong network-wide synchronization)</li>
                     <li><strong>Spiral motion:</strong> Detected across all centers (rotational dynamics)</li>

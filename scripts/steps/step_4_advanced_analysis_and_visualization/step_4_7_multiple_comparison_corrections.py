@@ -368,7 +368,7 @@ class ComprehensiveMultipleComparisonCorrector:
                                     # Compare observed r_squared to null distribution
                                     # Get observed r_squared from step_2_0
                                     try:
-                                        with open(f'/Users/matthewsmawfield/www/TEP-GNSS/results/outputs/step_2_0_correlation_{ac}.json', 'r') as f2:
+                                        with open(Path(__file__).resolve().parents[3] / 'results' / 'outputs' / f'step_2_0_correlation_{ac}.json', 'r') as f2:
                                             step2_data = json.load(f2)
                                         observed_r2 = step2_data['exponential_fit']['r_squared']
                                         null_r2_mean = test_data['r_squared_mean']

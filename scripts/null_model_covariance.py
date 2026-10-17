@@ -226,11 +226,43 @@ def evaluate_null_models(data_path: str) -> Dict:
     if data is None:
         raise FileNotFoundError(f"Correlation data not found: {data_path}")
 
+    mc = data.get('model_comparison', {})
+    if mc and mc.get('model_results'):
+        results = []
+        for rslt in mc['model_results']:
+            results.append(dict(rslt))
+        best_aic = min(results, key=lambda x: x['aic'])
+        best_bic = min(results, key=lambda x: x['bic'])
+        for rslt in results:
+            rslt['delta_aic'] = float(rslt['aic'] - best_aic['aic'])
+            rslt['delta_bic'] = float(rslt['bic'] - best_bic['bic'])
+        delta_aics = np.array([r['delta_aic'] for r in results])
+        min_delta = np.min(delta_aics)
+        weights = np.exp(-0.5 * (delta_aics - min_delta))
+        weights /= np.sum(weights)
+        for i, rslt in enumerate(results):
+            rslt['akaike_weight'] = float(weights[i])
+        ds = data.get('data_summary', {})
+        bf = data.get('best_fit', {})
+        return {
+            'analysis_center': data.get('analysis_center', 'UNKNOWN'),
+            'data_source': 'step_2_0_real_binned_model_comparison',
+            'circular_if_synthetic': False,
+            'total_pairs': ds.get('total_pairs'),
+            'n_bins': ds.get('bins_used', bf.get('n_bins', 28)),
+            'distance_range_km': ds.get('distance_range_km', [50.0, 13000.0]),
+            'best_model_aic': best_aic['name'],
+            'best_model_bic': best_bic['name'],
+            'exponential_fit': data.get('exponential_fit', bf),
+            'model_results': results,
+        }
+
     r, y, counts, synthetic = extract_bins(data)
     if synthetic:
-        print("  WARNING: per-bin data unavailable; synthetic bins generated "
-              "from the exponential best fit. Model comparison is CIRCULAR "
-              "and carries no evidential weight.")
+        raise FileNotFoundError(
+            f"Per-bin CSV data and step_2_0 model_comparison both unavailable for {data_path}; "
+            "synthetic bin fallback is disabled."
+        )
     sigma = 1.0 / np.sqrt(np.maximum(counts, 1.0))
 
     results = []
@@ -294,13 +326,17 @@ def print_summary(summary: Dict):
     print("=" * 70)
 
     best = summary['best_model_aic']
-    exp_result = next((r for r in summary['model_results'] if r['name'] == 'exponential'), None)
+    exp_result = next((r for r in summary['model_results'] if r['name'].lower() == 'exponential'), None)
     if exp_result:
-        if best == 'exponential':
+        if best.lower() == 'exponential':
             print("\nRESULT: Exponential (TEP) is the preferred model by AIC.")
         else:
             print(f"\nCAUTION: Exponential is NOT the best model; '{best}' is preferred.")
-        print(f"  Exponential λ = {exp_result['params'][1]:.1f} km (predicted ~{TEP_LAMBDA_KM:.0f} km)")
+        lam_val = (exp_result.get('params', [None, None])[1]
+                   if 'params' in exp_result
+                   else summary.get('exponential_fit', {}).get('lambda_km'))
+        if lam_val is not None:
+            print(f"  Exponential λ = {lam_val:.1f} km (predicted ~{TEP_LAMBDA_KM:.0f} km)")
 
 
 def main():

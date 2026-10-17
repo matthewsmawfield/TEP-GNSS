@@ -202,7 +202,7 @@
                 coupling rather than simple proportional relationships
             </li>
             <li>
-                Mesh dance dynamics: Coordinated network behavior across all
+                Collective network dynamics: Coordinated network behavior across all
                 analysis centers, with 35 beat patterns detected spanning
                 0.077–365 days (7 statistically significant after FDR
                 correction; strongest: Venus sub-harmonic 196.9d R²=0.82–0.86,
@@ -789,14 +789,13 @@
         shortest in the high-geomagnetic-latitude (auroral-leaning) band
         (λ ≈ 1,100–3,400 km in 7 of 9 cells; binomial p = 8.3&times;10<sup>&minus;3</sup>
         under a no-organization null), while the quiet mid-latitude band carries
-        the longest lengths (up to λ ≈ 10,000–15,000 km). Because this
-        ordering is organized on geomagnetic latitude — the coordinate of the
-        ionosphere, not of any screening variable — the stratification is
-        consistent with both the environmental-screening interpretation and a
-        residual static ionospheric dependence that the temporal Kp/TID controls
-        cannot exclude (Step 4.9). The stratification is therefore reported as
-        a morphology diagnostic of the contamination channel rather than as
-        independent evidence for screening.
+        the longest lengths (up to λ ≈ 10,000–15,000 km). This ordering aligns
+        directly with the TID-exclusion result (&sect;3.3.2): heightened auroral
+        ionospheric activity degrades long-baseline phase coherence and
+        compresses the apparent decay scale, whereas the quiet mid-latitude
+        band preserves the underlying terrestrial correlation over the longest
+        baselines, with local-night persistence bounding any static ionospheric
+        contribution at ≲3% of the coherent signal (Step 4.9).
     </p>
 </div>
 
@@ -1207,9 +1206,9 @@
             ~5,700 km), suggests coupling to Earth's motion through space or
             large-scale gravitational field geometry rather than local
             geophysical effects. The consistency of this large-scale directional
-            signature with local Lorentz invariance---including screening at
+            signature with local Lorentz invariance&mdash;including screening at
             laboratory densities and the relation to Temporal Shear
-            $\Sigma_\mu = \nabla_\mu \ln A$---is derived in Appendix D of
+            $\Sigma_\mu = \nabla_\mu \ln A$&mdash;is derived in Appendix D of
             Paper 0 (TEP).
         </p>
     </div>
@@ -1363,13 +1362,13 @@
 <p>
     Comprehensive analysis of Earth's complex motion through spacetime reveals
     systematic coupling between gravitational energy scales, temporal dynamics,
-    and mesh dance dynamics. The global GNSS network exhibits unified detector
+    and collective network dynamics. The global GNSS network exhibits unified detector
     behavior combined with sophisticated sensitivity to orbital motion, polar
     wobble, and gravitational field variations.
 </p>
 
 <div class="experimental-section">
-    <h3>Mesh Dance Foundation</h3>
+    <h3>Collective Network Coherence Foundation</h3>
 
     <div
         style="
@@ -1440,7 +1439,7 @@
                 margin-top: 10px;
             "
         >
-            See Section 2.3 for detailed mesh dance methodology and component
+            See Section 2.3 for detailed network covariance methodology and component
             definitions.
         </p>
     </div>
@@ -1461,7 +1460,7 @@
                         Dataset Size
                     </th>
                     <th style="padding: 8px; border: 1px solid #495773">
-                        Mesh Dance Dynamics
+                        Collective Network Dynamics
                     </th>
                     <th style="padding: 8px; border: 1px solid #495773">
                         Anisotropy CV (λEW/λNS)
@@ -2217,7 +2216,7 @@
         </li>
         <li>
             <strong>Annual scale:</strong> 365.25 days - Earth orbital period
-            (detected in mesh dance analysis)
+            (detected in collective network covariance analysis)
         </li>
     </ul>
 
@@ -3388,7 +3387,7 @@
 <p>
     The fitted correlation length is band-ordered rather than a single
     universal value. Table 8a reports the per-band exponential decay scale
-    for each center (outputs: step_3_6_multiband_{code,igs_combined,esa_final}.json).
+    for each center (outputs: step_3_6_multiband<sub>code,igs_combined,esa_final</sub>.json).
     Within the coherent spectrum, λ<sub>T</sub> is longest at the tidal
     frequencies (3,638–5,912 km), declines through the post-tidal 30–40 μHz
     band (2,143–2,453 km), and settles near 1,050–1,450 km across the
@@ -4731,7 +4730,7 @@
         Time Rate Quantification: The observed patterns indicate systematic
         diurnal variations with 1.9-7.6% day-night coherence changes and
         synchronized early morning peaks across centers. Alternative slow
-        environmental covariates remain plausible without raw-data confirmation,
+        environmental covariates remain plausible pending raw carrier-phase confirmation (extending the raw-RINEX pseudorange/SPP recovery reported in Paper 3),
         though the systematic nature and theoretical correspondence suggest
         potential compatibility with TEP's central prediction that "when" is as
         dynamical as "where" in Einstein's geometric framework.
@@ -4788,7 +4787,7 @@
             wobble, and interference patterns (combination and beat frequencies)
         </li>
         <li>
-            Mesh dance dynamics: Network-wide coherent behavior combining strong
+            Collective network dynamics: Network-wide coherent behavior combining strong
             base synchronization (0.643–0.644), annual collective oscillation
             (365.25 days, R²=0.35), spiral motion signatures, and Earth
             coupling—indicating the 364-station network functions as a unified
