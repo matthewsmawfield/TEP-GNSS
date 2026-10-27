@@ -35,16 +35,13 @@ jobs:
       - name: Tag check (skip deploy if untagged)
         id: tag_check
         run: |
-          TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
-          if [ -z "$TAG" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
-            echo "Commit is not tagged. Skipping deployment."
+          if [ "$GITHUB_REF_TYPE" != "tag" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "Push is not a tag. Skipping deployment."
             echo "deploy=false" >> $GITHUB_OUTPUT
             exit 0
           fi
           echo "deploy=true" >> $GITHUB_OUTPUT
-          if [ -n "$TAG" ]; then
-            echo "Tag: $TAG"
-          fi
+          echo "Ref: $GITHUB_REF"
 
       - name: Setup Node.js
         if: steps.tag_check.outputs.deploy == 'true'
